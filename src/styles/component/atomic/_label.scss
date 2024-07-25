@@ -1,0 +1,82 @@
+@mixin Filled($labelClassName, $textClassName, $bgColor, $colorText) {
+  .#{$labelClassName} {
+    background-color: #{$bgColor};
+  }
+  .#{$textClassName} {
+    color: #{$colorText};
+  }
+}
+
+@mixin Outline($labelClassName, $textClassName, $color) {
+  .#{$labelClassName} {
+    background-color: transparent;
+    border: 1px solid $color;
+  }
+  .#{$textClassName} {
+    color: #{$color};
+  }
+}
+
+@mixin Ghost($textClassName, $color) {
+  .#{$textClassName} {
+    color: $color;
+  }
+}
+
+// DEFINE Filled Label
+@include Filled(basic__filled, text__basic__filled, #e9f0ff, #2c3b4e);
+@include Filled(primary__filled, text__primary__filled, #3270ea, #fff);
+@include Filled(gray__filled, text__gray__filled, #d0d2d8, #fff);
+@include Filled(sky-blue__filled, text__sky-blue__filled, #82dfee, #0c8593);
+@include Filled(mint__filled, text__mint__filled, #b4e3d3, #008359);
+@include Filled(purple__filled, text__purple__filled, #a6a6e3, #4536ad);
+@include Filled(orange__filled, text__orange__filled, #fdb450, #e04f0e);
+@include Filled(coral__filled, text__coral__filled, #ffcbce, #f14232);
+@include Filled(rose__filled, text__rose__filled, #f5c0cf, #b8405e);
+@include Filled(brown__filled, text__brown__filled, #dfc7b1, #714e29);
+
+// DEFINE Account Label
+@include Filled(account__checkings, text__checkings, #14aec6, #fff);
+@include Filled(account__savings, text__savings, #2eb086, #fff);
+@include Filled(account__loan, text__loan, #7466ce, #fff);
+
+// DEFINE Outline Label
+@include Outline(basic__outline, text__basic__outline, #2c3b4e);
+@include Outline(primary__outline, text__primary__outline, #3270ea);
+@include Outline(gray__outline, text__gray__outline, #e1e3e9);
+@include Outline(sky-blue__outline, text__sky-blue__outline, #14aec6);
+@include Outline(mint__outline, text__mint__outline, #2eb086);
+@include Outline(purple__outline, text__purple__outline, #7466ce);
+@include Outline(orange__outline, text__orange__outline, #f78812);
+@include Outline(coral__outline, text__coral__outline, #ff6a63);
+@include Outline(rose__outline, text__rose__outline, #b8405e);
+@include Outline(brown__outline, text__brown__outline, #896646);
+
+// DEFINE Ghost Label
+@include Ghost(text__primary__ghost, #3270ea);
+@include Ghost(text__gray__ghost, #bec1c6);
+@include Ghost(text__sky-blue__ghost, #14aec6);
+@include Ghost(text__mint__ghost, #2eb086);
+@include Ghost(text__purple__ghost, #7466ce);
+@include Ghost(text__orange__ghost, #f78812);
+@include Ghost(text__coral__ghost, #ff6a63);
+@include Ghost(text__rose__ghost, #b8405e);
+@include Ghost(text__brown__ghost, #896646);
+
+.label {
+  width: fit-content;
+  height: 22px;
+  border-radius: 4px;
+  padding: 4px 6px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &__text {
+    font-weight: 400;
+    font-size: 12px;
+    text-transform: capitalize;
+  }
+}

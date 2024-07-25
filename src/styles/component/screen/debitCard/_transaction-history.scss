@@ -1,0 +1,191 @@
+.transaction__history {
+  background-color: rgba(225, 227, 233, 0.6);
+  .transaction__wrapper {
+    width: auto;
+  }
+  .header__wrapper {
+    background-color: #f8f8fa;
+  }
+  .transaction__right {
+    width: fit-content;
+    float: right;
+    margin-top: -23px;
+  }
+  .transaction__body {
+    height: 92vh;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &.nodata {
+      overflow: hidden;
+    }
+    .transaction__card__info {
+      padding: 0 16px;
+      background-color: #f8f8fa;
+      .short__card {
+        width: auto;
+        &.more {
+          background-color: #2c3b4e;
+          .content {
+            .title,
+            .subtitle {
+              color: #ffff;
+            }
+            .subtitle {
+              font-weight: 510;
+              font-size: 13px;
+              line-height: 150%;
+              opacity: 0.7;
+            }
+          }
+        }
+      }
+      .short__card__right .icon {
+        width: 36px;
+        height: 36px;
+        background-color: rgba(34, 36, 40, 0.4) !important;
+      }
+    }
+    .header__action__wrapper {
+      position: sticky;
+      top: -1px;
+      & .header__action {
+        height: 45px;
+        padding-top: 14px;
+      }
+    }
+    .transaction__search_wrapper {
+      background-color: #f8f8fa;
+      padding: 16px 0;
+      .search__result {
+        width: 100%;
+        padding: 16px 0 0 20px;
+        span {
+          font-weight: 400;
+          font-size: 13px;
+          color: #76797e;
+          b {
+            font-weight: 510;
+            font-size: 13px;
+            color: #222428;
+          }
+        }
+      }
+    }
+    .bottom__sheet__header__title,
+    .bottom__sheet__header__close {
+      top: 20px;
+    }
+    .history__nodata {
+      background-color: #f8f8fa;
+      margin-top: 14px;
+      padding-top: 32px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      &.search {
+        img {
+          width: 134px;
+          height: 134px;
+        }
+      }
+      &.search_area_mode {
+        margin-top: 0;
+      }
+      img {
+        width: 192px;
+        height: 165px;
+      }
+      .title {
+        display: flex;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 150%;
+        color: #a0a2a7;
+        .bold__title {
+          color: #222428;
+        }
+      }
+      .btn__outlined {
+        width: 110px;
+        height: 32px;
+        min-height: 32px;
+        font-weight: 510;
+        font-size: 13px;
+        line-height: 150%;
+        color: #3270ea;
+        padding: 6px 0px;
+        border-radius: 6px;
+        margin-top: 16px;
+      }
+    }
+    .history__dashboard {
+      .dashboard__item {
+        background-color: #f8f8fa;
+        margin-top: 14px;
+        padding: 20px 20px 0 20px;
+        .month__year__header {
+          padding: 16px 0 20px 0;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 140%;
+          color: #121619;
+          text-align: center;
+        }
+        .date__time {
+          font-weight: 510;
+          padding-bottom: 18px;
+          font-size: 13px;
+          line-height: 150%;
+          color: #222428;
+          border-bottom: 1px solid rgba(225, 227, 233, 0.6);
+        }
+        .history__item__wrapper {
+          .transaction__wrapper {
+            padding-top: 16px;
+          }
+          &:last-child {
+            .transaction__wrapper {
+              border-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.month__picker__bottomsheet {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .month__picker__vertical {
+    box-shadow: none;
+    border: 0;
+    background-color: transparent;
+    padding-top: 0;
+  }
+  .bottom__sheet__content {
+    padding-top: 5px;
+  }
+  &__button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .bottomsheet__button {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .transaction__history .bottom__sheet__content {
+    padding-top: 0;
+    height: 80%;
+    overflow: scroll;
+  }
+}

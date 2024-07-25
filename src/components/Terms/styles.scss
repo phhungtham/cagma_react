@@ -1,0 +1,10 @@
+.terms__wrapper {
+    height: 100vh;
+    overflow: scroll;
+    .header__wrapper {
+        z-index: 20;
+    }
+    .terms__content {
+        position: relative;
+    }
+}

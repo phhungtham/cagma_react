@@ -1,0 +1,72 @@
+.transfer__card__wrraper {
+  width: 100%;
+  .transfer__card {
+    height: 120px;
+    position: relative;
+
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &.short {
+      height: 78px;
+    }
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &__left {
+        align-items: center;
+        .icon {
+          img {
+            width: 36px;
+            height: 36px;
+          }
+        }
+        display: flex;
+        .info {
+          padding-left: 8px;
+          .account__name {
+            font-weight: 510;
+            font-size: 13px;
+            line-height: 150%;
+            color: #222428;
+          }
+          .card__id {
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 150%;
+            color: #a0a2a7;
+          }
+        }
+      }
+      &__right {
+        color: #bec1c6;
+      }
+    }
+    &__content {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      & .blur {
+        & .amount {
+          filter: blur(8px);
+        }
+      }
+    }
+  }
+  & .unhide__account {
+    position: absolute;
+    top: 15px;
+    font-weight: 400;
+    right: 20px;
+    font-size: 13px;
+    text-decoration-line: underline;
+    text-transform: capitalize;
+    color: #ff6a63;
+  }
+}

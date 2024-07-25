@@ -1,0 +1,133 @@
+.alert__wrapper {
+  width: 100vw;
+  z-index: -10;
+  right: 0;
+  bottom: 0;
+  & .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    // background-color: rgba(87, 87, 87, 0.218);
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0.6;
+    display: none;
+    z-index: 1000;
+
+    &.show {
+      display: block;
+      opacity: 1;
+    }
+  }
+  &.show {
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 10;
+  }
+  .alert {
+    position: relative;
+    width: 100%;
+    min-height: 206px;
+    z-index: 1001;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    box-shadow: 0px 0px 16px rgba(34, 36, 40, 0.16);
+    border-radius: 16px 16px 0px 0px;
+    bottom: 0;
+
+    padding: 36px 40px 20px 40px;
+
+    background: #ffffff;
+
+    position: fixed;
+    transform: translateY(120%);
+
+    &.close-button {
+      padding-top: 54px;
+    }
+    &.animate {
+      animation: slideDown 0.2s linear;
+    }
+
+    &.show {
+      transform: translateY(0);
+      animation: 0.2s alternate slideUp;
+      transform: translateY(0%);
+    }
+
+    &__close {
+      position: absolute;
+      text-align: end;
+      margin-bottom: 16px;
+      font-size: 2px;
+
+      top: 24px;
+      right: 22px;
+    }
+
+    &__title {
+      color: #222428;
+      font-size: 22px;
+    }
+    &__subtitle {
+      min-height: 47px;
+      color: #76797e;
+      font-size: 15px;
+      margin-top: 18px;
+      margin-bottom: 18px;
+      font-weight: 400;
+      word-wrap: break-word;
+      line-height: 1.5;
+    }
+    &__caption {
+      color: #a0a2a7;
+      font-weight: 400;
+      font-size: 11px;
+      min-height: 37px;
+    }
+
+    &__footer {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &__button {
+        height: 48px;
+      }
+    }
+    &__icon,
+    &__img__icon {
+      width: 56px;
+      height: 56px;
+      top: -28px;
+      left: 32px;
+      font-size: 56px;
+
+      position: absolute;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      &.I {
+        color: #128ed4;
+      }
+      &.E {
+        color: #f94d49;
+      }
+      &.W {
+        color: #fec42d;
+      }
+      &.S {
+        color: #00ac5a;
+      }
+    }
+  }
+}
+
+@include animationTranslate(slideUp, from, to, 100%, 0%);
+@include animationTranslate(slideDown, from, to, 0%, 100%);

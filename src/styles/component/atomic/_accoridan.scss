@@ -1,0 +1,132 @@
+.accoridan__wrapper {
+  width: 100%;
+  padding-top: 30px;
+  background-color: #fff;
+  .accoridan__item {
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+  }
+  & .right__icon {
+    margin-top: 0px;
+  }
+  &.view__detail__type {
+    & .list__wrapper {
+      justify-content: center;
+      border-bottom: none;
+    }
+  }
+
+  & .accoridan {
+    &__thumbnail {
+      & img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    &__icon {
+      transition: transform 0.2s ease-in-out;
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+    &__panel {
+      background: #eef0f6;
+      padding: 20px;
+      z-index: 99;
+      transition: transform 0.2s ease-in-out;
+
+      &.open {
+        display: block;
+        animation: fadeIn 0.3s;
+      }
+
+      &.close {
+        display: none;
+      }
+
+      &.view__detail__type {
+        border-radius: 16px;
+      }
+    }
+    &__content {
+      display: flex;
+      flex-direction: column;
+      column-gap: 14px;
+      &.data__icon {
+        flex-direction: row;
+      }
+    }
+    &__table {
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 1.5;
+      display: flex;
+      margin-top: 8px;
+      &:first-child {
+        margin-top: 0px;
+      }
+
+      &__label {
+        width: 90px;
+        color: #76797e;
+        margin-right: 8px;
+      }
+      &__text {
+        color: #222428;
+        flex: 1;
+      }
+    }
+
+    &__text {
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.5;
+      color: text-color(color-dark-jungle);
+    }
+    &__button {
+      display: block;
+      margin: 0 auto;
+      margin-top: 32px;
+    }
+    &__detail {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #222428;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+      &__title {
+        font-weight: 400;
+        margin-top: 24px;
+        margin-bottom: 12px;
+      }
+      &__main {
+        display: flex;
+        column-gap: 16px;
+        border-bottom: 1px solid rgba(225, 227, 233, 0.6);
+        padding: 15px;
+      }
+      &__label {
+        font-weight: 400;
+        color: #76797e;
+        width: 86px;
+      }
+      &__content {
+        font-weight: 510;
+        flex: 1;
+      }
+    }
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

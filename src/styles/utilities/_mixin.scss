@@ -1,0 +1,33 @@
+@mixin customPlaceholder($color, $fontWeight: 400) {
+  &::-webkit-input-placeholder {
+    color: $color;
+    font-weight: $fontWeight;
+  }
+
+  &::-moz-placeholder {
+    color: $color;
+    font-weight: $fontWeight;
+  }
+
+  &::-moz-placeholder {
+    color: $color;
+    font-weight: $fontWeight;
+  }
+
+  &::-ms-input-placeholder {
+    color: $color;
+    font-weight: $fontWeight;
+  }
+}
+
+@mixin animationTranslate($name, $keyFrom, $keyTo, $fromValue, $toValue) {
+  @keyframes #{$name} {
+    #{$keyFrom} {
+      transform: translateY($fromValue);
+    }
+
+    #{$keyTo} {
+      transform: translateY($toValue);
+    }
+  }
+}

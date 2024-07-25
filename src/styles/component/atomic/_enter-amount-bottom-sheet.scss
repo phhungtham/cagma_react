@@ -1,0 +1,110 @@
+.enter__amount__bottomsheet {
+  $color_1: white;
+  $color_2: rgba(255, 255, 255, 0.5);
+  $color_3: rgba(0, 0, 0, 0.6);
+  $color_4: rgba(0, 0, 0, 0.4);
+  $color_5: black;
+  $color_6: red;
+  $color_7: rgba(0, 0, 0, 0.2);
+  $background-color_1: #36425b;
+  $background-color_2: darken(#3270ea, 5%);
+  $background-color_3: #3270ea;
+  $background-color_4: white;
+  box-sizing: border-box;
+  .bottom__sheet__content {
+    padding: 0;
+  }
+  .numpad {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 20px;
+  }
+  .btn__keypad {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0 33.3333%;
+    min-height: 50px;
+    background-color: $background-color_1;
+    color: $color_1;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    margin: -1px;
+    &:active {
+      background-color: darken(#36425b, 5%);
+    }
+  }
+  .btn__next {
+    &:active {
+      background-color: $background-color_2;
+    }
+  }
+
+  .btn__next__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .btn__next {
+    width: 100%;
+    height: 52px;
+    border-radius: 10px;
+    border: none;
+    background-color: $background-color_3;
+    color: $color_1;
+    margin: 24px;
+    &:disabled {
+      width: 100%;
+      height: 52px;
+      border-radius: 10px;
+      border: none;
+      background-color: $background-color_3;
+      color: $color_2;
+      margin: 24px;
+    }
+  }
+  .input__content {
+    text-align: center;
+    .account {
+      color: $color_3;
+      font-weight: 600;
+    }
+    .balance {
+      color: $color_4;
+      font-weight: 400;
+      padding: 10px;
+    }
+    .currency {
+      font-weight: 700;
+      color: $color_5;
+      padding-top: 20px;
+      padding: 5px;
+    }
+    input {
+      color: $color_5;
+      padding: 0;
+      &::placeholder {
+        color: $color_7;
+        font-size: 25px;
+        font-weight: bold;
+      }
+    }
+    .alert {
+      color: $color_6;
+      padding: 10px;
+      padding-top: 20px;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+  input {
+    font-weight: bold;
+    background-color: $background-color_4;
+    text-align: center;
+    border: 0;
+    width: 100%;
+    height: 50px;
+    font-size: 25px;
+    opacity: 1;
+  }
+}

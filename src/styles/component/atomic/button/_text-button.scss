@@ -1,0 +1,77 @@
+.text__btn__primary,
+.text__btn__gray {
+  width: fit-content;
+  font-weight: 510;
+  font-size: 15px;
+  line-height: 20px;
+  text-decoration-line: underline;
+  display: flex;
+  align-items: center;
+
+  &.small {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  &.right, &.left {
+    text-decoration-line: none;
+  }
+
+  &.right {
+    flex-direction: row-reverse;
+  }
+
+  cursor: pointer;
+
+  &.disable {
+    color: #bec1c6;
+    pointer-events: none;
+  }
+
+  &__icon {  
+    display: flex;
+    align-items: center;
+    &.small {
+      width: 12px;
+      height: 12px;
+    }
+    &.medium {
+      width: 16px;
+      height: 16px;
+    }
+    &.right--medium,
+    &.left--medium,
+    &.right--small,
+    &.left--small {
+      background-color: #6ea4fc;
+    }
+    &.right--medium {
+      margin-left: 4px;
+    }
+    &.left--medium {
+      margin-right: 4px;
+    }
+    &.right--small {
+      margin-left: 2px;
+    }
+    &.left--small {
+      margin-right: 2px;
+    }
+  }
+}
+
+.text__btn__gray {
+  color: #76797e;
+  &:active,
+  &:hover {
+    color: #222428;
+  }
+}
+
+.text__btn__primary {
+  color: #3270ea;
+  &:active,
+  &:hover {
+    color: #193fa8;
+  }
+}

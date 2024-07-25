@@ -1,0 +1,41 @@
+.currency__wrapper {
+  color: text-color(color-blue);
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  & > .amount {
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.4;
+    &.graySmall {
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 1.6;
+      color: text-color(santa-gray);
+    }
+    &.withdraw,
+    &.default {
+      color: text-color(color-dark-jungle);
+    }
+    &.whiteColor {
+      color: text-color(color-white);
+    }
+  }
+  & > .unit {
+    font-weight: 400;
+    margin-left: 2px;
+    &.graySmall {
+      color: text-color(santa-gray);
+      font-size: 13px;
+    }
+    &.withdraw,
+    &.default {
+      color: text-color(color-dark-jungle);
+    }
+    &.whiteColor {
+      color: text-color(color-white);
+    }
+  }
+}

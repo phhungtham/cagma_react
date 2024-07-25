@@ -1,0 +1,42 @@
+.component-modal {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  &.main {
+    display: flex;
+    align-items: center;
+    top: 100px;
+  }
+  &.background {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.181);
+  }
+  &-container {
+    margin: auto;
+    width: 100%;
+    padding: 0 1rem;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: 0 0 10px #cccc;
+    background-color: white;
+    z-index: 999;
+  }
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gray;
+    &-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0.5em 0;
+    }
+    &-btnClose {
+      width: 25px;
+      height: 25px;
+      border: none;
+      background: transparent;
+    }
+  }
+}

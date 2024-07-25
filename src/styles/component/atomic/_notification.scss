@@ -1,0 +1,40 @@
+.notification {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__custom {
+    border: none;
+    padding-bottom: 0;
+  }
+  & .list__left__text__caption1 {
+    margin-top: 6px;
+  }
+  &.default__unread {
+    background: #e5f3ff;
+  }
+
+  & .home__banner {
+    box-shadow: 0 0 2px rgb(222, 220, 220);
+  }
+  &.transaction__unread,
+  &.event-banner__unread,
+  &.home-banner__unread {
+    background: rgba(18, 142, 212, 0.1);
+  }
+
+  & > .notifi__divider {
+    width: 90%;
+    height: 1px;
+    display: block;
+    background: rgba(225, 227, 233, 0.6);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

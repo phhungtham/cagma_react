@@ -1,0 +1,73 @@
+.board {
+  &__wrapper {
+  }
+  &__header {
+  }
+  &__search {
+  }
+  &__tab {
+    margin-top: 16px;
+
+    & .tabs__list {
+      width: 120px;
+    }
+    & .accoridan__wrapper {
+      padding-top: 20px;
+    }
+    & .accoridan__icon {
+      color: #a0a2a7;
+    }
+  }
+  &__content {
+    overflow-y: scroll;
+    height: 700px;
+    padding-bottom: 60px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  &__detail {
+    &__top {
+      border-bottom: 1px solid rgba(225, 227, 233, 0.6);
+      padding-bottom: 24px;
+
+      & .title {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 1.4;
+        color: #222428;
+        margin-top: 12px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
+      }
+      & .time {
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #76797e;
+        margin-top: 8px;
+      }
+    }
+    &__content {
+      margin-top: 24px;
+      height: 600px;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      & img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+  &__pagination {
+    margin-top: 35px;
+  }
+}

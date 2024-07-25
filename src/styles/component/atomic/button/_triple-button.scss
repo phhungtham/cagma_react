@@ -1,0 +1,12 @@
+.btn__triple__contain {
+  .btn__triple {
+    margin: 0 4px;
+    width: 106px;
+  }
+  .btn__triple:nth-of-type(1) {
+    margin-left: 0;
+  }
+  .btn__triple:nth-of-type(3) {
+    margin-right: 0;
+  }
+}

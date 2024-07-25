@@ -1,0 +1,110 @@
+.list__wrapper {
+  width: 100%;
+  border-bottom: 1px solid rgba(225, 227, 233, 0.6);
+  padding-bottom: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &.icon__left {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    column-gap: 18px;
+  }
+}
+.list {
+  &__left {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+    &.custom {
+      align-items: flex-start;
+    }
+
+    &__thumbnail {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+
+      &.small {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        min-height: 32px;
+      }
+      & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    &__text {
+      color: #222428;
+      display: flex;
+      flex-direction: column;
+      & > .left {
+        &__label {
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 1.5;
+          color: #3270ea;
+        }
+        &__title {
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 1.4;
+          display: flex;
+
+          &.small {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #76797e;
+          }
+          &.icon__left {
+            flex-direction: row-reverse;
+            column-gap: 14px;
+          }
+          &.icon__right {
+            column-gap: 14px;
+          }
+        }
+        &__subtitle {
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 1.5;
+        }
+        &__captions {
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 1.6;
+          color: #76797e;
+          display: flex;
+          align-items: center;
+          column-gap: 6px;
+          margin-top: 4px;
+
+          .caption__bar {
+            width: 1px;
+            height: 12px;
+            background: rgba(225, 227, 233, 0.6);
+          }
+        }
+      }
+    }
+  }
+  &__right {
+    display: block;
+    margin-left: 15px;
+    & .right__icon {
+      margin-top: 21px;
+    }
+    & .right__button {
+      background: #eef0f6;
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: #222428;
+      font-size: 13px;
+      min-height: 32px;
+    }
+  }
+}

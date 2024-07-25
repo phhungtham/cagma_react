@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'Battambang';
+  src: local('Battambang'), url(assets/fonts/battambang/Battambang-Light.ttf) format('truetype');
+  font-weight: 400;
+  unicode-range: U+1780-17FF, U+19E0-19FF;
+}
+
+@font-face {
+  font-family: 'Battambang';
+  src: local('Battambang'), url(assets/fonts/battambang/Battambang-Regular.ttf) format('truetype');
+  font-weight: 500;
+  unicode-range: U+1780-17FF, U+19E0-19FF;
+}
+
+@font-face {
+  font-family: 'Battambang';
+  src: local('Battambang'), url(assets/fonts/battambang/Battambang-Bold.ttf) format('truetype');
+  font-weight: 700;
+  unicode-range: U+1780-17FF, U+19E0-19FF;
+}
+
+body {
+  margin: 0;
+  font-family: 'Battambang', -apple-system, "Apple SD Gothic Neo", AppleSDGothicNeo, Arial, Malgun Gothic, Sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f6f6f9 !important;
+  /* prevent user selected text */
+   -moz-user-select:none; 
+   -webkit-user-select: none; 
+   -ms-user-select: none;
+   user-select: none; 
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+/***** Global Slide *****/
+.slide-right, .slide-left {
+  width: 100vw;
+  height: 100vh;
+}
+
+/***** Slide Left *****/
+.slide-left {
+  animation: 0.5s slide-left;
+}
+@keyframes slide-left {
+  from {
+    margin-left: 100%;
+  }
+  to {
+    margin-left: 0%;
+  }
+}
+/***** Slide Right *****/
+.slide-right {
+  animation: 0.5s slide-right;
+}
+@keyframes slide-right {
+  from {
+    margin-left: -100%;
+  }
+  to {
+    margin-left: 0%;
+  }
+}

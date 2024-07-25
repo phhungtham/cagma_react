@@ -1,0 +1,134 @@
+.month__picker__horizon {
+  width: 335px;
+  height: 219px;
+  background: #ffffff;
+  border: 1px solid #e1e3e9;
+  box-shadow: 0px 0px 16px rgba(34, 36, 40, 0.16);
+  border-radius: 12px;
+
+  padding: 20px 32px 20px 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__year {
+    height: 95px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    font-weight: 510;
+    font-size: 15px;
+    line-height: 150%;
+    color: #222428;
+    .prev__arrow,
+    .next__arrow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #a0a2a7;
+      transform: rotate(-90deg);
+    }
+    .next__arrow {
+      transform: rotate(90deg);
+    }
+  }
+  &__months {
+    width: 160px;
+    height: 180px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 29px 30px;
+
+    font-weight: 510;
+    font-size: 15px;
+    line-height: 150%;
+    color: #222428;
+    text-transform: capitalize;
+    .month {
+      min-width: 32px;
+      cursor: pointer;
+      &.current__month {
+        color: #bec1c6;
+      }
+      &.month__picked {
+        color: #3270ea;
+      }
+    }
+  }
+}
+
+.month__picker__vertical {
+  height: 246px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e1e3e9;
+  box-shadow: 0px 10px 35px rgba(34, 36, 40, 0.1);
+  border-radius: 12px;
+
+  padding: 25px 64px;
+
+  &__year {
+    height: auto;
+    max-height: 180px;
+    width: 40px;
+    font-weight: 510;
+    font-size: 15px;
+    color: #222428;
+    overflow: scroll;
+    line-height: 150%;
+    scroll-snap-type: y mandatory;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .year {
+      scroll-snap-align: start;
+      padding: 8px 0;
+      min-height: 38.5px;
+      &.picked {
+        color: #3270ea;
+      }
+    }
+    .year:last-child {
+      height: 25px;
+      min-height: auto;
+    }
+  }
+  .slide__line {
+    width: 1px;
+    height: 197px;
+    background: #e1e3e9;
+  }
+  &__months {
+    height: 180px;
+    width: 70px;
+    max-width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+    text-transform: capitalize;
+    font-weight: 510;
+    font-size: 15px;
+    line-height: 150%;
+    color: #222428;
+    scroll-snap-type: y mandatory;
+    .month {
+      min-height: 23px;
+      scroll-snap-align: start;
+      padding: 8px 0;
+      margin: 8px 0;
+      &.picked {
+        color: #3270ea;
+      }
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

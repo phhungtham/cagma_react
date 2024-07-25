@@ -1,0 +1,83 @@
+$blue-color: background-color(color-blue);
+$color-platinum: text-color(color-platinum);
+$white-color: background-color(color-white);
+$button-small-shadow: inset 0 0 0 6px;
+$button-large-shadow: inset 0 0 0 7px;
+
+.radio__group {
+  .radio__input {
+    position: absolute;
+    left: -99px;
+
+    // state : checked
+    &:checked + .radio__button {
+      &:before {
+        background-color: $white-color;
+        color: $blue-color;
+        border: 1px solid transparent;
+        width: 20px;
+        height: 20px;
+      }
+      &.large {
+        &:before {
+          box-shadow: $button-large-shadow;
+          width: 24px;
+          height: 24px;
+        }
+      }
+      &.disabled {
+        &:before {
+          background-color: background-color(color-blue-blur);
+        }
+      }
+    }
+  }
+
+  .radio__button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: text-color(color-dark-jungle);
+
+    &:before {
+      content: '';
+      background-color: background-color(color-grey-blur);
+      border-radius: 50%;
+      border: 1px solid $color-platinum;
+    }
+
+    &.small {
+      font-size: 13px;
+      font-weight: 400;
+
+      &:before {
+        width: 20px;
+        height: 20px;
+        box-shadow: $button-small-shadow;
+        color: $white-color;
+      }
+    }
+
+    &.large {
+      font-size: 16px;
+      font-weight: bold;
+
+      &:before {
+        width: 24px;
+        height: 24px;
+        box-shadow: $button-large-shadow;
+        color: $white-color;
+      }
+    }
+
+    &.disabled {
+      &:before {
+        border: none;
+        color: $color-platinum;
+      }
+    }
+  }
+  .radio__label {
+    color: text-color(color-grey-blur);
+  }
+}

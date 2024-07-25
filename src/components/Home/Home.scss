@@ -1,0 +1,62 @@
+.hybrid_ready_btn {
+  visibility: hidden;
+}
+.home__wrapper {
+  height: 100vh;
+  overflow-y: scroll;
+  background-color: transparent;
+  .header__wrapper {
+    background-color: transparent;
+  }
+  .home {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: rgb(69, 68, 67);
+    font-weight: bold;
+
+    h3 {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    &-direct {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      &-account {
+        width: 230px;
+        padding: 20px 12px;
+        height: 30px;
+        margin: 10px;
+        border-radius: 15px;
+        cursor: pointer;
+        color: #fff;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        background-color: #104f88;
+        position: relative;
+
+        .arrow-icon {
+          font-size: 2rem;
+          position: absolute;
+          right: 5px;
+        }
+      }
+      &-button {
+        width: 100%;
+        margin-top: 20px;
+      }
+    }
+  }
+}

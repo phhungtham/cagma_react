@@ -1,0 +1,141 @@
+.my__account {
+  &__header {
+    width: 335px;
+    height: 44px;
+    padding: 12px 16px;
+    border-radius: 16px;
+
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 150%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-radius 0.5s;
+
+    &.show {
+      border-radius: 16px 16px 0px 0px;
+      transition: border-radius 0.1s;
+    }
+
+    &__left {
+      display: flex;
+      .toggle__balance {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .eye-icon {
+          display: flex;
+          align-items: center;
+        }
+        .title {
+          margin-left: 2px;
+        }
+        .vertical__line {
+          width: 1px;
+          height: 10px;
+          background-color: rgba(255, 255, 255, 0.3);
+          margin: 0 13px;
+        }
+        .arrow__icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: rgba(255, 255, 255, 1);
+        }
+      }
+    }
+  }
+  &__body {
+    width: 335px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 0px 0px 16px 16px;
+    padding: 0 20px;
+    overflow: hidden;
+    height: 0;
+    transition: height 0.2s, padding 0.1s;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &.no-header {
+      border-radius: 16px;
+    }
+    .card__info {
+      display: flex;
+
+      .icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin-right: 8px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .content {
+      width: fit-content;
+      .title {
+        font-weight: 510;
+        font-size: 13px;
+        line-height: 150%;
+
+        color: #222428;
+      }
+      .subtitle {
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 150%;
+        color: #a0a2a7;
+      }
+    }
+    &.show,
+    &.show-nobutton {
+      display: flex;
+
+      height: 182px;
+      padding: 20px;
+    }
+    &.show {
+      &.alert {
+        height: 198px;
+      }
+    }
+    &.show-nobutton {
+      height: 122px;
+      &.alert {
+        height: 138px;
+      }
+    }
+    .card__content {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 140%;
+      color: #222428;
+
+      text-align: end;
+      .account__status {
+        text-align: end;
+        color: #f94d49;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 150%;
+      }
+      .hide__balance {
+        color: #bec1c6;
+      }
+    }
+
+    .my__account__button {
+      background: #eef0f6;
+      border-radius: 8px;
+      color: #222428;
+      font-weight: 510;
+      font-size: 15px;
+    }
+  }
+}

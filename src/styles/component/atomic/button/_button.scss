@@ -1,0 +1,60 @@
+@mixin button($bg-color: map-get($colors, 'light')) {
+  max-width: 100%;
+  min-height: 48px;   
+  text-decoration: none;
+  font-size: $button-font-size;
+  cursor: pointer;
+  border: 0;
+  padding: 13px 20px;
+  border-radius: $base-border-radius;
+  background-color: $bg-color;
+}
+.btn {
+  @include button();
+  &__contain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    &.right {
+      flex-direction: row-reverse;
+    }
+  }
+  &__icon {
+    &.right {
+      margin-left: 4px;
+    }
+    &.left {
+      margin-right: 4px;
+    }
+  }
+}
+@each $label, $map in $button-type-maps {
+  .btn__#{$label} {
+    @include button(map-get($map, background-nor));
+    color: map-get($map, text-color);
+    &:hover,
+    &:active {
+      background-color: map-get($map, background-active);
+      color: map-get($map, text-color-active);
+    }
+    &.disable {
+      color: map-get($map, text-color-disable);
+    }
+  }
+  .btn__outlined {
+    border: 1px solid #3270ea;
+    &:hover,
+    &:active {
+      border: 1px solid #0e45b3;
+    }
+    &.disable {
+      border: 1px solid #bec1c6;
+    }
+  }
+}
+@each $key, $val in $sizes {
+  .btn--#{$key} {
+    font-size: $val;
+  }
+}

@@ -1,0 +1,161 @@
+// color
+$colors: (
+  'primary': #1677ff,
+  'secondary': #18e18c,
+  'error': #f5222d,
+  'warning': #faad14,
+  'dark': #222,
+  'light': #eee
+);
+
+// global color
+$color-white: #ffffff;
+$color-black: #000000;
+$color-blue: #3270ea;
+$color-grey-blur: #bec1c6;
+$color-dark-blue: #193fa8;
+$color-platinum: #e1e3e9;
+$color-blue-blur: #84a9f2;
+$dark-sky-blue: #5185ed;
+$santa-gray: #a0a2a7;
+$error-light-red: #f94d49;
+
+//button-text-color
+$text-colors: (
+  color-white: $color-white,
+  color-white-blur: rgba(255, 255, 255, 0.4),
+  color-dark-blue: $color-dark-blue,
+  color-blue: $color-blue,
+  color-grey-blur: $color-grey-blur,
+  color-black: $color-black,
+  color-grey: #76797e,
+  color-dark-jungle: #222428,
+  color-platinum: $color-platinum,
+  color-blue-blur: $color-blue-blur,
+  santa-gray: $santa-gray,
+  error-light-red: $error-light-red
+);
+
+@function text-color($color) {
+  @return map-get($text-colors, $color);
+}
+
+// background-color
+$background-colors: (
+  color-white: $color-white,
+  color-blue: $color-blue,
+  color-grey-blur: $color-grey-blur,
+  color-gray-scale: #eef0f6,
+  color-platinum: $color-platinum,
+  color-blue-blur: $color-blue-blur,
+  dark-sky-blue: $dark-sky-blue,
+  santa-gray: $santa-gray,
+  error-light-red: $error-light-red
+);
+
+@function background-color($color) {
+  @return map-get($background-colors, $color);
+}
+
+$btn-bg-colors: (
+  color-blue: $color-blue,
+  color-medium-blue: #0e45b3,
+  color-dark-blue: $color-dark-blue,
+  color-grey: #2c3b4e,
+  color-transparent: transparent
+);
+
+@function bt-bg-color($color) {
+  @return map-get($btn-bg-colors, $color);
+}
+//button-color
+$button-type-maps: (
+  solid: (
+    background-nor: bt-bg-color(color-blue),
+    background-active: bt-bg-color(color-medium-blue),
+    text-color: text-color(color-white),
+    text-color-active: text-color(color-white),
+    text-color-disable: text-color(color-white-blur)
+  ),
+  background: (
+    background-nor: bt-bg-color(color-dark-blue),
+    background-active: bt-bg-color(color-grey),
+    text-color: text-color(color-white),
+    text-color-active: text-color(color-white),
+    text-color-disable: text-color(color-white-blur)
+  ),
+  outlined: (
+    background-nor: bt-bg-color(color-transparent),
+    background-active: bt-bg-color(color-transparent),
+    text-color: text-color(color-blue),
+    text-color-active: text-color(color-dark-blue),
+    text-color-disable: text-color(color-grey-blur)
+  )
+);
+//icon-color
+$icon-colors: (
+  //blue-color
+  'blue-800': #1e59cf,
+  'blue-500': #17bed9,
+  'blue-300': #aad0ff,
+  //emerald-color
+  'emerald-800': #0c8593,
+  'emerald-500': #4f8bf4,
+  'emerald-200': #82dfee,
+  //mint-color
+  'mint-700': #008359,
+  'mint-400': #2eb086,
+  'mint-200': #b4e3d3,
+  //purple-color
+  'purple-700': #4536ad,
+  'purple-400': #6a66ce,
+  'purple-200': #a6a6e3,
+  // mustard-color
+  'mustard-900': #f68a31,
+  'mustard-700': #ffc947,
+  'mustard-200': #fff6a4,
+  // coral-color
+  'coral-700': #f14232,
+  'coral-300': #ff6a63,
+  'coral-100': #ffcbce,
+  // rose-color
+  'rose-700': #b8405e,
+  'rose-300': #e45b7c,
+  'rose-100': #f5c0cf,
+  // brown-color
+  'brown-500': #714e29,
+  'brown-300': #a08063,
+  'brown-100': #dfc7b1,
+  // gray-color
+  'gray-800': #43454a,
+  'gray-600': #76797e,
+  'gray-350': #d0d2d8,
+  // navy-color
+  'navy-700': #4e637d,
+  'navy-400': #8398b6,
+  'navy-100': #cddcef
+);
+
+// font-size
+$button-font-size: 17px;
+$base-font-size: 1rem;
+$font-size-sm: $base-font-size * 0.75;
+$font-size-lg: $base-font-size * 1;
+$font-size-xl: $base-font-size * 2;
+$font-size-xxl: $base-font-size * 3;
+//size
+$sizes: (
+  'small': $font-size-sm,
+  'medium': $font-size-lg,
+  'large': $font-size-xl
+);
+// spacing
+$base-padding: 0.75rem;
+$base-margin: 0.75rem;
+
+// borders
+$base-border-thickness: 1px;
+$base-border-radius: 10px;
+
+// box-shadow
+$base-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);

@@ -1,0 +1,126 @@
+.bottom__sheet__wrapper {
+  & .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    z-index: 1000;
+
+    &.show {
+      display: block;
+    }
+  }
+}
+
+.bottom__sheet {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0px 16px rgba(34, 36, 40, 0.16);
+  border-radius: 16px 16px 0px 0px;
+
+  position: fixed;
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 1000;
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 20px;
+    .header__content {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    &.notitle {
+      .header__content {
+        justify-content: flex-end;
+      }
+    }
+    &__close {
+      font-size: 22px;
+    }
+    &__title {
+      font-size: 17px;
+      font-weight: 700;
+      text-transform: capitalize;
+      align-items: center;
+      display: flex;
+    }
+
+    &__docker {
+      width: 48px;
+      height: 3px;
+      background: #e1e3e9;
+      border-radius: 100px;
+      position: absolute;
+      top: 7px;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  }
+  &.show {
+    transform: translateY(0);
+    animation: 0.3s alternate slideUp;
+
+    // case bottom sheet show 90%
+    &.pulled-90 {
+      transform: translateY(10%);
+      animation: 0.3s alternate slideUp-pulled-90;
+    }
+  }
+  &.hidden {
+    transform: translateY(10000%);
+    &.animate {
+      animation: 0.3s alternate slideDown;
+      &.pulled-90 {
+        animation: 0.3s alternate slidedown-pulled-90;
+      }
+    }
+  }
+
+  &.middle {
+    height: 321px;
+  }
+  &.max {
+    height: 95vh;
+  }
+  &.max-scroll {
+    height: 95vh;
+  }
+  &.pulled-90 {
+    height: 90%;
+  }
+  &.fit-content {
+    height: fit-content;
+  }
+
+  &__content {
+    padding: 20px;
+    padding-top: 0;
+
+    &.max-scroll {
+      overflow-y: scroll;
+      &::-webkit-scrollbar-thumb {
+        background-color: #bec1c6;
+        border-radius: 8px;
+        height: 10%;
+      }
+    }
+  }
+}
+
+@include animationTranslate(slideUp, from, to, 100%, 0%);
+@include animationTranslate(slideUp-pulled-90, from, to, 100%, 10%);
+@include animationTranslate(slideDown, 0%, 100%, 0%, 100%);
+@include animationTranslate(slidedown-pulled-90, 0%, 100%, 10%, 100%);

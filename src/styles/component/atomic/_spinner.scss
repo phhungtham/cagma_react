@@ -1,0 +1,24 @@
+.spinner__wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: rgb(234, 234, 234);
+  opacity: 0.6;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+}
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  & svg {
+    width: 140px !important;
+    height: 140px !important;
+  }
+}

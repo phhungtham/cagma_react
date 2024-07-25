@@ -1,0 +1,124 @@
+.filter__bottom__sheet {
+  .bottom__sheet__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sort__by {
+    .chips__item {
+      width: 50%;
+    }
+  }
+  .inquiry__period {
+    .chips__item {
+      width: 25%;
+    }
+  }
+  .transaction__type {
+    .chips__item {
+      width: 50%;
+    }
+    &.three__child {
+      .chips__item {
+        width: 33.33%;
+        padding: 20px;
+      }
+    }
+  }
+  .sort__by,
+  .inquiry__period,
+  .transaction__type {
+    margin-bottom: 34px;
+    width: 100%;
+    & .chips__wrapper {
+      width: 100%;
+      max-width: 100%;
+    }
+    .title {
+      font-weight: 510;
+      font-size: 15px;
+      line-height: 150%;
+      color: #76797e;
+    }
+    .sort__chip,
+    .inquiry__chip,
+    .transaction__chip {
+      margin-top: 10px;
+      text-align: center;
+    }
+    .sort__chip {
+      .chips__item.last__item {
+        border-left: 0;
+      }
+    }
+    .inquiry__chip {
+      .chips__item:nth-child(2),
+      .chips__item:nth-child(3),
+      .chips__item:nth-child(4) {
+        border-left: 0;
+      }
+    }
+    .transaction__chip {
+      .chips__item:nth-child(2),
+      .chips__item:nth-child(3) {
+        border-left: 0;
+      }
+    }
+  }
+  .transaction__type {
+    margin-bottom: 48px;
+  }
+  .button__wrapper {
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+
+    .reset__button,
+    .apply__button {
+      width: 50%;
+    }
+    .reset__button {
+      font-weight: 510;
+      font-size: 17px;
+    }
+    .apply__button {
+      font-weight: 510;
+      font-size: 17px;
+      margin-left: 7px;
+    }
+  }
+  .calendar__input {
+    margin-top: 12px;
+    width: 100%;
+  }
+  .calendar__input__wrapper {
+    height: 0;
+    overflow: hidden;
+    position: relative;
+    &.show {
+      height: 60px;
+      overflow-y: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .transaction__history {
+    .bottom__sheet__header__title {
+      left: 10px;
+    }
+    .bottom__sheet__content {
+      padding: 0px 20px 0px 20px;
+    }
+  }
+}
+
+.bottom__sheet.fit-content.transaction__detail__bottom {
+  height: 80vh;
+  .bottom__sheet__content {
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

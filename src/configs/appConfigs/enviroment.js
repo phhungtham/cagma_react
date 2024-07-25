@@ -1,0 +1,9 @@
+
+const AppCfg = {
+  API_ENDPOINT: process.env.REACT_APP_API_ENDPOINT,
+  API_ENDPOINT_PORT: process.env.REACT_APP_API_ENDPOINT_PORT,
+  BASE_URL_IMAGE: process.env.REACT_APP_BASE_URL,
+  ENV: process.env.REACT_APP_ENV,
+  GENERATE_SOURCEMAP: process.env.REACT_APP_GENERATE_SOURCEMAP
+};
+export default AppCfg;

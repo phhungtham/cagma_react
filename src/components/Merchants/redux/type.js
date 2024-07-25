@@ -1,0 +1,22 @@
+export const FeatureMerchantName = 'merchant';
+
+export const ActionType = {
+  MERCHANT_REQUEST: `${FeatureMerchantName}/MERCHANT_REQUEST`,
+  MERCHANT_REQUEST_SUCCESS: `${FeatureMerchantName}/MERCHANT_REQUEST_SUCCESS`,
+  MERCHANT_REQUEST_FAILED: `${FeatureMerchantName}/MERCHANT_REQUEST_FAILED`,
+  MERCHANT_SELECTED: `${FeatureMerchantName}/MERCHANT_SELECTED`,
+  MERCHANT_SET_LOADING: `${FeatureMerchantName}/MERCHANT_SET_LOADING`,
+
+  SALES_ANALYSIS_REQUEST: `${FeatureMerchantName}/SALES_ANALYSIS_REQUEST`,
+  SALES_ANALYSIS_REQUEST_SUCCESS: `${FeatureMerchantName}/SALES_ANALYSIS_REQUEST_SUCCESS`,
+  SALES_ANALYSIS_REQUEST_FAILED: `${FeatureMerchantName}/SALES_ANALYSIS_REQUEST_FAILED`,
+  SALES_ANALYSIS_EMPTY_LIST: `${FeatureMerchantName}/SALES_ANALYSIS_EMPTY_LIST`,
+  SHOW_CALENDAR: `${FeatureMerchantName}/SHOW_CALENDAR`,
+
+  FOCUS_MERCHANT: `${FeatureMerchantName}/FOCUS_MERCHANT`
+};
+
+export const merchantsURLs = {
+  GET_MERCHANT: '/kh/pa/KHPA011.pwkjson',
+  GET_SALES_ANALYSIS: '/kh/pa/KHPA021.pwkjson'
+};

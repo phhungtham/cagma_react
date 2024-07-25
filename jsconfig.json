@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@common/*": ["common/*"],
+      "@shared/*": ["shared/*"],
+      "@design/*": ["design/*"],
+      "@routes/*": ["routes/*"],
+      "@configs/*": ["configs/*"],
+      "@hooks/*": ["hooks/*"],
+      "@utilities/*": ["utilities/*"],
+      "@assets/*": ["assets/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

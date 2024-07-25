@@ -1,0 +1,123 @@
+.common__test__wrapper {
+  padding: 0 20px;
+  height: 100vh;
+  overflow-y: scroll;
+
+  & .title {
+    padding: 0 15px;
+  }
+  .login__field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eaedf5;
+    width: 100%;
+    height: auto;
+
+    padding: 20px 0;
+    border-radius: 10px;
+  }
+  input {
+    height: 26px;
+    max-width: 130px;
+    margin: 0 10px;
+    padding-left: 10px;
+  }
+  .button__wrapper {
+    margin: 0 40px;
+    button {
+      cursor: pointer;
+      background-color: #607bc3;
+      border-radius: 3px;
+      color: white;
+      min-width: 80px;
+      height: 30px;
+      border: 0;
+      margin: 0 5px;
+    }
+  }
+  .navigation__plugin {
+    width: 100%;
+    p {
+      margin: 10px 0;
+    }
+    .table__cus {
+      border-top: 1px solid #6ca0d4;
+      display: flex;
+      flex-wrap: wrap;
+      li {
+        display: flex;
+        width: calc(100% / 3);
+        border-bottom: 1px solid #6ca0d4;
+      }
+      .title,
+      .content {
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+      }
+      .title {
+        flex-wrap: wrap;
+        min-height: 47px;
+        width: 150px;
+        font-weight: 600;
+        padding: 10px 10px;
+        border-left: 1px solid #c4c4c4;
+        border-right: 1px solid #c4c4c4;
+        background-color: #c8ce22;
+      }
+      .content {
+        width: calc(100% - 150px);
+        button {
+          cursor: pointer;
+          height: 30px;
+          padding: 0 10px;
+          border-radius: 5px;
+          background: #fff9f5;
+          border: 1px solid #e67e22;
+          color: #e67e22;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .common__test__wrapper {
+    .login__field {
+      flex-direction: column;
+      align-items: flex-start;
+      section {
+        padding: 5px 0;
+      }
+      span {
+        display: inline-block;
+        min-width: 100px;
+      }
+      select {
+        &#account {
+          width: 75px;
+        }
+      }
+      input {
+        width: 70px;
+      }
+      .button__wrapper {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        button {
+          min-width: 130px;
+        }
+      }
+    }
+    .navigation__plugin {
+      .table__cus {
+        li {
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}

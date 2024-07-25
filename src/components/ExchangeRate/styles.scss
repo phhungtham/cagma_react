@@ -1,0 +1,67 @@
+.exchange {
+  &__wrapper {
+    width: 100vw;
+    height: 100vh;
+    padding: 30px;
+  }
+  &__header {
+    font-size: 30px;
+  }
+  &__body {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 30px;
+    & .input__date {
+      width: 200px;
+      height: 60px;
+      border-radius: 10px;
+      padding: 10px 20px;
+    }
+  }
+
+  &__content {
+    margin-top: 40px;
+    & .date__wrap {
+      display: flex;
+      align-items: center;
+      column-gap: 30px;
+      & .date__title {
+        font-weight: 700;
+        font-size: 20px;
+        display: inline;
+      }
+      & .date__value {
+        font-weight: 500;
+        display: inline;
+        margin-left: 25px;
+      }
+    }
+  }
+  &__info {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.404);
+    padding-bottom: 20px;
+    &__label {
+      width: 100px;
+      font-weight: 500;
+      color: gray;
+    }
+    &__value {
+      flex: 1;
+    }
+  }
+}
+.nodata__image {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  & > img {
+    background: #fff;
+    width: 500px;
+  }
+}

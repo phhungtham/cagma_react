@@ -1,0 +1,42 @@
+.btn__duo__oto,
+.btn__duo__ott {
+  display: flex;
+
+  .btn__duo__first,
+  .btn__duo__second {
+    width: 164px;
+    margin-right: 4px;
+  }
+  .btn__duo__second {
+    margin-right: 0;
+    margin-left: 4px;
+  }
+}
+.btn__duo__ott {
+  .btn__duo__first {
+    width: 109px;
+    margin-right: 4px;
+  }
+  .btn__duo__second {
+    width: 218px;
+    margin-right: 0;
+    margin-left: 4px;
+  }
+}
+
+.btn__duo__vertical {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .btn__duo__first,
+  .btn__duo__second {
+    width: 100%;
+  }
+  .btn__duo__second  {
+    border: 0px;
+    color: #76797e;
+    font-weight: 510;
+    font-size: 17px;
+    line-height: 22px;
+  }
+}

@@ -1,0 +1,80 @@
+.transaction__detail__header {
+  display: flex;
+  padding-left: 5px;
+  .transaction__icon {
+    display: flex;
+    align-items: center;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  .transaction__info {
+    padding-left: 10px;
+    .currency__wrapper {
+      justify-content: flex-start;
+    }
+    .title {
+      font-weight: 510;
+      font-size: 15px;
+      line-height: 150%;
+      color: #222428;
+      font-style: normal;
+    }
+    .subtitle {
+      .currency__wrapper {
+        & > .amount {
+          &.graySmall {
+            font-weight: 700;
+            font-size: 22px;
+            line-height: 140%;
+            color: #222428;
+          }
+        }
+        & > .unit {
+          &.graySmall {
+            margin-left: 3px !important;
+            padding-top: 0 !important;
+            padding-top: 2px;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 140%;
+            color: #222428;
+          }
+        }
+      }
+    }
+  }
+}
+
+.transaction__detail__body {
+  width: 100%;
+  padding: 5px 5px 0 5px;
+  .transaction__row {
+    width: 100%;
+    display: flex;
+    padding: 20px 0px;
+    border-bottom: 1px solid rgba(225, 227, 233, 0.6);
+    &:nth-last-child(1) {
+      border-bottom: 0;
+    }
+    .title {
+      width: 100px;
+      min-width: 100px;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 150%;
+      color: #76797e;
+      text-transform: capitalize;
+    }
+    .content {
+      margin-left: 16px;
+      font-weight: 700;
+      font-style: normal;
+      font-size: 13px;
+      line-height: 150%;
+      color: #222428;
+      word-break: break-word;
+    }
+  }
+}
