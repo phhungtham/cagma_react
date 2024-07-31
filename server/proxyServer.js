@@ -7,13 +7,11 @@ const proxies = [
   {
     pathPattern: '/',
     proxy: {
-      target: 'https://gmkhdev.shinhanglobal.com',
+      target: 'https://gmcadev.shinhanglobal.com',
       secure: false,
       changeOrigin: true,
-      onProxyRes: (proxyRes, req, res) => {
-      },
-      onProxyReq: (proxyReq, req, res) => {
-      }
+      onProxyRes: (proxyRes, req, res) => {},
+      onProxyReq: (proxyReq, req, res) => {}
     }
   }
 ];
@@ -29,5 +27,4 @@ app.use('/health-check', (req, res) => res.json({ message: 'Proxy started alread
   proxies.forEach(item => app.use(item.pathPattern, createProxyMiddleware(item.proxy)));
 })();
 const PORT = 4000;
-app.listen(PORT, () => {
-});
+app.listen(PORT, () => {});
