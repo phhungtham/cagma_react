@@ -9,28 +9,30 @@ $colors: (
 );
 
 // global color
-$blue-100: #E6EDFF;
-$blue-200: #B3C8FF;
-$blue-300: #94ABFA;
-$blue-400: #4C7DFF;
-$blue-500: #005DF9;
-$blue-600: #0046FF;
-$blue-700: #0040E8;
-$blue-800: #1539CB;
-$blue-900: #102FA8;
-$gray-50: #F8F9FC;
-$gray-100: #F3F6FB;
-$gray-200: #EBEFF5;
-$gray-250: #E1E6EC;
-$gray-300: #D6DBE1;
-$gray-400: #B9C1C9;
-$gray-500: #808892;
-$gray-550: #6C747E;
-$gray-600: #565B64;
-$gray-700: #3A3F49;
-$gray-800: #24272D;
-$gray-850: #1B1E23;
-$gray-900: #121418;
+$color-white: #ffffff;
+$color-black: #000000;
+$color-blue-100: #E6EDFF;
+$color-blue-200: #B3C8FF;
+$color-blue-300: #94ABFA;
+$color-blue-400: #4C7DFF;
+$color-blue-500: #005DF9;
+$color-blue-600: #0046FF;
+$color-blue-700: #0040E8;
+$color-blue-800: #1539CB;
+$color-blue-900: #102FA8;
+$color-gray-50: #F8F9FC;
+$color-gray-100: #F3F6FB;
+$color-gray-200: #EBEFF5;
+$color-gray-250: #E1E6EC;
+$color-gray-300: #D6DBE1;
+$color-gray-400: #B9C1C9;
+$color-gray-500: #808892;
+$color-gray-550: #6C747E;
+$color-gray-600: #565B64;
+$color-gray-700: #3A3F49;
+$color-gray-800: #24272D;
+$color-gray-850: #1B1E23;
+$color-gray-900: #121418;
 
 //button-text-color
 $text-colors: (
@@ -70,8 +72,8 @@ $background-colors: (
 }
 
 $btn-bg-colors: (
-  color-blue: $color-blue,
-  color-medium-blue: #0e45b3,
+  color-blue: $color-blue-500,
+  color-medium-blue: $color-blue-900,
   color-dark-blue: $color-dark-blue,
   color-grey: #2c3b4e,
   color-transparent: transparent
