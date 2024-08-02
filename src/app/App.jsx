@@ -73,16 +73,6 @@ const App = () => {
       });
   };
 
-  const changeAppFont = currentLanguage => {
-    const globalEl = document.getElementsByClassName('slide-animation')[0]; // if globalEl is null, then font can not be set correctly. So moved class to root div in html. 2023/07/07  Yen, KHGMA-2035
-    if (!globalEl) return;
-    if (currentLanguage === 'km') {
-      globalEl.style.fontFamily = 'Battambang,cursive';
-    } else {
-      globalEl.style.fontFamily = 'Open Sans,sans-serif';
-    }
-  };
-
   useEffect(() => {
     const isMobileDevice = deviceDetected();
     scriptLoad(isMobileDevice);

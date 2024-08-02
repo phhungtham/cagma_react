@@ -34,16 +34,14 @@ export const transformRequest = (payload, language = 'en') => {
   };
 };
 
-export const languageStorageKeys = (currentLanguage) => {
+export const languageStorageKeys = currentLanguage => {
   if (!currentLanguage || currentLanguage === 'undefined') return;
   switch (currentLanguage) {
     case 'en':
-      return 'KH_EN';
+      return 'CA_EN';
     case 'ko':
-      return 'KH_KO';
-    case 'km':
-      return 'KH_KM';
+      return 'CA_KO';
     default:
-      return 'KH_EN';
+      return 'CA_EN';
   }
 };

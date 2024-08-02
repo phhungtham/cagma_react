@@ -4,9 +4,8 @@ const LOCALSTORAGE_KEYS = {
   ACCESS_TOKEN: 'sol-access-token',
   JSESSIONID: 'JSESSIONID',
   USER_INFO: 'userInfo',
-  KH_EN: 'kh_en',
-  KH_KO: 'kh_ko',
-  KH_KM: 'kh_km',
+  CA_EN: 'ca_en',
+  CA_KO: 'ca_ko',
   LANGUAGE_CODE: 'language_code'
 };
 const setToken = token => {

@@ -10,24 +10,15 @@ import { AppCfg } from '@configs/appConfigs';
 import './i18n';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const RouterComponent = AppCfg.ENV === 'development' || AppCfg.ENV === 'dev' ? BrowserRouter : Router;
 root.render(
-  AppCfg.ENV === 'development' || AppCfg.ENV === 'dev' ? (
-    <BrowserRouter>
-      <React.StrictMode>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </React.StrictMode>
-    </BrowserRouter>
-  ) : (
-    <Router>
-      <React.StrictMode>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </React.StrictMode>
-    </Router>
-  )
+  <RouterComponent>
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>
+  </RouterComponent>
 );
 
 // If you want to start measuring performance in your app, pass a function

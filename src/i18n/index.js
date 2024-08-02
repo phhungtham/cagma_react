@@ -2,20 +2,16 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import localStorageService from '../storage/localStorage';
 
-let kh_en = JSON.parse(localStorageService.getLang('KH_EN'));
-let kh_ko = JSON.parse(localStorageService.getLang('KH_KO'));
-let kh_km = JSON.parse(localStorageService.getLang('KH_KM'));
+let ca_en = JSON.parse(localStorageService.getLang('CA_EN'));
+let ca_ko = JSON.parse(localStorageService.getLang('CA_KO'));
 
 // the translations
 const resources = {
   en: {
-    translation: kh_en
+    translation: ca_en
   },
   ko: {
-    translation: kh_ko
-  },
-  km: {
-    translation: kh_km
+    translation: ca_ko
   }
 };
 

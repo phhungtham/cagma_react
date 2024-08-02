@@ -17,7 +17,6 @@ import SelectCards from '@components/VisaCard/SelectCards';
 import CreateNewVirtualCards from '@components/VisaCard/CreateNewVirtualCards';
 import FraudWarning from '@components/FraudWarning';
 import OpenSourceLicense from '@components/OpenSourceLicense';
-import Merchants from '@components/Merchants/Merchants';
 import SalesAnalysis from '@components/Merchants/SalesAnalysis';
 
 
@@ -124,12 +123,6 @@ const RoutesConfig = [
   {
     path: '/open-source-license',
     component: OpenSourceLicense,
-    private: false,
-    navigatePath: '/'
-  },
-  {
-    path: '/payment/merchant/merchants',
-    component: Merchants,
     private: false,
     navigatePath: '/'
   },
