@@ -1,12 +1,10 @@
 .notification {
   &__wrapper {
-    background-color: #f8f8fa;
     .tabs__wrapper {
       overflow-y: scroll;
       width: 100%;
-      padding: 0 20px;
       .tabs__list {
-        width: 50%;
+        flex: 1;
       }
     }
 
@@ -117,20 +115,16 @@
   }
   &__empty {
     position: absolute;
-    top: 20%;
+    top: 16%;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    & img {
-      width: 100px;
-      height: auto;
-    }
     &__text {
       font-weight: 400;
       font-size: 15px;
       line-height: 1.5;
       text-align: center;
-      color: #a0a2a7;
+      color: $color-gray-500;
     }
   }
   &__list {

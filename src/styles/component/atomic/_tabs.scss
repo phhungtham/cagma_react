@@ -6,6 +6,8 @@
 
   &__wrapper {
     display: flex;
+    padding: 0 24px;
+    border-bottom: 1px solid $color-gray-200;
   }
   &__list {
     width: 168px;
@@ -17,18 +19,19 @@
     border-bottom: 2px solid transparent;
 
     &.tab__active {
-      border-bottom: 2px solid #3270ea;
+      border-bottom: 2px solid $color-gray-900;
 
       & .tabs__item {
         transition: all 0.2s linear;
-        color: #222428;
+        font-weight: 700;
+        color: $color-gray-900;
       }
     }
   }
   &__item {
-    font-size: 16px;
-    font-weight: 500;
-    color: #bec1c6;
+    font-size: 15px;
+    font-weight: 400;
+    color: $color-gray-500;
   }
   &__content {
     width: 100%;
