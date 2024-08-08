@@ -13,14 +13,14 @@ const IconButton = args => <Button {...args}> </Button>;
 
 export const Basic = BasicButton.bind({});
 Basic.args = {
-  variant: 'solid',
+  variant: 'filled__primary',
   label: 'Button',
   disable: false
 };
 
 export const ButtonIcon = IconButton.bind({});
 ButtonIcon.args = {
-  variant: 'solid',
+  variant: 'filled__primary',
   label: 'Button',
   disable: false,
   iconPosition: 'right'

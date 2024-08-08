@@ -14,7 +14,7 @@ AlertStory.args = {
   subtitle: 'Subtitle',
   caption: 'Caption',
   isShowAlert: false,
-  isCloseButton: true,
+  isCloseButton: false,
   alertIcon: null,
   firstButton: null,
   secondButton: null

@@ -33,7 +33,7 @@ import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { APP_GLOBAL } from '../../app/redux/type';
-import no_notification from '../../assets/images/no-result.png';
+import no_notification from '../../assets/images/bell-no-result.png';
 import {
   cleanupAppNotification,
   getBenefitNotificationList,
@@ -64,9 +64,9 @@ import showPDFView from '@utilities/gmCommon/showPDFView';
 
 const AppNotifications = ({ translate }) => {
   const TABS = {
-    CHECKING: translate('lbl_BHO2020001_0001'),
-    NOTICES: translate('lbl_BHO2020001_0004'),
-    BENEFITS: translate('lbl_BHO2020001_0002')
+    CHECKING: translate('Transactions'),
+    NOTICES: translate('Your Offers'),
+    BENEFITS: translate('Promotions')
   };
 
   useReducers([
@@ -412,7 +412,7 @@ const AppNotifications = ({ translate }) => {
     ) : (
       <div className="notification__empty">
         <img src={no_notification} alt={'no_notification'} />
-        <Span clazz="notification__empty__text" text={translate('lbl_BHO2020001_0003')} />
+        <Span clazz="notification__empty__text" text={translate('No notifications')} />
       </div>
     );
   }, [listCheckingNotiy, tabIndex, appLang, isNativeRedirect]);
@@ -433,7 +433,7 @@ const AppNotifications = ({ translate }) => {
     ) : (
       <div className="notification__empty">
         <img src={no_notification} alt={'no_notification'} />
-        <Span clazz="notification__empty__text" text={translate('lbl_BHO2020001_0003')} />
+        <Span clazz="notification__empty__text" text={translate('No notifications')} />
       </div>
     );
   }, [listNoticesNotiy, tabIndex, appLang, isNativeRedirect]);
@@ -453,19 +453,20 @@ const AppNotifications = ({ translate }) => {
     ) : (
       <div className="notification__empty">
         <img src={no_notification} alt={'no_notification'} />
-        <Span clazz="notification__empty__text" text={translate('lbl_BHO2020001_0003')} />
+        <Span clazz="notification__empty__text" text={translate('No notifications')} />
       </div>
     );
   }, [benefitListDisplay, tabIndex, appLang, isNativeRedirect]);
 
   return (
     <div className="notification__wrapper">
-      {loadCheckingState && listCheckingNotiy?.length === 0 && <Spinner />}
+      {/* {loadCheckingState && listCheckingNotiy?.length === 0 && <Spinner />}
       {loadNoticesState && listNoticesNotiy?.length === 0 && <Spinner />}
-      {loadBenefitState && listBenefitNotify?.length === 0 && <Spinner />}
+      {loadBenefitState && listBenefitNotify?.length === 0 && <Spinner />} */}
       <div className="notification__header">
         <Header
-          title={translate('mymen_KHHO202001')}
+          // title={translate('mymen_KHHO202001')}
+          title="App Notifications"
           isExpand={isHeaderExpand}
           onClick={() => {
             moveBack();
