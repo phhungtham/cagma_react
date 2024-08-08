@@ -38,16 +38,16 @@ $color-gray-900: #121418;
 $text-colors: (
   color-white: $color-white,
   color-white-blur: rgba(255, 255, 255, 0.4),
-  color-dark-blue: $color-dark-blue,
-  color-blue: $color-blue,
-  color-grey-blur: $color-grey-blur,
-  color-black: $color-black,
+  color-dark-blue: $color-blue-900,
+  color-blue: $color-blue-900,
+  color-grey-blur: $color-gray-900,
+  color-black: $color-gray-900,
   color-grey: #76797e,
   color-dark-jungle: #222428,
-  color-platinum: $color-platinum,
-  color-blue-blur: $color-blue-blur,
-  santa-gray: $santa-gray,
-  error-light-red: $error-light-red
+  color-platinum: $color-blue-900,
+  color-blue-blur: $color-blue-900,
+  santa-gray: $color-gray-900,
+  error-light-red: $color-blue-900
 );
 
 @function text-color($color) {
@@ -57,14 +57,14 @@ $text-colors: (
 // background-color
 $background-colors: (
   color-white: $color-white,
-  color-blue: $color-blue,
-  color-grey-blur: $color-grey-blur,
+  color-blue: $color-blue-900,
+  color-grey-blur: $color-blue-900,
   color-gray-scale: #eef0f6,
-  color-platinum: $color-platinum,
-  color-blue-blur: $color-blue-blur,
-  dark-sky-blue: $dark-sky-blue,
-  santa-gray: $santa-gray,
-  error-light-red: $error-light-red
+  color-platinum: $color-blue-900,
+  color-blue-blur: $color-blue-900,
+  dark-sky-blue: $color-blue-900,
+  santa-gray: $color-gray-900,
+  error-light-red: $color-blue-900
 );
 
 @function background-color($color) {
@@ -74,7 +74,7 @@ $background-colors: (
 $btn-bg-colors: (
   color-blue: $color-blue-500,
   color-medium-blue: $color-blue-900,
-  color-dark-blue: $color-dark-blue,
+  color-dark-blue: $color-blue-900,
   color-grey: #2c3b4e,
   color-transparent: transparent
 );
@@ -82,14 +82,15 @@ $btn-bg-colors: (
 @function bt-bg-color($color) {
   @return map-get($btn-bg-colors, $color);
 }
-//button-color
+//button-colorbackground-active
 $button-type-maps: (
-  solid: (
+  filled__primary: (
     background-nor: bt-bg-color(color-blue),
-    background-active: bt-bg-color(color-medium-blue),
+    background-active: $color-blue-900,
+    background-disabled: $color-gray-250,
     text-color: text-color(color-white),
     text-color-active: text-color(color-white),
-    text-color-disable: text-color(color-white-blur)
+    text-color-disable: $color-gray-400
   ),
   background: (
     background-nor: bt-bg-color(color-dark-blue),
@@ -98,12 +99,12 @@ $button-type-maps: (
     text-color-active: text-color(color-white),
     text-color-disable: text-color(color-white-blur)
   ),
-  outlined: (
-    background-nor: bt-bg-color(color-transparent),
-    background-active: bt-bg-color(color-transparent),
-    text-color: text-color(color-blue),
-    text-color-active: text-color(color-dark-blue),
-    text-color-disable: text-color(color-grey-blur)
+  outlined__primary: (
+    background-nor: $color-white,
+    background-active: $color-blue-100,
+    text-color: $color-blue-600,
+    text-color-active: $color-blue-900,
+    text-color-disable: $color-blue-200
   )
 );
 //icon-color

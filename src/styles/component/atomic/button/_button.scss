@@ -1,12 +1,12 @@
 @mixin button($bg-color: map-get($colors, 'light')) {
   max-width: 100%;
-  min-height: 48px;   
+  min-height: 56px;   
   text-decoration: none;
   font-size: $button-font-size;
   cursor: pointer;
   border: 0;
   padding: 13px 20px;
-  border-radius: $base-border-radius;
+  border-radius: 18px;
   background-color: $bg-color;
 }
 .btn {
@@ -39,17 +39,18 @@
       color: map-get($map, text-color-active);
     }
     &.disable {
+      background-color: map-get($map, background-disabled);
       color: map-get($map, text-color-disable);
     }
   }
-  .btn__outlined {
-    border: 1px solid #3270ea;
+  .btn__outlined__primary {
+    border: 1px solid $color-blue-500;
     &:hover,
     &:active {
-      border: 1px solid #0e45b3;
+      border: 1px solid $color-blue-800;
     }
     &.disable {
-      border: 1px solid #bec1c6;
+      border: 1px solid $color-blue-200;
     }
   }
 }

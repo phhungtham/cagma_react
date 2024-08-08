@@ -24,7 +24,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   iconPosition: PropTypes.oneOf(['right', 'left']),
   type: PropTypes.oneOf(['submit', 'button']),
-  variant: PropTypes.oneOf(['solid', 'background', 'outlined'])
+  variant: PropTypes.oneOf(['filled__primary', 'background', 'outlined__primary'])
 };
 
 Button.defaultProps = {
@@ -33,5 +33,5 @@ Button.defaultProps = {
   iconPosition: 'left',
   label: 'Button',
   onClick: undefined,
-  variant: 'solid'
+  variant: 'filled__primary'
 };
