@@ -1,15 +1,15 @@
 import { FeatureAppNotificationName } from './type';
 
-export const checkingList = state => {
-  return state[FeatureAppNotificationName]?.listCheckingNotify?.list;
+export const transactionList = state => {
+  return state[FeatureAppNotificationName]?.listTransactionNotify?.list;
 };
 
-export const noticesList = state => {
-  return state[FeatureAppNotificationName]?.listNoticesNotify?.list;
+export const offerList = state => {
+  return state[FeatureAppNotificationName]?.listOfferNotify?.list;
 };
 
-export const benefitList = state => {
-  return state[FeatureAppNotificationName]?.listBenefitNotify?.list;
+export const promotionList = state => {
+  return state[FeatureAppNotificationName]?.listpromotionNotify?.list;
 };
 
 export const listCheckingLoadMoreCnt = state => {

@@ -20,6 +20,12 @@ export const ActionType = {
   CLEAN_UP: `${FeatureAppNotificationName}/CLEAN_UP`
 };
 
+export const NotificationTab = {
+  TRANSACTIONS: 0,
+  YOUR_OFFERS: 1,
+  PROMOTIONS: 2
+};
+
 export const AppNotifyURLs = {
   CHECKING_NOTIFY: '/kh/ho/KHHO001.pwkjson',
   NOTICES_NOTIFY: '/kh/ho/KHHO001.pwkjson',

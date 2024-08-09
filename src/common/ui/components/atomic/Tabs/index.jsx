@@ -17,9 +17,9 @@ const Tabs = props => {
 
   return (
     <div className={`tabs ${clazz}`}>
-      <div className="tabs__wrapper">
-        {isLoginAlready &&
-          tabList.map((tab, index) => (
+      {isLoginAlready && (
+        <div className="tabs__wrapper">
+          {tabList.map((tab, index) => (
             <div
               key={index}
               className={`tabs__list ${tabActive === index && 'tab__active'}`}
@@ -28,7 +28,8 @@ const Tabs = props => {
               <Span key={index} clazz="tabs__item" text={tab.title} />
             </div>
           ))}
-      </div>
+        </div>
+      )}
       {children && <div className="tabs__content">{children}</div>}
     </div>
   );
