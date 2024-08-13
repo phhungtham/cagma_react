@@ -3,8 +3,8 @@ import React from 'react';
 const ClearIcon = () => {
   return (
     <div>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="10" fill="#BEC1C6" />
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" fill="#808892" />
         <path
           d="M15.6065 15.5351C15.216 15.9256 14.6116 15.9544 14.2566 15.5994L8.47117 9.81394C8.11615 9.45892 8.14493 8.85454 8.53545 8.46401C8.92598 8.07349 9.53036 8.04471 9.88538 8.39973L15.6708 14.1851C16.0258 14.5402 15.997 15.1446 15.6065 15.5351Z"
           fill="white"

@@ -18,7 +18,7 @@ import CreateNewVirtualCards from '@components/VisaCard/CreateNewVirtualCards';
 import FraudWarning from '@components/FraudWarning';
 import OpenSourceLicense from '@components/OpenSourceLicense';
 import SalesAnalysis from '@components/Merchants/SalesAnalysis';
-
+import ChangeProfile from '@components/Profile/ChangeProfile';
 
 const RoutesConfig = [
   {
@@ -30,6 +30,11 @@ const RoutesConfig = [
     path: '/login',
     component: Login,
     private: false
+  },
+  {
+    path: '/change-profile',
+    component: ChangeProfile,
+    private: true
   },
   {
     path: '/exchange-rate',

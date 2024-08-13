@@ -54,6 +54,14 @@ $text-colors: (
   @return map-get($text-colors, $color);
 }
 
+$border-colors: (
+  color-primary: $color-blue-500,
+);
+
+@function border-color($color) {
+  @return map-get($border-colors, $color);
+}
+
 // background-color
 $background-colors: (
   color-white: $color-white,

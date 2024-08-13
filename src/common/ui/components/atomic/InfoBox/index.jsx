@@ -16,7 +16,7 @@ const InfoBox = ({ variant, textOnly, label, action }) => {
     <div className={`info__wrapper ${variant}`}>
       {!textOnly && <section className="info__icon">{handleRenderIcon()}</section>}
       <section className="info__label">
-        {label}.
+        {label}
         {action && <Span clazz="info__action" text={action?.name} onClick={action?.click} />}
       </section>
     </div>

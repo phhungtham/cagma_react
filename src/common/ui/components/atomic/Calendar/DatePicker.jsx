@@ -59,7 +59,7 @@ const DatePicker = ({ minDate, maxDate, onCalendarDateChange, datePicked, defaul
 
   const customClassName = ({ date }) => {
     const dateList = replaceString(convertDateTime(date), '.', '');
-    if (dateList === datePicked.value) {
+    if (dateList === datePicked?.value) {
       return 'picked';
     }
     if (date.getDay() === 6) {

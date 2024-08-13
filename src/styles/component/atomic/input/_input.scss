@@ -2,20 +2,20 @@ $input-on-background: background-color(dark-sky-blue);
 @mixin textFieldStyles {
   position: absolute;
   bottom: 0;
-  width: 300px;
-  max-width: 300px;
+  width: 90%;
+  max-width: 90%;
   height: 40px;
   background-color: transparent;
   padding: 0 35px 0 4px;
   padding-bottom: 14px;
   font-size: 16px;
-  color: #222428;
-  font-weight: 510;
+  color: $color-gray-900;
+  font-weight: 500;
 
-  caret-color: text-color(color-blue);
+  caret-color: $color-blue-500;
 
   border: 0;
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: none;
   border-color: transparent;
 }
@@ -25,13 +25,11 @@ $input-on-background: background-color(dark-sky-blue);
 }
 
 .text__field {
-  width: 335px;
-
   display: flex;
   flex-direction: column;
 
   .input__wrapper.input__focus {
-    border: 1px solid #3270ea !important;
+    border: 1px solid border-color(color-primary) !important;
   }
 
   .input__memo {
@@ -50,12 +48,12 @@ $input-on-background: background-color(dark-sky-blue);
 
   .input__wrapper {
     position: relative;
-    width: 335px;
+    width: 100%;
     height: 56px;
     overflow: hidden;
 
-    border-radius: 10px;
-    border: 1px solid text-color(color-platinum);
+    border-radius: 12px;
+    border: 1px solid $color-gray-300;
 
     display: flex;
     justify-content: center;
@@ -64,7 +62,7 @@ $input-on-background: background-color(dark-sky-blue);
     transition: height ease-in-out 0.15s;
 
     &.disable {
-      background: #f8fbff;
+      background: $color-gray-100;
     }
     &.onBackground {
       @include inputOnBackground();
@@ -116,15 +114,15 @@ $input-on-background: background-color(dark-sky-blue);
       left: 20px;
       font-weight: 400;
       font-size: 16px;
-      color: text-color(santa-gray);
+      color: $color-gray-500;
       &.disable {
-        color: #a0a2a7;
+        color: $color-gray-400;
       }
 
       &.input__focus,
       &.input__completed {
         font-size: 13px;
-        top: 12px;
+        top: 14px;
       }
       &.input__focus {
         &.onBackground {
@@ -152,7 +150,7 @@ $input-on-background: background-color(dark-sky-blue);
       }
     }
     &.input__completed {
-      border: 1px solid text-color(color-platinum);
+      border: 1px solid $color-gray-300;
       &.onBackground {
         @include inputOnBackground();
         & > input {

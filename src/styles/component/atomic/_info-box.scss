@@ -1,24 +1,23 @@
 .info__wrapper {
-  width: 335px;
-  min-height: 40px;
-  border-radius: 8px;
+  min-height: 44px;
+  border-radius: 12px;
 
-  padding: 10px 14px 10px 0;
+  padding: 12px 12px 12px 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   .info__icon {
     padding-left: 14px;
-    font-size: 25px;
+    font-size: 20px;
   }
 
   .info__label {
     word-break: break-word;
-    color: #76797e;
+    color: $color-gray-600;
     font-weight: 400;
     font-size: 13px;
-    line-height: 16px;
-    padding: 0 12px;
+    line-height: 17px;
+    padding: 0 8px;
     
     display: flex;
     align-items: center;
@@ -30,9 +29,9 @@
   }
   
   &.informative {
-    background: rgba(18, 142, 212, 0.1);
+    background: rgba(0, 93, 249, 0.1);
     .info__icon {
-      color: #128ed4;
+      color: $color-blue-500;
     }
   }
   &.notice {

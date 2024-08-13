@@ -2,10 +2,10 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useComposeRefs from '../../../../../hooks/useComposeRefs';
 import { InputTypes, SIZE, TAG_NAME } from '@common/ui/constants';
-import { ClearIcon } from 'assets/icons';
+import { ArrowDown, ArrowUp, ClearIcon } from 'assets/icons';
 import { IconButton } from '../ButtonGroup/IconButton/IconButton';
 
-const Input = forwardRef((props, ref) => {
+const Dropdown = forwardRef((props, ref) => {
   const {
     autoComplete,
     children,
@@ -133,14 +133,6 @@ const Input = forwardRef((props, ref) => {
 
   return (
     <div className={`text__field ${clazz}`}>
-      {isMemo && (
-        <section className="input__memo">
-          <div className="input__memo__title">Memo</div>
-          <div className="input__memo__icon">
-            <IconButton size={'w-16'} />
-          </div>
-        </section>
-      )}
       <section
         className={`input__wrapper ${customClass} ${tagName} ${errorTextField && 'input__error'} ${
           disabled && 'disable'
@@ -148,74 +140,33 @@ const Input = forwardRef((props, ref) => {
         onBlur={handleOnBlur}
       >
         <div className={`input__wrapper__label ${customClass} ${disabled && 'disable'} ${mode}`}>{label}</div>
-        {tagName === TAG_NAME.INPUT ? (
-          <input
-            autoComplete="new-password"
-            name={name}
-            readOnly={readOnly}
-            ref={composeRef}
-            maxLength={maxLength}
-            minLength={minLength}
-            placeholder={placeHolder}
-            defaultValue={defaultValue}
-            disabled={disabled}
-            onChange={handleInputChange}
-            onFocus={() => handleFocusStatus()}
-            onBlur={handleOnBlur}
-            style={style}
-            type={type}
-            value={value}
-            {...otherProps}
-          />
-        ) : (
-          <textarea
-            autoComplete="new-password"
-            name={name}
-            readOnly={readOnly}
-            ref={composeRef}
-            maxLength={maxLength}
-            minLength={minLength}
-            placeholder={placeHolder}
-            defaultValue={defaultValue}
-            disabled={disabled}
-            onChange={handleInputChange}
-            onFocus={() => handleFocusStatus()}
-            onBlur={handleOnBlur}
-            style={style}
-            type={type}
-            value={value}
-            {...otherProps}
-          />
-        )}
-        {minutes ? (
-          <div className="input__remaining">
-            {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-          </div>
-        ) : (
-          customClass === 'input__focus' &&
-          inputValues && (
-            <div onMouseDown={handleClearInputText} className={`input__icon ${tagName}`}>
-              <ClearIcon />
-            </div>
-          )
-        )}
-        {endAdornment}
+        <input
+          autoComplete="new-password"
+          name={name}
+          readOnly={readOnly}
+          ref={composeRef}
+          maxLength={maxLength}
+          minLength={minLength}
+          placeholder={placeHolder}
+          defaultValue={defaultValue}
+          disabled={disabled}
+          onChange={handleInputChange}
+          onFocus={() => handleFocusStatus()}
+          onBlur={handleOnBlur}
+          style={style}
+          type={type}
+          value={value}
+          {...otherProps}
+        />
+        <div onMouseDown={handleClearInputText} className={`input__icon ${tagName}`}>
+          {customClass === 'input__focus' ? <ArrowUp /> : <ArrowDown />}
+        </div>
       </section>
-      {isCountCharacter ? (
-        <section
-          className={`input__character__counter ${disabled && 'disable'}`}
-        >{`${inputValues?.length}/${maxLength}bytes`}</section>
-      ) : (
-        <>
-          {errorTextField && <section className="input__subtitle error">{errorMessage}</section>}
-          {helperText && !errorTextField && <section className="input__subtitle">{helperText}</section>}
-        </>
-      )}
     </div>
   );
 });
 
-Input.propTypes = {
+Dropdown.propTypes = {
   children: PropTypes.node,
   className: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
   defaultValue: PropTypes.string,
@@ -243,7 +194,7 @@ Input.propTypes = {
   onClearInput: PropTypes.func
 };
 
-Input.defaultProps = {
+Dropdown.defaultProps = {
   className: '',
   defaultValue: '',
   disabled: false,
@@ -270,4 +221,4 @@ Input.defaultProps = {
   onClearInput: () => {}
 };
 
-export default Input;
+export default Dropdown;
