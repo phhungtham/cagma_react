@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { DuoButton } from '../ButtonGroup/DuoButton/DuoButton';
-import { CloseIcon, InfoIcon } from 'assets/icons';
-import ErrorAlertIcon from '@assets/images/image_alret_negative.png';
-import WarningAlertIcon from '@assets/images/image_alret_notice.png';
-import InfoAlertIcon from '@assets/images/image_alret_informative.png';
-import SuccessAlertIcon from '@assets/images/image_alret__positive.png';
+import { CloseIcon } from 'assets/icons';
 
 const Alert = ({
   title,
   subtitle,
   caption,
-  alertType,
   isShowAlert,
   handleCloseAlert,
   alertIcon,
   imageIcon,
   firstButton,
   secondButton,
-  isCloseButton
+  isCloseButton,
+  textAlign
 }) => {
   const [animate, setAnimate] = useState(false);
 
@@ -38,21 +34,6 @@ const Alert = ({
   const firstDoulButton = firstButton ? { ...firstButton, className: 'alert__footer__button' } : null;
   const secondDoulButton = secondButton ? { ...secondButton, className: 'alert__footer__button' } : null;
 
-  const renderImageIcon = type => {
-    switch (type) {
-      case 'I':
-        return InfoAlertIcon;
-      case 'E':
-        return ErrorAlertIcon;
-      case 'W':
-        return WarningAlertIcon;
-      case 'S':
-        return SuccessAlertIcon;
-      default:
-        return InfoAlertIcon;
-    }
-  };
-
   return (
     <div className={`alert__wrapper  ${isShowAlert && 'show'}`}>
       <div className={`overlay ${isShowAlert && 'show'}`} onClick={closeAlert}></div>
@@ -67,10 +48,7 @@ const Alert = ({
         )}
         {alertIcon && <section className={`alert__icon ${alertIcon.type}`}>{alertIcon.name}</section>}
         {imageIcon && <img alt="alert-icon" className="alert__img__icon" src={imageIcon} />}
-        {alertType && alertType !== '' && (
-          <img alt="alert-icon" className="alert__icon" src={renderImageIcon(alertType)} />
-        )}
-        <section className="alert__header">
+        <section className={`alert__header ${textAlign}`}>
           {title && <p className="alert__title">{title}</p>}
           {subtitle && <p className="alert__subtitle">{subtitle}</p>}
           {caption && <p className="alert__caption">{caption}</p>}
@@ -87,7 +65,7 @@ Alert.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   caption: PropTypes.string,
-
+  textAlign: PropTypes.oneOf(['left', 'center']),
   isShowAlert: PropTypes.bool,
   alertIcon: PropTypes.any,
   isCloseButton: PropTypes.any,
@@ -113,6 +91,7 @@ Alert.defaultProps = {
   alertIcon: null,
   firstButton: null,
   secondButton: null,
+  textAlign: 'left',
   handleCloseAlert: () => {}
 };
 

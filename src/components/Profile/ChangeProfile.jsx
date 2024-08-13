@@ -10,6 +10,8 @@ import InputSelect from '@common/ui/components/atomic/Input/InputSelect';
 import Dropdown from '@common/ui/components/atomic/Dropdown';
 import { Button } from '@common/ui/components/atomic/ButtonGroup/Button/Button';
 import InfoBox from '@common/ui/components/atomic/InfoBox';
+import ChangePhotoBottom from './components/ChangePhotoBottom';
+import { useState } from 'react';
 
 const initValues = {
   name: 'Jennifer',
@@ -21,9 +23,21 @@ const initValues = {
 };
 
 const ChangeProfile = ({translation}) => {
+  const [showBottomSheet, setShowBottomSheet] = useState({
+    bottomChangePhoto: false,
+  });
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: initValues
   });
+
+  const onOpenChangePhotoBottom = () => {
+    setShowBottomSheet({...showBottomSheet, bottomChangePhoto: true});
+  };
+
+  const onCloseChangePhotoBottom = () => {
+    setShowBottomSheet({...showBottomSheet, bottomChangePhoto: false});
+  };
+
   return (
     <div className="change-profile-wrapper">
       <Header
@@ -38,7 +52,7 @@ const ChangeProfile = ({translation}) => {
             <div className="avatar-img">
               <img src={avatarURL} alt="profile" />
             </div>
-            <div className="setting-button">
+            <div className="setting-button" onClick={onOpenChangePhotoBottom}>
               <SettingIcon />
             </div>
           </div>
@@ -174,11 +188,11 @@ const ChangeProfile = ({translation}) => {
             </div>
           </div>
         </div>
-        
         <div className="footer-fixed">
           <Button label="Save" variant="filled__primary" className="btn__cta"></Button>
         </div>
       </div>
+      <ChangePhotoBottom open={showBottomSheet.bottomChangePhoto} onClose={onCloseChangePhotoBottom} />
     </div>
   );
 };

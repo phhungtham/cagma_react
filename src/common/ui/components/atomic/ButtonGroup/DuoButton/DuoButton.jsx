@@ -28,7 +28,7 @@ export const DuoButton = ({ className, ratio, firstButton, secondButton, duoDire
           className={`btn__duo__first ${firstClassName}`}
           disable={firstDisable}
           onClick={firstOnClick}
-          variant={isVertical ? 'solid' : 'outlined'}
+          variant={isVertical ? 'filled__primary' : 'outlined__primary'}
           label={firstLabel}
         />
       )}
@@ -37,7 +37,7 @@ export const DuoButton = ({ className, ratio, firstButton, secondButton, duoDire
           className={`btn__duo__second ${secondClassName}`}
           disable={secondDisable}
           onClick={secondOnClick}
-          variant={!isVertical ? 'solid' : 'outlined'}
+          variant={!isVertical ? 'filled__primary' : 'text__gray'}
           label={secondLabel}
         />
       )}
