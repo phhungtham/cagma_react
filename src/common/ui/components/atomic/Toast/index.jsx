@@ -1,24 +1,34 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { CloseIcon } from 'assets/icons';
+import { CheckIcon, CloseIcon, InfoIcon } from 'assets/icons';
 
 const defaultClass = 'toast';
+const typeWithIcons = {
+  info: InfoIcon,
+  success: CheckIcon,
+  error: CheckIcon,
+  warning: CheckIcon,
+};
+
 const Toast = ({
   isShowToast,
-  mode,
   iconStatus,
   clazz,
   message,
   iconClose,
-  buttonLabel,
-  lineOfText,
   children,
-  onClose
+  onClose,
+  type
 }) => {
   const clazzName = [defaultClass, clazz].join(' ');
 
   const handleClose = () => {
     onClose();
+  };
+
+  const renderIcon = (type) => {
+    const Component = typeWithIcons[type];
+    return <Component />;
   };
 
   useEffect(() => {
@@ -30,17 +40,18 @@ const Toast = ({
   }, [isShowToast]);
 
   return (
-    <div className={`${clazzName} toast__${mode} ${isShowToast && 'showToast'}`} onClick={handleClose}>
+    <div className={`${clazzName} ${isShowToast && 'showToast'}`} onClick={handleClose}>
       {iconStatus && <section className="icon__status">{iconStatus}</section>}
-      <div className={`toast__wrap toast__${lineOfText}`}>
-        {children && <div className="toast__icon">{children}</div>}
+      <div className="toast__wrap">
+        {type && (
+          <div className={`toast__icon ${type}`}>{renderIcon(type)}</div>
+        )}
         <div className="toast__msg">
-          <span className={mode}>{message}</span>
+          <span>{message}</span>
         </div>
-        {buttonLabel && <span className={`toast__button ${lineOfText} ${mode}`}>{buttonLabel}</span>}
       </div>
       {iconClose && (
-        <div className={`toast__close ${lineOfText} ${mode}`} onClick={handleClose}>
+        <div className="toast__close" onClick={handleClose}>
           <CloseIcon />
         </div>
       )}
@@ -52,10 +63,7 @@ Toast.propTypes = {
   clazz: PropTypes.string,
   message: PropTypes.string,
   iconClose: PropTypes.bool,
-  buttonLabel: PropTypes.string,
-  iconStatus: PropTypes.any,
-  lineOfText: PropTypes.oneOf(['single', 'multiple']),
-  mode: PropTypes.oneOf(['dark', 'light']),
+  type: PropTypes.oneOf(['info', 'success', 'error', 'warning']),
   isShowToast: PropTypes.bool
 };
 
@@ -64,9 +72,7 @@ Toast.defaultProps = {
   message: '',
   iconClose: false,
   iconStatus: null,
-  buttonLabel: '',
-  lineOfText: 'single',
-  mode: 'dark',
-  isShowToast: false
+  isShowToast: false,
+  type: 'info'
 };
 export default Toast;

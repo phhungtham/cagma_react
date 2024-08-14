@@ -47,7 +47,7 @@
       height: 32px;
       padding: 0;
       min-height: 32px;
-      font-size: 16px;
+      font-size: 14px;
     }
   }
   .btn__outlined__primary {
@@ -58,6 +58,17 @@
     }
     &.disable {
       border: 1px solid $color-blue-200;
+    }
+  }
+
+  .btn__outlined__gray {
+    border: 1px solid $color-gray-400;
+    &:hover,
+    &:active {
+      border: 1px solid $color-gray-500;
+    }
+    &.disable {
+      border: 1px solid $color-gray-250;
     }
   }
 }

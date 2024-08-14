@@ -17,149 +17,69 @@ const Dropdown = forwardRef((props, ref) => {
     onChange,
     onFocus,
     onBlur,
-    maxLength,
-    minLength,
     name,
     readOnly,
     isMemo,
     placeHolder,
     style,
-    type,
     helperText,
-    remainingTime,
     isCountCharacter,
-    tagName,
     mode,
     value,
     onClearInput,
     completedMode,
-    ignoreInitShow = false,
-    endAdornment,
+    options,
     ...otherProps
   } = props;
-  const [inputValues, setInputValues] = useState(defaultValue || value);
+  const [valueDisplay, setValueDisplay] = useState('');
   const [customClass, setCustomClass] = useState('');
   const [errorTextField, setErrorTextField] = useState(errorMessage);
 
-  const [minutes, setMinutes] = useState(remainingTime.minutes);
-  const [seconds, setSeconds] = useState(remainingTime.seconds);
-  const [initShow, setInitShow] = useState(true);
-
-  const composeRef = useComposeRefs(ref);
-
   useEffect(() => {
-    completedMode && setCustomClass('input__completed');
+    completedMode && setCustomClass('dropdown__completed');
   }, [completedMode]);
 
-  const handleFocusStatus = (focusMode = 'focus') => {
-    setInitShow(true);
+  const handleFocusStatus = () => {
     if (readOnly) {
-      setCustomClass('input__completed');
+      setCustomClass('dropdown__completed');
       return;
     }
     onFocus();
-    if (inputValues && focusMode === 'blur') {
-      setMinutes(null);
-      setCustomClass('input__completed');
-      return;
-    }
-
-    if (focusMode === 'focus') {
-      setCustomClass('input__focus');
-    } else {
-      setCustomClass('');
-    }
-  };
-
-  const handleInputChange = e => {
-    onChange(e);
-    const values = e.target.value;
-    setInputValues(values);
-    if (initShow) {
-      setInitShow(false);
-    }
+    setCustomClass('dropdown__focus');
   };
 
   const handleOnBlur = () => {
-    onBlur();
-    handleFocusStatus('blur');
-  };
-
-  const handleClearInputText = () => {
-    setInputValues('');
-    setInitShow(true);
-    composeRef.current.value = '';
-    // setErrorTextField('');
-    onChange();
-    onClearInput();
+    setCustomClass(valueDisplay ? 'dropdown__completed' : '');
   };
 
   useEffect(() => {
-    let myInterval;
-    if (!readOnly) {
-      myInterval = setInterval(() => {
-        if (seconds > 0) {
-          setSeconds(seconds - 1);
-        }
-        if (seconds === 0) {
-          if (minutes === 0) {
-            clearInterval(myInterval);
-          } else {
-            setMinutes(minutes - 1);
-            setSeconds(59);
-          }
-        }
-      }, 1000);
-    } else {
-      setMinutes(null);
+    if (value) {
+      const valueForDisplay = options.find(option => option.value === value)?.label || '';
+      setValueDisplay(valueForDisplay);
     }
-    return () => {
-      clearInterval(myInterval);
-    };
-  });
-  useEffect(() => {
-    if ((value || (defaultValue && !readOnly)) && !initShow) {
-      setInputValues(value || defaultValue);
-      setCustomClass('input__focus');
-    } else if ((readOnly || initShow) && !ignoreInitShow) {
-      setInputValues(value || defaultValue);
-      setCustomClass('input__completed');
-    }
-  }, [value, defaultValue]);
+    setCustomClass(value ? 'dropdown__completed' : '');
+  }, [value]);
 
   useEffect(() => {
     setErrorTextField(errorMessage);
   }, [errorMessage]);
 
   return (
-    <div className={`text__field ${clazz}`}>
+    <div className={clazz}>
       <section
-        className={`input__wrapper ${customClass} ${tagName} ${errorTextField && 'input__error'} ${
+        className={`dropdown__wrapper ${!!valueDisplay ? 'has-value' : ''} ${customClass} ${errorTextField && 'dropdown__error'} ${
           disabled && 'disable'
         } ${mode}`}
+        tabIndex={-1} // Make the section focusable
         onBlur={handleOnBlur}
+        onClick={handleFocusStatus}
       >
-        <div className={`input__wrapper__label ${customClass} ${disabled && 'disable'} ${mode}`}>{label}</div>
-        <input
-          autoComplete="new-password"
-          name={name}
-          readOnly={readOnly}
-          ref={composeRef}
-          maxLength={maxLength}
-          minLength={minLength}
-          placeholder={placeHolder}
-          defaultValue={defaultValue}
-          disabled={disabled}
-          onChange={handleInputChange}
-          onFocus={() => handleFocusStatus()}
-          onBlur={handleOnBlur}
-          style={style}
-          type={type}
-          value={value}
-          {...otherProps}
-        />
-        <div onMouseDown={handleClearInputText} className={`input__icon ${tagName}`}>
-          {customClass === 'input__focus' ? <ArrowUp /> : <ArrowDown />}
+        <div className='dropdown__main'>
+          <div className={`dropdown__label ${customClass} ${disabled && 'disable'} ${mode}`}>{label}</div>
+          <div className='dropdown__value'>{valueDisplay}</div>
+        </div>
+        <div className='dropdown__icon'>
+          {customClass === 'dropdown__focus' ? <ArrowUp /> : <ArrowDown />}
         </div>
       </section>
     </div>
@@ -177,21 +97,19 @@ Dropdown.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
-  maxLength: PropTypes.number,
-  minLength: PropTypes.number,
   name: PropTypes.string,
   readOnly: PropTypes.bool,
   isCountCharacter: PropTypes.bool,
-  isMemo: PropTypes.bool,
   placeHolder: PropTypes.string,
-  remainingTime: PropTypes.exact({
-    minutes: PropTypes.number,
-    seconds: PropTypes.number
-  }),
   style: PropTypes.object,
   mode: PropTypes.oneOf(['normal', 'onBackground']),
-  type: PropTypes.oneOf(['text', 'password', 'number', 'email']),
-  onClearInput: PropTypes.func
+  onClearInput: PropTypes.func,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 Dropdown.defaultProps = {
@@ -199,22 +117,14 @@ Dropdown.defaultProps = {
   defaultValue: '',
   disabled: false,
   size: SIZE.SMALL,
-  type: 'text',
   label: '',
   readOnly: false,
-  isMemo: false,
-  maxLength: null,
-  minLength: null,
   placeHolder: '',
   isCountCharacter: false,
   errorMessage: '',
-  remainingTime: {
-    minutes: null,
-    seconds: null
-  },
   helperText: '',
   mode: 'normal',
-  tagName: TAG_NAME.INPUT,
+  options: [],
   onChange: () => {},
   onFocus: () => {},
   onBlur: () => {},

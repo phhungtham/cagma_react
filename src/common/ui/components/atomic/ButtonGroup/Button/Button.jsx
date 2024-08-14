@@ -24,7 +24,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   iconPosition: PropTypes.oneOf(['right', 'left']),
   type: PropTypes.oneOf(['submit', 'button']),
-  variant: PropTypes.oneOf(['filled__primary', 'background', 'outlined__primary'])
+  variant: PropTypes.oneOf(['filled__primary', 'background', 'outlined__primary', 'outlined__gray'])
 };
 
 Button.defaultProps = {

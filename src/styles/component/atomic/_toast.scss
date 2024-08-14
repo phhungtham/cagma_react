@@ -2,7 +2,7 @@
   width: 335px;
   padding: 12px 20px;
   word-break: break-word;
-  border-radius: 8px;
+  border-radius: 12px;
   position: relative;
   align-items: center;
   opacity: 0;
@@ -12,6 +12,7 @@
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
   animation-duration: 0.2s;
+  background-color: $color-gray-800;
   &.showToast {
     display: flex;
     opacity: 1;
@@ -20,66 +21,25 @@
     animation-timing-function: ease-in;
     animation-duration: 0.2s;
   }
-  .icon__status {
-    color: #999999;
-    margin-right: 10px;
-  }
+  .toast__icon {
+    font-size: 20px;
 
-  &__dark {
-    background: rgba(34, 36, 40, 0.9);
-  }
-
-  &__light {
-    box-shadow: 0 0 1px #ccc;
-    background: rgba(255, 255, 255, 0.9);
+    &.info {
+      color: $color-blue-500;
+    }
   }
 
   &__wrap {
     display: flex;
     column-gap: 8px;
-  }
-
-  &__single {
     align-items: center;
-  }
-
-  &__multiple {
-    flex-wrap: wrap;
-  }
-
-  &__button {
-    text-decoration: underline;
-    margin-right: 24px;
-    cursor: pointer;
-
-    &.single {
-      margin-left: auto;
-    }
-
-    &.multiple {
-      margin-top: 7px;
-      margin-left: 30px;
-    }
-
-    &.dark {
-      color: text-color(color-grey-blur);
-    }
-
-    &.light {
-      color: #76797e;
-    }
+    gap: 8px;
   }
 
   &__msg {
-    max-width: 230px;
-    font-size: 13px;
-    line-height: 16px;
-    .dark {
-      color: text-color(color-white);
-    }
-    .light {
-      color: #222428;
-    }
+    font-size: 15px;
+    line-height: 20px;
+    color: $color-gray-100;
   }
 
   &__close {
@@ -95,14 +55,6 @@
     &.multiple {
       top: 14px;
       right: 22px;
-    }
-
-    &.dark {
-      color: text-color(color-white);
-    }
-
-    &.light {
-      color: text-color(color-black);
     }
   }
 }

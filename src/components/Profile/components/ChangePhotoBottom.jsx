@@ -42,17 +42,16 @@ const ChangePhotoBottom = ({open, onClose}) => {
         open={open}
         onClose={onClose}
         title="Change profile image"
-        clazz="change-profile-image-bottom"
+        clazz="bottom__dropdown__wrapper"
         type="fit-content"
       >
-        <div className="bottom-content">
-          <div className="option-item" onClick={onClickAccessCamera}>
-            <span className="option-label">Take Photo</span>
+        <div className="bottom__dropdown__list">
+          <div className="dropdown__option" onClick={onClickAccessCamera}>
+            <span className="option__label">Take Photo</span>
             <ArrowRight />
           </div>
-          <div className="divider-item-solid"></div>
-          <div className="option-item" onClick={onClickAccessPhotos}>
-            <span className="option-label">Upload from Gallery</span>
+          <div className="dropdown__option" onClick={onClickAccessPhotos}>
+            <span className="option__label">Upload from Gallery</span>
             <ArrowRight />
           </div>
         </div>

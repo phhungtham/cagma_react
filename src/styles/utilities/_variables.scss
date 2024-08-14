@@ -114,6 +114,13 @@ $button-type-maps: (
     text-color-active: $color-blue-900,
     text-color-disable: $color-blue-200
   ),
+  outlined__gray: (
+    background-nor: $color-white,
+    background-active: $color-gray-200,
+    text-color: $color-gray-900,
+    text-color-active: $color-gray-900,
+    text-color-disable: $color-gray-250
+  ),
   text__gray: (
     background-nor: $color-white,
     background-active: $color-white,

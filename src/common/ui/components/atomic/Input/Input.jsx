@@ -10,7 +10,6 @@ const Input = forwardRef((props, ref) => {
     autoComplete,
     children,
     clazz,
-    defaultValue,
     disabled,
     errorMessage,
     label,
@@ -32,34 +31,25 @@ const Input = forwardRef((props, ref) => {
     mode,
     value,
     onClearInput,
-    completedMode,
-    ignoreInitShow = false,
     endAdornment,
     ...otherProps
   } = props;
-  const [inputValues, setInputValues] = useState(defaultValue || value);
+  const [inputValues, setInputValues] = useState(value);
   const [customClass, setCustomClass] = useState('');
   const [errorTextField, setErrorTextField] = useState(errorMessage);
 
   const [minutes, setMinutes] = useState(remainingTime.minutes);
   const [seconds, setSeconds] = useState(remainingTime.seconds);
-  const [initShow, setInitShow] = useState(true);
 
   const composeRef = useComposeRefs(ref);
 
-  useEffect(() => {
-    completedMode && setCustomClass('input__completed');
-  }, [completedMode]);
-
   const handleFocusStatus = (focusMode = 'focus') => {
-    setInitShow(true);
     if (readOnly) {
       setCustomClass('input__completed');
       return;
     }
     onFocus();
     if (inputValues && focusMode === 'blur') {
-      setMinutes(null);
       setCustomClass('input__completed');
       return;
     }
@@ -75,9 +65,6 @@ const Input = forwardRef((props, ref) => {
     onChange(e);
     const values = e.target.value;
     setInputValues(values);
-    if (initShow) {
-      setInitShow(false);
-    }
   };
 
   const handleOnBlur = () => {
@@ -87,7 +74,6 @@ const Input = forwardRef((props, ref) => {
 
   const handleClearInputText = () => {
     setInputValues('');
-    setInitShow(true);
     composeRef.current.value = '';
     // setErrorTextField('');
     onChange();
@@ -95,37 +81,11 @@ const Input = forwardRef((props, ref) => {
   };
 
   useEffect(() => {
-    let myInterval;
-    if (!readOnly) {
-      myInterval = setInterval(() => {
-        if (seconds > 0) {
-          setSeconds(seconds - 1);
-        }
-        if (seconds === 0) {
-          if (minutes === 0) {
-            clearInterval(myInterval);
-          } else {
-            setMinutes(minutes - 1);
-            setSeconds(59);
-          }
-        }
-      }, 1000);
-    } else {
-      setMinutes(null);
-    }
-    return () => {
-      clearInterval(myInterval);
-    };
-  });
-  useEffect(() => {
-    if ((value || (defaultValue && !readOnly)) && !initShow) {
-      setInputValues(value || defaultValue);
-      setCustomClass('input__focus');
-    } else if ((readOnly || initShow) && !ignoreInitShow) {
-      setInputValues(value || defaultValue);
+    setInputValues(value);
+    if(value) {
       setCustomClass('input__completed');
     }
-  }, [value, defaultValue]);
+  }, [value]);
 
   useEffect(() => {
     setErrorTextField(errorMessage);
@@ -157,7 +117,6 @@ const Input = forwardRef((props, ref) => {
             maxLength={maxLength}
             minLength={minLength}
             placeholder={placeHolder}
-            defaultValue={defaultValue}
             disabled={disabled}
             onChange={handleInputChange}
             onFocus={() => handleFocusStatus()}
@@ -176,7 +135,6 @@ const Input = forwardRef((props, ref) => {
             maxLength={maxLength}
             minLength={minLength}
             placeholder={placeHolder}
-            defaultValue={defaultValue}
             disabled={disabled}
             onChange={handleInputChange}
             onFocus={() => handleFocusStatus()}
@@ -218,7 +176,6 @@ const Input = forwardRef((props, ref) => {
 Input.propTypes = {
   children: PropTypes.node,
   className: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
-  defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   helperText: PropTypes.string,
@@ -245,7 +202,6 @@ Input.propTypes = {
 
 Input.defaultProps = {
   className: '',
-  defaultValue: '',
   disabled: false,
   size: SIZE.SMALL,
   type: 'text',
