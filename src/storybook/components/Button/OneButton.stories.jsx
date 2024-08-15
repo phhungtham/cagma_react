@@ -1,6 +1,6 @@
+import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import React from 'react';
 
-import { Button } from '@atomic/ButtonGroup/Button/Button';
 
 // eslint-disable-next-line
 export default {

@@ -1,4 +1,4 @@
-import Alert from '@common/ui/components/atomic/Alert/Alert';
+import Alert from '@common/components/molecules/Alert';
 import React from 'react';
 
 export default {

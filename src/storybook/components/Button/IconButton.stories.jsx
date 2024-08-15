@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IconButton } from '@common/ui/components/atomic/ButtonGroup/IconButton/IconButton';
+import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 
 // eslint-disable-next-line
 export default {

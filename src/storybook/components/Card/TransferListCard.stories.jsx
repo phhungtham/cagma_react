@@ -1,5 +1,5 @@
+import TransferListCard from '@common/components/organisms/CardGroup/TransferListCard/TransferListCard';
 import React from 'react';
-import TransferListCard from '@common/ui/components/atomic/CardGroup/TransferListCard/TransferListCard';
 
 
 // eslint-disable-next-line

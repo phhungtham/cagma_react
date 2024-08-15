@@ -1,6 +1,6 @@
 import React from 'react';
-import BearImage from '../../../assets/images/bear-profile.png';
-import TransactionHistory from '@common/ui/components/atomic/TransactionHistory';
+import BearImage from '@assets/images/bear-profile.png';
+import TransactionHistory from '@common/components/organisms/TransactionHistory';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/List/Transaction History',

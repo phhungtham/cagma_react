@@ -1,4 +1,4 @@
-import Currency from '@common/ui/components/atomic/Currency';
+import Currency from '@common/components/atoms/Currency';
 import React from 'react';
 
 export default {

@@ -1,5 +1,5 @@
-import Notification from '@common/ui/components/atomic/Notification';
-import Tabs from '@common/ui/components/atomic/Tabs';
+import Tabs from '@common/components/molecules/Tabs';
+import Notification from '@common/components/organisms/Notification';
 import React from 'react';
 
 export default {

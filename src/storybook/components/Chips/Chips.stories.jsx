@@ -1,4 +1,4 @@
-import Chips from '@common/ui/components/atomic/Chips';
+import Chips from '@common/components/atoms/Chips';
 import React from 'react';
 
 export default {

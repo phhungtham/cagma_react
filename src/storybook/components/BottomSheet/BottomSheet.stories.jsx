@@ -1,5 +1,5 @@
+import BottomSheet from '@common/components/templates/BottomSheet';
 import React from 'react';
-import BottomSheet from '@common/ui/components/atomic/BottomSheet';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Bottom/Bottom Sheet',

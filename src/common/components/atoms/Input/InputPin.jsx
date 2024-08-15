@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import TextError from '../TextError';
 import { PropTypes } from 'prop-types';
-import { INPUT_MODE } from '@common/ui/constants';
+import { INPUT_MODE } from '@common/components/constants';
 
 const InputPin = ({ clazz, mode, stepsNumber, errorMsg, onChange }) => {
   const [codeValue, setCodeValue] = useState('');

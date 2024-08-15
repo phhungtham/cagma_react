@@ -1,6 +1,6 @@
 import React from 'react';
-import Switch from '@atomic/Switch';
 import { action, actions } from '@storybook/addon-actions';
+import Switch from '@common/components/atoms/Switch';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Switch/Switch Only',

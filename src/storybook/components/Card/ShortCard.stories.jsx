@@ -1,6 +1,6 @@
+import ShortCard from '@common/components/organisms/CardGroup/ShortCard/ShortCard';
 import React from 'react';
 
-import ShortCard from '@common/ui/components/atomic/CardGroup/ShortCard/ShortCard';
 
 // eslint-disable-next-line
 export default {

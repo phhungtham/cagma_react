@@ -1,5 +1,5 @@
-import InputSearch from '@common/ui/components/atomic/Input/InputSearch';
-import { INPUT_MODE, SIZE } from '@common/ui/constants';
+import InputSearch from '@common/components/atoms/Input/InputSearch';
+import { INPUT_MODE, SIZE } from '@common/components/constants';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 

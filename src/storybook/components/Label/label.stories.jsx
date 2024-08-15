@@ -1,5 +1,5 @@
+import Label from '@common/components/atoms/Label';
 import React from 'react';
-import Label from '@common/ui/components/atomic/Label';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Label/Label',

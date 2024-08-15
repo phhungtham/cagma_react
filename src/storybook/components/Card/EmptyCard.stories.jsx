@@ -1,5 +1,5 @@
+import EmptyCard from '@common/components/organisms/CardGroup/EmptyCard/EmptyCard';
 import React from 'react';
-import EmptyCard from '@common/ui/components/atomic/CardGroup/EmptyCard/EmptyCard';
 
 // eslint-disable-next-line
 export default {

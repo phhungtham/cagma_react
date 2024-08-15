@@ -1,10 +1,10 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useComposeRefs from '../../../../../hooks/useComposeRefs';
-import { InputTypes, INPUT_MODE, SIZE } from '@common/ui/constants';
+import useComposeRefs from '@hooks/useComposeRefs';
 import { ClearIcon, ClearIconDark, SearchIcon } from 'assets/icons';
 import Span from '../Span';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
+import { INPUT_MODE, InputTypes, SIZE } from '@common/components/constants';
 
 const InputSearch = forwardRef((props, ref) => {
   const {

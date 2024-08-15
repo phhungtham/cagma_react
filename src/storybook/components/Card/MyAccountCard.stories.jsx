@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { CardIcon } from 'assets/icons';
-import MyAccountCard from '@common/ui/components/atomic/CardGroup/MyAccountCard/MyAccountCard';
+import MyAccountCard from '@common/components/organisms/CardGroup/MyAccountCard/MyAccountCard';
 
 // eslint-disable-next-line
 export default {

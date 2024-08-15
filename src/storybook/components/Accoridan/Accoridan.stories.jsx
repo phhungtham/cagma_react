@@ -1,4 +1,4 @@
-import Accoridan from '@common/ui/components/atomic/Accoridan';
+import Accoridan from '@common/components/atoms/Accoridan';
 import { AnswerIcon, QuestionIcon } from 'assets/icons';
 import React from 'react';
 

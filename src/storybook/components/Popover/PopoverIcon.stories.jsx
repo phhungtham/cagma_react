@@ -1,4 +1,4 @@
-import Popover from '@common/ui/components/atomic/Popover';
+import Popover from '@common/components/atoms/Popover';
 import { CheckIcon } from 'assets/icons';
 import React from 'react';
 

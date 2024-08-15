@@ -1,5 +1,5 @@
+import TotalBalanceCard from '@common/components/organisms/CardGroup/TotalBalanceCard/TotalBalanceCard';
 import React from 'react';
-import TotalBalanceCard from '@common/ui/components/atomic/CardGroup/TotalBalanceCard/TotalBalanceCard';
 
 // eslint-disable-next-line
 export default {

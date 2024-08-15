@@ -1,7 +1,7 @@
 import React from 'react';
 
-import AccountCard from '@common/ui/components/atomic/CardGroup/AccountCard/AccountCard';
 import { PipIcon } from 'assets/icons';
+import AccountCard from '@common/components/organisms/CardGroup/AccountCard/AccountCard';
 
 // eslint-disable-next-line
 export default {

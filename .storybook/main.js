@@ -26,12 +26,12 @@ module.exports = {
       '@design': path.resolve(__dirname, '../src/design'),
       '@routes': path.resolve(__dirname, '../src/routes'),
       '@global': path.resolve(__dirname, '../src/global'),
-      '@atomic': path.resolve(__dirname, '../src/common/ui/components/atomic'),
+      '@atomic': path.resolve(__dirname, '../src/common/components/atoms'),
       '@assets': path.resolve(__dirname, '../src/assets'),
       '@hooks': path.resolve(__dirname, '../src/hooks'),
       '@configs': path.resolve(__dirname, '../src/configs'),
       '@utilities': path.resolve(__dirname, '../src/utilities'),
-      '@components': path.resolve(__dirname, '../src/components')
+      '@pages': path.resolve(__dirname, '../src/pages')
     };
     return config;
   },

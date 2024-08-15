@@ -2,7 +2,7 @@ import React from 'react';
 
 import { action } from '@storybook/addon-actions';
 import { DocumentIcon } from 'assets/icons';
-import Switch from '@common/ui/components/atomic/Switch';
+import Switch from '@common/components/atoms/Switch';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Switch/Switch With Icon',

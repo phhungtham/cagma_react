@@ -1,7 +1,7 @@
 import React from 'react';
-import Profile from '@common/ui/components/atomic/Profile';
 
-import BearProfile from '../../../assets/images/bear-profile.png';
+import BearProfile from '@assets/images/bear-profile.png';
+import Profile from '@common/components/molecules/Profile';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Profile/Profile',

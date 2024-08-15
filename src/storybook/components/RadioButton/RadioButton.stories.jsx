@@ -1,7 +1,7 @@
-import RadioButton from '@common/ui/components/atomic/RadioButton';
+import RadioButton from '@common/components/atoms/RadioButton';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { SIZE } from '@common/ui/constants';
+import { SIZE } from '@common/components/constants';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Radio/Radio Button',

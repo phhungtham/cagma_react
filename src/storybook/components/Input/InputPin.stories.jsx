@@ -1,5 +1,5 @@
-import InputPin from '@common/ui/components/atomic/Input/InputPin';
-import { INPUT_MODE } from '@common/ui/constants';
+import InputPin from '@common/components/atoms/Input/InputPin';
+import { INPUT_MODE } from '@common/components/constants';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 

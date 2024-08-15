@@ -1,6 +1,6 @@
 import React from 'react';
 import BearImage from '../../../assets/images/bear-profile.png';
-import TransferList from '@common/ui/components/atomic/ListGroup/TransferList';
+import TransferList from '@common/components/atoms/ListGroup/TransferList';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/List/Transfer List',

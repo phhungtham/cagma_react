@@ -1,4 +1,4 @@
-import Popover from '@common/ui/components/atomic/Popover';
+import Popover from '@common/components/atoms/Popover';
 import React from 'react';
 
 export default {

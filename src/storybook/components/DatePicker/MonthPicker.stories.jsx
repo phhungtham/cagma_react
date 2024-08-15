@@ -1,5 +1,5 @@
+import MonthPicker from '@common/components/molecules/Calendar/MonthPicker';
 import React from 'react';
-import MonthPicker from '@common/ui/components/atomic/Calendar/MonthPicker';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Calendar/MonthPickerBox',

@@ -1,5 +1,5 @@
+import { FAButton } from '@common/components/atoms/ButtonGroup/FAB/FAButton';
 import React from 'react';
-import { FAButton } from '@common/ui/components/atomic/ButtonGroup/FAB/FAButton';
 
 // eslint-disable-next-line
 export default {

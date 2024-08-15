@@ -1,6 +1,6 @@
 import React from 'react';
-import BearImage from '../../../assets/images/bear-profile.png';
-import Notification from '@common/ui/components/atomic/Notification';
+import BearImage from '@assets/images/bear-profile.png';
+import Notification from '@common/components/organisms/Notification';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/List/Notification',

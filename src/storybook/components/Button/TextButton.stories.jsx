@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { TextButton } from '@common/ui/components/atomic/ButtonGroup/TextButton/TextButton';
-import { SIZE } from '@common/ui/constants';
+import { TextButton } from '@common/components/atoms/ButtonGroup/TextButton/TextButton';
+import { SIZE } from '@common/components/constants';
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Button/TextButton',

@@ -1,5 +1,5 @@
 import React from 'react';
-import List from '@common/ui/components/atomic/ListGroup/List';
+import List from '@common/components/atoms/ListGroup/List';
 import { CheckingIcon, ShareIcon } from 'assets/icons';
 import BearImage from '../../../assets/images/bear-profile.png';
 

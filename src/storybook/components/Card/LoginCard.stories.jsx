@@ -1,6 +1,6 @@
+import LoginCard from '@common/components/organisms/CardGroup/LoginCard/LoginCard';
 import React from 'react';
 
-import LoginCard from '@atomic/CardGroup/LoginCard/LoginCard';
 
 // eslint-disable-next-line
 export default {
