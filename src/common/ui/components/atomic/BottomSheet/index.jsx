@@ -8,7 +8,7 @@ import { appGlobalReducer } from 'app/redux/reducer';
 import { setIsNativeClickBack } from 'app/redux/action';
 
 const BottomSheet = props => {
-  const { clazz, open, type, title, dockerBar, closeIcon, onClose, srollUpOnClose = true, children } = props;
+  const { clazz, open, type, title, subTitle, dockerBar, closeIcon, onClose, srollUpOnClose = true, children } = props;
   const [animate, setAnimate] = useState(false);
   useReducers([
     { key: APP_GLOBAL, reducer: appGlobalReducer }
@@ -38,6 +38,11 @@ const BottomSheet = props => {
             {title && (
               <div className="bottom__sheet__header__title">
                 <Span clazz="" text={title} />
+                {subTitle && (
+                  <div className="bottom__sheet__header__sub-title">
+                    <Span clazz="" text={subTitle} />
+                  </div>
+                )}
               </div>
             )}
             {closeIcon && (

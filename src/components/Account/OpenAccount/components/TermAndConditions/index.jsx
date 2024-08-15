@@ -6,15 +6,27 @@ import TermConditionChecklist from '@common/ui/components/organisms/TermConditio
 import { termConditionConfig } from '../../constants';
 import { Button } from '@common/ui/components/atomic/ButtonGroup/Button/Button';
 import { useState } from 'react';
+import SelectBottom from '@common/ui/components/atomic/BottomSheet/SelectBottom/SelectBottom';
+import ViewTermBottom from '@common/ui/components/molecules/ViewTermBottom';
 
 const TermAndConditions = () => {
   const [isValidForm, setIsValidForm] = useState(false);
+  const [isShowViewTermBottom, setIsShowViewTermBottom] = useState(false);
   const onChangeSelectAll = (checked) => {
     setIsValidForm(checked);
   };
 
   const onClickSubmit = () => {
     alert('on submit');
+  };
+
+  const onClickViewTermDetail = (value) => {
+    console.log('value :>> ', value);
+    setIsShowViewTermBottom(true);
+  };
+
+  const onCloseViewTermBottom = () => {
+    setIsShowViewTermBottom(false);
   };
   
   return (
@@ -55,12 +67,18 @@ const TermAndConditions = () => {
           </div>
         </div>
         <div className='term-condition__checklist'>
-          <TermConditionChecklist config={termConditionConfig} onSelectAll={onChangeSelectAll} onClickViewTerm={() => {console.log('on Click View Term');}} />
+          <TermConditionChecklist config={termConditionConfig} onSelectAll={onChangeSelectAll} onClickViewTerm={onClickViewTermDetail} />
         </div>
       </div>
       <div className="footer__fixed">
         <Button label="Next" variant="filled__primary" className="btn__cta" onClick={onClickSubmit} disable={!isValidForm}></Button>
       </div>
+      <ViewTermBottom 
+        open={isShowViewTermBottom} 
+        onClose={onCloseViewTermBottom} 
+        title="View Terms" 
+        subTitle="View terms subtitle"
+      />
     </div>
   );
 };

@@ -54,8 +54,16 @@
       font-size: 17px;
       font-weight: 600;
       text-transform: capitalize;
-      align-items: center;
       display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__sub-title {
+      margin-top: 4px;
+      font-size: 14px;
+      line-height: 19px;
+      color: $color-gray-700;
     }
 
     &__docker {
@@ -93,7 +101,7 @@
     height: 321px;
   }
   &.max {
-    height: 95vh;
+    height: 93vh;
   }
   &.max-scroll {
     height: 95vh;
@@ -111,7 +119,7 @@
     &.max-scroll {
       overflow-y: scroll;
       &::-webkit-scrollbar-thumb {
-        background-color: #bec1c6;
+        background-color: $color-gray-400;
         border-radius: 8px;
         height: 10%;
       }
