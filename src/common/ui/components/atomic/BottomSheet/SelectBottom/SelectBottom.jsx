@@ -20,7 +20,7 @@ const SelectBottom = ({open, onClose, onSelect, options, title}) => {
     >
       <div className="bottom__dropdown__list">
         {options.map(item => 
-          <div className="dropdown__option" onClick={() => onSelectItem(item)}>
+          <div className="dropdown__option" key={item.value} onClick={() => onSelectItem(item)}>
             <span className="option__label">{item.label}</span>
             <ArrowRight />
           </div>

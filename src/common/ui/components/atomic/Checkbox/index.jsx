@@ -9,48 +9,32 @@ const CheckBox = ({
   clazz,
   size,
   label,
-  backgroundSelected,
   disabled,
   hideCheckBox,
   onChange,
-  staticCheckBox,
-  defaultChecked = false,
-  onChecked
+  checked
 }) => {
-  const [selected, setSelected] = useState(false);
   const sizeClassName = size === SIZE.SMALL ? 'checkbox__small' : 'checkbox__large';
   const disabledClassName = disabled ? 'disabled' : '';
-  const selectedClassName = selected || staticCheckBox ? 'selected' : '';
+  const selectedClassName = checked ? 'selected' : '';
 
   const handleCheckbox = e => {
     const isSelected = e.target.checked;
-    if (onChange) onChange(isSelected);
-    setSelected(!selected);
-    if (onChecked && !selected) {
-      onChecked();
-    }
+    onChange?.(isSelected);
   };
+  
   return (
     <label className={`checkbox ${clazz}`}>
-      {staticCheckBox ? (
-        <input
-          type="checkbox"
-          className={`checkbox__input ${disabledClassName}`}
-          defaultChecked={true}
-          disabled={true}
-        />
-      ) : (
-        <input
-          type="checkbox"
-          className={`checkbox__input ${disabledClassName}`}
-          onChange={handleCheckbox}
-          disabled={disabled}
-          defaultChecked={defaultChecked}
-        />
-      )}
+      <input
+        type="checkbox"
+        className={`checkbox__input ${disabledClassName}`}
+        onChange={handleCheckbox}
+        disabled={disabled}
+        checked={checked}
+      />
       {!hideCheckBox && (
         <span
-          className={`checkbox__inner ${selectedClassName} ${disabledClassName} ${sizeClassName} ${backgroundSelected}`}
+          className={`checkbox__inner ${selectedClassName} ${disabledClassName} ${sizeClassName}`}
         >
           {size === SIZE.SMALL ? <CheckSmallIcon /> : <CheckLargeIcon />}
         </span>
@@ -64,25 +48,19 @@ const CheckBox = ({
 CheckBox.propTypes = {
   clazz: PropTypes.string,
   size: PropTypes.oneOf(['small', 'large']),
-  backgroundSelected: PropTypes.oneOf(['light', 'dark']),
   disabled: PropTypes.bool,
   label: PropTypes.string,
   hideCheckBox: PropTypes.bool,
-  staticCheckBox: PropTypes.bool,
   onChange: PropTypes.func,
-  url: PropTypes.string
 };
 
 CheckBox.defaultProps = {
   clazz: '',
-  size: SIZE.SMALL,
+  size: SIZE.LARGE,
   disabled: false,
-  backgroundSelected: 'light',
   label: '',
   hideCheckBox: false,
-  staticCheckBox: false,
   onChange: undefined,
-  url: null
 };
 
 export default CheckBox;

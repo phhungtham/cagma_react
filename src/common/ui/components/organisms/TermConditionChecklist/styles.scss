@@ -1,0 +1,25 @@
+@import 'styles/utilities/variables';
+
+.term-condition-checklist-wrapper {
+  .checklist__check-all {
+    padding-bottom: 20px;
+    .checkbox__label {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 21px;
+      color: $color-gray-900;
+    }
+  }
+
+  .checklist___options {
+    padding-top: 8px;
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+      color: $color-gray-550;
+    }
+  }
+}

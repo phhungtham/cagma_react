@@ -10,7 +10,7 @@
       "@configs/*": ["configs/*"],
       "@hooks/*": ["hooks/*"],
       "@utilities/*": ["utilities/*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
     }
   },
   "exclude": ["node_modules"]
