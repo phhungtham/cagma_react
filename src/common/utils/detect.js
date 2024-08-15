@@ -1,4 +1,4 @@
-import { ICON_NOTIFY_TYPE } from '@common/ui/constants';
+import { ICON_NOTIFY_TYPE } from '@common/components/constants';
 
 export const detectIconNotifyType = type => {
   switch (type) {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Toast from '@common/ui/components/atomic/Toast';
+import Toast from '@common/components/atoms/Toast';
 import { CheckIcon } from 'assets/icons';
 
 export default {

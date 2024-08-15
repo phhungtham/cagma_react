@@ -1,4 +1,4 @@
-import Spinner from '@common/ui/components/atomic/Spinner';
+import Spinner from '@common/components/atoms/Spinner';
 import React from 'react';
 
 export default {

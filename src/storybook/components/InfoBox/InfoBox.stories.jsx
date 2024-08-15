@@ -1,4 +1,4 @@
-import InfoBox from '@common/ui/components/atomic/InfoBox';
+import InfoBox from '@common/components/atoms/InfoBox';
 import React from 'react';
 
 export default {

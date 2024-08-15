@@ -1,5 +1,3 @@
-import ErrorBoundary from '@common/ui/ErrorBoundary';
-import Fallback from '@common/ui/Fallback';
 import useDetectBrowser from '@hooks/useDetectBrowser';
 import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
@@ -27,6 +25,8 @@ import { appGlobalReducer } from './redux/reducer';
 import { appLanguage } from './redux/selector';
 import { APP_GLOBAL } from './redux/type';
 import { AppCfg } from '@configs/appConfigs';
+import ErrorBoundary from '@common/components/ErrorBoundary';
+import Fallback from '@common/components/Fallback';
 
 const App = () => {
   useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
