@@ -100,7 +100,7 @@ Dropdown.propTypes = {
   isCountCharacter: PropTypes.bool,
   placeHolder: PropTypes.string,
   style: PropTypes.object,
-  mode: PropTypes.oneOf(['normal', 'onBackground']),
+  mode: PropTypes.oneOf(['normal', 'text']),
   onClearInput: PropTypes.func,
   options: PropTypes.arrayOf(
     PropTypes.shape({

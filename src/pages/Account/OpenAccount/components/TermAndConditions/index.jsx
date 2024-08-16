@@ -35,7 +35,7 @@ const TermAndConditions = ({onSubmit}) => {
         onClick={moveBack}
       />
       <div className='term-conditions__content'>
-        <h1 className='term-condition__title'>Terms&Conditions</h1>
+        <h1 className='page__title'>Terms&Conditions</h1>
         <div className='term-condition__banner'>
           <div className='banner__desc'>
             <div className='product__type'>

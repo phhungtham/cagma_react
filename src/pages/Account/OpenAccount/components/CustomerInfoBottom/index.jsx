@@ -3,7 +3,7 @@ import './styles.scss';
 import { customerInfoFields } from '../../constants';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 
-const CustomerInfoBottom = ({customerInfo}) => {
+const CustomerInfoBottom = ({customerInfo, onClickConfirm, onClickChangeProfile}) => {
   return (
     <BottomSheet
       open={true}
@@ -29,8 +29,8 @@ const CustomerInfoBottom = ({customerInfo}) => {
         </div>
         <div className='divider__item__solid'></div>
         <div className='customer__cta'>
-          <Button variant="filled__secondary-blue" label="Update Profile"></Button>
-          <Button variant="filled__primary" label="New Account"></Button>
+          <Button variant="filled__secondary-blue" label="Update Profile" onClick={onClickChangeProfile}></Button>
+          <Button variant="filled__primary" label="New Account" onClick={onClickConfirm}></Button>
         </div>
       </div>
     </BottomSheet>

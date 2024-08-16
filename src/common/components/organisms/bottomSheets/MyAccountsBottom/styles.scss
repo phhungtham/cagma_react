@@ -1,0 +1,46 @@
+@import 'styles/utilities/variables';
+
+.my-accounts-bottom__wrapper {
+  &.bottom__sheet.max-scroll {
+    height: auto;
+    max-height: 93vh;
+  }
+  .bottom__sheet__content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.my-accounts {
+  &__item {
+    padding: 0 24px;
+    &:hover, &:focus {
+      background-color: $color-gray-50;
+    }
+    &:last-child {
+      .my-accounts__item__main {
+        border: none;
+      }
+    }
+  }
+  &__item__main {
+    padding: 20px 0;
+    border-bottom: 1px solid $color-gray-200;
+  }
+  &__name {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 21px;
+  }
+  &__number {
+    font-size: 14px;
+    line-height: 19px;
+    color: $color-gray-700;
+  }
+  &__balance {
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 18px;
+    color: $color-gray-550;
+  }
+}

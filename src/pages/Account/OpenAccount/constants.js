@@ -14,7 +14,8 @@ export const termConditionConfig = {
 
 export const OPEN_ACCOUNT_STEP = {
   VIEW_TERMS: 'viewTerms',
-  CUSTOMER_INFO: 'customerInfo'
+  CUSTOMER_INFO: 'customerInfo',
+  ENTER_ACCOUNT_INFORMATION: 'enterAccountInformation'
 };
 
 export const customerInfoFields = [

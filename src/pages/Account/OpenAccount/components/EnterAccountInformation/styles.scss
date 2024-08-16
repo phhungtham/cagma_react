@@ -1,0 +1,13 @@
+.enter-account-information__content {
+  .page__title {
+    padding: 10px 0 16px;
+  }
+  .enter-account {
+    &__account-number {
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 19px;
+      font-weight: 500;
+    }
+  }
+}
