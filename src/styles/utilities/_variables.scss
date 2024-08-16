@@ -100,6 +100,14 @@ $button-type-maps: (
     text-color-active: text-color(color-white),
     text-color-disable: $color-gray-400
   ),
+  filled__secondary-blue: (
+    background-nor: $color-blue-100,
+    background-active: $color-gray-500,
+    background-disabled: $color-blue-100,
+    text-color: $color-blue-900,
+    text-color-active: $color-blue-900,
+    text-color-disable: $color-blue-200
+  ),
   background: (
     background-nor: bt-bg-color(color-dark-blue),
     background-active: bt-bg-color(color-grey),

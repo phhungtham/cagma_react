@@ -8,7 +8,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { termConditionConfig } from '../../constants';
 import Header from '@common/components/organisms/Header';
 
-const TermAndConditions = () => {
+const TermAndConditions = ({onSubmit}) => {
   const [isValidForm, setIsValidForm] = useState(false);
   const [isShowViewTermBottom, setIsShowViewTermBottom] = useState(false);
   const onChangeSelectAll = (checked) => {
@@ -16,7 +16,7 @@ const TermAndConditions = () => {
   };
 
   const onClickSubmit = () => {
-    alert('on submit');
+    onSubmit();
   };
 
   const onClickViewTermDetail = (value) => {

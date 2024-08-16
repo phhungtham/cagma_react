@@ -6,4 +6,14 @@
   .pt-#{$i} {
     padding-top: $i * 4px;
   }
+
+  .py-#{$i} {
+    padding-top: $i * 4px;
+    padding-bottom: $i * 4px;
+  }
+
+  .px-#{$i} {
+    padding-left: $i * 4px;
+    padding-right: $i * 4px;
+  }
 }
