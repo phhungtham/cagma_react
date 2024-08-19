@@ -1,4 +1,4 @@
-.enter__amount__bottomsheet {
+.enter-amount__bottomsheet {
   $color_1: white;
   $color_2: rgba(255, 255, 255, 0.5);
   $color_3: rgba(0, 0, 0, 0.6);
@@ -24,8 +24,8 @@
     align-items: center;
     justify-content: center;
     flex: 1 0 33.3333%;
-    min-height: 50px;
-    background-color: $background-color_1;
+    min-height: 63px;
+    background-color: #35415B;
     color: $color_1;
     border: 1px solid rgba(0, 0, 0, 0.25);
     margin: -1px;
@@ -61,50 +61,103 @@
       margin: 24px;
     }
   }
-  .input__content {
+  .form__wrapper {
     text-align: center;
-    .account {
-      color: $color_3;
-      font-weight: 600;
+    padding: 0 24px;
+    .account-name {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 20px;
     }
-    .balance {
-      color: $color_4;
-      font-weight: 400;
-      padding: 10px;
+    .account-number {
+      margin-top: 4px;
+      font-size: 14px;
+      line-height: 19px;
+      color: $color-gray-700;
     }
-    .currency {
-      font-weight: 700;
-      color: $color_5;
-      padding-top: 20px;
-      padding: 5px;
+    .account-balance {
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 18px;
+      color: $color-gray-550;
     }
-    input {
-      color: $color_5;
-      padding: 0;
-      &::placeholder {
-        color: $color_7;
-        font-size: 25px;
-        font-weight: bold;
+    .currency-selection {
+      display: flex;
+      justify-content: center;
+    }
+    .currency-item {
+      height: 36px;
+      padding: 0 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      line-height: 19px;
+      border: 1px solid $color-gray-300;
+      color: $color-gray-500;
+      &.selected {
+        color: $color-blue-500;
+        font-weight: 500;
+        border: 1px solid $color-blue-500;
+      }
+      &:first-child {
+        border-radius: 10px 0 0 10px;
+      }
+      &:last-child {
+        border-radius: 0 10px 10px 0;
       }
     }
-    .alert {
-      color: $color_6;
-      padding: 10px;
-      padding-top: 20px;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
+    .amount-value__wrapper {
+      margin-top: 24px;
+      height: 41px;
     }
-  }
-  input {
-    font-weight: bold;
-    background-color: $background-color_4;
-    text-align: center;
-    border: 0;
-    width: 100%;
-    height: 50px;
-    font-size: 25px;
-    opacity: 1;
+    .amount-unit,
+    .amount-value {
+      font-size: 34px;
+      line-height: 41px;
+      color: $color-gray-400;
+    }
+    .amount-value {
+      font-weight: 700;
+    }
+    .amount-value__error-alert {
+      margin-top: 8px;
+      color: #D61111;
+      font-size: 12px;
+      line-height: 16px;
+      height: 16px;
+      @include flexCenter();
+
+      .error-icon {
+        font-size: 14px;
+      }
+    }
+    .amount-exchange-rate__wrapper {
+      @include flexCenter();
+      margin-top: 24px;
+      height: 20px;
+      font-size: 14px;
+      color: $color-gray-700;
+    }
+    .exchange-rate__value__block {
+      display: flex;
+      color: $color-blue-500;
+
+      .exchange-rate__value {
+        font-weight: 700;
+      }
+    }
+    .refresh-btn {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+    }
+    .btn-submit__wrapper {
+      margin-top: 12px;
+      padding: 24px 0;
+      .btn-submit {
+        width: 100%;
+      }
+    }
   }
 }

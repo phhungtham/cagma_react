@@ -4,6 +4,7 @@ import './styles.scss';
 import TextDropdown from '@common/components/atoms/Dropdown/TextDropdown';
 import { useState } from 'react';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
+import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAmountBottom';
 
 const EnterAccountInformation = () => {
   const [showMyAccountsBottom, setShowMyAccountBottoms] = useState(false);
@@ -49,6 +50,16 @@ const EnterAccountInformation = () => {
         </div>
       </div>
       <MyAccountsBottom open={showMyAccountsBottom} onClose={() => setShowMyAccountBottoms(false)} onSelect={onSelectAccount} />
+      {showEnterAmountBottom && 
+        <EnterAmountBottom 
+          onClose={() => setShowEnterAmountBottoms(false)} 
+          accountName={selectedAccount?.name}
+          accountNumber={selectedAccount?.number}
+          accountBalance="Available Balance $300,000.00"
+          currency="CAD"
+        />
+      }
+      
     </div>
   );
 };

@@ -68,3 +68,5 @@ export { default as ArrowUp } from './ArrowUp';
 export { default as ViewPDFIcon } from './ViewPDFIcon';
 export { default as ViewDetailIcon } from './ViewDetailIcon';
 export { default as CameraIcon } from './CameraIcon';
+export { default as ErrorIcon } from './ErrorIcon';
+export { default as RefreshIcon } from './RefreshIcon';

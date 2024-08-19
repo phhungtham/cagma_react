@@ -15,6 +15,16 @@
     margin-left: $i * 4px;
   }
 
+  .mx-#{$i} {
+    margin-left: $i * 4px;
+    margin-right: $i * 4px;
+  }
+
+  .my-#{$i} {
+    margin-top: $i * 4px;
+    margin-bottom: $i * 4px;
+  }
+
   .pt-#{$i} {
     padding-top: $i * 4px;
   }
