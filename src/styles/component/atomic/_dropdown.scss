@@ -95,6 +95,11 @@
     gap: 8px;
     align-items: center;
     cursor: pointer;
+    &.align-vertical {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
   }
   &__label {
     font-size: 20px;
@@ -112,5 +117,6 @@
   }
   &__select-icon {
     font-size: 16px;
+    margin-top: 2px;
   }
 }

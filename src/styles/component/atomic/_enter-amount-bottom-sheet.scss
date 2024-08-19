@@ -110,12 +110,15 @@
     .amount-value__wrapper {
       margin-top: 24px;
       height: 41px;
+      color: $color-gray-400;
+      &.has-value {
+        color: $color-blue-500;
+      }
     }
     .amount-unit,
     .amount-value {
       font-size: 34px;
       line-height: 41px;
-      color: $color-gray-400;
     }
     .amount-value {
       font-weight: 700;

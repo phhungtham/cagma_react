@@ -38,4 +38,16 @@
     padding-left: $i * 4px;
     padding-right: $i * 4px;
   }
+
+  .gap-#{$i} {
+    gap: $i * 4px;
+  }
+}
+
+.d-flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
 }

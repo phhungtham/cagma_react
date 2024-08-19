@@ -22,7 +22,7 @@ const OpenAccount = ({translation}) => {
         <TermAndConditions onSubmit={onSubmitAgreeTerms} />
       }
       {currentStep === OPEN_ACCOUNT_STEP.CUSTOMER_INFO && 
-        <CustomerInfoBottom customerInfo={customerInfo} onClickConfirm={onConfirmCustomerInfo} /> 
+        <CustomerInfoBottom customerInfo={customerInfo} onClickConfirm={onConfirmCustomerInfo} onCh /> 
       }
       {currentStep === OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION && 
         <EnterAccountInformation /> 

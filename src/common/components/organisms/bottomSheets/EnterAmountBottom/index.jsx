@@ -27,7 +27,7 @@ const EnterAmountBottom = ({
   alert_msg,
   handleOnClickNextButton,
   amount,
-  setInputValue
+  onChangeAmount
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(currency);
   console.log('selectedCurrency :>> ', selectedCurrency);
@@ -47,15 +47,15 @@ const EnterAmountBottom = ({
   const handleNumberClick = value => {
     if (value === 'delete') {
       if (amount === 'delete') {
-        setInputValue('');
+        onChangeAmount('');
       } else {
         let newValue = amount.slice(0, -1);
         if (newValue.includes(',')) {
           newValue = newValue.replace(/,/g, '');
           const formattedValue = newValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-          setInputValue(formattedValue);
+          onChangeAmount(formattedValue);
         } else {
-          setInputValue(newValue);
+          onChangeAmount(newValue);
         }
       }
     } else if (
@@ -76,7 +76,7 @@ const EnterAmountBottom = ({
       }
       // New logic ends here
       const formattedInput = newInput.replace(/,/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      setInputValue(formattedInput);
+      onChangeAmount(formattedInput);
     }
   };
 
@@ -94,7 +94,7 @@ const EnterAmountBottom = ({
               <span className={`currency-item ${selectedCurrency === value ? 'selected' : ''}`} onClick={() => setSelectedCurrency(value)}>{label}</span>
             ))}
           </div>
-          <div className='amount-value__wrapper'>
+          <div className={`amount-value__wrapper ${!!amount ? 'has-value' : ''}`}>
             <span className='amount-unit mr-1'>$</span>
             <span className='amount-value'>{amount ? amount : '0.00'}</span>
           </div>

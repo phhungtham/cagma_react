@@ -58,3 +58,46 @@ export const customerInfo = {
   cell: 'CUS-ADR-TELN0410002250',
   occupation: 'MANAGEMENT',
 };
+
+export const intendedUseOfAccounts = [
+  {
+    label: 'Salary Receipt',
+    value: 'SalaryReceipt'
+  },
+  {
+    label: 'Daily Transaction',
+    value: 'DailyTransaction'
+  },
+  {
+    label: 'Personal Savings',
+    value: 'PersonalSavings'
+  },
+  {
+    label: 'Retirement',
+    value: 'Retirement'
+  },
+  {
+    label: 'Home Purchase',
+    value: 'HomePurchase'
+  },
+  {
+    label: 'Vehicle Purchase',
+    value: 'VehiclePurchase'
+  },
+  {
+    label: 'Vacation/Leisure',
+    value: 'VacationLeisure'
+  },
+  {
+    label: 'Education',
+    value: 'Education'
+  },
+  {
+    label: 'Remittance',
+    value: 'Remittance'
+  },
+  {
+    label: 'Business Operating Expenses',
+    value: 'BusinessOperatingExpenses'
+  },
+];

@@ -5,13 +5,16 @@ import TextDropdown from '@common/components/atoms/Dropdown/TextDropdown';
 import { useState } from 'react';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAmountBottom';
+import IntendedUseOfAccountBottom from '../IntendedUseOfAccountBottom';
 
 const EnterAccountInformation = () => {
   const [showMyAccountsBottom, setShowMyAccountBottoms] = useState(false);
   const [showEnterAmountBottom, setShowEnterAmountBottoms] = useState(false);
+  const [showIntendedUseAccountBottom, setShowIntendedUseAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
+  const [intendedUseAccount, setIntendedUseAccount] = useState();
   const [selectedAmount, setSelectedAmount] = useState({
-    value: 0,
+    value: '',
     unit: ''
   });
 
@@ -23,10 +26,26 @@ const EnterAccountInformation = () => {
     setShowEnterAmountBottoms(true);
   };
 
+  const onOpenIntendedUseAccountBottom = () => {
+    setShowIntendedUseAccountBottom(true);
+  };
+
   const onSelectAccount = (account) => {
     setSelectedAccount(account);
     console.log('account :>> ', account);
     setShowMyAccountBottoms(false);
+  };
+
+  const onSelectIntendedUseAccount = (intended) => {
+    setIntendedUseAccount(intended);
+    setShowIntendedUseAccountBottom(false);
+  };
+
+  const onChangeAmount = (value) => {
+    setSelectedAmount({
+      value: value,
+      unit: ''
+    });
   };
 
   return (
@@ -44,12 +63,22 @@ const EnterAccountInformation = () => {
             </TextDropdown>
           </section>
           <section>
-            <TextDropdown label="Amount" placeholder="10.00 ~ 1,000.00 CAD" onClick={onOpenEnterAmountBottom} value={selectedAccount?.name}>
+            <TextDropdown label="Amount" placeholder="10.00 ~ 1,000.00 CAD" onClick={onOpenEnterAmountBottom} value={selectedAmount?.value}>
+            </TextDropdown>
+          </section>
+          <section>
+            <TextDropdown 
+              label="Intended use of account" 
+              placeholder="Select" 
+              align='vertical' 
+              onClick={onOpenIntendedUseAccountBottom} 
+              value={intendedUseAccount?.label}>
             </TextDropdown>
           </section>
         </div>
       </div>
       <MyAccountsBottom open={showMyAccountsBottom} onClose={() => setShowMyAccountBottoms(false)} onSelect={onSelectAccount} />
+      <IntendedUseOfAccountBottom open={showIntendedUseAccountBottom} onClose={() => setShowIntendedUseAccountBottom(false)} onSelect={onSelectIntendedUseAccount} />
       {showEnterAmountBottom && 
         <EnterAmountBottom 
           onClose={() => setShowEnterAmountBottoms(false)} 
@@ -57,6 +86,8 @@ const EnterAccountInformation = () => {
           accountNumber={selectedAccount?.number}
           accountBalance="Available Balance $300,000.00"
           currency="CAD"
+          amount={selectedAmount.value}
+          onChangeAmount={onChangeAmount}
         />
       }
       
