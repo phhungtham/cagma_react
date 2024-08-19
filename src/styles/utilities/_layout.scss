@@ -29,6 +29,10 @@
     padding-top: $i * 4px;
   }
 
+  .pb-#{$i} {
+    padding-bottom: $i * 4px;
+  }
+
   .py-#{$i} {
     padding-top: $i * 4px;
     padding-bottom: $i * 4px;

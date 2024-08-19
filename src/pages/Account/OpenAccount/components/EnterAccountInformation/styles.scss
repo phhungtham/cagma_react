@@ -1,4 +1,12 @@
+@import 'styles/utilities/variables';
+
+.enter-account-information__wrapper {
+  height: 100vh;
+  overflow-y: auto;
+}
+
 .enter-account-information__content {
+  padding-bottom: 150px;
   .page__title {
     padding: 10px 0 16px;
   }
@@ -9,5 +17,36 @@
       line-height: 19px;
       font-weight: 500;
     }
+  }
+  .info__wrapper {
+    .info__icon {
+      font-size: 17px;
+    }
+  }
+  .checklist___options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .option-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checkbox {
+    width: unset;
+  }
+  .item__tooltip {
+    color: $color-gray-400;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .third_party-form__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 20px;
   }
 }

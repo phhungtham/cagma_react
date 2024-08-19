@@ -100,6 +100,11 @@
       align-items: flex-start;
       gap: 4px;
     }
+    &.disabled {
+      .text-dropdown__select-icon {
+        color: $color-gray-400;
+      }
+    }
   }
   &__label {
     font-size: 20px;
@@ -113,6 +118,9 @@
     color: $color-gray-400;
     &.selected {
       color: $color-blue-500;
+      &.disabled {
+        color: $color-gray-700;
+      }
     }
   }
   &__select-icon {

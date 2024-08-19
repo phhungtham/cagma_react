@@ -70,3 +70,4 @@ export { default as ViewDetailIcon } from './ViewDetailIcon';
 export { default as CameraIcon } from './CameraIcon';
 export { default as ErrorIcon } from './ErrorIcon';
 export { default as RefreshIcon } from './RefreshIcon';
+export { default as FillTooltipIcon } from './FillTooltipIcon';

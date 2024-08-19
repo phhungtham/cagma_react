@@ -181,6 +181,16 @@ $input-on-background: background-color(dark-sky-blue);
       font-size: 15px;
       line-height: 100%;
     }
+    .input__icon {
+      position: absolute;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+    }
   }
 
   .input__character__counter {
