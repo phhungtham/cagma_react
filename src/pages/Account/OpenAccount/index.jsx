@@ -2,7 +2,7 @@ import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { moveBack } from '@utilities/index';
 import TermAndConditions from './components/TermAndConditions';
 import { useState } from 'react';
-import { customerInfo, OPEN_ACCOUNT_STEP } from './constants';
+import { customerInfo, OPEN_ACCOUNT_STEP, openAccountInfo } from './constants';
 import CustomerInfoBottom from './components/CustomerInfoBottom';
 import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
@@ -33,7 +33,7 @@ const OpenAccount = ({translation}) => {
         <EnterAccountInformation onSubmit={onSubmitOpenAccountForm}/> 
       }
       {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && 
-        <OpenAccountSuccessful /> 
+        <OpenAccountSuccessful openAccountInfo={openAccountInfo} /> 
       }
     </div>
   );

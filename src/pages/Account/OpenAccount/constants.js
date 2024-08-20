@@ -102,3 +102,34 @@ export const intendedUseOfAccounts = [
     value: 'BusinessOperatingExpenses'
   },
 ];
+
+export const openAccountSuccessFields = [
+  {
+    label: 'Product name',
+    value: 'productName'
+  },
+  {
+    label: 'Account no.',
+    value: 'acNo'
+  },
+  {
+    label: 'Interest rate',
+    value: 'interestRate'
+  },
+  {
+    label: 'Amount',
+    value: 'amount'
+  },
+  {
+    label: 'Deposit from',
+    value: 'depositFrom'
+  },
+];
+
+export const openAccountInfo = {
+  productName: 'e-Saving(CAD)',
+  acNo: '700 000 123123',
+  interestRate: '7.00% APR',
+  amount: '1000.00 CAD',
+  depositFrom: '700 000 987654',
+};

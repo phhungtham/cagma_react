@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IconButton } from '../IconButton/IconButton';
+
 export const Button = ({ className, label, disable, onClick, variant, iconPosition, children, ...otherProps }) => {
   const customClass = [`btn__${variant} ${disable ? 'disable' : ''}`, className].join(' ');
   return (
