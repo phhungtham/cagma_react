@@ -2,6 +2,7 @@ import Home from '@pages/Home/Home';
 import ChangeProfile from '@pages/Profile/ChangeProfile';
 import OpenAccount from '@pages/Account/OpenAccount';
 import AppNotifications from '@pages/AppNotifications';
+import DemoComponent from '@pages/DemoComponent/DemoComponent';
 
 const RoutesConfig = [
   {
@@ -22,6 +23,11 @@ const RoutesConfig = [
   {
     path: '/notification',
     component: AppNotifications,
+    private: false
+  },
+  {
+    path: '/demo',
+    component: DemoComponent,
     private: false
   },
 ];
