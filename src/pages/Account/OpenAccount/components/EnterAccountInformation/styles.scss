@@ -12,10 +12,17 @@
   }
   .enter-account {
     &__account-number {
-      margin-top: 8px;
+      margin-top: 6px;
       font-size: 14px;
       line-height: 19px;
       font-weight: 500;
+    }
+    &__term {
+      margin-top: 6px;
+      display: flex;
+      font-size: 14px;
+      line-height: 19px;
+      gap: 17px;
     }
   }
   .info__wrapper {

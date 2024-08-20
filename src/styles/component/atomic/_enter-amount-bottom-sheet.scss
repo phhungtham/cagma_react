@@ -1,16 +1,4 @@
 .enter-amount__bottomsheet {
-  $color_1: white;
-  $color_2: rgba(255, 255, 255, 0.5);
-  $color_3: rgba(0, 0, 0, 0.6);
-  $color_4: rgba(0, 0, 0, 0.4);
-  $color_5: black;
-  $color_6: red;
-  $color_7: rgba(0, 0, 0, 0.2);
-  $background-color_1: #36425b;
-  $background-color_2: darken(#3270ea, 5%);
-  $background-color_3: #3270ea;
-  $background-color_4: white;
-  box-sizing: border-box;
   .bottom__sheet__content {
     padding: 0;
   }
@@ -26,39 +14,11 @@
     flex: 1 0 33.3333%;
     min-height: 63px;
     background-color: #35415B;
-    color: $color_1;
+    color: #FFF;
     border: 1px solid rgba(0, 0, 0, 0.25);
     margin: -1px;
     &:active {
       background-color: darken(#36425b, 5%);
-    }
-  }
-  .btn__next {
-    &:active {
-      background-color: $background-color_2;
-    }
-  }
-
-  .btn__next__wrapper {
-    display: flex;
-    justify-content: center;
-  }
-  .btn__next {
-    width: 100%;
-    height: 52px;
-    border-radius: 10px;
-    border: none;
-    background-color: $background-color_3;
-    color: $color_1;
-    margin: 24px;
-    &:disabled {
-      width: 100%;
-      height: 52px;
-      border-radius: 10px;
-      border: none;
-      background-color: $background-color_3;
-      color: $color_2;
-      margin: 24px;
     }
   }
   .form__wrapper {
@@ -125,7 +85,7 @@
     }
     .amount-value__error-alert {
       margin-top: 8px;
-      color: #D61111;
+      color: $color-error;
       font-size: 12px;
       line-height: 16px;
       height: 16px;

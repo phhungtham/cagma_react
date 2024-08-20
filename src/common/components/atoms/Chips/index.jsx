@@ -3,28 +3,21 @@ import Span from '../Span';
 import { PropTypes } from 'prop-types';
 
 const Chips = props => {
-  const { clazz, type, segments, defaultActive } = props;
-  const [activeChip, setActiveChip] = useState(defaultActive);
-  const handleClickChip = (index, chipItem) => {
-    setActiveChip(chipItem.value);
-    chipItem.handleClick(chipItem.value);
-  };
+  const { clazz, type, segments, value: selectedValue, onChange } = props;
 
-  useEffect(() => {
-    setActiveChip(defaultActive);
-  }, [defaultActive]);
+  const handleClickChip = (chipValue) => {
+    onChange(chipValue);
+  };
 
   return (
     <div className="chips__wrapper">
-      {segments?.map((chip, idx) => (
+      {segments?.map(({label, value}) => (
         <div
-          key={idx}
-          className={`chips__item ${type} ${clazz} ${idx === 0 && 'first__item'} ${
-            segments.length === idx + 1 && 'last__item'
-          } ${activeChip === chip.value && type !== 'amount' && 'active__chip'}`}
-          onClick={() => handleClickChip(idx, chip)}
+          key={value}
+          className={`chips__item ${type} ${selectedValue === value ? 'active__chip' : ''}`}
+          onClick={() => handleClickChip(value)}
         >
-          <Span clazz={`chips__label ${type}`} text={chip.label} />
+          <Span clazz={`chips__label ${type}`} text={label} />
         </div>
       ))}
     </div>
@@ -33,14 +26,15 @@ const Chips = props => {
 
 Chips.propTypes = {
   clazz: PropTypes.string,
+  defaultActive: PropTypes.string,
   type: PropTypes.oneOf(['amount', 'small', 'default']),
-  // segments: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     label: PropTypes.string.isRequired,
-  //     value: PropTypes.string.isRequired,
-  //     handleClick: PropTypes.func
-  //   })
-  // ),
+  onChange: PropTypes.func,
+  segments: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ),
 };
 Chips.defaultProps = {
   clazz: '',
@@ -49,10 +43,9 @@ Chips.defaultProps = {
     {
       label: 'Label',
       value: 'label',
-      handleClick: value => {
-      }
     }
   ],
+  onChange: () => {},
   defaultActive: ''
 };
 

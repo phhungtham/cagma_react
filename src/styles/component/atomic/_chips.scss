@@ -1,59 +1,27 @@
 .chips {
   &__wrapper {
     display: flex;
-    max-width: 340px;
   }
 
   &__item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #fff;
-    width: 168px;
-    height: 50px;
-    border: 1px solid #e1e3e9;
-
-    &.first__item {
-      border-radius: 10px 0px 0px 10px;
-    }
-    &.last__item {
-      border-radius: 0px 10px 10px 0px;
-    }
+    @include flexCenter();
 
     &.amount {
-      width: 69px;
-      height: 36px;
-      padding: 8px 17px;
-
+      height: 34px;
+      padding: 8px 16px;
       width: fit-content;
-      background: #f3f6fb;
+      background: $color-gray-100;
       border-radius: 100px;
       border: 0;
     }
 
-    &.small {
-      width: 65px;
-      height: 28px;
-      & .chips__label {
-        font-size: 11px;
-      }
-    }
-
     &.active__chip {
-      background: #3f5067;
-      border: 1px solid #3f5067;
-      & .chips__label {
-        color: #fff;
-      }
+      background: $color-gray-200;
     }
   }
   &__label {
-    font-weight: 500;
-    font-size: 15px;
-    color: #a0a2a7;
     &.amount {
       font-size: 13px;
-      color: text-color(color-dark-jungle);
     }
   }
 }

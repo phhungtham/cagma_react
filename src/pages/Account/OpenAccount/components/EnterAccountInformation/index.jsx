@@ -14,13 +14,17 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Dropdown from '@common/components/atoms/Dropdown';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import SelectTermsBottom from '@common/components/organisms/bottomSheets/SelectTermsBottom';
+import { SelectTermDurationTypes } from '@common/constants/terms';
 
 const EnterAccountInformation = ({onSubmit}) => {
   const [showMyAccountsBottom, setShowMyAccountBottoms] = useState(false);
+  const [showSelectTermsBottom, setShowSelectTermsBottom] = useState(false);
   const [showEnterAmountBottom, setShowEnterAmountBottoms] = useState(false);
   const [showIntendedUseAccountBottom, setShowIntendedUseAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [intendedUseAccount, setIntendedUseAccount] = useState();
+  const [selectedTerm, setSelectedTerm] = useState();
   const [selectedAmount, setSelectedAmount] = useState({
     value: '',
     unit: ''
@@ -30,6 +34,10 @@ const EnterAccountInformation = ({onSubmit}) => {
 
   const onOpenMyAccountBottom = () => {
     setShowMyAccountBottoms(true);
+  };
+
+  const onOpenSelectTermsBottom = () => {
+    setShowSelectTermsBottom(true);
   };
 
   const onOpenEnterAmountBottom = () => {
@@ -58,6 +66,10 @@ const EnterAccountInformation = ({onSubmit}) => {
     });
   };
 
+  const onChangeTerms = (value) => {
+    setSelectedTerm(value);
+  };
+
   const onSubmitOpenAccount = (values) => {
     onSubmit();
   };
@@ -74,6 +86,14 @@ const EnterAccountInformation = ({onSubmit}) => {
           <section >
             <TextDropdown label="From" placeholder="My Account" onClick={onOpenMyAccountBottom} value={selectedAccount?.name}>
               {selectedAccount ? <div className='enter-account__account-number'>{selectedAccount?.number}</div> : ''}
+            </TextDropdown>
+          </section>
+          <section >
+            <TextDropdown label="Terms" placeholder="Select" onClick={onOpenSelectTermsBottom} value={`${selectedTerm} Months`}>
+              <div className='enter-account__term'>
+                <span>Maturity date</span>
+                <span>25.05.2024</span>
+              </div>
             </TextDropdown>
           </section>
           <section>
@@ -195,7 +215,16 @@ const EnterAccountInformation = ({onSubmit}) => {
           onChangeAmount={onChangeAmount}
         />
       }
-      
+      {showSelectTermsBottom && 
+        <SelectTermsBottom 
+          onClose={() => setShowSelectTermsBottom(false)} 
+          type={SelectTermDurationTypes.MONTH}
+          onChange={onChangeTerms}
+          value={selectedTerm}
+          max={60}
+          min={1}
+        />
+      }
     </div>
   );
 };
