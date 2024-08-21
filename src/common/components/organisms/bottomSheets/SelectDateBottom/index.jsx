@@ -4,11 +4,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 
-import './styles.scss';
+import { itemHeight, months, selectType } from '@common/constants/selectBottom';
 
-const months = ['JAN', 'FED', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-const selectType = { monthYear: 'MM/YYYY', year: 'YYYY' };
-const itemHeight = 30;
+import '../bs_styles.scss';
 
 const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange, type, defaultDate }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
@@ -66,7 +64,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
 
   const handleConfirmSelectedDate = () => {
     if (type === selectType.monthYear) {
-      onDateChange(`${currentMonth + 1 < 10 ? `0${currentMonth + 1}` : currentMonth + 1}/${currentYear}`);
+      onDateChange(`${currentMonth + 1 < 10 ? `0${currentMonth + 1}` : currentMonth + 1}.${currentYear}`);
     } else {
       onDateChange(String(currentYear));
     }
@@ -122,8 +120,8 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
       }
     } else {
       if (typeof defaultDate === 'string') {
-        const month = Number(defaultDate?.split('/')?.[0]);
-        const year = Number(defaultDate?.split('/')?.[1]);
+        const month = Number(defaultDate?.split('.')?.[0]);
+        const year = Number(defaultDate?.split('.')?.[1]);
 
         if (year >= minYear && year <= maxYear && month > 0 && month < 13) {
           scrollToYear(year);
@@ -142,7 +140,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
       type="fit-content"
     >
       <div>
-        <div className='select_date_wrapper'>
+        <div className='select_wrapper'>
           {type !== selectType.year && <div ref={scrollMonthViewRef} className='select_item_wrapper'>
             {months.map((item, idx) => (
               <div key={`month - ${item}`}
@@ -162,7 +160,6 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
               <div key={`year - ${item} `}
                 className={`select_item ${currentYear === item ? 'selected' : ''} ${currentYear - item === 2 ? 'rotateTop' : item - currentYear === 2 ? 'rotateBottom' : ''} `}
                 onClick={() => scrollToYear(item)}>
-                {Math.abs(currentYear - item) === 2 && <div className='gradient' />}
                 {currentYear - item === 2 && <div className='top_gradient' />}
                 {item - currentYear === 2 && <div className='bot_gradient' />}
                 <span>
