@@ -10,7 +10,7 @@
 
   &__group {
     position: relative;
-    width: 34px;
+    width: 38px;
     height: 20px;
   }
 
@@ -28,20 +28,20 @@
     display: none;
 
     &:checked + .switch__slider {
-      background-color: background-color(color-blue);
+      background-color: $color-blue-500;
       &.disabled {
-        background: #e1e3e9;
+        background: $color-blue-200;
       }
     }
 
     &:checked + .switch__icon .selected__right,
     &:checked + .switch__slider .selected__right {
-      transform: translateX(80%);
+      transform: translateX(98%);
     }
 
     &:checked + .switch__icon .selected__left,
     &:checked + .switch__slider .selected__left {
-      transform: translateX(-80%);
+      transform: translateX(-98%);
     }
   }
 
@@ -56,26 +56,26 @@
     transition: 0.4s;
     border-radius: 12px;
     cursor: pointer;
-    background-color: background-color(color-grey-blur);
+    background-color: #667085;
     &.disabled {
-      background: #e1e3e9;
+      background: #D0D5DD;
     }
     .circle {
-      height: 16px;
-      width: 16px;
+      height: 18px;
+      width: 18px;
       position: absolute;
-      bottom: 2px;
-      background-color: background-color(color-white);
+      bottom: 1px;
+      background-color: #F9FAFB;
       transition: 0.4s;
       border-radius: 50%;
     }
 
     .selected__right {
-      left: 2px;
+      left: 1px;
     }
 
     .selected__left {
-      right: 2px;
+      right: 1px;
     }
   }
 

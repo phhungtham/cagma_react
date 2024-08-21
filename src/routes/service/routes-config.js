@@ -3,6 +3,7 @@ import ChangeProfile from '@pages/Profile/ChangeProfile';
 import OpenAccount from '@pages/Account/OpenAccount';
 import AppNotifications from '@pages/AppNotifications';
 import DemoComponent from '@pages/DemoComponent/DemoComponent';
+import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
 
 const RoutesConfig = [
   {
@@ -23,6 +24,11 @@ const RoutesConfig = [
   {
     path: '/notification',
     component: AppNotifications,
+    private: false
+  },
+  {
+    path: '/e-alert-management',
+    component: EAlertsManagement,
     private: false
   },
   {

@@ -52,6 +52,10 @@
   .gap-#{$i} {
     gap: $i * 4px;
   }
+
+  .flex-#{$i} {
+    flex: $i;
+  }
 }
 
 .d-flex {

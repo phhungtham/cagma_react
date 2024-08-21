@@ -1,0 +1,14 @@
+.customer-info__content {
+  padding-top: 16px;
+  .title {
+    font-size: 14px;
+    line-height: 19px;
+    color: #475467;
+  }
+  .checklist___options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+  }
+}
