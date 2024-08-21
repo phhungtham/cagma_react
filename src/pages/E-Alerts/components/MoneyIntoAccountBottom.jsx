@@ -6,13 +6,13 @@ import { useState } from 'react';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import BalanceSettingBottomForm from './BalanceSettingBottomForm';
 
-const MoneyLeavingAccountBottom = ({onClose, onSubmit}) => {
+const MoneyIntoAccountBottom = ({onClose, onSubmit}) => {
 
   return (
     <BottomSheet
       open={true}
       onClose={onClose}
-      title="Money leaving your account"
+      title="Money into your account"
       clazz="money-leaving-account__wrapper"
       type="fit-content"
     >
@@ -25,4 +25,4 @@ const MoneyLeavingAccountBottom = ({onClose, onSubmit}) => {
   );
 };
 
-export default MoneyLeavingAccountBottom;
+export default MoneyIntoAccountBottom;

@@ -81,3 +81,53 @@ $button-large-shadow: inset 0 0 0 7px;
     color: text-color(color-grey-blur);
   }
 }
+
+
+.box-radio__wrapper {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  width: 100%;
+  &.small {
+    height: 36px;
+    .box-radio__label {
+      font-size: 14px;
+      line-height: 19px;
+    }
+  }
+  .box-radio__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $color-gray-300;
+    height: 100%;
+    flex: 1;
+    margin-left: -1px;
+    color: $color-gray-500;
+    cursor: pointer;
+    &:first-child {
+      border-radius: 12px 0 0 12px;
+    }
+    &:last-child {
+      border-radius: 0 12px 12px 0;
+    }
+    &.active {
+      border: 1.4px solid $color-blue-500;
+      color: $color-blue-500;
+      z-index: 1;
+      font-weight: 500;
+      &.disabled {
+        border: 1.4px solid $color-blue-200;
+        color: $color-blue-200;
+      }
+    }
+    &.disabled {
+      background-color: $color-gray-50;
+      color: $color-gray-400;
+    }
+    .box-radio__label {
+      font-size: 15px;
+      line-height: 20px;
+    }
+  }
+}

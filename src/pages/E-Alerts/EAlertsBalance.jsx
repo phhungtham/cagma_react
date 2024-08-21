@@ -10,6 +10,8 @@ import { Controller, useForm } from 'react-hook-form';
 import Dropdown from '@common/components/atoms/Dropdown';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import MoneyLeavingAccountBottom from './components/MoneyLeavingAccountBottom';
+import MoneyIntoAccountBottom from './components/MoneyIntoAccountBottom';
+import LowBalanceWarningBottom from './components/LowBalanceWarningBottom';
 
 const EAlertsBalance = () => {
   const [showCustomerInfoChangeBottom, setShowCustomerInfoChangeBottom] = useState(false);
@@ -35,11 +37,19 @@ const EAlertsBalance = () => {
     setShowMoneyLeavingAccountBottom(true);
   };
 
-  const handleApplyCustomerInfoChange = (checkOptions) => {
+  const onOpenMoneyIntoAccountBottom = () => {
+    setShowMoneyIntoAccountBottom(true);
+  };
+
+  const onOpenLowBalanceWarningBottom = () => {
+    setShowLowBalanceWarningBottom(true);
+  };
+
+  const handleApplyMoneyLeavingAccount = (checkOptions) => {
     setShowCustomerInfoChangeBottom(false);
     setShowToast({
       isShow: true,
-      message: 'Alerts  notifications enabled',
+      message: 'Alerts notifications enabled',
       type: 'success'
     });
   };
@@ -79,7 +89,7 @@ const EAlertsBalance = () => {
               </span>
             </div>
           </div>
-          <div className='balance__setting-item'>
+          <div className='balance__setting-item' onClick={onOpenMoneyIntoAccountBottom}>
             <div className='item__title'>
               <div>Money into your account</div>
               <div className='item__sub'>
@@ -95,7 +105,7 @@ const EAlertsBalance = () => {
               </span>
             </div>
           </div>
-          <div className='balance__setting-item'>
+          <div className='balance__setting-item' onClick={onOpenLowBalanceWarningBottom}>
             <div className='item__title'>
               <div>Low balance</div>
               <div className='item__sub'>
@@ -114,10 +124,16 @@ const EAlertsBalance = () => {
         </div>
       </div>
       {showCustomerInfoChangeBottom && 
-        <CustomerInfoChangeBottom onClose={() => setShowCustomerInfoChangeBottom(false)} onSubmit={handleApplyCustomerInfoChange} />
+        <CustomerInfoChangeBottom onClose={() => setShowCustomerInfoChangeBottom(false)} onSubmit={() => {}} />
       }
       {showMoneyLeavingAccountBottom && 
-        <MoneyLeavingAccountBottom onClose={() => setShowMoneyLeavingAccountBottom(false)} onSubmit={handleApplyCustomerInfoChange} />
+        <MoneyLeavingAccountBottom onClose={() => setShowMoneyLeavingAccountBottom(false)} onSubmit={() => {}} />
+      }
+      {showMoneyIntoAccountBottom && 
+        <MoneyIntoAccountBottom onClose={() => setShowMoneyIntoAccountBottom(false)} onSubmit={() => {}} />
+      }
+      {showLowBalanceWarningBottom && 
+        <LowBalanceWarningBottom onClose={() => setShowLowBalanceWarningBottom(false)} onSubmit={() => {}} />
       }
       <section className="toast__overlay">
         <Toast

@@ -1,4 +1,5 @@
-.customer-info__content {
+.customer-info__content,
+.balance-setting__content {
   padding-top: 16px;
   .title {
     font-size: 14px;
@@ -10,5 +11,17 @@
     flex-direction: column;
     gap: 12px;
     margin-top: 10px;
+  }
+}
+
+.balance-setting__content {
+  .setting-desc {
+    font-size: 14px;
+    line-height: 19px;
+    color: #475467;
+  }
+  .money-options {
+    display: flex;
+    justify-content: center;
   }
 }
