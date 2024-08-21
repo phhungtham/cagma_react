@@ -1,6 +1,6 @@
 import BottomSheet from '@common/components/templates/BottomSheet';
 import './styles.scss';
-import { eAlertCustomerInfoOptions } from '../constants';
+import { eAlertSettingMethodOptions } from '../constants';
 import CheckBox from '@common/components/atoms/Checkbox';
 import { useState } from 'react';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -35,7 +35,7 @@ const CustomerInfoChangeBottom = ({onClose, onSubmit}) => {
       <div className='customer-info__content'>
         <div className='title'>Methods</div>
         <div className='checklist___options'>
-          {eAlertCustomerInfoOptions.map(({label, value}) => 
+          {eAlertSettingMethodOptions.map(({label, value}) => 
             <div className='option-item' key={value}>
               <CheckBox
                 size="large"

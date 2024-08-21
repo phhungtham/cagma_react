@@ -1,4 +1,4 @@
-export const eAlertCustomerInfoOptions = [
+export const eAlertSettingMethodOptions = [
   {
     label: 'E-Mail',
     value: '1'

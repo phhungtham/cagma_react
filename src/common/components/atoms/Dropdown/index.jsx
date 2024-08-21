@@ -52,7 +52,7 @@ const Dropdown = forwardRef((props, ref) => {
 
   useEffect(() => {
     if (value) {
-      const valueForDisplay = options.find(option => option.value === value)?.label || '';
+      const valueForDisplay = options?.length ? options.find(option => option.value === value)?.label || '' : value;
       setValueDisplay(valueForDisplay);
     }
     setCustomClass(value ? 'dropdown__completed' : '');
@@ -75,6 +75,7 @@ const Dropdown = forwardRef((props, ref) => {
         <div className='dropdown__main'>
           <div className={`dropdown__label ${customClass} ${disabled && 'disable'} ${mode}`}>{label}</div>
           <div className='dropdown__value'>{valueDisplay}</div>
+          {children}
         </div>
         <div className='dropdown__icon'>
           {customClass === 'dropdown__focus' ? <ArrowUp /> : <ArrowDown />}

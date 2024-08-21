@@ -4,6 +4,7 @@ import OpenAccount from '@pages/Account/OpenAccount';
 import AppNotifications from '@pages/AppNotifications';
 import DemoComponent from '@pages/DemoComponent/DemoComponent';
 import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
+import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
 
 const RoutesConfig = [
   {
@@ -27,8 +28,13 @@ const RoutesConfig = [
     private: false
   },
   {
-    path: '/e-alert-management',
+    path: '/e-alerts-management',
     component: EAlertsManagement,
+    private: false
+  },
+  {
+    path: '/e-alerts-balance',
+    component: EAlertsBalance,
     private: false
   },
   {

@@ -5,4 +5,8 @@
   &__item__black {
     border-bottom: 1px solid $color-gray-900;
   }
+  &__group {
+    height: 8px;
+    background-color: $color-gray-100;
+  }
 }
