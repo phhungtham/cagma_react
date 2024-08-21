@@ -109,10 +109,10 @@ $button-type-maps: (
     text-color-active: $color-blue-900,
     text-color-disable: $color-blue-200
   ),
-  background: (
-    background-nor: bt-bg-color(color-dark-blue),
+  text__primary: (
+    background-nor: transparent,
     background-active: bt-bg-color(color-grey),
-    text-color: text-color(color-white),
+    text-color: $color-blue-500,
     text-color-active: text-color(color-white),
     text-color-disable: text-color(color-white-blur)
   ),

@@ -5,6 +5,7 @@ import AppNotifications from '@pages/AppNotifications';
 import DemoComponent from '@pages/DemoComponent/DemoComponent';
 import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
 import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
+import AppointmentHome from '@pages/Appointment/AppointmentHome';
 
 const RoutesConfig = [
   {
@@ -35,6 +36,11 @@ const RoutesConfig = [
   {
     path: '/e-alerts-balance',
     component: EAlertsBalance,
+    private: false
+  },
+  {
+    path: '/appointment',
+    component: AppointmentHome,
     private: false
   },
   {
