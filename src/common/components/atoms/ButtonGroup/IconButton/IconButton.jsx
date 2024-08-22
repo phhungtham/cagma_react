@@ -12,8 +12,8 @@ export const IconButton = ({
   const customClass = [`btn__icon btn__icon__${type} icon--${size} ${disable ? 'disable' : ''}`, className].join(' ');
 
   return (
-    <div className={`btn__icon__wrapper ${customClass}`} onClick={onClick}>
-      <div className='btn__icon__main'>
+    <div className={`btn__icon__wrapper ${customClass}`}>
+      <div className='btn__icon__main' onClick={onClick}>
         <div className="icon__container">
           {icon}
         </div>
