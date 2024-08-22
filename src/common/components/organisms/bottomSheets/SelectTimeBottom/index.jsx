@@ -14,8 +14,6 @@ const SelectTimeBottom = ({ open, onClose, title, onTimeChange, defaultTime }) =
   const [currentHour, setCurrentHour] = useState(new Date().getHours() % 12 || 12);
   const [currentType, setCurrentType] = useState(new Date().getHours() > 12 ? 'PM' : 'AM');
 
-  console.log(new Date().getHours() % 12 || 12);
-
   const onChangeHour = (month) => {
     setCurrentHour(month);
   };

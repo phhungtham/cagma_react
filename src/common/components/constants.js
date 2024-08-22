@@ -64,3 +64,21 @@ export const FAQCategory = [
   'Security/Authentication',
   'Errors/Bugs'
 ];
+
+export const placementsMap = {
+  top_left: 'top-start',
+  top_right: 'top-end',
+  top_center: 'top',
+  bottom_left: 'bottom-start',
+  bottom_right: 'bottom-end',
+  bottom_center: 'bottom',
+};
+
+export const allowedPlacements = [
+  'bottom',
+  'bottom-start',
+  'bottom-end',
+  'top',
+  'top-start',
+  'top-end',
+];

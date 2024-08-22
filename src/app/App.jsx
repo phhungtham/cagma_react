@@ -27,6 +27,7 @@ import { APP_GLOBAL } from './redux/type';
 import { AppCfg } from '@configs/appConfigs';
 import ErrorBoundary from '@common/components/ErrorBoundary';
 import Fallback from '@common/components/Fallback';
+import { TooltipProvider } from '@common/components/atoms/Tooltip/TooltipContext';
 
 const App = () => {
   useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
@@ -105,7 +106,7 @@ const App = () => {
             const params = JSON.parse(data.param);
             setNativeParams(params);
           }
-        } catch (error) {}
+        } catch (error) { }
         setIsNativeRedirect();
       },
       false
@@ -148,14 +149,16 @@ const App = () => {
 
   return (
     <ErrorBoundary>
-      <div>
-        <Suspense fallback={<Fallback />}>
-          <Routes>
-            {privateRoutes()}
-            {publicRoutes()}
-          </Routes>
-        </Suspense>
-      </div>
+      <TooltipProvider>
+        <div>
+          <Suspense fallback={<Fallback />}>
+            <Routes>
+              {privateRoutes()}
+              {publicRoutes()}
+            </Routes>
+          </Suspense>
+        </div>
+      </TooltipProvider>
     </ErrorBoundary>
   );
 };
