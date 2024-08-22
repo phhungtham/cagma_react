@@ -1,3 +1,22 @@
+@import 'styles/utilities/variables';
+@import 'styles/utilities/mixin';
+
+.branch-directory__wrapper {
+  height: 100vh;
+  overflow-y: auto;
+}
+
 .branch-directory__content {
   padding-top: 16px;
+  .branch-directory__item {
+    @include dividerBottomSolid();
+    &:last-child {
+      border: none;
+    }
+    .table__item__value {
+      &.phone {
+        text-decoration: underline;
+      }
+    }
+  }
 }

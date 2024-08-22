@@ -1,3 +1,30 @@
+$icon-circle-sizes: (
+  xl: (
+    border-radius: 14px,
+    padding: 0px 12px,
+    height: 48px,
+    font-size: 16px
+  ),
+  lg: (
+    border-radius: 12px,
+    padding: 0px 12px,
+    height: 44px,
+    font-size: 16px
+  ),
+  md: (
+    border-radius: 10px,
+    padding: 0px 12px,
+    height: 40px,
+    font-size: 15px
+  ),
+  sm: (
+    border-radius: 8px,
+    padding: 0px 12px,
+    height: 32px,
+    font-size: 14px
+  ),
+);
+
 @mixin button($bg-color: map-get($colors, 'light')) {
   max-width: 100%;
   min-height: 56px;   
@@ -51,12 +78,14 @@
       background-color: map-get($map, background-disabled);
       color: map-get($map, text-color-disable);
     }
-    &.btn__sm {
-      border-radius: 8px;
-      height: 32px;
-      padding: 0;
-      min-height: 32px;
-      font-size: 14px;
+    @each $size, $props in $icon-circle-sizes {
+      &.btn__#{$size} {
+        border-radius: map-get($props, border-radius);
+        height: map-get($props, height);
+        padding: map-get($props, padding);
+        min-height: map-get($props, height);
+        font-size: map-get($props, font-size);
+      }
     }
   }
   .btn__outlined__primary {
@@ -79,6 +108,10 @@
     &.disable {
       border: 1px solid $color-gray-250;
     }
+  }
+
+  .btn__text__primary {
+    padding: 0 !important;
   }
 }
 @each $key, $val in $sizes {
