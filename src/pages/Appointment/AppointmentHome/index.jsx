@@ -9,10 +9,13 @@ import { ArrowRight } from '@assets/icons';
 import Label from '@common/components/atoms/Label';
 import Alert from '@common/components/molecules/Alert';
 import { useState } from 'react';
+import AppointmentDetailBottom from '../components/AppointmentDetailBottom';
+import { appointmentDetailTest } from '../constants';
 
 const AppointmentHome = () => {
 
   const [showLocationAccessPermissionAlert, setShowLocationAccessPermissionAlert] = useState(false);
+  const [showAppointmentDetailBottom, setShowAppointmentDetailBottom] = useState(false);
 
   const onClickAppointmentCard = () => {
     //TODO: Check have the permission or not
@@ -25,6 +28,10 @@ const AppointmentHome = () => {
   
   const onCloseAccessLocationAlert = () => {
     setShowLocationAccessPermissionAlert(false);
+  };
+
+  const onClickViewAppointmentDetail = () => {
+    setShowAppointmentDetailBottom(true);
   };
   
   return (
@@ -76,7 +83,7 @@ const AppointmentHome = () => {
             </div>
           </div>
           <div className='details__list'>
-            <section className='item-card__wrapper'>
+            <section className='item-card__wrapper' onClick={onClickViewAppointmentDetail}>
               <div className='item-card__main'>
                 <div className='item-card__img'>
                   <img src={apparatusZoomImg} alt="In-person Appointment" />
@@ -95,7 +102,7 @@ const AppointmentHome = () => {
                 <Label type="filled" label="Requested" variant="blue" />
               </div>
             </section>
-            <section className='item-card__wrapper'>
+            <section className='item-card__wrapper' onClick={onClickViewAppointmentDetail}>
               <div className='item-card__main'>
                 <div className='item-card__img'>
                   <img src={apparatusZoomImg} alt="In-person Appointment" />
@@ -117,6 +124,12 @@ const AppointmentHome = () => {
           </div>
         </div>
       </div>
+      {showAppointmentDetailBottom && 
+        <AppointmentDetailBottom 
+          appointmentDetail={appointmentDetailTest} 
+          onClose={() => setShowAppointmentDetailBottom(false)} 
+        />
+      }
       <Alert
         isCloseButton={false}
         isShowAlert={showLocationAccessPermissionAlert}

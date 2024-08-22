@@ -71,3 +71,4 @@ export { default as CameraIcon } from './CameraIcon';
 export { default as ErrorIcon } from './ErrorIcon';
 export { default as RefreshIcon } from './RefreshIcon';
 export { default as FillTooltipIcon } from './FillTooltipIcon';
+export { default as FillDeleteIcon } from './FillDeleteIcon';

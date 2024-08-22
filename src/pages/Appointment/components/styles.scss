@@ -1,0 +1,48 @@
+@import 'styles/utilities/variables';
+.appointment-detail-bottom__content {
+  padding-bottom: 30px;
+  .appointment {
+    &__header {
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    &__time {
+      font-size: 16px;
+      line-height: 21px;
+      font-weight: 500;
+    }
+    &__method {
+      font-size: 14px;
+      line-height: 19px;
+      color: $color-gray-700;
+    }
+    &__detail {
+      padding-top: 16px;
+    }
+    &__item {
+      padding-bottom: 16px;
+      display: flex;
+      font-size: 14px;
+      line-height: 19px;
+      gap: 16px;
+    }
+    &__label {
+      width: 112px;
+      flex-shrink: 0;
+      color: $color-gray-500;
+    }
+    &__value {
+      font-weight: 500;
+    }
+  }
+  .footer__buttons {
+    padding-top: 32px;
+    display: flex;
+    justify-content: center;
+    .btn__icon-delete {
+      color: $color-gray-500;
+    }
+  }
+}

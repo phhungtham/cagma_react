@@ -1,42 +1,51 @@
-.btn__icon__contain {
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #222428;
-  .btn__icon__wrapper {
-    &.background {
-      background: #ffff;
-      border-radius: 12px;
-      padding: 12px;
-    }
+$icon-circle-sizes: (
+  xl: (
+    border-radius: 16px,
+    padding: 10px,
+    height: 56px
+  ),
+  lg: (
+    border-radius: 14px,
+    padding: 10px,
+    height: 44px
+  ),
+  md: (
+    border-radius: 12px,
+    padding: 10px,
+    height: 36px
+  ),
+  sm: (
+    border-radius: 10px,
+    padding: 8px,
+    height: 32px
+  ),
+);
 
-    &.border {
-      border: 1px solid #e1e6ec;
-      box-shadow: 0px 0px 8px rgba(22, 37, 66, 0.06);
-    }
-
-    .btn__icon__common {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-
-      &.disable {
-        opacity: 0.4;
-      }
-      .icon__container {
-        position: relative;
-        .star__icon {
-          position: absolute;
-          top: 6px;
-          right: -5px;
+.btn__icon__wrapper {
+  &.btn__icon__circle {
+    @each $size, $map in $icon-circle-sizes {
+      &.icon--#{$size} {
+        .btn__icon__main {
+          background: $color-gray-100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: map-get($map, border-radius);
+          padding: map-get($map, padding);
+          height: map-get($map, height);
+          &:active,
+          &:hover {
+            background-color: $color-gray-400;
+          }
+        }
+        .btn__icon__label {
+          margin-top: 8px;
+          font-size: 13px;
+          line-height: 18px;
+          text-align: center;
+          color: $color-gray-900;
         }
       }
     }
-  }
-  &.disable {
-    color: #bec1c6;
   }
 }
