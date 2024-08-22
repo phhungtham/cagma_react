@@ -7,6 +7,7 @@ import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
 import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
 import AppointmentHome from '@pages/Appointment/AppointmentHome';
 import BranchDirectory from '@pages/Appointment/BranchDirectory';
+import AppointmentManagement from '@pages/Appointment/AppointmentManagement';
 
 const RoutesConfig = [
   {
@@ -47,6 +48,11 @@ const RoutesConfig = [
   {
     path: '/branch-directory',
     component: BranchDirectory,
+    private: false
+  },
+  {
+    path: '/appointment-management',
+    component: AppointmentManagement,
     private: false
   },
   {

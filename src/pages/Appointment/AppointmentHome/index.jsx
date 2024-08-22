@@ -8,9 +8,10 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { ArrowRight } from '@assets/icons';
 import Label from '@common/components/atoms/Label';
 import Alert from '@common/components/molecules/Alert';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import AppointmentDetailBottom from '../components/AppointmentDetailBottom';
-import { appointmentDetailTest } from '../constants';
+import { appointmentDetailTest, appointmentListTest } from '../constants';
+import AppointmentCard from '../components/AppointmentCard';
 
 const AppointmentHome = () => {
 
@@ -84,44 +85,11 @@ const AppointmentHome = () => {
               </div>
             </div>
             <div className='details__list'>
-              <section className='item-card__wrapper' onClick={onClickViewAppointmentDetail}>
-                <div className='item-card__main'>
-                  <div className='item-card__img'>
-                    <img src={apparatusZoomImg} alt="In-person Appointment" />
-                  </div>
-                  <div className='item-card__info'>
-                    <div className='item-card__id'>#123456</div>
-                    {/* <div className='item-card__branch-name'>Mississauge Branch</div> */}
-                    <div className='item-card__time mt-1'>
-                      <span className='item-card__date'>2024.06.15</span>
-                      <span className='divider__vertical'></span>
-                      <span className='item-card__hour'>At 1pm</span>
-                    </div>
-                  </div>
-                </div>
-                <div className='item-card__status'>
-                  <Label type="filled" label="Requested" variant="blue" />
-                </div>
-              </section>
-              <section className='item-card__wrapper' onClick={onClickViewAppointmentDetail}>
-                <div className='item-card__main'>
-                  <div className='item-card__img'>
-                    <img src={apparatusZoomImg} alt="In-person Appointment" />
-                  </div>
-                  <div className='item-card__info'>
-                    <div className='item-card__id'>#123456</div>
-                    <div className='item-card__branch-name'>Mississauge Branch</div>
-                    <div className='item-card__time mt-1'>
-                      <span className='item-card__date'>2024.06.15</span>
-                      <span className='divider__vertical'></span>
-                      <span className='item-card__hour'>At 1pm</span>
-                    </div>
-                  </div>
-                </div>
-                <div className='item-card__status'>
-                  <Label type="filled" label="Confirmed" variant="gray" />
-                </div>
-              </section>
+              {appointmentListTest.map(appointment => (
+                <Fragment key={appointment.id}>
+                  <AppointmentCard appointmentInfo={appointment} onClick={onClickViewAppointmentDetail} />
+                </Fragment>
+              ))}
             </div>
           </div>
         </div>

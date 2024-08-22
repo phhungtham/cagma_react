@@ -1,4 +1,4 @@
-
+import apparatusZoomImg from '@assets/images/apparatus_zoom_40.png';
 export const appointmentDetailFields = [
   {
     label: 'Confirmation Number',
@@ -80,3 +80,75 @@ export const branchDirectoryListTest = [
     branchNo: '08048',
   },
 ];
+
+export const AppointmentStatus = {
+  REQUESTED: 'requested',
+  CONFIRMED: 'confirmed',
+  CANCELED: 'canceled',
+  COMPLETED: 'completed',
+};
+
+export const appointmentListTest = [
+  {
+    id: '#123456',
+    branchName: '',
+    date: '2024.06.15',
+    time: 'At 1pm',
+    status: AppointmentStatus.REQUESTED,
+    image: apparatusZoomImg
+  },
+  {
+    id: '#123456',
+    branchName: 'Mississauge Branch',
+    date: '2024.06.15',
+    time: 'At 1pm',
+    status: AppointmentStatus.CONFIRMED,
+    image: apparatusZoomImg
+  },
+  {
+    id: '#123456',
+    branchName: 'Mississauge Branch',
+    date: '2024.06.15',
+    time: 'At 1pm',
+    status: AppointmentStatus.CANCELED,
+    image: apparatusZoomImg
+  },
+  {
+    id: '#123456',
+    branchName: '',
+    date: '2024.06.15',
+    time: 'At 1pm',
+    status: AppointmentStatus.REQUESTED,
+    image: apparatusZoomImg
+  },
+  {
+    id: '#123456',
+    branchName: '',
+    date: '2024.06.15',
+    time: 'At 1pm',
+    status: AppointmentStatus.CONFIRMED,
+    image: apparatusZoomImg
+  },
+  {
+    id: '#123456',
+    branchName: '',
+    date: '2024.06.15',
+    time: 'At 1pm',
+    status: AppointmentStatus.CONFIRMED,
+    image: apparatusZoomImg
+  },
+];
+
+export const labelStatusWithVariant = {
+  [AppointmentStatus.REQUESTED]: 'blue',
+  [AppointmentStatus.CANCELED]: 'rose',
+  [AppointmentStatus.CONFIRMED]: 'gray',
+  [AppointmentStatus.COMPLETED]: 'gray',
+};
+
+export const labelStatusWithType = {
+  [AppointmentStatus.REQUESTED]: 'filled',
+  [AppointmentStatus.CANCELED]: 'filled',
+  [AppointmentStatus.CONFIRMED]: 'filled',
+  [AppointmentStatus.COMPLETED]: 'outline',
+};

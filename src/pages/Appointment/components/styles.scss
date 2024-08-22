@@ -1,4 +1,6 @@
 @import 'styles/utilities/variables';
+@import 'styles/utilities/mixin';
+
 .appointment-detail-bottom__content {
   padding-bottom: 30px;
   .appointment {
@@ -45,4 +47,53 @@
       color: $color-gray-500;
     }
   }
+}
+
+.appointment-card__wrapper {
+  padding: 20px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  @include dividerBottomSolid();
+  .item-card {
+
+    &__main {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    &__id {
+      font-size: 16px;
+      line-height: 21px;
+      font-weight: 500;
+    }
+    &__time {
+      height: 18px;
+      font-size: 13px;
+      line-height: 18px;
+      color: $color-gray-550;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    &__branch-name {
+      font-size: 14px;
+      line-height: 19px;
+      color: $color-gray-700;
+    }
+    &__img__wrapper {
+      width: 40px;
+      height: 40px;
+    }
+    &__status {
+      .label__text {
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+.divider__vertical {
+  width: 1px;
+  height: 100%;
+  background-color: $color-gray-200;
 }
