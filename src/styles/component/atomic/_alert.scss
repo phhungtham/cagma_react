@@ -87,6 +87,8 @@
       font-weight: 400;
       word-wrap: break-word;
       line-height: 21px;
+      display: flex;
+      flex-direction: column;
     }
     &__caption {
       color: $color-gray-550;
