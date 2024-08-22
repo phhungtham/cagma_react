@@ -89,7 +89,7 @@ const EnterAccountInformation = ({onSubmit}) => {
             </TextDropdown>
           </section>
           <section >
-            <TextDropdown label="Terms" placeholder="Select" onClick={onOpenSelectTermsBottom} value={`${selectedTerm} Months`}>
+            <TextDropdown label="Terms" placeholder="Select" onClick={onOpenSelectTermsBottom} value={selectedTerm ? `${selectedTerm} Months` : ''}>
               <div className='enter-account__term'>
                 <span>Maturity date</span>
                 <span>25.05.2024</span>
