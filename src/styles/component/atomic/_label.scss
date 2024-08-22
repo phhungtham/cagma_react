@@ -24,23 +24,17 @@
 }
 
 // DEFINE Filled Label
-@include Filled(basic__filled, text__basic__filled, #e9f0ff, #2c3b4e);
-@include Filled(primary__filled, text__primary__filled, #3270ea, #fff);
-@include Filled(gray__filled, text__gray__filled, #d0d2d8, #fff);
-@include Filled(sky-blue__filled, text__sky-blue__filled, #82dfee, #0c8593);
-@include Filled(mint__filled, text__mint__filled, #b4e3d3, #008359);
-@include Filled(purple__filled, text__purple__filled, #a6a6e3, #4536ad);
-@include Filled(orange__filled, text__orange__filled, #fdb450, #e04f0e);
-@include Filled(coral__filled, text__coral__filled, #ffcbce, #f14232);
-@include Filled(rose__filled, text__rose__filled, #f5c0cf, #b8405e);
-@include Filled(brown__filled, text__brown__filled, #dfc7b1, #714e29);
+@include Filled(gray__filled, text__gray__filled, $color-gray-200, $color-gray-850);
+@include Filled(blue__filled, text__blue__filled, $color-blue-100, $color-blue-800);
+@include Filled(mint__filled, text__mint__filled, #D5F4F9, #007D91);
+@include Filled(green__filled, text__mint__filled, #EAF5F0, #149F6E);
+@include Filled(purple__filled, text__purple__filled, #E1E1FF, #4536AD);
+@include Filled(orange__filled, text__orange__filled, #FFEAC1, #DA4A09);
+@include Filled(coral__filled, text__coral__filled, #FDEBE5, #EB6E47);
+@include Filled(rose__filled, text__rose__filled, #FFF2F2, #EB3D4F);
+@include Filled(brown__filled, text__brown__filled, #F1DECD, #804714);
 
-// DEFINE Account Label
-@include Filled(account__checkings, text__checkings, #14aec6, #fff);
-@include Filled(account__savings, text__savings, #2eb086, #fff);
-@include Filled(account__loan, text__loan, #7466ce, #fff);
-
-// DEFINE Outline Label
+// TODO: DEFINE Outline Label
 @include Outline(basic__outline, text__basic__outline, #2c3b4e);
 @include Outline(primary__outline, text__primary__outline, #3270ea);
 @include Outline(gray__outline, text__gray__outline, #e1e3e9);
@@ -52,7 +46,7 @@
 @include Outline(rose__outline, text__rose__outline, #b8405e);
 @include Outline(brown__outline, text__brown__outline, #896646);
 
-// DEFINE Ghost Label
+//TODO: DEFINE Ghost Label
 @include Ghost(text__primary__ghost, #3270ea);
 @include Ghost(text__gray__ghost, #bec1c6);
 @include Ghost(text__sky-blue__ghost, #14aec6);
@@ -65,7 +59,7 @@
 
 .label {
   width: fit-content;
-  height: 22px;
+  height: 24px;
   border-radius: 4px;
   padding: 4px 6px;
 
@@ -77,6 +71,6 @@
   &__text {
     font-weight: 400;
     font-size: 12px;
-    text-transform: capitalize;
+    line-height: 16px;
   }
 }

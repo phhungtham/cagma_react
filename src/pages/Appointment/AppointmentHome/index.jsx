@@ -6,8 +6,27 @@ import apparatusZoomImg from '@assets/images/apparatus_zoom_40.png';
 import './styles.scss';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { ArrowRight } from '@assets/icons';
+import Label from '@common/components/atoms/Label';
+import Alert from '@common/components/molecules/Alert';
+import { useState } from 'react';
 
 const AppointmentHome = () => {
+
+  const [showLocationAccessPermissionAlert, setShowLocationAccessPermissionAlert] = useState(false);
+
+  const onClickAppointmentCard = () => {
+    //TODO: Check have the permission or not
+    setShowLocationAccessPermissionAlert(true);
+  };
+
+  const handleAllowAccessLocation = () => {
+    alert('allow');
+  };
+  
+  const onCloseAccessLocationAlert = () => {
+    setShowLocationAccessPermissionAlert(false);
+  };
+  
   return (
     <div className='appointment-home__wrapper'>
       <Header
@@ -16,7 +35,7 @@ const AppointmentHome = () => {
       />
       <div className='appointment-home__content'>
         <div className='card__list'>
-          <div className='card__item'>
+          <div className='card__item' onClick={onClickAppointmentCard}>
             <div className='card__content'>
               <div className='card__title'>
                 <span>Receive a</span>
@@ -64,6 +83,25 @@ const AppointmentHome = () => {
                 </div>
                 <div className='item-card__info'>
                   <div className='item-card__id'>#123456</div>
+                  {/* <div className='item-card__branch-name'>Mississauge Branch</div> */}
+                  <div className='item-card__time mt-1'>
+                    <span className='item-card__date'>2024.06.15</span>
+                    <span className='divider__vertical'></span>
+                    <span className='item-card__hour'>At 1pm</span>
+                  </div>
+                </div>
+              </div>
+              <div className='item-card__status'>
+                <Label type="filled" label="Requested" variant="blue" />
+              </div>
+            </section>
+            <section className='item-card__wrapper'>
+              <div className='item-card__main'>
+                <div className='item-card__img'>
+                  <img src={apparatusZoomImg} alt="In-person Appointment" />
+                </div>
+                <div className='item-card__info'>
+                  <div className='item-card__id'>#123456</div>
                   <div className='item-card__branch-name'>Mississauge Branch</div>
                   <div className='item-card__time mt-1'>
                     <span className='item-card__date'>2024.06.15</span>
@@ -73,12 +111,26 @@ const AppointmentHome = () => {
                 </div>
               </div>
               <div className='item-card__status'>
-
+                <Label type="filled" label="Confirmed" variant="gray" />
               </div>
             </section>
           </div>
         </div>
       </div>
+      <Alert
+        isCloseButton={false}
+        isShowAlert={showLocationAccessPermissionAlert}
+        title={<span>Allow <span className='text__primary'>“Shinhan SOL”</span> to access your location?</span>}
+        textAlign="center"
+        firstButton={{
+          onClick: handleAllowAccessLocation,
+          label: 'Allow'
+        }}
+        secondButton={{
+          onClick: onCloseAccessLocationAlert,
+          label: 'I’ll do it next time'
+        }}
+      />
     </div>
   );
 };

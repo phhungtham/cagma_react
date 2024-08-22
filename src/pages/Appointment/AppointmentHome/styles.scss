@@ -1,4 +1,5 @@
 @import 'styles/utilities/variables';
+@import 'styles/utilities/mixin';
 
 .appointment-home__wrapper {
   height: 100vh;
@@ -10,6 +11,8 @@
 .appointment-home__content {
   background-color: $color-gray-100;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   .card {
     &__list {
       padding: 20px 24px 16px;
@@ -53,6 +56,7 @@
   .appointment-details__wrapper {
     background-color: $color-white;
     padding: 0 24px;
+    flex-grow: 1;
     .details__header {
       display: flex;
       justify-content: space-between;
@@ -71,10 +75,14 @@
     .item-card {
       &__wrapper {
         padding: 20px 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        @include dividerBottomSolid();
       }
       &__main {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 12px;
       }
       &__id {

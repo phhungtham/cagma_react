@@ -3,12 +3,12 @@ import { PropTypes } from 'prop-types';
 import Span from '../Span';
 
 const Label = props => {
-  const { clazz, variant, type, label, accountLabel } = props;
+  const { clazz, variant, type, label } = props;
   return (
-    <div className={`label ${variant}__${type} account__${accountLabel} ${clazz}`}>
+    <div className={`label ${variant}__${type} ${clazz}`}>
       <Span
-        clazz={`label__text text__${variant}__${type} text__${accountLabel}`}
-        text={accountLabel ? accountLabel : label}
+        clazz={`label__text text__${variant}__${type}`}
+        text={label}
       />
     </div>
   );
@@ -20,7 +20,7 @@ Label.propTypes = {
     'basic',
     'primary',
     'gray',
-    'sky-blue',
+    'blue',
     'mint',
     'purple',
     'orange',
@@ -38,7 +38,6 @@ Label.defaultProps = {
   variant: 'basic',
   type: 'filled',
   label: 'Label',
-  accountLabel: ''
 };
 
 export default Label;
