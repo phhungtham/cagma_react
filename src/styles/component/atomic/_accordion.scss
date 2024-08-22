@@ -1,8 +1,8 @@
-.accoridan__wrapper {
+.accordion__wrapper {
   width: 100%;
   padding-top: 30px;
   background-color: #fff;
-  .accoridan__item {
+  .accordion__item {
     width: 100%;
     padding: 0 20px;
     display: flex;
@@ -18,7 +18,7 @@
     }
   }
 
-  & .accoridan {
+  & .accordion {
     &__thumbnail {
       & img {
         width: 20px;

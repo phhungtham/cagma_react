@@ -1,15 +1,15 @@
-import Accoridan from '@common/components/atoms/Accoridan';
+import Accordion from '@common/components/atoms/Accordion';
 import { AnswerIcon, QuestionIcon } from 'assets/icons';
 import React from 'react';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Accoridan/Accoridan',
-  component: Accoridan
+  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Accordion/Accordion',
+  component: Accordion
 };
 
-const AccoridanStories = args => <Accoridan {...args} />;
+const AccordionStories = args => <Accordion {...args} />;
 
-export const TextOnly = AccoridanStories.bind({});
+export const TextOnly = AccordionStories.bind({});
 TextOnly.args = {
   label: 'Label',
   title: 'Cannot set property wmatrix of which has only a getter',
@@ -19,7 +19,7 @@ TextOnly.args = {
   captionSegments: { type: 2, caption1: 'Caption1', caption2: 'Caption2' }
 };
 
-export const WithIcon = AccoridanStories.bind({});
+export const WithIcon = AccordionStories.bind({});
 WithIcon.args = {
   title: 'Cannot set property wmatrix of which has only a getter',
   panelData: {
@@ -29,7 +29,7 @@ WithIcon.args = {
   titleIcon: { name: QuestionIcon, position: 'left' }
 };
 
-export const WithButton = AccoridanStories.bind({});
+export const WithButton = AccordionStories.bind({});
 WithButton.args = {
   label: 'Label',
   title: 'Cannot set property wmatrix of which has only a getter',
@@ -44,7 +44,7 @@ WithButton.args = {
   button: 'Button'
 };
 
-export const DataTable = AccoridanStories.bind({});
+export const DataTable = AccordionStories.bind({});
 DataTable.args = {
   label: 'Label',
   title: 'Cannot set property wmatrix of which has only a getter',
@@ -56,7 +56,7 @@ DataTable.args = {
     ]
   }
 };
-export const ViewDetail = AccoridanStories.bind({});
+export const ViewDetail = AccordionStories.bind({});
 ViewDetail.args = {
   title: 'View Detail',
   viewDetail: true,

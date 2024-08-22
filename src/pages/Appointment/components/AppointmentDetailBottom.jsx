@@ -8,15 +8,17 @@ import { FillDeleteIcon } from '@assets/icons';
 import { useState } from 'react';
 import Alert from '@common/components/molecules/Alert';
 
-const AppointmentDetailBottom = ({appointmentDetail, onClose, onConfirm}) => {
+const AppointmentDetailBottom = ({appointmentDetail, onClose, onConfirmCancel}) => {
   const [showCancelAlert, setShowCancelAlert] = useState(false);
 
   const onShowCancelAppointmentAlert = () => {
     setShowCancelAlert(true);
   };
 
-  const onClickCancelAppointment = () => {
-    onConfirm();
+  const onClickConfirmCancel = () => {
+    alert('confirm cancel');
+    setShowCancelAlert(false);
+    onConfirmCancel();
   };
 
   const onCloseCancelAppointment = () => {
@@ -73,7 +75,7 @@ const AppointmentDetailBottom = ({appointmentDetail, onClose, onConfirm}) => {
         }
         textAlign="left"
         firstButton={{
-          onClick: onClickCancelAppointment,
+          onClick: onClickConfirmCancel,
           label: 'Cancel'
         }}
         secondButton={{

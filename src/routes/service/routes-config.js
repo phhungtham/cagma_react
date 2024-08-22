@@ -6,6 +6,7 @@ import DemoComponent from '@pages/DemoComponent/DemoComponent';
 import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
 import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
 import AppointmentHome from '@pages/Appointment/AppointmentHome';
+import BranchDirectory from '@pages/Appointment/BranchDirectory';
 
 const RoutesConfig = [
   {
@@ -41,6 +42,11 @@ const RoutesConfig = [
   {
     path: '/appointment',
     component: AppointmentHome,
+    private: false
+  },
+  {
+    path: '/branch-directory',
+    component: BranchDirectory,
     private: false
   },
   {

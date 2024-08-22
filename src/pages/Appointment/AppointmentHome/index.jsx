@@ -143,7 +143,8 @@ const AppointmentHome = () => {
       {showAppointmentDetailBottom && 
         <AppointmentDetailBottom 
           appointmentDetail={appointmentDetailTest} 
-          onClose={() => setShowAppointmentDetailBottom(false)} 
+          onClose={() => setShowAppointmentDetailBottom(false)}
+          onConfirmCancel={() => {}} 
         />
       }
     </>
