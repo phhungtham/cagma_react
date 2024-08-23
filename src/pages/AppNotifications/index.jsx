@@ -64,6 +64,7 @@ import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
 import Label from '@common/components/atoms/Label';
 import { offerListDummy, promotionListDummy, transactionListDummy } from './constants';
+import PromotionDetailBottom from './components/PromotionDetailBottom';
 
 const AppNotifications = ({ translate }) => {
   const TABS = {
@@ -82,7 +83,7 @@ const AppNotifications = ({ translate }) => {
   const listNoticesCount = useSelector(listNoticesLoadMoreCnt);
   const reduxTabIndex = useSelector(tabIdx);
   const [tabIndex, setTabIndex] = useState(reduxTabIndex);
-  const [showBenefitDetail, setShowBenefitDetail] = useState(false);
+  const [showPromotionDetail, setShowPromotionDetail] = useState(false);
   const [currentBenefitDetail, setCurrentBenefitDetail] = useState({});
   const [eventDayRemain, setEventDayRemain] = useState(0);
   const [loadMoreNotify, setLoadMoreNotify] = useState(false);
@@ -205,13 +206,13 @@ const AppNotifications = ({ translate }) => {
   }, [tabIndex, notificationListRef.current]);
 
   useEffect(() => {
-    benefitDetailRef.current.scrollTop = 0;
-    if (!showBenefitDetail) {
+    // benefitDetailRef.current?.scrollTop = 0;
+    if (!showPromotionDetail) {
       setTimeout(() => {
         setCurrentBenefitDetail(EMPTY_OBJ);
       }, 200);
     }
-  }, [showBenefitDetail]);
+  }, [showPromotionDetail]);
 
   const handleAppNotificationTouchMove = () => {
     /* When the user touch to the bottom of the checking list or notice list, fetch more data */
@@ -273,17 +274,15 @@ const AppNotifications = ({ translate }) => {
     return;
   };
 
-  const handleNotificationClick = data => {
-    if (tabIndex === 0) {
-      const screenType = Number(data?.dep_sjt_class);
-      const accountNumber = data?.ums_ntc_acno;
-      setReduxTabIndex(tabIndex);
-      moveToAccountDetailScreen(screenType, accountNumber);
-    }
-    if (tabIndex === 2) {
-      setShowBenefitDetail(true);
-      setCurrentBenefitDetail(data);
-    }
+  const handleViewPromotionDetail = data => {
+    // if (tabIndex === 0) {
+    //   const screenType = Number(data?.dep_sjt_class);
+    //   const accountNumber = data?.ums_ntc_acno;
+    //   setReduxTabIndex(tabIndex);
+    //   moveToAccountDetailScreen(screenType, accountNumber);
+    // }
+    setShowPromotionDetail(true);
+    setCurrentBenefitDetail(data);
   };
   // add button Try it now
   const handleClickTryItNow = () => {
@@ -349,14 +348,14 @@ const AppNotifications = ({ translate }) => {
   };
 
   const timeEventLabelJSX = useMemo(() => {
-    if (showBenefitDetail) {
+    if (showPromotionDetail) {
       return (
         checkEventTime(currentBenefitDetail.banner_per_to) && (
           <Label clazz={benenefitDetailScroll} label={`D-${eventDayRemain}`} variant="primary" />
         )
       );
     }
-  }, [showBenefitDetail, eventDayRemain]);
+  }, [showPromotionDetail, eventDayRemain]);
 
   return (
     <div className="notification__wrapper">
@@ -400,16 +399,17 @@ const AppNotifications = ({ translate }) => {
                   <YourOffersTab ref={notificationListRef} offerList={listOfferNotify} />
                 )}
                 {tabIndex === NotificationTab.PROMOTIONS && (
-                  <PromotionsTab ref={notificationListRef} promotionList={listPromotionNotify} />
+                  <PromotionsTab ref={notificationListRef} promotionList={listPromotionNotify} onClick={handleViewPromotionDetail} />
                 )}
               </>
               :
-              <PromotionsTab ref={notificationListRef} promotionList={listPromotionNotify} />
+              <PromotionsTab ref={notificationListRef} promotionList={listPromotionNotify} onClick={handleViewPromotionDetail} />
           }
           
         </Tabs>
+
         {/* Benefit detail */}
-        <BottomSheet
+        {/* <BottomSheet
           clazz="notification__bottom__sheet"
           type="max"
           open={showBenefitDetail}
@@ -450,9 +450,12 @@ const AppNotifications = ({ translate }) => {
               </div>
             </div>
           </section>
-        </BottomSheet>
+        </BottomSheet> */}
       </div>
       {/* show alert notify when get data failed */}
+      {showPromotionDetail 
+      && <PromotionDetailBottom onClose={() => setShowPromotionDetail(false)} onClickSubmit={() => {}} />
+      }
       <Alert
         isCloseButton={false}
         isShowAlert={checkingLoadErrors || benefitsLoadErrors}

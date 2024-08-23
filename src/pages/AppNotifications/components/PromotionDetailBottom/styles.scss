@@ -1,0 +1,30 @@
+@import 'styles/utilities/variables';
+@import 'styles/utilities/mixin';
+
+.promotion {
+  &__header {
+    padding: 16px 0;
+    @include dividerBottomSolid;
+  }
+  &__title__wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__title {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 28px;
+  }
+  &__share {
+    font-size: 24px;
+  }
+  &__period {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 19px;
+    color: $color-gray-700;
+  }
+  
+}

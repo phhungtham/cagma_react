@@ -4,12 +4,12 @@ import testImg from '@assets/images/notification-image-test.png';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import Span from '@common/components/atoms/Span';
 
-const PromotionsTab = forwardRef(({ promotionList, translate }, ref) => {
+const PromotionsTab = forwardRef(({ promotionList, translate, onClick }, ref) => {
   return (
     <div ref={ref} className="notification__list checking">
       {promotionList?.length > 0 ? (
         promotionList.map((item, index) => (
-          <div className={`promotion__item__wrapper ${item.read ? 'read' : 'unread'}`} key={index}>
+          <div className={`promotion__item__wrapper ${item.read ? 'read' : 'unread'}`} key={index} onClick={onClick}>
             <div className='promotion__item'>
               <div className='promotion__img'>
                 <img src={testImg} alt='promotion logo' />
