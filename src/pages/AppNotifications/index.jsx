@@ -63,6 +63,7 @@ import Alert from '@common/components/molecules/Alert';
 import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
 import Label from '@common/components/atoms/Label';
+import { offerListDummy, promotionListDummy, transactionListDummy } from './constants';
 
 const AppNotifications = ({ translate }) => {
   const TABS = {
@@ -110,9 +111,9 @@ const AppNotifications = ({ translate }) => {
   const [reqDataNotices, setReqDataNotices] = useState({ ...initRequestNoticesNotify });
 
   // selectors
-  const listTransactionNotify = useSelector(transactionList) || [];
-  const listOfferNotify = useSelector(offerList) || [];
-  const listPromotionNotify = useSelector(promotionList) || [];
+  const listTransactionNotify = useSelector(transactionList) || transactionListDummy;
+  const listOfferNotify = useSelector(offerList) || offerListDummy;
+  const listPromotionNotify = useSelector(promotionList) || promotionListDummy;
   const loadCheckingState = useSelector(checkingLoadState);
   const loadNoticesState = useSelector(noticesLoadState);
   const loadBenefitState = useSelector(benefitsLoadState);
@@ -389,15 +390,23 @@ const AppNotifications = ({ translate }) => {
           tabIndex={tabIndex}
           onTabChange={handleTabChange}
         >
-          {tabIndex === NotificationTab.TRANSACTIONS && (
-            <TransactionsTab ref={notificationListRef} transactionList={listTransactionNotify} />
-          )}
-          {tabIndex === NotificationTab.YOUR_OFFERS && (
-            <YourOffersTab ref={notificationListRef} promotionList={listPromotionNotify} />
-          )}
-          {tabIndex === NotificationTab.PROMOTIONS && (
-            <PromotionsTab ref={notificationListRef} />
-          )}
+          {
+            !isLogin ? 
+              <>
+                {tabIndex === NotificationTab.TRANSACTIONS && (
+                  <TransactionsTab ref={notificationListRef} transactionList={listTransactionNotify} />
+                )}
+                {tabIndex === NotificationTab.YOUR_OFFERS && (
+                  <YourOffersTab ref={notificationListRef} offerList={listOfferNotify} />
+                )}
+                {tabIndex === NotificationTab.PROMOTIONS && (
+                  <PromotionsTab ref={notificationListRef} promotionList={listPromotionNotify} />
+                )}
+              </>
+              :
+              <PromotionsTab ref={notificationListRef} promotionList={listPromotionNotify} />
+          }
+          
         </Tabs>
         {/* Benefit detail */}
         <BottomSheet

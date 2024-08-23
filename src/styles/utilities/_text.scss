@@ -1,3 +1,16 @@
-.text__primary {
+$font-weights: (
+  'normal': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700,
+);
+
+.text-primary {
   color: $color-blue-500;
+}
+
+@each $key, $val in $font-weights {
+  .font-#{$key} {
+    font-weight: $val;
+  }
 }

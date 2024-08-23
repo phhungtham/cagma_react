@@ -96,7 +96,7 @@ const AppointmentHome = () => {
         <Alert
           isCloseButton={false}
           isShowAlert={showLocationAccessPermissionAlert}
-          title={<span>Allow <span className='text__primary'>“Shinhan SOL”</span> to access your location?</span>}
+          title={<span>Allow <span className='text-primary'>“Shinhan SOL”</span> to access your location?</span>}
           textAlign="center"
           firstButton={{
             onClick: handleAllowAccessLocation,

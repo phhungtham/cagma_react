@@ -21,7 +21,7 @@ const BookAppointmentSuccessful = ({appointmentInfo}) => {
           </div>
           <div className='book-appointment__title'>
             <div className='complete-message'>Your appointment is requested successfully</div>
-            <div className='note'>Debit card will be sent to the stored customer address.</div>
+            <div className='note'>Zoom link will be sent via email</div>
           </div>
         </div>
         <div className='divider__item__black'></div>

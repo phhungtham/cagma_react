@@ -1,0 +1,55 @@
+@import 'styles/utilities/variables';
+@import 'styles/utilities/mixin';
+
+.transaction,
+.offer,
+.promotion {
+  &__item__wrapper {
+    padding: 0 24px;
+    &.unread {
+      background-color: $color-blue-100;
+    }
+  }
+  &__item {
+    padding: 20px 0;
+    @include dividerBottomSolid;
+  }
+  &__title {
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 500;
+  }
+  &__time {
+    margin-top: 4px;
+    color: $color-gray-550;
+    font-size: 13px;
+    line-height: 18px;
+  }
+}
+
+.offer {
+  &__label {
+    font-size: 13px;
+    line-height: 18px;
+    color: $color-blue-700;
+  }
+}
+
+.promotion {
+  &__content {
+    font-size: 14px;
+    line-height: 19px;
+    color: $color-gray-700;
+    margin-top: 6px;
+  }
+  &__item {
+    display: flex;
+    gap: 16px;
+  }
+  &__img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+}
