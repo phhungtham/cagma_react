@@ -53,14 +53,14 @@ export const branchFields = [
 export const branchDirectoryListTest = [
   {
     title: 'North Yrok Ontario Branch',
-    caption: '5095 Yonge Street Unit B2 North York Ontario M2N 6Z4',
+    caption: '10102 101 St, La Crête, AB T0H 2H0, Canada',
     phone: '416-250-3550',
     fax: '416-250-3460',
     branchNo: '08048',
   },
   {
     title: 'Mississauga Ontario Branch',
-    caption: '257 Dundas Street East Unit 3 & 4 Mississauga Ontario L5A 1W8',
+    caption: '10513 100 Ave, La Crête, AB T0H 2H0, Canada',
     phone: '416-250-3550',
     fax: '416-250-3460',
     branchNo: '08048',
