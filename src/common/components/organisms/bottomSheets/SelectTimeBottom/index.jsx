@@ -83,7 +83,7 @@ const SelectTimeBottom = ({ open, onClose, title, onTimeChange, defaultTime }) =
       scrollHourViewRef.current.addEventListener('scroll', handleHourScroll);
 
       return () => {
-        scrollHourViewRef.current.removeEventListener('scroll', handleHourScroll);
+        scrollHourViewRef.current?.removeEventListener('scroll', handleHourScroll);
       };
     }
   }, []);
@@ -104,15 +104,14 @@ const SelectTimeBottom = ({ open, onClose, title, onTimeChange, defaultTime }) =
       scrollTypeViewRef.current.addEventListener('scroll', handleTypeScroll);
 
       return () => {
-        scrollTypeViewRef.current.removeEventListener('scroll', handleTypeScroll);
+        scrollTypeViewRef.current?.removeEventListener('scroll', handleTypeScroll);
       };
     }
   }, []);
 
   useEffect(() => {
     if (typeof defaultTime === 'string') {
-      const hour = defaultTime?.split(' ')?.[0];
-      const type = defaultTime?.split(' ')?.[1];
+      const [hour, type] = defaultTime.split(' ');
 
       if (timeTypes.includes(type) && Number(hour) > 0 && Number(hour) < 13) {
         setCurrentHour(hour - 1);
@@ -160,7 +159,7 @@ const SelectTimeBottom = ({ open, onClose, title, onTimeChange, defaultTime }) =
         </div>
 
         <div className="btn_container">
-          <Button label="Confirm" variant="filled__primary" className="w_full" onClick={handleConfirmSelectedTime} />
+          <Button label="Confirm" variant="filled__primary" className="w-full" onClick={handleConfirmSelectedTime} />
         </div>
       </div>
 

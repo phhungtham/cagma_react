@@ -152,3 +152,80 @@ export const labelStatusWithType = {
   [AppointmentStatus.CONFIRMED]: 'filled',
   [AppointmentStatus.COMPLETED]: 'outline',
 };
+
+export const BookAppointmentType = {
+  IN_PERSON: 'inPerson',
+  ZOOM: 'zoom'
+};
+
+export const customerTypeOptions = [
+  {
+    label: 'Personal Customer',
+    value: '1'
+  },
+  {
+    label: 'Small Business Customer',
+    value: '2'
+  },
+];
+
+export const purposeAppointmentOptions = [
+  {
+    label: 'Open an account',
+    value: '1'
+  },
+  {
+    label: 'Banking transaction',
+    value: '2'
+  },
+  {
+    label: 'Debit card',
+    value: '3'
+  },
+  {
+    label: 'Investing',
+    value: '4'
+  },
+  {
+    label: 'Borrowing',
+    value: '5'
+  },
+  {
+    label: 'Other',
+    value: 'other'
+  },
+];
+
+export const preferredLanguages = [
+  {
+    label: 'English',
+    value: 'en'
+  },
+  {
+    label: 'Korean',
+    value: 'ko'
+  }
+];
+
+export const customerStatusFields = [
+  {
+    label: 'Name',
+    value: 'name'
+  },
+  {
+    label: 'Phone no.',
+    value: 'phone'
+  },
+  {
+    label: 'Email',
+    value: 'email'
+  },
+  {
+    label: 'Preferred Language',
+    value: 'language'
+  },
+  {
+    label: 'Additional Comments',
+    value: 'comment'
+  },
+];

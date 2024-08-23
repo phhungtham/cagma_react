@@ -1,0 +1,12 @@
+.form__section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-section__title {
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 700;
+  color: $color-gray-700;
+}

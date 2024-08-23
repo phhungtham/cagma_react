@@ -1,0 +1,44 @@
+@import 'styles/utilities/variables';
+@import 'styles/utilities/mixin';
+
+.book-appointment__content {
+  padding-top: 10px;
+  padding-bottom: 150px;
+  .page__title {
+    padding: 10px 0 16px;
+  }
+  .purpose__detail {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: 500;
+  }
+
+  .customer-status {
+    &__info {
+      padding: 8px 20px;
+      border-radius: 16px;
+      background-color: $color-gray-100;
+    }
+    &__item {
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      font-size: 14px;
+      line-height: 19px;
+      @include dividerBottomSolid();
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    &__label {
+      width: 86px;
+      flex-shrink: 0;
+      color: $color-gray-500;
+    }
+    &__value {
+      font-weight: 500;
+    }
+  }
+}

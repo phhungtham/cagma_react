@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { useState } from 'react';
 import BottomSheet from '@common/components/templates/BottomSheet';
 
-const SelectBottom = ({open, onClose, onSelect, options, title}) => {
+const SelectBottom = ({open, onClose, onSelect, options, title, showArrow}) => {
 
   const onSelectItem = (item) => {
     onSelect(item);
@@ -21,7 +21,7 @@ const SelectBottom = ({open, onClose, onSelect, options, title}) => {
         {options.map(item => 
           <div className="dropdown__option" key={item.value} onClick={() => onSelectItem(item)}>
             <span className="option__label">{item.label}</span>
-            <ArrowRight />
+            {showArrow ? <ArrowRight /> : <></>}
           </div>
         )}
       </div>
