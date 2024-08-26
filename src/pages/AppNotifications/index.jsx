@@ -456,7 +456,7 @@ const AppNotifications = ({ translate }) => {
       {showPromotionDetail 
       && <PromotionDetailBottom onClose={() => setShowPromotionDetail(false)} onClickSubmit={() => {}} />
       }
-      <Alert
+      {/* <Alert
         isCloseButton={false}
         isShowAlert={checkingLoadErrors || benefitsLoadErrors}
         subtitle={checkingLoadErrors?.msgText || benefitsLoadErrors?.msgText}
@@ -465,7 +465,7 @@ const AppNotifications = ({ translate }) => {
           onClick: () => alertMove(checkingLoadErrors?.msgId),
           label: translate('lbl_cta_3006')
         }}
-      />
+      /> */}
       {loadMoreNotify && loadCheckingState && listTransactionNotify.length > 0 && <LoadingInfinite />}
       {loadMoreNotify && loadNoticesState && listOfferNotify.length > 0 && <LoadingInfinite />}
     </div>
