@@ -1,4 +1,5 @@
 import no_image from '../assets/images/no-result.png';
+
 const imgSrcDetected = (baseUrl, path) => {
   if (!path || path === 'undefined' || !path.length) {
     return no_image;
@@ -8,6 +9,5 @@ const imgSrcDetected = (baseUrl, path) => {
     return `${baseUrl}${path}`;
   }
 };
-  
+
 export default imgSrcDetected;
-  

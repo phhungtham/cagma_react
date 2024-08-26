@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 import { setIsNativeClickBack } from 'app/redux/action';
 import { appGlobalReducer } from 'app/redux/reducer';
 import { backEventSelector } from 'app/redux/selector';
 import { APP_GLOBAL } from 'app/redux/type';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+
 import useReducers from './useReducers';
 
 const useNativeBack = callback => {

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import Toast from '../Toast';
+
 import { PropTypes } from 'prop-types';
+
+import Toast from '../Toast';
 
 const Popover = ({ clazz, message, children, iconClose, buttonLabel, lineOfText, mode }) => {
   const [popoverVisibility, setPopoverVisibility] = useState(true);
@@ -32,7 +34,7 @@ Popover.propTypes = {
   iconClose: PropTypes.bool,
   buttonLabel: PropTypes.string,
   lineOfText: PropTypes.oneOf(['single', 'multiple']),
-  mode: PropTypes.oneOf(['dark', 'light'])
+  mode: PropTypes.oneOf(['dark', 'light']),
 };
 
 Popover.defaultProps = {
@@ -41,7 +43,7 @@ Popover.defaultProps = {
   iconClose: true,
   buttonLabel: '',
   lineOfText: 'single',
-  mode: 'dark'
+  mode: 'dark',
 };
 
 export default Popover;

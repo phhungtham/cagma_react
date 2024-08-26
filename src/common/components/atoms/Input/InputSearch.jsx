@@ -1,17 +1,19 @@
-import React, { forwardRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { forwardRef, useEffect, useState } from 'react';
+
+import { INPUT_MODE, InputTypes, SIZE } from '@common/components/constants';
 import useComposeRefs from '@hooks/useComposeRefs';
 import { ClearIcon, ClearIconDark, SearchIcon } from 'assets/icons';
-import Span from '../Span';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
-import { INPUT_MODE, InputTypes, SIZE } from '@common/components/constants';
+import PropTypes from 'prop-types';
+
+import Span from '../Span';
 
 const InputSearch = forwardRef((props, ref) => {
   const {
     translate,
-    autoComplete,
-    children,
-    className,
+    // autoComplete,
+    // children,
+    // className,
     defaultValue,
     onChange,
     maxLength,
@@ -85,7 +87,10 @@ const InputSearch = forwardRef((props, ref) => {
   const handleSubmit = () => {};
   return (
     <div className={`input__search__wrapper ${checkOncancel() ? 'has-cancel' : ''}`}>
-      <section className={`input__search ${checkOncancel() && 'has-cancel'} ${size} ${mode}`} onBlur={handleOnBlur}>
+      <section
+        className={`input__search ${checkOncancel() && 'has-cancel'} ${size} ${mode}`}
+        onBlur={handleOnBlur}
+      >
         <div className={`input__search__icon ${mode}`}>
           <SearchIcon />
         </div>
@@ -108,16 +113,28 @@ const InputSearch = forwardRef((props, ref) => {
           {...otherProps}
         />
         {inputValues && isShowClearBtn && (
-          <div onMouseDown={handleClearInputText} onClick={handleClearInputText} className="input__search__clear">
+          <div
+            onMouseDown={handleClearInputText}
+            onClick={handleClearInputText}
+            className="input__search__clear"
+          >
             {mode === INPUT_MODE.ON_BACKGROUND ? <ClearIconDark /> : <ClearIcon />}
           </div>
         )}
       </section>
       {hasCancelButton ? (
-        <Span clazz={`input__search__cancel ${mode}`} text={translate('lbl_com_3032')} onClick={handleCancelInput} />
+        <Span
+          clazz={`input__search__cancel ${mode}`}
+          text={translate('lbl_com_3032')}
+          onClick={handleCancelInput}
+        />
       ) : (
         checkOncancel() && (
-          <Span clazz={`input__search__cancel ${mode}`} text={translate('lbl_com_3032')} onClick={handleCancelInput} />
+          <Span
+            clazz={`input__search__cancel ${mode}`}
+            text={translate('lbl_com_3032')}
+            onClick={handleCancelInput}
+          />
         )
       )}
     </div>
@@ -137,7 +154,7 @@ InputSearch.propTypes = {
   type: PropTypes.oneOf(Object.values(InputTypes)),
   size: PropTypes.oneOf(Object.values(SIZE)),
   mode: PropTypes.oneOf(Object.values(INPUT_MODE)),
-  hasCancelButton: PropTypes.bool
+  hasCancelButton: PropTypes.bool,
 };
 
 InputSearch.defaultProps = {
@@ -147,7 +164,7 @@ InputSearch.defaultProps = {
   mode: INPUT_MODE.NORMAL,
   type: 'text',
   onChange: () => {},
-  hasCancelButton: false
+  hasCancelButton: false,
 };
 
 export default withHTMLParseI18n(InputSearch);

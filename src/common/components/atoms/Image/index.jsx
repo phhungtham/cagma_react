@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+
 import no_image from '@assets/images/no-result.png';
 
 const Image = props => {
@@ -10,7 +11,15 @@ const Image = props => {
     }
   };
 
-  return <img ref={imageRef} src={src} alt={alt} onClick={onClick} onError={hanldeImageError} />;
+  return (
+    <img
+      ref={imageRef}
+      src={src}
+      alt={alt}
+      onClick={onClick}
+      onError={hanldeImageError}
+    />
+  );
 };
 
 export default Image;

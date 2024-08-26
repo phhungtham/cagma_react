@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import List from '../ListGroup/List';
+import { useEffect, useState } from 'react';
+
 import { ArrowIcon } from 'assets/icons';
-import { useState } from 'react';
-import Span from '../Span';
-import { Button } from '../ButtonGroup/Button/Button';
+import PropTypes from 'prop-types';
 
 const Accordion = ({
   clazz,
@@ -18,7 +15,7 @@ const Accordion = ({
   button,
   onClick,
   time,
-  children
+  children,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,29 +29,27 @@ const Accordion = ({
   }, [isExpand]);
 
   return (
-    <div className={`${clazz} accordion__wrapper`} onClick={onClick}>
+    <div
+      className={`${clazz} accordion__wrapper`}
+      onClick={onClick}
+    >
       <div className="accordion__item">
-        <div className='accordion__item__main'>
-          {label && 
-            <div className='accordion__label'>{label}</div>
-          }
-          <div className='accordion__title'>{title}</div>
-          {caption && 
-            <div className='accordion__caption'>{caption}</div>
-          }
-          {time && 
-            <div className='accordion__time'>{time}</div>
-          }
+        <div className="accordion__item__main">
+          {label && <div className="accordion__label">{label}</div>}
+          <div className="accordion__title">{title}</div>
+          {caption && <div className="accordion__caption">{caption}</div>}
+          {time && <div className="accordion__time">{time}</div>}
         </div>
-        <div className='accordion__arrow'>
-          <div className={`accordion__icon ${isOpen ? 'open' : 'close'}`} onClick={handleToggleExpand}>
+        <div className="accordion__arrow">
+          <div
+            className={`accordion__icon ${isOpen ? 'open' : 'close'}`}
+            onClick={handleToggleExpand}
+          >
             <ArrowIcon direction={'down'} />
           </div>
         </div>
       </div>
-      <div className={`accordion__panel ${isOpen ? 'open' : 'close'}`}>
-        {children}
-      </div>
+      <div className={`accordion__panel ${isOpen ? 'open' : 'close'}`}>{children}</div>
     </div>
   );
 };
@@ -74,7 +69,7 @@ Accordion.defaultProps = {
   caption: '',
   titleIcon: {
     name: '',
-    position: ''
+    position: '',
   },
   isExpand: false,
 };

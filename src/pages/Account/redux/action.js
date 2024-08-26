@@ -1,4 +1,5 @@
 import { dispatch } from 'shared/redux/store';
+
 import { ActionType } from './type';
 
 export const getAccountResquest = payload => dispatch({ type: ActionType.GET_ACCOUNT_REQUEST, payload });

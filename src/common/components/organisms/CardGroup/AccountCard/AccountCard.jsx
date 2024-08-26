@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { HideEyeIcon, MoreIcon, ShowEyeIcon } from 'assets/icons';
+
+import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import Switch from '@common/components/atoms/Switch';
 import { CARD_COLOR } from '@common/components/constants';
-import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
+import { HideEyeIcon, MoreIcon, ShowEyeIcon } from 'assets/icons';
+import PropTypes from 'prop-types';
+
 const AccountCard = ({
   cardQuantity,
   balance,
@@ -18,7 +20,7 @@ const AccountCard = ({
   graph,
   switchButton,
   pendingNum,
-  children
+  children,
 }) => {
   const [isShowBalance, setIsShowBalance] = useState(balanceStatus);
   //only provide firstButton props if want to show 1 button
@@ -35,7 +37,12 @@ const AccountCard = ({
     if (variant !== 'primary') return;
     let stackRenders = [];
     for (let i = 0; i < cardQuantity - 1; i++) {
-      stackRenders.push(<section key={`stack-${i}`} className="account__card__stack" />);
+      stackRenders.push(
+        <section
+          key={`stack-${i}`}
+          className="account__card__stack"
+        />
+      );
     }
     return stackRenders;
   };
@@ -93,7 +100,10 @@ const AccountCard = ({
     <section className="account__card__wrapper">
       {switchButton && (
         <section className="switch__top">
-          <Switch label="Hide Balance" onChange={status => setIsShowBalance(status)} />
+          <Switch
+            label="Hide Balance"
+            onChange={status => setIsShowBalance(status)}
+          />
         </section>
       )}
 
@@ -107,7 +117,10 @@ const AccountCard = ({
         <section className="account__card__header">
           <div className="account__card__header-info">
             <div className="card__icon">
-              <IconButton size="w-20" icon={icon} />
+              <IconButton
+                size="w-20"
+                icon={icon}
+              />
             </div>
             <div className="info">
               <div className="title">Account name</div>
@@ -119,7 +132,10 @@ const AccountCard = ({
               <MoreIcon />
             </div>
           ) : (
-            <div className="account__card__header-eye" onClick={toggleBalance}>
+            <div
+              className="account__card__header-eye"
+              onClick={toggleBalance}
+            >
               {isShowBalance ? <ShowEyeIcon /> : <HideEyeIcon />}
             </div>
           )}
@@ -134,7 +150,7 @@ const AccountCard = ({
             <div
               className="card__graph__progress"
               style={{
-                background: `linear-gradient(90deg, #ffffff ${paymentsPercent}%, rgba(34, 36, 40, 0.2) 0%)`
+                background: `linear-gradient(90deg, #ffffff ${paymentsPercent}%, rgba(34, 36, 40, 0.2) 0%)`,
               }}
             />
           </section>
@@ -166,16 +182,16 @@ AccountCard.prototype = {
   pendingNum: PropTypes.number,
   graphValue: PropTypes.shape({
     paymentsMade: PropTypes.number,
-    paymentsTotal: PropTypes.number
+    paymentsTotal: PropTypes.number,
   }),
   firstButton: PropTypes.shape({
     onClick: PropTypes.func,
-    label: PropTypes.string
+    label: PropTypes.string,
   }),
   secondButton: PropTypes.shape({
     onClick: PropTypes.func,
-    label: PropTypes.string
-  })
+    label: PropTypes.string,
+  }),
 };
 
 AccountCard.defaultProps = {
@@ -193,16 +209,16 @@ AccountCard.defaultProps = {
   pendingNum: null,
   graph: {
     paymentsMade: 20,
-    paymentsTotal: 100
+    paymentsTotal: 100,
   },
   firstButton: {
     onClick: () => {},
-    label: 'Button'
+    label: 'Button',
   },
   secondButton: {
     onClick: () => {},
-    label: 'Button'
-  }
+    label: 'Button',
+  },
 };
 
 export default AccountCard;

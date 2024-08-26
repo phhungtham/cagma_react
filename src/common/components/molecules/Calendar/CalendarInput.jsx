@@ -1,15 +1,15 @@
+import { useEffect, useRef, useState } from 'react';
+
 import { convertDateTime } from '@common/utils/formater';
 // import { setIsShowCalendar } from '@components/VisaCard/redux/action';
 // import { debitCardReducer } from '@components/VisaCard/redux/reducer';
 // import { showCalendarSelector } from '@components/VisaCard/redux/selector';
 // import { FeatureDebitCardName } from '@components/VisaCard/redux/type';
-import useReducers from '@hooks/useReducers';
 import { addDateWithMonth, getCurrentDate } from '@utilities/dateTimeUtils';
 import { replaceString } from '@utilities/debitCardUtils';
 import { CalendarIcon } from 'assets/icons';
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+
 import DatePicker from './DatePicker';
 
 const CalendarInput = ({ clazz, inputType, disabled, onDateChange, isHideCalendar, isReset }) => {
@@ -18,14 +18,14 @@ const CalendarInput = ({ clazz, inputType, disabled, onDateChange, isHideCalenda
     startDateString: '',
     startDate: new Date(),
     endDateString: '',
-    endDate: new Date()
+    endDate: new Date(),
   };
   // const isShowCalendar = useSelector(showCalendarSelector);
   const isShowCalendar = true;
   const [dateType, setDateType] = useState(null);
   const [datePicked, setDatePicked] = useState({
     type: '',
-    value: ''
+    value: '',
   });
   const [dateRange, setDateRange] = useState(defaultDateRange);
   const currentDate = getCurrentDate('DD.MM.YYYY');
@@ -132,17 +132,17 @@ const CalendarInput = ({ clazz, inputType, disabled, onDateChange, isHideCalenda
   useEffect(() => {
     if (!dataTypeRef) return;
     if (dataTypeRef.current === 'startDate') {
-      const startDay = replaceString(dateRange.startDateString, '.', '') || replaceString(lastSixMonthDate,'.', '');
+      const startDay = replaceString(dateRange.startDateString, '.', '') || replaceString(lastSixMonthDate, '.', '');
       setDatePicked({
         type: 'startDate',
-        value: startDay
+        value: startDay,
       });
     }
     if (dataTypeRef.current === 'endDate') {
-      const endDay = replaceString(dateRange.endDateString,'.', '');
+      const endDay = replaceString(dateRange.endDateString, '.', '');
       setDatePicked({
         type: 'endDate',
-        value: endDay
+        value: endDay,
       });
     }
   }, [dateRange, isShowCalendar, dataTypeRef]);
@@ -157,7 +157,10 @@ const CalendarInput = ({ clazz, inputType, disabled, onDateChange, isHideCalenda
           {dateRange.startDateString || lastSixMonthDate}
         </div>
         {!disabled && (
-          <div className="calendar__icon calendar__icon__left" onClick={() => handleToggleCalendar('startDate')}>
+          <div
+            className="calendar__icon calendar__icon__left"
+            onClick={() => handleToggleCalendar('startDate')}
+          >
             <CalendarIcon />
           </div>
         )}
@@ -171,7 +174,10 @@ const CalendarInput = ({ clazz, inputType, disabled, onDateChange, isHideCalenda
           {dateRange.endDateString || currentDate}
         </div>
         {!disabled && (
-          <div className="calendar__icon calendar__icon__right" onClick={() => handleToggleCalendar('endDate')}>
+          <div
+            className="calendar__icon calendar__icon__right"
+            onClick={() => handleToggleCalendar('endDate')}
+          >
             <CalendarIcon />
           </div>
         )}
@@ -209,12 +215,12 @@ const CalendarInput = ({ clazz, inputType, disabled, onDateChange, isHideCalenda
 
 CalendarInput.propTypes = {
   inputType: PropTypes.oneOf(['calendar', 'keyboard']),
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 CalendarInput.defaultProps = {
   inputType: 'keyboard',
-  disabled: false
+  disabled: false,
 };
 
 export default CalendarInput;

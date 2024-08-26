@@ -1,11 +1,11 @@
+import { SH_LCL_CORP_C } from '@configs/global/constants';
+import { getDateFormat } from '@utilities/dateTimeUtils';
 import extendSession from '@utilities/gmCommon/extendSession';
 import axios from 'axios';
 import { toJson } from 'common/utils/convert';
 import AppCfg from 'configs/appConfigs/enviroment';
 import { localStorageService } from 'storage';
 import { transformRequest } from 'utilities/transform';
-import { getDateFormat } from '@utilities/dateTimeUtils';
-import { SH_LCL_CORP_C } from '@configs/global/constants';
 
 const buildURL = url => {
   if (AppCfg.ENV === 'development') {
@@ -19,11 +19,11 @@ export const Method = {
   GET: 'get',
   POST: 'post',
   PUT: 'put',
-  DELETE: 'delete'
+  DELETE: 'delete',
 };
 const HeadersDefault = {
   'Content-Type': 'application/json',
-  Accept: 'text/*, application/json'
+  Accept: 'text/*, application/json',
 };
 
 export async function apiCall(url, method, payload, options = {}) {
@@ -33,10 +33,14 @@ export async function apiCall(url, method, payload, options = {}) {
     const response = await axios({
       method: method,
       url: buildURL(url),
-      headers: { ...HeadersDefault, 'Proworks-lang': localStorageService.getLanguageCode(),'g-trace-id': createGtraceId() },
+      headers: {
+        ...HeadersDefault,
+        'Proworks-lang': localStorageService.getLanguageCode(),
+        'g-trace-id': createGtraceId(),
+      },
       data: transformRequest(payload),
       withCredentials: true,
-      transformResponse: data => toJson(data, null)
+      transformResponse: data => toJson(data, null),
     });
     result.data = response.data;
     if (isExtendSession) {

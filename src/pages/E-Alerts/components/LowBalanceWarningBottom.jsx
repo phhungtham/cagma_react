@@ -1,24 +1,21 @@
 import BottomSheet from '@common/components/templates/BottomSheet';
-import './styles.scss';
-import { eAlertLowBalanceWarningOptions, eAlertSettingMethodOptions } from '../constants';
-import CheckBox from '@common/components/atoms/Checkbox';
-import { useState } from 'react';
-import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+
+import { eAlertLowBalanceWarningOptions } from '../constants';
 import BalanceSettingBottomForm from './BalanceSettingBottomForm';
+import './styles.scss';
 
-const LowBalanceWarningBottom = ({onClose, onSubmit}) => {
-
+const LowBalanceWarningBottom = ({ onClose, onSubmit }) => {
   return (
     <BottomSheet
-      open={true}
+      open
       onClose={onClose}
       title="Low balance Warning"
       clazz="money-leaving-account__wrapper"
       type="fit-content"
     >
-      <BalanceSettingBottomForm 
+      <BalanceSettingBottomForm
         description="Send alert when available balance is less than"
-        onConfirm={onSubmit} 
+        onConfirm={onSubmit}
         balanceOptions={eAlertLowBalanceWarningOptions}
       />
     </BottomSheet>

@@ -1,7 +1,8 @@
 import { PropTypes } from 'prop-types';
+
 import BottomSheet from '../../../templates/BottomSheet';
 
-const ViewTermBottom = ({open, onClose, title, subTitle, children}) => {
+const ViewTermBottom = ({ open, onClose, title, subTitle, children }) => {
   return (
     <BottomSheet
       open={open}
@@ -12,40 +13,39 @@ const ViewTermBottom = ({open, onClose, title, subTitle, children}) => {
       type="max-scroll"
     >
       <div className="view-term__content">
-        <div className='view-term__detail'>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          <div className='mt-4'>Content View Term</div>
-          
+        <div className="view-term__detail">
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
+          <div className="mt-4">Content View Term</div>
         </div>
       </div>
     </BottomSheet>

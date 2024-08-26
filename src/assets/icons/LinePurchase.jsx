@@ -2,7 +2,13 @@ import React from 'react';
 
 const LinePurchase = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+    >
       <path
         d="M1.40608 5.86164C1.38449 5.711 1.50137 5.57617 1.65355 5.57617H18.3464C18.4986 5.57617 18.6155 5.711 18.5939 5.86164L16.9401 17.4001C16.9225 17.5232 16.817 17.6146 16.6926 17.6146H3.30736C3.183 17.6146 3.07754 17.5232 3.05989 17.4001L1.40608 5.86164Z"
         stroke="currentColor"

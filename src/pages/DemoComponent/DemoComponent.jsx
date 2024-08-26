@@ -1,12 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useState } from 'react';
 
+import Tooltip from '@common/components/atoms/Tooltip';
 import SelectDateBottom from '@common/components/organisms/bottomSheets/SelectDateBottom';
 import SelectTimeBottom from '@common/components/organisms/bottomSheets/SelectTimeBottom';
-import Tooltip from '@common/components/atoms/Tooltip';
+import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBottom';
 
 import './styles.scss';
-import LocationMap from '@common/components/atoms/LocationMap';
-import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBottom';
 
 const DemoComponent = () => {
   const [selectDate, setSelectDate] = useState({ open: false, date: '' });
@@ -15,83 +14,98 @@ const DemoComponent = () => {
 
   return (
     <div>
-
-      <div className='container'>
-        <div style={{ position: 'relative' }}>
+      <div className="container">
+        <div className="relative">
           <h1>Location</h1>
-
         </div>
 
-        <div className='__demo'>
-          <div className='__title'>Bottom Sheet</div>
+        <div className="demo">
+          <div className="title">Bottom Sheet</div>
           <div
-            className='__button'
-            onClick={() => setSelectDate((prev) => ({ ...prev, open: true }))}
+            className="button"
+            onClick={() => setSelectDate(prev => ({ ...prev, open: true }))}
           >
             BS Select Date
           </div>
 
           <div
-            className='__button'
-            onClick={() => setSelectTime((prev) => ({ ...prev, open: true }))}
+            className="button"
+            onClick={() => setSelectTime(prev => ({ ...prev, open: true }))}
           >
             BS Select Time
           </div>
 
           <div
-            className='__button'
-            onClick={() => setViewMapItem({ open: true, })}
+            className="button"
+            onClick={() => setViewMapItem({ open: true })}
           >
             BS View Map
           </div>
         </div>
 
-        <div className='__demo'>
-          <div className='__title'>Tooltip</div>
-          <Tooltip content='Top left' placement='top_left'>
-            <div className='__button'>Top Left</div>
+        <div className="demo">
+          <div className="title">Tooltip</div>
+          <Tooltip
+            content="Top left"
+            placement="top_left"
+          >
+            <div className="button">Top Left</div>
           </Tooltip>
-          <Tooltip content='Top right' placement='top_right'>
-            <div className='__button'>Top Right</div>
+          <Tooltip
+            content="Top right"
+            placement="top_right"
+          >
+            <div className="button">Top Right</div>
           </Tooltip>
-          <Tooltip content='Top Center' placement='top_center'>
-            <div className='__button'>Top Center</div>
+          <Tooltip
+            content="Top Center"
+            placement="top_center"
+          >
+            <div className="button">Top Center</div>
           </Tooltip>
-          <Tooltip content='Bottom left' placement='bottom_left'>
-            <div className='__button'>Bottom Left</div>
+          <Tooltip
+            content="Bottom left"
+            placement="bottom_left"
+          >
+            <div className="button">Bottom Left</div>
           </Tooltip>
-          <Tooltip content='Bottom right' placement='bottom_right'>
-            <div className='__button'>Bottom Right</div>
+          <Tooltip
+            content="Bottom right"
+            placement="bottom_right"
+          >
+            <div className="button">Bottom Right</div>
           </Tooltip>
-          <Tooltip content='Bottom center' placement='bottom_center'>
-            <div className='__button'>Bottom Center</div>
+          <Tooltip
+            content="Bottom center"
+            placement="bottom_center"
+          >
+            <div className="button">Bottom Center</div>
           </Tooltip>
         </div>
 
         <SelectDateBottom
           open={selectDate.open}
-          maxYear='2040'
-          minYear='1980'
-          onClose={() => setSelectDate((prev) => ({ ...prev, open: false }))}
-          onDateChange={(date) => {
+          maxYear="2040"
+          minYear="1980"
+          onClose={() => setSelectDate(prev => ({ ...prev, open: false }))}
+          onDateChange={date => {
             setSelectDate({
               date,
-              open: false
+              open: false,
             });
           }}
           defaultDate={selectDate.date}
-          type='MM/YYYY'
+          type="MM/YYYY"
         />
 
         <SelectTimeBottom
           open={selectTime.open}
-          onClose={() => setSelectTime((prev) => ({ ...prev, open: false }))}
-          onTimeChange={(time) => {
+          onClose={() => setSelectTime(prev => ({ ...prev, open: false }))}
+          onTimeChange={time => {
             setSelectTime({ time, open: false });
           }}
           defaultTime={selectTime.time}
         />
-
 
         <ViewMapBottom
           open={viewMapItem.open}
@@ -104,10 +118,9 @@ const DemoComponent = () => {
             branchNo: '08048',
           }}
         />
-      </div >
+      </div>
     </div>
   );
 };
-
 
 export default DemoComponent;

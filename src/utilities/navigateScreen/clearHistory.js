@@ -5,9 +5,9 @@ const clearHistory = (menuCode, param = {}) => {
   if (AppCfg.ENV === 'development') return;
   $h.exec(() => {}, 'NavigationPlugin', 'clearHistory', [
     {
-      menuCode: menuCode
+      menuCode: menuCode,
     },
-    param
+    param,
   ]);
 };
 export default clearHistory;

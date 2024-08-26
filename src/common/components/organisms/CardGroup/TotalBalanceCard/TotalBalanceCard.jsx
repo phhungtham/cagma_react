@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+
 import Switch from '@common/components/atoms/Switch';
+import PropTypes from 'prop-types';
 
 const TotalBalanceCard = ({ firstValue, secondValue, handleBlurAmount }) => {
   const [isBlur, setIsBlur] = useState(false);
@@ -13,7 +14,10 @@ const TotalBalanceCard = ({ firstValue, secondValue, handleBlurAmount }) => {
   return (
     <div className="total__balance">
       <div className="total__balance__header">
-        <Switch label="Hide Balance" onChange={onSwitch} />
+        <Switch
+          label="Hide Balance"
+          onChange={onSwitch}
+        />
       </div>
       <div className="total__balance__body">
         <section className="total__balance__body__left">
@@ -38,23 +42,23 @@ const TotalBalanceCard = ({ firstValue, secondValue, handleBlurAmount }) => {
 TotalBalanceCard.propTypes = {
   firstValue: PropTypes.shape({
     currency: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    currencyUnit: PropTypes.string
+    currencyUnit: PropTypes.string,
   }),
   secondValue: PropTypes.shape({
     currency: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    currencyUnit: PropTypes.string
-  })
+    currencyUnit: PropTypes.string,
+  }),
 };
 
 TotalBalanceCard.defaultProps = {
   firstValue: {
     currency: '523.00',
-    currencyUnit: 'USD'
+    currencyUnit: 'USD',
   },
   secondValue: {
     currency: '4.823.00',
-    currencyUnit: 'KHR'
-  }
+    currencyUnit: 'KHR',
+  },
 };
 
 export default TotalBalanceCard;

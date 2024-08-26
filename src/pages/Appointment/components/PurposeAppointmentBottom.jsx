@@ -1,27 +1,28 @@
-import { ArrowRight } from '@assets/icons';
-import { PropTypes } from 'prop-types';
 import { useState } from 'react';
-import BottomSheet from '@common/components/templates/BottomSheet';
-import { purposeAppointmentOptions } from '../constants';
-import TextDropdown from '@common/components/atoms/Dropdown/TextDropdown';
+
+import { ArrowRight } from '@assets/icons';
+import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
-import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import BottomSheet from '@common/components/templates/BottomSheet';
+import { PropTypes } from 'prop-types';
 
-const PurposeAppointmentBottom = ({open, onClose, onChange}) => {
+import { purposeAppointmentOptions } from '../constants';
+
+const PurposeAppointmentBottom = ({ open, onClose, onChange }) => {
   const [selectedPurpose, setSelectedPurpose] = useState({
     label: '',
-    value: ''
+    value: '',
   });
   const [detail, setDetail] = useState();
   const [showDetailInputForm, setShowDetailInputForm] = useState(false);
 
-  const onSelectItem = (item) => {
+  const onSelectItem = item => {
     setSelectedPurpose(item);
     setShowDetailInputForm(true);
   };
 
-  const handleDetailChange = (e) => {
+  const handleDetailChange = e => {
     setDetail(e.target.value);
   };
 
@@ -29,7 +30,7 @@ const PurposeAppointmentBottom = ({open, onClose, onChange}) => {
     onChange({
       label: selectedPurpose.label,
       value: selectedPurpose.value,
-      detail: detail
+      detail: detail,
     });
   };
 
@@ -41,31 +42,48 @@ const PurposeAppointmentBottom = ({open, onClose, onChange}) => {
       clazz="bottom__dropdown__wrapper"
       type="fit-content"
     >
-      {showDetailInputForm ? 
+      {showDetailInputForm ? (
         <>
-          <div className='pt-4'>
+          <div className="pt-4">
             <section>
-              <Dropdown label="Purpose of Appointment" value={selectedPurpose.label} disabled />
+              <Dropdown
+                label="Purpose of Appointment"
+                value={selectedPurpose.label}
+                disabled
+              />
             </section>
-            <section className='mt-3'>
-              <Input label="Detail for Appointment" type="text" onChange={handleDetailChange} />
+            <section className="mt-3">
+              <Input
+                label="Detail for Appointment"
+                type="text"
+                onChange={handleDetailChange}
+              />
             </section>
           </div>
-          <div className='btn__ctas'>
-            <Button variant="filled__primary" label="Next" className="w-full" onClick={onClickConfirm} disable={!detail} />
-          </div> 
+          <div className="btn__ctas">
+            <Button
+              variant="filled__primary"
+              label="Next"
+              className="w-full"
+              onClick={onClickConfirm}
+              disable={!detail}
+            />
+          </div>
         </>
-        : 
+      ) : (
         <div className="bottom__dropdown__list">
-          {purposeAppointmentOptions.map(item => 
-            <div className="dropdown__option" key={item.value} onClick={() => onSelectItem(item)}>
+          {purposeAppointmentOptions.map(item => (
+            <div
+              className="dropdown__option"
+              key={item.value}
+              onClick={() => onSelectItem(item)}
+            >
               <span className="option__label">{item.label}</span>
               <ArrowRight />
             </div>
-          )}
+          ))}
         </div>
-      }
-      
+      )}
     </BottomSheet>
   );
 };

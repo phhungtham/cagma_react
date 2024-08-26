@@ -4,7 +4,7 @@ export const ActionType = {
   GET_ACCOUNT_REQUEST_FAILED: `${FeatureName}/GET_ACCOUNT_REQUEST_FAILED`,
   GET_ACCOUNT_REQUEST: `${FeatureName}/GET_ACCOUNT_REQUEST`,
   CREATE_ACCOUNT_REQUEST: `${FeatureName}/CREATE_ACCOUNT_REQUEST`,
-  CLEAN_UP: `${FeatureName}/CLEAN_UP`
+  CLEAN_UP: `${FeatureName}/CLEAN_UP`,
 };
 
 export const AccountURLs = {

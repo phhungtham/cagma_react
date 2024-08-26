@@ -2,7 +2,13 @@ import React from 'react';
 
 const SOLAvatar = ({ width = 28, height = 19 }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 61 40" fill="none">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 61 40"
+      fill="none"
+    >
       <path
         d="M49.6777 0.330517V23.5707H60.5005V27.7897H43.9347V3.87228C43.9347 2.67288 43.7371 2.08023 43.0598 1.31826C42.6224 0.796167 42.9046 0.316406 43.4126 0.316406H49.6636L49.6777 0.330517Z"
         fill="currentColor"

@@ -14,7 +14,8 @@
 .my-accounts {
   &__item {
     padding: 0 24px;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-color: $color-gray-50;
     }
     &:last-child {

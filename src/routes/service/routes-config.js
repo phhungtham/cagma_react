@@ -1,74 +1,75 @@
-import Home from '@pages/Home/Home';
-import ChangeProfile from '@pages/Profile/ChangeProfile';
 import OpenAccount from '@pages/Account/OpenAccount';
 import AppNotifications from '@pages/AppNotifications';
-import DemoComponent from '@pages/DemoComponent/DemoComponent';
-import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
-import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
 import AppointmentHome from '@pages/Appointment/AppointmentHome';
-import BranchDirectory from '@pages/Appointment/BranchDirectory';
 import AppointmentManagement from '@pages/Appointment/AppointmentManagement';
 import BookAppointment from '@pages/Appointment/BookAppointment';
+import BranchDirectory from '@pages/Appointment/BranchDirectory';
+import DemoComponent from '@pages/DemoComponent/DemoComponent';
+import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
+import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
+import Home from '@pages/Home/Home';
+import ChangeProfile from '@pages/Profile/ChangeProfile';
 
 const RoutesConfig = [
   {
     path: '/',
     component: Home,
-    private: false
+    private: false,
   },
   {
     path: '/change-profile',
     component: ChangeProfile,
-    private: true
+    private: true,
   },
   {
     path: '/open-account',
     component: OpenAccount,
-    private: true
+    private: true,
   },
   {
     path: '/notification',
     component: AppNotifications,
-    private: false
+    private: false,
   },
   {
     path: '/e-alerts-management',
     component: EAlertsManagement,
-    private: false
+    private: false,
   },
   {
     path: '/e-alerts-balance',
     component: EAlertsBalance,
-    private: false
+    private: false,
   },
   {
     path: '/appointment',
     component: AppointmentHome,
-    private: false
+    private: false,
   },
   {
     path: '/branch-directory',
     component: BranchDirectory,
-    private: false
+    private: false,
   },
   {
     path: '/appointment-management',
     component: AppointmentManagement,
-    private: false
+    private: false,
   },
   {
     path: '/book-appointment',
     component: BookAppointment,
-    private: false
+    private: false,
   },
   {
     path: '/demo',
     component: DemoComponent,
-    private: false
+    private: false,
   },
 ];
 
 // Reference: https://www.codemzy.com/blog/fix-chunkloaderror-react
+// eslint-disable-next-line no-unused-vars
 const lazyRetry = function (componentImport, name) {
   if (!name) name = 'lazy';
   return new Promise((resolve, reject) => {

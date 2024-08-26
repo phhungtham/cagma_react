@@ -1,10 +1,17 @@
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+
 import { CalendarArrow } from 'assets/icons';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import PropTypes from 'prop-types';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
-const MonthPicker = ({ calendarDirection, dateTimeDisplay, recentDatePick, getYearPicked, getMonthPicked, translate }) => {
-
+const MonthPicker = ({
+  calendarDirection,
+  dateTimeDisplay,
+  recentDatePick,
+  getYearPicked,
+  getMonthPicked,
+  translate,
+}) => {
   const currentDateTime = new Date();
   const currentYear = +currentDateTime.getFullYear();
   const currentMonth = +currentDateTime.getMonth();
@@ -34,7 +41,7 @@ const MonthPicker = ({ calendarDirection, dateTimeDisplay, recentDatePick, getYe
     translate('lbl_com_3091'),
     translate('lbl_com_3092'),
     translate('lbl_com_3093'),
-    translate('lbl_com_3094')
+    translate('lbl_com_3094'),
   ];
 
   const yearRef = useRef(null);
@@ -190,11 +197,17 @@ const MonthPicker = ({ calendarDirection, dateTimeDisplay, recentDatePick, getYe
     return (
       <div className={customClass}>
         <section className={`${customClass}__year`}>
-          <div className="prev__arrow" onClick={() => handleChangeYear('prev')}>
+          <div
+            className="prev__arrow"
+            onClick={() => handleChangeYear('prev')}
+          >
             <CalendarArrow />
           </div>
           <div className="year__label">{dateTime.yearShowed}</div>
-          <div className="next__arrow" onClick={() => handleChangeYear('next')}>
+          <div
+            className="next__arrow"
+            onClick={() => handleChangeYear('next')}
+          >
             <CalendarArrow />
           </div>
         </section>
@@ -247,20 +260,28 @@ const MonthPicker = ({ calendarDirection, dateTimeDisplay, recentDatePick, getYe
   const renderVerticalCalendar = () => {
     return (
       <div className={customClass}>
-        <section className={`${customClass}__months`} ref={monthRef} onScroll={handleMonthScroll}>
-          <div className="month -2"></div>
-          <div className="month -1"></div>
+        <section
+          className={`${customClass}__months`}
+          ref={monthRef}
+          onScroll={handleMonthScroll}
+        >
+          <div className="month -2" />
+          <div className="month -1" />
           {renderMonthVertical}
-          <div className="month"></div>
-          <div className="month"></div>
+          <div className="month" />
+          <div className="month" />
         </section>
-        <section className="slide__line"></section>
-        <section className={`${customClass}__year`} ref={yearRef} onScroll={handleYearScroll}>
-          <div className="year"></div>
-          <div className="year"></div>
+        <section className="slide__line" />
+        <section
+          className={`${customClass}__year`}
+          ref={yearRef}
+          onScroll={handleYearScroll}
+        >
+          <div className="year" />
+          <div className="year" />
           {renderYearVertical}
-          <div className="year"></div>
-          <div className="year"></div>
+          <div className="year" />
+          <div className="year" />
         </section>
       </div>
     );
@@ -270,11 +291,11 @@ const MonthPicker = ({ calendarDirection, dateTimeDisplay, recentDatePick, getYe
 };
 
 MonthPicker.propTypes = {
-  calendarDirection: PropTypes.oneOf(['vertical', 'horizon'])
+  calendarDirection: PropTypes.oneOf(['vertical', 'horizon']),
 };
 
 MonthPicker.defaultProps = {
-  calendarDirection: 'horizon'
+  calendarDirection: 'horizon',
 };
 
 export default withHTMLParseI18n(MonthPicker);

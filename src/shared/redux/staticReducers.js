@@ -1,4 +1,4 @@
-import { authReducer, FeatureName as authName } from 'shared/features/auth/reducer';
+import { FeatureName as authName, authReducer } from 'shared/features/auth/reducer';
 import { httpReducer } from 'shared/features/http';
 
 const staticReducers = {
@@ -6,6 +6,6 @@ const staticReducers = {
   [authName]: authReducer,
   appConfig: (state = {}, action) => {
     return state;
-  }
+  },
 };
 export default staticReducers;

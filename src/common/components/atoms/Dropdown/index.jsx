@@ -1,33 +1,34 @@
-import React, { forwardRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { ArrowDown, ArrowUp, ClearIcon } from 'assets/icons';
+import { forwardRef, useEffect, useState } from 'react';
+
 import { SIZE } from '@common/components/constants';
+import { ArrowDown, ArrowUp } from 'assets/icons';
+import PropTypes from 'prop-types';
 
 const Dropdown = forwardRef((props, ref) => {
   const {
-    autoComplete,
+    // autoComplete,
     children,
     clazz,
-    defaultValue,
+    // defaultValue,
     disabled,
     errorMessage,
     label,
-    onChange,
+    // onChange,
     onFocus,
-    onBlur,
-    name,
+    // onBlur,
+    // name,
     readOnly,
-    isMemo,
-    placeHolder,
-    style,
-    helperText,
-    isCountCharacter,
+    // isMemo,
+    // placeHolder,
+    // style,
+    // helperText,
+    // isCountCharacter,
     mode,
     value,
-    onClearInput,
+    // onClearInput,
     completedMode,
     options,
-    ...otherProps
+    // ...otherProps
   } = props;
   const [valueDisplay, setValueDisplay] = useState('');
   const [customClass, setCustomClass] = useState('');
@@ -65,21 +66,19 @@ const Dropdown = forwardRef((props, ref) => {
   return (
     <div className={clazz}>
       <section
-        className={`dropdown__wrapper ${!!valueDisplay ? 'has-value' : ''} ${customClass} ${errorTextField && 'dropdown__error'} ${
-          disabled && 'disable'
-        } ${mode}`}
+        className={`dropdown__wrapper ${!!valueDisplay ? 'has-value' : ''} ${customClass} ${
+          errorTextField && 'dropdown__error'
+        } ${disabled && 'disable'} ${mode}`}
         tabIndex={-1} // Make the section focusable
         onBlur={handleOnBlur}
         onClick={handleFocusStatus}
       >
-        <div className='dropdown__main'>
+        <div className="dropdown__main">
           <div className={`dropdown__label ${customClass} ${disabled && 'disable'} ${mode}`}>{label}</div>
-          <div className='dropdown__value'>{valueDisplay}</div>
+          <div className="dropdown__value">{valueDisplay}</div>
           {children}
         </div>
-        <div className='dropdown__icon'>
-          {customClass === 'dropdown__focus' ? <ArrowUp /> : <ArrowDown />}
-        </div>
+        <div className="dropdown__icon">{customClass === 'dropdown__focus' ? <ArrowUp /> : <ArrowDown />}</div>
       </section>
     </div>
   );
@@ -127,7 +126,7 @@ Dropdown.defaultProps = {
   onChange: () => {},
   onFocus: () => {},
   onBlur: () => {},
-  onClearInput: () => {}
+  onClearInput: () => {},
 };
 
 export default Dropdown;

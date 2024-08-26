@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { PropTypes } from 'prop-types';
+
 import Span from '../Span';
 
 const Currency = props => {
@@ -7,8 +9,14 @@ const Currency = props => {
 
   return (
     <div className={`currency__wrapper ${clazz} ${type}`}>
-      <Span clazz={`amount ${type}`} text={`${label} ${type !== 'withdraw' ? amount : '-' + amount}`} />
-      <Span clazz={`unit ${type}`} text={unit} />
+      <Span
+        clazz={`amount ${type}`}
+        text={`${label} ${type !== 'withdraw' ? amount : '-' + amount}`}
+      />
+      <Span
+        clazz={`unit ${type}`}
+        text={unit}
+      />
     </div>
   );
 };
@@ -18,7 +26,7 @@ Currency.propTypes = {
   type: PropTypes.oneOf(['default', 'deposit', 'withdraw', 'whiteColor', 'graySmall']),
   amount: PropTypes.string,
   unit: PropTypes.string,
-  label: PropTypes.string
+  label: PropTypes.string,
 };
 
 Currency.defaultProps = {
@@ -26,7 +34,7 @@ Currency.defaultProps = {
   type: 'default',
   amount: null,
   unit: '',
-  label: ''
+  label: '',
 };
 
 export default Currency;

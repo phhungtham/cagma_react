@@ -1,7 +1,9 @@
-import { setHttpFailure, setHttpRequesting, setHttpSuccess } from '../features/http';
-import { apiCall } from '../api';
 import { call, put } from 'redux-saga/effects';
 import { extractData } from 'utilities/transform';
+
+import { apiCall } from '../api';
+import { setHttpFailure, setHttpRequesting, setHttpSuccess } from '../features/http';
+
 /**
  * Perform a forked saga worker to handle the async request
  * @param {string} url the absolute or relative api endpoint
@@ -10,7 +12,7 @@ import { extractData } from 'utilities/transform';
  * @param {object} action the dispatched action
  */
 export default function* workerSaga(url, method, options, action) {
-  const { showIndicator = true, dataPath, defaultResponse } = options;
+  const { dataPath, defaultResponse } = options;
   const { type, payload } = action;
   const { data, errors } = yield call(apiCall, url, method, payload, options);
   yield put(setHttpRequesting(type));

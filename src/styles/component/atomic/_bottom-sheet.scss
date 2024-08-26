@@ -154,12 +154,9 @@
     .option__label {
       font-weight: 500;
       line-height: 21px;
-      
     }
-    
   }
 }
-
 
 @include animationTranslate(slideUp, from, to, 100%, 0%);
 @include animationTranslate(slideUp-pulled-90, from, to, 100%, 10%);

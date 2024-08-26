@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ThinArrowIcon } from 'assets/icons';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { ThinArrowIcon } from 'assets/icons';
+import PropTypes from 'prop-types';
+
 const LoginCard = ({ isLogin, afterLoginImage, isJoinCard }) => {
   return (
     <section className="login__card__wrapper">
@@ -10,7 +10,7 @@ const LoginCard = ({ isLogin, afterLoginImage, isJoinCard }) => {
           <section className="top__content">
             <div className="title">{isLogin ? 'Welcome to SOL' : 'Login to SOL'}</div>
             {isLogin ? (
-              <div className="subtitle">{'You don\'t own any accounts'}</div>
+              <div className="subtitle">You don't own any accounts</div>
             ) : (
               <>
                 <div className="subtitle">Get started login</div>
@@ -18,7 +18,10 @@ const LoginCard = ({ isLogin, afterLoginImage, isJoinCard }) => {
               </>
             )}
           </section>
-          <Button className={'login__card__button'} label={isLogin ? 'Browse products' : 'Login'} />
+          <Button
+            className={'login__card__button'}
+            label={isLogin ? 'Browse products' : 'Login'}
+          />
         </section>
         <section className="right__content">
           {/* <img alt='card' src={isLogin ? afterLoginImage : CardBankImage} /> */}
@@ -26,7 +29,7 @@ const LoginCard = ({ isLogin, afterLoginImage, isJoinCard }) => {
       </section>
       {isJoinCard && (
         <section className="join__card">
-          <span>{'Don\'t you have Shinhan Bank account?'}</span>
+          <span>Don't you have Shinhan Bank account?</span>
           <span className="arrow__icon">
             <ThinArrowIcon />
           </span>
@@ -39,13 +42,13 @@ const LoginCard = ({ isLogin, afterLoginImage, isJoinCard }) => {
 LoginCard.prototype = {
   isLogin: PropTypes.bool,
   afterLoginImage: PropTypes.string,
-  isJoinCard: PropTypes.bool
+  isJoinCard: PropTypes.bool,
 };
 
 LoginCard.defaultProps = {
   isLogin: true,
   afterLoginImage: '',
-  isJoinCard: true
+  isJoinCard: true,
 };
 
 export default LoginCard;

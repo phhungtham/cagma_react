@@ -2,8 +2,20 @@ import React from 'react';
 
 const LoanIcon = () => {
   return (
-    <svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect y="0.304688" width="36" height="36" rx="18" fill="#7466CE" />
+    <svg
+      width="36"
+      height="37"
+      viewBox="0 0 36 37"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        y="0.304688"
+        width="36"
+        height="36"
+        rx="18"
+        fill="#7466CE"
+      />
       <path
         d="M23.3339 24.5273C23.8248 24.5273 24.2228 24.9253 24.2228 25.4162C24.2228 25.9072 23.8248 26.3051 23.3339 26.3051H12.6672C12.1763 26.3051 11.7783 25.9072 11.7783 25.4162C11.7783 24.9253 12.1763 24.5273 12.6672 24.5273H23.3339Z"
         fill="white"

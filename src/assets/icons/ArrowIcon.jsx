@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
 const ArrowIcon = ({ direction = 'down' }) => {
@@ -42,11 +43,11 @@ const ArrowIcon = ({ direction = 'down' }) => {
 };
 
 ArrowIcon.propTypes = {
-  direction: PropTypes.oneOf(['up', 'down', 'right', 'left'])
+  direction: PropTypes.oneOf(['up', 'down', 'right', 'left']),
 };
 
 ArrowIcon.defaultProps = {
-  direction: 'up'
+  direction: 'up',
 };
 
 export default ArrowIcon;

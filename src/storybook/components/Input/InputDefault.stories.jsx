@@ -5,7 +5,7 @@ import Input from '@common/components/atoms/Input/Input';
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Input/Default',
-  component: Input
+  component: Input,
 };
 
 const Template = args => <Input {...args} />;
@@ -13,12 +13,12 @@ const Template = args => <Input {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   label: 'Label',
-  placeholder: 'Placeholder'
+  placeholder: 'Placeholder',
 };
 
 export const TextFieldError = Template.bind({});
 TextFieldError.args = {
   label: 'Label',
   placeholder: 'Placeholder',
-  errorMessage: 'Error Message'
+  errorMessage: 'Error Message',
 };

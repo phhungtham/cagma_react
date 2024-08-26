@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { PropTypes } from 'prop-types';
+
 import Span from '../Span';
 
 const Label = props => {
@@ -16,21 +18,10 @@ const Label = props => {
 
 Label.propTypes = {
   clazz: PropTypes.string,
-  variant: PropTypes.oneOf([
-    'basic',
-    'primary',
-    'gray',
-    'blue',
-    'mint',
-    'purple',
-    'orange',
-    'coral',
-    'rose',
-    'brown'
-  ]),
+  variant: PropTypes.oneOf(['basic', 'primary', 'gray', 'blue', 'mint', 'purple', 'orange', 'coral', 'rose', 'brown']),
   type: PropTypes.oneOf(['filled', 'outline', 'ghost']),
   label: PropTypes.string,
-  accountLabel: PropTypes.oneOf(['','checkings', 'savings', 'loan'])
+  accountLabel: PropTypes.oneOf(['', 'checkings', 'savings', 'loan']),
 };
 
 Label.defaultProps = {

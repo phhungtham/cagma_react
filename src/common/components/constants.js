@@ -12,42 +12,42 @@ export const InputTypes = {
   URL: 'url',
   SEARCH: 'search',
   TEL: 'tel',
-  COLOR: 'color'
+  COLOR: 'color',
 };
 
 export const SIZE = {
   SMALL: 'small',
-  LARGE: 'large'
+  LARGE: 'large',
 };
 
 export const INPUT_MODE = {
   ON_BACKGROUND: 'onBackground',
-  NORMAL: 'normal'
+  NORMAL: 'normal',
 };
 
 export const TAG_NAME = {
   INPUT: 'input',
-  TEXT_AREA: 'textarea'
+  TEXT_AREA: 'textarea',
 };
 
 export const BOX_INFO_TYPE = {
   INFO: 'info',
   NOTICE: 'notice',
   NEGATIVE: 'negative',
-  NEGATIVE_DARK: 'negativeDark'
+  NEGATIVE_DARK: 'negativeDark',
 };
 
 export const CARD_COLOR = {
   checking: '#14AEC6',
   savings: '#2EB086',
-  loan: '#7466CE'
+  loan: '#7466CE',
 };
 
 export const ICON_NOTIFY_TYPE = {
   DEBIT_NOTICE: 'Debit Notice',
   CREDIT_NOTICE: 'Credit Notice',
   SHINHAN_KHQR: 'Shinhan KHQR Pay Notice',
-  DEFAULT: 'Default'
+  DEFAULT: 'Default',
 };
 
 export const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
@@ -62,7 +62,7 @@ export const FAQCategory = [
   'Internet Banking',
   'Mobile Banking',
   'Security/Authentication',
-  'Errors/Bugs'
+  'Errors/Bugs',
 ];
 
 export const placementsMap = {
@@ -74,11 +74,4 @@ export const placementsMap = {
   bottom_center: 'bottom',
 };
 
-export const allowedPlacements = [
-  'bottom',
-  'bottom-start',
-  'bottom-end',
-  'top',
-  'top-start',
-  'top-end',
-];
+export const allowedPlacements = ['bottom', 'bottom-start', 'bottom-end', 'top', 'top-start', 'top-end'];

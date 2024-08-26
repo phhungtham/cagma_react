@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { $h } from 'navigation/wmatrix_config';
-import isEmpty from '@utilities/isEmpty';
 import { useSelector } from 'react-redux';
-import { nativeRedirectStateSelector } from 'app/redux/selector';
-import useReducers from './useReducers';
-import { APP_GLOBAL } from 'app/redux/type';
-import { appGlobalReducer } from 'app/redux/reducer';
+
+import isEmpty from '@utilities/isEmpty';
 import { setLoginState } from 'app/redux/action';
+import { appGlobalReducer } from 'app/redux/reducer';
+import { nativeRedirectStateSelector } from 'app/redux/selector';
+import { APP_GLOBAL } from 'app/redux/type';
+import { $h } from 'navigation/wmatrix_config';
+
+import useReducers from './useReducers';
 
 const useLoginInfo = (props = {}) => {
   useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
@@ -18,7 +20,7 @@ const useLoginInfo = (props = {}) => {
     isLogin: null,
     isLoading: true,
     error: null,
-    loginInfo: {}
+    loginInfo: {},
   });
 
   const getLoginInfo = useCallback(() => {
@@ -33,7 +35,7 @@ const useLoginInfo = (props = {}) => {
         isLoading: false,
         isLogin: true,
         error: null,
-        loginInfo: res
+        loginInfo: res,
       }));
       setLoginState(true);
     };
@@ -45,7 +47,7 @@ const useLoginInfo = (props = {}) => {
         isLoading: false,
         isLogin: false,
         error: res,
-        loginInfo: {}
+        loginInfo: {},
       }));
       setLoginState(false);
     };
@@ -54,7 +56,7 @@ const useLoginInfo = (props = {}) => {
       isSendingRef.current = true;
       setState(s => ({
         ...s,
-        error: null
+        error: null,
       }));
 
       $h.exec(
@@ -82,7 +84,7 @@ const useLoginInfo = (props = {}) => {
     loginInfo: state.loginInfo,
     isLoading: state.isLoading,
     error: state.error,
-    isLogin: state.isLogin
+    isLogin: state.isLogin,
   };
 };
 

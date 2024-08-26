@@ -1,3 +1,13 @@
+/* eslint-disable no-unused-vars */
+import { Suspense, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Routes, useNavigate } from 'react-router-dom';
+
+import { TooltipProvider } from '@common/components/atoms/Tooltip/TooltipContext';
+import ErrorBoundary from '@common/components/ErrorBoundary';
+import Fallback from '@common/components/Fallback';
+import { AppCfg } from '@configs/appConfigs';
 import useDetectBrowser from '@hooks/useDetectBrowser';
 import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
@@ -5,12 +15,9 @@ import publicRoutes from '@routes/service/public-routes';
 import { languageStorageKeys } from '@utilities/transform';
 import { reloadLanguageResource } from 'i18n/reloadLanguageResource';
 import { $h, wmatrix } from 'navigation/wmatrix_config';
-import { Suspense, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { Routes, useNavigate } from 'react-router-dom';
 import { polyfill } from 'smoothscroll-polyfill';
 import { localStorageService } from 'storage';
+
 import { deviceDetected } from '../utilities';
 import './App.scss';
 import {
@@ -19,15 +26,11 @@ import {
   setInitLoginState,
   setIsNativeClickBack,
   setIsNativeRedirect,
-  setNativeParams
+  setNativeParams,
 } from './redux/action';
 import { appGlobalReducer } from './redux/reducer';
 import { appLanguage } from './redux/selector';
 import { APP_GLOBAL } from './redux/type';
-import { AppCfg } from '@configs/appConfigs';
-import ErrorBoundary from '@common/components/ErrorBoundary';
-import Fallback from '@common/components/Fallback';
-import { TooltipProvider } from '@common/components/atoms/Tooltip/TooltipContext';
 
 const App = () => {
   useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
@@ -106,7 +109,7 @@ const App = () => {
             const params = JSON.parse(data.param);
             setNativeParams(params);
           }
-        } catch (error) { }
+        } catch (error) {}
         setIsNativeRedirect();
       },
       false

@@ -1,14 +1,12 @@
-import React from 'react';
-
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Button/IconButton',
-  component: IconButton
+  component: IconButton,
 };
 
-const IconButtonStory = args => <IconButton {...args} ></IconButton>;
+const IconButtonStory = args => <IconButton {...args} />;
 
 export const Icon = IconButtonStory.bind({});
 Icon.args = {
@@ -18,7 +16,7 @@ Icon.args = {
   onClick: undefined,
   size: 'w-16',
   backgroundBorder: false,
-  background: false
+  background: false,
 };
 export const IconText = IconButtonStory.bind({});
 IconText.args = {
@@ -28,5 +26,5 @@ IconText.args = {
   onClick: undefined,
   size: 'w-16',
   backgroundBorder: false,
-  background: false
+  background: false,
 };

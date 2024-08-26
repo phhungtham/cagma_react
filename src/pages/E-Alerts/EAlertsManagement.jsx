@@ -1,11 +1,13 @@
-import Header from '@common/components/organisms/Header';
-import { moveBack } from '@utilities/index';
-import './styles.scss';
+import { useState } from 'react';
+
 import { ArrowRight } from '@assets/icons';
 import Switch from '@common/components/atoms/Switch';
-import { useState } from 'react';
-import CustomerInfoChangeBottom from './components/CustomerInfoChangeBottom';
 import Toast from '@common/components/atoms/Toast';
+import Header from '@common/components/organisms/Header';
+import { moveBack } from '@utilities/index';
+
+import CustomerInfoChangeBottom from './components/CustomerInfoChangeBottom';
+import './styles.scss';
 
 const EAlertsManagement = () => {
   const [showCustomerInfoChangeBottom, setShowCustomerInfoChangeBottom] = useState(false);
@@ -13,19 +15,19 @@ const EAlertsManagement = () => {
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
-    type: 'success'
+    type: 'success',
   });
 
   const onClickShowCustomerInfoBottom = () => {
     setShowCustomerInfoChangeBottom(true);
   };
 
-  const handleApplyCustomerInfoChange = (checkOptions) => {
+  const handleApplyCustomerInfoChange = checkOptions => {
     setShowCustomerInfoChangeBottom(false);
     setShowToast({
       isShow: true,
       message: 'Alerts  notifications enabled',
-      type: 'success'
+      type: 'success',
     });
   };
 
@@ -36,41 +38,47 @@ const EAlertsManagement = () => {
         onClick={moveBack}
       />
       <div className="eAlerts-management__content">
-        <div className='alert__item' onClick={onClickShowCustomerInfoBottom}>
-          <div className='item__title'>Customer Information</div>
-          <div className='item__value'>
-            <span className='on'>ON</span>
-            <span className='arrow-icon'>
+        <div
+          className="alert__item"
+          onClick={onClickShowCustomerInfoBottom}
+        >
+          <div className="item__title">Customer Information</div>
+          <div className="item__value">
+            <span className="on">ON</span>
+            <span className="arrow-icon">
               <ArrowRight />
             </span>
           </div>
         </div>
-        <div className='alert__item'>
-          <div className='item__title'>Offers</div>
-          <div className='item__value'>
-            <span className='switch-icon'>
+        <div className="alert__item">
+          <div className="item__title">Offers</div>
+          <div className="item__value">
+            <span className="switch-icon">
               <Switch />
             </span>
           </div>
         </div>
-        <div className='alert__item'>
-          <div className='item__title'>Balance</div>
-          <div className='item__value'>
-            <span className=''>OFF</span>
-            <span className='arrow-icon'>
+        <div className="alert__item">
+          <div className="item__title">Balance</div>
+          <div className="item__value">
+            <span className="">OFF</span>
+            <span className="arrow-icon">
               <ArrowRight />
             </span>
           </div>
         </div>
       </div>
-      {showCustomerInfoChangeBottom && 
-        <CustomerInfoChangeBottom onClose={() => setShowCustomerInfoChangeBottom(false)} onSubmit={handleApplyCustomerInfoChange} />
-      }
+      {showCustomerInfoChangeBottom && (
+        <CustomerInfoChangeBottom
+          onClose={() => setShowCustomerInfoChangeBottom(false)}
+          onSubmit={handleApplyCustomerInfoChange}
+        />
+      )}
       <section className="toast__overlay">
         <Toast
           isShowToast={showToast.isShow}
           type={showToast.type}
-          onClose={() => setShowToast({...showToast, isShow: false})}
+          onClose={() => setShowToast({ ...showToast, isShow: false })}
           message={showToast.message}
         />
       </section>

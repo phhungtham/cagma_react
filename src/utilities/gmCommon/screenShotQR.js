@@ -12,8 +12,8 @@ const screenShotQR = (cb, dataURL) => {
     [
       {
         dataURL: `${dataURL}`,
-        shareImage: true
-      }
+        shareImage: true,
+      },
     ]
   );
 };

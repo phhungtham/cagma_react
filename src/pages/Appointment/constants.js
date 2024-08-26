@@ -1,29 +1,30 @@
 import apparatusZoomImg from '@assets/images/apparatus_zoom_40.png';
+
 export const appointmentDetailFields = [
   {
     label: 'Confirmation Number',
-    value: 'number'
+    value: 'number',
   },
   {
     label: 'Method',
-    value: 'method'
+    value: 'method',
   },
   {
     label: 'Appointment Date',
-    value: 'date'
+    value: 'date',
   },
   {
     label: 'Appointment Time',
-    value: 'time'
+    value: 'time',
   },
   {
     label: 'Name of the Branch',
-    value: 'branchName'
+    value: 'branchName',
   },
   {
     label: 'Branch Address',
-    value: 'branchAddress'
-  }
+    value: 'branchAddress',
+  },
 ];
 
 export const appointmentDetailTest = {
@@ -38,15 +39,15 @@ export const appointmentDetailTest = {
 export const branchFields = [
   {
     label: 'Phone',
-    value: 'phone'
+    value: 'phone',
   },
   {
     label: 'Fax',
-    value: 'fax'
+    value: 'fax',
   },
   {
     label: 'Branch No',
-    value: 'branchNo'
+    value: 'branchNo',
   },
 ];
 
@@ -95,7 +96,7 @@ export const appointmentListTest = [
     date: '2024.06.15',
     time: 'At 1pm',
     status: AppointmentStatus.REQUESTED,
-    image: apparatusZoomImg
+    image: apparatusZoomImg,
   },
   {
     id: '#123456',
@@ -103,7 +104,7 @@ export const appointmentListTest = [
     date: '2024.06.15',
     time: 'At 1pm',
     status: AppointmentStatus.CONFIRMED,
-    image: apparatusZoomImg
+    image: apparatusZoomImg,
   },
   {
     id: '#123456',
@@ -111,7 +112,7 @@ export const appointmentListTest = [
     date: '2024.06.15',
     time: 'At 1pm',
     status: AppointmentStatus.CANCELED,
-    image: apparatusZoomImg
+    image: apparatusZoomImg,
   },
   {
     id: '#123456',
@@ -119,7 +120,7 @@ export const appointmentListTest = [
     date: '2024.06.15',
     time: 'At 1pm',
     status: AppointmentStatus.REQUESTED,
-    image: apparatusZoomImg
+    image: apparatusZoomImg,
   },
   {
     id: '#123456',
@@ -127,7 +128,7 @@ export const appointmentListTest = [
     date: '2024.06.15',
     time: 'At 1pm',
     status: AppointmentStatus.CONFIRMED,
-    image: apparatusZoomImg
+    image: apparatusZoomImg,
   },
   {
     id: '#123456',
@@ -135,7 +136,7 @@ export const appointmentListTest = [
     date: '2024.06.15',
     time: 'At 1pm',
     status: AppointmentStatus.CONFIRMED,
-    image: apparatusZoomImg
+    image: apparatusZoomImg,
   },
 ];
 
@@ -155,77 +156,77 @@ export const labelStatusWithType = {
 
 export const BookAppointmentType = {
   IN_PERSON: 'inPerson',
-  ZOOM: 'zoom'
+  ZOOM: 'zoom',
 };
 
 export const customerTypeOptions = [
   {
     label: 'Personal Customer',
-    value: '1'
+    value: '1',
   },
   {
     label: 'Small Business Customer',
-    value: '2'
+    value: '2',
   },
 ];
 
 export const purposeAppointmentOptions = [
   {
     label: 'Open an account',
-    value: '1'
+    value: '1',
   },
   {
     label: 'Banking transaction',
-    value: '2'
+    value: '2',
   },
   {
     label: 'Debit card',
-    value: '3'
+    value: '3',
   },
   {
     label: 'Investing',
-    value: '4'
+    value: '4',
   },
   {
     label: 'Borrowing',
-    value: '5'
+    value: '5',
   },
   {
     label: 'Other',
-    value: 'other'
+    value: 'other',
   },
 ];
 
 export const preferredLanguages = [
   {
     label: 'English',
-    value: 'en'
+    value: 'en',
   },
   {
     label: 'Korean',
-    value: 'ko'
-  }
+    value: 'ko',
+  },
 ];
 
 export const customerStatusFields = [
   {
     label: 'Name',
-    value: 'name'
+    value: 'name',
   },
   {
     label: 'Phone no.',
-    value: 'phone'
+    value: 'phone',
   },
   {
     label: 'Email',
-    value: 'email'
+    value: 'email',
   },
   {
     label: 'Preferred Language',
-    value: 'language'
+    value: 'language',
   },
   {
     label: 'Additional Comments',
-    value: 'comment'
+    value: 'comment',
   },
 ];

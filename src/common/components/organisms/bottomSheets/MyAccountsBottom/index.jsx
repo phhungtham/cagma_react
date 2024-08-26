@@ -1,7 +1,6 @@
-import { ArrowRight } from '@assets/icons';
-import { PropTypes } from 'prop-types';
-import { useState } from 'react';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { PropTypes } from 'prop-types';
+
 import './styles.scss';
 
 const accounts = [
@@ -61,9 +60,8 @@ const accounts = [
   },
 ];
 
-const MyAccountsBottom = ({open, onClose, onSelect}) => {
-
-  const onSelectAccount = (item) => {
+const MyAccountsBottom = ({ open, onClose, onSelect }) => {
+  const onSelectAccount = item => {
     onSelect(item);
   };
 
@@ -76,14 +74,18 @@ const MyAccountsBottom = ({open, onClose, onSelect}) => {
       type="max-scroll"
     >
       <div className="my-accounts__content">
-        <div className='my-accounts__list'>
-          {accounts.map((account) => (
-            <div className='my-accounts__item' key={account.name} onClick={() => onSelectAccount(account)}>
-              <div className='my-accounts__item__main'>
-                <div className='my-accounts__name'>{account.name}</div>
-                <div className='my-accounts__number'>{account.number}</div>
-                <div className='my-accounts__balance'>
-                  <span className='mr-2'>Available Balance</span>
+        <div className="my-accounts__list">
+          {accounts.map(account => (
+            <div
+              className="my-accounts__item"
+              key={account.name}
+              onClick={() => onSelectAccount(account)}
+            >
+              <div className="my-accounts__item__main">
+                <div className="my-accounts__name">{account.name}</div>
+                <div className="my-accounts__number">{account.number}</div>
+                <div className="my-accounts__balance">
+                  <span className="mr-2">Available Balance</span>
                   <span>{account.ccy_code}</span>
                   <span>{account.balance}</span>
                 </div>

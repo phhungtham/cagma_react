@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import TextError from '../TextError';
-import { PropTypes } from 'prop-types';
+
 import { INPUT_MODE } from '@common/components/constants';
+import { PropTypes } from 'prop-types';
+
+import TextError from '../TextError';
 
 const InputPin = ({ clazz, mode, stepsNumber, errorMsg, onChange }) => {
   const [codeValue, setCodeValue] = useState('');
@@ -45,7 +47,7 @@ const InputPin = ({ clazz, mode, stepsNumber, errorMsg, onChange }) => {
             key={idx}
             className={`dots__input ${mode === INPUT_MODE.ON_BACKGROUND && !focused ? 'on__background' : ''}`}
           >
-            {item && <span className="dots__item"></span>}
+            {item && <span className="dots__item" />}
           </div>
         ))}
       </div>
@@ -68,7 +70,12 @@ const InputPin = ({ clazz, mode, stepsNumber, errorMsg, onChange }) => {
         onBlur={handleInputBlur}
         autoFocus
       />
-      {errorMsg && <TextError clazz="" text={errorMsg} />}
+      {errorMsg && (
+        <TextError
+          clazz=""
+          text={errorMsg}
+        />
+      )}
     </div>
   );
 };
@@ -77,14 +84,14 @@ InputPin.propTypes = {
   clazz: PropTypes.string,
   mode: PropTypes.oneOf(['normal', 'onBackground']),
   stepsNumber: PropTypes.number,
-  errorMsg: PropTypes.string
+  errorMsg: PropTypes.string,
 };
 
 InputPin.defaultProps = {
   clazz: '',
   mode: 'normal',
   stepsNumber: 6,
-  errorMsg: ''
+  errorMsg: '',
 };
 
 export default InputPin;

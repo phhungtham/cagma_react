@@ -1,5 +1,6 @@
-import store from 'shared/redux/store';
 import { useEffect } from 'react';
+
+import store from 'shared/redux/store';
 
 /**
  * This hook is used to hook up sagas that handle the asynchronous actions for the page/screen/route

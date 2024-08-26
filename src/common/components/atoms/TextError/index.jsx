@@ -8,10 +8,10 @@ export default TextError;
 
 TextError.propTypes = {
   clazz: PropTypes.string,
-  text: PropTypes.string
+  text: PropTypes.string,
 };
 
 TextError.defaultProps = {
   clazz: defaultClass,
-  text: ''
+  text: '',
 };

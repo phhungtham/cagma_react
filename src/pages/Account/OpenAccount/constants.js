@@ -3,50 +3,50 @@ export const termConditionConfig = {
   options: [
     {
       label: '[Mandatory] User Agreement',
-      value: '1'
+      value: '1',
     },
     {
       label: '[Mandatory] Product Feature',
-      value: '2'
-    }
-  ]
+      value: '2',
+    },
+  ],
 };
 
 export const OPEN_ACCOUNT_STEP = {
   VIEW_TERMS: 'viewTerms',
   CUSTOMER_INFO: 'customerInfo',
   ENTER_ACCOUNT_INFORMATION: 'enterAccountInformation',
-  COMPLETED: 'completed'
+  COMPLETED: 'completed',
 };
 
 export const customerInfoFields = [
   {
     label: 'Name',
-    value: 'name'
+    value: 'name',
   },
   {
     label: 'Date of Birth',
-    value: 'dob'
+    value: 'dob',
   },
   {
     label: 'SIN',
-    value: 'sin'
+    value: 'sin',
   },
   {
     label: 'E-mail Address',
-    value: 'email'
+    value: 'email',
   },
   {
     label: 'Phone Number',
-    value: 'phone'
+    value: 'phone',
   },
   {
     label: 'Cell Number',
-    value: 'cell'
+    value: 'cell',
   },
   {
     label: 'Occupation',
-    value: 'occupation'
+    value: 'occupation',
   },
 ];
 
@@ -63,66 +63,66 @@ export const customerInfo = {
 export const intendedUseOfAccounts = [
   {
     label: 'Salary Receipt',
-    value: 'SalaryReceipt'
+    value: 'SalaryReceipt',
   },
   {
     label: 'Daily Transaction',
-    value: 'DailyTransaction'
+    value: 'DailyTransaction',
   },
   {
     label: 'Personal Savings',
-    value: 'PersonalSavings'
+    value: 'PersonalSavings',
   },
   {
     label: 'Retirement',
-    value: 'Retirement'
+    value: 'Retirement',
   },
   {
     label: 'Home Purchase',
-    value: 'HomePurchase'
+    value: 'HomePurchase',
   },
   {
     label: 'Vehicle Purchase',
-    value: 'VehiclePurchase'
+    value: 'VehiclePurchase',
   },
   {
     label: 'Vacation/Leisure',
-    value: 'VacationLeisure'
+    value: 'VacationLeisure',
   },
   {
     label: 'Education',
-    value: 'Education'
+    value: 'Education',
   },
   {
     label: 'Remittance',
-    value: 'Remittance'
+    value: 'Remittance',
   },
   {
     label: 'Business Operating Expenses',
-    value: 'BusinessOperatingExpenses'
+    value: 'BusinessOperatingExpenses',
   },
 ];
 
 export const openAccountSuccessFields = [
   {
     label: 'Product name',
-    value: 'productName'
+    value: 'productName',
   },
   {
     label: 'Account no.',
-    value: 'acNo'
+    value: 'acNo',
   },
   {
     label: 'Interest rate',
-    value: 'interestRate'
+    value: 'interestRate',
   },
   {
     label: 'Amount',
-    value: 'amount'
+    value: 'amount',
   },
   {
     label: 'Deposit from',
-    value: 'depositFrom'
+    value: 'depositFrom',
   },
 ];
 

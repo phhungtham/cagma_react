@@ -1,27 +1,27 @@
 export const bookAppointmentSuccessFields = [
   {
     label: 'Method',
-    value: 'method'
+    value: 'method',
   },
   {
     label: 'Name of the Branch',
-    value: 'branchName'
+    value: 'branchName',
   },
   {
     label: 'Address',
-    value: 'address'
+    value: 'address',
   },
   {
     label: 'Appointment Date',
-    value: 'date'
+    value: 'date',
   },
   {
     label: 'Appointment  Time',
-    value: 'time'
+    value: 'time',
   },
   {
     label: 'Confirmation number',
-    value: 'confirmNumber'
+    value: 'confirmNumber',
   },
 ];
 

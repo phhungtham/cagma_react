@@ -1,5 +1,7 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
+
 export const TextButton = ({
   className,
   label,
@@ -11,9 +13,15 @@ export const TextButton = ({
   children,
   ...otherProps
 }) => {
-  const customClass = [`text__btn__${variant} ${disable ? 'disable' : ''}  ${iconPosition} ${size}`, className].join(' ');
+  const customClass = [`text__btn__${variant} ${disable ? 'disable' : ''}  ${iconPosition} ${size}`, className].join(
+    ' '
+  );
   return (
-    <section className={customClass} onClick={onClick} {...otherProps}>
+    <section
+      className={customClass}
+      onClick={onClick}
+      {...otherProps}
+    >
       {children && (
         <div className={`text__btn__${variant}__icon`}>
           <div className={`text__btn__${variant}__icon ${size} ${iconPosition}--${size}`}>{children}</div>
@@ -32,7 +40,7 @@ TextButton.propTypes = {
   onClick: PropTypes.func,
   iconPosition: PropTypes.oneOf(['right', 'left']),
   type: PropTypes.oneOf(['submit', 'button']),
-  variant: PropTypes.oneOf(['gray', 'primary'])
+  variant: PropTypes.oneOf(['gray', 'primary']),
 };
 
 TextButton.defaultProps = {
@@ -42,5 +50,5 @@ TextButton.defaultProps = {
   label: 'Text Button',
   onClick: undefined,
   variant: 'gray',
-  size: 'small'
+  size: 'small',
 };

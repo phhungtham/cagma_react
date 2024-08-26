@@ -1,21 +1,19 @@
-import { ErrorIcon, InfoIcon, RefreshIcon } from '@assets/icons';
+import { useState } from 'react';
+
+import { ErrorIcon, RefreshIcon } from '@assets/icons';
 import KeypadDeleteIcon from '@assets/icons/KeypadDeleteIcon';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import Span from '@common/components/atoms/Span';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 const currencyOptions = [
   {
     label: 'CAD',
-    value: 'CAD'
+    value: 'CAD',
   },
   {
     label: 'USD',
-    value: 'USD'
-  }
+    value: 'USD',
+  },
 ];
 
 const EnterAmountBottom = ({
@@ -27,22 +25,18 @@ const EnterAmountBottom = ({
   alert_msg,
   handleOnClickNextButton,
   amount,
-  onChangeAmount
+  onChangeAmount,
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(currency);
   console.log('selectedCurrency :>> ', selectedCurrency);
-  
+
   const handleCloseBottomSheet = () => {
     onClose();
   };
 
-  const onClickRefreshExchangeRate = () => {
+  const onClickRefreshExchangeRate = () => {};
 
-  };
-
-  const onClickConfirm = () => {
-
-  };
+  const onClickConfirm = () => {};
 
   const handleNumberClick = value => {
     if (value === 'delete') {
@@ -84,49 +78,69 @@ const EnterAmountBottom = ({
 
   return (
     <>
-      <BottomSheet open={true} onClose={handleCloseBottomSheet} type="fit-content" clazz="enter-amount__bottomsheet">
+      <BottomSheet
+        open
+        onClose={handleCloseBottomSheet}
+        type="fit-content"
+        clazz="enter-amount__bottomsheet"
+      >
         <div className="form__wrapper">
-          <div className='account-name'>{accountName}</div>
-          <div className='account-number'>{accountNumber}</div>
-          <div className='account-balance'>{accountBalance}</div>
-          <div className='currency-selection mt-8'>
-            {currencyOptions.map(({label, value}) => (
-              <span className={`currency-item ${selectedCurrency === value ? 'selected' : ''}`} onClick={() => setSelectedCurrency(value)}>{label}</span>
+          <div className="account-name">{accountName}</div>
+          <div className="account-number">{accountNumber}</div>
+          <div className="account-balance">{accountBalance}</div>
+          <div className="currency-selection mt-8">
+            {currencyOptions.map(({ label, value }) => (
+              <span
+                className={`currency-item ${selectedCurrency === value ? 'selected' : ''}`}
+                onClick={() => setSelectedCurrency(value)}
+              >
+                {label}
+              </span>
             ))}
           </div>
           <div className={`amount-value__wrapper ${!!amount ? 'has-value' : ''}`}>
-            <span className='amount-unit mr-1'>$</span>
-            <span className='amount-value'>{amount ? amount : '0.00'}</span>
+            <span className="amount-unit mr-1">$</span>
+            <span className="amount-value">{amount ? amount : '0.00'}</span>
           </div>
-          <div className='amount-value__error-alert'>
-            <span className='error-icon mr-1'><ErrorIcon /></span>
+          <div className="amount-value__error-alert">
+            <span className="error-icon mr-1">
+              <ErrorIcon />
+            </span>
             <span>Please input an amount more than 10.00 CAD</span>
           </div>
-          <div className='amount-exchange-rate__wrapper'>
-            <span className='mr-1'>Exchange rate</span>
-            <div className='exchange-rate__value__block mr-2'>
-              <span className='exchange-rate__unit'>$</span>
-              <span className='exchange-rate__value'>1.00</span>
-              <span className='mx-1'>=</span>
-              <span className='exchange-rate__unit'>US$</span>
-              <span className='exchange-rate__value'>1,000</span>
+          <div className="amount-exchange-rate__wrapper">
+            <span className="mr-1">Exchange rate</span>
+            <div className="exchange-rate__value__block mr-2">
+              <span className="exchange-rate__unit">$</span>
+              <span className="exchange-rate__value">1.00</span>
+              <span className="mx-1">=</span>
+              <span className="exchange-rate__unit">US$</span>
+              <span className="exchange-rate__value">1,000</span>
             </div>
-            <div className='refresh-btn' onClick={onClickRefreshExchangeRate}>
+            <div
+              className="refresh-btn"
+              onClick={onClickRefreshExchangeRate}
+            >
               <RefreshIcon />
             </div>
           </div>
-          <div className='btn-submit__wrapper'>
-            <Button label="Next" variant="filled__primary" className="btn-submit" onClick={onClickConfirm} />
+          <div className="btn-submit__wrapper">
+            <Button
+              label="Next"
+              variant="filled__primary"
+              className="btn-submit"
+              onClick={onClickConfirm}
+            />
           </div>
         </div>
         <div className="numpad">
           {numberButtons.map(value => (
-            <button key={value} className="btn__keypad" onClick={() => handleNumberClick(value)}>
-              {value === 'delete' ? (
-                <KeypadDeleteIcon />
-              ) : (
-                value
-              )}
+            <button
+              key={value}
+              className="btn__keypad"
+              onClick={() => handleNumberClick(value)}
+            >
+              {value === 'delete' ? <KeypadDeleteIcon /> : value}
             </button>
           ))}
         </div>

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { PropTypes } from 'prop-types';
+
 import { CheckIcon, CloseIcon, InfoIcon } from 'assets/icons';
+import { PropTypes } from 'prop-types';
 
 const defaultClass = 'toast';
 const typeWithIcons = {
@@ -10,23 +11,14 @@ const typeWithIcons = {
   warning: CheckIcon,
 };
 
-const Toast = ({
-  isShowToast,
-  iconStatus,
-  clazz,
-  message,
-  iconClose,
-  children,
-  onClose,
-  type
-}) => {
+const Toast = ({ isShowToast, iconStatus, clazz, message, iconClose, children, onClose, type }) => {
   const clazzName = [defaultClass, clazz].join(' ');
 
   const handleClose = () => {
     onClose();
   };
 
-  const renderIcon = (type) => {
+  const renderIcon = type => {
     const Component = typeWithIcons[type];
     return <Component />;
   };
@@ -40,18 +32,22 @@ const Toast = ({
   }, [isShowToast]);
 
   return (
-    <div className={`${clazzName} ${isShowToast && 'showToast'}`} onClick={handleClose}>
+    <div
+      className={`${clazzName} ${isShowToast && 'showToast'}`}
+      onClick={handleClose}
+    >
       {iconStatus && <section className="icon__status">{iconStatus}</section>}
       <div className="toast__wrap">
-        {type && (
-          <div className={`toast__icon ${type}`}>{renderIcon(type)}</div>
-        )}
+        {type && <div className={`toast__icon ${type}`}>{renderIcon(type)}</div>}
         <div className="toast__msg">
           <span>{message}</span>
         </div>
       </div>
       {iconClose && (
-        <div className="toast__close" onClick={handleClose}>
+        <div
+          className="toast__close"
+          onClick={handleClose}
+        >
           <CloseIcon />
         </div>
       )}
@@ -64,7 +60,7 @@ Toast.propTypes = {
   message: PropTypes.string,
   iconClose: PropTypes.bool,
   type: PropTypes.oneOf(['info', 'success', 'error', 'warning']),
-  isShowToast: PropTypes.bool
+  isShowToast: PropTypes.bool,
 };
 
 Toast.defaultProps = {
@@ -73,6 +69,6 @@ Toast.defaultProps = {
   iconClose: false,
   iconStatus: null,
   isShowToast: false,
-  type: 'info'
+  type: 'info',
 };
 export default Toast;

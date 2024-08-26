@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { PropTypes } from 'prop-types';
-import { createPopper } from '@popperjs/core';
-
-import { allowedPlacements, placementsMap } from '@common/components/constants';
-import { TooltipContext } from '@common/components/atoms/Tooltip/TooltipContext';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 
 import { CloseIcon } from '@assets/icons';
+import { TooltipContext } from '@common/components/atoms/Tooltip/TooltipContext';
+import { allowedPlacements, placementsMap } from '@common/components/constants';
+import { createPopper } from '@popperjs/core';
+import { PropTypes } from 'prop-types';
 
 import './styles.scss';
 
@@ -35,7 +34,7 @@ const Tooltip = ({ children, content, placement, onlyCloseBtn }) => {
     }
   };
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (
       popperPopupRef.current &&
       !popperPopupRef.current.contains(event.target) &&
@@ -89,14 +88,24 @@ const Tooltip = ({ children, content, placement, onlyCloseBtn }) => {
 
   return (
     <div>
-      <div ref={popperButtonRef} onClick={togglePopper}>
+      <div
+        ref={popperButtonRef}
+        onClick={togglePopper}
+      >
         {children}
       </div>
-      <div id="popper-popup" ref={popperPopupRef} className={isVisible ? 'show' : 'hidden'}>
-        <div className='__popover_content'>
+      <div
+        id="popper-popup"
+        ref={popperPopupRef}
+        className={isVisible ? 'show' : 'hidden'}
+      >
+        <div className="__popover_content">
           {content}
-          <div className='__btn_close' onClick={onClosePopper}>
-            <CloseIcon size='small' />
+          <div
+            className="__btn_close"
+            onClick={onClosePopper}
+          >
+            <CloseIcon size="small" />
           </div>
         </div>
       </div>

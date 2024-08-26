@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+
 /**
  * Hook up the input html element to the controlled react hook form element
  * @param {function} rhfRef The provided ref function by React Hook Form to hook up the element to the form

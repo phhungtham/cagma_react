@@ -1,9 +1,9 @@
 @for $i from 0 through 10 {
   .w-#{$i} {
-    width: $i * 4px;;
+    width: $i * 4px;
   }
   .h-#{$i} {
-    height: $i * 4px;;
+    height: $i * 4px;
   }
   .mt-#{$i} {
     margin-top: $i * 4px;

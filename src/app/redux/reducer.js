@@ -1,4 +1,5 @@
 import { EMPTY_OBJ } from '@configs/global/constants';
+
 import { ActionType } from './type';
 
 const initState = {
@@ -7,7 +8,7 @@ const initState = {
   isNativeClickBack: false,
   isLogin: '',
   nativeParams: EMPTY_OBJ,
-  appPath: ''
+  appPath: '',
 };
 
 export const appGlobalReducer = (state = initState, action) => {
@@ -27,7 +28,7 @@ export const appGlobalReducer = (state = initState, action) => {
 
     case ActionType.NATIVE_PARAMS:
       return { ...state, nativeParams: payload };
-      
+
     case ActionType.APP_PATH:
       return { ...state, appPath: payload };
 

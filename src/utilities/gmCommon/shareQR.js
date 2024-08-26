@@ -11,8 +11,8 @@ const shareQR = (cb, accountText) => {
     'shareAccountText',
     [
       {
-        accountText: `${accountText}`
-      }
+        accountText: `${accountText}`,
+      },
     ]
   );
 };

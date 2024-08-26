@@ -2,7 +2,13 @@ import React from 'react';
 
 const LoadingInfinite = () => {
   return (
-    <svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="33"
+      height="32"
+      viewBox="0 0 33 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -18,8 +24,15 @@ const LoadingInfinite = () => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(16.5 16) scale(16)"
         >
-          <stop offset="0.374523" stopColor="#6A717D" />
-          <stop offset="0.377922" stopColor="#6A717D" stopOpacity="0.01" />
+          <stop
+            offset="0.374523"
+            stopColor="#6A717D"
+          />
+          <stop
+            offset="0.377922"
+            stopColor="#6A717D"
+            stopOpacity="0.01"
+          />
         </radialGradient>
       </defs>
     </svg>

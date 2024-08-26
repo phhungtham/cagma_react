@@ -5,89 +5,89 @@ export const initValues = {
   email: 'Jennifer6756@gmail.com',
   call: '647-770-5364',
   callNumber: '647-770-5364',
-  employment: ''
+  employment: '',
 };
 
 export const employmentOptions = [
   {
     label: 'Employed',
-    value: '1'
+    value: '1',
   },
   {
     label: 'Self-Employed',
-    value: '2'
+    value: '2',
   },
   {
     label: 'Retired',
-    value: '3'
+    value: '3',
   },
   {
     label: 'Student',
-    value: '4'
+    value: '4',
   },
   {
     label: 'House-wife',
-    value: '5'
+    value: '5',
   },
   {
     label: 'Unemployed',
-    value: '6'
-  }
+    value: '6',
+  },
 ];
 
 export const occupation1Options = [
   {
     label: 'Management',
-    value: '1'
+    value: '1',
   },
   {
     label: 'Business, Finance, Admin',
-    value: '2'
+    value: '2',
   },
   {
     label: 'Natural&Applied Sciences',
-    value: '3'
+    value: '3',
   },
   {
     label: 'Health',
-    value: '4'
+    value: '4',
   },
   {
     label: 'Social Science, Education, Government Service, Religion',
-    value: '5'
+    value: '5',
   },
   {
     label: 'Art, Culture, Recreation, Sport',
-    value: '6'
+    value: '6',
   },
   {
     label: 'Sales, Services',
-    value: '7'
+    value: '7',
   },
   {
     label: 'Trade, Transportation',
-    value: '8'
+    value: '8',
   },
   {
     label: 'Primary Industry',
-    value: '9'
+    value: '9',
   },
   {
     label: 'Processing, Manufacutring, Utilities',
-    value: '10'
+    value: '10',
   },
 ];
 
 export const SELECT_TYPE = {
   EMPLOYMENT: 'employment',
-  OCCUPATION1: 'occupation1'
+  OCCUPATION1: 'occupation1',
 };
 
 export const initSelectBottom = {
   isShow: false,
   type: '',
   options: [],
-  title: ''
+  title: '',
 };
 
 export const selectBottomTypeMapField = {

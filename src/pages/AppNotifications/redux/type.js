@@ -17,17 +17,17 @@ export const ActionType = {
   GET_BENEFITS_NOTIFY_REQUEST_FAILED: `${FeatureAppNotificationName}/GET_BENEFITS_NOTIFY_REQUEST_FAILED`,
   GET_BANNER_SEQ: `${FeatureAppNotificationName}/GET_BANNER_SEQ`,
   SET_TAB_INDEX: `${FeatureAppNotificationName}/SET_TAB_INDEX`,
-  CLEAN_UP: `${FeatureAppNotificationName}/CLEAN_UP`
+  CLEAN_UP: `${FeatureAppNotificationName}/CLEAN_UP`,
 };
 
 export const NotificationTab = {
   TRANSACTIONS: 0,
   YOUR_OFFERS: 1,
-  PROMOTIONS: 2
+  PROMOTIONS: 2,
 };
 
 export const AppNotifyURLs = {
   CHECKING_NOTIFY: '/kh/ho/KHHO001.pwkjson',
   NOTICES_NOTIFY: '/kh/ho/KHHO001.pwkjson',
-  BENEFIT_NOTIFY: '/kh/ho/KHHO002.pwkjson'
+  BENEFIT_NOTIFY: '/kh/ho/KHHO002.pwkjson',
 };

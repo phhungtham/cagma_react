@@ -1,12 +1,13 @@
-import { ArrowRight } from '@assets/icons';
-import { PropTypes } from 'prop-types';
-import '../styles.scss';
 import { useState } from 'react';
+
+import { ArrowRight } from '@assets/icons';
 import Alert from '@common/components/molecules/Alert';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { PropTypes } from 'prop-types';
 
-const ChangePhotoBottom = ({open, onClose}) => {
+import '../styles.scss';
 
+const ChangePhotoBottom = ({ open, onClose }) => {
   const [showAccessCameraAlert, setShowAccessCameraAlert] = useState(false);
   const [showAccessPhotosAlert, setShowAccessPhotosAlert] = useState(false);
 
@@ -46,11 +47,17 @@ const ChangePhotoBottom = ({open, onClose}) => {
         type="fit-content"
       >
         <div className="bottom__dropdown__list">
-          <div className="dropdown__option" onClick={onClickAccessCamera}>
+          <div
+            className="dropdown__option"
+            onClick={onClickAccessCamera}
+          >
             <span className="option__label">Take Photo</span>
             <ArrowRight />
           </div>
-          <div className="dropdown__option" onClick={onClickAccessPhotos}>
+          <div
+            className="dropdown__option"
+            onClick={onClickAccessPhotos}
+          >
             <span className="option__label">Upload from Gallery</span>
             <ArrowRight />
           </div>
@@ -63,11 +70,11 @@ const ChangePhotoBottom = ({open, onClose}) => {
         textAlign="center"
         firstButton={{
           onClick: handleAccessCamera,
-          label: 'Allow'
+          label: 'Allow',
         }}
         secondButton={{
           onClick: onCloseAccessCamera,
-          label: 'Cancel'
+          label: 'Cancel',
         }}
       />
       <Alert
@@ -77,11 +84,11 @@ const ChangePhotoBottom = ({open, onClose}) => {
         textAlign="center"
         firstButton={{
           onClick: handleAccessPhotos,
-          label: 'Allow'
+          label: 'Allow',
         }}
         secondButton={{
           onClick: onCloseAccessPhotos,
-          label: 'Cancel'
+          label: 'Cancel',
         }}
       />
     </>

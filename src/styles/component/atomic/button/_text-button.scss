@@ -13,7 +13,8 @@
     line-height: 18px;
   }
 
-  &.right, &.left {
+  &.right,
+  &.left {
     text-decoration-line: none;
   }
 
@@ -28,7 +29,7 @@
     pointer-events: none;
   }
 
-  &__icon {  
+  &__icon {
     display: flex;
     align-items: center;
     &.small {

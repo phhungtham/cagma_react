@@ -1,9 +1,10 @@
-import Alert from '@common/components/molecules/Alert';
 import React from 'react';
+
+import Alert from '@common/components/molecules/Alert';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Alert/Alert',
-  component: Alert
+  component: Alert,
 };
 
 const AlertTemp = args => <Alert {...args} />;
@@ -17,5 +18,5 @@ AlertStory.args = {
   isCloseButton: false,
   alertIcon: null,
   firstButton: null,
-  secondButton: null
+  secondButton: null,
 };

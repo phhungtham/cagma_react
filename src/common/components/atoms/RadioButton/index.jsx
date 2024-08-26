@@ -1,6 +1,7 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+
 import { SIZE } from '@common/components/constants';
+import { PropTypes } from 'prop-types';
 
 const RadioButton = ({ clazz, value = '', size, label, disabled, selected, onChange, handleClick }) => {
   const toggleRadio = e => {
@@ -12,7 +13,10 @@ const RadioButton = ({ clazz, value = '', size, label, disabled, selected, onCha
     handleClick && handleClick(value);
   };
   return (
-    <div className={`radio__group ${clazz}`} onClick={onClickRadio}>
+    <div
+      className={`radio__group ${clazz}`}
+      onClick={onClickRadio}
+    >
       <label className="radio__item">
         <input
           className="radio__input"
@@ -37,7 +41,7 @@ RadioButton.propTypes = {
   disabled: PropTypes.bool,
   selected: PropTypes.string,
   label: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 RadioButton.defaultProps = {
   clazz: '',
@@ -45,6 +49,6 @@ RadioButton.defaultProps = {
   disabled: false,
   selected: '',
   label: '',
-  onChange: undefined
+  onChange: undefined,
 };
 export default RadioButton;

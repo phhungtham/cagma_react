@@ -1,14 +1,16 @@
-import React, { forwardRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import useComposeRefs from '@hooks/useComposeRefs';
-import { CalendarIcon, ClearIcon } from 'assets/icons';
-import { IconButton } from '../ButtonGroup/IconButton/IconButton';
+import { forwardRef, useEffect, useState } from 'react';
+
 import { SIZE, TAG_NAME } from '@common/components/constants';
+import useComposeRefs from '@hooks/useComposeRefs';
+import { CalendarIcon } from 'assets/icons';
+import PropTypes from 'prop-types';
+
+import { IconButton } from '../ButtonGroup/IconButton/IconButton';
 
 const InputDate = forwardRef((props, ref) => {
   const {
-    autoComplete,
-    children,
+    // autoComplete,
+    // children,
     clazz,
     disabled,
     errorMessage,
@@ -24,22 +26,22 @@ const InputDate = forwardRef((props, ref) => {
     placeHolder,
     style,
     type,
-    helperText,
-    remainingTime,
-    isCountCharacter,
+    // helperText,
+    // remainingTime,
+    // isCountCharacter,
     tagName,
     mode,
     value,
-    onClearInput,
-    endAdornment,
+    // onClearInput,
+    // endAdornment,
     ...otherProps
   } = props;
   const [inputValues, setInputValues] = useState(value);
   const [customClass, setCustomClass] = useState('');
   const [errorTextField, setErrorTextField] = useState(errorMessage);
 
-  const [minutes, setMinutes] = useState(remainingTime.minutes);
-  const [seconds, setSeconds] = useState(remainingTime.seconds);
+  // const [minutes, setMinutes] = useState(remainingTime.minutes);
+  // const [seconds, setSeconds] = useState(remainingTime.seconds);
 
   const composeRef = useComposeRefs(ref);
 
@@ -72,17 +74,17 @@ const InputDate = forwardRef((props, ref) => {
     handleFocusStatus('blur');
   };
 
-  const handleClearInputText = () => {
-    setInputValues('');
-    composeRef.current.value = '';
-    // setErrorTextField('');
-    onChange();
-    onClearInput();
-  };
+  // const handleClearInputText = () => {
+  //   setInputValues('');
+  //   composeRef.current.value = '';
+  //   // setErrorTextField('');
+  //   onChange();
+  //   onClearInput();
+  // };
 
   useEffect(() => {
     setInputValues(value);
-    if(value) {
+    if (value) {
       setCustomClass('input__completed');
     }
   }, [value]);
@@ -125,7 +127,7 @@ const InputDate = forwardRef((props, ref) => {
           value={value}
           {...otherProps}
         />
-        <div className='input__icon'>
+        <div className="input__icon">
           <CalendarIcon />
         </div>
       </section>
@@ -152,12 +154,12 @@ InputDate.propTypes = {
   placeHolder: PropTypes.string,
   remainingTime: PropTypes.exact({
     minutes: PropTypes.number,
-    seconds: PropTypes.number
+    seconds: PropTypes.number,
   }),
   style: PropTypes.object,
   mode: PropTypes.oneOf(['normal', 'onBackground']),
   type: PropTypes.oneOf(['text', 'password', 'number', 'email']),
-  onClearInput: PropTypes.func
+  onClearInput: PropTypes.func,
 };
 
 InputDate.defaultProps = {
@@ -175,7 +177,7 @@ InputDate.defaultProps = {
   errorMessage: '',
   remainingTime: {
     minutes: null,
-    seconds: null
+    seconds: null,
   },
   helperText: '',
   mode: 'normal',
@@ -183,7 +185,7 @@ InputDate.defaultProps = {
   onChange: () => {},
   onFocus: () => {},
   onBlur: () => {},
-  onClearInput: () => {}
+  onClearInput: () => {},
 };
 
 export default InputDate;

@@ -1,10 +1,9 @@
-import { PropTypes } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 
-import BottomSheet from '@common/components/templates/BottomSheet';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-
+import BottomSheet from '@common/components/templates/BottomSheet';
 import { itemHeight, months, selectType } from '@common/constants/selectBottom';
+import { PropTypes } from 'prop-types';
 
 import '../bs_styles.scss';
 
@@ -12,11 +11,11 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
-  const onChangeMonth = (month) => {
+  const onChangeMonth = month => {
     setCurrentMonth(month);
   };
 
-  const onChangeYear = (year) => {
+  const onChangeYear = year => {
     setCurrentYear(year);
   };
 
@@ -26,7 +25,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
   //create year list from min date and max date
   const years = Array.from({ length: Number(maxYear) - Number(minYear) + 1 }, (_, i) => i + Number(minYear));
 
-  const scrollToMonth = (month) => {
+  const scrollToMonth = month => {
     if (scrollMonthViewRef.current) {
       scrollMonthViewRef.current.scrollTop = itemHeight * month;
     }
@@ -34,7 +33,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
     onChangeMonth(month);
   };
 
-  const scrollToYear = (year) => {
+  const scrollToYear = year => {
     if (scrollYearViewRef.current) {
       scrollYearViewRef.current.scrollTop = itemHeight * (year - minYear);
     }
@@ -42,7 +41,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
     onChangeYear(year);
   };
 
-  // func to debounce behavior scroll back to correct offset after user scroll 
+  // func to debounce behavior scroll back to correct offset after user scroll
   const debounce = (func, delay) => {
     let timeout;
 
@@ -54,11 +53,11 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
     };
   };
 
-  const handleScrollMonthEnd = debounce((month) => {
+  const handleScrollMonthEnd = debounce(month => {
     scrollToMonth(month);
   }, 500);
 
-  const handleScrollYearEnd = debounce((year) => {
+  const handleScrollYearEnd = debounce(year => {
     scrollToYear(year);
   }, 500);
 
@@ -72,7 +71,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
 
   useEffect(() => {
     if (scrollMonthViewRef.current) {
-      // init scroll - scroll to current month when component mounted 
+      // init scroll - scroll to current month when component mounted
       scrollToMonth(currentMonth);
 
       // handle to update month when scrolling
@@ -93,7 +92,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
 
   useEffect(() => {
     if (scrollYearViewRef.current) {
-      // init scroll - scroll to current year when component mounted 
+      // init scroll - scroll to current year when component mounted
       scrollToYear(currentYear);
 
       // handle to update year when scrolling
@@ -112,7 +111,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
     }
   }, [type]);
 
-  // handle set and scroll to the default date 
+  // handle set and scroll to the default date
   useEffect(() => {
     if (type === selectType.year) {
       if (Number(defaultDate) >= minYear && Number(defaultDate) <= maxYear) {
@@ -140,42 +139,57 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
       type="fit-content"
     >
       <div>
-        <div className='select_wrapper'>
-          {type !== selectType.year && <div ref={scrollMonthViewRef} className='select_item_wrapper'>
-            {months.map((item, idx) => (
-              <div key={`month - ${item}`}
-                className={`select_item ${currentMonth === idx ? 'selected' : ''} ${currentMonth - idx === 2 ? 'rotateTop' : (idx - currentMonth) === 2 ? 'rotateBottom' : ''}`}
-                onClick={() => scrollToMonth(idx)}>
-                {currentMonth - idx === 2 && <div className='top_gradient' />}
-                {idx - currentMonth === 2 && <div className='bot_gradient' />}
-                <span>
-                  {item}
-                </span>
-              </div>
-            ))}
-          </div>
-          }
-          <div ref={scrollYearViewRef} className='select_item_wrapper'>
-            {years.map((item) => (
-              <div key={`year - ${item} `}
-                className={`select_item ${currentYear === item ? 'selected' : ''} ${currentYear - item === 2 ? 'rotateTop' : item - currentYear === 2 ? 'rotateBottom' : ''} `}
-                onClick={() => scrollToYear(item)}>
-                {currentYear - item === 2 && <div className='top_gradient' />}
-                {item - currentYear === 2 && <div className='bot_gradient' />}
-                <span>
-                  {item}
-                </span>
+        <div className="select_wrapper">
+          {type !== selectType.year && (
+            <div
+              ref={scrollMonthViewRef}
+              className="select_item_wrapper"
+            >
+              {months.map((item, idx) => (
+                <div
+                  key={`month - ${item}`}
+                  className={`select_item ${currentMonth === idx ? 'selected' : ''} ${
+                    currentMonth - idx === 2 ? 'rotateTop' : idx - currentMonth === 2 ? 'rotateBottom' : ''
+                  }`}
+                  onClick={() => scrollToMonth(idx)}
+                >
+                  {currentMonth - idx === 2 && <div className="top_gradient" />}
+                  {idx - currentMonth === 2 && <div className="bot_gradient" />}
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          <div
+            ref={scrollYearViewRef}
+            className="select_item_wrapper"
+          >
+            {years.map(item => (
+              <div
+                key={`year - ${item} `}
+                className={`select_item ${currentYear === item ? 'selected' : ''} ${
+                  currentYear - item === 2 ? 'rotateTop' : item - currentYear === 2 ? 'rotateBottom' : ''
+                } `}
+                onClick={() => scrollToYear(item)}
+              >
+                {currentYear - item === 2 && <div className="top_gradient" />}
+                {item - currentYear === 2 && <div className="bot_gradient" />}
+                <span>{item}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div className="btn_container">
-          <Button label="Confirm" variant="filled__primary" className="w_full" onClick={handleConfirmSelectedDate} />
+          <Button
+            label="Confirm"
+            variant="filled__primary"
+            className="w_full"
+            onClick={handleConfirmSelectedDate}
+          />
         </div>
       </div>
-
-    </BottomSheet >
+    </BottomSheet>
   );
 };
 
@@ -192,9 +206,9 @@ SelectDateBottom.propTypes = {
 
 SelectDateBottom.defaultProps = {
   open: false,
-  onClose: () => { },
+  onClose: () => {},
   title: 'Select Date',
-  onDateChange: () => { },
+  onDateChange: () => {},
   maxYear: '2040',
   minYear: '2000',
   type: selectType.monthYear,

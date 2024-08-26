@@ -1,6 +1,7 @@
-import { selectHttpStatus } from 'shared/features/http';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+
+import { selectHttpStatus } from 'shared/features/http';
 
 /********************************************
  * This hook is used to watch the HTTP Status of request to server by Action Type

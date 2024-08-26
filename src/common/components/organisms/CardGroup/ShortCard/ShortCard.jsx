@@ -1,6 +1,8 @@
 import React from 'react';
+
+import { EqualIcon, MinusIcon, MoreIcon, PlusIcon, ThinArrowIcon } from 'assets/icons';
 import PropTypes from 'prop-types';
-import { MoreIcon, ThinArrowIcon, MinusIcon, EqualIcon, PlusIcon } from 'assets/icons';
+
 const ShortCard = ({ title, subTitle, variant, icon, type }) => {
   const renderCardIcon = () => {
     return <div className="icon">{icon ? icon : type !== 'more' ? <MinusIcon /> : <PlusIcon />}</div>;
@@ -38,14 +40,14 @@ ShortCard.prototype = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
   variant: PropTypes.oneOf(['more', 'setting']),
-  type: PropTypes.oneOf(['primary', 'checking', 'savings', 'loan', 'more'])
+  type: PropTypes.oneOf(['primary', 'checking', 'savings', 'loan', 'more']),
 };
 
 ShortCard.defaultProps = {
   title: 'All accounts',
   subTitle: '0',
   variant: 'setting',
-  type: 'more'
+  type: 'more',
 };
 
 export default ShortCard;

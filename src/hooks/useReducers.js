@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import store from 'shared/redux/store';
+
 /**
  * This hook is used to hook up the reducers to handle the changes to Store dymanically
  * Reducers will be unhooked once user navigate to another page/screen/route

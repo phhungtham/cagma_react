@@ -2,9 +2,26 @@ import React from 'react';
 
 const CheckingIcon = () => {
   return (
-    <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0.5" width="36" height="36" rx="18" fill="#4F8BF4" />
-      <rect width="20" height="20" transform="translate(8.5 8)" fill="#4F8BF4" />
+    <svg
+      width="37"
+      height="36"
+      viewBox="0 0 37 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="0.5"
+        width="36"
+        height="36"
+        rx="18"
+        fill="#4F8BF4"
+      />
+      <rect
+        width="20"
+        height="20"
+        transform="translate(8.5 8)"
+        fill="#4F8BF4"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"

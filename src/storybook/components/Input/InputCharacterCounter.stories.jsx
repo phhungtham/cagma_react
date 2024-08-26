@@ -1,10 +1,11 @@
-import Input from '@common/components/atoms/Input/Input';
 import React from 'react';
+
+import Input from '@common/components/atoms/Input/Input';
 
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Input/Input Character Counter',
-  component: Input
+  component: Input,
 };
 
 const Template = args => <Input {...args} />;

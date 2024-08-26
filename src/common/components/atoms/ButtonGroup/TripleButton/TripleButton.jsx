@@ -1,5 +1,7 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
+
 import { Button } from '../Button/Button';
 
 export const TripleButton = ({ className, firstButton, secondButton, thirdButton, type, ...otherProps }) => {
@@ -11,9 +13,24 @@ export const TripleButton = ({ className, firstButton, secondButton, thirdButton
 
   return (
     <section className={customClass}>
-      <Button onClick={firstOnClick} label={firstLabel} disable={firstDisable} className="btn__triple" />
-      <Button onClick={secondOnClick} label={secondLabel} disable={secondDisable} className="btn__triple" />
-      <Button onClick={thirdOnClick} label={thirdLabel} disable={thirdDisable} className="btn__triple" />
+      <Button
+        onClick={firstOnClick}
+        label={firstLabel}
+        disable={firstDisable}
+        className="btn__triple"
+      />
+      <Button
+        onClick={secondOnClick}
+        label={secondLabel}
+        disable={secondDisable}
+        className="btn__triple"
+      />
+      <Button
+        onClick={thirdOnClick}
+        label={thirdLabel}
+        disable={thirdDisable}
+        className="btn__triple"
+      />
     </section>
   );
 };
@@ -23,17 +40,17 @@ TripleButton.propTypes = {
   firstButton: PropTypes.shape({
     onClick: PropTypes.func,
     label: PropTypes.string,
-    disable: PropTypes.bool
+    disable: PropTypes.bool,
   }),
   secondButton: PropTypes.shape({
     onClick: PropTypes.func,
     label: PropTypes.string,
-    disable: PropTypes.bool
+    disable: PropTypes.bool,
   }),
   thirdButton: PropTypes.shape({
     onClick: PropTypes.func,
     label: PropTypes.string,
-    disable: PropTypes.bool
+    disable: PropTypes.bool,
   }),
 };
 
@@ -42,16 +59,16 @@ TripleButton.defaultProps = {
   firstButton: {
     onClick: undefined,
     label: 'Button',
-    disable: false
+    disable: false,
   },
   secondButton: {
     onClick: undefined,
     label: 'Button',
-    disable: false
+    disable: false,
   },
   thirdButton: {
     onClick: undefined,
     label: 'Button',
-    disable: false
-  }
+    disable: false,
+  },
 };

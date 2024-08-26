@@ -5,7 +5,7 @@ import Input from '@common/components/atoms/Input/Input';
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Input/Input Remaining Time',
-  component: Input
+  component: Input,
 };
 
 const Template = args => <Input {...args} />;
@@ -16,7 +16,7 @@ InputRemainingTime.args = {
   placeholder: 'Placeholder',
   remainingTime: {
     minutes: 3,
-    seconds: 0
+    seconds: 0,
   },
   helperText: 'Helper Text',
 };

@@ -1,15 +1,20 @@
 import React from 'react';
 
-import { PipIcon } from 'assets/icons';
 import AccountCard from '@common/components/organisms/CardGroup/AccountCard/AccountCard';
+import { PipIcon } from 'assets/icons';
 
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Card/AccountCardTemp',
-  component: AccountCard
+  component: AccountCard,
 };
 
-const AccountCardStory = args => <AccountCard icon={<PipIcon />} {...args} />;
+const AccountCardStory = args => (
+  <AccountCard
+    icon={<PipIcon />}
+    {...args}
+  />
+);
 
 export const AccountCardTemp = AccountCardStory.bind({});
 AccountCardTemp.args = {
@@ -23,17 +28,17 @@ AccountCardTemp.args = {
   noButton: false,
   graph: {
     paymentsMade: 20,
-    paymentsTotal: 100
+    paymentsTotal: 100,
   },
   balanceStatus: true,
   switchButton: true,
   pendingNum: 2,
   firstButton: {
     onClick: () => {},
-    label: 'Button'
+    label: 'Button',
   },
   secondButton: {
     onClick: () => {},
-    label: 'Button'
-  }
+    label: 'Button',
+  },
 };

@@ -2,8 +2,19 @@ import React from 'react';
 
 const OtherIcon = () => {
   return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="20" r="20" fill="#3B94FD" />
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="20"
+        cy="20"
+        r="20"
+        fill="#3B94FD"
+      />
       <path
         d="M27.6754 12.2012V21.4176H32.0001V23.0907H25.3784V13.6049C25.3784 13.137 25.2933 12.8959 25.0239 12.5982C24.8538 12.3997 24.9672 12.2012 25.1657 12.2012H27.6612H27.6754Z"
         fill="white"

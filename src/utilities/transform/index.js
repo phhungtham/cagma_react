@@ -21,16 +21,16 @@ export const extractData = (dataSrc, dataPath, fallBackValue) => {
   return node || fallBackValue;
 };
 
-const ElHeader = {
+export const ElHeader = {
   elHeader: {
-    language: 'en'
-  }
+    language: 'en',
+  },
 };
 
 export const transformRequest = (payload, language = 'en') => {
   return {
     elData: { ...payload },
-    elHeader: {}
+    elHeader: {},
   };
 };
 

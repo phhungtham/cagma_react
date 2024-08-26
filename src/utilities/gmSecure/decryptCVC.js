@@ -1,7 +1,7 @@
 import { AppCfg } from '@configs/appConfigs';
 import { $h } from 'navigation/wmatrix_config';
 
-const decryptCVC = async (text , cb) => {
+const decryptCVC = async (text, cb) => {
   if (AppCfg.ENV === 'development') return;
   $h.exec(
     result => {
@@ -15,8 +15,8 @@ const decryptCVC = async (text , cb) => {
     'decryptCVC',
     [
       {
-        text: text || ''
-      }
+        text: text || '',
+      },
     ]
   );
 };

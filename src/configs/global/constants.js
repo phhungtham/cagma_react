@@ -17,7 +17,7 @@ export const ICON_SIZES = {
   'w-36': '36',
   'w-40': '40',
   'w-44': '44',
-  'w-48': '48'
+  'w-48': '48',
 };
 
 export const AVATAR_SIZES = {
@@ -25,7 +25,7 @@ export const AVATAR_SIZES = {
   'w-40': '40',
   'w-52': '52',
   'w-56': '56',
-  'w-80': '80'
+  'w-80': '80',
 };
 
 export const MENU_CODE = {
@@ -46,13 +46,13 @@ export const MENU_CODE = {
   MERCHANT_REQUEST_QR: 'KHPA500014',
   MERCHANT_SALES_HISTORY: 'KHPA500011',
   MERCHANT_SALES_ANALYSIS: 'KHPA500013',
-  MERCHANT_GET_MORE_INTEREST: 'KHPA500015'
+  MERCHANT_GET_MORE_INTEREST: 'KHPA500015',
 };
 
 export const APP_LANGUAGE = {
   EN: 'en',
   KO: 'ko',
-  KM: 'km'
+  KM: 'km',
 };
 
 export const SH_LCL_CORP_C = '161';
@@ -65,7 +65,7 @@ export const CARD_LIMIT_DEF = {
     withdrawal_min: 10,
     withdrawal_max: 10000,
     ERR_MIN: 'The minimum amount is 10.00 USD',
-    ERR_MAX: 'The maximum amount is 10,000.00 USD'
+    ERR_MAX: 'The maximum amount is 10,000.00 USD',
   },
   DEBIT_CLASSIC: {
     // card code: 0006, 0007
@@ -74,15 +74,15 @@ export const CARD_LIMIT_DEF = {
     withdrawal_min: 10,
     withdrawal_max: 4000,
     ERR_MIN: 'The minimum amount is 10.00 USD',
-    ERR_MAX: 'The maximum amount is 4,000.00 USD'
+    ERR_MAX: 'The maximum amount is 4,000.00 USD',
   },
   DEBIT_VIRTUAL: {
     // card code: 0009
     purchase_min: 10,
     purchase_max: 4000,
     ERR_MIN: 'The minimum amount is 10.00 USD',
-    ERR_MAX: 'The maximum amount is 4,000.00 USD'
-  }
+    ERR_MAX: 'The maximum amount is 4,000.00 USD',
+  },
 };
 
 export const isProductionEnv = process.env.NODE_ENV === 'production';

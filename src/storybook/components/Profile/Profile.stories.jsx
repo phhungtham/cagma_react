@@ -5,7 +5,7 @@ import Profile from '@common/components/molecules/Profile';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Profile/Profile',
-  component: Profile
+  component: Profile,
 };
 
 const ProfileTemp = args => <Profile {...args} />;
@@ -16,5 +16,5 @@ ProfileDefault.args = {};
 export const ProfileWithIcon = ProfileTemp.bind({});
 ProfileDefault.args = {
   avatarURL: BearProfile,
-  badgeURL: ''
+  badgeURL: '',
 };

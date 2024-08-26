@@ -1,5 +1,6 @@
-import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+
+import i18n from 'i18next';
 import { localStorageService } from 'storage';
 
 export const reloadLanguageResource = language => {
@@ -8,11 +9,11 @@ export const reloadLanguageResource = language => {
 
   const resources = {
     en: {
-      translation: ca_en
+      translation: ca_en,
     },
     ko: {
-      translation: ca_ko
-    }
+      translation: ca_ko,
+    },
   };
 
   i18n.use(initReactI18next).init({
@@ -20,7 +21,7 @@ export const reloadLanguageResource = language => {
     lng: language,
     keySeparator: false,
     interpolation: {
-      escapeValue: false
-    }
+      escapeValue: false,
+    },
   });
 };

@@ -1,6 +1,6 @@
+import { AppCfg } from '@configs/appConfigs';
 import { animationSlideScreen } from '@utilities/animationSlideScreen';
 import { $h } from 'navigation/wmatrix_config';
-import { AppCfg } from '@configs/appConfigs';
 
 const moveNext = (menuCode, param = {}, src) => {
   if (AppCfg.ENV === 'development' && src) {
@@ -15,9 +15,9 @@ const moveNext = (menuCode, param = {}, src) => {
     'move',
     [
       {
-        menuCode: menuCode
+        menuCode: menuCode,
       },
-      param || {}
+      param || {},
     ]
   );
 };

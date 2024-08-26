@@ -1,10 +1,11 @@
+import List from '@common/components/atoms/ListGroup/List';
 import { ICON_NOTIFY_TYPE } from '@common/components/constants';
 import { DepositNotifyIcon, OtherIcon, QRIcon, WithdrawNotifyIcon } from 'assets/icons';
 import { PropTypes } from 'prop-types';
-import HomeBanner from '../BannerGroup/HomeBanner';
-import List from '@common/components/atoms/ListGroup/List';
-import TransactionHistory from '../TransactionHistory';
+
 import EventBanner from '../BannerGroup/EventsBanner';
+import HomeBanner from '../BannerGroup/HomeBanner';
+import TransactionHistory from '../TransactionHistory';
 
 const Notification = props => {
   const {
@@ -18,7 +19,7 @@ const Notification = props => {
     currency,
     thumbnail,
     thumbnailType,
-    onNotifyClick
+    onNotifyClick,
   } = props;
   return (
     <div
@@ -31,7 +32,7 @@ const Notification = props => {
           label={label}
           title={notifyContent}
           captionSegments={{
-            caption1: time
+            caption1: time,
           }}
           thumbnail={
             (thumbnailType === ICON_NOTIFY_TYPE.CREDIT_NOTICE && <DepositNotifyIcon />) ||
@@ -56,16 +57,21 @@ const Notification = props => {
           description={notifyContent}
           date={{
             timeStart: time,
-            position: 'bottom'
+            position: 'bottom',
           }}
           thumbnail={thumbnail}
-        ></EventBanner>
+        />
       )}
       {notifyType === 'home-banner' && (
-        <HomeBanner description={notifyContent} heading={title} size="small" thumbnail={thumbnail}></HomeBanner>
+        <HomeBanner
+          description={notifyContent}
+          heading={title}
+          size="small"
+          thumbnail={thumbnail}
+        />
       )}
 
-      <div className="notifi__divider"></div>
+      <div className="notifi__divider" />
     </div>
   );
 };
@@ -80,7 +86,7 @@ Notification.propTypes = {
   thumbnail: PropTypes.string,
   thumbnailType: PropTypes.oneOf(['Default', 'Debit Notice', 'Credit Notice', 'Shinhan KHQR Pay Notice']),
   isRead: PropTypes.bool,
-  currency: PropTypes.object
+  currency: PropTypes.object,
 };
 Notification.defaultProps = {
   clazz: '',
@@ -92,6 +98,6 @@ Notification.defaultProps = {
   thumbnail: null,
   thumbnailType: 'Default',
   isRead: true,
-  currency: null
+  currency: null,
 };
 export default Notification;

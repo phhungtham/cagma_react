@@ -1,9 +1,10 @@
+import React from 'react';
+
 import reloadWebView from '@utilities/gmCommon/reloadWebView';
 import { moveHome } from '@utilities/index';
-import React from 'react';
-import Alert from './molecules/Alert';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
+import Alert from './molecules/Alert';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class ErrorBoundary extends React.Component {
               reloadWebView();
             },
             // label: 'Reload'
-            label: this.props.translate('lbl_cta_3006') // get translate props from withHTMLParseI18n HOC, 2023/07/07  Yen, KHGMA-2035
+            label: this.props.translate('lbl_cta_3006'), // get translate props from withHTMLParseI18n HOC, 2023/07/07  Yen, KHGMA-2035
           }}
         />
       );

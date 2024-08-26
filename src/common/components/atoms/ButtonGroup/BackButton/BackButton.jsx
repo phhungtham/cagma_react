@@ -1,10 +1,15 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
+
 import './style.scss';
 
 const BackButton = ({ className, onClick }) => {
   return (
-    <button className={`back-button ${className}`} onClick={onClick}>
+    <button
+      className={`back-button ${className}`}
+      onClick={onClick}
+    >
       ←
     </button>
   );
@@ -12,11 +17,11 @@ const BackButton = ({ className, onClick }) => {
 
 BackButton.propTypes = {
   className: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 BackButton.defaultProps = {
-  className: ''
+  className: '',
 };
 
 export default BackButton;

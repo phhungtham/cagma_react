@@ -6,7 +6,7 @@ const LOCALSTORAGE_KEYS = {
   USER_INFO: 'userInfo',
   CA_EN: 'ca_en',
   CA_KO: 'ca_ko',
-  LANGUAGE_CODE: 'language_code'
+  LANGUAGE_CODE: 'language_code',
 };
 const setToken = token => {
   localStorage.setItem(LOCALSTORAGE_KEYS.ACCESS_TOKEN, token);
@@ -45,7 +45,7 @@ const localStorageService = {
   setLang,
   getLang,
   setLanguageCode,
-  getLanguageCode
+  getLanguageCode,
 };
 
 export default localStorageService;

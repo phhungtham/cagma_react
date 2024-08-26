@@ -2,7 +2,7 @@ import { ActionType } from './type';
 
 const initState = {
   isLoading: false,
-  listAccount: {}
+  listAccount: {},
 };
 
 export const accountReducer = (state = initState, action) => {

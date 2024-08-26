@@ -12,8 +12,8 @@ const saveQR = (cb, dataURL) => {
     [
       {
         dataURL: `${dataURL}`,
-        shareImage: false
-      }
+        shareImage: false,
+      },
     ]
   );
 };

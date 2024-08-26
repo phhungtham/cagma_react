@@ -1,9 +1,8 @@
-
 import React from 'react';
+
 import { PropTypes } from 'prop-types';
 
 const LocationMap = ({ address, width, height, title }) => {
-
   const formatAddress = () => {
     let newAddress = '';
     for (const char of (address || '')?.trim()) {
@@ -12,7 +11,7 @@ const LocationMap = ({ address, width, height, title }) => {
       }
 
       newAddress += char === ' ' ? '+' : char;
-    };
+    }
 
     return newAddress;
   };
@@ -24,8 +23,8 @@ const LocationMap = ({ address, width, height, title }) => {
       title={title}
       loading="lazy"
       src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAn61uMR5qyS6OA7PeH65MJuziqWA1Yj-Q
-          &q=${formatAddress(address)}&zoom=18`}>
-    </iframe>
+          &q=${formatAddress(address)}&zoom=18`}
+    />
   );
 };
 

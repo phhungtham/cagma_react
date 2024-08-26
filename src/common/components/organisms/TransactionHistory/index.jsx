@@ -1,9 +1,8 @@
-import React from 'react';
-import { convertToOrdinal } from '@common/utils/convert';
-import { PropTypes } from 'prop-types';
-import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
-import Span from '@common/components/atoms/Span';
 import Currency from '@common/components/atoms/Currency';
+import Span from '@common/components/atoms/Span';
+import { convertToOrdinal } from '@common/utils/convert';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
+import { PropTypes } from 'prop-types';
 
 const TransactionHistory = props => {
   const {
@@ -12,7 +11,7 @@ const TransactionHistory = props => {
     title,
     subTitle,
     transactionTime,
-    transactionType,
+    // transactionType,
     currency,
     transactionBalance,
     transactionLoan,
@@ -22,13 +21,13 @@ const TransactionHistory = props => {
     orderNumber,
     onCancel,
     cancelButton,
-    ...otherProps
+    // ...otherProps
   } = props;
 
   const TRANSACTION_IS_PENDING = status === 'pending';
 
   const renderBarDivider = () => {
-    return <div className="bar"></div>;
+    return <div className="bar" />;
   };
 
   return (
@@ -36,33 +35,63 @@ const TransactionHistory = props => {
       <div className="transaction__left">
         {thumbnail && (
           <div className="transaction__thumbnail">
-            <img src={thumbnail} alt={title} />
+            <img
+              src={thumbnail}
+              alt={title}
+            />
           </div>
         )}
         <div className="transaction__info">
           <div className="transaction__info__main">
-            {orderNumber && <Span clazz="transaction__info__order" text={convertToOrdinal(orderNumber)} />}
+            {orderNumber && (
+              <Span
+                clazz="transaction__info__order"
+                text={convertToOrdinal(orderNumber)}
+              />
+            )}
             {title && orderNumber && renderBarDivider()}
-            <Span clazz="transaction__info__title" text={title} />
+            <Span
+              clazz="transaction__info__title"
+              text={title}
+            />
           </div>
           {(subTitle || TRANSACTION_IS_PENDING) && (
             <div className="transaction__info__sub">
-              <Span clazz={`transaction__info__subtitle ${status}`} text={subTitle || 'Processing'} />
+              <Span
+                clazz={`transaction__info__subtitle ${status}`}
+                text={subTitle || 'Processing'}
+              />
               {memo && renderBarDivider()}
-              {memo && <Span clazz="transaction__info__memo" text={memo} />}
+              {memo && (
+                <Span
+                  clazz="transaction__info__memo"
+                  text={memo}
+                />
+              )}
             </div>
           )}
 
-          <Span clazz="transaction__info__time" text={transactionTime} />
+          <Span
+            clazz="transaction__info__time"
+            text={transactionTime}
+          />
         </div>
       </div>
       <div className="transaction__right">
         <div className="transaction__amount">
-          <Currency type={currency?.type} amount={currency?.amount} unit={currency?.unit} />
+          <Currency
+            type={currency?.type}
+            amount={currency?.amount}
+            unit={currency?.unit}
+          />
         </div>
         {transactionBalance && (
           <div className="transaction__balance">
-            <Currency type="graySmall" amount={transactionBalance?.amount} unit={transactionBalance?.unit} />
+            <Currency
+              type="graySmall"
+              amount={transactionBalance?.amount}
+              unit={transactionBalance?.unit}
+            />
           </div>
         )}
         {transactionLoan && (
@@ -87,7 +116,13 @@ const TransactionHistory = props => {
             )}
           </div>
         )}
-        {cancelButton && <Span clazz="transaction__cancel__button" text={translate('lbl_com_3032')} onClick={onCancel} />}
+        {cancelButton && (
+          <Span
+            clazz="transaction__cancel__button"
+            text={translate('lbl_com_3032')}
+            onClick={onCancel}
+          />
+        )}
       </div>
     </div>
   );
@@ -105,7 +140,7 @@ TransactionHistory.propTypes = {
   memo: PropTypes.string,
   status: PropTypes.string,
   orderNumber: PropTypes.number,
-  cancelButton: PropTypes.bool
+  cancelButton: PropTypes.bool,
 };
 
 TransactionHistory.defaultProps = {
@@ -120,6 +155,6 @@ TransactionHistory.defaultProps = {
   memo: '',
   status: '',
   orderNumber: null,
-  cancelButton: false
+  cancelButton: false,
 };
 export default withHTMLParseI18n(TransactionHistory);

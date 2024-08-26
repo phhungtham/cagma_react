@@ -1,15 +1,17 @@
-import { PropTypes } from 'prop-types';
-import { ArrowRight } from '@assets/icons';
-import './styles.scss';
 import { useEffect, useState } from 'react';
-import CheckBox from '@common/components/atoms/Checkbox';
 
-const TermConditionChecklist = ({config, onClickViewTerm, onSelectAll}) => {
-  const {selectAllLabel, options = []} = config;
+import { ArrowRight } from '@assets/icons';
+import CheckBox from '@common/components/atoms/Checkbox';
+import { PropTypes } from 'prop-types';
+
+import './styles.scss';
+
+const TermConditionChecklist = ({ config, onClickViewTerm, onSelectAll }) => {
+  const { selectAllLabel, options = [] } = config;
   const [checkedOptions, setCheckedOptions] = useState([]);
 
-  const handleSelectAll = (checked) => {
-    if(checked) {
+  const handleSelectAll = checked => {
+    if (checked) {
       setCheckedOptions(options.map(option => option.value));
     } else {
       setCheckedOptions([]);
@@ -17,7 +19,7 @@ const TermConditionChecklist = ({config, onClickViewTerm, onSelectAll}) => {
   };
 
   const handleCheckOption = (value, checked) => {
-    if(checked) {
+    if (checked) {
       setCheckedOptions([...checkedOptions, value]);
     } else {
       setCheckedOptions(checkedOptions.filter(option => option !== value));
@@ -30,8 +32,8 @@ const TermConditionChecklist = ({config, onClickViewTerm, onSelectAll}) => {
   }, [checkedOptions]);
 
   return (
-    <div className='term-condition-checklist-wrapper'>
-      <div className='checklist__check-all'>
+    <div className="term-condition-checklist-wrapper">
+      <div className="checklist__check-all">
         <CheckBox
           size="large"
           label={selectAllLabel}
@@ -39,19 +41,24 @@ const TermConditionChecklist = ({config, onClickViewTerm, onSelectAll}) => {
           checked={checkedOptions.length === options.length}
         />
       </div>
-      <div className='divider__item__solid'></div>
-      <div className='checklist___options'>
-        {options.map(({label, value}) => 
-          <div className='option-item' key={value}>
+      <div className="divider__item__solid" />
+      <div className="checklist___options">
+        {options.map(({ label, value }) => (
+          <div
+            className="option-item"
+            key={value}
+          >
             <CheckBox
               size="large"
               label={label}
-              onChange={(checked) => handleCheckOption(value, checked)}
+              onChange={checked => handleCheckOption(value, checked)}
               checked={checkedOptions.includes(value)}
             />
-            <div onClick={() => onClickViewTerm(value)}><ArrowRight /></div>
+            <div onClick={() => onClickViewTerm(value)}>
+              <ArrowRight />
+            </div>
           </div>
-        )}
+        ))}
       </div>
     </div>
   );
@@ -67,14 +74,14 @@ TermConditionChecklist.propTypes = {
         label: PropTypes.string,
         value: PropTypes.string,
       })
-    )
-  })
+    ),
+  }),
 };
 
 TermConditionChecklist.defaultProps = {
   onClickViewTerm: () => {},
   onSelectAll: () => {},
-  config: {}
+  config: {},
 };
 
 export default TermConditionChecklist;

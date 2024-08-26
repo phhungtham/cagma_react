@@ -26,13 +26,13 @@
 // DEFINE Filled Label
 @include Filled(gray__filled, text__gray__filled, $color-gray-200, $color-gray-850);
 @include Filled(blue__filled, text__blue__filled, $color-blue-100, $color-blue-800);
-@include Filled(mint__filled, text__mint__filled, #D5F4F9, #007D91);
-@include Filled(green__filled, text__mint__filled, #EAF5F0, #149F6E);
-@include Filled(purple__filled, text__purple__filled, #E1E1FF, #4536AD);
-@include Filled(orange__filled, text__orange__filled, #FFEAC1, #DA4A09);
-@include Filled(coral__filled, text__coral__filled, #FDEBE5, #EB6E47);
-@include Filled(rose__filled, text__rose__filled, #FFF2F2, #EB3D4F);
-@include Filled(brown__filled, text__brown__filled, #F1DECD, #804714);
+@include Filled(mint__filled, text__mint__filled, #d5f4f9, #007d91);
+@include Filled(green__filled, text__mint__filled, #eaf5f0, #149f6e);
+@include Filled(purple__filled, text__purple__filled, #e1e1ff, #4536ad);
+@include Filled(orange__filled, text__orange__filled, #ffeac1, #da4a09);
+@include Filled(coral__filled, text__coral__filled, #fdebe5, #eb6e47);
+@include Filled(rose__filled, text__rose__filled, #fff2f2, #eb3d4f);
+@include Filled(brown__filled, text__brown__filled, #f1decd, #804714);
 
 // TODO: DEFINE Outline Label
 @include Outline(basic__outline, text__basic__outline, #2c3b4e);

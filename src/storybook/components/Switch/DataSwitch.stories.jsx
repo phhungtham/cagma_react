@@ -1,16 +1,19 @@
 import React from 'react';
 
+import Switch from '@common/components/atoms/Switch';
 import { action } from '@storybook/addon-actions';
 import { DocumentIcon } from 'assets/icons';
-import Switch from '@common/components/atoms/Switch';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Switch/Switch With Icon',
-  component: Switch
+  component: Switch,
 };
 
 const Template = args => (
-  <Switch {...args} onChange={action('Active Status')}>
+  <Switch
+    {...args}
+    onChange={action('Active Status')}
+  >
     <DocumentIcon />
   </Switch>
 );
@@ -18,17 +21,17 @@ const Template = args => (
 export const SwitchWithIcon = Template.bind({});
 SwitchWithIcon.args = {
   type: 'data',
-  positionSelected: 'right'
+  positionSelected: 'right',
 };
 
 export const SelectedRight = Template.bind({});
 SelectedRight.args = {
   type: 'data',
-  positionSelected: 'right'
+  positionSelected: 'right',
 };
 
 export const SelectedLeft = Template.bind({});
 SelectedLeft.args = {
   type: 'data',
-  positionSelected: 'left'
+  positionSelected: 'left',
 };

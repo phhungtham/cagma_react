@@ -2,10 +2,11 @@ import React from 'react';
 
 import { TextButton } from '@common/components/atoms/ButtonGroup/TextButton/TextButton';
 import { SIZE } from '@common/components/constants';
+
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Button/TextButton',
-  component: TextButton
+  component: TextButton,
 };
 
 const TextButtonStory = args => <TextButton {...args} />;
@@ -18,7 +19,7 @@ TextButtonBasic.args = {
   label: 'Text Button',
   onClick: undefined,
   variant: 'primary',
-  size: SIZE.SMALL
+  size: SIZE.SMALL,
 };
 
 export const TextButtonIcon = TextButtonIconStory.bind({});
@@ -29,5 +30,5 @@ TextButtonIcon.args = {
   iconPosition: 'right',
   onClick: undefined,
   variant: 'primary',
-  size: SIZE.SMALL
+  size: SIZE.SMALL,
 };

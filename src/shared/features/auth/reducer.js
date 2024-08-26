@@ -3,7 +3,7 @@ export const FeatureName = 'authentication';
 
 export const AuthAction = {
   SET_AUTHENTICATION: `${FeatureName}/SET_AUTHENTICATION`,
-  CLEAN_UP: `${FeatureName}/CLEAN_UP`
+  CLEAN_UP: `${FeatureName}/CLEAN_UP`,
 };
 
 // reducers

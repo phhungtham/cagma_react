@@ -8,7 +8,11 @@
   gap: 100px;
   background-color: rgba(233, 235, 236, 0.445);
 
-  .__demo {
+  .relative {
+    position: 'relative';
+  }
+
+  .demo {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -16,15 +20,15 @@
     padding: 0px 50px;
     flex-wrap: wrap;
 
-    .__title {
+    .title {
       width: 100%;
       text-align: center;
       font-size: 25px;
       font-weight: bold;
       color: rgb(243, 91, 142);
     }
-    
-    .__button {
+
+    .button {
       padding: 15px 20px;
       border-radius: 8px;
       color: white;

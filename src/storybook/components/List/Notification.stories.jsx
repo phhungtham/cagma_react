@@ -1,10 +1,11 @@
 import React from 'react';
+
 import BearImage from '@assets/images/bear-profile.png';
 import Notification from '@common/components/organisms/Notification';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/List/Notification',
-  component: Notification
+  component: Notification,
 };
 
 const Template = args => <Notification {...args} />;
@@ -23,7 +24,7 @@ TransactionWithdrawal.args = {
   time: '27.03.2022 13:05',
   thumbnail: BearImage,
   currency: { amount: '891,623,000', unit: 'VND', type: 'withdraw' },
-  isRead: true
+  isRead: true,
 };
 
 export const TransactionDeposit = Template.bind({});
@@ -32,7 +33,7 @@ TransactionDeposit.args = {
   notifyType: 'transaction',
   time: '27.03.2022 13:05',
   thumbnail: BearImage,
-  currency: { amount: '891,623,000', unit: 'VND', type: 'deposit' }
+  currency: { amount: '891,623,000', unit: 'VND', type: 'deposit' },
 };
 
 export const NotifyEventBanner = Template.bind({});
@@ -40,7 +41,7 @@ NotifyEventBanner.args = {
   notifyType: 'event-banner',
   notifyContent: 'If you pass the diary and find a lovely character, you`ll be chosen!',
   time: '27.03.2022 13:05',
-  thumbnail: BearImage
+  thumbnail: BearImage,
 };
 
 export const NotifyHomeBanner = Template.bind({});
@@ -48,5 +49,5 @@ NotifyHomeBanner.args = {
   notifyType: 'home-banner',
   title: 'Shinhan Bank Golden Tiger Event',
   notifyContent: 'Open an savings account with a preferential interest rate for the new year ',
-  thumbnail: BearImage
+  thumbnail: BearImage,
 };

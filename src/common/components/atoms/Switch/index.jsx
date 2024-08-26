@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import PropTypes from 'prop-types';
 
 const Switch = ({ label, type, onChange, positionSelected, active, disabled, children }) => {
@@ -23,7 +24,12 @@ const Switch = ({ label, type, onChange, positionSelected, active, disabled, chi
     <div className="switch">
       {label && <span className={`switch__label ${isListType && 'switch__list'}`}>{label}</span>}
       <div className={`switch__group${hasIcon ? '__icon' : ''}`}>
-        <input type="checkbox" className="switch__input" checked={checkValue} onChange={onChangeValue} />
+        <input
+          type="checkbox"
+          className="switch__input"
+          checked={checkValue}
+          onChange={onChangeValue}
+        />
         <button
           className={`switch__slider ${hasIcon && 'switch__has__icon'} ${disabled && 'disabled'}`}
           type="button"
@@ -44,7 +50,7 @@ Switch.propTypes = {
   type: PropTypes.oneOf(['list', 'label', 'data']),
   positionSelected: PropTypes.oneOf(['left', 'right']),
   disabled: PropTypes.bool,
-  active: PropTypes.bool
+  active: PropTypes.bool,
 };
 
 Switch.defaultProps = {
@@ -53,7 +59,7 @@ Switch.defaultProps = {
   type: 'label',
   positionSelected: 'right',
   disabled: false,
-  active: false
+  active: false,
 };
 
 export default Switch;

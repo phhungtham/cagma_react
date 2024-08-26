@@ -4,11 +4,11 @@
  * @returns the value of the variable _result.
  */
 export const dateNumberCheck = number => {
-  let _result = `${number}`;
+  let result = `${number}`;
   if (Number(number) < 10) {
-    _result = `0${number}`;
+    result = `0${number}`;
   }
-  return _result;
+  return result;
 };
 
 /**

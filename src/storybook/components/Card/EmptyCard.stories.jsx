@@ -1,10 +1,11 @@
-import EmptyCard from '@common/components/organisms/CardGroup/EmptyCard/EmptyCard';
 import React from 'react';
+
+import EmptyCard from '@common/components/organisms/CardGroup/EmptyCard/EmptyCard';
 
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Card/EmptyCardTemp',
-  component: EmptyCard
+  component: EmptyCard,
 };
 
 const EmptyCardStory = args => <EmptyCard {...args} />;
@@ -14,5 +15,5 @@ EmptyCardTemp.args = {
   title: 'You do not own any checkings accounts.',
   type: 'checking',
   buttonTitle: 'Browse products',
-  header: false
+  header: false,
 };

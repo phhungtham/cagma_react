@@ -1,10 +1,11 @@
+import React from 'react';
+
 import Accordion from '@common/components/atoms/Accordion';
 import { AnswerIcon, QuestionIcon } from 'assets/icons';
-import React from 'react';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Accordion/Accordion',
-  component: Accordion
+  component: Accordion,
 };
 
 const AccordionStories = args => <Accordion {...args} />;
@@ -14,9 +15,9 @@ TextOnly.args = {
   label: 'Label',
   title: 'Cannot set property wmatrix of which has only a getter',
   panelData: {
-    text: 'Enter at least 2 lines of title. Enter at least 2  lines of title.'
+    text: 'Enter at least 2 lines of title. Enter at least 2  lines of title.',
   },
-  captionSegments: { type: 2, caption1: 'Caption1', caption2: 'Caption2' }
+  captionSegments: { type: 2, caption1: 'Caption1', caption2: 'Caption2' },
 };
 
 export const WithIcon = AccordionStories.bind({});
@@ -24,9 +25,9 @@ WithIcon.args = {
   title: 'Cannot set property wmatrix of which has only a getter',
   panelData: {
     text: 'Enter at least 2 lines of title. Enter at least 2  lines of title.',
-    icon: AnswerIcon
+    icon: AnswerIcon,
   },
-  titleIcon: { name: QuestionIcon, position: 'left' }
+  titleIcon: { name: QuestionIcon, position: 'left' },
 };
 
 export const WithButton = AccordionStories.bind({});
@@ -37,11 +38,11 @@ WithButton.args = {
     dataTable: [
       { label: 'Label', text: 'Cannot set property wmatrix' },
       { label: 'Label', text: 'Cannot set property wmatrix' },
-      { label: 'Label', text: 'Cannot set property wmatrix' }
-    ]
+      { label: 'Label', text: 'Cannot set property wmatrix' },
+    ],
   },
   titleIcon: { name: QuestionIcon, position: 'left' },
-  button: 'Button'
+  button: 'Button',
 };
 
 export const DataTable = AccordionStories.bind({});
@@ -52,9 +53,9 @@ DataTable.args = {
     dataTable: [
       { label: 'Label', text: 'Cannot set property wmatrix' },
       { label: 'Label', text: 'Cannot set property wmatrix' },
-      { label: 'Label', text: 'Cannot set property wmatrix' }
-    ]
-  }
+      { label: 'Label', text: 'Cannot set property wmatrix' },
+    ],
+  },
 };
 export const ViewDetail = AccordionStories.bind({});
 ViewDetail.args = {
@@ -67,35 +68,35 @@ ViewDetail.args = {
         detailItems: [
           {
             label: 'Withdrawal account',
-            content: 'Shinhan Bank 1234567891012'
+            content: 'Shinhan Bank 1234567891012',
           },
           {
             label: 'Total deposit amount',
-            content: '1,200 USD'
+            content: '1,200 USD',
           },
           {
             label: 'Balance after withdrawal',
-            content: '2,400,000 USD'
-          }
-        ]
+            content: '2,400,000 USD',
+          },
+        ],
       },
       {
         title: 'Branch Information',
         detailItems: [
           {
             label: 'Office',
-            content: 'Hochiminh Branch'
+            content: 'Hochiminh Branch',
           },
           {
             label: 'Address',
-            content: '11th Floor, Centec Tower, 72-72 Nguyen Thi Minh Khai, Distric 3, HC'
+            content: '11th Floor, Centec Tower, 72-72 Nguyen Thi Minh Khai, Distric 3, HC',
           },
           {
             label: 'Contact',
-            content: '028.3823.8302'
-          }
-        ]
-      }
-    ]
-  }
+            content: '028.3823.8302',
+          },
+        ],
+      },
+    ],
+  },
 };

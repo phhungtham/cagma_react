@@ -2,7 +2,13 @@ import React from 'react';
 
 const ViewPDFIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+    >
       <path
         d="M7.61765 14.1181H2.5C1.94772 14.1181 1.5 13.6704 1.5 13.1181V2.88283C1.5 2.33054 1.94772 1.88282 2.50001 1.88282L8.38235 1.8829L11.4412 4.94164V6.0887"
         stroke="currentColor"

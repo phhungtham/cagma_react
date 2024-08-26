@@ -1,14 +1,16 @@
-import React, { forwardRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { forwardRef, useEffect, useState } from 'react';
+
+import { SIZE, TAG_NAME } from '@common/components/constants';
 import useComposeRefs from '@hooks/useComposeRefs';
 import { ClearIcon } from 'assets/icons';
+import PropTypes from 'prop-types';
+
 import { IconButton } from '../ButtonGroup/IconButton/IconButton';
-import { SIZE, TAG_NAME } from '@common/components/constants';
 
 const Input = forwardRef((props, ref) => {
   const {
-    autoComplete,
-    children,
+    // autoComplete,
+    // children,
     clazz,
     disabled,
     errorMessage,
@@ -38,8 +40,8 @@ const Input = forwardRef((props, ref) => {
   const [customClass, setCustomClass] = useState('');
   const [errorTextField, setErrorTextField] = useState(errorMessage);
 
-  const [minutes, setMinutes] = useState(remainingTime.minutes);
-  const [seconds, setSeconds] = useState(remainingTime.seconds);
+  const [minutes, _setMinutes] = useState(remainingTime.minutes);
+  const [seconds, _setSeconds] = useState(remainingTime.seconds);
 
   const composeRef = useComposeRefs(ref);
 
@@ -82,7 +84,7 @@ const Input = forwardRef((props, ref) => {
 
   useEffect(() => {
     setInputValues(value);
-    if(value) {
+    if (value) {
       setCustomClass('input__completed');
     }
   }, [value]);
@@ -152,7 +154,10 @@ const Input = forwardRef((props, ref) => {
         ) : (
           customClass === 'input__focus' &&
           inputValues && (
-            <div onMouseDown={handleClearInputText} className={`input__icon ${tagName}`}>
+            <div
+              onMouseDown={handleClearInputText}
+              className={`input__icon ${tagName}`}
+            >
               <ClearIcon />
             </div>
           )
@@ -192,12 +197,12 @@ Input.propTypes = {
   placeHolder: PropTypes.string,
   remainingTime: PropTypes.exact({
     minutes: PropTypes.number,
-    seconds: PropTypes.number
+    seconds: PropTypes.number,
   }),
   style: PropTypes.object,
   mode: PropTypes.oneOf(['normal', 'onBackground']),
   type: PropTypes.oneOf(['text', 'password', 'number', 'email']),
-  onClearInput: PropTypes.func
+  onClearInput: PropTypes.func,
 };
 
 Input.defaultProps = {
@@ -215,7 +220,7 @@ Input.defaultProps = {
   errorMessage: '',
   remainingTime: {
     minutes: null,
-    seconds: null
+    seconds: null,
   },
   helperText: '',
   mode: 'normal',
@@ -223,7 +228,7 @@ Input.defaultProps = {
   onChange: () => {},
   onFocus: () => {},
   onBlur: () => {},
-  onClearInput: () => {}
+  onClearInput: () => {},
 };
 
 export default Input;

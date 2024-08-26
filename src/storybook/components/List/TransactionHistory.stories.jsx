@@ -1,10 +1,11 @@
 import React from 'react';
+
 import BearImage from '@assets/images/bear-profile.png';
 import TransactionHistory from '@common/components/organisms/TransactionHistory';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/List/Transaction History',
-  component: TransactionHistory
+  component: TransactionHistory,
 };
 
 const Template = args => <TransactionHistory {...args} />;
@@ -14,7 +15,7 @@ Deposit.args = {
   title: 'Shinhan Kim',
   subTitle: 'Shinhan 8021',
   transactionTime: '13:25',
-  currency: { type: 'deposit', amount: '891,623,000', unit: 'USD' }
+  currency: { type: 'deposit', amount: '891,623,000', unit: 'USD' },
 };
 
 export const Withdrawal = Template.bind({});
@@ -22,7 +23,7 @@ Withdrawal.args = {
   title: 'Shinhan Kim',
   subTitle: 'Shinhan 8021',
   transactionTime: '13:25',
-  currency: { type: 'withdraw', amount: '891,623,000', unit: 'USD' }
+  currency: { type: 'withdraw', amount: '891,623,000', unit: 'USD' },
 };
 
 export const Thumbnail = Template.bind({});
@@ -31,7 +32,7 @@ Thumbnail.args = {
   subTitle: 'Shinhan 8021',
   transactionTime: '13:25',
   thumbnail: BearImage,
-  currency: { type: 'deposit', amount: '891,623,000', unit: 'USD' }
+  currency: { type: 'deposit', amount: '891,623,000', unit: 'USD' },
 };
 
 export const Memo = Template.bind({});
@@ -41,7 +42,7 @@ Memo.args = {
   memo: 'Vehicle maintenance costs ',
   transactionTime: '13:25',
   thumbnail: BearImage,
-  currency: { type: 'withdraw', amount: '891,623,000', unit: 'USD' }
+  currency: { type: 'withdraw', amount: '891,623,000', unit: 'USD' },
 };
 
 export const CheckingBalanceOn = Template.bind({});
@@ -52,7 +53,7 @@ CheckingBalanceOn.args = {
   transactionTime: '13:25',
   thumbnail: BearImage,
   currency: { type: 'deposit', amount: '891,623,000', unit: 'USD' },
-  transactionBalance: { amount: '1,234,567,891', unit: 'USD' }
+  transactionBalance: { amount: '1,234,567,891', unit: 'USD' },
 };
 
 export const CheckingBalanceOff = Template.bind({});
@@ -61,7 +62,7 @@ CheckingBalanceOff.args = {
   memo: 'Money for groceries',
   transactionTime: '13:25',
   thumbnail: BearImage,
-  currency: { type: 'withdraw', amount: '891,623,000', unit: 'USD' }
+  currency: { type: 'withdraw', amount: '891,623,000', unit: 'USD' },
 };
 
 export const Savings = Template.bind({});
@@ -70,7 +71,7 @@ Savings.args = {
   title: 'Automatic transfer',
   transactionTime: '31.04.2022',
   currency: { type: 'deposit', amount: '891,623,000', unit: 'USD' },
-  transactionBalance: { amount: '1,200,000,000', unit: 'USD' }
+  transactionBalance: { amount: '1,200,000,000', unit: 'USD' },
 };
 
 export const LoanInterestAmountOff = Template.bind({});
@@ -78,7 +79,7 @@ LoanInterestAmountOff.args = {
   title: 'Redemption',
   transactionTime: '11.04.2022',
   currency: { type: 'default', amount: '12,500.00', unit: 'USD' },
-  transactionLoan: { outstandingBalance: '9,375,163.04', unit: 'USD' }
+  transactionLoan: { outstandingBalance: '9,375,163.04', unit: 'USD' },
 };
 
 export const LoanInterestAmountOn = Template.bind({});
@@ -86,7 +87,7 @@ LoanInterestAmountOn.args = {
   title: 'Redemption',
   transactionTime: '11.04.2022',
   currency: { type: 'default', amount: '12,500.00', unit: 'USD' },
-  transactionLoan: { outstandingBalance: '9,375,163.04', interestAmount: '4,500.00', unit: 'USD' }
+  transactionLoan: { outstandingBalance: '9,375,163.04', interestAmount: '4,500.00', unit: 'USD' },
 };
 
 export const Pending = Template.bind({});
@@ -96,7 +97,7 @@ Pending.args = {
   subTitle: 'Processing',
   transactionTime: '11.04.2022',
   currency: { type: 'withdraw', amount: '891,623,000', unit: 'USD' },
-  thumbnail: BearImage
+  thumbnail: BearImage,
 };
 
 export const PendingWithMemo = Template.bind({});
@@ -107,7 +108,7 @@ PendingWithMemo.args = {
   subTitle: 'Processing',
   transactionTime: '11.04.2022',
   currency: { type: 'withdraw', amount: '891,623,000', unit: 'USD' },
-  thumbnail: BearImage
+  thumbnail: BearImage,
 };
 
 export const PendingWithCancel = Template.bind({});
@@ -119,5 +120,5 @@ PendingWithCancel.args = {
   subTitle: 'Processing',
   transactionTime: '11.04.2022',
   currency: { type: 'withdraw', amount: '891,623,000', unit: 'USD' },
-  thumbnail: BearImage
+  thumbnail: BearImage,
 };

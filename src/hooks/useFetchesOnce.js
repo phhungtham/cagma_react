@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 /**
  * This hook accepts a list of functions to fetch data once when component mounting
  * Each item of the fetch action conform the format { fetchAction: <ref-of-fetch-action>, args: any[] } strictly

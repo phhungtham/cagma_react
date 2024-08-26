@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { CardIcon, HideEyeIcon, ShowEyeIcon, ThinArrowIcon } from 'assets/icons';
-import { CARD_COLOR } from '@common/components/constants';
-import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
+
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
+import { CARD_COLOR } from '@common/components/constants';
+import { CardIcon, HideEyeIcon, ShowEyeIcon, ThinArrowIcon } from 'assets/icons';
+import PropTypes from 'prop-types';
 
 const MyAccountCard = ({
   type,
@@ -15,7 +16,7 @@ const MyAccountCard = ({
   cardQuantity,
   noButton,
   header,
-  icon
+  icon,
 }) => {
   const [isShowCard, setIsShowCard] = useState(header ? initialShow : true);
   const [isShowBalance, setIsShowBalance] = useState(showBalance);
@@ -41,7 +42,10 @@ const MyAccountCard = ({
           <div className="type">Checking</div>
           <div className="my__account__header__left">
             <div className="toggle__balance">
-              <div className="eye-icon" onClick={toggleBalance}>
+              <div
+                className="eye-icon"
+                onClick={toggleBalance}
+              >
                 {isShowBalance ? <ShowEyeIcon /> : <HideEyeIcon />}
               </div>
               <div className="title">Hide Balance</div>
@@ -60,8 +64,14 @@ const MyAccountCard = ({
 
       <section className={customClass}>
         <div className="card__info">
-          <div className="icon" style={{ backgroundColor: CARD_COLOR[type] }}>
-            <IconButton size="w-20" icon={icon} />
+          <div
+            className="icon"
+            style={{ backgroundColor: CARD_COLOR[type] }}
+          >
+            <IconButton
+              size="w-20"
+              icon={icon}
+            />
           </div>
           <div className="content">
             <div className="title">{title}</div>
@@ -88,7 +98,7 @@ MyAccountCard.prototype = {
   initialShow: PropTypes.bool,
   header: PropTypes.bool,
   icon: PropTypes.string,
-  showBalance: PropTypes.bool
+  showBalance: PropTypes.bool,
 };
 
 MyAccountCard.defaultProps = {
@@ -101,7 +111,7 @@ MyAccountCard.defaultProps = {
   initialShow: true,
   header: true,
   icon: <CardIcon />,
-  showBalance: true
+  showBalance: true,
 };
 
 export default MyAccountCard;

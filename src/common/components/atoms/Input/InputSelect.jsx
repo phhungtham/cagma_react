@@ -1,11 +1,13 @@
-import React, { forwardRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import { forwardRef, useState } from 'react';
+
 import { ArrowIcon } from 'assets/icons';
-import Input from './Input';
+import PropTypes from 'prop-types';
+
 import { IconButton } from '../ButtonGroup/IconButton/IconButton';
+import Input from './Input';
 
 const InputSelect = forwardRef((props, ref) => {
-  const { clazz, errorMessage, beExpand, label, onClick, value, disabled, ...otherProps } = props;
+  const { errorMessage, beExpand, label, onClick, value, disabled, ...otherProps } = props;
 
   const [isFocus, setIsFocus] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -34,7 +36,10 @@ const InputSelect = forwardRef((props, ref) => {
   };
 
   return (
-    <div className="input__select" onClick={onClick}>
+    <div
+      className="input__select"
+      onClick={onClick}
+    >
       <div
         onBlur={handleOnBlur}
         className={`input__select__wrapper ${isFocus && beExpand && 'expand'} ${isCompleted && 'completed'} ${
@@ -71,7 +76,7 @@ InputSelect.propTypes = {
   errorMessage: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string,
-  placeHolder: PropTypes.string
+  placeHolder: PropTypes.string,
 };
 
 InputSelect.defaultProps = {
@@ -80,7 +85,7 @@ InputSelect.defaultProps = {
   beExpand: true,
   label: 'Label',
   placeHolder: 'Place Holder',
-  errorMessage: ''
+  errorMessage: '',
 };
 
 export default InputSelect;

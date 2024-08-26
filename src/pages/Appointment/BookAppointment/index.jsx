@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import BookAppointmentSuccessful from './components/BookAppointmentSuccessful';
 import BookAppointmentForm from './components/BookAppointmentForm';
+import BookAppointmentSuccessful from './components/BookAppointmentSuccessful';
 import { appointmentSuccessInfoTest } from './constants';
 
 const BookAppointmentStep = {
@@ -9,22 +9,25 @@ const BookAppointmentStep = {
   COMPLETED: 'completed',
 };
 
-const BookAppointment = ({type}) => {
+const BookAppointment = ({ type }) => {
   const [currentStep, setCurrentStep] = useState(BookAppointmentStep.ENTER_INFO_FORM);
 
-  const handleBookAppointment = (formValues) => {
+  const handleBookAppointment = formValues => {
     //TODO: Handle book appointment
     setCurrentStep(BookAppointmentStep.COMPLETED);
   };
 
   return (
     <>
-      {currentStep === BookAppointmentStep.ENTER_INFO_FORM && 
-        <BookAppointmentForm type={type} onSubmit={handleBookAppointment} />
-      }
-      {currentStep === BookAppointmentStep.COMPLETED && 
-        <BookAppointmentSuccessful appointmentInfo={appointmentSuccessInfoTest} /> 
-      }
+      {currentStep === BookAppointmentStep.ENTER_INFO_FORM && (
+        <BookAppointmentForm
+          type={type}
+          onSubmit={handleBookAppointment}
+        />
+      )}
+      {currentStep === BookAppointmentStep.COMPLETED && (
+        <BookAppointmentSuccessful appointmentInfo={appointmentSuccessInfoTest} />
+      )}
     </>
   );
 };

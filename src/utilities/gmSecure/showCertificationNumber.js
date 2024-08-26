@@ -1,5 +1,5 @@
-import { $h } from 'navigation/wmatrix_config';
 import { AppCfg } from '@configs/appConfigs';
+import { $h } from 'navigation/wmatrix_config';
 
 const showCertificationNumber = async (
   { title, description, maxLength, errMsg, showUnique, checkNumber },
@@ -38,8 +38,8 @@ const showCertificationNumber = async (
           maxLength: maxLength,
           errMsg: errMsg || '',
           checkNumber: checkNumber || 'false', // true: prevent 3 consecutive numbers
-          showForgotNumber: 'false'
-        }
+          showForgotNumber: 'false',
+        },
       ]
     );
   }

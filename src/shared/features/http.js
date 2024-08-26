@@ -4,14 +4,14 @@ export const Http = {
   INIT: 'INIT',
   REQUESTING: 'REQUESTING',
   SUCCESS: 'SUCCESS',
-  FAILURE: 'FAILURE'
+  FAILURE: 'FAILURE',
 };
 
 export const HttpAction = {
   INIT: `${FeatureName}/${Http.INIT}`,
   REQUESTING: `${FeatureName}/${Http.REQUESTING}`,
   SUCCESS: `${FeatureName}/${Http.SUCCESS}`,
-  FAILURE: `${FeatureName}/${Http.FAILURE}`
+  FAILURE: `${FeatureName}/${Http.FAILURE}`,
 };
 
 const initState = {};

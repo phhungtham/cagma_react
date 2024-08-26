@@ -1,11 +1,11 @@
-import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import React from 'react';
 
+import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Button/OneButton',
-  component: Button
+  component: Button,
 };
 
 const BasicButton = args => <Button {...args} />;
@@ -15,7 +15,7 @@ export const Basic = BasicButton.bind({});
 Basic.args = {
   variant: 'filled__primary',
   label: 'Button',
-  disable: false
+  disable: false,
 };
 
 export const ButtonIcon = IconButton.bind({});
@@ -23,7 +23,7 @@ ButtonIcon.args = {
   variant: 'filled__primary',
   label: 'Button',
   disable: false,
-  iconPosition: 'right'
+  iconPosition: 'right',
 };
 
 // export const ButtonDisable = Template.bind({});

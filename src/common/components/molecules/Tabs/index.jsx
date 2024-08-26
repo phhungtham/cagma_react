@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+
 import Span from '@common/components/atoms/Span';
+import PropTypes from 'prop-types';
 
 const Tabs = props => {
   const { clazz, tabList, isLoginAlready, children, onTabChange, tabIndex = 0 } = props;
@@ -25,7 +26,11 @@ const Tabs = props => {
               className={`tabs__list ${tabActive === index && 'tab__active'}`}
               onClick={() => handleTabClick(tab.title, index)}
             >
-              <Span key={index} clazz="tabs__item" text={tab.title} />
+              <Span
+                key={index}
+                clazz="tabs__item"
+                text={tab.title}
+              />
             </div>
           ))}
         </div>
@@ -38,13 +43,13 @@ const Tabs = props => {
 Tabs.propTypes = {
   clazz: PropTypes.string,
   tabList: PropTypes.array,
-  isLoginAlready: PropTypes.bool
+  isLoginAlready: PropTypes.bool,
 };
 
 Tabs.defaultProps = {
   clazz: '',
   tabList: [],
-  isLoginAlready: true
+  isLoginAlready: true,
 };
 
 export default Tabs;

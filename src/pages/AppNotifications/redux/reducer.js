@@ -7,7 +7,7 @@ const initState = {
   listCheckingNotify: {
     list: [],
     list_cnt: 0,
-    total_cnt: 0
+    total_cnt: 0,
   },
   listCheckingCount: null,
   loadCheckingListFailed: '',
@@ -18,10 +18,10 @@ const initState = {
   listNoticesNotify: {
     list: [],
     list_cnt: 0,
-    total_cnt: 0
+    total_cnt: 0,
   },
   listNoticesCount: null,
-  loadNoticesListFailed: ''
+  loadNoticesListFailed: '',
 };
 
 export const appNotificationReducer = (state = initState, action) => {
@@ -42,7 +42,7 @@ export const appNotificationReducer = (state = initState, action) => {
       return {
         ...state,
         listCheckingNotify: { ...payload.elData, list: [...state.listCheckingNotify.list, ...payload.elData.list] },
-        loadCheckingState: false
+        loadCheckingState: false,
       };
 
     case ActionType.GET_NOTICES_NOTIFY_REQUEST_SUCCESS:
@@ -50,7 +50,7 @@ export const appNotificationReducer = (state = initState, action) => {
       return {
         ...state,
         listNoticesNotify: { ...payload.elData, list: [...state.listNoticesNotify.list, ...payload.elData.list] },
-        loadNoticesState: false
+        loadNoticesState: false,
       };
 
     case ActionType.GET_BENEFITS_NOTIFY_REQUEST_SUCCESS:
@@ -75,7 +75,7 @@ export const appNotificationReducer = (state = initState, action) => {
       return {
         ...initState,
         loadBannerSeq: state.loadBannerSeq,
-        tabIdx: state.tabIdx
+        tabIdx: state.tabIdx,
       };
 
     default:

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
+
 import { Button } from '../Button/Button';
 
 export const DuoButton = ({ className, ratio, firstButton, secondButton, duoDirection, children, ...otherProps }) => {
@@ -13,16 +15,19 @@ export const DuoButton = ({ className, ratio, firstButton, secondButton, duoDire
     onClick: firstOnClick,
     label: firstLabel,
     disable: firstDisable,
-    className: firstClassName
+    className: firstClassName,
   } = firstButton || {};
   const {
     onClick: secondOnClick,
     label: secondLabel,
     disable: secondDisable,
-    className: secondClassName
+    className: secondClassName,
   } = secondButton || {};
   return (
-    <section className={customClass} {...otherProps}>
+    <section
+      className={customClass}
+      {...otherProps}
+    >
       {firstButton && (
         <Button
           className={`btn__duo__first ${firstClassName}`}
@@ -54,15 +59,15 @@ DuoButton.propTypes = {
     onClick: PropTypes.func,
     label: PropTypes.string,
     disable: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
   }),
   secondButton: PropTypes.shape({
     onClick: PropTypes.func,
     label: PropTypes.string,
     disable: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
   }),
-  type: PropTypes.oneOf(['submit', 'button'])
+  type: PropTypes.oneOf(['submit', 'button']),
 };
 
 DuoButton.defaultProps = {
@@ -70,5 +75,5 @@ DuoButton.defaultProps = {
   ratio: 'oto',
   duoDirection: 'horizontal',
   firstButton: null,
-  secondButton: null
+  secondButton: null,
 };

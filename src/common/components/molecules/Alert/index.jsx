@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { CloseIcon } from 'assets/icons';
+import { useEffect, useState } from 'react';
+
 import { DuoButton } from '@common/components/atoms/ButtonGroup/DuoButton/DuoButton';
+import { CloseIcon } from 'assets/icons';
+import PropTypes from 'prop-types';
 
 const Alert = ({
   title,
@@ -14,7 +15,7 @@ const Alert = ({
   firstButton,
   secondButton,
   isCloseButton,
-  textAlign
+  textAlign,
 }) => {
   const [animate, setAnimate] = useState(false);
 
@@ -36,25 +37,41 @@ const Alert = ({
 
   return (
     <div className={`alert__wrapper  ${isShowAlert && 'show'}`}>
-      <div className={`overlay ${isShowAlert && 'show'}`} onClick={closeAlert}></div>
+      <div
+        className={`overlay ${isShowAlert && 'show'}`}
+        onClick={closeAlert}
+      />
       <div
         className={`alert ${isShowAlert && 'show'} ${animate && 'animate'} ${isCloseButton && 'close-button'}`}
         onClick={e => e.stopPropagation()}
       >
         {isCloseButton && (
-          <section className="alert__close" onClick={handleClose}>
+          <section
+            className="alert__close"
+            onClick={handleClose}
+          >
             <CloseIcon size="medium" />
           </section>
         )}
         {alertIcon && <section className={`alert__icon ${alertIcon.type}`}>{alertIcon.name}</section>}
-        {imageIcon && <img alt="alert-icon" className="alert__img__icon" src={imageIcon} />}
+        {imageIcon && (
+          <img
+            alt="alert-icon"
+            className="alert__img__icon"
+            src={imageIcon}
+          />
+        )}
         <section className={`alert__header ${textAlign}`}>
           {title && <p className="alert__title">{title}</p>}
           {subtitle && <p className="alert__subtitle">{subtitle}</p>}
           {caption && <p className="alert__caption">{caption}</p>}
         </section>
         <section className="alert__footer">
-          <DuoButton firstButton={firstDoulButton} secondButton={secondDoulButton} duoDirection="vertical" />
+          <DuoButton
+            firstButton={firstDoulButton}
+            secondButton={secondDoulButton}
+            duoDirection="vertical"
+          />
         </section>
       </div>
     </div>
@@ -73,13 +90,13 @@ Alert.propTypes = {
   firstButton: PropTypes.shape({
     onClick: PropTypes.func,
     label: PropTypes.string,
-    disable: PropTypes.bool
+    disable: PropTypes.bool,
   }),
   secondButton: PropTypes.shape({
     onClick: PropTypes.func,
     label: PropTypes.string,
-    disable: PropTypes.bool
-  })
+    disable: PropTypes.bool,
+  }),
 };
 
 Alert.defaultProps = {
@@ -92,7 +109,7 @@ Alert.defaultProps = {
   firstButton: null,
   secondButton: null,
   textAlign: 'left',
-  handleCloseAlert: () => {}
+  handleCloseAlert: () => {},
 };
 
 export default Alert;

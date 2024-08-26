@@ -1,4 +1,5 @@
 import { dispatch } from 'shared/redux/store';
+
 import { ActionType } from './type';
 
 export const setIsNativeRedirect = () => dispatch({ type: ActionType.REDIRECT_REQUEST });

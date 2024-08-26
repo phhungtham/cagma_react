@@ -1,14 +1,15 @@
-import { FAButton } from '@common/components/atoms/ButtonGroup/FAB/FAButton';
 import React from 'react';
+
+import { FAButton } from '@common/components/atoms/ButtonGroup/FAB/FAButton';
 
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Button/FAButton',
-  component: FAButton
+  component: FAButton,
 };
 
-const FAButtonStory = args => <FAButton {...args} > </FAButton>;
-const FAExpandButtonStory = args => <FAButton {...args} > </FAButton>;
+const FAButtonStory = args => <FAButton {...args}> </FAButton>;
+const FAExpandButtonStory = args => <FAButton {...args}> </FAButton>;
 
 export const ScrollButton = FAButtonStory.bind({});
 ScrollButton.args = {
@@ -17,7 +18,7 @@ ScrollButton.args = {
   onClick: () => {
     return;
   },
-  variant: 'scroll'
+  variant: 'scroll',
 };
 
 export const ExpandButton = FAExpandButtonStory.bind({});
@@ -27,5 +28,5 @@ ExpandButton.args = {
   onClick: () => {
     return;
   },
-  variant: 'expand'
+  variant: 'expand',
 };

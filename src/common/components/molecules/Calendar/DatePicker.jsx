@@ -1,25 +1,24 @@
-import React, { useLayoutEffect, useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import Calendar from 'react-calendar';
+
+import { convertDateTime } from '@common/utils/formater';
+import { replaceString } from '@utilities/debitCardUtils';
 import { CalendarArrow, CalendarDoubleArrow } from 'assets/icons';
 import PropTypes from 'prop-types';
-import { convertDateTime } from '@common/utils/formater';
-import { useState } from 'react';
-
-import { replaceString } from '@utilities/debitCardUtils';
 
 const DatePicker = ({ minDate, maxDate, onCalendarDateChange, datePicked, defaultActiveDate = new Date() }) => {
-  const [valueClicked, setValueClicked] = useState('');
+  // const [valueClicked, setValueClicked] = useState('');
   const navigatetionIcon = {
     nextLabel: <CalendarArrow />,
     next2Label: <CalendarDoubleArrow />,
     prevLabel: <CalendarArrow />,
-    prev2Label: <CalendarDoubleArrow />
+    prev2Label: <CalendarDoubleArrow />,
   };
 
   const navigatetionProperties = {
     calendarType: 'US',
     showNeighboringMonth: false,
-    locale: 'en'
+    locale: 'en',
   };
 
   const calendarRef = useRef(null);
@@ -33,7 +32,7 @@ const DatePicker = ({ minDate, maxDate, onCalendarDateChange, datePicked, defaul
   };
 
   const renderNavigationLabel = ({ date, label, locale, view }) => {
-    const { yearLabel, monthLabel, dateLabel } = handleDateTime(date);
+    const { yearLabel, monthLabel } = handleDateTime(date);
     return renderDateTime(yearLabel, monthLabel);
   };
 
@@ -109,14 +108,14 @@ DatePicker.propTypes = {
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
   defaultActiveDate: PropTypes.any,
-  onCalendarDateChange: PropTypes.func
+  onCalendarDateChange: PropTypes.func,
 };
 
 DatePicker.defaultProps = {
   minDate: '',
   maxDate: '',
   defaultActiveDate: null,
-  onActiveStartDateChange: () => {}
+  onActiveStartDateChange: () => {},
 };
 
 export default DatePicker;

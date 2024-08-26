@@ -1,8 +1,9 @@
-import { legacy_createStore as createStore, combineReducers, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import staticReducers from './staticReducers';
 import AppCfg from 'configs/appConfigs/enviroment';
+import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+
+import staticReducers from './staticReducers';
 
 const sagaMiddleware = createSagaMiddleware();
 const STATIC_ROOT_SAGA = '____root';
@@ -47,7 +48,7 @@ let DynamicReducers = {};
 const rootReducer = () =>
   combineReducers({
     ...staticReducers,
-    ...DynamicReducers
+    ...DynamicReducers,
   });
 
 const initStore = initialState => {

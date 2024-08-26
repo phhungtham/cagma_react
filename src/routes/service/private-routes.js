@@ -1,11 +1,17 @@
-import { AppCfg } from '@configs/appConfigs';
 import { Route } from 'react-router-dom';
+
+import { AppCfg } from '@configs/appConfigs';
+
 import RoutesConfig from './routes-config';
 
 const privateRoutes = () => {
   if (AppCfg.ENV !== 'development') return;
   return RoutesConfig.filter(route => route.private).map(route => (
-    <Route key={route.path} path={route.path} element={<route.component />} />
+    <Route
+      key={route.path}
+      path={route.path}
+      element={<route.component />}
+    />
   ));
 };
 export const redirectWhenAccessFailed = navigate => {

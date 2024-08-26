@@ -1,19 +1,8 @@
-import { CheckLargeIcon, CheckSmallIcon } from 'assets/icons';
-import React from 'react';
-import { useState } from 'react';
-import { PropTypes } from 'prop-types';
-import { AppCfg } from '@configs/appConfigs';
 import { SIZE } from '@common/components/constants';
+import { CheckLargeIcon, CheckSmallIcon } from 'assets/icons';
+import { PropTypes } from 'prop-types';
 
-const CheckBox = ({
-  clazz,
-  size,
-  label,
-  disabled,
-  hideCheckBox,
-  onChange,
-  checked
-}) => {
+const CheckBox = ({ clazz, size, label, disabled, hideCheckBox, onChange, checked }) => {
   const sizeClassName = size === SIZE.SMALL ? 'checkbox__small' : 'checkbox__large';
   const disabledClassName = disabled ? 'disabled' : '';
   const selectedClassName = checked ? 'selected' : '';
@@ -22,7 +11,7 @@ const CheckBox = ({
     const isSelected = e.target.checked;
     onChange?.(isSelected);
   };
-  
+
   return (
     <label className={`checkbox ${clazz}`}>
       <input
@@ -33,9 +22,7 @@ const CheckBox = ({
         checked={checked}
       />
       {!hideCheckBox && (
-        <span
-          className={`checkbox__inner ${selectedClassName} ${disabledClassName} ${sizeClassName}`}
-        >
+        <span className={`checkbox__inner ${selectedClassName} ${disabledClassName} ${sizeClassName}`}>
           {size === SIZE.SMALL ? <CheckSmallIcon /> : <CheckLargeIcon />}
         </span>
       )}

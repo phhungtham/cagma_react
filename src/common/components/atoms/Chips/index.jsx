@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import Span from '../Span';
 import { PropTypes } from 'prop-types';
 
-const Chips = props => {
-  const { clazz, type, segments, value: selectedValue, onChange } = props;
+import Span from '../Span';
 
-  const handleClickChip = (chipValue) => {
+const Chips = props => {
+  const { type, segments, value: selectedValue, onChange } = props;
+
+  const handleClickChip = chipValue => {
     onChange(chipValue);
   };
 
   return (
     <div className="chips__wrapper">
-      {segments?.map(({label, value}) => (
+      {segments?.map(({ label, value }) => (
         <div
           key={value}
           className={`chips__item ${type} ${selectedValue === value ? 'active__chip' : ''}`}
           onClick={() => handleClickChip(value)}
         >
-          <Span clazz={`chips__label ${type}`} text={label} />
+          <Span
+            clazz={`chips__label ${type}`}
+            text={label}
+          />
         </div>
       ))}
     </div>
@@ -43,10 +46,10 @@ Chips.defaultProps = {
     {
       label: 'Label',
       value: 'label',
-    }
+    },
   ],
   onChange: () => {},
-  defaultActive: ''
+  defaultActive: '',
 };
 
 export default Chips;

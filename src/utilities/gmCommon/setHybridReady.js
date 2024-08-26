@@ -5,8 +5,8 @@ const setHybridReady = () => {
   if (AppCfg.ENV === 'development') return;
   return $h.exec(() => {}, 'GMCommon', 'setHybridReady', [
     {
-      isReact: 'true'
-    }
+      isReact: 'true',
+    },
   ]);
 };
 export default setHybridReady;

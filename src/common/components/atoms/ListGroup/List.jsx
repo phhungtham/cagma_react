@@ -1,9 +1,11 @@
 import React from 'react';
+
+import { PropTypes } from 'prop-types';
+
 import { Button } from '../ButtonGroup/Button/Button';
 import CheckBox from '../Checkbox';
 import Span from '../Span';
 import Switch from '../Switch';
-import { PropTypes } from 'prop-types';
 
 const List = props => {
   const {
@@ -19,7 +21,7 @@ const List = props => {
     control,
     onChange,
     onListClick,
-    onIconClick
+    onIconClick,
   } = props;
 
   const handleChangeItem = value => {
@@ -28,39 +30,81 @@ const List = props => {
 
   const captionOn = captionSegments?.type !== 'off';
   return (
-    <div className={`${clazz} list__wrapper icon__${control.position}`} onClick={onListClick}>
+    <div
+      className={`${clazz} list__wrapper icon__${control.position}`}
+      onClick={onListClick}
+    >
       <div className={`list__left ${title && subTitle && captionSegments && 'custom'}`}>
         {thumbnail && <div className={`list__left__thumbnail ${size}`}>{thumbnail}</div>}
         <div className="list__left__text">
-          {label && <Span clazz="left__label" text={label} />}
+          {label && (
+            <Span
+              clazz="left__label"
+              text={label}
+            />
+          )}
           <div className={`left__title  icon__${titleIcon?.position}`}>
-            <Span clazz={`left__title ${size}`} text={title} />
+            <Span
+              clazz={`left__title ${size}`}
+              text={title}
+            />
             {titleIcon && <div className="title__icon">{titleIcon.name && <titleIcon.name />}</div>}
           </div>
-          {subTitle && <Span clazz="left__subtitle" text={subTitle} />}
+          {subTitle && (
+            <Span
+              clazz="left__subtitle"
+              text={subTitle}
+            />
+          )}
           {captionOn && (
             <div className="left__captions">
-              {captionSegments?.caption1 && <Span clazz="left__caption1" text={captionSegments?.caption1} />}
-              {captionSegments?.type === 2 && <div className="caption__bar"></div>}
-              {captionSegments?.caption2 && <Span clazz="left__caption2" text={captionSegments?.caption2} />}
+              {captionSegments?.caption1 && (
+                <Span
+                  clazz="left__caption1"
+                  text={captionSegments?.caption1}
+                />
+              )}
+              {captionSegments?.type === 2 && <div className="caption__bar" />}
+              {captionSegments?.caption2 && (
+                <Span
+                  clazz="left__caption2"
+                  text={captionSegments?.caption2}
+                />
+              )}
             </div>
           )}
         </div>
       </div>
       <div className="list__right">
         {icon && (
-          <div className="right__icon" onClick={onIconClick}>
+          <div
+            className="right__icon"
+            onClick={onIconClick}
+          >
             {icon}
           </div>
         )}
         {control?.name === 'select' && control?.position === 'right' && (
-          <CheckBox hideCheckBox={control?.hide} backgroundSelected="dark" onChange={handleChangeItem} />
+          <CheckBox
+            hideCheckBox={control?.hide}
+            backgroundSelected="dark"
+            onChange={handleChangeItem}
+          />
         )}
         {control?.name === 'select' && control?.position === 'left' && <CheckBox onChange={handleChangeItem} />}
         {control?.name === 'switch' && (
-          <Switch active={control?.active} onChange={handleChangeItem} disabled={control?.disabled} />
+          <Switch
+            active={control?.active}
+            onChange={handleChangeItem}
+            disabled={control?.disabled}
+          />
         )}
-        {control?.name === 'button' && <Button className="right__button" label={control?.label} />}
+        {control?.name === 'button' && (
+          <Button
+            className="right__button"
+            label={control?.label}
+          />
+        )}
       </div>
     </div>
   );
@@ -77,7 +121,7 @@ List.propTypes = {
   captionSegments: PropTypes.shape({
     type: PropTypes.number,
     caption1: PropTypes.string,
-    caption2: PropTypes.string
+    caption2: PropTypes.string,
   }),
   control: PropTypes.shape({
     name: PropTypes.string,
@@ -85,8 +129,8 @@ List.propTypes = {
     disabled: PropTypes.bool,
     label: PropTypes.string,
     position: PropTypes.oneOf(['left', 'right']),
-    hide: PropTypes.bool
-  })
+    hide: PropTypes.bool,
+  }),
 };
 
 List.defaultProps = {
@@ -101,8 +145,8 @@ List.defaultProps = {
     active: false,
     disabled: false,
     position: 'right',
-    hide: false
-  }
+    hide: false,
+  },
 };
 
 export default List;

@@ -1,10 +1,11 @@
+import React from 'react';
+
 import Tabs from '@common/components/molecules/Tabs';
 import Notification from '@common/components/organisms/Notification';
-import React from 'react';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Tabs/Tab',
-  component: Tabs
+  component: Tabs,
 };
 
 const Template = args => (
@@ -19,5 +20,5 @@ const Template = args => (
 
 export const Tab = Template.bind({});
 Tab.args = {
-  tabList: [{ title: 'Checking' }, { title: 'Benefits' }]
+  tabList: [{ title: 'Checking' }, { title: 'Benefits' }],
 };

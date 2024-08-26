@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { CloseIcon } from 'assets/icons';
-import Span from '../atoms/Span';
-import { PropTypes } from 'prop-types';
+import { useEffect, useState } from 'react';
+
 import useReducers from '@hooks/useReducers';
-import { APP_GLOBAL } from 'app/redux/type';
-import { appGlobalReducer } from 'app/redux/reducer';
 import { setIsNativeClickBack } from 'app/redux/action';
+import { appGlobalReducer } from 'app/redux/reducer';
+import { APP_GLOBAL } from 'app/redux/type';
+import { CloseIcon } from 'assets/icons';
+import { PropTypes } from 'prop-types';
+
+import Span from '../atoms/Span';
 
 const BottomSheet = props => {
   const { clazz, open, type, title, subTitle, dockerBar, closeIcon, onClose, srollUpOnClose = true, children } = props;
   const [animate, setAnimate] = useState(false);
-  useReducers([
-    { key: APP_GLOBAL, reducer: appGlobalReducer }
-  ]);
+  useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
   useEffect(() => {
     open && setAnimate(true);
   }, [open]);
@@ -31,27 +31,44 @@ const BottomSheet = props => {
 
   return (
     <div className="bottom__sheet__wrapper">
-      <div className={`overlay ${open && 'show'}`} onClick={closeBottomSheet}></div>
+      <div
+        className={`overlay ${open && 'show'}`}
+        onClick={closeBottomSheet}
+      />
       <div className={`bottom__sheet ${type} ${animate && 'animate'} ${open ? 'show' : 'hidden'} ${clazz}`}>
         <div className={`bottom__sheet__header ${!title && 'notitle'}`}>
           <section className="header__content">
             {title && (
               <div className="bottom__sheet__header__title">
-                <Span clazz="" text={title} />
+                <Span
+                  clazz=""
+                  text={title}
+                />
                 {subTitle && (
                   <div className="bottom__sheet__header__sub-title">
-                    <Span clazz="" text={subTitle} />
+                    <Span
+                      clazz=""
+                      text={subTitle}
+                    />
                   </div>
                 )}
               </div>
             )}
             {closeIcon && (
-              <div className="bottom__sheet__header__close" onClick={closeBottomSheet}>
+              <div
+                className="bottom__sheet__header__close"
+                onClick={closeBottomSheet}
+              >
                 <CloseIcon />
               </div>
             )}
           </section>
-          {dockerBar && <div className="bottom__sheet__header__docker" onClick={closeBottomSheet}></div>}
+          {dockerBar && (
+            <div
+              className="bottom__sheet__header__docker"
+              onClick={closeBottomSheet}
+            />
+          )}
         </div>
         <div className={`bottom__sheet__content ${type}`}>{children}</div>
       </div>
@@ -65,7 +82,7 @@ BottomSheet.propTypes = {
   type: PropTypes.oneOf(['fit-content', 'middle', 'max', 'max-scroll', 'pulled-90']),
   closeIcon: PropTypes.bool,
   dockerBar: PropTypes.bool,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
 };
 BottomSheet.defaultProps = {
   clazz: '',
@@ -74,6 +91,6 @@ BottomSheet.defaultProps = {
   type: 'middle',
   closeIcon: true,
   dockerBar: false,
-  onClose: null
+  onClose: null,
 };
 export default BottomSheet;

@@ -1,7 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Span from '../Span';
+
 import { ArrowIcon } from 'assets/icons';
+import PropTypes from 'prop-types';
+
+import Span from '../Span';
 
 const Banner = props => {
   const { clazz, heading, description, children } = props;
@@ -10,10 +12,16 @@ const Banner = props => {
       <div className="banner__img">{children}</div>
       <div className="banner__content">
         <div className="banner__content__heading">
-          <Span clazz="content__heading" text={heading} />
+          <Span
+            clazz="content__heading"
+            text={heading}
+          />
           <ArrowIcon direction="right" />
         </div>
-        <Span clazz="banner__content__desc" text={description} />
+        <Span
+          clazz="banner__content__desc"
+          text={description}
+        />
       </div>
     </div>
   );
@@ -22,7 +30,7 @@ const Banner = props => {
 Banner.propTypes = {
   clazz: PropTypes.string,
   label: PropTypes.string,
-  description: PropTypes.string
+  description: PropTypes.string,
 };
 
 Banner.defaultProps = {

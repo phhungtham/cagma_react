@@ -3,31 +3,31 @@ $icon-circle-sizes: (
     border-radius: 14px,
     padding: 0px 12px,
     height: 48px,
-    font-size: 16px
+    font-size: 16px,
   ),
   lg: (
     border-radius: 12px,
     padding: 0px 12px,
     height: 44px,
-    font-size: 16px
+    font-size: 16px,
   ),
   md: (
     border-radius: 10px,
     padding: 0px 12px,
     height: 40px,
-    font-size: 15px
+    font-size: 15px,
   ),
   sm: (
     border-radius: 8px,
     padding: 0px 12px,
     height: 32px,
-    font-size: 14px
+    font-size: 14px,
   ),
 );
 
 @mixin button($bg-color: map-get($colors, 'light')) {
   max-width: 100%;
-  min-height: 56px;   
+  min-height: 56px;
   text-decoration: none;
   font-size: $button-font-size;
   cursor: pointer;

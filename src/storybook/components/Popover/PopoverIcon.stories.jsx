@@ -1,10 +1,11 @@
+import React from 'react';
+
 import Popover from '@common/components/atoms/Popover';
 import { CheckIcon } from 'assets/icons';
-import React from 'react';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Popover/Popover With Icon',
-  component: Popover
+  component: Popover,
 };
 
 const Template = args => (
@@ -16,23 +17,23 @@ const Template = args => (
 export const PopoverLight = Template.bind({});
 PopoverLight.args = {
   message: 'Complete to hide the account',
-  mode: 'light'
+  mode: 'light',
 };
 export const PopoverDark = Template.bind({});
 PopoverDark.args = {
   message: 'Complete to hide the account',
-  mode: 'dark'
+  mode: 'dark',
 };
 export const PopoverWithButton = Template.bind({});
 PopoverWithButton.args = {
   message: 'Complete to hide the account',
   mode: 'dark',
-  buttonLabel: 'Button'
+  buttonLabel: 'Button',
 };
 export const PopoverMultipleLine = Template.bind({});
 PopoverMultipleLine.args = {
   lineOfText: 'multiple',
   message: 'Complete to hide the account Complete to hide the account. Thank you.',
   mode: 'dark',
-  buttonLabel: 'Button'
+  buttonLabel: 'Button',
 };

@@ -1,9 +1,10 @@
-import BottomSheet from '@common/components/templates/BottomSheet';
 import React from 'react';
+
+import BottomSheet from '@common/components/templates/BottomSheet';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Bottom/Bottom Sheet',
-  component: BottomSheet
+  component: BottomSheet,
 };
 
 const Template = args => (
@@ -33,22 +34,22 @@ const Template = args => (
 export const Middle = Template.bind({});
 Middle.args = {
   type: 'middle',
-  open: false
+  open: false,
 };
 export const Max = Template.bind({});
 Max.args = {
   type: 'max',
-  open: false
+  open: false,
 };
 export const MaxScroll = Template.bind({});
 MaxScroll.args = {
   type: 'max-scroll',
   open: false,
-  dockerBar: true
+  dockerBar: true,
 };
 export const Pulled90 = Template.bind({});
 Pulled90.args = {
   type: 'pulled-90',
   open: false,
-  title: 'title'
+  title: 'title',
 };

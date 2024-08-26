@@ -6,7 +6,7 @@ export const CARD_LIMIT_DEF = {
     withdrawal_min: 10,
     withdrawal_max: 10000,
     ERR_MIN: 'The minimum amount is 10.00 USD',
-    ERR_MAX: 'The maximum amount is 10,000.00 USD'
+    ERR_MAX: 'The maximum amount is 10,000.00 USD',
   },
   DEBIT_CLASSIC: {
     // card code: 0006, 0007
@@ -15,15 +15,15 @@ export const CARD_LIMIT_DEF = {
     withdrawal_min: 10,
     withdrawal_max: 4000,
     ERR_MIN: 'The minimum amount is 10.00 USD',
-    ERR_MAX: 'The maximum amount is 4,000.00 USD'
+    ERR_MAX: 'The maximum amount is 4,000.00 USD',
   },
   DEBIT_VIRTUAL: {
     // card code: 0009
     purchase_min: 10,
     purchase_max: 4000,
     ERR_MIN: 'The minimum amount is 10.00 USD',
-    ERR_MAX: 'The maximum amount is 4,000.00 USD'
-  }
+    ERR_MAX: 'The maximum amount is 4,000.00 USD',
+  },
 };
 
 export const getCardType = cardNo => {
@@ -85,7 +85,7 @@ export const handleFormatValue = value => {
     return `${value}.00`;
   } else {
     const decimals = value.length - findIndexDot(value) - 1;
-    if(decimals === 0){
+    if (decimals === 0) {
       return `${value}00`;
     }
     if (decimals === 1) {

@@ -1,14 +1,14 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-import { AVATAR_SIZES } from 'configs/global/constants';
 import { SOLAvatar } from 'assets/icons';
+import { AVATAR_SIZES } from 'configs/global/constants';
+import { PropTypes } from 'prop-types';
 
 const Profile = props => {
-  const { clazz, size, avatarURL, badgeURL } = props;
+  //clazz
+  const { size, avatarURL, badgeURL } = props;
   const badgeSize = AVATAR_SIZES[size] / 2;
   const avatarSize = {
     height: AVATAR_SIZES[size] / 3,
-    width: AVATAR_SIZES[size] / 2
+    width: AVATAR_SIZES[size] / 2,
   };
 
   return (
@@ -23,13 +23,19 @@ const Profile = props => {
             width: `${AVATAR_SIZES[size]}px`,
             height: `${AVATAR_SIZES[size]}px`,
             fontSize: `${AVATAR_SIZES[size] / 4}px`,
-            backgroundColor: `${!avatarURL && '#0e45b3'}`
+            backgroundColor: `${!avatarURL && '#0e45b3'}`,
           }}
         >
           {avatarURL ? (
-            <img src={avatarURL} alt="profile" />
+            <img
+              src={avatarURL}
+              alt="profile"
+            />
           ) : (
-            <SOLAvatar width={avatarSize.width} height={avatarSize.height} />
+            <SOLAvatar
+              width={avatarSize.width}
+              height={avatarSize.height}
+            />
           )}
           {badgeURL && (
             <div
@@ -38,10 +44,13 @@ const Profile = props => {
                 width: `${badgeSize}px`,
                 height: `${badgeSize}px`,
                 right: `-${badgeSize / 4}px`,
-                bottom: `-${badgeSize / 4}px`
+                bottom: `-${badgeSize / 4}px`,
               }}
             >
-              <img src={badgeURL} alt="badge" />
+              <img
+                src={badgeURL}
+                alt="badge"
+              />
             </div>
           )}
         </div>
@@ -52,11 +61,11 @@ const Profile = props => {
 
 Profile.propTypes = {
   size: PropTypes.oneOf(['w-32', 'w-40', 'w-52', 'w-56', 'w-80']),
-  avatarURL: PropTypes.any
+  avatarURL: PropTypes.any,
 };
 
 Profile.defaultProps = {
-  size: 'w-40'
+  size: 'w-40',
 };
 
 export default Profile;

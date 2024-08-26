@@ -2,9 +2,25 @@ import React from 'react';
 
 const SavingIcon = () => {
   return (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="36" height="36" rx="18" fill="#17BED9" />
-      <rect width="20" height="20" transform="translate(8 8)" fill="#17BED9" />
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        width="36"
+        height="36"
+        rx="18"
+        fill="#17BED9"
+      />
+      <rect
+        width="20"
+        height="20"
+        transform="translate(8 8)"
+        fill="#17BED9"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { CardIcon } from 'assets/icons';
 import MyAccountCard from '@common/components/organisms/CardGroup/MyAccountCard/MyAccountCard';
+import { CardIcon } from 'assets/icons';
 
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Card/AccountCardTemp',
-  component: MyAccountCard
+  component: MyAccountCard,
 };
 
 const MyAccountCardStory = args => <MyAccountCard {...args} />;
@@ -22,5 +22,5 @@ MyAccountCardTemp.args = {
   initialShow: true,
   header: true,
   icon: <CardIcon />,
-  showBalance: true
+  showBalance: true,
 };

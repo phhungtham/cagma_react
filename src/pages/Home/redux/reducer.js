@@ -1,4 +1,5 @@
 import { EMPTY_OBJ } from 'configs/global/constants';
+
 import { ActionType } from './type';
 
 const InitState = EMPTY_OBJ;

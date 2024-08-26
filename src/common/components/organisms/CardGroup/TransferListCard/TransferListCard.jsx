@@ -1,10 +1,11 @@
-import { MoreIcon, VerticalDotsIcon } from 'assets/icons';
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { QRIcon, ShareIcon, SettingIcon, StarIcon, HideAccountIcon } from '@assets/icons';
-import Span from '@common/components/atoms/Span';
+import { useState } from 'react';
+
+import { HideAccountIcon, QRIcon, SettingIcon, ShareIcon, StarIcon } from '@assets/icons';
 import Currency from '@common/components/atoms/Currency';
+import Span from '@common/components/atoms/Span';
 import OptionMenu from '@common/components/molecules/OptionMenu/OptionMenu';
+import { VerticalDotsIcon } from 'assets/icons';
+import PropTypes from 'prop-types';
 
 const TransferListCard = ({
   icon,
@@ -14,34 +15,34 @@ const TransferListCard = ({
   currencyUnit,
   onUnhideAccount,
   openPopupManageAccount,
-  isShowBalance
+  isShowBalance,
 }) => {
   const options = [
     {
       title: 'My QR',
       icon: QRIcon,
-      function: () => handleQRClick()
+      function: () => handleQRClick(),
     },
     {
       title: 'Share Account',
       icon: ShareIcon,
-      function: () => handleShareClick()
+      function: () => handleShareClick(),
     },
     {
       title: 'Manage Account',
       icon: SettingIcon,
-      function: () => handleManageAccountClick()
+      function: () => handleManageAccountClick(),
     },
     {
       title: 'Set as Primary',
       icon: StarIcon,
-      function: () => handleStarClick()
+      function: () => handleStarClick(),
     },
     {
       title: 'Hide Account',
       icon: HideAccountIcon,
-      function: () => handleHideAccountClick()
-    }
+      function: () => handleHideAccountClick(),
+    },
   ];
 
   const [showOption, setShowOption] = useState(false);
@@ -69,16 +70,27 @@ const TransferListCard = ({
             </div>
           </section>
           {onUnhideAccount ? (
-            <Span clazz="unhide__account" text="Unhide" onClick={onUnhideAccount} />
+            <Span
+              clazz="unhide__account"
+              text="Unhide"
+              onClick={onUnhideAccount}
+            />
           ) : (
-            <section className="transfer__card__header__right" onClick={() => setShowOption(!showOption)}>
+            <section
+              className="transfer__card__header__right"
+              onClick={() => setShowOption(!showOption)}
+            >
               <VerticalDotsIcon />
               {showOption && <OptionMenu listOption={options} />}
             </section>
           )}
         </section>
         <section className="transfer__card__content">
-          <Currency clazz={isShowBalance ? 'blur' : ''} amount={currency} unit={currencyUnit} />
+          <Currency
+            clazz={isShowBalance ? 'blur' : ''}
+            amount={currency}
+            unit={currencyUnit}
+          />
         </section>
       </div>
     </div>
@@ -86,12 +98,12 @@ const TransferListCard = ({
 };
 TransferListCard.prototype = {
   currency: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  currencyUnit: PropTypes.string
+  currencyUnit: PropTypes.string,
 };
 
 TransferListCard.defaultProps = {
   currency: '4,823.00',
-  currencyUnit: 'USD'
+  currencyUnit: 'USD',
 };
 
 export default TransferListCard;

@@ -5,8 +5,8 @@ const callPhone = phoneNumber => {
   if (AppCfg.ENV === 'development') return;
   return $h.exec(() => {}, 'GMCommon', 'callPhone', [
     {
-      phoneNumber: `${phoneNumber}`
-    }
+      phoneNumber: `${phoneNumber}`,
+    },
   ]);
 };
 export default callPhone;

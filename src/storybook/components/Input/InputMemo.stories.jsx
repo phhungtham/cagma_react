@@ -5,7 +5,7 @@ import Input from '@common/components/atoms/Input/Input';
 // eslint-disable-next-line
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Input/Input Memo',
-  component: Input
+  component: Input,
 };
 
 const Template = args => <Input {...args} />;
@@ -17,5 +17,5 @@ InputMemo.args = {
   helperText: 'Helper Text',
   maxLength: 35,
   isCountCharacter: true,
-  isMemo: true
+  isMemo: true,
 };
