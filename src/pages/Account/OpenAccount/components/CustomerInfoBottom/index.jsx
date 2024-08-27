@@ -4,11 +4,11 @@ import BottomSheet from '@common/components/templates/BottomSheet';
 import { customerInfoFields } from '../../constants';
 import './styles.scss';
 
-const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClickChangeProfile }) => {
+const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChangeProfile }) => {
   return (
     <BottomSheet
       open
-      onClose={() => {}}
+      onClose={onClose}
       title="Customer Info"
       clazz="customer-info-bottom__wrapper"
       type="fit-content"
@@ -21,14 +21,22 @@ const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClickChangeProfile
         </section>
         <div className="divider__item__black mt-4" />
         <div className="customer-info__detail">
-          {customerInfoFields.map(({ label, value }) => (
+          {customerInfoFields.map(({ label, value: fieldName }) => (
             <div
               className="customer-item"
-              key={value}
+              key={fieldName}
             >
               <span className="customer-label">{label}</span>
               <span className="customer-value">
-                <span>{customerInfo[value]}</span>
+                {fieldName === 'job' ? (
+                  <>
+                    <span>{customerInfo?.job_t}</span>
+                    <span>{customerInfo?.sub_job_t_v}</span>
+                    <span>{customerInfo?.job_nm}</span>
+                  </>
+                ) : (
+                  <span>{customerInfo?.[fieldName]}</span>
+                )}
               </span>
             </div>
           ))}

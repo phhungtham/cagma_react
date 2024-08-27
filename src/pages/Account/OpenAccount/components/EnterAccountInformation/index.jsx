@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { FillTooltipIcon } from '@assets/icons';
@@ -13,29 +13,36 @@ import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAm
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import SelectTermsBottom from '@common/components/organisms/bottomSheets/SelectTermsBottom';
 import Header from '@common/components/organisms/Header';
+import { CurrencyCode } from '@common/constants/currency';
 import { SelectTermDurationTypes } from '@common/constants/terms';
 import { moveBack } from '@utilities/index';
 
 import IntendedUseOfAccountBottom from '../IntendedUseOfAccountBottom';
+import { openAccountDefaultValues } from './constants';
 import './styles.scss';
 
+const enterAmountMin = 10;
+const enterAmountMax = 1000;
+
 const EnterAccountInformation = ({ onSubmit }) => {
-  const [showMyAccountsBottom, setShowMyAccountBottoms] = useState(false);
+  const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [showSelectTermsBottom, setShowSelectTermsBottom] = useState(false);
-  const [showEnterAmountBottom, setShowEnterAmountBottoms] = useState(false);
+  const [showEnterAmountBottom, setShowEnterAmountBottom] = useState(false);
   const [showIntendedUseAccountBottom, setShowIntendedUseAccountBottom] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [intendedUseAccount, setIntendedUseAccount] = useState();
   const [selectedTerm, setSelectedTerm] = useState();
-  const [selectedAmount, setSelectedAmount] = useState({
-    value: '',
-    unit: '',
+
+  const { handleSubmit, control, setValue, getValues } = useForm({
+    defaultValues: openAccountDefaultValues,
+    mode: 'onChange',
   });
 
-  const { handleSubmit, control } = useForm();
+  const [amount] = getValues(['amount']);
 
   const onOpenMyAccountBottom = () => {
-    setShowMyAccountBottoms(true);
+    setShowMyAccountBottom(true);
   };
 
   const onOpenSelectTermsBottom = () => {
@@ -43,7 +50,7 @@ const EnterAccountInformation = ({ onSubmit }) => {
   };
 
   const onOpenEnterAmountBottom = () => {
-    setShowEnterAmountBottoms(true);
+    setShowEnterAmountBottom(true);
   };
 
   const onOpenIntendedUseAccountBottom = () => {
@@ -51,9 +58,9 @@ const EnterAccountInformation = ({ onSubmit }) => {
   };
 
   const onSelectAccount = account => {
-    setSelectedAccount(account);
     console.log('account :>> ', account);
-    setShowMyAccountBottoms(false);
+    setSelectedAccount(account);
+    setShowMyAccountBottom(false);
   };
 
   const onSelectIntendedUseAccount = intended => {
@@ -62,10 +69,8 @@ const EnterAccountInformation = ({ onSubmit }) => {
   };
 
   const onChangeAmount = value => {
-    setSelectedAmount({
-      value: value,
-      unit: '',
-    });
+    setValue('amount', value?.amount || '');
+    setShowEnterAmountBottom(false);
   };
 
   const onChangeTerms = value => {
@@ -76,6 +81,11 @@ const EnterAccountInformation = ({ onSubmit }) => {
     onSubmit();
   };
 
+  useEffect(() => {
+    //Check set show Terms
+    setShowTerms(false);
+  }, []);
+
   return (
     <div className="enter-account-information__wrapper">
       <Header
@@ -85,35 +95,28 @@ const EnterAccountInformation = ({ onSubmit }) => {
       <div className="enter-account-information__content">
         <div className="enter-account__form page__container">
           <h1 className="page__title">e-Saving(CAD)</h1>
-          <section>
-            <TextDropdown
-              label="From"
-              placeholder="My Account"
-              onClick={onOpenMyAccountBottom}
-              value={selectedAccount?.name}
-            >
-              {selectedAccount ? <div className="enter-account__account-number">{selectedAccount?.number}</div> : ''}
-            </TextDropdown>
-          </section>
-          <section>
-            <TextDropdown
-              label="Terms"
-              placeholder="Select"
-              onClick={onOpenSelectTermsBottom}
-              value={selectedTerm ? `${selectedTerm} Months` : ''}
-            >
-              <div className="enter-account__term">
-                <span>Maturity date</span>
-                <span>25.05.2024</span>
-              </div>
-            </TextDropdown>
-          </section>
+          {showTerms && (
+            <section>
+              <TextDropdown
+                label="Terms"
+                placeholder="Select"
+                onClick={onOpenSelectTermsBottom}
+                value={selectedTerm ? `${selectedTerm} Months` : ''}
+              >
+                <div className="enter-account__term">
+                  <span>Maturity date</span>
+                  <span>25.05.2024</span>
+                </div>
+              </TextDropdown>
+            </section>
+          )}
+
           <section>
             <TextDropdown
               label="Amount"
               placeholder="10.00 ~ 1,000.00 CAD"
               onClick={onOpenEnterAmountBottom}
-              value={selectedAmount?.value}
+              value={amount}
             />
           </section>
           <section>
@@ -124,6 +127,20 @@ const EnterAccountInformation = ({ onSubmit }) => {
               onClick={onOpenIntendedUseAccountBottom}
               value={intendedUseAccount?.label}
             />
+          </section>
+          <section>
+            <TextDropdown
+              label="From"
+              placeholder="My Account"
+              onClick={onOpenMyAccountBottom}
+              value={selectedAccount?.dep_ac_alnm_nm}
+            >
+              {selectedAccount ? (
+                <div className="enter-account__account-number">{selectedAccount?.lcl_ac_no_display}</div>
+              ) : (
+                <></>
+              )}
+            </TextDropdown>
           </section>
           <div className="divider__item__solid my-2" />
           <section className="pb-6">
@@ -278,7 +295,7 @@ const EnterAccountInformation = ({ onSubmit }) => {
       </div>
       <MyAccountsBottom
         open={showMyAccountsBottom}
-        onClose={() => setShowMyAccountBottoms(false)}
+        onClose={() => setShowMyAccountBottom(false)}
         onSelect={onSelectAccount}
       />
       <IntendedUseOfAccountBottom
@@ -288,12 +305,12 @@ const EnterAccountInformation = ({ onSubmit }) => {
       />
       {showEnterAmountBottom && (
         <EnterAmountBottom
-          onClose={() => setShowEnterAmountBottoms(false)}
-          accountName={selectedAccount?.name}
-          accountNumber={selectedAccount?.number}
-          accountBalance="Available Balance $300,000.00"
-          currency="CAD"
-          amount={selectedAmount.value}
+          onClose={() => setShowEnterAmountBottom(false)}
+          account={selectedAccount}
+          currency={CurrencyCode.CAD}
+          amount={amount}
+          min={enterAmountMin}
+          max={enterAmountMax}
           onChangeAmount={onChangeAmount}
         />
       )}

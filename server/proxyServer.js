@@ -11,14 +11,14 @@ const proxies = [
       secure: false,
       changeOrigin: true,
       onProxyRes: (proxyRes, req, res) => {},
-      onProxyReq: (proxyReq, req, res) => {}
-    }
-  }
+      onProxyReq: (proxyReq, req, res) => {},
+    },
+  },
 ];
 const corsOptions = {
   origin: true,
   credentials: true,
-  exposedHeaders: ['set-cookie']
+  exposedHeaders: ['set-cookie'],
 };
 
 app.use(cors(corsOptions));

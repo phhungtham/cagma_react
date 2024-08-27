@@ -18,16 +18,19 @@
     display: flex;
     font-size: 14px;
     line-height: 19px;
+    gap: 16px;
   }
 
   .customer-label {
-    width: 135px;
+    width: 112px;
     flex-shrink: 0;
     color: $color-gray-500;
   }
 
   .customer-value {
     font-weight: 500;
+    display: flex;
+    flex-direction: column;
   }
 
   .customer__cta {

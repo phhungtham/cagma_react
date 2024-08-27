@@ -8,12 +8,18 @@ import DemoComponent from '@pages/DemoComponent/DemoComponent';
 import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
 import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
 import Home from '@pages/Home/Home';
+import Login from '@pages/Login/Login';
 import ChangeProfile from '@pages/Profile/ChangeProfile';
 
 const RoutesConfig = [
   {
     path: '/',
     component: Home,
+    private: false,
+  },
+  {
+    path: '/login',
+    component: Login,
     private: false,
   },
   {

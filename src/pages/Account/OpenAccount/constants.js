@@ -22,84 +22,122 @@ export const OPEN_ACCOUNT_STEP = {
 export const customerInfoFields = [
   {
     label: 'Name',
-    value: 'name',
+    value: 'cus_snm_nm',
   },
   {
     label: 'Date of Birth',
-    value: 'dob',
+    value: 'cus_bth_y4mm_dt_display',
   },
   {
     label: 'SIN',
-    value: 'sin',
+    value: 'lcl_cus_rlnm_no',
   },
   {
     label: 'E-mail Address',
-    value: 'email',
+    value: 'cus_email',
   },
   {
     label: 'Phone Number',
-    value: 'phone',
+    value: 'cus_adr_telno',
   },
   {
     label: 'Cell Number',
-    value: 'cell',
+    value: 'cus_cell_no',
   },
   {
     label: 'Occupation',
-    value: 'occupation',
+    value: 'job',
   },
 ];
-
-export const customerInfo = {
-  name: 'CUS-SNM-NM41000002250',
-  dob: '01/09/1970',
-  sin: '4100002250',
-  email: '410000250@TEST.COM',
-  phone: 'CUS-ADR-TELN0410002250',
-  cell: 'CUS-ADR-TELN0410002250',
-  occupation: 'MANAGEMENT',
-};
 
 export const intendedUseOfAccounts = [
   {
     label: 'Salary Receipt',
-    value: 'SalaryReceipt',
+    value: '10',
   },
   {
     label: 'Daily Transaction',
-    value: 'DailyTransaction',
+    value: '101',
   },
   {
     label: 'Personal Savings',
-    value: 'PersonalSavings',
+    value: '102',
   },
   {
     label: 'Retirement',
-    value: 'Retirement',
+    value: '103',
   },
   {
     label: 'Home Purchase',
-    value: 'HomePurchase',
+    value: '104',
   },
   {
     label: 'Vehicle Purchase',
-    value: 'VehiclePurchase',
+    value: '105',
   },
   {
     label: 'Vacation/Leisure',
-    value: 'VacationLeisure',
+    value: '106',
   },
   {
     label: 'Education',
-    value: 'Education',
+    value: '107',
   },
   {
     label: 'Remittance',
-    value: 'Remittance',
+    value: '108',
   },
   {
     label: 'Business Operating Expenses',
-    value: 'BusinessOperatingExpenses',
+    value: '121',
+  },
+  {
+    label: 'Business Savings',
+    value: '122',
+  },
+  {
+    label: 'Payroll Payment',
+    value: '123',
+  },
+  {
+    label: 'Payment to Suppliers',
+    value: '124',
+  },
+  {
+    label: 'Business Remittance',
+    value: '125',
+  },
+  {
+    label: 'Personal Expense',
+    value: '20',
+  },
+  {
+    label: 'Household Payment',
+    value: '30',
+  },
+  {
+    label: 'Tuition for School',
+    value: '40',
+  },
+  {
+    label: 'General Business Expense',
+    value: '50',
+  },
+  {
+    label: 'Payroll Expense',
+    value: '60',
+  },
+  {
+    label: 'Investment',
+    value: '70',
+  },
+  {
+    label: 'Trust',
+    value: '80',
+  },
+  {
+    label: 'Others',
+    value: '90',
   },
 ];
 
