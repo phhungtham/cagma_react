@@ -1,45 +1,44 @@
 import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
-import { FillTooltipIcon } from '@assets/icons';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import CheckBox from '@common/components/atoms/Checkbox';
-import Dropdown from '@common/components/atoms/Dropdown';
 import TextDropdown from '@common/components/atoms/Dropdown/TextDropdown';
-import InfoBox from '@common/components/atoms/InfoBox';
-import Input from '@common/components/atoms/Input/Input';
-import InputDate from '@common/components/atoms/Input/InputDate';
 import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAmountBottom';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import SelectTermsBottom from '@common/components/organisms/bottomSheets/SelectTermsBottom';
 import Header from '@common/components/organisms/Header';
 import { CurrencyCode } from '@common/constants/currency';
 import { SelectTermDurationTypes } from '@common/constants/terms';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack } from '@utilities/index';
 
 import IntendedUseOfAccountBottom from '../IntendedUseOfAccountBottom';
 import { openAccountDefaultValues } from './constants';
+import InterestRateSection from './InterestRateSection';
+import { openAccountSchema } from './schema';
 import './styles.scss';
 
 const enterAmountMin = 10;
 const enterAmountMax = 1000;
 
-const EnterAccountInformation = ({ onSubmit }) => {
+const EnterAccountInformation = ({ onSubmit, interestRate }) => {
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [showSelectTermsBottom, setShowSelectTermsBottom] = useState(false);
   const [showEnterAmountBottom, setShowEnterAmountBottom] = useState(false);
   const [showIntendedUseAccountBottom, setShowIntendedUseAccountBottom] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
-  const [intendedUseAccount, setIntendedUseAccount] = useState();
   const [selectedTerm, setSelectedTerm] = useState();
 
   const { handleSubmit, control, setValue, getValues } = useForm({
     defaultValues: openAccountDefaultValues,
     mode: 'onChange',
+    resolver: yupResolver(openAccountSchema),
   });
 
-  const [amount] = getValues(['amount']);
+  const [amount, dep_ac_usag_d_display] = getValues(['amount', 'dep_ac_usag_d_display']);
+  const showInterestRateSection = !!amount && !!dep_ac_usag_d_display && !!selectedAccount;
 
   const onOpenMyAccountBottom = () => {
     setShowMyAccountBottom(true);
@@ -64,7 +63,8 @@ const EnterAccountInformation = ({ onSubmit }) => {
   };
 
   const onSelectIntendedUseAccount = intended => {
-    setIntendedUseAccount(intended);
+    setValue('dep_ac_usag_d', intended.value);
+    setValue('dep_ac_usag_d_display', intended.label);
     setShowIntendedUseAccountBottom(false);
   };
 
@@ -116,7 +116,7 @@ const EnterAccountInformation = ({ onSubmit }) => {
               label="Amount"
               placeholder="10.00 ~ 1,000.00 CAD"
               onClick={onOpenEnterAmountBottom}
-              value={amount}
+              value={amount ? `${formatCurrencyDisplay(amount)} CAD` : undefined}
             />
           </section>
           <section>
@@ -125,7 +125,7 @@ const EnterAccountInformation = ({ onSubmit }) => {
               placeholder="Select"
               align="vertical"
               onClick={onOpenIntendedUseAccountBottom}
-              value={intendedUseAccount?.label}
+              value={dep_ac_usag_d_display}
             />
           </section>
           <section>
@@ -142,147 +142,15 @@ const EnterAccountInformation = ({ onSubmit }) => {
               )}
             </TextDropdown>
           </section>
-          <div className="divider__item__solid my-2" />
-          <section className="pb-6">
-            <TextDropdown
-              label="Interest rate"
-              placeholder="Interest rate"
-              value="0.07% APR"
-              disabled
-            />
-            <InfoBox
-              variant="informative"
-              label="APR (Annual Percentage Rate)"
-            />
-          </section>
-          <div className="divider__item__solid" />
-          <section className="py-5">
-            <div className="checklist___options">
-              <div className="option-item">
-                <CheckBox
-                  size="large"
-                  label="Debit Card Issuance"
-                />
-                <div className="item__tooltip">
-                  <FillTooltipIcon />
-                </div>
-              </div>
-              <div className="option-item">
-                <CheckBox
-                  size="large"
-                  label="Third Party Determination"
-                />
-                <div className="item__tooltip">
-                  <FillTooltipIcon />
-                </div>
-              </div>
-            </div>
-            <section className="third_party-form__wrapper">
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label="Name of the Third Party"
-                    {...field}
-                  />
-                )}
+          {showInterestRateSection && (
+            <>
+              <div className="divider__item__solid my-2" />
+              <InterestRateSection
                 control={control}
-                name="name"
+                interestRate={interestRate}
               />
-              <Controller
-                render={({ field }) => (
-                  <InputDate
-                    label="Date of Birth"
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="name"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label="Address"
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="address"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label="City"
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="city"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Dropdown
-                    label="Province"
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="province"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label="Postal Code"
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="postalCode"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label="Title"
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="title"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label="Occupation/Nature of Business"
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="occupation"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label="Relationship to Applicant(S)"
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="relationship"
-              />
-            </section>
-          </section>
-          <div className="divider__item__solid" />
-          <section className="mt-6">
-            <Controller
-              render={({ field }) => (
-                <Input
-                  label={'Referral Code (Optional)'}
-                  {...field}
-                />
-              )}
-              control={control}
-              name="referralCode"
-            />
-          </section>
+            </>
+          )}
         </div>
         <div className="footer__fixed">
           <Button

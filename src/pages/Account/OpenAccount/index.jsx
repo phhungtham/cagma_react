@@ -16,6 +16,8 @@ import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
 import { OPEN_ACCOUNT_STEP, openAccountInfo } from './constants';
 
+const ntfct_intrt = 0.07;
+
 const OpenAccount = ({ translation }) => {
   useReducers([{ key: FeatureName, reducer: customerReducer }]);
   useSagas([{ key: FeatureName, saga: customerSaga }]);
@@ -69,7 +71,10 @@ const OpenAccount = ({ translation }) => {
         />
       )}
       {currentStep === OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION && (
-        <EnterAccountInformation onSubmit={onSubmitOpenAccountForm} />
+        <EnterAccountInformation
+          onSubmit={onSubmitOpenAccountForm}
+          interestRate={ntfct_intrt}
+        />
       )}
       {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && <OpenAccountSuccessful openAccountInfo={openAccountInfo} />}
     </div>
