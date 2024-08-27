@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { PropTypes } from 'prop-types';
 
 const LocationMap = ({ address, width, height, title }) => {
@@ -22,7 +20,7 @@ const LocationMap = ({ address, width, height, title }) => {
       height={height}
       title={title}
       loading="lazy"
-      src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAn61uMR5qyS6OA7PeH65MJuziqWA1Yj-Q
+      src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyC820r5kTO-4w5G2FYKR3J7SPgga5a2iY8
           &q=${formatAddress(address)}&zoom=18`}
     />
   );
