@@ -5,14 +5,28 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
+import { DepositSubjectClass } from '@common/constants/deposit';
+import { PeriodUnitCodeDisplay } from '@common/constants/product';
 import { moveBack } from '@utilities/index';
 
 import { termConditionConfig } from '../../constants';
 import './styles.scss';
 
-const TermAndConditions = ({ onSubmit }) => {
+const TermAndConditions = ({ onSubmit, product }) => {
   const [isValidForm, setIsValidForm] = useState(false);
   const [isShowViewTermBottom, setIsShowViewTermBottom] = useState(false);
+
+  const {
+    prdt_c,
+    product_ccy,
+    ntfct_intrt,
+    dep_sjt_class,
+    prdt_st_trm_unit_cnt,
+    prdt_close_trm_unit_cnt,
+    prdt_psb_trm_unit_c,
+    lcl_prdt_nm,
+  } = product;
+
   const onChangeSelectAll = checked => {
     setIsValidForm(checked);
   };
@@ -41,7 +55,7 @@ const TermAndConditions = ({ onSubmit }) => {
         <div className="term-condition__banner">
           <div className="banner__desc">
             <div className="product__type">
-              <span>e-Savings(CAD)</span>
+              <span>{lcl_prdt_nm}</span>
             </div>
             <div className="product__desc">
               <span>
@@ -54,17 +68,21 @@ const TermAndConditions = ({ onSubmit }) => {
             <div className="product__item">
               <div className="item__label">Interest Rate</div>
               <div className="item__value">
-                <span className="item__quantity">~7.35</span>
+                <span className="item__quantity">~{product?.ntfct_intrt}</span>
                 <span className="item__unit">%</span>
               </div>
             </div>
-            <div className="product__item">
-              <div className="item__label">Tenor</div>
-              <div className="item__value">
-                <span className="item__quantity">6~36</span>
-                <span className="item__unit">months</span>
+            {product?.dep_sjt_class && product.dep_sjt_class !== DepositSubjectClass.REGULAR_SAVING && (
+              <div className="product__item">
+                <div className="item__label">Tenor</div>
+                <div className="item__value">
+                  <span className="item__quantity">
+                    {product?.prdt_st_trm_unit_cnt}~{product?.prdt_close_trm_unit_cnt}
+                  </span>
+                  <span className="item__unit">{PeriodUnitCodeDisplay[product?.prdt_psb_trm_unit_c]}s</span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="banner__image">
             <img src={BannerBook} />

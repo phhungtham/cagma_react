@@ -8,10 +8,10 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 
 const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
-  const thirdPartyChecked = watch('third_party_checked');
+  const thirdPartyChecked = watch('tpd_chk');
 
   const handleChangeThirdPartyOption = checked => {
-    setValue('third_party_checked', checked);
+    setValue('tpd_chk', checked);
   };
 
   return (

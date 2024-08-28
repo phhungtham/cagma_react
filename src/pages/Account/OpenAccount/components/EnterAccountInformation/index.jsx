@@ -45,8 +45,8 @@ const EnterAccountInformation = ({ onSubmit, interestRate }) => {
 
   console.log('errors :>> ', errors);
 
-  const [amount, dep_ac_usag_d_display] = watch(['amount', 'dep_ac_usag_d_display']);
-  const showInterestRateSection = !!amount && !!dep_ac_usag_d_display && !!selectedAccount;
+  const [trx_amt, dep_ac_usag_d_display] = watch(['trx_amt', 'dep_ac_usag_d_display']);
+  const showInterestRateSection = !!trx_amt && !!dep_ac_usag_d_display && !!selectedAccount;
 
   const onOpenMyAccountBottom = () => {
     setShowMyAccountBottom(true);
@@ -125,7 +125,7 @@ const EnterAccountInformation = ({ onSubmit, interestRate }) => {
               label="Amount"
               placeholder="10.00 ~ 1,000.00 CAD"
               onClick={onOpenEnterAmountBottom}
-              value={amount ? `${formatCurrencyDisplay(amount)} CAD` : undefined}
+              value={trx_amt ? `${formatCurrencyDisplay(trx_amt)} CAD` : undefined}
             />
           </section>
           <section>
@@ -187,7 +187,7 @@ const EnterAccountInformation = ({ onSubmit, interestRate }) => {
           onClose={() => setShowEnterAmountBottom(false)}
           account={selectedAccount}
           currency={CurrencyCode.CAD}
-          amount={amount}
+          amount={trx_amt}
           min={enterAmountMin}
           max={enterAmountMax}
           onChangeAmount={onChangeAmount}

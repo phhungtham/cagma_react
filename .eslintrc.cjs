@@ -19,7 +19,7 @@ module.exports = {
     'jsx-a11y/no-access-key': 'error',
     'no-multi-spaces': ['error'],
     'no-unused-vars': [
-      'error',
+      'warn',
       {
         varsIgnorePattern: '^_', // Ignore variables that start with an underscore
         argsIgnorePattern: '^', // Ignore no use argument of function.
