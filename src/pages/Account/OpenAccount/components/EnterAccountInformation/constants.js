@@ -5,4 +5,5 @@ export const openAccountDefaultValues = {
   currency: CurrencyCode.CAD,
   dep_ac_usag_d: '',
   dep_ac_usag_d_display: '',
+  third_party_checked: false,
 };

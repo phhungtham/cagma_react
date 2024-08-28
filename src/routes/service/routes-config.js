@@ -9,6 +9,7 @@ import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
 import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
 import Home from '@pages/Home/Home';
 import Login from '@pages/Login/Login';
+import ProductList from '@pages/Product/ProductList';
 import ChangeProfile from '@pages/Profile/ChangeProfile';
 
 const RoutesConfig = [
@@ -25,6 +26,11 @@ const RoutesConfig = [
   {
     path: '/change-profile',
     component: ChangeProfile,
+    private: true,
+  },
+  {
+    path: '/products',
+    component: ProductList,
     private: true,
   },
   {

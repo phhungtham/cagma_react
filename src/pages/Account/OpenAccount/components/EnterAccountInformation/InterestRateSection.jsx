@@ -7,7 +7,13 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 
-const InterestRateSection = ({ control, interestRate }) => {
+const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
+  const thirdPartyChecked = watch('third_party_checked');
+
+  const handleChangeThirdPartyOption = checked => {
+    setValue('third_party_checked', checked);
+  };
+
   return (
     <div className="interest-rate__section">
       <section className="pb-6">
@@ -39,104 +45,98 @@ const InterestRateSection = ({ control, interestRate }) => {
             <CheckBox
               size="large"
               label="Third Party Determination"
+              checked={!!thirdPartyChecked}
+              onChange={handleChangeThirdPartyOption}
             />
             <div className="item__tooltip">
               <FillTooltipIcon />
             </div>
           </div>
         </div>
-        <section className="third_party-form__wrapper">
-          <Controller
-            render={({ field }) => (
-              <Input
-                label="Name of the Third Party"
-                {...field}
-              />
-            )}
-            control={control}
-            name="name"
-          />
-          <Controller
-            render={({ field }) => (
-              <InputDate
-                label="Date of Birth"
-                {...field}
-              />
-            )}
-            control={control}
-            name="name"
-          />
-          <Controller
-            render={({ field }) => (
-              <Input
-                label="Address"
-                {...field}
-              />
-            )}
-            control={control}
-            name="address"
-          />
-          <Controller
-            render={({ field }) => (
-              <Input
-                label="City"
-                {...field}
-              />
-            )}
-            control={control}
-            name="city"
-          />
-          <Controller
-            render={({ field }) => (
-              <Dropdown
-                label="Province"
-                {...field}
-              />
-            )}
-            control={control}
-            name="province"
-          />
-          <Controller
-            render={({ field }) => (
-              <Input
-                label="Postal Code"
-                {...field}
-              />
-            )}
-            control={control}
-            name="postalCode"
-          />
-          <Controller
-            render={({ field }) => (
-              <Input
-                label="Title"
-                {...field}
-              />
-            )}
-            control={control}
-            name="title"
-          />
-          <Controller
-            render={({ field }) => (
-              <Input
-                label="Occupation/Nature of Business"
-                {...field}
-              />
-            )}
-            control={control}
-            name="occupation"
-          />
-          <Controller
-            render={({ field }) => (
-              <Input
-                label="Relationship to Applicant(S)"
-                {...field}
-              />
-            )}
-            control={control}
-            name="relationship"
-          />
-        </section>
+        {thirdPartyChecked && (
+          <section className="third_party-form__wrapper">
+            <Controller
+              render={({ field }) => (
+                <Input
+                  label="Name of the Third Party"
+                  {...field}
+                />
+              )}
+              control={control}
+              name="tpd_nm"
+            />
+            <Controller
+              render={({ field }) => (
+                <InputDate
+                  label="Date of Birth"
+                  {...field}
+                />
+              )}
+              control={control}
+              name="tpd_bth_y4mm_dt"
+            />
+            <Controller
+              render={({ field }) => (
+                <Input
+                  label="Address"
+                  {...field}
+                />
+              )}
+              control={control}
+              name="tpd_adr1"
+            />
+            <Controller
+              render={({ field }) => (
+                <Input
+                  label="City"
+                  {...field}
+                />
+              )}
+              control={control}
+              name="tpd_adr2"
+            />
+            <Controller
+              render={({ field }) => (
+                <Dropdown
+                  label="Province"
+                  {...field}
+                />
+              )}
+              control={control}
+              name="tpd_state_c"
+            />
+            <Controller
+              render={({ field }) => (
+                <Input
+                  label="Postal Code"
+                  {...field}
+                />
+              )}
+              control={control}
+              name="tpd_adr_zipc"
+            />
+            <Controller
+              render={({ field }) => (
+                <Input
+                  label="Occupation/Nature of Business"
+                  {...field}
+                />
+              )}
+              control={control}
+              name="tpd_job_nm"
+            />
+            <Controller
+              render={({ field }) => (
+                <Input
+                  label="Relationship to Applicant(S)"
+                  {...field}
+                />
+              )}
+              control={control}
+              name="tpd_cus_relt_ctt"
+            />
+          </section>
+        )}
       </section>
       <div className="divider__item__solid" />
       <section className="mt-6">

@@ -31,13 +31,21 @@ const EnterAccountInformation = ({ onSubmit, interestRate }) => {
   const [selectedAccount, setSelectedAccount] = useState();
   const [selectedTerm, setSelectedTerm] = useState();
 
-  const { handleSubmit, control, setValue, getValues } = useForm({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
     defaultValues: openAccountDefaultValues,
     mode: 'onChange',
     resolver: yupResolver(openAccountSchema),
   });
 
-  const [amount, dep_ac_usag_d_display] = getValues(['amount', 'dep_ac_usag_d_display']);
+  console.log('errors :>> ', errors);
+
+  const [amount, dep_ac_usag_d_display] = watch(['amount', 'dep_ac_usag_d_display']);
   const showInterestRateSection = !!amount && !!dep_ac_usag_d_display && !!selectedAccount;
 
   const onOpenMyAccountBottom = () => {
@@ -78,6 +86,7 @@ const EnterAccountInformation = ({ onSubmit, interestRate }) => {
   };
 
   const onSubmitOpenAccount = values => {
+    console.log('values :>> ', values);
     onSubmit();
   };
 
@@ -148,6 +157,8 @@ const EnterAccountInformation = ({ onSubmit, interestRate }) => {
               <InterestRateSection
                 control={control}
                 interestRate={interestRate}
+                watch={watch}
+                setValue={setValue}
               />
             </>
           )}
