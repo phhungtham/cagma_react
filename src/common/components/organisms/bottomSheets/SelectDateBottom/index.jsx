@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import BottomSheet from '@common/components/templates/BottomSheet';
@@ -184,7 +184,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
           <Button
             label="Confirm"
             variant="filled__primary"
-            className="w_full"
+            className="w-full"
             onClick={handleConfirmSelectedDate}
           />
         </div>
