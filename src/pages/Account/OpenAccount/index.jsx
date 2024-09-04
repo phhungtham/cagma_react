@@ -3,16 +3,18 @@ import { useSelector } from 'react-redux';
 
 import Spinner from '@common/components/atoms/Spinner';
 import Alert from '@common/components/molecules/Alert';
+import Header from '@common/components/organisms/Header';
 import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { MENU_CODE } from '@configs/global/constants';
 import useCommonCode from '@hooks/useCommonCode';
+import useProductInterestRate from '@hooks/useProductInterestRate';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
 import { apiCall } from '@shared/api';
 import { convertObjectBaseMappingFields } from '@utilities/convert';
-import { moveNext } from '@utilities/index';
+import { moveBack, moveNext } from '@utilities/index';
 import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -38,7 +40,10 @@ const OpenAccount = ({ translation }) => {
   console.log('productInfo :>> ', productInfo);
   const customer = useSelector(customerInfo);
 
-  const { sendRequest: requestGetJob, data: jobData, isLoading: isLoadingGetJob } = useCommonCode();
+  const { sendRequest: requestGetJob, data: jobData } = useCommonCode();
+  const { sendRequest: requestGetProductInterestRate, data: productInterestRateData } = useProductInterestRate();
+
+  console.log('productInterestRateData :>> ', productInterestRateData);
 
   const [currentStep, setCurrentStep] = useState(OPEN_ACCOUNT_STEP.VIEW_TERMS);
   const [showCustomerInfoBottom, setShowCustomerInfoBottom] = useState(false);
@@ -50,16 +55,7 @@ const OpenAccount = ({ translation }) => {
     content: '',
   });
 
-  const {
-    prdt_c,
-    product_ccy,
-    ntfct_intrt,
-    dep_sjt_class,
-    prdt_st_trm_unit_cnt,
-    prdt_close_trm_unit_cnt,
-    prdt_psb_trm_unit_c,
-    lcl_prdt_nm,
-  } = productInfo;
+  const { prdt_c, product_ccy, ntfct_intrt, lcl_prdt_nm } = productInfo;
 
   //Get phone number of home address
   const homeAddress = customer?.r_CAME001_1Vo?.find(address => address.cus_adr_t === 11);
@@ -84,6 +80,8 @@ const OpenAccount = ({ translation }) => {
     request.tpd_chk = request.tpd_chk ? 'Y' : 'N';
     request.credit_chk = request.credit_chk ? '1' : '0';
     request.trx_amt = Number(request.trx_amt);
+    debugger;
+    request.intrt_trm_c = productInterestRateData?.intrt_trm_c;
     delete request.intendedUseAccountDisplay;
     const openAccountResponse = await apiCall(endpoints.openAccount, 'POST', request);
     setIsLoadingOpenAccount(false);
@@ -127,10 +125,21 @@ const OpenAccount = ({ translation }) => {
     }
   }, [customer]);
 
+  useEffect(() => {
+    requestGetProductInterestRate({
+      prdt_c,
+      product_ccy,
+    });
+  }, []);
+
   return (
     <>
       <div className="open-account__wrapper">
         {(isLoadingCustomer || isLoadingOpenAccount) && <Spinner />}
+        <Header
+          title="Open Account"
+          onClick={moveBack}
+        />
         {currentStep === OPEN_ACCOUNT_STEP.VIEW_TERMS && (
           <TermAndConditions
             product={productInfo}

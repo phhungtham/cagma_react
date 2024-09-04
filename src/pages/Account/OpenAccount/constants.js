@@ -14,7 +14,6 @@ export const termConditionConfig = {
 
 export const OPEN_ACCOUNT_STEP = {
   VIEW_TERMS: 'viewTerms',
-  CUSTOMER_INFO: 'customerInfo',
   ENTER_ACCOUNT_INFORMATION: 'enterAccountInformation',
   COMPLETED: 'completed',
 };
@@ -47,97 +46,6 @@ export const customerInfoFields = [
   {
     label: 'Occupation',
     value: 'job',
-  },
-];
-
-export const intendedUseOfAccounts = [
-  {
-    label: 'Salary Receipt',
-    value: '10',
-  },
-  {
-    label: 'Daily Transaction',
-    value: '101',
-  },
-  {
-    label: 'Personal Savings',
-    value: '102',
-  },
-  {
-    label: 'Retirement',
-    value: '103',
-  },
-  {
-    label: 'Home Purchase',
-    value: '104',
-  },
-  {
-    label: 'Vehicle Purchase',
-    value: '105',
-  },
-  {
-    label: 'Vacation/Leisure',
-    value: '106',
-  },
-  {
-    label: 'Education',
-    value: '107',
-  },
-  {
-    label: 'Remittance',
-    value: '108',
-  },
-  {
-    label: 'Business Operating Expenses',
-    value: '121',
-  },
-  {
-    label: 'Business Savings',
-    value: '122',
-  },
-  {
-    label: 'Payroll Payment',
-    value: '123',
-  },
-  {
-    label: 'Payment to Suppliers',
-    value: '124',
-  },
-  {
-    label: 'Business Remittance',
-    value: '125',
-  },
-  {
-    label: 'Personal Expense',
-    value: '20',
-  },
-  {
-    label: 'Household Payment',
-    value: '30',
-  },
-  {
-    label: 'Tuition for School',
-    value: '40',
-  },
-  {
-    label: 'General Business Expense',
-    value: '50',
-  },
-  {
-    label: 'Payroll Expense',
-    value: '60',
-  },
-  {
-    label: 'Investment',
-    value: '70',
-  },
-  {
-    label: 'Trust',
-    value: '80',
-  },
-  {
-    label: 'Others',
-    value: '90',
   },
 ];
 

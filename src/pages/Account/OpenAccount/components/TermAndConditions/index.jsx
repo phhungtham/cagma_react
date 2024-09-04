@@ -3,11 +3,9 @@ import { useState } from 'react';
 import BannerBook from '@assets/images/open-account-book.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
-import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { PeriodUnitCodeDisplay } from '@common/constants/product';
-import { moveBack } from '@utilities/index';
 
 import { termConditionConfig } from '../../constants';
 import './styles.scss';
@@ -16,16 +14,7 @@ const TermAndConditions = ({ onSubmit, product }) => {
   const [isValidForm, setIsValidForm] = useState(false);
   const [isShowViewTermBottom, setIsShowViewTermBottom] = useState(false);
 
-  const {
-    prdt_c,
-    product_ccy,
-    ntfct_intrt,
-    dep_sjt_class,
-    prdt_st_trm_unit_cnt,
-    prdt_close_trm_unit_cnt,
-    prdt_psb_trm_unit_c,
-    lcl_prdt_nm,
-  } = product;
+  const { lcl_prdt_nm } = product;
 
   const onChangeSelectAll = checked => {
     setIsValidForm(checked);
@@ -36,7 +25,6 @@ const TermAndConditions = ({ onSubmit, product }) => {
   };
 
   const onClickViewTermDetail = value => {
-    console.log('value :>> ', value);
     setIsShowViewTermBottom(true);
   };
 
@@ -46,10 +34,6 @@ const TermAndConditions = ({ onSubmit, product }) => {
 
   return (
     <div className="term-conditions__wrapper">
-      <Header
-        title="Open Account"
-        onClick={moveBack}
-      />
       <div className="term-conditions__content">
         <h1 className="page__title">Terms&Conditions</h1>
         <div className="term-condition__banner">
@@ -68,6 +52,7 @@ const TermAndConditions = ({ onSubmit, product }) => {
             <div className="product__item">
               <div className="item__label">Interest Rate</div>
               <div className="item__value">
+                <span className="item__note">up to</span>
                 <span className="item__quantity">~{product?.ntfct_intrt}</span>
                 <span className="item__unit">%</span>
               </div>

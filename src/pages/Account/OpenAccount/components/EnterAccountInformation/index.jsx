@@ -7,13 +7,11 @@ import Spinner from '@common/components/atoms/Spinner';
 import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAmountBottom';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import SelectTermsBottom from '@common/components/organisms/bottomSheets/SelectTermsBottom';
-import Header from '@common/components/organisms/Header';
 import { CurrencyCode } from '@common/constants/currency';
 import { SelectTermDurationTypes } from '@common/constants/terms';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCardCount from '@hooks/useCardCount';
 import { formatCurrencyDisplay } from '@utilities/currency';
-import { moveBack } from '@utilities/index';
 
 import IntendedUseOfAccountBottom from '../IntendedUseOfAccountBottom';
 import { openAccountDefaultValues } from './constants';
@@ -89,7 +87,6 @@ const EnterAccountInformation = ({ onSubmit, interestRate, productName }) => {
   };
 
   const onSubmitOpenAccount = values => {
-    console.log('values :>> ', values);
     onSubmit(values);
   };
 
@@ -108,10 +105,6 @@ const EnterAccountInformation = ({ onSubmit, interestRate, productName }) => {
   return (
     <div className="enter-account-information__wrapper">
       {isLoadingGetCardCount && <Spinner />}
-      <Header
-        title="Open Account"
-        onClick={moveBack}
-      />
       <div className="enter-account-information__content">
         <div className="enter-account__form page__container">
           <h1 className="page__title">{productName}</h1>

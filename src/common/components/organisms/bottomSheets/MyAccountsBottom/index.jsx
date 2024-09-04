@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import Spinner from '@common/components/atoms/Spinner';
@@ -14,12 +14,14 @@ import { PropTypes } from 'prop-types';
 
 import './styles.scss';
 
-const MyAccountsBottom = ({ open, onClose, onSelect }) => {
+const MyAccountsBottom = ({ open, onClose, onSelect, init = true }) => {
   useReducers([{ key: FeatureName, reducer: accountReducer }]);
   useSagas([{ key: FeatureName, saga: accountSaga }]);
 
   const accounts = useSelector(accountList);
   const isLoadingGetAccounts = useSelector(accountLoadState);
+
+  const [initParams, setInitParams] = useState(false);
 
   const onSelectAccount = item => {
     onSelect(item);
@@ -32,11 +34,20 @@ const MyAccountsBottom = ({ open, onClose, onSelect }) => {
   }, [open]);
 
   useEffect(() => {
-    if (accounts?.length) {
-      // TODO: Set default account is
-      // const primaryAccount =
+    if (accounts?.length && !initParams) {
+      const defaultAccount = accounts.find(account => String(account.base_ac_t) === '1');
+      if (defaultAccount) {
+        setInitParams(true);
+        onSelectAccount(defaultAccount);
+      }
     }
   }, [accounts]);
+
+  useEffect(() => {
+    if (init) {
+      getAccountListRequest();
+    }
+  }, []);
 
   return (
     <>
