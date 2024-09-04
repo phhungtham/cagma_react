@@ -30,8 +30,8 @@ const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChan
               <span className="customer-value">
                 {fieldName === 'job' ? (
                   <>
-                    <span>{customerInfo?.job_t}</span>
-                    <span>{customerInfo?.sub_job_t_v}</span>
+                    <span>{customerInfo?.job_display}</span>
+                    <span>{customerInfo?.sub_job_display}</span>
                     <span>{customerInfo?.job_nm}</span>
                   </>
                 ) : (

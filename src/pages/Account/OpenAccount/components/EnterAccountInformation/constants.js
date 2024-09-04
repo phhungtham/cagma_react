@@ -1,9 +1,12 @@
 import { CurrencyCode } from '@common/constants/currency';
 
 export const openAccountDefaultValues = {
-  trx_amt: '',
+  accountNo: '',
+  amount: '',
   currency: CurrencyCode.CAD,
-  dep_ac_usag_d: '',
-  dep_ac_usag_d_display: '',
+  intendedUseAccount: '',
+  intendedUseAccountDisplay: '',
   tpd_chk: false,
+  debitCardIssuance: false,
+  dep_cvsr_bnkerno: '',
 };

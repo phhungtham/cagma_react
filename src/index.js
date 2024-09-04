@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, HashRouter as Router } from 'react-router-dom';
@@ -15,11 +14,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const RouterComponent = AppCfg.ENV === 'development' || AppCfg.ENV === 'dev' ? BrowserRouter : Router;
 root.render(
   <RouterComponent>
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </RouterComponent>
 );
 

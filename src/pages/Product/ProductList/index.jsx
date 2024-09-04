@@ -2,17 +2,20 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import BannerBook from '@assets/images/open-account-book.png';
+import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { PeriodUnitCodeDisplay } from '@common/constants/product';
+import { MENU_CODE } from '@configs/global/constants';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
-import { moveBack } from '@utilities/index';
+import { routePaths } from '@routes/paths';
+import { moveBack, moveNext } from '@utilities/index';
 
 import { getProductListRequest } from './redux/action';
 import { productReducer } from './redux/reducer';
 import { productSaga } from './redux/saga';
-import { productList } from './redux/selector';
+import { productList, productLoadState } from './redux/selector';
 import { FeatureName } from './redux/type';
 import './styles.scss';
 
@@ -20,8 +23,19 @@ const ProductList = () => {
   useReducers([{ key: FeatureName, reducer: productReducer }]);
   useSagas([{ key: FeatureName, saga: productSaga }]);
 
-  const products = useSelector(productList);
-  console.log('products :>> ', products);
+  //Only display e-Saving for Phase 1
+  const products = (useSelector(productList) || []).filter(item => item.prdt_c === '5117020025');
+  const isLoadingProducts = useSelector(productLoadState);
+
+  const handleNavigateOpenAccount = product => {
+    moveNext(
+      MENU_CODE.OPEN_ACCOUNT,
+      {
+        param: JSON.stringify(product),
+      },
+      routePaths.openAccount
+    );
+  };
 
   useEffect(() => {
     getProductListRequest({
@@ -31,6 +45,7 @@ const ProductList = () => {
 
   return (
     <div className="product-list__wrapper">
+      {isLoadingProducts && <Spinner />}
       <Header
         title="Product"
         onClick={moveBack}
@@ -41,6 +56,7 @@ const ProductList = () => {
             <div
               className="term-condition__banner"
               key={product?.prdt_c}
+              onClick={() => handleNavigateOpenAccount(product)}
             >
               <div className="banner__desc">
                 <div className="product__type">

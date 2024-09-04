@@ -49,7 +49,7 @@
 
   &.dropdown__focus,
   &.dropdown__completed {
-    height: 72px;
+    min-height: 72px;
     padding: 15px 18px;
     .dropdown__label {
       font-size: 13px;
@@ -58,7 +58,7 @@
     }
     .dropdown__value {
       display: block;
-      height: 21px;
+      min-height: 21px;
       margin-top: 8px;
     }
   }

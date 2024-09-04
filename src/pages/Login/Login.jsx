@@ -12,6 +12,7 @@ import useFocus from '@hooks/useFocus';
 import useHttpStatus from '@hooks/useHttpStatus';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
+import { routePaths } from '@routes/paths';
 import { setAuthenticated } from 'shared/features/auth/action';
 import { Http } from 'shared/features/http';
 
@@ -31,7 +32,12 @@ const Login = () => {
 
   const { status } = useHttpStatus(ActionType.LOGIN_REQUEST);
   const navigate = useNavigate();
-  const { handleSubmit, control, setValue } = useForm();
+  const { handleSubmit, control, setValue } = useForm({
+    defaultValues: {
+      userName: 'WTLEE815',
+      password: 'qwer1234',
+    },
+  });
   const isLoginSuccess = useSelector(loginStatusSelector);
   const loginMessage = useSelector(loginStatusMsg);
   const [currentAccount, setCurrentAccount] = useState('WTLEE815');
@@ -57,7 +63,7 @@ const Login = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       setAuthenticated();
-      navigate('/open-account');
+      navigate(routePaths.productList);
     }
   }, [isLoginSuccess]);
 

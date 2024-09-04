@@ -1,3 +1,5 @@
+import { monthNumberWithDisplays } from '@common/constants/dateTime';
+
 /**
  * It takes a number and returns a string of that number with a leading zero if the number is less than
  * 10
@@ -198,6 +200,18 @@ export const getDateFormat = format => {
   newDate = newDate.replace('SSS', SSS);
 
   return newDate;
+};
+
+//Example: 20230518 => May 18, 2023
+export const formatYYYYMMDDToDisplay = date => {
+  if (!date) {
+    return '';
+  }
+  date = String(date);
+  const yearString = date.slice(0, 4);
+  const monthString = date.slice(4, 6);
+  const dateString = date.slice(6, 8);
+  return `${monthNumberWithDisplays[monthString]} ${dateString},${yearString}`;
 };
 
 function formatZero(number, length) {

@@ -123,6 +123,9 @@ $input-on-background: background-color(dark-sky-blue);
       &.input__completed {
         font-size: 13px;
         top: 14px;
+        &.input__calendar {
+          display: none;
+        }
       }
       &.input__focus {
         &.onBackground {
@@ -138,6 +141,9 @@ $input-on-background: background-color(dark-sky-blue);
       justify-content: flex-start;
       &.input {
         height: 72px;
+        &.input__calendar {
+          height: 56px;
+        }
       }
       &.textarea {
         height: 136px;

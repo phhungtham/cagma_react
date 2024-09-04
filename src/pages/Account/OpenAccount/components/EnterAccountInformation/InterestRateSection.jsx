@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
 import { ArrowDown, FillTooltipIcon } from '@assets/icons';
@@ -6,13 +7,49 @@ import Dropdown from '@common/components/atoms/Dropdown';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
+import Tooltip from '@common/components/atoms/Tooltip';
+import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
+import { postalCodeNotAllowRegex } from '@common/constants/regex';
+import useProvince from '@hooks/useProvince';
+import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
+import openCalendar from '@utilities/gmCommon/openCalendar';
 
 const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
-  const thirdPartyChecked = watch('tpd_chk');
+  const { data: provinceList, requestGetProvinceList } = useProvince();
+  const [showSelectProvinceBottom, setShowSelectProvinceBottom] = useState(false);
 
-  const handleChangeThirdPartyOption = checked => {
-    setValue('tpd_chk', checked);
+  const provinceListConverted = (provinceList || []).map(item => {
+    return { value: item.key, label: item.value };
+  });
+
+  const [thirdPartyChecked, dob] = watch(['thirdPartyChecked', 'dob']);
+
+  const handleSelectDate = date => {
+    setValue('dob', date);
+    setValue('dob_display', date);
   };
+
+  const handleOpenCalendar = () => {
+    //TODO: For dummy data
+    setValue('dob', '20240830');
+    setValue('dob_display', formatYYYYMMDDToDisplay('20240830'));
+    openCalendar(handleSelectDate, { selectDate: dob || undefined });
+  };
+
+  const handleOpenSelectProvinceDropdown = () => {
+    setShowSelectProvinceBottom(true);
+  };
+
+  const handleSelectProvince = item => {
+    setValue('province', item.value);
+    setShowSelectProvinceBottom(false);
+  };
+
+  useEffect(() => {
+    if (thirdPartyChecked && !provinceList?.length) {
+      requestGetProvinceList();
+    }
+  }, [thirdPartyChecked]);
 
   return (
     <div className="interest-rate__section">
@@ -33,24 +70,48 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
       <section className="py-5">
         <div className="checklist___options">
           <div className="option-item">
-            <CheckBox
-              size="large"
-              label="Debit Card Issuance"
+            <Controller
+              render={({ field }) => (
+                <CheckBox
+                  size="large"
+                  label="Debit Card Issuance"
+                  {...field}
+                  checked={field.value}
+                />
+              )}
+              control={control}
+              name="debitCardIssuance"
             />
-            <div className="item__tooltip">
-              <FillTooltipIcon />
-            </div>
+            <Tooltip
+              content="If a debit card is issued, it will be sent to the stored customer address."
+              placement="bottom_center"
+            >
+              <div className="item__tooltip">
+                <FillTooltipIcon />
+              </div>
+            </Tooltip>
           </div>
           <div className="option-item">
-            <CheckBox
-              size="large"
-              label="Third Party Determination"
-              checked={!!thirdPartyChecked}
-              onChange={handleChangeThirdPartyOption}
+            <Controller
+              render={({ field }) => (
+                <CheckBox
+                  size="large"
+                  label="Third Party Determination"
+                  {...field}
+                  checked={field.value}
+                />
+              )}
+              control={control}
+              name="thirdPartyChecked"
             />
-            <div className="item__tooltip">
-              <FillTooltipIcon />
-            </div>
+            <Tooltip
+              content="If this account be used by or on behalf of third party, please complete information"
+              placement="bottom_center"
+            >
+              <div className="item__tooltip">
+                <FillTooltipIcon />
+              </div>
+            </Tooltip>
           </div>
         </div>
         {thirdPartyChecked && (
@@ -59,81 +120,92 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
               render={({ field }) => (
                 <Input
                   label="Name of the Third Party"
+                  maxLength={100}
                   {...field}
                 />
               )}
               control={control}
-              name="tpd_nm"
+              name="thirdPartyName"
             />
             <Controller
-              render={({ field }) => (
+              render={({ field: { value } }) => (
                 <InputDate
                   label="Date of Birth"
-                  {...field}
+                  onFocus={handleOpenCalendar}
+                  value={value}
                 />
               )}
               control={control}
-              name="tpd_bth_y4mm_dt"
+              name="dob_display"
             />
+
             <Controller
               render={({ field }) => (
                 <Input
                   label="Address"
+                  maxLength={200}
                   {...field}
                 />
               )}
               control={control}
-              name="tpd_adr1"
+              name="address"
             />
             <Controller
               render={({ field }) => (
                 <Input
                   label="City"
+                  maxLength={200}
                   {...field}
                 />
               )}
               control={control}
-              name="tpd_adr2"
+              name="city"
             />
             <Controller
               render={({ field }) => (
                 <Dropdown
                   label="Province"
+                  onFocus={handleOpenSelectProvinceDropdown}
+                  options={provinceListConverted}
                   {...field}
                 />
               )}
               control={control}
-              name="tpd_state_c"
+              name="province"
             />
             <Controller
               render={({ field }) => (
                 <Input
                   label="Postal Code"
+                  maxLength={10}
+                  regex={postalCodeNotAllowRegex}
                   {...field}
                 />
               )}
               control={control}
-              name="tpd_adr_zipc"
+              name="postalCode"
             />
             <Controller
               render={({ field }) => (
                 <Input
                   label="Occupation/Nature of Business"
+                  maxLength={100}
                   {...field}
                 />
               )}
               control={control}
-              name="tpd_job_nm"
+              name="occupation"
             />
             <Controller
               render={({ field }) => (
                 <Input
                   label="Relationship to Applicant(S)"
+                  maxLength={100}
                   {...field}
                 />
               )}
               control={control}
-              name="tpd_cus_relt_ctt"
+              name="relationship"
             />
           </section>
         )}
@@ -144,6 +216,7 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
           render={({ field }) => (
             <Input
               label={'Referral Code (Optional)'}
+              maxLength={8}
               {...field}
             />
           )}
@@ -151,6 +224,13 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
           name="referralCode"
         />
       </section>
+      <SelectBottom
+        open={showSelectProvinceBottom}
+        onClose={() => setShowSelectProvinceBottom(false)}
+        onSelect={handleSelectProvince}
+        options={provinceListConverted}
+        title="Province"
+      />
     </div>
   );
 };

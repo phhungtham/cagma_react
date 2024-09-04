@@ -1,6 +1,5 @@
+import casol_loading from '@assets/lottie/casol_loading.json';
 import Lottie from 'lottie-react';
-
-import casol_loading from '../../../../assets/lottie/casol_loading.json';
 
 const Spinner = () => {
   return (

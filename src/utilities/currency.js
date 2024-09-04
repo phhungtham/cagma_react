@@ -1,5 +1,5 @@
 export const stringNumberToCurrency = value => {
-  value = value.replace(/,/g, '');
+  value = String(value).replace(/,/g, '');
   return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
@@ -16,4 +16,9 @@ export const formatCurrencyDisplay = value => {
     value = value + '.00';
   }
   return value;
+};
+
+export const convertToNumber = value => {
+  const valueConverted = String(value).replace(/,/g, '');
+  return Number(valueConverted);
 };

@@ -5,7 +5,7 @@ import KeypadDeleteIcon from '@assets/icons/KeypadDeleteIcon';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { CurrencyAmountDefaultBaseCode, CurrencyCode, CurrencyPrefixBaseCode } from '@common/constants/currency';
-import { stringNumberToCurrency } from '@utilities/currency';
+import { convertToNumber, formatCurrencyDisplay, stringNumberToCurrency } from '@utilities/currency';
 
 // const currencyOptions = [
 //   {
@@ -20,6 +20,12 @@ import { stringNumberToCurrency } from '@utilities/currency';
 
 const numberButtons = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'delete'];
 
+const InvalidType = {
+  REQUIRED: 'required',
+  MIN: 'min',
+  MAX: 'max',
+};
+
 const EnterAmountBottom = ({
   onClose,
   account,
@@ -29,10 +35,15 @@ const EnterAmountBottom = ({
   handleOnClickNextButton,
   amount = '',
   onChangeAmount,
+  min,
+  max,
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(currency);
   const [currentAmount, setCurrentAmount] = useState(amount);
-  const [invalidAmount, setInvalidAmount] = useState(false);
+  const [invalidAmount, setInvalidAmount] = useState({
+    invalid: false,
+    type: '',
+  });
   const hasExchangeRate = currencyOptions?.length > 0;
 
   const handleCloseBottomSheet = () => {
@@ -79,8 +90,40 @@ const EnterAmountBottom = ({
     }
   };
 
+  const getInvalidMessage = type => {
+    if (type === InvalidType.MIN) {
+      return `Please input an amount more than ${formatCurrencyDisplay(min)} ${currency}`;
+    }
+    if (type === InvalidType.MAX) {
+      return `You can send up to $${formatCurrencyDisplay(max)} at a time.`;
+    }
+    return '';
+  };
+
   useEffect(() => {
-    setInvalidAmount(false);
+    if (min || max) {
+      if (currentAmount) {
+        const amountInNumber = convertToNumber(currentAmount);
+        if (amountInNumber < min) {
+          setInvalidAmount({
+            invalid: true,
+            type: InvalidType.MIN,
+          });
+          return;
+        }
+        if (amountInNumber > max) {
+          setInvalidAmount({
+            invalid: true,
+            type: InvalidType.MAX,
+          });
+          return;
+        }
+      }
+      setInvalidAmount({
+        invalid: false,
+        type: '',
+      });
+    }
   }, [currentAmount]);
 
   return (
@@ -114,12 +157,14 @@ const EnterAmountBottom = ({
               {currentAmount ? currentAmount : CurrencyAmountDefaultBaseCode[selectedCurrency]}
             </span>
           </div>
-          <div className={`amount-value__error-alert ${invalidAmount ? 'error-msg' : ''}`}>
-            <span className="error-icon mr-1">
-              <ErrorIcon />
-            </span>
-            <span>Please input an amount more than 10.00 CAD</span>
-          </div>
+          {invalidAmount.invalid && (
+            <div className="amount-value__error-alert">
+              <span className="error-icon mr-1">
+                <ErrorIcon />
+              </span>
+              <span>{getInvalidMessage(invalidAmount.type)}</span>
+            </div>
+          )}
           {hasExchangeRate && (
             //TODO: Handle Exchange Rate
             <div className="amount-exchange-rate__wrapper">
@@ -145,7 +190,7 @@ const EnterAmountBottom = ({
               variant="filled__primary"
               className="btn-submit"
               onClick={onClickConfirm}
-              disable={!currentAmount || invalidAmount}
+              disable={!currentAmount || invalidAmount.invalid}
             />
           </div>
         </div>

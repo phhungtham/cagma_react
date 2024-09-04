@@ -11,6 +11,7 @@ import Home from '@pages/Home/Home';
 import Login from '@pages/Login/Login';
 import ProductList from '@pages/Product/ProductList';
 import ChangeProfile from '@pages/Profile/ChangeProfile';
+import { routePaths } from '@routes/paths';
 
 const RoutesConfig = [
   {
@@ -29,12 +30,12 @@ const RoutesConfig = [
     private: true,
   },
   {
-    path: '/products',
+    path: routePaths.productList,
     component: ProductList,
     private: true,
   },
   {
-    path: '/open-account',
+    path: routePaths.openAccount,
     component: OpenAccount,
     private: true,
   },

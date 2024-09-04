@@ -110,6 +110,8 @@
   }
   &.fit-content {
     height: fit-content;
+    max-height: 93vh;
+    overflow-y: auto;
   }
 
   &__content {

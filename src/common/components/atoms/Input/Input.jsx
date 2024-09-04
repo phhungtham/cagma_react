@@ -34,6 +34,7 @@ const Input = forwardRef((props, ref) => {
     value,
     onClearInput,
     endAdornment,
+    regex,
     ...otherProps
   } = props;
   const [inputValues, setInputValues] = useState(value);
@@ -64,9 +65,12 @@ const Input = forwardRef((props, ref) => {
   };
 
   const handleInputChange = e => {
-    onChange(e);
-    const values = e.target.value;
-    setInputValues(values);
+    let value = e.target.value;
+    if (regex) {
+      value = value.replace(regex, '');
+    }
+    onChange(value);
+    setInputValues(value);
   };
 
   const handleOnBlur = () => {
