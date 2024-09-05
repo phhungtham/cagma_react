@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import Spinner from '@common/components/atoms/Spinner';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { AccountType } from '@common/constants/account';
 import { getAccountListRequest } from '@common/redux/accounts/action';
 import { accountReducer } from '@common/redux/accounts/reducer';
 import { accountSaga } from '@common/redux/accounts/saga';
@@ -14,17 +15,31 @@ import { PropTypes } from 'prop-types';
 
 import './styles.scss';
 
-const MyAccountsBottom = ({ open, onClose, onSelect, init = true }) => {
+const MyAccountsBottom = ({ open, onClose, onSelect, type, init = true }) => {
   useReducers([{ key: FeatureName, reducer: accountReducer }]);
   useSagas([{ key: FeatureName, saga: accountSaga }]);
 
   const accounts = useSelector(accountList);
   const isLoadingGetAccounts = useSelector(accountLoadState);
 
+  const [filteredAccounts, setFilteredAccounts] = useState([]);
+
   const [initParams, setInitParams] = useState(false);
 
   const onSelectAccount = item => {
     onSelect(item);
+  };
+
+  const isBankingAccount = account => {
+    if (account?.acno_jiacno_gbn !== '1') {
+      return false;
+    }
+    const productType = account?.prdt_c || '';
+    if (['700', '701', '702', '703'].includes(productType.substring(3, 6))) {
+      return true;
+    }
+
+    return false;
   };
 
   useEffect(() => {
@@ -35,7 +50,16 @@ const MyAccountsBottom = ({ open, onClose, onSelect, init = true }) => {
 
   useEffect(() => {
     if (accounts?.length && !initParams) {
-      const defaultAccount = accounts.find(account => String(account.base_ac_t) === '1');
+      let newAccounts = accounts;
+      if (type) {
+        if (type === AccountType.BANKING) {
+          newAccounts = accounts.filter(account => {
+            return isBankingAccount(account);
+          });
+        }
+      }
+      setFilteredAccounts(newAccounts);
+      const defaultAccount = newAccounts.find(account => String(account.base_ac_t) === '1');
       if (defaultAccount) {
         setInitParams(true);
         onSelectAccount(defaultAccount);
@@ -63,7 +87,7 @@ const MyAccountsBottom = ({ open, onClose, onSelect, init = true }) => {
         >
           <div className="my-accounts__content">
             <div className="my-accounts__list">
-              {(accounts || []).map(account => (
+              {(filteredAccounts || []).map(account => (
                 <div
                   className="my-accounts__item"
                   key={account.name}

@@ -14,7 +14,7 @@ const TermAndConditions = ({ onSubmit, product }) => {
   const [isValidForm, setIsValidForm] = useState(false);
   const [isShowViewTermBottom, setIsShowViewTermBottom] = useState(false);
 
-  const { lcl_prdt_nm } = product;
+  const { lcl_prdt_nm } = product || {};
 
   const onChangeSelectAll = checked => {
     setIsValidForm(checked);

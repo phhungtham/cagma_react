@@ -55,7 +55,7 @@ const OpenAccount = ({ translation }) => {
     content: '',
   });
 
-  const { prdt_c, product_ccy, ntfct_intrt, lcl_prdt_nm } = productInfo;
+  const { prdt_c, product_ccy, ntfct_intrt, lcl_prdt_nm } = productInfo || {};
 
   //Get phone number of home address
   const homeAddress = customer?.r_CAME001_1Vo?.find(address => address.cus_adr_t === 11);
@@ -79,7 +79,7 @@ const OpenAccount = ({ translation }) => {
     request.tpd_trx_t = 0;
     request.tpd_chk = request.tpd_chk ? 'Y' : 'N';
     request.credit_chk = request.credit_chk ? '1' : '0';
-    request.trx_amt = Number(request.trx_amt);
+    request.trx_amt = 1;
     debugger;
     request.intrt_trm_c = productInterestRateData?.intrt_trm_c;
     delete request.intendedUseAccountDisplay;
@@ -116,6 +116,11 @@ const OpenAccount = ({ translation }) => {
       const subJobMapList = jobData.sub_job_t_v || [];
       customer.sub_job_display = subJobMapList.find(item => item.key === subJobType)?.value || '';
       setIsLoadingCustomer(false);
+      //TODO: Only call this API when submit Open Account
+      requestGetProductInterestRate({
+        prdt_c,
+        product_ccy,
+      });
     }
   }, [jobData]);
 
@@ -124,13 +129,6 @@ const OpenAccount = ({ translation }) => {
       requestGetJob(`${getJobCode};${getSubJobCode}`);
     }
   }, [customer]);
-
-  useEffect(() => {
-    requestGetProductInterestRate({
-      prdt_c,
-      product_ccy,
-    });
-  }, []);
 
   return (
     <>

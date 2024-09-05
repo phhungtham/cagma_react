@@ -7,6 +7,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAmountBottom';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import SelectTermsBottom from '@common/components/organisms/bottomSheets/SelectTermsBottom';
+import { AccountType } from '@common/constants/account';
 import { CurrencyCode } from '@common/constants/currency';
 import { SelectTermDurationTypes } from '@common/constants/terms';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -181,6 +182,7 @@ const EnterAccountInformation = ({ onSubmit, interestRate, productName }) => {
         open={showMyAccountsBottom}
         onClose={() => setShowMyAccountBottom(false)}
         onSelect={onSelectAccount}
+        type={AccountType.BANKING}
       />
       <IntendedUseOfAccountBottom
         open={showIntendedUseAccountBottom}
