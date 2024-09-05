@@ -27,17 +27,17 @@ const RoutesConfig = [
   {
     path: '/change-profile',
     component: ChangeProfile,
-    private: true,
+    private: false,
   },
   {
     path: routePaths.productList,
     component: ProductList,
-    private: true,
+    private: false,
   },
   {
     path: routePaths.openAccount,
     component: OpenAccount,
-    private: true,
+    private: false,
   },
   {
     path: '/notification',
