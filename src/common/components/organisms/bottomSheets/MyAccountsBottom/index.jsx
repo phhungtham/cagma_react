@@ -34,8 +34,8 @@ const MyAccountsBottom = ({ open, onClose, onSelect, type, init = true }) => {
     if (account?.acno_jiacno_gbn !== '1') {
       return false;
     }
-    const productType = account?.prdt_c || '';
-    if (['700', '701', '702', '703'].includes(productType.substring(3, 6))) {
+    const acnoPrefix = account?.lcl_ac_no || '';
+    if (['700', '701', '702', '703'].includes(acnoPrefix.substring(0, 3))) {
       return true;
     }
 

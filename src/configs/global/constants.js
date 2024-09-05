@@ -29,7 +29,7 @@ export const AVATAR_SIZES = {
 };
 
 export const MENU_CODE = {
-  OPEN_ACCOUNT: 'CAPR010000',
+  OPEN_ACCOUNT: 'CAPR010101',
   CHANGE_PROFILE: 'CAME030100',
 };
 

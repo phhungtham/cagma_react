@@ -8,7 +8,6 @@ import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { MENU_CODE } from '@configs/global/constants';
 import useCommonCode from '@hooks/useCommonCode';
-import useProductInterestRate from '@hooks/useProductInterestRate';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
@@ -41,9 +40,6 @@ const OpenAccount = ({ translation }) => {
   const customer = useSelector(customerInfo);
 
   const { sendRequest: requestGetJob, data: jobData } = useCommonCode();
-  const { sendRequest: requestGetProductInterestRate, data: productInterestRateData } = useProductInterestRate();
-
-  console.log('productInterestRateData :>> ', productInterestRateData);
 
   const [currentStep, setCurrentStep] = useState(OPEN_ACCOUNT_STEP.VIEW_TERMS);
   const [showCustomerInfoBottom, setShowCustomerInfoBottom] = useState(false);
@@ -73,15 +69,18 @@ const OpenAccount = ({ translation }) => {
 
   const onSubmitOpenAccountForm = async formValues => {
     setIsLoadingOpenAccount(true);
+    const productInterestRateResponse = await apiCall(endpoints.inquiryProductInterestRate, 'POST', {
+      prdt_c,
+      product_ccy,
+    });
     const request = convertObjectBaseMappingFields(formValues, accountFormMapFields);
     request.prdt_c = prdt_c;
     request.apl_intrt = ntfct_intrt;
     request.tpd_trx_t = 0;
     request.tpd_chk = request.tpd_chk ? 'Y' : 'N';
     request.credit_chk = request.credit_chk ? '1' : '0';
-    request.trx_amt = 1;
-    debugger;
-    request.intrt_trm_c = productInterestRateData?.intrt_trm_c;
+    request.trx_amt = Number(request.trx_amt);
+    request.intrt_trm_c = productInterestRateResponse?.data?.elData?.intrt_trm_c;
     delete request.intendedUseAccountDisplay;
     const openAccountResponse = await apiCall(endpoints.openAccount, 'POST', request);
     setIsLoadingOpenAccount(false);
@@ -116,11 +115,6 @@ const OpenAccount = ({ translation }) => {
       const subJobMapList = jobData.sub_job_t_v || [];
       customer.sub_job_display = subJobMapList.find(item => item.key === subJobType)?.value || '';
       setIsLoadingCustomer(false);
-      //TODO: Only call this API when submit Open Account
-      requestGetProductInterestRate({
-        prdt_c,
-        product_ccy,
-      });
     }
   }, [jobData]);
 
