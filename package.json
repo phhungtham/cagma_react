@@ -69,7 +69,7 @@
   "scripts": {
     "start": "env-cmd -f src/configs/envSetting/_development.env craco start & node ./server/proxyServer.js",
     "start:mockserver": "env-cmd -f src/configs/envSetting/mockserver.env craco start",
-    "build": "env-cmd -f src/configs/envSetting/production.env set CI=false & craco build",
+    "build": "env-cmd -f src/configs/envSetting/development.env set CI=false & craco build",
     "test": "craco test",
     "eject": "craco eject",
     "lint": "eslint --ext js,jsx src/",
