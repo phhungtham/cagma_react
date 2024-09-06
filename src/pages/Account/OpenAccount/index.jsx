@@ -13,6 +13,7 @@ import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
 import { apiCall } from '@shared/api';
 import { convertObjectBaseMappingFields } from '@utilities/convert';
+import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack, moveNext } from '@utilities/index';
 import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -28,9 +29,7 @@ import { customerSaga } from './redux/customer/saga';
 import { customerInfo } from './redux/customer/selector';
 import { CustomerFeatureName } from './redux/customer/type';
 
-//TODO: Call API Success
 //TODO: View Term PDF File
-//TODO: Get response from API for show Complete screen
 const OpenAccount = ({ translation }) => {
   useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
   useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
@@ -70,7 +69,6 @@ const OpenAccount = ({ translation }) => {
 
   const onSubmitOpenAccountForm = async formValues => {
     setIsLoadingOpenAccount(true);
-    debugger;
     const productInterestRateResponse = await apiCall(endpoints.inquiryProductInterestRate, 'POST', {
       prdt_c,
       product_ccy,
@@ -99,24 +97,21 @@ const OpenAccount = ({ translation }) => {
     request.y4mm_intrt_d = y4mm_intrt_d;
     request.ntfct_intrt = interestRateValue;
     request.adt_intrt = adt_intrt;
-    // request.dep_ac_usag_d = Number(request.dep_ac_usag_d);
-    // request.tpd_adr_zipc = Number(request.tpd_adr_zipc);
     request.apply_intrt = apply_intrt;
     delete request.intendedUseAccountDisplay;
     delete request.dob_display;
     const openAccountResponse = await apiCall(endpoints.openAccount, 'POST', request);
-    debugger;
     setIsLoadingOpenAccount(false);
     const openAccountStatus = openAccountResponse?.data?.elHeader;
     if (openAccountStatus?.resSuc) {
-      const { ntfct_intrt, lcl_ac_no, product_amount, acno } = openAccountResponse?.data?.elData || {};
+      const { lcl_ac_no_display, dep_acno_display } = openAccountResponse?.data?.elData || {};
       setOpenAccountSuccessInfo({
         productName: lcl_prdt_nm,
         creditChecked: request.credit_chk === '1',
-        acNo: lcl_ac_no,
+        acNo: lcl_ac_no_display,
         interestRate: `${ntfct_intrt}% APR`,
-        amount: `${product_amount} CAD`,
-        depositFrom: acno,
+        amount: `${formatCurrencyDisplay(request.trx_amt)} CAD`,
+        depositFrom: dep_acno_display,
       });
       setCurrentStep(OPEN_ACCOUNT_STEP.COMPLETED);
     } else {

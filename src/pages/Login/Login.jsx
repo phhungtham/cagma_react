@@ -23,7 +23,21 @@ import { loginStatusMsg, loginStatusSelector } from './redux/selector';
 import { ActionType, FeatureLoginName } from './redux/type';
 import './styles.scss';
 
-const listAccount = ['WTLEE815'];
+const listAccount = [
+  'WTLEE815',
+  'MYGODFIVE5',
+  'CATEST24',
+  'CATEST25',
+  'CATEST26',
+  'CATEST27',
+  'CATEST28',
+  'CATEST29',
+  'CATEST30',
+  'CATEST31',
+  'CATEST32',
+  'CATEST33',
+  'CATEST34',
+];
 
 const Login = () => {
   useReducers([{ key: FeatureLoginName, reducer: loginReducer }]);
