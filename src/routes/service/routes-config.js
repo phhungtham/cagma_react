@@ -4,6 +4,7 @@ import AppointmentHome from '@pages/Appointment/AppointmentHome';
 import AppointmentManagement from '@pages/Appointment/AppointmentManagement';
 import BookAppointment from '@pages/Appointment/BookAppointment';
 import BranchDirectory from '@pages/Appointment/BranchDirectory';
+import CommonTestPage from '@pages/CommonTestPage/CommonTestPage';
 import DemoComponent from '@pages/DemoComponent/DemoComponent';
 import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
 import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
@@ -78,6 +79,12 @@ const RoutesConfig = [
     path: '/demo',
     component: DemoComponent,
     private: false,
+  },
+  {
+    path: '/react-test-page',
+    component: CommonTestPage,
+    private: true,
+    navigatePath: '/',
   },
 ];
 
