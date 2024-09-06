@@ -21,7 +21,7 @@ import CustomerInfoBottom from './components/CustomerInfoBottom';
 import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
-import { accountFormMapFields, OPEN_ACCOUNT_STEP, openAccountInfo } from './constants';
+import { accountFormMapFields, OPEN_ACCOUNT_STEP } from './constants';
 import { getCustomerInfoRequest } from './redux/customer/action';
 import { customerReducer } from './redux/customer/reducer';
 import { customerSaga } from './redux/customer/saga';
@@ -45,13 +45,14 @@ const OpenAccount = ({ translation }) => {
   const [showCustomerInfoBottom, setShowCustomerInfoBottom] = useState(false);
   const [isLoadingCustomer, setIsLoadingCustomer] = useState(false);
   const [isLoadingOpenAccount, setIsLoadingOpenAccount] = useState(false);
+  const [openAccountSuccessInfo, setOpenAccountSuccessInfo] = useState();
   const [showAlert, setShowAlert] = useState({
     isShow: false,
     title: '',
     content: '',
   });
 
-  const { prdt_c, product_ccy, ntfct_intrt, lcl_prdt_nm } = productInfo || {};
+  const { prdt_c, product_ccy, ntfct_intrt, lcl_prdt_nm, dep_sjt_class } = productInfo || {};
 
   //Get phone number of home address
   const homeAddress = customer?.r_CAME001_1Vo?.find(address => address.cus_adr_t === 11);
@@ -69,23 +70,54 @@ const OpenAccount = ({ translation }) => {
 
   const onSubmitOpenAccountForm = async formValues => {
     setIsLoadingOpenAccount(true);
+    debugger;
     const productInterestRateResponse = await apiCall(endpoints.inquiryProductInterestRate, 'POST', {
       prdt_c,
       product_ccy,
     });
     const request = convertObjectBaseMappingFields(formValues, accountFormMapFields);
+    const {
+      dep_intrt_k,
+      intrt_trm_c,
+      y4mm_intrt_d,
+      ntfct_intrt: interestRateValue,
+      adt_intrt,
+      apply_intrt,
+    } = productInterestRateResponse?.data?.elData || {};
     request.prdt_c = prdt_c;
     request.apl_intrt = ntfct_intrt;
     request.tpd_trx_t = 0;
     request.tpd_chk = request.tpd_chk ? 'Y' : 'N';
-    request.credit_chk = request.credit_chk ? '1' : '0';
+    request.credit_chk = request.credit_chk ? 'Y' : 'N';
     request.trx_amt = Number(request.trx_amt);
-    request.intrt_trm_c = productInterestRateResponse?.data?.elData?.intrt_trm_c;
+    request.stmt_ccy_cvs_exrt = 1;
+    request.dep_cvsr_bnkerno = request.dep_cvsr_bnkerno || null;
+    request.refno = request.acno;
+    request.intrt_trm_c = intrt_trm_c;
+    request.dep_sjt_class = dep_sjt_class;
+    request.dep_intrt_k = dep_intrt_k;
+    request.y4mm_intrt_d = y4mm_intrt_d;
+    request.ntfct_intrt = interestRateValue;
+    request.adt_intrt = adt_intrt;
+    // request.dep_ac_usag_d = Number(request.dep_ac_usag_d);
+    // request.tpd_adr_zipc = Number(request.tpd_adr_zipc);
+    request.apply_intrt = apply_intrt;
     delete request.intendedUseAccountDisplay;
+    delete request.dob_display;
     const openAccountResponse = await apiCall(endpoints.openAccount, 'POST', request);
+    debugger;
     setIsLoadingOpenAccount(false);
     const openAccountStatus = openAccountResponse?.data?.elHeader;
     if (openAccountStatus?.resSuc) {
+      const { ntfct_intrt, lcl_ac_no, product_amount, acno } = openAccountResponse?.data?.elData || {};
+      setOpenAccountSuccessInfo({
+        productName: lcl_prdt_nm,
+        creditChecked: request.credit_chk === '1',
+        acNo: lcl_ac_no,
+        interestRate: `${ntfct_intrt}% APR`,
+        amount: `${product_amount} CAD`,
+        depositFrom: acno,
+      });
       setCurrentStep(OPEN_ACCOUNT_STEP.COMPLETED);
     } else {
       setShowAlert({
@@ -153,7 +185,9 @@ const OpenAccount = ({ translation }) => {
             productName={lcl_prdt_nm}
           />
         )}
-        {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && <OpenAccountSuccessful openAccountInfo={openAccountInfo} />}
+        {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && (
+          <OpenAccountSuccessful openAccountInfo={openAccountSuccessInfo} />
+        )}
       </div>
       <Alert
         isCloseButton={false}

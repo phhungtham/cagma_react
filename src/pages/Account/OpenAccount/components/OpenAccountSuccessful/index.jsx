@@ -5,6 +5,7 @@ import { openAccountSuccessFields } from '../../constants';
 import './styles.scss';
 
 const OpenAccountSuccessful = ({ openAccountInfo }) => {
+  const { creditChecked, productName } = openAccountInfo || {};
   const onClickViewAccount = () => {};
 
   const onClickNavigateHome = () => {};
@@ -21,8 +22,8 @@ const OpenAccountSuccessful = ({ openAccountInfo }) => {
           </div>
           <div className="open-account__title">
             <div className="complete-message">You’ve successfully opened</div>
-            <div className="product-type">e-Saving(CAD)</div>
-            <div className="note">Debit card will be sent to the stored customer address.</div>
+            <div className="product-type">{productName}</div>
+            {!!creditChecked && <div className="note">Debit card will be sent to the stored customer address.</div>}
           </div>
         </div>
         <div className="divider__item__black" />
