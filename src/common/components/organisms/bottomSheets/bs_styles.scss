@@ -39,6 +39,7 @@ $color-gray-400: #b9c1c9;
         height: 75%;
         top: 0;
         left: 0;
+        display: none;
       }
 
       .bot_gradient {
@@ -48,6 +49,7 @@ $color-gray-400: #b9c1c9;
         height: 75%;
         left: 0;
         bottom: 0;
+        display: none;
       }
     }
 
@@ -62,10 +64,16 @@ $color-gray-400: #b9c1c9;
 
     .rotateTop {
       transform: rotateX(30deg);
+      .top_gradient {
+        display: unset;
+      }
     }
 
     .rotateBottom {
       transform: rotateX(-30deg);
+      .bot_gradient {
+        display: unset;
+      }
     }
   }
 }

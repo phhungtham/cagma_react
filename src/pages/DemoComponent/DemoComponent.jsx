@@ -8,8 +8,14 @@ import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBott
 import './styles.scss';
 
 const DemoComponent = () => {
-  const [selectDate, setSelectDate] = useState({ open: false, date: '' });
-  const [selectTime, setSelectTime] = useState({ open: false, time: '' });
+  const [selectDate, setSelectDate] = useState({
+    open: false,
+    date: `${new Date().getMonth() + 1}.${new Date().getFullYear()}`,
+  });
+  const [selectTime, setSelectTime] = useState({
+    open: false,
+    time: `${new Date().getHours() % 12} ${new Date().getHours() > 12 ? 'PM' : 'AM'}`,
+  });
   const [viewMapItem, setViewMapItem] = useState({ open: false });
 
   return (

@@ -41,7 +41,7 @@ module.exports = {
       {
         arrowParens: 'avoid',
         trailingComma: 'es5',
-        endOfLine: 'lf',
+        endOfLine: 'auto',
         tabWidth: 2,
         useTabs: false,
         singleQuote: true,
