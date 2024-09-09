@@ -3,10 +3,27 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import InfoBox from '@common/components/atoms/InfoBox';
+import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAmountBottom';
+import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
+import SelectDateBottom from '@common/components/organisms/bottomSheets/SelectDateBottom';
+import SelectTermsBottom from '@common/components/organisms/bottomSheets/SelectTermsBottom';
+import SelectTimeBottom from '@common/components/organisms/bottomSheets/SelectTimeBottom';
+import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBottom';
+import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
+import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
+import { CurrencyCode } from '@common/constants/currency';
+import { SelectTermDurationTypes } from '@common/constants/terms';
 import { MENU_CODE } from '@configs/global/constants';
+import useCommonCode from '@hooks/useCommonCode';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
+import CustomerInfoBottom from '@pages/Account/OpenAccount/components/CustomerInfoBottom';
+import { getCustomerInfoRequest } from '@pages/Account/OpenAccount/redux/customer/action';
+import { customerReducer } from '@pages/Account/OpenAccount/redux/customer/reducer';
+import { customerSaga } from '@pages/Account/OpenAccount/redux/customer/saga';
+import { customerInfo } from '@pages/Account/OpenAccount/redux/customer/selector';
+import { CustomerFeatureName } from '@pages/Account/OpenAccount/redux/customer/type';
 import {
   callPhone,
   clearHistory,
@@ -27,12 +44,6 @@ import { loginStatusMsg, loginStatusSelector } from '../Login/redux/selector';
 import { FeatureLoginName } from '../Login/redux/type';
 
 const CommonTestPage = () => {
-  const defaultAccount = {
-    user_id: 'DOOLY94',
-    password: 'qwer1234',
-  };
-  const [accountInfo, setaccountInfo] = useState(defaultAccount);
-  const [loginInfo, setLoginInfo] = useState(null);
   const [showBottomSheet, setShowBottomSheet] = useState({
     bottomAccount: false,
     reportLost: false,
@@ -41,11 +52,66 @@ const CommonTestPage = () => {
     unlockCard: false,
     manageLimit: false,
     decryptCVC: false,
+    MyAccountsBottom: false,
+    CustomerInfoBottom: false,
+    ViewTermBottom: false,
+    ViewMapBottom: false,
+    SelectDateBottom: false,
+    SelectTimeBottom: false,
+    SelectTermsBottom: false,
   });
+
+  const defaultAccount = {
+    user_id: 'DOOLY94',
+    password: 'qwer1234',
+  };
+  const [accountInfo, setaccountInfo] = useState(defaultAccount);
+  const [loginInfo, setLoginInfo] = useState(null);
   const [showCompletedPage, setShowCompletedPage] = useState(false);
+
   const [cvcText, setCVCText] = useState('aJAQjrapJCfRhy/+k13how==');
   const loginMessage = useSelector(loginStatusMsg);
+  const [selectAccount, setSelectedAccount] = useState();
+  const [selectAmount, setSelectedAmount] = useState();
+  const [selectTerm, setSelectTerm] = useState();
 
+  // select date , time
+  const [selectDate, setSelectDate] = useState({
+    date: `${new Date().getMonth() + 1}.${new Date().getFullYear()}`,
+  });
+  const [selectTime, setSelectTime] = useState({
+    time: `${new Date().getHours() % 12} ${new Date().getHours() > 12 ? 'PM' : 'AM'}`,
+  });
+  //Get customer info and phone number of home address, job data
+  useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
+  useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
+  const { sendRequest: requestGetJob, data: jobData } = useCommonCode();
+  useEffect(() => {
+    if (showBottomSheet.CustomerInfoBottom && !customer) {
+      getCustomerInfoRequest();
+    }
+  }, [showBottomSheet.CustomerInfoBottom]);
+  const customer = useSelector(customerInfo);
+
+  const homeAddress = customer?.r_CAME001_1Vo?.find(address => address.cus_adr_t === 11);
+  const cus_adr_telno = homeAddress?.cus_adr_telno || '';
+
+  useEffect(() => {
+    if (jobData) {
+      const jobType = customer.job_t;
+      const jobMapList = jobData.job_t || [];
+      customer.job_display = jobMapList.find(item => item.key === jobType)?.value || '';
+      const subJobType = customer.sub_job_t_v;
+      const subJobMapList = jobData.sub_job_t_v || [];
+      customer.sub_job_display = subJobMapList.find(item => item.key === subJobType)?.value || '';
+    }
+  }, [jobData]);
+  useEffect(() => {
+    if (customer && !jobData) {
+      requestGetJob(`${getJobCode};${getSubJobCode}`);
+    }
+  }, [customer]);
+  // Login
   useReducers([{ key: FeatureLoginName, reducer: loginReducer }]);
   useSagas([{ key: FeatureLoginName, saga: loginSaga }]);
   const handleChangeAccountInfo = value => {
@@ -74,12 +140,12 @@ const CommonTestPage = () => {
 
   const onSubmitLogin = () => {
     const userInfo = {
-      uicc_id: 'LI5D+DstmWVPI6/WtlGr5grpywLN68+swhQMf33CC+o=',
+      uicc_id: 'x6BcpPoe9rVti6Jy2i/6iNwIe83Qjv4vVixo8MgZ1ds=',
       login_type: '1',
       user_id: accountInfo?.user_id,
       USER_PWD: accountInfo?.password,
       auth_key: '',
-      token_id: 'dfewtsfsfssf',
+      token_id: '512088810006623',
       cusno: '',
     };
     submitLoginRequest(userInfo);
@@ -179,6 +245,52 @@ const CommonTestPage = () => {
         },
       ],
     },
+    {
+      label: '• Test BS',
+      items: [
+        {
+          title: 'Customer Info',
+          label: 'Customer Info',
+          action: () => setShowBottomSheet({ ...showBottomSheet, CustomerInfoBottom: true }),
+        },
+        {
+          title: 'Get Account list',
+          label: 'Account List',
+          action: () => setShowBottomSheet({ ...showBottomSheet, MyAccountsBottom: true }),
+        },
+        {
+          title: 'Enter Amount',
+          label: 'Enter Amount',
+          action: () => setShowBottomSheet({ ...showBottomSheet, EnterAmountBottom: true }),
+        },
+
+        {
+          title: 'View Term',
+          label: 'View Term',
+          action: () => setShowBottomSheet({ ...showBottomSheet, ViewTermBottom: true }),
+        },
+        {
+          title: 'View Map',
+          label: 'View Map',
+          action: () => setShowBottomSheet({ ...showBottomSheet, ViewMapBottom: true }),
+        },
+        {
+          title: 'Select Date',
+          label: 'Select Date',
+          action: () => setShowBottomSheet({ ...showBottomSheet, SelectDateBottom: true }),
+        },
+        {
+          title: 'Select Time',
+          label: 'Select Time',
+          action: () => setShowBottomSheet({ ...showBottomSheet, SelectTimeBottom: true }),
+        },
+        {
+          title: 'Select Term',
+          label: 'Select Term',
+          action: () => setShowBottomSheet({ ...showBottomSheet, SelectTermsBottom: true }),
+        },
+      ],
+    },
   ];
 
   return (
@@ -186,7 +298,7 @@ const CommonTestPage = () => {
       <div className="common__test__wrapper">
         {renderNotify()}
         <Header title={'Common Test Page'} />
-        {/* <section className="login__field">
+        <section className="login__field">
           <section className="language__wrapper">
             <span className="title">Language</span>
             <select
@@ -205,8 +317,8 @@ const CommonTestPage = () => {
               defaultValue={defaultAccount.user_id}
               onChange={e => handleChangeAccountInfo({ user_id: e.target.value })}
             >
-              <option value="DOOLY94">DOOLY94</option>
-              <option value="YOUNGDOL1">YOUNGDOL1</option>
+              <option value="WTLEE815">WTLEE815</option>
+              <option value="HANNADIK1">HANNADIK1</option>
             </select>
             <input
               onChange={e => handleChangeAccountInfo({ password: e.target.value })}
@@ -218,7 +330,98 @@ const CommonTestPage = () => {
             <button onClick={onSubmitLogin}>login</button>
             <button>logout</button>
           </section>
-        </section> */}
+        </section>
+
+        {showBottomSheet.CustomerInfoBottom && (
+          <CustomerInfoBottom
+            customerInfo={{ ...customer, cus_adr_telno }}
+            // open={showBottomSheet.CustomerInfoBottom}
+            onClose={() => setShowBottomSheet({ ...showBottomSheet, CustomerInfoBottom: false })}
+            onClickConfirm={() => alert('Click confirm')}
+            onClickChangeProfile={() => alert('Click Change profile')}
+          />
+        )}
+        <MyAccountsBottom
+          open={showBottomSheet.MyAccountsBottom}
+          onClose={() => setShowBottomSheet({ ...showBottomSheet, MyAccountsBottom: false })}
+          onSelect={account => {
+            setSelectedAccount();
+            setSelectedAccount(account);
+            setShowBottomSheet({ ...showBottomSheet, MyAccountsBottom: false });
+          }}
+        />
+        {showBottomSheet.EnterAmountBottom && (
+          <EnterAmountBottom
+            onClose={() => setShowBottomSheet({ ...showBottomSheet, EnterAmountBottom: false })}
+            account={selectAccount}
+            currency={CurrencyCode.CAD}
+            amount={selectAmount}
+            min={100}
+            max={99999}
+            onChangeAmount={result => {
+              setSelectedAmount(result.amount);
+              console.log(selectAmount);
+            }}
+          />
+        )}
+
+        <ViewTermBottom
+          open={showBottomSheet.ViewTermBottom}
+          onClose={() => setShowBottomSheet({ ...showBottomSheet, ViewTermBottom: false })}
+          onSelect={() => alert('Selected account')}
+        />
+
+        {/* {showBottomSheet.ViewMapBottom && ( */}
+        <ViewMapBottom
+          open={showBottomSheet.ViewMapBottom}
+          onClose={() => setShowBottomSheet({ ...showBottomSheet, ViewMapBottom: false })}
+          branchData={{
+            title: '72 Centec',
+            caption: '72 Nguyen Thi Minh Khai, Vo Thi Sau',
+            phone: '039-596-5416',
+            fax: '416-250-3460',
+            branchNo: '08048',
+          }}
+        />
+        {/* )} */}
+
+        <SelectDateBottom
+          open={showBottomSheet.SelectDateBottom}
+          maxYear="2040"
+          minYear="1980"
+          onClose={() => setShowBottomSheet({ ...showBottomSheet, SelectDateBottom: false })}
+          onDateChange={date => {
+            setSelectDate({ date });
+            setShowBottomSheet({ ...showBottomSheet, SelectDateBottom: false });
+          }}
+          defaultDate={selectDate.date}
+          type="MM/YYYY"
+        />
+
+        <SelectTimeBottom
+          open={showBottomSheet.SelectTimeBottom}
+          onClose={() => setShowBottomSheet({ ...showBottomSheet, SelectTimeBottom: false })}
+          onTimeChange={time => {
+            setSelectTime({ time });
+            setShowBottomSheet({ ...showBottomSheet, SelectTimeBottom: false });
+          }}
+          defaultTime={selectTime.time}
+        />
+
+        {showBottomSheet.SelectTermsBottom && (
+          <SelectTermsBottom
+            onClose={() => setShowBottomSheet({ ...showBottomSheet, SelectTermsBottom: false })}
+            type={SelectTermDurationTypes.MONTH}
+            onChange={term => {
+              setSelectTerm(term);
+              console.log(term);
+            }}
+            value={selectTerm}
+            max={60}
+            min={1}
+          />
+        )}
+
         {testRowData.map(data => renderNavigationEl(data.label, data.items))}
       </div>
     </>
