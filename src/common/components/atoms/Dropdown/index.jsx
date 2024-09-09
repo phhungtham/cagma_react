@@ -39,7 +39,7 @@ const Dropdown = forwardRef((props, ref) => {
   }, [completedMode]);
 
   const handleFocusStatus = () => {
-    if (readOnly) {
+    if (readOnly || disabled) {
       setCustomClass('dropdown__completed');
       return;
     }
@@ -52,12 +52,13 @@ const Dropdown = forwardRef((props, ref) => {
   };
 
   useEffect(() => {
+    let valueForDisplay = '';
     if (value) {
-      const valueForDisplay = options?.length ? options.find(option => option.value === value)?.label || '' : value;
-      setValueDisplay(valueForDisplay);
+      valueForDisplay = options?.length ? options.find(option => option.value === value)?.label || '' : value;
     }
+    setValueDisplay(valueForDisplay);
     setCustomClass(value ? 'dropdown__completed' : '');
-  }, [value]);
+  }, [value, options]);
 
   useEffect(() => {
     setErrorTextField(errorMessage);

@@ -77,7 +77,7 @@ const Login = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       setAuthenticated();
-      navigate(routePaths.productList);
+      navigate(routePaths.changeProfile);
     }
   }, [isLoginSuccess]);
 

@@ -35,7 +35,6 @@ const OpenAccount = ({ translation }) => {
   useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
   const productInfo = useSelector(nativeParamsSelector);
 
-  console.log('productInfo :>> ', productInfo);
   const customer = useSelector(customerInfo);
 
   const { sendRequest: requestGetJob, data: jobData } = useCommonCode();

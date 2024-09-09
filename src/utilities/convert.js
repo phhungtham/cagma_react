@@ -6,3 +6,24 @@ export const convertObjectBaseMappingFields = (currentObject, mappingFields) => 
   }
   return convertedObject;
 };
+
+export const buildObjectMapFromResponse = (response, mappingFields) => {
+  const newObject = {};
+  for (const [localKey, remoteKey] of Object.entries(mappingFields)) {
+    newObject[localKey] = response[remoteKey] || null;
+  }
+  return newObject;
+};
+
+export const commonCodeDataToOptions = (commonCodeData = []) => {
+  if (!commonCodeData) {
+    return [];
+  }
+
+  return commonCodeData.map(item => {
+    return {
+      label: item.value,
+      value: item.key,
+    };
+  });
+};
