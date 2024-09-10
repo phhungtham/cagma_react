@@ -1,5 +1,12 @@
 export const getIntendedUseAccountCode = 'dep_ac_usag_d';
 export const getProvinceCode = 'state_c';
 export const getJobCode = 'job_t';
-export const getSubJobCode = 'sub_job_t_v';
+export const getSubJobCode = 'sub_job_t';
 export const getEmploymentCode = 'emplm_s_c';
+export const getAddressTypeCode = 'cus_adr_t';
+export const getCountryCode = 'nat_c';
+
+export const EmploymentMap = {
+  Employed: '2',
+  SelfEmployed: '4',
+};

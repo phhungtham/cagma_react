@@ -1,34 +1,55 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { ViewDetailIcon } from '@assets/icons';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Dropdown from '@common/components/atoms/Dropdown';
+import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
+import { endpoints } from '@common/constants/endpoint';
+import { notAllowNumberRegex } from '@common/constants/regex';
+import { apiCall } from '@shared/api';
 
-import { employmentValuesDisableOccupation } from '../constants';
+import { EMAIL_VERIFY_IN_SECONDS, employmentValuesDisableOccupation } from '../constants';
 
-const ContactInformationSection = ({
+const ContactInfoSection = ({
   onOpenSelectEmploymentBottom,
   employmentOptions,
   onOpenSelectOccupation1Bottom,
   occupation1Options,
+  onOpenSelectOccupation2Bottom,
+  occupation2Options,
+  onShowLoading,
+  onCloseLoading,
 }) => {
-  const { control, watch, setValue } = useFormContext();
-  const [employment] = watch(['employment']);
+  const {
+    control,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
 
+  //TODO: Hanle 3 minutes
+
+  const [employment, verificationCode, email] = watch(['employment', 'verificationCode', 'email']);
+
+  const [isShowEmailVerifyCode, setIsShowEmailVerifyCode] = useState(false);
+
+  const invalidVerificationCode = verificationCode?.length !== 6;
   const isDisabledOccupation = employmentValuesDisableOccupation.includes(employment);
 
-  useEffect(() => {
-    setValue('occupation1', null);
-    setValue('occupation2', null);
-    if (employmentValuesDisableOccupation.includes(employment)) {
-      const occupation3Name = (employmentOptions || []).find(item => item.value === employment)?.label;
-      setValue('occupation3', occupation3Name);
-    } else {
-      setValue('occupation3', '');
+  const handleSendEmailVerifyCode = async () => {
+    if (!errors.email) {
+      onShowLoading();
+      const request = {
+        cus_email: email,
+      };
+      const requestVerifyResponse = await apiCall(endpoints.requestEmailVerification, 'POST', request);
+      onCloseLoading();
+      console.log('requestVerifyResponse :>> ', requestVerifyResponse);
+      setIsShowEmailVerifyCode(true);
     }
-  }, [employment]);
+  };
 
   return (
     <div className="form__section">
@@ -81,6 +102,7 @@ const ContactInformationSection = ({
                 label="Send"
                 variant="outlined__primary"
                 className="btn__send btn__sm"
+                onClick={handleSendEmailVerifyCode}
               />
             }
             {...field}
@@ -89,6 +111,37 @@ const ContactInformationSection = ({
         control={control}
         name="email"
       />
+      {isShowEmailVerifyCode && (
+        <>
+          <Controller
+            render={({ field }) => (
+              <Input
+                label="Verification code"
+                type={'text'}
+                remainingTime={EMAIL_VERIFY_IN_SECONDS}
+                endAdornment={
+                  <Button
+                    label="Verify"
+                    variant="outlined__primary"
+                    className="btn__send btn__sm"
+                    disable={invalidVerificationCode}
+                  />
+                }
+                regex={notAllowNumberRegex}
+                maxLength={6}
+                {...field}
+              />
+            )}
+            control={control}
+            name="verificationCode"
+          />
+          <InfoBox
+            variant="notice"
+            label="You need to click the Save button after making changes to apply them."
+          />
+        </>
+      )}
+
       <Controller
         render={({ field }) => (
           <Input
@@ -129,6 +182,8 @@ const ContactInformationSection = ({
         render={({ field }) => (
           <Dropdown
             label={'Occupation2'}
+            onFocus={onOpenSelectOccupation2Bottom}
+            options={occupation2Options}
             disabled={isDisabledOccupation}
             {...field}
           />
@@ -154,4 +209,4 @@ const ContactInformationSection = ({
   );
 };
 
-export default ContactInformationSection;
+export default ContactInfoSection;

@@ -221,3 +221,11 @@ function formatZero(number, length) {
   }
   return str;
 }
+
+export const formatSecondsDisplay = seconds => {
+  const minutes = Math.floor(seconds / 60);
+  const second = seconds % 60;
+  const formattedSeconds = second < 10 ? `0${second}` : second;
+
+  return `${minutes}:${formattedSeconds}`;
+};

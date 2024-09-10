@@ -1,7 +1,8 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 
 import { SIZE, TAG_NAME } from '@common/components/constants';
 import useComposeRefs from '@hooks/useComposeRefs';
+import { formatSecondsDisplay } from '@utilities/dateTimeUtils';
 import { ClearIcon } from 'assets/icons';
 import PropTypes from 'prop-types';
 
@@ -41,8 +42,12 @@ const Input = forwardRef((props, ref) => {
   const [customClass, setCustomClass] = useState('');
   const [errorTextField, setErrorTextField] = useState(errorMessage);
 
-  const [minutes, _setMinutes] = useState(remainingTime.minutes);
-  const [seconds, _setSeconds] = useState(remainingTime.seconds);
+  const timerRef = useRef(null);
+  const countRef = useRef(remainingTime);
+  const displayRef = useRef(null);
+
+  // const [minutes, setMinutes] = useState(remainingTime.minutes);
+  // const [seconds, setSeconds] = useState(remainingTime.seconds);
 
   const composeRef = useComposeRefs(ref);
 
@@ -96,6 +101,48 @@ const Input = forwardRef((props, ref) => {
   useEffect(() => {
     setErrorTextField(errorMessage);
   }, [errorMessage]);
+
+  useEffect(() => {
+    if (remainingTime) {
+      const updateCountdown = () => {
+        if (countRef.current > 0) {
+          countRef.current -= 1;
+          if (displayRef.current) {
+            displayRef.current.textContent = formatSecondsDisplay(countRef.current); //Update DOM without rerendering
+          }
+        } else {
+          clearInterval(timerRef.current);
+        }
+      };
+
+      timerRef.current = setInterval(updateCountdown, 1000);
+
+      return () => {
+        clearInterval(timerRef.current);
+      };
+      // let myInterval;
+      // if (!readOnly) {
+      //   myInterval = setInterval(() => {
+      //     if (seconds > 0) {
+      //       setSeconds(seconds - 1);
+      //     }
+      //     if (seconds === 0) {
+      //       if (minutes === 0) {
+      //         clearInterval(myInterval);
+      //       } else {
+      //         setMinutes(minutes - 1);
+      //         setSeconds(59);
+      //       }
+      //     }
+      //   }, 1000);
+      // } else {
+      //   setMinutes(null);
+      // }
+      // return () => {
+      //   clearInterval(myInterval);
+      // };
+    }
+  }, []);
 
   return (
     <div className={`text__field ${clazz}`}>
@@ -151,9 +198,10 @@ const Input = forwardRef((props, ref) => {
             {...otherProps}
           />
         )}
-        {minutes ? (
-          <div className="input__remaining">
-            {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+        {remainingTime ? (
+          <div className={`input__remaining ${!!endAdornment ? 'has-endAdornment' : ''}`}>
+            {/* {minutes}:{seconds < 10 ? `0${seconds}` : seconds} */}
+            <span ref={displayRef} />
           </div>
         ) : (
           customClass === 'input__focus' &&
@@ -199,10 +247,7 @@ Input.propTypes = {
   isCountCharacter: PropTypes.bool,
   isMemo: PropTypes.bool,
   placeHolder: PropTypes.string,
-  remainingTime: PropTypes.exact({
-    minutes: PropTypes.number,
-    seconds: PropTypes.number,
-  }),
+  remainingTime: PropTypes.number,
   style: PropTypes.object,
   mode: PropTypes.oneOf(['normal', 'onBackground']),
   type: PropTypes.oneOf(['text', 'password', 'number', 'email']),
@@ -222,10 +267,7 @@ Input.defaultProps = {
   placeHolder: '',
   isCountCharacter: false,
   errorMessage: '',
-  remainingTime: {
-    minutes: null,
-    seconds: null,
-  },
+  remainingTime: 0,
   helperText: '',
   mode: 'normal',
   tagName: TAG_NAME.INPUT,

@@ -179,13 +179,17 @@ $input-on-background: background-color(dark-sky-blue);
       align-items: center;
 
       cursor: pointer;
+      &.has-endAdornment {
+        right: 100px;
+      }
     }
     .input__remaining {
-      color: text-color(santa-gray);
+      color: $color-gray-550;
       font-style: normal;
       font-weight: 400;
       font-size: 15px;
       line-height: 100%;
+      line-height: 20px;
     }
     .input__icon {
       position: absolute;

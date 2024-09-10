@@ -1,33 +1,48 @@
 import { useEffect, useState } from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { CameraIcon, SettingIcon } from '@assets/icons';
+import { SettingIcon } from '@assets/icons';
 import avatarURL from '@assets/images/jack-icon.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import Dropdown from '@common/components/atoms/Dropdown';
-import InfoBox from '@common/components/atoms/InfoBox';
-import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import Alert from '@common/components/molecules/Alert';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import Header from '@common/components/organisms/Header';
-import { getEmploymentCode, getJobCode, getSubJobCode } from '@common/constants/commonCode';
+import { addressTypeMapping } from '@common/constants/address';
+import {
+  EmploymentMap,
+  getAddressTypeCode,
+  getCountryCode,
+  getEmploymentCode,
+  getJobCode,
+  getProvinceCode,
+  getSubJobCode,
+} from '@common/constants/commonCode';
+import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { buildObjectMapFromResponse, commonCodeDataToOptions } from '@utilities/convert';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
+import AddressInfoSection from './components/AddressInfoSection';
 import ChangePhotoBottom from './components/ChangePhotoBottom';
-import ContactInformationSection from './components/ContactInformationSection';
-import { initSelectBottom, profileFormMapFields, SELECT_TYPE, selectBottomTypeMapField } from './constants';
+import ContactInfoSection from './components/ContactInfoSection';
+import {
+  employmentValuesDisableOccupation,
+  initSelectBottom,
+  profileFormMapFields,
+  SELECT_TYPE,
+  selectBottomTypeMapField,
+} from './constants';
 import { getUserInfoRequest } from './redux/userInfo/action';
 import { userInfoReducer } from './redux/userInfo/reducer';
 import { userInfoSaga } from './redux/userInfo/saga';
 import { userInfoLoadState, userInfoSelector } from './redux/userInfo/selector';
 import { UserInfoFeatureName } from './redux/userInfo/type';
+import { changeProfileSchema } from './schema';
 import './styles.scss';
 
 const ChangeProfile = ({ translation }) => {
@@ -46,10 +61,18 @@ const ChangeProfile = ({ translation }) => {
     bottomChangePhoto: false,
   });
 
+  const [showLoading, setShowLoading] = useState(false);
+
+  const isLoading = isLoadingUserInfo || isLoadingCommonCode || showLoading;
+
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [employmentOptions, setEmploymentOptions] = useState([]);
   const [occupation1Options, setOccupation1Options] = useState([]);
+  const [subJobs, setSubJobs] = useState([]);
   const [occupation2Options, setOccupation2Options] = useState([]);
+  const [addressTypeOptions, setAddressTypeOptions] = useState([]);
+  const [countryOptions, setCountryOptions] = useState([]);
+  const [provinceOptions, setProvinceOptions] = useState([]);
 
   const [showAlert, setShowAlert] = useState({
     saveChangeConfirmAlert: false,
@@ -62,8 +85,14 @@ const ChangeProfile = ({ translation }) => {
     type: 'success',
   });
 
-  const methods = useForm();
-  const { handleSubmit, control, setValue, reset } = methods;
+  const methods = useForm({
+    // defaultValues: defaultValues,
+    mode: 'onChange',
+    resolver: yupResolver(changeProfileSchema),
+  });
+  const { handleSubmit, control, setValue, reset, watch } = methods;
+
+  const [employment, occupation1] = watch(['employment', 'occupation1']);
 
   const onClickMoveBack = () => {
     setShowAlert({ ...showAlert, saveChangeConfirmAlert: true });
@@ -85,13 +114,58 @@ const ChangeProfile = ({ translation }) => {
     setSelectBottom({ type: SELECT_TYPE.OCCUPATION1, options: occupation1Options, isShow: true, title: 'Occupation1' });
   };
 
+  const handleOpenSelectOccupation2Bottom = () => {
+    setSelectBottom({ type: SELECT_TYPE.OCCUPATION2, options: occupation2Options, isShow: true, title: 'Occupation2' });
+  };
+
+  const handleOpenSelectAddressTypeBottom = () => {
+    setSelectBottom({
+      type: SELECT_TYPE.ADDRESS_TYPE,
+      options: addressTypeOptions,
+      isShow: true,
+      title: 'Address Type',
+    });
+  };
+
+  const handleOpenSelectCountryBottom = () => {
+    setSelectBottom({
+      type: SELECT_TYPE.COUNTRY,
+      options: countryOptions,
+      isShow: true,
+      title: 'Country',
+    });
+  };
+
+  const handleOpenSelectProvinceBottom = () => {
+    setSelectBottom({
+      type: SELECT_TYPE.PROVINCE,
+      options: provinceOptions,
+      isShow: true,
+      title: 'Province',
+    });
+  };
+
   const onCloseSelectBottom = () => {
     setSelectBottom(initSelectBottom);
   };
 
   const onChangeSelectBottom = item => {
     const fieldName = selectBottomTypeMapField[selectBottom.type];
-    setValue(fieldName, item.value);
+    const value = item.value;
+    setValue(fieldName, value);
+    if (fieldName === 'employment') {
+      setValue('occupation1', null);
+      setValue('occupation2', null);
+      if (employmentValuesDisableOccupation.includes(value)) {
+        const occupation3Name = (employmentOptions || []).find(item => item.value === value)?.label;
+        setValue('occupation3', occupation3Name);
+      } else {
+        setValue('occupation3', '');
+      }
+    }
+    if (fieldName === 'occupation1') {
+      setValue('occupation2', null);
+    }
     onCloseSelectBottom();
   };
 
@@ -118,26 +192,93 @@ const ChangeProfile = ({ translation }) => {
     setShowAlert({ ...showAlert, deletePhotoConfirmAlert: true });
   };
 
+  //Using sub job prefix for get list of occupation 2 based sub job list
+  const getSubJobPrefix = () => {
+    let subJobPrefix = '';
+    const occupation1Num = Number(occupation1);
+    if (employment === EmploymentMap.Employed) {
+      subJobPrefix = 'E';
+    } else if (employment === EmploymentMap.SelfEmployed) {
+      subJobPrefix = 'S';
+      if (occupation1Num === 1) {
+        return subJobPrefix;
+      }
+    }
+
+    if (occupation1Num < 10) {
+      subJobPrefix += `0${occupation1Num}`;
+    }
+
+    return subJobPrefix;
+  };
+
+  const handleShowLoading = () => {
+    setShowLoading(true);
+  };
+
+  const handleCloseLoading = () => {
+    setShowLoading(false);
+  };
+
   useEffect(() => {
     if (userInfo) {
       const user = buildObjectMapFromResponse(userInfo, profileFormMapFields);
-      console.log('user :>> ', user);
+      const defaultAddress =
+        (userInfo?.r_CAME001_1Vo || []).find(item => String(item.cus_adr_t) === addressTypeMapping.home) ||
+        userInfo?.r_CAME001_1Vo?.[0];
+      user.addressType = defaultAddress?.cus_adr_t ? String(defaultAddress?.cus_adr_t) : null;
+      user.phoneNumber = defaultAddress?.cus_adr_telno;
+      user.faxNumber = defaultAddress?.cus_faxno;
+      user.aptNumber = defaultAddress?.adr_strt_nm;
+      user.country = defaultAddress?.adr_nat_c || 'CA'; //Set default is Canada
+      user.province = defaultAddress?.state_c;
+      user.postalCode = defaultAddress?.cus_adr_zipc;
+      user.aptNumber = defaultAddress?.adr_strt_nm;
+      user.streetNumber = defaultAddress?.adr_houseno_in_ctt;
+      user.streetName = defaultAddress?.adr_colny_nm;
+      user.city = defaultAddress?.cus_city_nm;
       reset(user);
-      requestGetCommonCode([getEmploymentCode, getJobCode, getSubJobCode].join(';'));
+      requestGetCommonCode(
+        [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
+      );
     }
   }, [userInfo]);
 
   useEffect(() => {
     if (commonCodeData) {
-      const { emplm_s_c: employments, job_t: jobs, sub_job_t_v: subJobs } = commonCodeData || {};
+      const {
+        emplm_s_c: employments,
+        job_t: jobs,
+        sub_job_t: subJobs,
+        cus_adr_t: address,
+        nat_c: countries,
+        state_c: provinces,
+      } = commonCodeData || {};
       const convertedEmployments = commonCodeDataToOptions(employments);
       const convertedJobs = commonCodeDataToOptions(jobs);
       const convertedSubJobs = commonCodeDataToOptions(subJobs);
+      const convertedCountries = commonCodeDataToOptions(countries);
+      const convertedProvince = commonCodeDataToOptions(provinces);
+      const filteredAddressTypesForDisplay = (address || []).filter(item =>
+        [addressTypeMapping.home, addressTypeMapping.work, addressTypeMapping.alternativeMailing].includes(item?.key)
+      );
+      const convertedAddressTypes = commonCodeDataToOptions(filteredAddressTypesForDisplay);
       setEmploymentOptions(convertedEmployments);
       setOccupation1Options(convertedJobs);
-      setOccupation2Options(convertedSubJobs);
+      setSubJobs(convertedSubJobs);
+      setAddressTypeOptions(convertedAddressTypes);
+      setCountryOptions(convertedCountries);
+      setProvinceOptions(convertedProvince);
     }
   }, [commonCodeData]);
+
+  useEffect(() => {
+    if (occupation1 && employment && subJobs?.length) {
+      const subJobPrefix = getSubJobPrefix();
+      const filteredOccupation2List = subJobs?.filter(item => item.value?.includes(subJobPrefix)) || [];
+      setOccupation2Options(filteredOccupation2List);
+    }
+  }, [occupation1, employment, subJobs]);
 
   useEffect(() => {
     getUserInfoRequest();
@@ -145,7 +286,7 @@ const ChangeProfile = ({ translation }) => {
 
   return (
     <div className="change-profile__wrapper">
-      {(isLoadingUserInfo || isLoadingCommonCode) && <Spinner />}
+      {isLoading && <Spinner />}
       <Header
         title="Change Profile"
         onClick={onClickMoveBack}
@@ -177,134 +318,24 @@ const ChangeProfile = ({ translation }) => {
         </div>
         <div className="form__wrapper">
           <FormProvider {...methods}>
-            <ContactInformationSection
+            <ContactInfoSection
               onOpenSelectEmploymentBottom={handleOpenSelectEmploymentBottom}
               employmentOptions={employmentOptions}
               onOpenSelectOccupation1Bottom={handleOpenSelectOccupation1Bottom}
               occupation1Options={occupation1Options}
+              onOpenSelectOccupation2Bottom={handleOpenSelectOccupation2Bottom}
+              occupation2Options={occupation2Options}
+              onShowLoading={handleShowLoading}
+              onCloseLoading={handleCloseLoading}
             />
-            <div className="form__section pt-9">
-              <div className="form__section__title">
-                <span>Address Information</span>
-              </div>
-              <Controller
-                render={({ field }) => (
-                  <Dropdown
-                    label={'Address Type'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="addressType"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label={'Phone Number'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="phoneNumber"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label={'Fax Number'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="faxNumber"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Dropdown
-                    label={'Country'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="country"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label={'Postal Code'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="postalCode"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label={'APT Number/SUITE Number'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="aptNumber"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label={'Street Number'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="postalCode"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label={'Street Name'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="postalCode"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Input
-                    label={'City'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="postalCode"
-              />
-              <Controller
-                render={({ field }) => (
-                  <Dropdown
-                    label={'Province'}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="country"
-              />
-              <div className="divider__item__solid mt-4" />
-              <div className="form__section pt-4">
-                <div className="form__section__title">
-                  <span>Proof of address</span>
-                </div>
-                <div className="address__upload">
-                  <div className="upload__icon">
-                    <CameraIcon />
-                  </div>
-                  <p className="upload__title">Upload</p>
-                  <p className="upload__desc">*5MB Max</p>
-                </div>
-                <InfoBox
-                  variant="informative"
-                  label="Your address can be easily updated via online by submitting a proff of address document. If you prefer the in-person help, please visit our branches."
-                />
-              </div>
-            </div>
+            <AddressInfoSection
+              onOpenAddressTypeBottom={handleOpenSelectAddressTypeBottom}
+              addressTypeOptions={addressTypeOptions}
+              onOpenCountryBottom={handleOpenSelectCountryBottom}
+              countryOptions={countryOptions}
+              onOpenProvinceBottom={handleOpenSelectProvinceBottom}
+              provinceOptions={provinceOptions}
+            />
           </FormProvider>
         </div>
         <div className="footer__fixed">
