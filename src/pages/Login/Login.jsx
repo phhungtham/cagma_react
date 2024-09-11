@@ -48,13 +48,13 @@ const Login = () => {
   const navigate = useNavigate();
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
-      userName: 'WTLEE815',
+      userName: 'CATEST25',
       password: 'qwer1234',
     },
   });
   const isLoginSuccess = useSelector(loginStatusSelector);
   const loginMessage = useSelector(loginStatusMsg);
-  const [currentAccount, setCurrentAccount] = useState('WTLEE815');
+  const [currentAccount, setCurrentAccount] = useState('CATEST25');
 
   const renderNotify = () => {
     if (isLoginSuccess) {

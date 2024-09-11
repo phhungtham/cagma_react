@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { ViewDetailIcon } from '@assets/icons';
@@ -10,7 +10,7 @@ import { endpoints } from '@common/constants/endpoint';
 import { notAllowNumberRegex } from '@common/constants/regex';
 import { apiCall } from '@shared/api';
 
-import { EMAIL_VERIFY_IN_SECONDS, employmentValuesDisableOccupation } from '../constants';
+import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX, employmentValuesDisableOccupation } from '../constants';
 
 const ContactInfoSection = ({
   onOpenSelectEmploymentBottom,
@@ -19,13 +19,14 @@ const ContactInfoSection = ({
   occupation1Options,
   onOpenSelectOccupation2Bottom,
   occupation2Options,
-  onShowLoading,
-  onCloseLoading,
+  setShowLoading,
+  setShowToast,
 }) => {
   const {
     control,
     watch,
     setValue,
+    setError,
     formState: { errors },
   } = useFormContext();
 
@@ -33,21 +34,98 @@ const ContactInfoSection = ({
 
   const [employment, verificationCode, email] = watch(['employment', 'verificationCode', 'email']);
 
-  const [isShowEmailVerifyCode, setIsShowEmailVerifyCode] = useState(false);
+  const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
+  const [showEmailVerifyInfo, setShowEmailVerifyInfo] = useState(false);
+  const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
+  const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
+  const clearTimeOutRef = useRef();
+
+  const verifyEmailFailedNumber = useRef(0);
 
   const invalidVerificationCode = verificationCode?.length !== 6;
   const isDisabledOccupation = employmentValuesDisableOccupation.includes(employment);
 
-  const handleSendEmailVerifyCode = async () => {
+  const verifyCodeSessionNumberRef = useRef(null);
+
+  console.log('verifyCodeSessionNumberRef.current :>> ', verifyCodeSessionNumberRef.current);
+
+  const handleRequestGetEmailVerifyCode = async () => {
     if (!errors.email) {
-      onShowLoading();
+      setShowLoading(true);
+      await apiCall(endpoints.inquiryUserInformation, 'POST');
       const request = {
         cus_email: email,
       };
-      const requestVerifyResponse = await apiCall(endpoints.requestEmailVerification, 'POST', request);
-      onCloseLoading();
-      console.log('requestVerifyResponse :>> ', requestVerifyResponse);
-      setIsShowEmailVerifyCode(true);
+      const requestVerifyResponse = await apiCall(endpoints.requestGetEmailVerifyCode, 'POST', request);
+      const responseData = requestVerifyResponse?.data?.elData;
+      const resultCode = responseData?.cnt;
+      const isDuplicatedEmail = resultCode === 9;
+      const isEmailAvailable = resultCode === 0;
+      setShowLoading(false);
+      if (isDuplicatedEmail) {
+        //TODO: Show Error
+        return;
+      }
+
+      if (isEmailAvailable) {
+        const { seqno } = responseData || {};
+        verifyCodeSessionNumberRef.current = seqno;
+        //TODO: Handle clear time out when submit or failed 5 times.
+        //TODO: Focus to verify code input when clicking send button
+        clearTimeOutRef.current = setTimeout(() => {
+          setError('verificationCode', {
+            type: 'timeout',
+            message: 'Verification code has timed out. Resend E-mail and try again.',
+          });
+          setDisabledVerifyButton(true);
+        }, EMAIL_VERIFY_IN_SECONDS * 1000);
+        setShowEmailVerifyCode(true);
+        setShowEmailVerifyInfo(true);
+        if (!alreadySendEmailVerification) {
+          setAlreadySendEmailVerification(true);
+        }
+      }
+    }
+  };
+
+  const handleSendEmailVerifyCode = async () => {
+    setShowLoading(true);
+    // await apiCall(endpoints.inquiryUserInformation, 'POST');
+    const request = {
+      cert_no: verificationCode,
+      seqno: verifyCodeSessionNumberRef.current,
+    };
+    const verifyResponse = await apiCall(endpoints.sendEmailVerifyCode, 'POST', request);
+    const responseData = verifyResponse?.data?.elData;
+    const resultCode = String(responseData?.result_cd || '');
+    const isVerifyFailed = resultCode === '9';
+    const isVerifySuccess = resultCode === '1';
+    setShowLoading(false);
+    if (isVerifyFailed) {
+      verifyEmailFailedNumber.current += 1;
+      if (verifyEmailFailedNumber.current === EMAIL_VERIFY_RETRY_MAX) {
+        setError('verificationCode', {
+          type: 'wrong',
+          message: 'You’ve entered the wrong code %1 times. Resend E-mail and try again.',
+        });
+        setDisabledVerifyButton(true);
+      } else {
+        setError('verificationCode', {
+          type: 'wrong',
+          message: `You’ve entered the wrong code. (${verifyEmailFailedNumber.current}/5)`,
+        });
+      }
+
+      return;
+    }
+
+    if (isVerifySuccess) {
+      setShowEmailVerifyCode(false);
+      setShowToast({
+        isShow: true,
+        message: 'Email verification is complete.',
+        type: 'success',
+      });
     }
   };
 
@@ -99,47 +177,50 @@ const ContactInfoSection = ({
             type={'text'}
             endAdornment={
               <Button
-                label="Send"
+                label={alreadySendEmailVerification ? 'Resend' : 'Send'}
                 variant="outlined__primary"
                 className="btn__send btn__sm"
-                onClick={handleSendEmailVerifyCode}
+                onClick={handleRequestGetEmailVerifyCode}
               />
             }
+            maxLength={64}
             {...field}
           />
         )}
         control={control}
         name="email"
       />
-      {isShowEmailVerifyCode && (
-        <>
-          <Controller
-            render={({ field }) => (
-              <Input
-                label="Verification code"
-                type={'text'}
-                remainingTime={EMAIL_VERIFY_IN_SECONDS}
-                endAdornment={
-                  <Button
-                    label="Verify"
-                    variant="outlined__primary"
-                    className="btn__send btn__sm"
-                    disable={invalidVerificationCode}
-                  />
-                }
-                regex={notAllowNumberRegex}
-                maxLength={6}
-                {...field}
-              />
-            )}
-            control={control}
-            name="verificationCode"
-          />
-          <InfoBox
-            variant="notice"
-            label="You need to click the Save button after making changes to apply them."
-          />
-        </>
+      {showEmailVerifyCode && (
+        <Controller
+          render={({ field }) => (
+            <Input
+              label="Verification code"
+              type={'text'}
+              remainingTime={EMAIL_VERIFY_IN_SECONDS}
+              endAdornment={
+                <Button
+                  label="Verify"
+                  variant="outlined__primary"
+                  className="btn__send btn__sm"
+                  disable={invalidVerificationCode || disabledVerifyButton}
+                  onClick={handleSendEmailVerifyCode}
+                />
+              }
+              regex={notAllowNumberRegex}
+              maxLength={6}
+              errorMessage={errors?.verificationCode?.message || ''}
+              {...field}
+            />
+          )}
+          control={control}
+          name="verificationCode"
+        />
+      )}
+      {showEmailVerifyInfo && (
+        <InfoBox
+          variant="notice"
+          label="You need to click the Save button after making changes to apply them."
+        />
       )}
 
       <Controller

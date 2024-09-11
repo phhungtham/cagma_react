@@ -166,7 +166,7 @@ $input-on-background: background-color(dark-sky-blue);
     }
 
     &.input__error {
-      border: 1px solid text-color(error-light-red);
+      border: 1px solid $color-error;
     }
 
     .input__icon,
@@ -221,10 +221,11 @@ $input-on-background: background-color(dark-sky-blue);
     padding-left: 20px;
     font-size: 12px;
     font-weight: 400;
+    line-height: 16px;
     color: text-color(santa-gray);
 
     &.error {
-      color: text-color(error-light-red);
+      color: $color-error;
     }
   }
 }

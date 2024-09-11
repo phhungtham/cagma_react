@@ -46,3 +46,4 @@ export const employmentValuesDisableOccupation = [
 ];
 
 export const EMAIL_VERIFY_IN_SECONDS = 180;
+export const EMAIL_VERIFY_RETRY_MAX = 5;

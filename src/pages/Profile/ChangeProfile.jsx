@@ -63,8 +63,6 @@ const ChangeProfile = ({ translation }) => {
 
   const [showLoading, setShowLoading] = useState(false);
 
-  const isLoading = isLoadingUserInfo || isLoadingCommonCode || showLoading;
-
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [employmentOptions, setEmploymentOptions] = useState([]);
   const [occupation1Options, setOccupation1Options] = useState([]);
@@ -212,14 +210,6 @@ const ChangeProfile = ({ translation }) => {
     return subJobPrefix;
   };
 
-  const handleShowLoading = () => {
-    setShowLoading(true);
-  };
-
-  const handleCloseLoading = () => {
-    setShowLoading(false);
-  };
-
   useEffect(() => {
     if (userInfo) {
       const user = buildObjectMapFromResponse(userInfo, profileFormMapFields);
@@ -241,6 +231,7 @@ const ChangeProfile = ({ translation }) => {
       requestGetCommonCode(
         [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
       );
+      setShowLoading(false);
     }
   }, [userInfo]);
 
@@ -281,12 +272,13 @@ const ChangeProfile = ({ translation }) => {
   }, [occupation1, employment, subJobs]);
 
   useEffect(() => {
+    setShowLoading(true);
     getUserInfoRequest();
   }, []);
 
   return (
     <div className="change-profile__wrapper">
-      {isLoading && <Spinner />}
+      {showLoading && <Spinner />}
       <Header
         title="Change Profile"
         onClick={onClickMoveBack}
@@ -325,8 +317,8 @@ const ChangeProfile = ({ translation }) => {
               occupation1Options={occupation1Options}
               onOpenSelectOccupation2Bottom={handleOpenSelectOccupation2Bottom}
               occupation2Options={occupation2Options}
-              onShowLoading={handleShowLoading}
-              onCloseLoading={handleCloseLoading}
+              setShowLoading={setShowLoading}
+              setShowToast={setShowToast}
             />
             <AddressInfoSection
               onOpenAddressTypeBottom={handleOpenSelectAddressTypeBottom}
