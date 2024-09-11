@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import LocationMap from '@common/components/atoms/LocationMap';
@@ -9,6 +9,31 @@ import { PropTypes } from 'prop-types';
 import './styles.scss';
 
 const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
+  function encodeToURL(str) {
+    return str
+      .replace(/"/g, '%22')
+      .replace(/#/g, '%23')
+      .replace(/\$/g, '%24')
+      .replace(/%/g, '%25')
+      .replace(/&/g, '%26')
+      .replace(/'/g, '%27')
+      .replace(/\(/g, '%28')
+      .replace(/\)/g, '%29')
+      .replace(/\+/g, '%2B')
+      .replace(/,/g, '%2C')
+      .replace(/\//g, '%2F')
+      .replace(/:/g, '%3A')
+      .replace(/;/g, '%3B')
+      .replace(/</g, '%3C')
+      .replace(/=/g, '%3D')
+      .replace(/>/g, '%3E')
+      .replace(/\?/g, '%3F')
+      .replace(/@/g, '%40')
+      .replace(/\[/g, '%5B')
+      .replace(/\]/g, '%5D')
+      .replace(/\|/g, '%7C');
+  }
+
   return (
     <BottomSheet
       open={open}
@@ -19,7 +44,7 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
     >
       <div className="view_map">
         <div className="map">
-          <LocationMap address={branchData?.caption || ''} />
+          <LocationMap address={encodeToURL(branchData?.caption || '')} />
         </div>
         <div className="content">
           <div className="title">{branchData?.title || ''}</div>
