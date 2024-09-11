@@ -1,7 +1,7 @@
-export const convertObjectBaseMappingFields = (currentObject, mappingFields) => {
-  const convertedObject = { ...currentObject };
+export const convertObjectBaseMappingFields = (currentObject, mappingFields, ignoreRemainingFields = false) => {
+  const convertedObject = ignoreRemainingFields ? {} : { ...currentObject };
   for (const [oldKey, newKey] of Object.entries(mappingFields)) {
-    convertedObject[newKey] = convertedObject[oldKey];
+    convertedObject[newKey] = currentObject[oldKey];
     delete convertedObject[oldKey];
   }
   return convertedObject;

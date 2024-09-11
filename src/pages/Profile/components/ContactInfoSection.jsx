@@ -50,40 +50,43 @@ const ContactInfoSection = ({
   console.log('verifyCodeSessionNumberRef.current :>> ', verifyCodeSessionNumberRef.current);
 
   const handleRequestGetEmailVerifyCode = async () => {
-    if (!errors.email) {
-      setShowLoading(true);
-      await apiCall(endpoints.inquiryUserInformation, 'POST');
-      const request = {
-        cus_email: email,
-      };
-      const requestVerifyResponse = await apiCall(endpoints.requestGetEmailVerifyCode, 'POST', request);
-      const responseData = requestVerifyResponse?.data?.elData;
-      const resultCode = responseData?.cnt;
-      const isDuplicatedEmail = resultCode === 9;
-      const isEmailAvailable = resultCode === 0;
-      setShowLoading(false);
-      if (isDuplicatedEmail) {
-        //TODO: Show Error
-        return;
-      }
+    if (errors.email) {
+      return;
+    }
+    setShowLoading(true);
+    await apiCall(endpoints.inquiryUserInformation, 'POST');
+    const request = {
+      cus_email: email,
+    };
+    const requestVerifyResponse = await apiCall(endpoints.requestGetEmailVerifyCode, 'POST', request);
+    const responseData = requestVerifyResponse?.data?.elData;
+    const resultCode = responseData?.cnt;
+    const isDuplicatedEmail = resultCode === 9;
+    const isEmailAvailable = resultCode === 0;
+    setShowLoading(false);
+    if (isDuplicatedEmail) {
+      //TODO: Show Error
+      return;
+    }
 
-      if (isEmailAvailable) {
-        const { seqno } = responseData || {};
-        verifyCodeSessionNumberRef.current = seqno;
-        //TODO: Handle clear time out when submit or failed 5 times.
-        //TODO: Focus to verify code input when clicking send button
-        clearTimeOutRef.current = setTimeout(() => {
-          setError('verificationCode', {
-            type: 'timeout',
-            message: 'Verification code has timed out. Resend E-mail and try again.',
-          });
-          setDisabledVerifyButton(true);
-        }, EMAIL_VERIFY_IN_SECONDS * 1000);
-        setShowEmailVerifyCode(true);
-        setShowEmailVerifyInfo(true);
-        if (!alreadySendEmailVerification) {
-          setAlreadySendEmailVerification(true);
-        }
+    if (isEmailAvailable) {
+      const { seqno, new_cus_email } = responseData || {};
+      setValue('newEmail', new_cus_email);
+      verifyCodeSessionNumberRef.current = seqno;
+      //TODO: Handle clear time out when submit or failed 5 times.
+      //TODO: Focus to verify code input when clicking send button
+      //TODO: Handle reset update timeout for layout verification
+      clearTimeOutRef.current = setTimeout(() => {
+        setError('verificationCode', {
+          type: 'timeout',
+          message: 'Verification code has timed out. Resend E-mail and try again.',
+        });
+        setDisabledVerifyButton(true);
+      }, EMAIL_VERIFY_IN_SECONDS * 1000);
+      setShowEmailVerifyCode(true);
+      setShowEmailVerifyInfo(true);
+      if (!alreadySendEmailVerification) {
+        setAlreadySendEmailVerification(true);
       }
     }
   };
@@ -121,6 +124,7 @@ const ContactInfoSection = ({
 
     if (isVerifySuccess) {
       setShowEmailVerifyCode(false);
+      setValue('isEmailVerified', true);
       setShowToast({
         isShow: true,
         message: 'Email verification is complete.',

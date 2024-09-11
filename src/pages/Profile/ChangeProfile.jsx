@@ -24,7 +24,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
-import { buildObjectMapFromResponse, commonCodeDataToOptions } from '@utilities/convert';
+import {
+  buildObjectMapFromResponse,
+  commonCodeDataToOptions,
+  convertObjectBaseMappingFields,
+} from '@utilities/convert';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AddressInfoSection from './components/AddressInfoSection';
@@ -179,6 +183,14 @@ const ChangeProfile = ({ translation }) => {
 
   const onSubmitSaveForm = values => {
     console.log('values :>> ', values);
+    const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
+    request.chg_yn = 'N'; //TODO: Check address change
+    request.file_upd_yn = 'N'; //TODO: Check photo file uploaded
+    request.noproc_cnt = userInfo.noproc_cnt;
+    request.email_chk_yn = values.isEmailVerified ? 'Y' : 'N'; //TODO: Check user send email and updated successful
+    request.cus_email_bf_modfy = userInfo.cus_email;
+    request.new_cus_email = values.newEmail;
+    debugger;
     setShowToast({
       isShow: true,
       message: 'Your profile information has been changed',
