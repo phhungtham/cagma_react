@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
-
 import { ArrowRight } from '@assets/icons';
 import CheckBox from '@common/components/atoms/Checkbox';
+import { useTermAndConditions } from '@pages/Account/OpenAccount/components/TermAndConditions/TermAndConditionsContext';
 import { PropTypes } from 'prop-types';
 
 import './styles.scss';
 
-const TermConditionChecklist = ({ config, onClickViewTerm, onSelectAll }) => {
+const TermConditionChecklist = ({ config, onClickViewTerm }) => {
+  const { checkedOptions, setCheckedOptions } = useTermAndConditions();
   const { selectAllLabel, options = [] } = config;
-  const [checkedOptions, setCheckedOptions] = useState([]);
 
   const handleSelectAll = checked => {
     if (checked) {
@@ -26,11 +25,6 @@ const TermConditionChecklist = ({ config, onClickViewTerm, onSelectAll }) => {
     }
   };
 
-  useEffect(() => {
-    const isAllChecked = checkedOptions.length === options.length;
-    onSelectAll?.(isAllChecked);
-  }, [checkedOptions]);
-
   return (
     <div className="term-condition-checklist-wrapper">
       <div className="checklist__check-all">
@@ -38,7 +32,7 @@ const TermConditionChecklist = ({ config, onClickViewTerm, onSelectAll }) => {
           size="large"
           label={selectAllLabel}
           onChange={checked => handleSelectAll(checked)}
-          checked={checkedOptions.length === options.length}
+          checked={checkedOptions?.length === options.length}
         />
       </div>
       <div className="divider__item__solid" />
@@ -76,12 +70,16 @@ TermConditionChecklist.propTypes = {
       })
     ),
   }),
+  onCheckOption: PropTypes.array,
+  setOnCheckOption: PropTypes.func,
 };
 
 TermConditionChecklist.defaultProps = {
   onClickViewTerm: () => {},
   onSelectAll: () => {},
   config: {},
+  onCheckOption: [],
+  setOnCheckOption: () => {},
 };
 
 export default TermConditionChecklist;

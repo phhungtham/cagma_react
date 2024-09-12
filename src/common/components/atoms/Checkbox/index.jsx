@@ -11,7 +11,6 @@ const CheckBox = ({ clazz, size, label, disabled, hideCheckBox, onChange, checke
     const isSelected = e.target.checked;
     onChange?.(isSelected);
   };
-
   return (
     <label className={`checkbox ${clazz}`}>
       <input

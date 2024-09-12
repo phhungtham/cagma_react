@@ -1,0 +1,27 @@
+@import 'styles/utilities/variables';
+
+.view-term__item {
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.react-pdf__Document {
+    max-height: calc(92vh - 181px);
+}
+
+.view-term__footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0 24px;
+    height: 122px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .btn__cta {
+        width: 100%;
+    }
+}

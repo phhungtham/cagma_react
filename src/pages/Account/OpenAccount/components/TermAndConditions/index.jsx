@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import BannerBook from '@assets/images/open-account-book.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
@@ -9,27 +7,32 @@ import { PeriodUnitCodeDisplay } from '@common/constants/product';
 
 import { termConditionConfig } from '../../constants';
 import './styles.scss';
+import { useTermAndConditions } from './TermAndConditionsContext';
 
 const TermAndConditions = ({ onSubmit, product }) => {
-  const [isValidForm, setIsValidForm] = useState(false);
-  const [isShowViewTermBottom, setIsShowViewTermBottom] = useState(false);
+  const { viewTermBottom, setViewTermBottom, checkedOptions } = useTermAndConditions();
+
+  const isValidForm = checkedOptions?.length === termConditionConfig.options.length;
 
   const { lcl_prdt_nm } = product || {};
-
-  const onChangeSelectAll = checked => {
-    setIsValidForm(checked);
-  };
 
   const onClickSubmit = () => {
     onSubmit();
   };
 
   const onClickViewTermDetail = value => {
-    setIsShowViewTermBottom(true);
+    const termItem = termConditionConfig.options.find(item => item.value === value);
+    const { fileUrl, title } = termItem;
+    setViewTermBottom({
+      open: true,
+      fileUrl,
+      title,
+      value,
+    });
   };
 
   const onCloseViewTermBottom = () => {
-    setIsShowViewTermBottom(false);
+    setViewTermBottom({ ...viewTermBottom, open: false });
   };
 
   return (
@@ -76,7 +79,6 @@ const TermAndConditions = ({ onSubmit, product }) => {
         <div className="term-condition__checklist">
           <TermConditionChecklist
             config={termConditionConfig}
-            onSelectAll={onChangeSelectAll}
             onClickViewTerm={onClickViewTermDetail}
           />
         </div>
@@ -91,10 +93,10 @@ const TermAndConditions = ({ onSubmit, product }) => {
         />
       </div>
       <ViewTermBottom
-        open={isShowViewTermBottom}
+        open={viewTermBottom.open}
         onClose={onCloseViewTermBottom}
-        title="View Terms"
-        subTitle="View terms subtitle"
+        title={viewTermBottom.title}
+        pdfFile={viewTermBottom.fileUrl}
       />
     </div>
   );
