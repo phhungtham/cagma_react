@@ -71,7 +71,7 @@ const ContactInfoSection = ({
 
     if (isEmailAvailable) {
       const { seqno, new_cus_email } = responseData || {};
-      setValue('newEmail', new_cus_email);
+      setValue('verifiedEmail', new_cus_email);
       verifyCodeSessionNumberRef.current = seqno;
       //TODO: Handle clear time out when submit or failed 5 times.
       //TODO: Focus to verify code input when clicking send button

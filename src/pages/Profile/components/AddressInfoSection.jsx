@@ -111,6 +111,16 @@ const AddressInfoSection = ({
           <Controller
             render={({ field }) => (
               <Input
+                label="Address 1"
+                {...field}
+              />
+            )}
+            control={control}
+            name="address1"
+          />
+          <Controller
+            render={({ field }) => (
+              <Input
                 label={'City'}
                 {...field}
               />

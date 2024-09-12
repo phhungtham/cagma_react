@@ -10,7 +10,9 @@ export const convertObjectBaseMappingFields = (currentObject, mappingFields, ign
 export const buildObjectMapFromResponse = (response, mappingFields) => {
   const newObject = {};
   for (const [localKey, remoteKey] of Object.entries(mappingFields)) {
-    newObject[localKey] = response[remoteKey] || null;
+    if (response.hasOwnProperty(remoteKey)) {
+      newObject[localKey] = response[remoteKey] || null;
+    }
   }
   return newObject;
 };

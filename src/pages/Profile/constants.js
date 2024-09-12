@@ -36,6 +36,17 @@ export const profileFormMapFields = {
   occupation3: 'job_nm',
   phoneNumber: 'cus_adr_telno',
   faxNumber: 'cus_faxno',
+  addressType: 'cus_adr_t',
+  postalCode: 'cus_adr_zipc',
+  country: 'adr_nat_c',
+  province: 'state_c',
+  streetName: 'adr_colny_nm',
+  aptNumber: 'adr_strt_nm',
+  streetNumber: 'adr_houseno_in_ctt',
+  address1: 'cus_adr1',
+  address2: 'cus_adr2',
+  address3: 'cus_adr3',
+  city: 'cus_city_nm',
 };
 
 export const employmentValuesDisableOccupation = [
@@ -47,3 +58,9 @@ export const employmentValuesDisableOccupation = [
 
 export const EMAIL_VERIFY_IN_SECONDS = 180;
 export const EMAIL_VERIFY_RETRY_MAX = 5;
+
+export const ProfileTransactionFunctionType = {
+  ADDRESS_USER_INFO_CHANGE: '2',
+  ADDRESS_CHANGE: '4',
+  USER_INFO_CHANGE: '5',
+};

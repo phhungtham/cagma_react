@@ -4,4 +4,6 @@ export const endpoints = {
   inquiryUserInformation: '/ca/me/CAME001.pwkjson',
   requestGetEmailVerifyCode: '/ca/se/CASE001.pwkjson',
   sendEmailVerifyCode: '/ca/se/CASE002.pwkjson',
+  changeUserInfoPreTransaction: '/ca/me/CAME002.pwkjson',
+  changeUserInfoTransaction: '/ca/me/CAME003.pwkjson',
 };

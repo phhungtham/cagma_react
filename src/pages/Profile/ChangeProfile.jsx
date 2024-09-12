@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { SettingIcon } from '@assets/icons';
-import avatarURL from '@assets/images/jack-icon.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
@@ -20,31 +18,37 @@ import {
   getProvinceCode,
   getSubJobCode,
 } from '@common/constants/commonCode';
+import { endpoints } from '@common/constants/endpoint';
+import { SecurityMediaType } from '@common/constants/plugin';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
+import { apiCall } from '@shared/api';
 import {
   buildObjectMapFromResponse,
   commonCodeDataToOptions,
   convertObjectBaseMappingFields,
 } from '@utilities/convert';
+import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
+import { moveBack } from '@utilities/index';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AddressInfoSection from './components/AddressInfoSection';
-import ChangePhotoBottom from './components/ChangePhotoBottom';
 import ContactInfoSection from './components/ContactInfoSection';
+import ProfileAvatar from './components/ProfileAvatar';
 import {
   employmentValuesDisableOccupation,
   initSelectBottom,
   profileFormMapFields,
+  ProfileTransactionFunctionType,
   SELECT_TYPE,
   selectBottomTypeMapField,
 } from './constants';
 import { getUserInfoRequest } from './redux/userInfo/action';
 import { userInfoReducer } from './redux/userInfo/reducer';
 import { userInfoSaga } from './redux/userInfo/saga';
-import { userInfoLoadState, userInfoSelector } from './redux/userInfo/selector';
+import { getUserInfoFailedMsg, userInfoSelector } from './redux/userInfo/selector';
 import { UserInfoFeatureName } from './redux/userInfo/type';
 import { changeProfileSchema } from './schema';
 import './styles.scss';
@@ -53,17 +57,9 @@ const ChangeProfile = ({ translation }) => {
   useReducers([{ key: UserInfoFeatureName, reducer: userInfoReducer }]);
   useSagas([{ key: UserInfoFeatureName, saga: userInfoSaga }]);
   const userInfo = useSelector(userInfoSelector);
-  const isLoadingUserInfo = useSelector(userInfoLoadState);
+  const getUserFailedMsg = useSelector(getUserInfoFailedMsg);
 
-  const { sendRequest: requestGetCommonCode, data: commonCodeData, isLoading: isLoadingCommonCode } = useCommonCode();
-
-  console.log('commonCodeData :>> ', commonCodeData);
-
-  console.log('userInfo :>> ', userInfo);
-
-  const [showBottomSheet, setShowBottomSheet] = useState({
-    bottomChangePhoto: false,
-  });
+  const { sendRequest: requestGetCommonCode, data: commonCodeData } = useCommonCode();
 
   const [showLoading, setShowLoading] = useState(false);
 
@@ -76,9 +72,14 @@ const ChangeProfile = ({ translation }) => {
   const [countryOptions, setCountryOptions] = useState([]);
   const [provinceOptions, setProvinceOptions] = useState([]);
 
-  const [showAlert, setShowAlert] = useState({
+  const [showSaveChangeConfirmAlert, setShowSaveChangeConfirmAlert] = useState({
     saveChangeConfirmAlert: false,
-    deletePhotoConfirmAlert: false,
+  });
+
+  const [showServerAlert, setShowServerAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
   });
 
   const [showToast, setShowToast] = useState({
@@ -92,20 +93,28 @@ const ChangeProfile = ({ translation }) => {
     mode: 'onChange',
     resolver: yupResolver(changeProfileSchema),
   });
-  const { handleSubmit, control, setValue, reset, watch } = methods;
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    reset,
+    watch,
+    formState: { isDirty: isFormDirty },
+  } = methods;
 
   const [employment, occupation1] = watch(['employment', 'occupation1']);
 
   const onClickMoveBack = () => {
-    setShowAlert({ ...showAlert, saveChangeConfirmAlert: true });
+    if (isFormDirty) {
+      setShowSaveChangeConfirmAlert(true);
+      return;
+    }
+    moveBack();
   };
 
-  const onOpenChangePhotoBottom = () => {
-    setShowBottomSheet({ ...showBottomSheet, bottomChangePhoto: true });
-  };
-
-  const onCloseChangePhotoBottom = () => {
-    setShowBottomSheet({ ...showBottomSheet, bottomChangePhoto: false });
+  const handleCloseSaveChangeConfirmAlert = () => {
+    setShowSaveChangeConfirmAlert(false);
+    moveBack();
   };
 
   const handleOpenSelectEmploymentBottom = () => {
@@ -172,34 +181,137 @@ const ChangeProfile = ({ translation }) => {
   };
 
   const onConfirmSaveForm = () => {
-    setShowAlert({ ...showAlert, saveChangeConfirmAlert: false });
+    setShowSaveChangeConfirmAlert(false);
     alert('handle submit');
   };
 
-  const onConfirmDeletePhoto = () => {
-    setShowAlert({ ...showAlert, deletePhotoConfirmAlert: false });
-    alert('handle delete photo');
+  const handleRequestChangeProfile = async request => {
+    setShowLoading(true);
+    const changeProfileResponse = await apiCall(endpoints.changeUserInfoTransaction, 'POST', request);
+    setShowLoading(false);
+    const responseErrorMessage = changeProfileResponse?.data?.elHeader?.resMsgVo?.msgText;
+    if (responseErrorMessage) {
+      setShowServerAlert({
+        isShow: true,
+        title: 'Sorry!',
+        content: changeProfileResponse?.data?.elHeader?.resMsgVo?.msgText,
+      });
+    }
   };
 
-  const onSubmitSaveForm = values => {
+  const onSubmitSaveForm = async values => {
     console.log('values :>> ', values);
+    setShowLoading(true);
     const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
     request.chg_yn = 'N'; //TODO: Check address change
     request.file_upd_yn = 'N'; //TODO: Check photo file uploaded
     request.noproc_cnt = userInfo.noproc_cnt;
     request.email_chk_yn = values.isEmailVerified ? 'Y' : 'N'; //TODO: Check user send email and updated successful
     request.cus_email_bf_modfy = userInfo.cus_email;
-    request.new_cus_email = values.newEmail;
-    debugger;
-    setShowToast({
-      isShow: true,
-      message: 'Your profile information has been changed',
-      type: 'success',
-    });
-  };
-
-  const onClickDeletePhoto = () => {
-    setShowAlert({ ...showAlert, deletePhotoConfirmAlert: true });
+    request.new_cus_email = values.verifiedEmail || null;
+    request.trx_func_d = ProfileTransactionFunctionType.USER_INFO_CHANGE;
+    request.cus_adr_t = values.addressType;
+    request.telno_nat_c = 'CA'; //Find in array home of userInfo to get nat_c
+    request.cus_pst_dspch_apnd_t = userInfo.cus_pst_dspch_apnd_t;
+    request.adr_vrfc_file_path_nm = ''; //File path of upload avatar
+    request.adr_vrfc_file_nm = ''; //File path of upload avatar
+    request.etr_reg_yn = 'N'; //e-transfer registered or not
+    request.agrmt_downld_yn = 'Y'; //e-transfer registered or not
+    request.etr_agrmt_yn = 'N'; //N: update from profile change page. Y: from e-transfer page
+    const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
+    if (changeUserInfoResponse?.data?.elData) {
+      const userResponse = changeUserInfoResponse.data.elData;
+      const {
+        secu_mdm_yn,
+        gibintnbk_aplct_trx_mng_no,
+        chg_yn,
+        file_upd_yn,
+        trx_func_d,
+        cus_email,
+        cus_cell_no,
+        cus_faxno,
+        job_t,
+        sub_job_t_v,
+        job_nm,
+        emplm_s_c,
+        cus_adr_t,
+        cus_adr_zipc,
+        cus_adr_telno,
+        telno_nat_c,
+        adr_nat_c,
+        cus_pst_dspch_apnd_t,
+        state_c,
+        adr_colny_nm,
+        adr_strt_nm,
+        adr_houseno_in_ctt,
+        cus_adr1,
+        cus_adr2,
+        cus_adr3,
+        cus_city_nm,
+        adr_vrfc_file_path_nm,
+        adr_vrfc_file_nm,
+        etr_reg_yn,
+        agrmt_downld_yn,
+        exec_svc,
+      } = userResponse || {};
+      const usingSecurityCheck = secu_mdm_yn === 1;
+      const requestChangeProfile = {
+        ...request,
+        pre_gibintnbk_aplct_trx_mng_no: gibintnbk_aplct_trx_mng_no,
+        pre_secu_mdm_yn: secu_mdm_yn,
+        pre_chg_yn: chg_yn,
+        pre_file_upd_yn: file_upd_yn,
+        pre_trx_func_d: trx_func_d,
+        pre_cus_email: cus_email,
+        pre_cus_cell_no: cus_cell_no,
+        pre_cus_faxno: cus_faxno,
+        pre_job_t: job_t,
+        pre_sub_job_t_v: sub_job_t_v,
+        pre_job_nm: job_nm,
+        pre_emplm_s_c: emplm_s_c,
+        pre_cus_adr_t: cus_adr_t,
+        pre_cus_adr_zipc: cus_adr_zipc,
+        pre_cus_adr_telno: cus_adr_telno,
+        pre_telno_nat_c: telno_nat_c,
+        pre_adr_nat_c: adr_nat_c,
+        pre_cus_pst_dspch_apnd_t: cus_pst_dspch_apnd_t,
+        pre_state_c: state_c,
+        pre_adr_colny_nm: adr_colny_nm,
+        pre_adr_strt_nm: adr_strt_nm,
+        pre_adr_houseno_in_ctt: adr_houseno_in_ctt,
+        pre_cus_adr1: cus_adr1,
+        pre_cus_adr2: cus_adr2,
+        pre_cus_adr3: cus_adr3,
+        pre_cus_city_nm: cus_city_nm,
+        pre_adr_vrfc_file_path_nm: adr_vrfc_file_path_nm,
+        pre_adr_vrfc_file_nm: adr_vrfc_file_nm,
+        pre_etr_reg_yn: etr_reg_yn,
+        pre_agrmt_downld_yn: agrmt_downld_yn,
+        pre_exec_svc: exec_svc,
+      };
+      if (usingSecurityCheck) {
+        setShowLoading(false);
+        authSecurityMedia(() => handleRequestChangeProfile(requestChangeProfile), null, {
+          type: SecurityMediaType.MOTP,
+        });
+      } else {
+        handleRequestChangeProfile(requestChangeProfile);
+      }
+      // setShowToast({
+      //   isShow: true,
+      //   message: 'Your profile information has been changed',
+      //   type: 'success',
+      // });
+      // return;
+    }
+    const responseErrorMessage = changeUserInfoResponse?.data?.elHeader?.resMsgVo?.msgText;
+    if (responseErrorMessage) {
+      setShowServerAlert({
+        isShow: true,
+        title: 'Sorry!',
+        content: changeUserInfoResponse?.data?.elHeader?.resMsgVo?.msgText,
+      });
+    }
   };
 
   //Using sub job prefix for get list of occupation 2 based sub job list
@@ -239,6 +351,9 @@ const ChangeProfile = ({ translation }) => {
       user.streetNumber = defaultAddress?.adr_houseno_in_ctt;
       user.streetName = defaultAddress?.adr_colny_nm;
       user.city = defaultAddress?.cus_city_nm;
+      user.address1 = defaultAddress?.cus_adr1;
+      user.address2 = defaultAddress?.cus_adr2;
+      user.address3 = defaultAddress?.cus_adr3;
       reset(user);
       requestGetCommonCode(
         [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
@@ -284,6 +399,17 @@ const ChangeProfile = ({ translation }) => {
   }, [occupation1, employment, subJobs]);
 
   useEffect(() => {
+    if (getUserFailedMsg?.msgText) {
+      setShowLoading(false);
+      setShowServerAlert({
+        isShow: true,
+        title: 'Sorry!',
+        content: getUserFailedMsg.msgText,
+      });
+    }
+  }, [getUserFailedMsg]);
+
+  useEffect(() => {
     setShowLoading(true);
     getUserInfoRequest();
   }, []);
@@ -296,30 +422,7 @@ const ChangeProfile = ({ translation }) => {
         onClick={onClickMoveBack}
       />
       <div className="change-profile__content">
-        <div className="profile__avatar__wrapper">
-          <div className="profile__avatar">
-            <div className="avatar__img">
-              <img
-                src={avatarURL}
-                alt="profile"
-              />
-            </div>
-            <div
-              className="btn__setting"
-              onClick={onOpenChangePhotoBottom}
-            >
-              <SettingIcon />
-            </div>
-          </div>
-          <div>
-            <Button
-              label="Delete"
-              variant="outlined__gray"
-              className="btn__delete btn__sm"
-              onClick={onClickDeletePhoto}
-            />
-          </div>
-        </div>
+        <ProfileAvatar />
         <div className="form__wrapper">
           <FormProvider {...methods}>
             <ContactInfoSection
@@ -351,10 +454,6 @@ const ChangeProfile = ({ translation }) => {
           />
         </div>
       </div>
-      <ChangePhotoBottom
-        open={showBottomSheet.bottomChangePhoto}
-        onClose={onCloseChangePhotoBottom}
-      />
       <SelectBottom
         open={selectBottom.isShow}
         onClose={onCloseSelectBottom}
@@ -365,7 +464,7 @@ const ChangeProfile = ({ translation }) => {
       />
       <Alert
         isCloseButton={false}
-        isShowAlert={showAlert.saveChangeConfirmAlert}
+        isShowAlert={showSaveChangeConfirmAlert}
         title="Would you like to save changes?"
         textAlign="center"
         firstButton={{
@@ -373,22 +472,21 @@ const ChangeProfile = ({ translation }) => {
           label: 'Save',
         }}
         secondButton={{
-          onClick: () => setShowAlert({ ...showAlert, saveChangeConfirmAlert: false }),
-          label: 'I&apos;ll do it next time',
+          onClick: handleCloseSaveChangeConfirmAlert,
+          // eslint-disable-next-line quotes
+          label: "I'll do it next time",
         }}
       />
+
       <Alert
         isCloseButton={false}
-        isShowAlert={showAlert.deletePhotoConfirmAlert}
-        title="Would you like to delete profile photo?"
-        textAlign="center"
+        isShowAlert={showServerAlert.isShow}
+        title={showServerAlert.title}
+        subtitle={showServerAlert.content}
+        textAlign="left"
         firstButton={{
-          onClick: onConfirmDeletePhoto,
-          label: 'Delete',
-        }}
-        secondButton={{
-          onClick: () => setShowAlert({ ...showAlert, deletePhotoConfirmAlert: false }),
-          label: 'I&apos;ll do it next time',
+          onClick: () => setShowServerAlert({ isShow: false, title: '', content: '' }),
+          label: 'Confirm',
         }}
       />
       <section className="toast__overlay">
