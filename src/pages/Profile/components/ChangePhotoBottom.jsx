@@ -1,40 +1,16 @@
-import { useState } from 'react';
-
 import { ArrowRight } from '@assets/icons';
-import Alert from '@common/components/molecules/Alert';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { PropTypes } from 'prop-types';
 
 import '../styles.scss';
 
-const ChangePhotoBottom = ({ open, onClose }) => {
-  const [showAccessCameraAlert, setShowAccessCameraAlert] = useState(false);
-  const [showAccessPhotosAlert, setShowAccessPhotosAlert] = useState(false);
-
+const ChangePhotoBottom = ({ open, onClose, onClickOpenCamera, onClickOpenGallery }) => {
   const onClickAccessCamera = () => {
-    //TODO: Check permission access camera
-    setShowAccessCameraAlert(true);
-  };
-
-  const onCloseAccessCamera = () => {
-    setShowAccessCameraAlert(false);
+    onClickOpenCamera();
   };
 
   const onClickAccessPhotos = () => {
-    //TODO: Check permission access camera
-    setShowAccessPhotosAlert(true);
-  };
-
-  const onCloseAccessPhotos = () => {
-    setShowAccessPhotosAlert(false);
-  };
-
-  const handleAccessCamera = () => {
-    console.log('access');
-  };
-
-  const handleAccessPhotos = () => {
-    console.log('access');
+    onClickOpenGallery();
   };
 
   return (
@@ -63,34 +39,6 @@ const ChangePhotoBottom = ({ open, onClose }) => {
           </div>
         </div>
       </BottomSheet>
-      <Alert
-        isCloseButton={false}
-        isShowAlert={showAccessCameraAlert}
-        title="Access to Camera"
-        textAlign="center"
-        firstButton={{
-          onClick: handleAccessCamera,
-          label: 'Allow',
-        }}
-        secondButton={{
-          onClick: onCloseAccessCamera,
-          label: 'Cancel',
-        }}
-      />
-      <Alert
-        isCloseButton={false}
-        isShowAlert={showAccessPhotosAlert}
-        title="Access to Photos"
-        textAlign="center"
-        firstButton={{
-          onClick: handleAccessPhotos,
-          label: 'Allow',
-        }}
-        secondButton={{
-          onClick: onCloseAccessPhotos,
-          label: 'Cancel',
-        }}
-      />
     </>
   );
 };

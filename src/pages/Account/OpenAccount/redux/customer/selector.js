@@ -9,5 +9,5 @@ export const customerLoadState = state => {
 };
 
 export const getCustomerFailedMsg = state => {
-  return state[CustomerFeatureName]?.customer?.elHeader?.resMsg;
+  return state[CustomerFeatureName]?.customer?.elHeader?.resMsgVo?.msgText;
 };

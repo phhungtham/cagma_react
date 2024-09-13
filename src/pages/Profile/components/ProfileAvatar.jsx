@@ -4,8 +4,11 @@ import { SettingIcon } from '@assets/icons';
 import avatarURL from '@assets/images/jack-icon.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Alert from '@common/components/molecules/Alert';
+import callCamera from '@utilities/gmCommon/callCamera';
+import callSelectImage from '@utilities/gmCommon/callSelectImage';
 import initProfileImg from '@utilities/gmCommon/initProfileImg';
 import loadProfileImgInfo from '@utilities/gmCommon/loadProfileImgInfo';
+import saveProfileImg from '@utilities/gmCommon/saveProfileImg';
 
 import ChangePhotoBottom from './ChangePhotoBottom';
 
@@ -52,6 +55,42 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
     setShowAlertDeletePhoto(false);
   };
 
+  const handleUpdateAvatarCallback = result => {
+    const { statusCode } = result || {};
+    const isUpdateSuccess = Number(statusCode) === 1000;
+    if (isUpdateSuccess) {
+      setShowToast({
+        isShow: true,
+        message: 'Your profile photo has been deleted.',
+        type: 'success',
+      });
+    }
+  };
+
+  const handleCallCameraCallback = fileInfo => {
+    if (fileInfo) {
+      const { imageInfo } = fileInfo;
+      setAvatarUrl(imageInfo);
+      saveProfileImg(handleUpdateAvatarCallback);
+    }
+  };
+
+  const handleCallSelectImageCallback = fileInfo => {
+    if (fileInfo) {
+      const { imageInfo } = fileInfo;
+      setAvatarUrl(imageInfo);
+      saveProfileImg(handleUpdateAvatarCallback);
+    }
+  };
+
+  const handleCallPluginOpenCamera = () => {
+    callCamera(handleCallCameraCallback);
+  };
+
+  const handleCallPluginSelectImage = () => {
+    callSelectImage(handleCallSelectImageCallback);
+  };
+
   useEffect(() => {
     loadProfileImgInfo(handleProfileImg);
   }, []);
@@ -91,6 +130,8 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
       <ChangePhotoBottom
         open={showChangeProfilePhotoBottom}
         onClose={onCloseChangePhotoBottom}
+        onClickOpenCamera={handleCallPluginOpenCamera}
+        onClickOpenGallery={handleCallPluginSelectImage}
       />
       <Alert
         isCloseButton={false}

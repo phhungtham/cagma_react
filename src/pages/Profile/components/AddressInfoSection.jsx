@@ -12,6 +12,7 @@ const AddressInfoSection = ({
   countryOptions,
   onOpenProvinceBottom,
   provinceOptions,
+  isDisableAddress,
 }) => {
   const { control, watch, setValue } = useFormContext();
   const [country] = watch(['country']);
@@ -28,6 +29,7 @@ const AddressInfoSection = ({
             label={'Address Type'}
             onFocus={onOpenAddressTypeBottom}
             options={addressTypeOptions}
+            disabled={isDisableAddress}
             {...field}
           />
         )}
@@ -38,6 +40,7 @@ const AddressInfoSection = ({
         render={({ field }) => (
           <Input
             label={'Phone Number'}
+            disabled={isDisableAddress}
             {...field}
           />
         )}
@@ -48,6 +51,7 @@ const AddressInfoSection = ({
         render={({ field }) => (
           <Input
             label={'Fax Number'}
+            disabled={isDisableAddress}
             {...field}
           />
         )}
@@ -60,6 +64,7 @@ const AddressInfoSection = ({
             label={'Country'}
             onFocus={onOpenCountryBottom}
             options={countryOptions}
+            disabled={isDisableAddress}
             {...field}
           />
         )}
@@ -70,6 +75,7 @@ const AddressInfoSection = ({
         render={({ field }) => (
           <Input
             label={'Postal Code'}
+            disabled={isDisableAddress}
             {...field}
           />
         )}
@@ -82,6 +88,7 @@ const AddressInfoSection = ({
             render={({ field }) => (
               <Input
                 label={'APT Number/SUITE Number'}
+                disabled={isDisableAddress}
                 {...field}
               />
             )}
@@ -92,6 +99,7 @@ const AddressInfoSection = ({
             render={({ field }) => (
               <Input
                 label={'Street Number'}
+                disabled={isDisableAddress}
                 {...field}
               />
             )}
@@ -102,6 +110,7 @@ const AddressInfoSection = ({
             render={({ field }) => (
               <Input
                 label={'Street Name'}
+                disabled={isDisableAddress}
                 {...field}
               />
             )}
@@ -112,6 +121,7 @@ const AddressInfoSection = ({
             render={({ field }) => (
               <Input
                 label="Address 1"
+                disabled={isDisableAddress}
                 {...field}
               />
             )}
@@ -122,6 +132,7 @@ const AddressInfoSection = ({
             render={({ field }) => (
               <Input
                 label={'City'}
+                disabled={isDisableAddress}
                 {...field}
               />
             )}
@@ -134,6 +145,7 @@ const AddressInfoSection = ({
                 label={'Province'}
                 onFocus={onOpenProvinceBottom}
                 options={provinceOptions}
+                disabled={isDisableAddress}
                 {...field}
               />
             )}
@@ -147,6 +159,7 @@ const AddressInfoSection = ({
             render={({ field }) => (
               <Input
                 label="Address 1"
+                disabled={isDisableAddress}
                 {...field}
               />
             )}
@@ -157,6 +170,7 @@ const AddressInfoSection = ({
             render={({ field }) => (
               <Input
                 label="Address 2"
+                disabled={isDisableAddress}
                 {...field}
               />
             )}
@@ -167,6 +181,7 @@ const AddressInfoSection = ({
             render={({ field }) => (
               <Input
                 label="Address 3"
+                disabled={isDisableAddress}
                 {...field}
               />
             )}

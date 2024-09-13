@@ -217,100 +217,36 @@ const ChangeProfile = ({ translation }) => {
     }
     setShowLoading(true);
     const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
-    if (isETransferRegistered === '') {
-      const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
-      if (getETransferInfoResponse?.data?.elData) {
-        const { etr_err_c } = getETransferInfoResponse.data.elData || {};
-        request.etr_reg_yn = etr_err_c?.indexOf('404') >= 0 ? 'N' : 'Y';
-      }
-    } else {
-      request.etr_reg_yn = isETransferRegistered === 'true' ? 'Y' : 'N';
-    }
+    // if (isETransferRegistered === '') {
+    //   const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
+    //   if (getETransferInfoResponse?.data?.elData) {
+    //     const { etr_err_c } = getETransferInfoResponse.data.elData || {};
+    //     request.etr_reg_yn = etr_err_c?.indexOf('404') >= 0 ? 'N' : 'Y';
+    //   }
+    // } else {
+    //   request.etr_reg_yn = isETransferRegistered === 'true' ? 'Y' : 'N';
+    // }
+    request.etr_reg_yn = 'N';
     request.chg_yn = 'N'; //TODO: Check address change
     request.file_upd_yn = 'N'; //TODO: Check photo file uploaded
-    request.noproc_cnt = userInfo.noproc_cnt;
-    request.email_chk_yn = values.isEmailVerified ? 'Y' : 'N'; //TODO: Check user send email and updated successful
-    request.cus_email_bf_modfy = userInfo.cus_email;
-    request.new_cus_email = values.verifiedEmail || null;
     request.trx_func_d = ProfileTransactionFunctionType.USER_INFO_CHANGE;
     request.cus_adr_t = values.addressType;
+    request.cus_fst_nm = userInfo.cus_fst_nm;
+    request.cus_last_nm = userInfo.cus_last_nm;
+    request.cus_middle_nm = userInfo.cus_middle_nm;
     request.telno_nat_c = 'CA'; //Find in array home of userInfo to get nat_c
     request.cus_pst_dspch_apnd_t = userInfo.cus_pst_dspch_apnd_t;
     request.adr_vrfc_file_path_nm = ''; //File path of upload avatar
     request.adr_vrfc_file_nm = ''; //File path of upload avatar
     request.agrmt_downld_yn = 'Y'; //e-transfer registered or not
-    // request.etr_agrmt_yn = 'N'; //N: update from profile change page. Y: from e-transfer page
     const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
     if (changeUserInfoResponse?.data?.elData) {
       const userResponse = changeUserInfoResponse.data.elData;
-      const {
-        secu_mdm_yn,
-        gibintnbk_aplct_trx_mng_no,
-        chg_yn,
-        file_upd_yn,
-        trx_func_d,
-        cus_email,
-        cus_cell_no,
-        cus_faxno,
-        job_t,
-        sub_job_t_v,
-        job_nm,
-        emplm_s_c,
-        cus_adr_t,
-        cus_adr_zipc,
-        cus_adr_telno,
-        telno_nat_c,
-        adr_nat_c,
-        cus_pst_dspch_apnd_t,
-        state_c,
-        adr_colny_nm,
-        adr_strt_nm,
-        adr_houseno_in_ctt,
-        cus_adr1,
-        cus_adr2,
-        cus_adr3,
-        cus_city_nm,
-        adr_vrfc_file_path_nm,
-        adr_vrfc_file_nm,
-        etr_reg_yn,
-        agrmt_downld_yn,
-        exec_svc,
-      } = userResponse || {};
+      const { secu_mdm_yn, gibintnbk_aplct_trx_mng_no } = userResponse || {};
       const usingSecurityCheck = secu_mdm_yn === 1;
       const requestChangeProfile = {
         ...request,
         gibintnbk_aplct_trx_mng_no,
-        pre_gibintnbk_aplct_trx_mng_no: gibintnbk_aplct_trx_mng_no,
-        pre_secu_mdm_yn: secu_mdm_yn,
-        pre_chg_yn: chg_yn,
-        pre_file_upd_yn: file_upd_yn,
-        pre_trx_func_d: trx_func_d,
-        pre_cus_email: cus_email,
-        pre_cus_cell_no: cus_cell_no,
-        pre_cus_faxno: cus_faxno,
-        pre_job_t: job_t,
-        pre_sub_job_t_v: sub_job_t_v,
-        pre_job_nm: job_nm,
-        pre_emplm_s_c: emplm_s_c,
-        pre_cus_adr_t: cus_adr_t,
-        pre_cus_adr_zipc: cus_adr_zipc,
-        pre_cus_adr_telno: cus_adr_telno,
-        pre_telno_nat_c: telno_nat_c,
-        pre_adr_nat_c: adr_nat_c,
-        pre_cus_pst_dspch_apnd_t: cus_pst_dspch_apnd_t,
-        pre_state_c: state_c,
-        pre_adr_colny_nm: adr_colny_nm,
-        pre_adr_strt_nm: adr_strt_nm,
-        pre_adr_houseno_in_ctt: adr_houseno_in_ctt,
-        pre_cus_adr1: cus_adr1,
-        pre_cus_adr2: cus_adr2,
-        pre_cus_adr3: cus_adr3,
-        pre_cus_city_nm: cus_city_nm,
-        pre_adr_vrfc_file_path_nm: adr_vrfc_file_path_nm,
-        pre_adr_vrfc_file_nm: adr_vrfc_file_nm,
-        pre_etr_reg_yn: etr_reg_yn,
-        pre_agrmt_downld_yn: agrmt_downld_yn,
-        pre_exec_svc: exec_svc,
       };
       if (usingSecurityCheck) {
         setShowLoading(false);
@@ -327,12 +263,13 @@ const ChangeProfile = ({ translation }) => {
       // });
       // return;
     }
-    const responseErrorMessage = changeUserInfoResponse?.data?.elHeader?.resMsgVo?.msgText;
+    const responseErrorMessage = changeUserInfoResponse?.data?.elHeader?.resMsg;
     if (responseErrorMessage) {
+      setShowLoading(false);
       setShowAlert({
         isShow: true,
         title: 'Sorry!',
-        content: changeUserInfoResponse?.data?.elHeader?.resMsgVo?.msgText,
+        content: changeUserInfoResponse?.data?.elHeader?.resMsg,
       });
     }
   };
@@ -474,6 +411,7 @@ const ChangeProfile = ({ translation }) => {
               countryOptions={countryOptions}
               onOpenProvinceBottom={handleOpenSelectProvinceBottom}
               provinceOptions={provinceOptions}
+              isDisableAddress={Number(userInfo?.noproc_cnt || 0) > 0}
             />
           </FormProvider>
         </div>

@@ -26,7 +26,7 @@ import { accountFormMapFields, OPEN_ACCOUNT_STEP } from './constants';
 import { getCustomerInfoRequest } from './redux/customer/action';
 import { customerReducer } from './redux/customer/reducer';
 import { customerSaga } from './redux/customer/saga';
-import { customerInfo } from './redux/customer/selector';
+import { customerInfo, getCustomerFailedMsg } from './redux/customer/selector';
 import { CustomerFeatureName } from './redux/customer/type';
 import './style.scss';
 
@@ -37,6 +37,7 @@ const OpenAccount = ({ translation }) => {
   const productInfo = useSelector(nativeParamsSelector);
 
   const customer = useSelector(customerInfo);
+  const getCustomerFailedMessage = useSelector(getCustomerFailedMsg);
 
   const { sendRequest: requestGetJob, data: jobData } = useCommonCode();
 
@@ -139,7 +140,7 @@ const OpenAccount = ({ translation }) => {
       const jobMapList = jobData.job_t || [];
       customer.job_display = jobMapList.find(item => item.key === jobType)?.value || '';
       const subJobType = customer.sub_job_t_v;
-      const subJobMapList = jobData.sub_job_t_v || [];
+      const subJobMapList = jobData.sub_job_t || [];
       customer.sub_job_display = subJobMapList.find(item => item.key === subJobType)?.value || '';
       setIsLoadingCustomer(false);
     }
@@ -150,6 +151,17 @@ const OpenAccount = ({ translation }) => {
       requestGetJob(`${getJobCode};${getSubJobCode}`);
     }
   }, [customer]);
+
+  useEffect(() => {
+    if (getCustomerFailedMessage) {
+      setIsLoadingCustomer(false);
+      setShowAlert({
+        isShow: true,
+        title: 'Sorry!',
+        content: getCustomerFailedMessage,
+      });
+    }
+  }, [getCustomerFailedMessage]);
 
   return (
     <>
