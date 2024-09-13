@@ -27,12 +27,27 @@
           height: 100%;
           width: 100%;
         }
+        .avatar__default {
+          background-color: #94bdfa;
+          height: 100%;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .avatar__first-name {
+          font-size: 40px;
+          font-weight: 700;
+          color: $color-white;
+        }
       }
       .btn__setting {
         position: absolute;
         bottom: -4px;
         right: -8px;
         cursor: pointer;
+        height: 40px;
+        width: 40px;
       }
     }
     .btn__delete {

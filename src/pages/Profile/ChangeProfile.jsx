@@ -223,7 +223,7 @@ const ChangeProfile = ({ translation }) => {
     request.adr_vrfc_file_nm = ''; //File path of upload avatar
     request.etr_reg_yn = 'N'; //e-transfer registered or not
     request.agrmt_downld_yn = 'Y'; //e-transfer registered or not
-    request.etr_agrmt_yn = 'N'; //N: update from profile change page. Y: from e-transfer page
+    // request.etr_agrmt_yn = 'N'; //N: update from profile change page. Y: from e-transfer page
     const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
     if (changeUserInfoResponse?.data?.elData) {
       const userResponse = changeUserInfoResponse.data.elData;
@@ -434,7 +434,10 @@ const ChangeProfile = ({ translation }) => {
         onClick={onClickMoveBack}
       />
       <div className="change-profile__content">
-        <ProfileAvatar />
+        <ProfileAvatar
+          userName={userInfo?.cus_snm_nm}
+          setShowToast={setShowToast}
+        />
         <div className="form__wrapper">
           <FormProvider {...methods}>
             <ContactInfoSection

@@ -9,7 +9,7 @@ import { $h } from 'navigation/wmatrix_config';
  * statusCode: number
  */
 const initProfileImg = cb => {
-  if (AppCfg.ENV === 'development') return;
+  if (AppCfg.ENV === 'development') return cb({ statusCode: 1000 });
   return $h.exec(
     result => {
       cb(result);
