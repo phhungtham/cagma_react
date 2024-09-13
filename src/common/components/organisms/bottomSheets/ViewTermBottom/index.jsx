@@ -9,7 +9,7 @@ import './style.scss';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm }) => {
+const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hiddenConfirmBtn }) => {
   const [numPages, setNumPages] = useState(null);
   const containerRef = useRef(null);
   const pageRefs = useRef([]);
@@ -91,7 +91,11 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm }) 
       setHasScrolled(true);
     } else if (hasScrolled || hasScrolledToEnd) {
       setHasScrolled(false);
-      onConfirm();
+      if (onConfirm) {
+        onConfirm();
+      } else {
+        onClose();
+      }
     }
   };
 

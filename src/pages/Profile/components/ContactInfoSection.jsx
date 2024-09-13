@@ -287,7 +287,10 @@ const ContactInfoSection = ({
         control={control}
         name="occupation3"
       />
-      <div className="agreement__download">
+      <div
+        className="agreement__download"
+        onClick={onClickViewAgreement}
+      >
         <span>Electronic Communication Agreement</span>
         <ViewDetailIcon />
       </div>

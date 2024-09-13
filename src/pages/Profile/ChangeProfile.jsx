@@ -79,7 +79,7 @@ const ChangeProfile = ({ translation }) => {
   const [showSaveChangeConfirmAlert, setShowSaveChangeConfirmAlert] = useState(false);
   const [showViewAgreementTermBottom, setShowViewAgreementTermBottom] = useState(false);
 
-  const [showServerAlert, setShowServerAlert] = useState({
+  const [showAlert, setShowAlert] = useState({
     isShow: false,
     title: '',
     content: '',
@@ -199,7 +199,7 @@ const ChangeProfile = ({ translation }) => {
     setShowLoading(false);
     const responseErrorMessage = changeProfileResponse?.data?.elHeader?.resMsgVo?.msgText;
     if (responseErrorMessage) {
-      setShowServerAlert({
+      setShowAlert({
         isShow: true,
         title: 'Sorry!',
         content: changeProfileResponse?.data?.elHeader?.resMsgVo?.msgText,
@@ -208,6 +208,13 @@ const ChangeProfile = ({ translation }) => {
   };
 
   const onSubmitSaveForm = async values => {
+    if (!values.isViewAgreement) {
+      return setShowAlert({
+        isShow: true,
+        title: 'Download Electronic Communication Agreement ',
+        content: 'Please download Electronic Communication Agreement',
+      });
+    }
     setShowLoading(true);
     const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
     if (isETransferRegistered === '') {
@@ -322,7 +329,7 @@ const ChangeProfile = ({ translation }) => {
     }
     const responseErrorMessage = changeUserInfoResponse?.data?.elHeader?.resMsgVo?.msgText;
     if (responseErrorMessage) {
-      setShowServerAlert({
+      setShowAlert({
         isShow: true,
         title: 'Sorry!',
         content: changeUserInfoResponse?.data?.elHeader?.resMsgVo?.msgText,
@@ -421,7 +428,7 @@ const ChangeProfile = ({ translation }) => {
   useEffect(() => {
     if (getUserFailedMsg?.msgText) {
       setShowLoading(false);
-      setShowServerAlert({
+      setShowAlert({
         isShow: true,
         title: 'Sorry!',
         content: getUserFailedMsg.msgText,
@@ -505,12 +512,12 @@ const ChangeProfile = ({ translation }) => {
 
       <Alert
         isCloseButton={false}
-        isShowAlert={showServerAlert.isShow}
-        title={showServerAlert.title}
-        subtitle={showServerAlert.content}
+        isShowAlert={showAlert.isShow}
+        title={showAlert.title}
+        subtitle={showAlert.content}
         textAlign="left"
         firstButton={{
-          onClick: () => setShowServerAlert({ isShow: false, title: '', content: '' }),
+          onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
           label: 'Confirm',
         }}
       />
@@ -527,6 +534,7 @@ const ChangeProfile = ({ translation }) => {
         onClose={() => setShowViewAgreementTermBottom(false)}
         title="Electronic Communication Agreement"
         pdfFile={fileUrls.electronicCommunicationAgreement}
+        hiddenConfirmBtn
       />
     </div>
   );
