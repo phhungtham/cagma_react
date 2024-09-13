@@ -30,6 +30,7 @@ import {
   commonCodeDataToOptions,
   convertObjectBaseMappingFields,
 } from '@utilities/convert';
+import getETransferRegistered from '@utilities/gmCommon/getETransferRegistered';
 import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 import { moveBack } from '@utilities/index';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -71,10 +72,9 @@ const ChangeProfile = ({ translation }) => {
   const [addressTypeOptions, setAddressTypeOptions] = useState([]);
   const [countryOptions, setCountryOptions] = useState([]);
   const [provinceOptions, setProvinceOptions] = useState([]);
+  const [isETransferRegistered, setIsETransferRegistered] = useState();
 
-  const [showSaveChangeConfirmAlert, setShowSaveChangeConfirmAlert] = useState({
-    saveChangeConfirmAlert: false,
-  });
+  const [showSaveChangeConfirmAlert, setShowSaveChangeConfirmAlert] = useState(false);
 
   const [showServerAlert, setShowServerAlert] = useState({
     isShow: false,
@@ -200,8 +200,14 @@ const ChangeProfile = ({ translation }) => {
   };
 
   const onSubmitSaveForm = async values => {
-    console.log('values :>> ', values);
     setShowLoading(true);
+    debugger;
+    if (isETransferRegistered === '') {
+      const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
+      //TODO: Set value of e-transfer registered
+      const { etr_err_c } = getETransferInfoResponse?.data?.elData || {};
+      // if(etr_err_c.indexOf)
+    }
     const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
     request.chg_yn = 'N'; //TODO: Check address change
     request.file_upd_yn = 'N'; //TODO: Check photo file uploaded
@@ -257,6 +263,7 @@ const ChangeProfile = ({ translation }) => {
       const usingSecurityCheck = secu_mdm_yn === 1;
       const requestChangeProfile = {
         ...request,
+        gibintnbk_aplct_trx_mng_no,
         pre_gibintnbk_aplct_trx_mng_no: gibintnbk_aplct_trx_mng_no,
         pre_secu_mdm_yn: secu_mdm_yn,
         pre_chg_yn: chg_yn,
@@ -332,6 +339,10 @@ const ChangeProfile = ({ translation }) => {
     }
 
     return subJobPrefix;
+  };
+
+  const getETransferRegisteredCallback = ({ isRegistered }) => {
+    setIsETransferRegistered(isRegistered);
   };
 
   useEffect(() => {
@@ -412,6 +423,7 @@ const ChangeProfile = ({ translation }) => {
   useEffect(() => {
     setShowLoading(true);
     getUserInfoRequest();
+    getETransferRegistered(getETransferRegisteredCallback);
   }, []);
 
   return (
