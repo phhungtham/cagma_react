@@ -21,6 +21,7 @@ const ContactInfoSection = ({
   occupation2Options,
   setShowLoading,
   setShowToast,
+  onClickViewAgreement,
 }) => {
   const {
     control,

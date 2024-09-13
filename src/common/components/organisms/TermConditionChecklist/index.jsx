@@ -1,28 +1,18 @@
 import { ArrowRight } from '@assets/icons';
 import CheckBox from '@common/components/atoms/Checkbox';
-import { useTermAndConditions } from '@pages/Account/OpenAccount/components/TermAndConditions/TermAndConditionsContext';
 import { PropTypes } from 'prop-types';
 
 import './styles.scss';
 
-const TermConditionChecklist = ({ config, onClickViewTerm }) => {
-  const { checkedOptions, setCheckedOptions } = useTermAndConditions();
+const TermConditionChecklist = ({ config, onClickViewTerm, onCheckOption, onCheckAll, checkedOptions }) => {
   const { selectAllLabel, options = [] } = config;
 
   const handleSelectAll = checked => {
-    if (checked) {
-      setCheckedOptions(options.map(option => option.value));
-    } else {
-      setCheckedOptions([]);
-    }
+    onCheckAll(checked);
   };
 
   const handleCheckOption = (value, checked) => {
-    if (checked) {
-      setCheckedOptions([...checkedOptions, value]);
-    } else {
-      setCheckedOptions(checkedOptions.filter(option => option !== value));
-    }
+    onCheckOption(value, checked);
   };
 
   return (

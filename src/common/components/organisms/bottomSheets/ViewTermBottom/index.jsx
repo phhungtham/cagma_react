@@ -2,7 +2,6 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import { useTermAndConditions } from '@pages/Account/OpenAccount/components/TermAndConditions/TermAndConditionsContext';
 import { PropTypes } from 'prop-types';
 
 import BottomSheet from '../../../templates/BottomSheet';
@@ -10,7 +9,7 @@ import './style.scss';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile }) => {
+const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm }) => {
   const [numPages, setNumPages] = useState(null);
   const containerRef = useRef(null);
   const pageRefs = useRef([]);
@@ -18,8 +17,6 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile }) => {
   const [hasScrolledToEnd, setHasScrolledToEnd] = useState(false);
   const bottomRef = useRef(null);
   const [hasScrolled, setHasScrolled] = useState(false);
-
-  const { viewTermBottom, setViewTermBottom, checkedOptions, setCheckedOptions } = useTermAndConditions();
 
   const getResponsiveWidth = () => {
     if (window.innerWidth > 425) {
@@ -89,16 +86,12 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile }) => {
   const { width, scale } = useMemo(() => getResponsiveWidth(), []);
 
   const handleConfirmViewTerm = () => {
-    const checkedValue = viewTermBottom.value;
     if (bottomRef.current && !hasScrolledToEnd && !hasScrolled) {
       bottomRef.current.scrollIntoView({ behavior: 'smooth' });
       setHasScrolled(true);
     } else if (hasScrolled || hasScrolledToEnd) {
-      if (!checkedOptions.includes(checkedValue)) {
-        setCheckedOptions([...checkedOptions, checkedValue]);
-      }
-      setViewTermBottom({ ...viewTermBottom, open: false });
       setHasScrolled(false);
+      onConfirm();
     }
   };
 

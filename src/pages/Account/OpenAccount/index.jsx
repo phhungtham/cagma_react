@@ -22,7 +22,6 @@ import CustomerInfoBottom from './components/CustomerInfoBottom';
 import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
-import { TermAndConditionsProvider } from './components/TermAndConditions/TermAndConditionsContext';
 import { accountFormMapFields, OPEN_ACCOUNT_STEP } from './constants';
 import { getCustomerInfoRequest } from './redux/customer/action';
 import { customerReducer } from './redux/customer/reducer';
@@ -161,12 +160,10 @@ const OpenAccount = ({ translation }) => {
           onClick={moveBack}
         />
         {currentStep === OPEN_ACCOUNT_STEP.VIEW_TERMS && (
-          <TermAndConditionsProvider>
-            <TermAndConditions
-              product={productInfo}
-              onSubmit={onSubmitAgreeTerms}
-            />
-          </TermAndConditionsProvider>
+          <TermAndConditions
+            product={productInfo}
+            onSubmit={onSubmitAgreeTerms}
+          />
         )}
         {showCustomerInfoBottom && !isLoadingCustomer && (
           <CustomerInfoBottom

@@ -7,6 +7,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import Alert from '@common/components/molecules/Alert';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
+import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import { addressTypeMapping } from '@common/constants/address';
 import {
@@ -19,6 +20,7 @@ import {
   getSubJobCode,
 } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
+import { fileUrls } from '@common/constants/file';
 import { SecurityMediaType } from '@common/constants/plugin';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
@@ -75,6 +77,7 @@ const ChangeProfile = ({ translation }) => {
   const [isETransferRegistered, setIsETransferRegistered] = useState();
 
   const [showSaveChangeConfirmAlert, setShowSaveChangeConfirmAlert] = useState(false);
+  const [showViewAgreementTermBottom, setShowViewAgreementTermBottom] = useState(false);
 
   const [showServerAlert, setShowServerAlert] = useState({
     isShow: false,
@@ -180,6 +183,11 @@ const ChangeProfile = ({ translation }) => {
     onCloseSelectBottom();
   };
 
+  const handleShowAgreementTermBottom = () => {
+    setShowViewAgreementTermBottom(true);
+    setValue('isViewAgreement', true);
+  };
+
   const onConfirmSaveForm = () => {
     setShowSaveChangeConfirmAlert(false);
     alert('handle submit');
@@ -201,14 +209,16 @@ const ChangeProfile = ({ translation }) => {
 
   const onSubmitSaveForm = async values => {
     setShowLoading(true);
-    debugger;
+    const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
     if (isETransferRegistered === '') {
       const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
-      //TODO: Set value of e-transfer registered
-      const { etr_err_c } = getETransferInfoResponse?.data?.elData || {};
-      // if(etr_err_c.indexOf)
+      if (getETransferInfoResponse?.data?.elData) {
+        const { etr_err_c } = getETransferInfoResponse.data.elData || {};
+        request.etr_reg_yn = etr_err_c?.indexOf('404') >= 0 ? 'N' : 'Y';
+      }
+    } else {
+      request.etr_reg_yn = isETransferRegistered === 'true' ? 'Y' : 'N';
     }
-    const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
     request.chg_yn = 'N'; //TODO: Check address change
     request.file_upd_yn = 'N'; //TODO: Check photo file uploaded
     request.noproc_cnt = userInfo.noproc_cnt;
@@ -221,7 +231,6 @@ const ChangeProfile = ({ translation }) => {
     request.cus_pst_dspch_apnd_t = userInfo.cus_pst_dspch_apnd_t;
     request.adr_vrfc_file_path_nm = ''; //File path of upload avatar
     request.adr_vrfc_file_nm = ''; //File path of upload avatar
-    request.etr_reg_yn = 'N'; //e-transfer registered or not
     request.agrmt_downld_yn = 'Y'; //e-transfer registered or not
     // request.etr_agrmt_yn = 'N'; //N: update from profile change page. Y: from e-transfer page
     const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
@@ -449,6 +458,7 @@ const ChangeProfile = ({ translation }) => {
               occupation2Options={occupation2Options}
               setShowLoading={setShowLoading}
               setShowToast={setShowToast}
+              onClickViewAgreement={handleShowAgreementTermBottom}
             />
             <AddressInfoSection
               onOpenAddressTypeBottom={handleOpenSelectAddressTypeBottom}
@@ -512,6 +522,12 @@ const ChangeProfile = ({ translation }) => {
           message={showToast.message}
         />
       </section>
+      <ViewTermBottom
+        open={showViewAgreementTermBottom}
+        onClose={() => setShowViewAgreementTermBottom(false)}
+        title="Electronic Communication Agreement"
+        pdfFile={fileUrls.electronicCommunicationAgreement}
+      />
     </div>
   );
 };

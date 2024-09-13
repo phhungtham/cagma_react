@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import BannerBook from '@assets/images/open-account-book.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
@@ -7,10 +9,15 @@ import { PeriodUnitCodeDisplay } from '@common/constants/product';
 
 import { termConditionConfig } from '../../constants';
 import './styles.scss';
-import { useTermAndConditions } from './TermAndConditionsContext';
 
 const TermAndConditions = ({ onSubmit, product }) => {
-  const { viewTermBottom, setViewTermBottom, checkedOptions } = useTermAndConditions();
+  const [viewTermBottom, setViewTermBottom] = useState({
+    open: false,
+    title: '',
+    fileUrl: '',
+    value: '',
+  });
+  const [checkedOptions, setCheckedOptions] = useState([]);
 
   const isValidForm = checkedOptions?.length === termConditionConfig.options.length;
 
@@ -18,6 +25,14 @@ const TermAndConditions = ({ onSubmit, product }) => {
 
   const onClickSubmit = () => {
     onSubmit();
+  };
+
+  const handleCheckOption = (value, checked) => {
+    if (checked) {
+      setCheckedOptions([...checkedOptions, value]);
+    } else {
+      setCheckedOptions(checkedOptions.filter(option => option !== value));
+    }
   };
 
   const onClickViewTermDetail = value => {
@@ -29,6 +44,22 @@ const TermAndConditions = ({ onSubmit, product }) => {
       title,
       value,
     });
+  };
+
+  const handleCheckAll = checked => {
+    if (checked) {
+      setCheckedOptions(termConditionConfig.options.map(option => option.value));
+    } else {
+      setCheckedOptions([]);
+    }
+  };
+
+  const handleConfirmTerm = () => {
+    const checkedValue = viewTermBottom.value;
+    if (!checkedOptions.includes(checkedValue)) {
+      setCheckedOptions([...checkedOptions, checkedValue]);
+    }
+    onCloseViewTermBottom();
   };
 
   const onCloseViewTermBottom = () => {
@@ -80,6 +111,9 @@ const TermAndConditions = ({ onSubmit, product }) => {
           <TermConditionChecklist
             config={termConditionConfig}
             onClickViewTerm={onClickViewTermDetail}
+            onCheckOption={handleCheckOption}
+            onCheckAll={handleCheckAll}
+            checkedOptions={checkedOptions}
           />
         </div>
       </div>
@@ -92,12 +126,15 @@ const TermAndConditions = ({ onSubmit, product }) => {
           disable={!isValidForm}
         />
       </div>
-      <ViewTermBottom
-        open={viewTermBottom.open}
-        onClose={onCloseViewTermBottom}
-        title={viewTermBottom.title}
-        pdfFile={viewTermBottom.fileUrl}
-      />
+      {viewTermBottom.open && (
+        <ViewTermBottom
+          open
+          onClose={onCloseViewTermBottom}
+          title={viewTermBottom.title}
+          pdfFile={viewTermBottom.fileUrl}
+          onConfirm={handleConfirmTerm}
+        />
+      )}
     </div>
   );
 };
