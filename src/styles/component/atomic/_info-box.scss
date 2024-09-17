@@ -6,6 +6,10 @@
   display: flex;
   align-items: flex-start;
 
+  &.middle {
+    align-items: center;
+  }
+
   .info__icon {
     padding-left: 14px;
     font-size: 20px;

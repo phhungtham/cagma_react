@@ -48,8 +48,6 @@ const ContactInfoSection = ({
 
   const verifyCodeSessionNumberRef = useRef(null);
 
-  console.log('verifyCodeSessionNumberRef.current :>> ', verifyCodeSessionNumberRef.current);
-
   const handleRequestGetEmailVerifyCode = async () => {
     if (errors.email) {
       return;
@@ -174,6 +172,11 @@ const ContactInfoSection = ({
         )}
         control={control}
         name="sin"
+      />
+      <InfoBox
+        variant="notice"
+        label="If there are DTR changes, contact branch"
+        direction="middle"
       />
       <Controller
         render={({ field }) => (
