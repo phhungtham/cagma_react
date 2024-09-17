@@ -211,7 +211,7 @@ export const formatYYYYMMDDToDisplay = date => {
   const yearString = date.slice(0, 4);
   const monthString = date.slice(4, 6);
   const dateString = date.slice(6, 8);
-  return `${monthNumberWithDisplays[monthString]} ${dateString},${yearString}`;
+  return `${monthNumberWithDisplays[monthString]} ${dateString}, ${yearString}`;
 };
 
 function formatZero(number, length) {

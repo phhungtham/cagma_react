@@ -130,39 +130,12 @@ export const BookAppointmentType = {
 
 export const customerTypeOptions = [
   {
-    label: 'Personal Customer',
+    label: 'Personal',
     value: '1',
   },
   {
-    label: 'Small Business Customer',
+    label: 'Small Business',
     value: '2',
-  },
-];
-
-export const purposeAppointmentOptions = [
-  {
-    label: 'Open an account',
-    value: '1',
-  },
-  {
-    label: 'Banking transaction',
-    value: '2',
-  },
-  {
-    label: 'Debit card',
-    value: '3',
-  },
-  {
-    label: 'Investing',
-    value: '4',
-  },
-  {
-    label: 'Borrowing',
-    value: '5',
-  },
-  {
-    label: 'Other',
-    value: 'other',
   },
 ];
 

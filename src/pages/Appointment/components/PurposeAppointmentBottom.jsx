@@ -1,89 +1,70 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ArrowRight } from '@assets/icons';
-import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import Dropdown from '@common/components/atoms/Dropdown';
-import Input from '@common/components/atoms/Input/Input';
+import Tabs from '@common/components/molecules/Tabs';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { PropTypes } from 'prop-types';
 
-import { purposeAppointmentOptions } from '../constants';
+const PurposeAppointmentBottom = ({ open, onClose, onChange, purposeTabs, subPurposeList, purposeList }) => {
+  const [tabIndex, setTabIndex] = useState(0);
+  const [subPurposeListFiltered, setSubPurposeListFiltered] = useState([]);
 
-const PurposeAppointmentBottom = ({ open, onClose, onChange }) => {
-  const [selectedPurpose, setSelectedPurpose] = useState({
-    label: '',
-    value: '',
+  const purposeTabTitles = (purposeTabs || []).map(purpose => {
+    return { title: purpose.label };
   });
-  const [detail, setDetail] = useState();
-  const [showDetailInputForm, setShowDetailInputForm] = useState(false);
 
-  const onSelectItem = item => {
-    setSelectedPurpose(item);
-    setShowDetailInputForm(true);
+  const handleTabChange = (tabName, tabIndex) => {
+    setTabIndex(tabIndex);
   };
 
-  const handleDetailChange = e => {
-    setDetail(e.target.value);
-  };
-
-  const onClickConfirm = () => {
+  const onSelectPurpose = item => {
+    const selectedPurpose = purposeTabs[tabIndex];
     onChange({
-      label: selectedPurpose.label,
-      value: selectedPurpose.value,
-      detail: detail,
+      purpose: selectedPurpose,
+      subPurpose: item,
     });
   };
+
+  useEffect(() => {
+    if (purposeTabs && subPurposeList && purposeList) {
+      const selectedPurposeValue = purposeTabs[tabIndex]?.value;
+      const purposeIndex = (purposeList || []).findIndex(purpose => purpose.value === selectedPurposeValue);
+      if (purposeIndex >= 0) {
+        const subPurposeListDisplay = (subPurposeList || []).filter(purpose =>
+          purpose.value.startsWith(String(purposeIndex + 1))
+        );
+        setSubPurposeListFiltered(subPurposeListDisplay);
+      }
+    }
+  }, [tabIndex, purposeTabs, subPurposeList, purposeList]);
 
   return (
     <BottomSheet
       open={open}
       onClose={onClose}
       title="Purpose of appointment"
-      clazz="bottom__dropdown__wrapper"
+      clazz="bottom__dropdown__wrapper purpose-appointment__wrapper"
       type="fit-content"
     >
-      {showDetailInputForm ? (
-        <>
-          <div className="pt-4">
-            <section>
-              <Dropdown
-                label="Purpose of Appointment"
-                value={selectedPurpose.label}
-                disabled
-              />
-            </section>
-            <section className="mt-3">
-              <Input
-                label="Detail for Appointment"
-                type="text"
-                onChange={handleDetailChange}
-              />
-            </section>
-          </div>
-          <div className="btn__ctas">
-            <Button
-              variant="filled__primary"
-              label="Next"
-              className="w-full"
-              onClick={onClickConfirm}
-              disable={!detail}
-            />
-          </div>
-        </>
-      ) : (
+      <Tabs
+        tabList={purposeTabTitles}
+        isLoginAlready
+        tabIndex={tabIndex}
+        onTabChange={handleTabChange}
+      >
         <div className="bottom__dropdown__list">
-          {purposeAppointmentOptions.map(item => (
+          {subPurposeListFiltered.map(item => (
             <div
               className="dropdown__option"
               key={item.value}
-              onClick={() => onSelectItem(item)}
+              onClick={() => onSelectPurpose(item)}
             >
               <span className="option__label">{item.label}</span>
               <ArrowRight />
             </div>
           ))}
         </div>
-      )}
+      </Tabs>
     </BottomSheet>
   );
 };
@@ -92,12 +73,17 @@ PurposeAppointmentBottom.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
+  purposeTabs: PropTypes.array,
+  subPurposeList: PropTypes.array,
+  purposeList: PropTypes.array,
 };
 
 PurposeAppointmentBottom.defaultProps = {
   open: false,
   onClose: () => {},
   onSelect: () => {},
+  purposeTabs: [],
+  purposeList: [],
 };
 
 export default PurposeAppointmentBottom;

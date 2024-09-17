@@ -5,6 +5,8 @@ export const getSubJobCode = 'sub_job_t';
 export const getEmploymentCode = 'emplm_s_c';
 export const getAddressTypeCode = 'cus_adr_t';
 export const getCountryCode = 'nat_c';
+export const getPurposeAppointment = 'apint_purp';
+export const getSubPurposeAppointment = 'apint_sub_purp';
 
 export const EmploymentMap = {
   Employed: '2',

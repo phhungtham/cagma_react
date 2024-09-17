@@ -1,6 +1,19 @@
 @import 'styles/utilities/variables';
 @import 'styles/utilities/mixin';
 
+.purpose-appointment__wrapper {
+  .bottom__sheet__content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .tabs__list {
+    flex: 1;
+  }
+  .tabs__content {
+    padding: 16px 24px 0;
+  }
+}
+
 .appointment-detail-bottom__content {
   padding-bottom: 30px;
   .appointment {

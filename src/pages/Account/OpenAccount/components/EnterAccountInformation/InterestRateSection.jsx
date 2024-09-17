@@ -28,7 +28,7 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
   const handleSelectDate = date => {
     if (date) {
       setValue('dob', date);
-      setValue('dob_display', formatYYYYMMDDToDisplay('20240830'));
+      setValue('dob_display', formatYYYYMMDDToDisplay(date));
     }
   };
 
