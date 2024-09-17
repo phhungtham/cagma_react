@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { ArrowRight } from '@assets/icons';
 import inPersonAppointmentImg from '@assets/images/in_person_consultation.png';
@@ -6,33 +6,57 @@ import zoomAppointmentImg from '@assets/images/zoom_consultation.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Alert from '@common/components/molecules/Alert';
 import Header from '@common/components/organisms/Header';
-import { moveBack } from '@utilities/index';
+import { endpoints } from '@common/constants/endpoint';
+import { MENU_CODE } from '@configs/global/constants';
+import { routePaths } from '@routes/paths';
+import { apiCall } from '@shared/api';
+import { moveBack, moveNext } from '@utilities/index';
 
 import AppointmentCard from '../components/AppointmentCard';
 import AppointmentDetailBottom from '../components/AppointmentDetailBottom';
-import { appointmentDetailTest, appointmentListTest } from '../constants';
+import { appointmentDetailTest, appointmentListTest, BookAppointmentType } from '../constants';
 import './styles.scss';
 
 const AppointmentHome = () => {
-  const [showLocationAccessPermissionAlert, setShowLocationAccessPermissionAlert] = useState(false);
   const [showAppointmentDetailBottom, setShowAppointmentDetailBottom] = useState(false);
+  const [showAlert, setShowAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
 
-  const onClickAppointmentCard = () => {
-    //TODO: Check have the permission or not
-    setShowLocationAccessPermissionAlert(true);
-  };
-
-  const handleAllowAccessLocation = () => {
-    alert('allow');
-  };
-
-  const onCloseAccessLocationAlert = () => {
-    setShowLocationAccessPermissionAlert(false);
+  const handleNavigateBranchDirectory = type => {
+    moveNext(
+      MENU_CODE.BRANCH_DIRECTORY,
+      {
+        param: JSON.stringify({ type }),
+      },
+      routePaths.branchDirectory
+    );
   };
 
   const onClickViewAppointmentDetail = () => {
     setShowAppointmentDetailBottom(true);
   };
+
+  const requestGetAppointments = async () => {
+    const getAppointmentsResponse = await apiCall(endpoints.inquiryAppointments, 'POST', {});
+    if (getAppointmentsResponse?.data?.elHeader?.resSuc) {
+    } else {
+      const errorMessage = getAppointmentsResponse?.data?.elHeader?.resMsg || '';
+      setShowAlert({
+        isShow: true,
+        title: 'Sorry!',
+        content: errorMessage,
+      });
+    }
+  };
+
+  //TODO: Handle Pass params to branch directoryœŒ
+
+  useEffect(() => {
+    requestGetAppointments();
+  }, []);
 
   return (
     <>
@@ -45,7 +69,7 @@ const AppointmentHome = () => {
           <div className="card__list">
             <div
               className="card__item"
-              onClick={onClickAppointmentCard}
+              onClick={() => handleNavigateBranchDirectory(BookAppointmentType.ZOOM)}
             >
               <div className="card__content">
                 <div className="card__title">
@@ -69,7 +93,10 @@ const AppointmentHome = () => {
                 />
               </div>
             </div>
-            <div className="card__item mt-4">
+            <div
+              className="card__item mt-4"
+              onClick={() => handleNavigateBranchDirectory(BookAppointmentType.IN_PERSON)}
+            >
               <div className="card__content">
                 <div className="card__title">
                   <span>Please visit our branch to </span>
@@ -112,24 +139,6 @@ const AppointmentHome = () => {
             </div>
           </div>
         </div>
-        <Alert
-          isCloseButton={false}
-          isShowAlert={showLocationAccessPermissionAlert}
-          title={
-            <span>
-              Allow <span className="text-primary">“Shinhan SOL”</span> to access your location?
-            </span>
-          }
-          textAlign="center"
-          firstButton={{
-            onClick: handleAllowAccessLocation,
-            label: 'Allow',
-          }}
-          secondButton={{
-            onClick: onCloseAccessLocationAlert,
-            label: 'I’ll do it next time',
-          }}
-        />
       </div>
       {showAppointmentDetailBottom && (
         <AppointmentDetailBottom
@@ -138,6 +147,17 @@ const AppointmentHome = () => {
           onConfirmCancel={() => {}}
         />
       )}
+      <Alert
+        isCloseButton={false}
+        isShowAlert={showAlert.isShow}
+        title={showAlert.title}
+        subtitle={showAlert.content}
+        textAlign="left"
+        firstButton={{
+          onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
+          label: 'Confirm',
+        }}
+      />
     </>
   );
 };

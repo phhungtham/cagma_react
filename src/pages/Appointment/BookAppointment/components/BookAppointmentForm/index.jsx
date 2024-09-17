@@ -78,7 +78,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
     <>
       <div className="page__wrapper">
         <Header
-          title="In person Appointment "
+          title="Book an Appointment"
           onClick={moveBack}
         />
         <div className="book-appointment__content">
@@ -129,7 +129,10 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
               <div className="mt-3">
                 <div className="customer-status__info">
                   {customerStatusFields.map(({ label, value }) => (
-                    <div className="customer-status__item">
+                    <div
+                      className="customer-status__item"
+                      key={label}
+                    >
                       <span className="customer-status__label">{label}</span>
                       <span className="customer-status__value">{customerStatusTest[value]}</span>
                     </div>

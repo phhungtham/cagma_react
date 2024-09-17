@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { nativeParamsSelector } from 'app/redux/selector';
 
 import BookAppointmentForm from './components/BookAppointmentForm';
 import BookAppointmentSuccessful from './components/BookAppointmentSuccessful';
@@ -9,7 +12,11 @@ const BookAppointmentStep = {
   COMPLETED: 'completed',
 };
 
-const BookAppointment = ({ type }) => {
+const BookAppointment = () => {
+  const nativeParams = useSelector(nativeParamsSelector);
+  const { type } = nativeParams || {};
+
+  console.log('nativeParams :>> ', nativeParams);
   const [currentStep, setCurrentStep] = useState(BookAppointmentStep.ENTER_INFO_FORM);
 
   const handleBookAppointment = formValues => {

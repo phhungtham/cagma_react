@@ -39,46 +39,15 @@ export const appointmentDetailTest = {
 export const branchFields = [
   {
     label: 'Phone',
-    value: 'phone',
+    value: 'br_telno',
   },
   {
     label: 'Fax',
-    value: 'fax',
+    value: 'br_fax_no',
   },
   {
     label: 'Branch No',
-    value: 'branchNo',
-  },
-];
-
-export const branchDirectoryListTest = [
-  {
-    title: 'North Yrok Ontario Branch',
-    caption: '10102 101 St, La Crête, AB T0H 2H0, Canada',
-    phone: '416-250-3550',
-    fax: '416-250-3460',
-    branchNo: '08048',
-  },
-  {
-    title: 'Mississauga Ontario Branch',
-    caption: '10513 100 Ave, La Crête, AB T0H 2H0, Canada',
-    phone: '416-250-3550',
-    fax: '416-250-3460',
-    branchNo: '08048',
-  },
-  {
-    title: 'Coquitlam Branch',
-    caption: '2929 Barnet Highway Unit 2842 Coquitlam British Columbia V3B 5R5',
-    phone: '416-250-3550',
-    fax: '416-250-3460',
-    branchNo: '08048',
-  },
-  {
-    title: 'North York Ontario Branch',
-    caption: '5140 Yonge Street Suite 2300 North York Ontario M2N 6L7',
-    phone: '416-250-3550',
-    fax: '416-250-3460',
-    branchNo: '08048',
+    value: 'brno',
   },
 ];
 

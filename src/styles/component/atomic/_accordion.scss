@@ -3,11 +3,14 @@
   background-color: $color-white;
   .accordion__item {
     width: 100%;
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 30px;
+    padding: 0 24px;
+    &__content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      padding: 20px 0;
+    }
   }
   .accordion {
     &__icon {

@@ -7,4 +7,6 @@ export const endpoints = {
   changeUserInfoPreTransaction: '/ca/me/CAME002.pwkjson',
   changeUserInfoTransaction: '/ca/me/CAME003.pwkjson',
   inquiryETransferCustomerInfo: '/ca/tr/CATR028.pwkjson',
+  inquiryAppointments: '/ca/hc/CAHC002.pwkjson',
+  getBranchDirectory: '/ca/co/CACO006.pwkjson',
 };

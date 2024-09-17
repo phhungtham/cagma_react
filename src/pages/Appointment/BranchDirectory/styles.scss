@@ -9,13 +9,18 @@
 .branch-directory__content {
   padding-top: 16px;
   .branch-directory__item {
-    @include dividerBottomSolid();
+    .accordion__item__content {
+      @include dividerBottomSolid();
+    }
     &:last-child {
-      border: none;
+      .accordion__item__content {
+        border: none;
+      }
     }
     .table__item__value {
       &.phone {
         text-decoration: underline;
+        font-weight: 500;
       }
     }
   }

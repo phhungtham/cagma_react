@@ -3,13 +3,28 @@ import { Fragment } from 'react';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import LocationMap from '@common/components/atoms/LocationMap';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { branchFields } from '@pages/Appointment/constants';
+import { callPhone } from '@utilities/index';
 import { PropTypes } from 'prop-types';
 
 import './styles.scss';
 
+const viewMapBranchFields = [
+  {
+    label: 'Phone',
+    value: 'br_telno',
+  },
+  {
+    label: 'Fax',
+    value: 'br_fax_no',
+  },
+  {
+    label: 'Address',
+    value: 'br_adr',
+  },
+];
+
 const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
-  function encodeToURL(str) {
+  const encodeToURL = str => {
     return str
       .replace(/"/g, '%22')
       .replace(/#/g, '%23')
@@ -32,7 +47,11 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
       .replace(/\[/g, '%5B')
       .replace(/\]/g, '%5D')
       .replace(/\|/g, '%7C');
-  }
+  };
+
+  const onClickCallPhone = () => {
+    callPhone(branchData?.br_telno);
+  };
 
   return (
     <BottomSheet
@@ -44,13 +63,13 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
     >
       <div className="view_map">
         <div className="map">
-          <LocationMap address={encodeToURL(branchData?.caption || '')} />
+          <LocationMap address={encodeToURL(branchData?.br_adr || '')} />
         </div>
         <div className="content">
-          <div className="title">{branchData?.title || ''}</div>
+          <div className="title">{branchData?.eng_br_nm || ''}</div>
           <div className="detail_info">
             {!!branchData &&
-              branchFields.map(({ label, value }, index) => (
+              viewMapBranchFields.map(({ label, value }, index) => (
                 <Fragment key={`${value}-${index}`}>
                   <span className="info_label">{label}</span>
                   <span className="info_content">{branchData[value]}</span>
@@ -64,15 +83,13 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
             label="Call"
             variant="filled__secondary-blue"
             className="w-full"
-            onClick={() => {
-              //
-            }}
+            onClick={onClickCallPhone}
           />
           <Button
             label="Book Appointment"
             variant="filled__primary"
             className="w-full"
-            onClick={() => onBookAppointment()}
+            onClick={() => onBookAppointment(branchData)}
           />
         </div>
       </div>
