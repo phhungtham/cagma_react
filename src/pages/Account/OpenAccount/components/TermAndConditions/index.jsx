@@ -126,15 +126,13 @@ const TermAndConditions = ({ onSubmit, product }) => {
           disable={!isValidForm}
         />
       </div>
-      {viewTermBottom.open && (
-        <ViewTermBottom
-          open
-          onClose={onCloseViewTermBottom}
-          title={viewTermBottom.title}
-          pdfFile={viewTermBottom.fileUrl}
-          onConfirm={handleConfirmTerm}
-        />
-      )}
+      <ViewTermBottom
+        open={viewTermBottom.open}
+        onClose={onCloseViewTermBottom}
+        title={viewTermBottom.title}
+        pdfFile={viewTermBottom.fileUrl}
+        onConfirm={handleConfirmTerm}
+      />
     </div>
   );
 };
