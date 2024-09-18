@@ -27,11 +27,10 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
 
   const handleSelectDate = data => {
     if (data) {
-      const objData = JSON.stringify(data);
-      const selectedDate = objData?.selectDate;
+      const selectedDate = data?.selectDate;
       setValue('dob', selectedDate);
       // setValue('dob_display', formatYYYYMMDDToDisplay(selectedDate));
-      setValue('dob_display', data);
+      setValue('dob_display', selectedDate);
     }
   };
 
