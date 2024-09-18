@@ -83,7 +83,7 @@ const RoutesConfig = [
   {
     path: '/react-test-page',
     component: CommonTestPage,
-    private: true,
+    private: false,
     navigatePath: '/',
   },
 ];
