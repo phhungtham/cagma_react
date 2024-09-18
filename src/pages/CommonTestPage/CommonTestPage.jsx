@@ -154,7 +154,10 @@ const CommonTestPage = () => {
 
   const handleViewHistory = () => {};
 
-  const handleCallCameraCallback = () => {};
+  const handleCallCameraCallback = data => {
+    debugger;
+    console.log('camera data :>> ', data);
+  };
 
   const handleBackToHome = () => {
     moveBack();
