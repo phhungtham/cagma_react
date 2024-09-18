@@ -27,7 +27,7 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
 
   const handleSelectDate = cbData => {
     if (cbData) {
-      const selectedDate = JSON.parse(cbData?.data?.selectDate || '');
+      const selectedDate = cbData?.data ? JSON.parse(cbData.data)?.selectDate : '';
       setValue('dob', selectedDate);
       setValue('dob_display', formatYYYYMMDDToDisplay(selectedDate));
     }
