@@ -28,8 +28,10 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
   const handleSelectDate = date => {
     console.log('open calendar data :>> ', date);
     if (date) {
-      setValue('dob', date);
-      setValue('dob_display', formatYYYYMMDDToDisplay(date));
+      setValue('dob', '19980523');
+      setValue('dob_display', formatYYYYMMDDToDisplay('19980523'));
+      // setValue('dob', date);
+      // setValue('dob_display', formatYYYYMMDDToDisplay(date));
     }
   };
 
