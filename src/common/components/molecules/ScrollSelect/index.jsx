@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { itemHeight } from '@common/constants/selectBottom';
+import { itemHeight } from '@common/constants/dateTime';
 
 import '../../organisms/bottomSheets/bs_styles.scss';
 
@@ -65,10 +65,10 @@ const ScrollSelect = ({ options, defaultValue, onChangeValue }) => {
         }, 200);
       };
 
-      containerRef.current.addEventListener('scroll', handleEventScroll);
+      containerRef.current?.addEventListener('scroll', handleEventScroll);
 
       return () => {
-        containerRef.current.removeEventListener('scroll', handleEventScroll);
+        containerRef.current?.removeEventListener('scroll', handleEventScroll);
 
         if (scrollTimeout) {
           clearTimeout(scrollTimeout);

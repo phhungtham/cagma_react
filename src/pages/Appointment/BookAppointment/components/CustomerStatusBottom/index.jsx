@@ -6,8 +6,10 @@ import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Tabs from '@common/components/molecules/Tabs';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { preferredLanguages } from '@pages/Appointment/constants';
 
+import { customerStatusSchema } from './schema';
 import './styles.scss';
 
 const StatusTab = {
@@ -15,22 +17,37 @@ const StatusTab = {
   NEW: 1,
 };
 
-const CustomerStatusBottom = ({ onClose, onConfirm, defaultValue }) => {
-  const [tabIndex, setTabIndex] = useState(StatusTab.EXISTING);
+const CustomerStatusBottom = ({ open, onClose, onConfirm, defaultValue }) => {
+  const [tabIndex, setTabIndex] = useState(StatusTab.NEW);
 
-  const { handleSubmit, control } = useForm(defaultValue);
+  const {
+    handleSubmit,
+    control,
+    formState: { isValid },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      name: defaultValue?.name,
+      phoneNumber: defaultValue?.phoneNumber,
+      lang: defaultValue?.lang,
+      email: defaultValue?.email,
+      comment: defaultValue?.comment,
+    },
+    resolver: yupResolver(customerStatusSchema),
+  });
 
   const handleTabChange = (tabName, tabIndex) => {
     setTabIndex(tabIndex);
   };
 
   const handleSubmitForm = formValues => {
+    formValues.customerStatusType = tabIndex === StatusTab.EXISTING ? 'Existing customer' : 'New customer';
     onConfirm(formValues);
   };
 
   return (
     <BottomSheet
-      open
+      open={open}
       onClose={onClose}
       title="Customer status"
       clazz="customer-status__wrapper"
@@ -120,6 +137,7 @@ const CustomerStatusBottom = ({ onClose, onConfirm, defaultValue }) => {
             variant="filled__primary"
             label="Next"
             className="w-full"
+            disable={!isValid}
             onClick={handleSubmit(handleSubmitForm)}
           />
         </div>

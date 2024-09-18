@@ -214,6 +214,19 @@ export const formatYYYYMMDDToDisplay = date => {
   return `${monthNumberWithDisplays[monthString]} ${dateString}, ${yearString}`;
 };
 
+export const formatHHMMToDisplay = time => {
+  const hour = time.slice(0, 2);
+  const minute = time.slice(2, 4);
+  return `${hour}:${minute}`;
+};
+
+export const appendZeroToTime = time => {
+  if (Number(time) < 10) {
+    return '0' + time;
+  }
+  return time;
+};
+
 function formatZero(number, length) {
   var str = '' + number;
   while (str.length < length) {

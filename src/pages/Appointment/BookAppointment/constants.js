@@ -33,3 +33,20 @@ export const appointmentSuccessInfoTest = {
   time: '1pm',
   confirmNumber: '#123456',
 };
+
+export const bookAppointmentFormDefaultValues = {
+  customerType: '',
+  customerTypeDisplay: '',
+  purpose: '',
+  purposeDisplay: '',
+  date: '',
+  dateDisplay: '',
+  time: '',
+  timeDisplay: '',
+  customerStatusType: '',
+  name: '',
+  phoneNumber: '',
+  email: '',
+  lang: 'en',
+  comment: '',
+};

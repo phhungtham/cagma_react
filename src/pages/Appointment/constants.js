@@ -157,7 +157,7 @@ export const customerStatusFields = [
   },
   {
     label: 'Phone no.',
-    value: 'phone',
+    value: 'phoneNumber',
   },
   {
     label: 'Email',
@@ -165,7 +165,7 @@ export const customerStatusFields = [
   },
   {
     label: 'Preferred Language',
-    value: 'language',
+    value: 'langDisplay',
   },
   {
     label: 'Additional Comments',

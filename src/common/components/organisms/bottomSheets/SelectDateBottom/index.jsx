@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ScrollSelect from '@common/components/molecules/ScrollSelect';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { months, selectType } from '@common/constants/selectBottom';
+import { months, selectType } from '@common/constants/dateTime';
 import { PropTypes } from 'prop-types';
 
 import '../bs_styles.scss';

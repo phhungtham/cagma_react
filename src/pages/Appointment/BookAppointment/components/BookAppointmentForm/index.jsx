@@ -7,25 +7,26 @@ import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom
 import SelectTimeBottom from '@common/components/organisms/bottomSheets/SelectTimeBottom';
 import Header from '@common/components/organisms/Header';
 import { getPurposeAppointment, getSubPurposeAppointment } from '@common/constants/commonCode';
+import { hoursFullOptions, minuteHalfOptions } from '@common/constants/dateTime';
 import { AppCfg } from '@configs/appConfigs';
+import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
 import PurposeAppointmentBottom from '@pages/Appointment/components/PurposeAppointmentBottom';
-import { BookAppointmentType, customerStatusFields, customerTypeOptions } from '@pages/Appointment/constants';
+import {
+  BookAppointmentType,
+  customerStatusFields,
+  customerTypeOptions,
+  preferredLanguages,
+} from '@pages/Appointment/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
-import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
+import { formatHHMMToDisplay, formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import { moveBack } from '@utilities/index';
 
+import { bookAppointmentFormDefaultValues } from '../../constants';
 import CustomerStatusBottom from '../CustomerStatusBottom';
+import { bookAppointmentSchema } from './schema';
 import './styles.scss';
-
-const customerStatusTest = {
-  name: 'PARK HYUN JI',
-  phone: '85512311231',
-  email: 'shinhan@global.com',
-  language: 'English',
-  comment: 'want to find out good for me',
-};
 
 const BookAppointmentForm = ({ type, onSubmit }) => {
   const { sendRequest: requestGetCommonCode, data: commonCodeData } = useCommonCode();
@@ -33,14 +34,26 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   const [showPurposeAppointmentBottom, setShowPurposeAppointmentBottom] = useState(false);
   const [showSelectTimeBottom, setShowSelectTimeBottom] = useState(false);
   const [showCustomerStatusBottom, setShowCustomerStatusBottom] = useState(false);
-  const [selectedTime, setSelectedTime] = useState();
+  const [showCustomerStatusInfo, setShowCustomerStatusInfo] = useState(false);
   const [purposeTabs, setPurposeTabs] = useState([]);
   const [purposeList, setPurposeList] = useState([]);
   const [subPurposeList, setSubPurposeList] = useState([]);
 
-  const { handleSubmit, setValue, watch, control, register } = useForm();
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    control,
+    formState: { isValid },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: bookAppointmentFormDefaultValues,
+    resolver: yupResolver(bookAppointmentSchema),
+  });
 
-  const [customerType, subPurposeDisplay, date] = watch(['customerType', 'subPurposeDisplay', 'date']);
+  const formValues = watch();
+
+  const { customerType, subPurposeDisplay, date } = formValues;
 
   const handleOpenCustomerTypeBottom = () => {
     setShowCustomerTypeBottom(true);
@@ -52,16 +65,16 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
 
   const handleSelectDate = date => {
     if (date) {
-      setValue('date', date);
-      setValue('dateDisplay', formatYYYYMMDDToDisplay('20240830'));
+      setValue('date', date, { shouldValidate: true });
+      setValue('dateDisplay', formatYYYYMMDDToDisplay('20240830'), { shouldValidate: true });
     }
   };
 
   const handleOpenCalendar = () => {
     if (AppCfg.ENV === 'development') {
       //For dummy data because it call native calendar
-      setValue('date', '19980523');
-      setValue('dateDisplay', formatYYYYMMDDToDisplay('19980523'));
+      setValue('date', '19980523', { shouldValidate: true });
+      setValue('dateDisplay', formatYYYYMMDDToDisplay('19980523'), { shouldValidate: true });
     }
     openCalendar(handleSelectDate, { selectDate: date || undefined });
   };
@@ -75,24 +88,37 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   };
 
   const handleSelectCustomerType = type => {
-    setValue('customerTypeDisplay', type?.label);
-    setValue('customerType', type?.value);
+    setValue('customerTypeDisplay', type?.label, { shouldValidate: true });
+    setValue('customerType', type?.value, { shouldValidate: true });
     setShowCustomerTypeBottom(false);
   };
 
   const handleSelectPurpose = ({ purpose, subPurpose }) => {
     if (purpose && subPurpose) {
-      setValue('purpose', purpose?.value);
-      setValue('purposeDisplay', purpose?.label);
-      setValue('subPurpose', subPurpose?.label);
-      setValue('subPurposeDisplay', subPurpose?.label);
+      setValue('purpose', purpose?.value, { shouldValidate: true });
+      setValue('purposeDisplay', purpose?.label, { shouldValidate: true });
+      setValue('subPurpose', subPurpose?.label, { shouldValidate: true });
+      setValue('subPurposeDisplay', subPurpose?.label, { shouldValidate: true });
     }
     setShowPurposeAppointmentBottom(false);
   };
 
   const handleSelectTime = time => {
-    setSelectedTime(time);
+    const formattedTime = time.replace(' ', '');
+    const timeDisplay = formatHHMMToDisplay(formattedTime);
+    setValue('time', formattedTime, { shouldValidate: true });
+    setValue('timeDisplay', timeDisplay, { shouldValidate: true });
     setShowSelectTimeBottom(false);
+  };
+
+  const handleChangeCustomerStatus = values => {
+    setShowCustomerStatusBottom(false);
+    for (const [key, value] of Object.entries(values)) {
+      setValue(key, value);
+    }
+    const selectedLang = preferredLanguages.find(language => language.value === values.lang);
+    setValue('langDisplay', selectedLang?.label, { shouldValidate: true });
+    setShowCustomerStatusInfo(true);
   };
 
   const onSubmitBookAppointment = values => {
@@ -119,8 +145,6 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   }, [commonCodeData]);
 
   useEffect(() => {
-    register('subPurpose');
-    register('subPurposeDisplay');
     requestGetCommonCode([getPurposeAppointment, getSubPurposeAppointment].join(';'));
   }, []);
 
@@ -181,40 +205,56 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
               />
             </section>
             <section>
-              <TextDropdown
-                label="Time"
-                placeholder="Select"
-                value={selectedTime}
-                onClick={handleOpenSelectTimeBottom}
+              <Controller
+                render={({ field: { value } }) => (
+                  <TextDropdown
+                    label="Time"
+                    placeholder="Select"
+                    value={value}
+                    onClick={handleOpenSelectTimeBottom}
+                  />
+                )}
+                control={control}
+                name="timeDisplay"
               />
             </section>
             <div className="divider__item__solid my-4" />
             <section>
-              <TextDropdown
-                label="Customer status"
-                placeholder="Select"
-                onClick={handleOpenCustomerStatusBottom}
+              <Controller
+                render={({ field: { value } }) => (
+                  <TextDropdown
+                    label="Customer status"
+                    placeholder="Select"
+                    value={value}
+                    onClick={handleOpenCustomerStatusBottom}
+                  />
+                )}
+                control={control}
+                name="customerStatusType"
               />
-              <div className="mt-3">
-                <div className="customer-status__info">
-                  {customerStatusFields.map(({ label, value }) => (
-                    <div
-                      className="customer-status__item"
-                      key={label}
-                    >
-                      <span className="customer-status__label">{label}</span>
-                      <span className="customer-status__value">{customerStatusTest[value]}</span>
-                    </div>
-                  ))}
+              {showCustomerStatusInfo && (
+                <div className="mt-3">
+                  <div className="customer-status__info">
+                    {customerStatusFields.map(({ label, value }) => (
+                      <div
+                        className="customer-status__item"
+                        key={label}
+                      >
+                        <span className="customer-status__label">{label}</span>
+                        <span className="customer-status__value">{formValues[value]}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </section>
           </div>
           <div className="footer__fixed">
             <Button
-              label="Reserve"
+              label="Book"
               variant="filled__primary"
               className="btn__cta"
+              disable={!isValid}
               onClick={handleSubmit(onSubmitBookAppointment)}
             />
           </div>
@@ -244,15 +284,15 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
         open={showSelectTimeBottom}
         onClose={() => setShowSelectTimeBottom(false)}
         onTimeChange={handleSelectTime}
-        defaultTime={selectedTime}
+        hourOptions={hoursFullOptions}
+        minuteOptions={minuteHalfOptions}
       />
-      {showCustomerStatusBottom && (
-        <CustomerStatusBottom
-          onClose={() => setShowCustomerStatusBottom(false)}
-          onConfirm={() => {}}
-          defaultValue={{}}
-        />
-      )}
+      <CustomerStatusBottom
+        open={showCustomerStatusBottom}
+        onClose={() => setShowCustomerStatusBottom(false)}
+        onConfirm={handleChangeCustomerStatus}
+        defaultValue={formValues}
+      />
     </>
   );
 };

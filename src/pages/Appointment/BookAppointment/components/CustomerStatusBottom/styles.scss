@@ -1,5 +1,22 @@
-.customer-status {
-  &__form {
-    padding-top: 24px;
+.customer-status__wrapper {
+  .customer-status {
+    &__form {
+      padding-top: 24px;
+    }
+  }
+  .bottom__sheet__content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .tabs__list {
+    flex: 1;
+  }
+  .tabs__content {
+    padding: 0 24px;
+  }
+
+  .btn__ctas {
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }

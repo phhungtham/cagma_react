@@ -24,6 +24,7 @@ import { customerReducer } from '@pages/Account/OpenAccount/redux/customer/reduc
 import { customerSaga } from '@pages/Account/OpenAccount/redux/customer/saga';
 import { customerInfo } from '@pages/Account/OpenAccount/redux/customer/selector';
 import { CustomerFeatureName } from '@pages/Account/OpenAccount/redux/customer/type';
+import callCamera from '@utilities/gmCommon/callCamera';
 import {
   callPhone,
   clearHistory,
@@ -153,6 +154,8 @@ const CommonTestPage = () => {
 
   const handleViewHistory = () => {};
 
+  const handleCallCameraCallback = () => {};
+
   const handleBackToHome = () => {
     moveBack();
   };
@@ -232,6 +235,11 @@ const CommonTestPage = () => {
           title: 'Call Phone',
           label: 'callPhone',
           action: () => callPhone('0221518419'),
+        },
+        {
+          title: 'Call Camera',
+          label: 'callCamera',
+          action: () => callCamera(handleCallCameraCallback),
         },
       ],
     },
