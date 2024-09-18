@@ -7,6 +7,7 @@ export const getAddressTypeCode = 'cus_adr_t';
 export const getCountryCode = 'nat_c';
 export const getPurposeAppointment = 'apint_purp';
 export const getSubPurposeAppointment = 'apint_sub_purp';
+export const getAppointmentStatus = 'apint_stat';
 
 export const EmploymentMap = {
   Employed: '2',

@@ -46,7 +46,7 @@ const BookAppointmentSuccessful = ({ appointmentInfo }) => {
           ))}
         </div>
       </div>
-      <div className="footer__fixed">
+      <div className="footer__fixed book-appointment__footer">
         <Button
           variant="filled__secondary-blue"
           label="View Appointment"

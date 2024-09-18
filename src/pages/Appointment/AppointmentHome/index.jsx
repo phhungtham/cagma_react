@@ -35,12 +35,17 @@ const AppointmentHome = () => {
     );
   };
 
+  const handleNavigateAppointmentManagement = e => {
+    e.stopPropagation();
+    moveNext(MENU_CODE.APPOINTMENT_MANAGEMENT, {}, routePaths.appointmentManagement);
+  };
+
   const onClickViewAppointmentDetail = () => {
     setShowAppointmentDetailBottom(true);
   };
 
   const requestGetAppointments = async () => {
-    const getAppointmentsResponse = await apiCall(endpoints.inquiryAppointments, 'POST', {});
+    const getAppointmentsResponse = await apiCall(endpoints.getAppointments, 'POST', {});
     if (getAppointmentsResponse?.data?.elHeader?.resSuc) {
     } else {
       const errorMessage = getAppointmentsResponse?.data?.elHeader?.resMsg || '';
@@ -51,8 +56,6 @@ const AppointmentHome = () => {
       });
     }
   };
-
-  //TODO: Handle Pass params to branch directoryœŒ
 
   useEffect(() => {
     requestGetAppointments();
@@ -123,7 +126,10 @@ const AppointmentHome = () => {
           <div className="appointment-details__wrapper">
             <div className="details__header">
               <div className="details__header__title">Appointment details</div>
-              <div className="details__header__icon">
+              <div
+                className="details__header__icon"
+                onClick={handleNavigateAppointmentManagement}
+              >
                 <ArrowRight />
               </div>
             </div>

@@ -41,8 +41,8 @@ const BookAppointment = () => {
     request.apint_visit_chk = type === BookAppointmentType.IN_PERSON ? 'Y' : 'N';
     request.apint_brno = branchNo;
     const bookAppointmentResponse = await apiCall(endpoints.bookAppointment, 'POST', request);
+    setShowLoading(false);
     if (bookAppointmentResponse?.data?.elData) {
-      setShowLoading(false);
       const {
         apint_visit_chk: visitCheck,
         lcl_br_nm: branchName,
@@ -66,7 +66,6 @@ const BookAppointment = () => {
     }
     const responseErrorMessage = bookAppointmentResponse?.data?.elHeader?.resMsgVo?.msgText;
     if (responseErrorMessage) {
-      setShowLoading(false);
       setShowAlert({
         isShow: true,
         title: 'Sorry!',

@@ -4,7 +4,7 @@
 .book-appointment-successful__wrapper {
   height: 100vh;
   overflow-y: auto;
-  padding: 56px 24px;
+  padding: 56px 24px 120px;
   .book-appointment {
     &__header {
       @include flexCenter();
@@ -55,5 +55,11 @@
         font-weight: 500;
       }
     }
+  }
+}
+
+.book-appointment__footer {
+  .btn__filled__primary {
+    align-self: stretch;
   }
 }

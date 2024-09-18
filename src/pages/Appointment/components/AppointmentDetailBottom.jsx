@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
 import { FillDeleteIcon } from '@assets/icons';
-import apparatusZoomImg from '@assets/images/apparatus_zoom_40.png';
+import zoomImg from '@assets/images/apparatus_zoom_40.png';
+import inPersonImg from '@assets/images/icon_fill_atm_40.png';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import Alert from '@common/components/molecules/Alert';
 import BottomSheet from '@common/components/templates/BottomSheet';
@@ -9,8 +10,20 @@ import BottomSheet from '@common/components/templates/BottomSheet';
 import { appointmentDetailFields } from '../constants';
 import './styles.scss';
 
-const AppointmentDetailBottom = ({ appointmentDetail, onClose, onConfirmCancel }) => {
+const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }) => {
+  console.log('appointment :>> ', appointment);
   const [showCancelAlert, setShowCancelAlert] = useState(false);
+
+  const {
+    apint_visit_chk,
+    apint_seq: number,
+    apint_reg_dt_display: date,
+    apint_reg_tm_display: time,
+    apint_stat_display: status,
+    lcl_br_nm: branchName,
+  } = appointment;
+
+  const isUsingZoom = apint_visit_chk === 'N';
 
   const onShowCancelAppointmentAlert = () => {
     setShowCancelAlert(true);
@@ -29,7 +42,7 @@ const AppointmentDetailBottom = ({ appointmentDetail, onClose, onConfirmCancel }
   return (
     <>
       <BottomSheet
-        open
+        open={open}
         onClose={onClose}
         closeIcon
         clazz="appointment-detail-bottom__wrapper"
@@ -39,13 +52,15 @@ const AppointmentDetailBottom = ({ appointmentDetail, onClose, onConfirmCancel }
           <section className="appointment__header">
             <div className="appointment__img">
               <img
-                src={apparatusZoomImg}
+                src={isUsingZoom ? zoomImg : inPersonImg}
                 alt="Zoom"
               />
             </div>
             <div className="appointment__summary">
-              <div className="appointment__time">2024.06.20 1PM</div>
-              <div className="appointment__method">zoom appointment</div>
+              <div className="appointment__time">
+                {date} {time}
+              </div>
+              <div className="appointment__method">{isUsingZoom ? 'Zoom appointment' : 'In person appointment'}</div>
             </div>
           </section>
           <div className="divider__item__black" />
@@ -57,7 +72,7 @@ const AppointmentDetailBottom = ({ appointmentDetail, onClose, onConfirmCancel }
               >
                 <span className="appointment__label">{label}</span>
                 <span className="appointment__value">
-                  <span>{appointmentDetail[value]}</span>
+                  <span>{appointment[value]}</span>
                 </span>
               </div>
             ))}
