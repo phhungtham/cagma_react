@@ -25,6 +25,10 @@ import { customerSaga } from '@pages/Account/OpenAccount/redux/customer/saga';
 import { customerInfo } from '@pages/Account/OpenAccount/redux/customer/selector';
 import { CustomerFeatureName } from '@pages/Account/OpenAccount/redux/customer/type';
 import callCamera from '@utilities/gmCommon/callCamera';
+import callSelectImage from '@utilities/gmCommon/callSelectImage';
+import initProfileImg from '@utilities/gmCommon/initProfileImg';
+import loadProfileImgInfo from '@utilities/gmCommon/loadProfileImgInfo';
+import saveProfileImg from '@utilities/gmCommon/saveProfileImg';
 import {
   callPhone,
   clearHistory,
@@ -155,8 +159,23 @@ const CommonTestPage = () => {
   const handleViewHistory = () => {};
 
   const handleCallCameraCallback = data => {
-    debugger;
     console.log('camera data :>> ', data);
+  };
+
+  const handleCallSelectImageCallback = data => {
+    console.log('select image data :>> ', data);
+  };
+
+  const handleLoadProfileImgInfoCallback = data => {
+    console.log('load profile image data :>> ', data);
+  };
+
+  const handleSaveProfileImgCallback = data => {
+    console.log('save profile image data :>> ', data);
+  };
+
+  const handleInitProfileImgCallback = data => {
+    console.log('init profile image data :>> ', data);
   };
 
   const handleBackToHome = () => {
@@ -243,6 +262,26 @@ const CommonTestPage = () => {
           title: 'Call Camera',
           label: 'callCamera',
           action: () => callCamera(handleCallCameraCallback),
+        },
+        {
+          title: 'Call Select Image',
+          label: 'callSelectImage',
+          action: () => callSelectImage(handleCallSelectImageCallback),
+        },
+        {
+          title: 'Load Profile Image Info',
+          label: 'loadProfileImgInfo',
+          action: () => loadProfileImgInfo(handleLoadProfileImgInfoCallback),
+        },
+        {
+          title: 'Save Profile Image',
+          label: 'saveProfileImg',
+          action: () => saveProfileImg(handleSaveProfileImgCallback),
+        },
+        {
+          title: 'Init Profile Image',
+          label: 'initProfileImg',
+          action: () => initProfileImg(handleInitProfileImgCallback),
         },
       ],
     },
