@@ -25,13 +25,12 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
 
   const [thirdPartyChecked, dob] = watch(['thirdPartyChecked', 'dob']);
 
-  const handleSelectDate = date => {
-    console.log('open calendar data :>> ', date);
-    if (date) {
-      setValue('dob', '19980523');
-      setValue('dob_display', formatYYYYMMDDToDisplay('19980523'));
-      // setValue('dob', date);
-      // setValue('dob_display', formatYYYYMMDDToDisplay(date));
+  const handleSelectDate = data => {
+    if (data) {
+      const objData = JSON.stringify(data);
+      const selectedDate = objData?.selectDate;
+      setValue('dob', selectedDate);
+      setValue('dob_display', formatYYYYMMDDToDisplay(selectedDate));
     }
   };
 
