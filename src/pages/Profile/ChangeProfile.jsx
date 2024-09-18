@@ -202,7 +202,7 @@ const ChangeProfile = ({ translation }) => {
       setShowAlert({
         isShow: true,
         title: 'Sorry!',
-        content: changeProfileResponse?.data?.elHeader?.resMsgVo?.msgText,
+        content: changeProfileResponse.data.elHeader.resMsgVo.msgText,
       });
     }
   };

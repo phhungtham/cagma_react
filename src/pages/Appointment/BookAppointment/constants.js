@@ -25,15 +25,6 @@ export const bookAppointmentSuccessFields = [
   },
 ];
 
-export const appointmentSuccessInfoTest = {
-  method: 'In person',
-  branchName: 'Mississauga Branch',
-  address: '257 Dundas Street East Unit 3 & 4 Mississauga Ontario L5A 1W8',
-  date: '2024.06.20',
-  time: '1pm',
-  confirmNumber: '#123456',
-};
-
 export const bookAppointmentFormDefaultValues = {
   customerType: '',
   customerTypeDisplay: '',
@@ -44,9 +35,29 @@ export const bookAppointmentFormDefaultValues = {
   time: '',
   timeDisplay: '',
   customerStatusType: '',
+  customerStatusTypeDisplay: '',
   name: '',
   phoneNumber: '',
   email: '',
   lang: 'en',
   comment: '',
+};
+
+export const CustomerStatusType = {
+  NEW: 'new',
+  EXISTING: 'existing',
+};
+
+export const bookAppointmentFormMapFields = {
+  customerType: 'apint_user_gbn',
+  purpose: 'apint_purp',
+  subPurpose: 'apint_sub_purp',
+  date: 'apint_reg_dt',
+  time: 'apint_reg_tm',
+  customerStatusType: 'apint_guest_chk',
+  name: 'apint_user_nm',
+  email: 'apint_user_email',
+  phoneNumber: 'apint_user_telno',
+  lang: 'apint_lang_gbn',
+  comment: 'apint_memo',
 };

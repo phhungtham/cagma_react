@@ -61,12 +61,12 @@ const RoutesConfig = [
     private: false,
   },
   {
-    path: '/branch-directory',
+    path: routePaths.branchDirectory,
     component: BranchDirectory,
     private: false,
   },
   {
-    path: '/appointment-management',
+    path: routePaths.appointmentManagement,
     component: AppointmentManagement,
     private: false,
   },

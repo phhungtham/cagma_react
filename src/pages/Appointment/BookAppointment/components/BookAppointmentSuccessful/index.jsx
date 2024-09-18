@@ -1,13 +1,20 @@
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { MENU_CODE } from '@configs/global/constants';
+import { routePaths } from '@routes/paths';
+import { moveHome, moveNext } from '@utilities/index';
 
 import { bookAppointmentSuccessFields } from '../../constants';
 import './styles.scss';
 
 const BookAppointmentSuccessful = ({ appointmentInfo }) => {
-  const onClickViewAccount = () => {};
+  const onClickNavigateAppointmentManagement = () => {
+    moveNext(MENU_CODE.APPOINTMENT_MANAGEMENT, {}, routePaths.appointmentManagement);
+  };
 
-  const onClickNavigateHome = () => {};
+  const onClickNavigateHome = () => {
+    moveHome();
+  };
 
   return (
     <>
@@ -21,7 +28,7 @@ const BookAppointmentSuccessful = ({ appointmentInfo }) => {
           </div>
           <div className="book-appointment__title">
             <div className="complete-message">Your appointment is requested successfully</div>
-            <div className="note">Zoom link will be sent via email</div>
+            {appointmentInfo?.visitCheck === 'N' && <div className="note">Zoom link will be sent via email</div>}
           </div>
         </div>
         <div className="divider__item__black" />
@@ -44,7 +51,7 @@ const BookAppointmentSuccessful = ({ appointmentInfo }) => {
           variant="filled__secondary-blue"
           label="View Appointment"
           className="btn__cta"
-          onClick={onClickViewAccount}
+          onClick={onClickNavigateAppointmentManagement}
         />
         <Button
           variant="filled__primary"

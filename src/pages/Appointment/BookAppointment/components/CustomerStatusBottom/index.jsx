@@ -9,6 +9,7 @@ import BottomSheet from '@common/components/templates/BottomSheet';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { preferredLanguages } from '@pages/Appointment/constants';
 
+import { CustomerStatusType } from '../../constants';
 import { customerStatusSchema } from './schema';
 import './styles.scss';
 
@@ -41,7 +42,9 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, defaultValue }) => {
   };
 
   const handleSubmitForm = formValues => {
-    formValues.customerStatusType = tabIndex === StatusTab.EXISTING ? 'Existing customer' : 'New customer';
+    formValues.customerStatusType =
+      tabIndex === StatusTab.EXISTING ? CustomerStatusType.EXISTING : CustomerStatusType.NEW;
+    formValues.customerStatusTypeDisplay = tabIndex === StatusTab.EXISTING ? 'Existing customer' : 'New customer';
     onConfirm(formValues);
   };
 

@@ -52,7 +52,7 @@ const BranchDirectory = () => {
     moveNext(
       MENU_CODE.BOOK_APPOINTMENT,
       {
-        param: JSON.stringify(nativeParams),
+        param: JSON.stringify({ ...nativeParams, branchNo: branch?.brno }),
       },
       routePaths.bookAppointment
     );

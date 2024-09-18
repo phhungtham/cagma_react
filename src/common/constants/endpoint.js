@@ -9,4 +9,5 @@ export const endpoints = {
   inquiryETransferCustomerInfo: '/ca/tr/CATR028.pwkjson',
   inquiryAppointments: '/ca/hc/CAHC002.pwkjson',
   getBranchDirectory: '/ca/co/CACO006.pwkjson',
+  bookAppointment: '/ca/hc/CAHC001.pwkjson',
 };

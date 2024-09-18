@@ -66,7 +66,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   const handleSelectDate = date => {
     if (date) {
       setValue('date', date, { shouldValidate: true });
-      setValue('dateDisplay', formatYYYYMMDDToDisplay('20240830'), { shouldValidate: true });
+      setValue('dateDisplay', formatYYYYMMDDToDisplay(date), { shouldValidate: true });
     }
   };
 
@@ -97,7 +97,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
     if (purpose && subPurpose) {
       setValue('purpose', purpose?.value, { shouldValidate: true });
       setValue('purposeDisplay', purpose?.label, { shouldValidate: true });
-      setValue('subPurpose', subPurpose?.label, { shouldValidate: true });
+      setValue('subPurpose', subPurpose?.value, { shouldValidate: true });
       setValue('subPurposeDisplay', subPurpose?.label, { shouldValidate: true });
     }
     setShowPurposeAppointmentBottom(false);
@@ -230,7 +230,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
                   />
                 )}
                 control={control}
-                name="customerStatusType"
+                name="customerStatusTypeDisplay"
               />
               {showCustomerStatusInfo && (
                 <div className="mt-3">

@@ -15,4 +15,5 @@ export const bookAppointmentSchema = Yup.object().shape({
   purposeDisplay: Yup.string().nullable().optional(),
   dateDisplay: Yup.string().nullable().optional(),
   timeDisplay: Yup.string().nullable().optional(),
+  customerStatusTypeDisplay: Yup.string().nullable().optional(),
 });

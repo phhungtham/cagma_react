@@ -4,5 +4,6 @@ export const routePaths = {
   changeProfile: '/change-profile',
   appointment: '/appointment',
   branchDirectory: '/branch-directory',
+  appointmentManagement: '/appointment-management',
   bookAppointment: '/book-appointment',
 };
