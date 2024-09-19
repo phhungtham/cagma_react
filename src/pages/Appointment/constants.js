@@ -73,17 +73,6 @@ export const BookAppointmentType = {
   ZOOM: 'zoom',
 };
 
-export const customerTypeOptions = [
-  {
-    label: 'Personal',
-    value: '1',
-  },
-  {
-    label: 'Small Business',
-    value: '2',
-  },
-];
-
 export const preferredLanguages = [
   {
     label: 'English',

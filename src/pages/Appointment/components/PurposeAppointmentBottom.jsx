@@ -27,11 +27,10 @@ const PurposeAppointmentBottom = ({ open, onClose, onChange, purposeTabs, subPur
 
   useEffect(() => {
     if (purposeTabs && subPurposeList && purposeList) {
-      const selectedPurposeValue = purposeTabs[tabIndex]?.value;
-      const purposeIndex = (purposeList || []).findIndex(purpose => purpose.value === selectedPurposeValue);
-      if (purposeIndex >= 0) {
+      const selectedPurposePrefix = purposeTabs[tabIndex]?.value?.[0];
+      if (selectedPurposePrefix) {
         const subPurposeListDisplay = (subPurposeList || []).filter(purpose =>
-          purpose.value.startsWith(String(purposeIndex + 1))
+          purpose.value.startsWith(selectedPurposePrefix)
         );
         setSubPurposeListFiltered(subPurposeListDisplay);
       }

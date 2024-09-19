@@ -81,7 +81,7 @@ const AppointmentHome = () => {
         message: 'Successfully canceled',
         type: 'success',
       });
-      sendRequestGetAppointments();
+      sendRequestGetAppointments({ inq_cnt: maxAppointmentDisplay });
     } else {
       const errorMessage = cancelAppointmentResponse?.data?.elHeader?.resMsgVo?.msgText || '';
       setShowAlert({
@@ -143,7 +143,7 @@ const AppointmentHome = () => {
   }, [appointmentData]);
 
   useEffect(() => {
-    sendRequestGetAppointments();
+    sendRequestGetAppointments({ inq_cnt: maxAppointmentDisplay });
   }, []);
 
   return (

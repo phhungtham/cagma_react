@@ -16,8 +16,8 @@ const useGetAppointments = () => {
   const isLoading = useSelector(appointmentsLoadState);
   const error = useSelector(getAppointmentsFailedMsg);
 
-  const sendRequest = () => {
-    getAppointmentsRequest();
+  const sendRequest = (payload = {}) => {
+    getAppointmentsRequest(payload);
   };
 
   return { data, sendRequest, isLoading, error };

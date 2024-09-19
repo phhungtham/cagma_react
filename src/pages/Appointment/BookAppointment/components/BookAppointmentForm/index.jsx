@@ -21,18 +21,19 @@ import { customerSaga } from '@pages/Account/OpenAccount/redux/customer/saga';
 import { customerInfo, customerLoadState } from '@pages/Account/OpenAccount/redux/customer/selector';
 import { CustomerFeatureName } from '@pages/Account/OpenAccount/redux/customer/type';
 import PurposeAppointmentBottom from '@pages/Appointment/components/PurposeAppointmentBottom';
-import {
-  BookAppointmentType,
-  customerStatusFields,
-  customerTypeOptions,
-  preferredLanguages,
-} from '@pages/Appointment/constants';
+import { BookAppointmentType, customerStatusFields, preferredLanguages } from '@pages/Appointment/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatHHMMToDisplay, formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import { moveBack } from '@utilities/index';
 
-import { bookAppointmentFormDefaultValues } from '../../constants';
+import {
+  bookAppointmentFormDefaultValues,
+  businessPurposeKeys,
+  customerTypeOptions,
+  CustomerTypes,
+  personalPurposeKeys,
+} from '../../constants';
 import CustomerStatusBottom from '../CustomerStatusBottom';
 import { bookAppointmentSchema } from './schema';
 import './styles.scss';
@@ -152,7 +153,8 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
 
   useEffect(() => {
     if (customerType && purposeList) {
-      const purposeTabsBaseCustomerType = (purposeList || []).filter(purpose => purpose.value.startsWith(customerType));
+      const purposeKeys = customerType === CustomerTypes.PERSONAL ? personalPurposeKeys : businessPurposeKeys;
+      const purposeTabsBaseCustomerType = (purposeList || []).filter(purpose => purposeKeys.includes(purpose.value));
       setPurposeTabs(purposeTabsBaseCustomerType);
     } else {
       setPurposeTabs([]);

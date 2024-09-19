@@ -58,7 +58,7 @@ const BookAppointment = () => {
         address,
         date,
         time,
-        confirmNumber,
+        confirmNumber: `#${confirmNumber}`,
       };
       setAppointmentSuccessData(bookAppointmentSuccessData);
       setCurrentStep(BookAppointmentStep.COMPLETED);

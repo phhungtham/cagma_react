@@ -61,3 +61,22 @@ export const bookAppointmentFormMapFields = {
   lang: 'apint_lang_gbn',
   comment: 'apint_memo',
 };
+
+export const CustomerTypes = {
+  PERSONAL: '1',
+  BUSINESS: '2',
+};
+
+export const customerTypeOptions = [
+  {
+    label: 'Personal',
+    value: CustomerTypes.PERSONAL,
+  },
+  {
+    label: 'Small Business',
+    value: CustomerTypes.BUSINESS,
+  },
+];
+
+export const personalPurposeKeys = ['10', '20', '30'];
+export const businessPurposeKeys = ['40', '50'];
