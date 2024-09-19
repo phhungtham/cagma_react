@@ -40,6 +40,7 @@
     font-size: 15px;
     line-height: 20px;
     color: $color-gray-100;
+    margin-bottom: 4px;
   }
 
   &__close {
@@ -73,5 +74,16 @@
   }
   0% {
     opacity: 1;
+  }
+}
+
+.toast__overlay {
+  position: absolute;
+  z-index: 9999;
+  left: 50%;
+  bottom: 0px;
+  transform: translate(-50%, -50%);
+  .toast {
+    width: calc(100vw - 48px);
   }
 }

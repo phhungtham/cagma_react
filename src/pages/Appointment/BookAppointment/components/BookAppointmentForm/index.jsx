@@ -92,8 +92,8 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   const handleOpenCalendar = () => {
     if (AppCfg.ENV === 'development') {
       //For dummy data because it call native calendar
-      setValue('date', '20240830', { shouldValidate: true });
-      setValue('dateDisplay', formatYYYYMMDDToDisplay('20240830'), { shouldValidate: true });
+      setValue('date', '20240930', { shouldValidate: true });
+      setValue('dateDisplay', formatYYYYMMDDToDisplay('20240930'), { shouldValidate: true });
     }
     openCalendar(handleSelectDate, { selectDate: date || undefined });
   };

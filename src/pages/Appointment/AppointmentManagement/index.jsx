@@ -8,6 +8,7 @@ import Header from '@common/components/organisms/Header';
 import { getAppointmentStatus } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import useCommonCode from '@hooks/useCommonCode';
+import useGetAppointments from '@hooks/useGetAppointments';
 import { apiCall } from '@shared/api';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
@@ -19,6 +20,12 @@ import { AppointmentManageTab } from './constants';
 import './styles.scss';
 
 const AppointmentManagement = () => {
+  const {
+    data: appointmentData,
+    isLoading: isLoadingAppointments,
+    sendRequest: sendRequestGetAppointments,
+    error: getAppointmentsError,
+  } = useGetAppointments();
   const {
     sendRequest: sendRequestGetCommonCode,
     data: commonCodeData,
@@ -71,7 +78,7 @@ const AppointmentManagement = () => {
         message: 'Successfully canceled',
         type: 'success',
       });
-      requestGetAppointments();
+      sendRequestGetAppointments();
     } else {
       const errorMessage = cancelAppointmentResponse?.data?.elHeader?.resMsgVo?.msgText || '';
       setShowAlert({
@@ -113,25 +120,25 @@ const AppointmentManagement = () => {
     });
   };
 
-  const requestGetAppointments = async () => {
-    setShowLoading(true);
-    const getAppointmentsResponse = await apiCall(endpoints.getAppointments, 'POST', {});
-    setShowLoading(false);
-    if (getAppointmentsResponse?.data?.elData) {
-      const { previousList = [], upcomingList = [] } = getAppointmentsResponse.data.elData;
-      const currentTabAppointments = tabIndex === AppointmentManageTab.UPCOMING ? upcomingList : previousList;
-      setAppointmentByTabList(currentTabAppointments);
-      setAppointmentResponseData(getAppointmentsResponse.data.elData);
-      sendRequestGetCommonCode(getAppointmentStatus);
-    } else {
-      const errorMessage = getAppointmentsResponse?.data?.elHeader?.resMsgVo?.msgText || '';
+  useEffect(() => {
+    if (getAppointmentsError) {
       setShowAlert({
         isShow: true,
         title: 'Sorry!',
-        content: errorMessage,
+        content: getAppointmentsError,
       });
     }
-  };
+  }, [getAppointmentsError]);
+
+  useEffect(() => {
+    if (appointmentData) {
+      const { previousList = [], upcomingList = [] } = appointmentData;
+      const currentTabAppointments = tabIndex === AppointmentManageTab.UPCOMING ? upcomingList : previousList;
+      setAppointmentByTabList(currentTabAppointments);
+      setAppointmentResponseData(appointmentData);
+      sendRequestGetCommonCode(getAppointmentStatus);
+    }
+  }, [appointmentData]);
 
   useEffect(() => {
     if (commonCodeData?.apint_stat) {
@@ -141,12 +148,12 @@ const AppointmentManagement = () => {
   }, [commonCodeData]);
 
   useEffect(() => {
-    requestGetAppointments();
+    sendRequestGetAppointments();
   }, []);
 
   return (
     <>
-      {(showLoading || isLoadingGetCommonCode) && <Spinner />}
+      {(showLoading || isLoadingAppointments || isLoadingGetCommonCode) && <Spinner />}
       <div className="appointment-management__wrapper">
         <Header
           title="Manage Appointment"

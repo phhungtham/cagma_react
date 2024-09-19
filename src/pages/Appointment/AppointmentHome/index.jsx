@@ -5,6 +5,7 @@ import inPersonAppointmentImg from '@assets/images/in_person_consultation.png';
 import zoomAppointmentImg from '@assets/images/zoom_consultation.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Spinner from '@common/components/atoms/Spinner';
+import Toast from '@common/components/atoms/Toast';
 import Alert from '@common/components/molecules/Alert';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
@@ -19,7 +20,7 @@ import AppointmentDetailBottom from '../components/AppointmentDetailBottom';
 import { BookAppointmentType } from '../constants';
 import './styles.scss';
 
-const maxAppointmentDisplay = 3;
+const maxAppointmentDisplay = 10;
 
 const AppointmentHome = () => {
   const {
@@ -250,6 +251,14 @@ const AppointmentHome = () => {
           label: 'Confirm',
         }}
       />
+      <section className="toast__overlay">
+        <Toast
+          isShowToast={showToast.isShow}
+          type={showToast.type}
+          onClose={() => setShowToast({ ...showToast, isShow: false })}
+          message={showToast.message}
+        />
+      </section>
     </>
   );
 };
