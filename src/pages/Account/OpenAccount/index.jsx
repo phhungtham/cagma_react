@@ -59,7 +59,6 @@ const OpenAccount = ({ translation }) => {
   const cus_adr_telno = homeAddress?.cus_adr_telno || '';
 
   const onSubmitAgreeTerms = () => {
-    setIsLoadingCustomer(true);
     setShowCustomerInfoBottom(true);
   };
 
@@ -130,6 +129,7 @@ const OpenAccount = ({ translation }) => {
 
   useEffect(() => {
     if (showCustomerInfoBottom && !customer) {
+      setIsLoadingCustomer(true);
       getCustomerInfoRequest();
     }
   }, [showCustomerInfoBottom]);
@@ -177,6 +177,7 @@ const OpenAccount = ({ translation }) => {
             onSubmit={onSubmitAgreeTerms}
           />
         )}
+
         {showCustomerInfoBottom && !isLoadingCustomer && (
           <CustomerInfoBottom
             customerInfo={{ ...customer, cus_adr_telno }}
