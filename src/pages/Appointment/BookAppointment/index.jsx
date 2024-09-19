@@ -37,7 +37,7 @@ const BookAppointment = () => {
       bookAppointmentFormMapFields,
       true /* ignoreRemainingFields*/
     );
-    request.apint_guest_chk = formValues.customerStatusType === CustomerStatusType.EXISTING ? 'Y' : 'N';
+    request.apint_guest_chk = formValues.customerStatusType === CustomerStatusType.NEW ? 'Y' : 'N';
     request.apint_visit_chk = type === BookAppointmentType.IN_PERSON ? 'Y' : 'N';
     request.apint_brno = branchNo;
     const bookAppointmentResponse = await apiCall(endpoints.bookAppointment, 'POST', request);

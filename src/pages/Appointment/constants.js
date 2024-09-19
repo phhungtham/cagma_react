@@ -1,5 +1,3 @@
-import apparatusZoomImg from '@assets/images/apparatus_zoom_40.png';
-
 export const appointmentDetailFields = [
   {
     label: 'Confirmation Number',
@@ -27,15 +25,6 @@ export const appointmentDetailFields = [
   },
 ];
 
-export const appointmentDetailTest = {
-  number: '#123456',
-  method: 'Zoom',
-  date: '2024.06.20',
-  time: '1:00 PM',
-  branchName: 'Mississauga Branch',
-  branchAddress: '257 Dundas Street East Unit 3 & 4 Mississauga Ontario L5A 1W8',
-};
-
 export const branchFields = [
   {
     label: 'Phone',
@@ -51,76 +40,32 @@ export const branchFields = [
   },
 ];
 
-export const AppointmentStatus = {
-  REQUESTED: 'requested',
-  CONFIRMED: 'confirmed',
-  CANCELED: 'canceled',
-  COMPLETED: 'completed',
+export const AppointmentStatusKey = {
+  REQUESTED: '1',
+  CONFIRMED: '2',
+  COMPLETED: '3',
+  CANCELED: '9',
 };
 
-export const appointmentListTest = [
-  {
-    id: '#123456',
-    branchName: '',
-    date: '2024.06.15',
-    time: 'At 1pm',
-    status: AppointmentStatus.REQUESTED,
-    image: apparatusZoomImg,
-  },
-  {
-    id: '#123456',
-    branchName: 'Mississauge Branch',
-    date: '2024.06.15',
-    time: 'At 1pm',
-    status: AppointmentStatus.CONFIRMED,
-    image: apparatusZoomImg,
-  },
-  {
-    id: '#123456',
-    branchName: 'Mississauge Branch',
-    date: '2024.06.15',
-    time: 'At 1pm',
-    status: AppointmentStatus.CANCELED,
-    image: apparatusZoomImg,
-  },
-  {
-    id: '#123456',
-    branchName: '',
-    date: '2024.06.15',
-    time: 'At 1pm',
-    status: AppointmentStatus.REQUESTED,
-    image: apparatusZoomImg,
-  },
-  {
-    id: '#123456',
-    branchName: '',
-    date: '2024.06.15',
-    time: 'At 1pm',
-    status: AppointmentStatus.CONFIRMED,
-    image: apparatusZoomImg,
-  },
-  {
-    id: '#123456',
-    branchName: '',
-    date: '2024.06.15',
-    time: 'At 1pm',
-    status: AppointmentStatus.CONFIRMED,
-    image: apparatusZoomImg,
-  },
-];
+export const AppointmentStatusKeyWithLabel = {
+  [AppointmentStatusKey.REQUESTED]: 'Requested',
+  [AppointmentStatusKey.CONFIRMED]: 'Confirmed',
+  [AppointmentStatusKey.COMPLETED]: 'Completed',
+  [AppointmentStatusKey.CANCELED]: 'Canceled',
+};
 
 export const labelStatusWithVariant = {
-  [AppointmentStatus.REQUESTED]: 'blue',
-  [AppointmentStatus.CANCELED]: 'rose',
-  [AppointmentStatus.CONFIRMED]: 'gray',
-  [AppointmentStatus.COMPLETED]: 'gray',
+  [AppointmentStatusKey.REQUESTED]: 'blue',
+  [AppointmentStatusKey.CANCELED]: 'rose',
+  [AppointmentStatusKey.CONFIRMED]: 'gray',
+  [AppointmentStatusKey.COMPLETED]: 'gray',
 };
 
 export const labelStatusWithType = {
-  [AppointmentStatus.REQUESTED]: 'filled',
-  [AppointmentStatus.CANCELED]: 'filled',
-  [AppointmentStatus.CONFIRMED]: 'filled',
-  [AppointmentStatus.COMPLETED]: 'outline',
+  [AppointmentStatusKey.REQUESTED]: 'filled',
+  [AppointmentStatusKey.CANCELED]: 'filled',
+  [AppointmentStatusKey.CONFIRMED]: 'filled',
+  [AppointmentStatusKey.COMPLETED]: 'outline',
 };
 
 export const BookAppointmentType = {

@@ -14,29 +14,19 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }
   console.log('appointment :>> ', appointment);
   const [showCancelAlert, setShowCancelAlert] = useState(false);
 
-  const {
-    apint_visit_chk,
-    apint_seq: number,
-    apint_reg_dt_display: date,
-    apint_reg_tm_display: time,
-    apint_stat_display: status,
-    lcl_br_nm: branchName,
-  } = appointment;
-
-  const isUsingZoom = apint_visit_chk === 'N';
+  const { isUsingZoom, date, time, isUpcoming, allowCancel } = appointment;
 
   const onShowCancelAppointmentAlert = () => {
     setShowCancelAlert(true);
   };
 
   const onClickConfirmCancel = () => {
-    alert('confirm cancel');
     setShowCancelAlert(false);
     onConfirmCancel();
   };
 
   const onCloseCancelAppointment = () => {
-    onClose();
+    setShowCancelAlert(false);
   };
 
   return (
@@ -78,17 +68,19 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }
             ))}
           </div>
           <div className="divider__item__solid" />
-          <div className="footer__buttons">
-            <div className="btn__icon-delete">
-              <IconButton
-                size="lg"
-                type="circle"
-                label="Cancel"
-                icon={<FillDeleteIcon />}
-                onClick={onShowCancelAppointmentAlert}
-              />
+          {isUpcoming && allowCancel && (
+            <div className="footer__buttons">
+              <div className="btn__icon-delete">
+                <IconButton
+                  size="lg"
+                  type="circle"
+                  label="Cancel"
+                  icon={<FillDeleteIcon />}
+                  onClick={onShowCancelAppointmentAlert}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </BottomSheet>
       <Alert

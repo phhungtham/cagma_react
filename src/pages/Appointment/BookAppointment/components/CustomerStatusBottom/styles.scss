@@ -7,16 +7,16 @@
   .bottom__sheet__content {
     padding-left: 0;
     padding-right: 0;
+
+    .bottom__footer {
+      width: 100%;
+      padding: 32px 24px;
+    }
   }
   .tabs__list {
     flex: 1;
   }
   .tabs__content {
     padding: 0 24px;
-  }
-
-  .btn__ctas {
-    padding-left: 24px;
-    padding-right: 24px;
   }
 }

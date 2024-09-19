@@ -2,7 +2,7 @@ import zoomImg from '@assets/images/apparatus_zoom_40.png';
 import inPersonImg from '@assets/images/icon_fill_atm_40.png';
 import Label from '@common/components/atoms/Label';
 
-import { labelStatusWithType, labelStatusWithVariant } from '../constants';
+import { AppointmentStatusKeyWithLabel, labelStatusWithType, labelStatusWithVariant } from '../constants';
 import './styles.scss';
 
 const AppointmentCard = ({ onClick, appointmentInfo, statusList }) => {
@@ -11,9 +11,9 @@ const AppointmentCard = ({ onClick, appointmentInfo, statusList }) => {
     apint_seq: id,
     apint_reg_dt_display: date,
     apint_reg_tm_display: time,
-    apint_stat_display: status,
+    apint_stat: status,
     lcl_br_nm: branchName,
-  } = appointmentInfo;
+  } = appointmentInfo || {};
   const isUsingZoom = apint_visit_chk === 'N';
   // const statusDisplay = statusList?.find(item => item.value === status)?.label;
 
@@ -46,7 +46,7 @@ const AppointmentCard = ({ onClick, appointmentInfo, statusList }) => {
       <div className="item-card__status">
         <Label
           type={labelStatusWithType[status]}
-          label={status}
+          label={AppointmentStatusKeyWithLabel[status]}
           variant={labelStatusWithVariant[status]}
         />
       </div>

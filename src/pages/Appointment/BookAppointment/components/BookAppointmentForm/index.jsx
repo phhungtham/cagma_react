@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import TextDropdown from '@common/components/atoms/Dropdown/TextDropdown';
+import Spinner from '@common/components/atoms/Spinner';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import SelectTimeBottom from '@common/components/organisms/bottomSheets/SelectTimeBottom';
 import Header from '@common/components/organisms/Header';
@@ -11,6 +13,13 @@ import { hoursFullOptions, minuteHalfOptions } from '@common/constants/dateTime'
 import { AppCfg } from '@configs/appConfigs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
+import useReducers from '@hooks/useReducers';
+import useSagas from '@hooks/useSagas';
+import { getCustomerInfoRequest } from '@pages/Account/OpenAccount/redux/customer/action';
+import { customerReducer } from '@pages/Account/OpenAccount/redux/customer/reducer';
+import { customerSaga } from '@pages/Account/OpenAccount/redux/customer/saga';
+import { customerInfo, customerLoadState } from '@pages/Account/OpenAccount/redux/customer/selector';
+import { CustomerFeatureName } from '@pages/Account/OpenAccount/redux/customer/type';
 import PurposeAppointmentBottom from '@pages/Appointment/components/PurposeAppointmentBottom';
 import {
   BookAppointmentType,
@@ -29,7 +38,16 @@ import { bookAppointmentSchema } from './schema';
 import './styles.scss';
 
 const BookAppointmentForm = ({ type, onSubmit }) => {
-  const { sendRequest: requestGetCommonCode, data: commonCodeData } = useCommonCode();
+  useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
+  useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
+
+  const customer = useSelector(customerInfo);
+  const isLoadingGetCustomer = useSelector(customerLoadState);
+  const {
+    sendRequest: requestGetCommonCode,
+    data: commonCodeData,
+    isLoading: isLoadingGetCommonCode,
+  } = useCommonCode();
   const [showCustomerTypeBottom, setShowCustomerTypeBottom] = useState(false);
   const [showPurposeAppointmentBottom, setShowPurposeAppointmentBottom] = useState(false);
   const [showSelectTimeBottom, setShowSelectTimeBottom] = useState(false);
@@ -63,18 +81,19 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
     setShowPurposeAppointmentBottom(true);
   };
 
-  const handleSelectDate = date => {
-    if (date) {
-      setValue('date', date, { shouldValidate: true });
-      setValue('dateDisplay', formatYYYYMMDDToDisplay(date), { shouldValidate: true });
+  const handleSelectDate = cbData => {
+    if (cbData) {
+      const selectedDate = cbData?.data ? JSON.parse(cbData.data)?.selectDate : '';
+      setValue('date', selectedDate, { shouldValidate: true });
+      setValue('dateDisplay', formatYYYYMMDDToDisplay(selectedDate), { shouldValidate: true });
     }
   };
 
   const handleOpenCalendar = () => {
     if (AppCfg.ENV === 'development') {
       //For dummy data because it call native calendar
-      setValue('date', '19980523', { shouldValidate: true });
-      setValue('dateDisplay', formatYYYYMMDDToDisplay('19980523'), { shouldValidate: true });
+      setValue('date', '20240830', { shouldValidate: true });
+      setValue('dateDisplay', formatYYYYMMDDToDisplay('20240830'), { shouldValidate: true });
     }
     openCalendar(handleSelectDate, { selectDate: date || undefined });
   };
@@ -126,6 +145,12 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   };
 
   useEffect(() => {
+    if (showCustomerStatusBottom && !customer) {
+      getCustomerInfoRequest();
+    }
+  }, [showCustomerStatusBottom]);
+
+  useEffect(() => {
     if (customerType && purposeList) {
       const purposeTabsBaseCustomerType = (purposeList || []).filter(purpose => purpose.value.startsWith(customerType));
       setPurposeTabs(purposeTabsBaseCustomerType);
@@ -151,6 +176,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   return (
     <>
       <div className="page__wrapper">
+        {(isLoadingGetCommonCode || isLoadingGetCustomer) && <Spinner />}
         <Header
           title="Book an Appointment"
           onClick={moveBack}
@@ -291,7 +317,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
         open={showCustomerStatusBottom}
         onClose={() => setShowCustomerStatusBottom(false)}
         onConfirm={handleChangeCustomerStatus}
-        defaultValue={formValues}
+        customer={customer}
       />
     </>
   );

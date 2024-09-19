@@ -8,6 +8,7 @@ export const endpoints = {
   changeUserInfoTransaction: '/ca/me/CAME003.pwkjson',
   inquiryETransferCustomerInfo: '/ca/tr/CATR028.pwkjson',
   getAppointments: '/ca/hc/CAHC002.pwkjson',
+  cancelAppointment: '/ca/hc/CAHC003.pwkjson',
   getBranchDirectory: '/ca/co/CACO006.pwkjson',
   bookAppointment: '/ca/hc/CAHC001.pwkjson',
 };

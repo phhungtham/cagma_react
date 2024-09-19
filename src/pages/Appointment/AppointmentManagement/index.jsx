@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 
 import Spinner from '@common/components/atoms/Spinner';
+import Toast from '@common/components/atoms/Toast';
 import Alert from '@common/components/molecules/Alert';
 import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
@@ -25,7 +26,7 @@ const AppointmentManagement = () => {
   } = useCommonCode();
   const [tabIndex, setTabIndex] = useState(AppointmentManageTab.UPCOMING);
   const [appointmentResponseData, setAppointmentResponseData] = useState([]);
-  const [appointmentByTabList, setAppointmentByTabList] = useState([]);
+  const [appointmentByTabList, setAppointmentByTabList] = useState();
   const [statusList, setStatusList] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
   const [showAppointmentDetailBottom, setShowAppointmentDetailBottom] = useState({
@@ -37,6 +38,11 @@ const AppointmentManagement = () => {
     title: '',
     content: '',
   });
+  const [showToast, setShowToast] = useState({
+    isShow: false,
+    message: '',
+    type: 'success',
+  });
 
   const handleTabChange = (tabName, tabIndex) => {
     const { previousList = [], upcomingList = [] } = appointmentResponseData;
@@ -45,11 +51,65 @@ const AppointmentManagement = () => {
     setTabIndex(tabIndex);
   };
 
+  const handleCancelAppointment = async () => {
+    setShowLoading(true);
+    const { number, branchNo, status } = showAppointmentDetailBottom.appointment || {};
+    const requestCancelPayload = {
+      apint_seq: number,
+      apint_brno: branchNo,
+      apint_stat: status,
+    };
+    const cancelAppointmentResponse = await apiCall(endpoints.cancelAppointment, 'POST', requestCancelPayload);
+    setShowLoading(false);
+    if (cancelAppointmentResponse?.data?.elData) {
+      setShowAppointmentDetailBottom({
+        isShow: false,
+        appointment: {},
+      });
+      setShowToast({
+        isShow: true,
+        message: 'Successfully canceled',
+        type: 'success',
+      });
+      requestGetAppointments();
+    } else {
+      const errorMessage = cancelAppointmentResponse?.data?.elHeader?.resMsgVo?.msgText || '';
+      setShowAlert({
+        isShow: true,
+        title: 'Sorry!',
+        content: errorMessage,
+      });
+    }
+  };
+
   const handleViewAppointmentDetail = appointment => {
-    //TODO: Change Appointment field to mapping with appointment detail
+    const {
+      apint_visit_chk,
+      apint_seq: number,
+      apint_reg_dt_display: date,
+      apint_reg_tm_display: time,
+      apint_stat: status,
+      apint_brno: branchNo,
+      lcl_br_nm: branchName,
+      br_adr: branchAddress,
+      cancel_yn,
+    } = appointment;
+    const appointmentDetail = {
+      method: apint_visit_chk === 'N' ? 'Zoom' : 'In person',
+      number,
+      isUsingZoom: apint_visit_chk === 'N',
+      date,
+      time,
+      status,
+      branchName,
+      branchAddress,
+      isUpcoming: tabIndex === AppointmentManageTab.UPCOMING,
+      allowCancel: cancel_yn === 1,
+      branchNo,
+    };
     setShowAppointmentDetailBottom({
       isShow: true,
-      appointment,
+      appointment: appointmentDetail,
     });
   };
 
@@ -105,20 +165,24 @@ const AppointmentManagement = () => {
             tabIndex={tabIndex}
             onTabChange={handleTabChange}
           >
-            {appointmentByTabList?.length ? (
-              <div className="appointment__list">
-                {appointmentByTabList.map(appointment => (
-                  <Fragment key={appointment.id}>
-                    <AppointmentCard
-                      appointmentInfo={appointment}
-                      onClick={handleViewAppointmentDetail}
-                      statusList={statusList}
-                    />
-                  </Fragment>
-                ))}
-              </div>
-            ) : (
-              <EmptyAppointment />
+            {appointmentByTabList && (
+              <>
+                {appointmentByTabList.length ? (
+                  <div className="appointment__list">
+                    {appointmentByTabList.map(appointment => (
+                      <Fragment key={appointment.id}>
+                        <AppointmentCard
+                          appointmentInfo={appointment}
+                          onClick={handleViewAppointmentDetail}
+                          statusList={statusList}
+                        />
+                      </Fragment>
+                    ))}
+                  </div>
+                ) : (
+                  <EmptyAppointment />
+                )}
+              </>
             )}
           </Tabs>
         </div>
@@ -126,8 +190,8 @@ const AppointmentManagement = () => {
       <AppointmentDetailBottom
         open={showAppointmentDetailBottom.isShow}
         appointment={showAppointmentDetailBottom.appointment}
-        onClose={() => setShowAppointmentDetailBottom({ ...showAppointmentDetailBottom, isShow: false })}
-        onConfirmCancel={() => {}}
+        onClose={() => setShowAppointmentDetailBottom({ appointment: {}, isShow: false })}
+        onConfirmCancel={handleCancelAppointment}
       />
       <Alert
         isCloseButton={false}
@@ -140,6 +204,14 @@ const AppointmentManagement = () => {
           label: 'Confirm',
         }}
       />
+      <section className="toast__overlay">
+        <Toast
+          isShowToast={showToast.isShow}
+          type={showToast.type}
+          onClose={() => setShowToast({ ...showToast, isShow: false })}
+          message={showToast.message}
+        />
+      </section>
     </>
   );
 };

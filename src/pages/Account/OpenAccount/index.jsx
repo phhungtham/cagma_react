@@ -30,7 +30,6 @@ import { customerInfo, getCustomerFailedMsg } from './redux/customer/selector';
 import { CustomerFeatureName } from './redux/customer/type';
 import './style.scss';
 
-//TODO: View Term PDF File
 const OpenAccount = ({ translation }) => {
   useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
   useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);

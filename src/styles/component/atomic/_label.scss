@@ -1,19 +1,19 @@
-@mixin Filled($labelClassName, $textClassName, $bgColor, $colorText) {
+@mixin Filled($labelClassName, $textClassName, $bgColor, $textColor) {
   .#{$labelClassName} {
     background-color: #{$bgColor};
   }
   .#{$textClassName} {
-    color: #{$colorText};
+    color: #{$textColor};
   }
 }
 
-@mixin Outline($labelClassName, $textClassName, $color) {
+@mixin Outline($labelClassName, $textClassName, $outlineColor, $textColor) {
   .#{$labelClassName} {
     background-color: transparent;
-    border: 1px solid $color;
+    border: 1px solid $outlineColor;
   }
   .#{$textClassName} {
-    color: #{$color};
+    color: #{$textColor};
   }
 }
 
@@ -35,16 +35,16 @@
 @include Filled(brown__filled, text__brown__filled, #f1decd, #804714);
 
 // TODO: DEFINE Outline Label
-@include Outline(basic__outline, text__basic__outline, #2c3b4e);
-@include Outline(primary__outline, text__primary__outline, #3270ea);
-@include Outline(gray__outline, text__gray__outline, #e1e3e9);
-@include Outline(sky-blue__outline, text__sky-blue__outline, #14aec6);
-@include Outline(mint__outline, text__mint__outline, #2eb086);
-@include Outline(purple__outline, text__purple__outline, #7466ce);
-@include Outline(orange__outline, text__orange__outline, #f78812);
-@include Outline(coral__outline, text__coral__outline, #ff6a63);
-@include Outline(rose__outline, text__rose__outline, #b8405e);
-@include Outline(brown__outline, text__brown__outline, #896646);
+@include Outline(basic__outline, text__basic__outline, #2c3b4e, $color-gray-900);
+@include Outline(primary__outline, text__primary__outline, #3270ea, $color-gray-900);
+@include Outline(gray__outline, text__gray__outline, #808892, $color-gray-900);
+@include Outline(sky-blue__outline, text__sky-blue__outline, #14aec6, $color-gray-900);
+@include Outline(mint__outline, text__mint__outline, #2eb086, $color-gray-900);
+@include Outline(purple__outline, text__purple__outline, #7466ce, $color-gray-900);
+@include Outline(orange__outline, text__orange__outline, #f78812, $color-gray-900);
+@include Outline(coral__outline, text__coral__outline, #ff6a63, $color-gray-900);
+@include Outline(rose__outline, text__rose__outline, #b8405e, $color-gray-900);
+@include Outline(brown__outline, text__brown__outline, #896646, $color-gray-900);
 
 //TODO: DEFINE Ghost Label
 @include Ghost(text__primary__ghost, #3270ea);

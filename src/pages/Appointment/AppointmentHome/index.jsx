@@ -4,25 +4,45 @@ import { ArrowRight } from '@assets/icons';
 import inPersonAppointmentImg from '@assets/images/in_person_consultation.png';
 import zoomAppointmentImg from '@assets/images/zoom_consultation.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import Spinner from '@common/components/atoms/Spinner';
 import Alert from '@common/components/molecules/Alert';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
 import { MENU_CODE } from '@configs/global/constants';
+import useGetAppointments from '@hooks/useGetAppointments';
 import { routePaths } from '@routes/paths';
 import { apiCall } from '@shared/api';
 import { moveBack, moveNext } from '@utilities/index';
 
 import AppointmentCard from '../components/AppointmentCard';
 import AppointmentDetailBottom from '../components/AppointmentDetailBottom';
-import { appointmentDetailTest, appointmentListTest, BookAppointmentType } from '../constants';
+import { BookAppointmentType } from '../constants';
 import './styles.scss';
 
+const maxAppointmentDisplay = 3;
+
 const AppointmentHome = () => {
-  const [showAppointmentDetailBottom, setShowAppointmentDetailBottom] = useState(false);
+  const {
+    data: appointmentData,
+    isLoading: isLoadingAppointments,
+    sendRequest: sendRequestGetAppointments,
+    error: getAppointmentsError,
+  } = useGetAppointments();
+  const [showLoading, setShowLoading] = useState(false);
+  const [upcomingAppointments, setUpcomingAppointments] = useState([]);
+  const [showAppointmentDetailBottom, setShowAppointmentDetailBottom] = useState({
+    isShow: false,
+    appointment: {},
+  });
   const [showAlert, setShowAlert] = useState({
     isShow: false,
     title: '',
     content: '',
+  });
+  const [showToast, setShowToast] = useState({
+    isShow: false,
+    message: '',
+    type: 'success',
   });
 
   const handleNavigateBranchDirectory = type => {
@@ -40,15 +60,29 @@ const AppointmentHome = () => {
     moveNext(MENU_CODE.APPOINTMENT_MANAGEMENT, {}, routePaths.appointmentManagement);
   };
 
-  const onClickViewAppointmentDetail = () => {
-    setShowAppointmentDetailBottom(true);
-  };
-
-  const requestGetAppointments = async () => {
-    const getAppointmentsResponse = await apiCall(endpoints.getAppointments, 'POST', {});
-    if (getAppointmentsResponse?.data?.elHeader?.resSuc) {
+  const handleCancelAppointment = async () => {
+    setShowLoading(true);
+    const { number, branchNo, status } = showAppointmentDetailBottom.appointment || {};
+    const requestCancelPayload = {
+      apint_seq: number,
+      apint_brno: branchNo,
+      apint_stat: status,
+    };
+    const cancelAppointmentResponse = await apiCall(endpoints.cancelAppointment, 'POST', requestCancelPayload);
+    setShowLoading(false);
+    if (cancelAppointmentResponse?.data?.elData) {
+      setShowAppointmentDetailBottom({
+        isShow: false,
+        appointment: {},
+      });
+      setShowToast({
+        isShow: true,
+        message: 'Successfully canceled',
+        type: 'success',
+      });
+      sendRequestGetAppointments();
     } else {
-      const errorMessage = getAppointmentsResponse?.data?.elHeader?.resMsg || '';
+      const errorMessage = cancelAppointmentResponse?.data?.elHeader?.resMsgVo?.msgText || '';
       setShowAlert({
         isShow: true,
         title: 'Sorry!',
@@ -57,13 +91,64 @@ const AppointmentHome = () => {
     }
   };
 
+  const handleViewAppointmentDetail = appointment => {
+    const {
+      apint_visit_chk,
+      apint_seq: number,
+      apint_reg_dt_display: date,
+      apint_reg_tm_display: time,
+      apint_stat: status,
+      apint_brno: branchNo,
+      lcl_br_nm: branchName,
+      br_adr: branchAddress,
+      cancel_yn,
+    } = appointment;
+    const appointmentDetail = {
+      method: apint_visit_chk === 'N' ? 'Zoom' : 'In person',
+      number,
+      isUsingZoom: apint_visit_chk === 'N',
+      date,
+      time,
+      status,
+      branchName,
+      branchAddress,
+      isUpcoming: true,
+      allowCancel: cancel_yn === 1,
+      branchNo,
+    };
+    setShowAppointmentDetailBottom({
+      isShow: true,
+      appointment: appointmentDetail,
+    });
+  };
+
   useEffect(() => {
-    requestGetAppointments();
+    if (getAppointmentsError) {
+      setShowAlert({
+        isShow: true,
+        title: 'Sorry!',
+        content: getAppointmentsError,
+      });
+    }
+  }, [getAppointmentsError]);
+
+  useEffect(() => {
+    if (appointmentData?.upcomingList) {
+      const appointmentsForDisplay = appointmentData.upcomingList.slice(0, maxAppointmentDisplay);
+      setUpcomingAppointments(appointmentsForDisplay);
+    } else {
+      setUpcomingAppointments([]);
+    }
+  }, [appointmentData]);
+
+  useEffect(() => {
+    sendRequestGetAppointments();
   }, []);
 
   return (
     <>
       <div className="appointment-home__wrapper">
+        {(isLoadingAppointments || showLoading) && <Spinner />}
         <Header
           title="Appointment"
           onClick={moveBack}
@@ -123,36 +208,37 @@ const AppointmentHome = () => {
               </div>
             </div>
           </div>
-          <div className="appointment-details__wrapper">
-            <div className="details__header">
-              <div className="details__header__title">Appointment details</div>
-              <div
-                className="details__header__icon"
-                onClick={handleNavigateAppointmentManagement}
-              >
-                <ArrowRight />
+          {upcomingAppointments?.length > 0 && (
+            <div className="appointment-details__wrapper">
+              <div className="details__header">
+                <div className="details__header__title">Appointment details</div>
+                <div
+                  className="details__header__icon"
+                  onClick={handleNavigateAppointmentManagement}
+                >
+                  <ArrowRight />
+                </div>
+              </div>
+              <div className="details__list">
+                {upcomingAppointments.map(appointment => (
+                  <Fragment key={appointment.id}>
+                    <AppointmentCard
+                      appointmentInfo={appointment}
+                      onClick={handleViewAppointmentDetail}
+                    />
+                  </Fragment>
+                ))}
               </div>
             </div>
-            <div className="details__list">
-              {appointmentListTest.map(appointment => (
-                <Fragment key={appointment.id}>
-                  <AppointmentCard
-                    appointmentInfo={appointment}
-                    onClick={onClickViewAppointmentDetail}
-                  />
-                </Fragment>
-              ))}
-            </div>
-          </div>
+          )}
         </div>
       </div>
-      {showAppointmentDetailBottom && (
-        <AppointmentDetailBottom
-          appointmentDetail={appointmentDetailTest}
-          onClose={() => setShowAppointmentDetailBottom(false)}
-          onConfirmCancel={() => {}}
-        />
-      )}
+      <AppointmentDetailBottom
+        open={showAppointmentDetailBottom.isShow}
+        appointment={showAppointmentDetailBottom.appointment}
+        onClose={() => setShowAppointmentDetailBottom({ appointment: {}, isShow: false })}
+        onConfirmCancel={handleCancelAppointment}
+      />
       <Alert
         isCloseButton={false}
         isShowAlert={showAlert.isShow}
