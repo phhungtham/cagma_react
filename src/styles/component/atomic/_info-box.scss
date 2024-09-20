@@ -20,9 +20,8 @@
     color: $color-gray-600;
     font-weight: 400;
     font-size: 13px;
-    line-height: 17px;
+    line-height: 18px;
     padding: 0 8px;
-
     display: flex;
     align-items: center;
   }
@@ -34,26 +33,33 @@
 
   &.informative {
     background: rgba(0, 93, 249, 0.1);
+
     .info__icon {
       color: $color-blue-500;
     }
   }
+
   &.notice {
     background: rgba(254, 196, 45, 0.16);
+
     .info__icon {
       color: #fec42d;
     }
   }
+
   &.negative-dark,
   &.negative {
     background: #ffffff;
+
     .info__icon {
       color: #f94d49;
     }
+
     .info__label {
       color: #f94d49;
     }
   }
+
   &.negative {
     background: rgba(249, 77, 73, 0.1);
   }

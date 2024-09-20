@@ -64,3 +64,16 @@ export const ProfileTransactionFunctionType = {
   ADDRESS_CHANGE: '4',
   USER_INFO_CHANGE: '5',
 };
+
+export const fieldsToCheckAddress = [
+  'phoneNumber',
+  'country',
+  'faxNumber',
+  'postalCode',
+  'aptNumber',
+  'streetNumber',
+  'streetName',
+  'address1',
+  'city',
+  'province',
+];

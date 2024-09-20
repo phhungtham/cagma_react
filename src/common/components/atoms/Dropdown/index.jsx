@@ -30,6 +30,7 @@ const Dropdown = forwardRef((props, ref) => {
     options,
     // ...otherProps
   } = props;
+
   const [valueDisplay, setValueDisplay] = useState('');
   const [customClass, setCustomClass] = useState('');
   const [errorTextField, setErrorTextField] = useState(errorMessage);

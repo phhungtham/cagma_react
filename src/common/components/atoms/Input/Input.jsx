@@ -38,6 +38,7 @@ const Input = forwardRef((props, ref) => {
     regex,
     ...otherProps
   } = props;
+
   const [inputValues, setInputValues] = useState(value);
   const [customClass, setCustomClass] = useState('');
   const [errorTextField, setErrorTextField] = useState(errorMessage);

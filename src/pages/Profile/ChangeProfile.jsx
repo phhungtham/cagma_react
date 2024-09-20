@@ -35,6 +35,7 @@ import {
 import getETransferRegistered from '@utilities/gmCommon/getETransferRegistered';
 import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 import { moveBack } from '@utilities/index';
+import { isEqual } from '@utilities/object';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AddressInfoSection from './components/AddressInfoSection';
@@ -42,6 +43,7 @@ import ContactInfoSection from './components/ContactInfoSection';
 import ProfileAvatar from './components/ProfileAvatar';
 import {
   employmentValuesDisableOccupation,
+  fieldsToCheckAddress,
   initSelectBottom,
   profileFormMapFields,
   ProfileTransactionFunctionType,
@@ -78,6 +80,7 @@ const ChangeProfile = ({ translation }) => {
 
   const [showSaveChangeConfirmAlert, setShowSaveChangeConfirmAlert] = useState(false);
   const [showViewAgreementTermBottom, setShowViewAgreementTermBottom] = useState(false);
+  const [defaultAddressInfo, setDefaultAddressInfo] = useState({});
 
   const [showAlert, setShowAlert] = useState({
     isShow: false,
@@ -102,10 +105,11 @@ const ChangeProfile = ({ translation }) => {
     setValue,
     reset,
     watch,
+    getValues,
     formState: { isDirty: isFormDirty },
   } = methods;
 
-  const [employment, occupation1] = watch(['employment', 'occupation1']);
+  const [employment, occupation1, isUpload] = watch(['employment', 'occupation1', 'isUpload']);
 
   const onClickMoveBack = () => {
     if (isFormDirty) {
@@ -207,7 +211,26 @@ const ChangeProfile = ({ translation }) => {
     }
   };
 
+  const checkRequireUploadProofAddress = values => {
+    if (defaultAddressInfo.addressType === addressTypeMapping.home) {
+      if (!isUpload) {
+        const isEqualHomeAddressInfo = isEqual(defaultAddressInfo, values, fieldsToCheckAddress);
+        return !isEqualHomeAddressInfo;
+      }
+    }
+    return false;
+  };
+
   const onSubmitSaveForm = async values => {
+    const isRequiredUploadProof = checkRequireUploadProofAddress(values);
+    if (isRequiredUploadProof) {
+      return setShowAlert({
+        isShow: true,
+        title: 'Review the documents again',
+        content: 'Please input Upload proof of address',
+      });
+    }
+
     if (!values.isViewAgreement) {
       return setShowAlert({
         isShow: true,
@@ -217,15 +240,15 @@ const ChangeProfile = ({ translation }) => {
     }
     setShowLoading(true);
     const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
-    // if (isETransferRegistered === '') {
-    //   const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
-    //   if (getETransferInfoResponse?.data?.elData) {
-    //     const { etr_err_c } = getETransferInfoResponse.data.elData || {};
-    //     request.etr_reg_yn = etr_err_c?.indexOf('404') >= 0 ? 'N' : 'Y';
-    //   }
-    // } else {
-    //   request.etr_reg_yn = isETransferRegistered === 'true' ? 'Y' : 'N';
-    // }
+    if (isETransferRegistered === '') {
+      const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
+      if (getETransferInfoResponse?.data?.elData) {
+        const { etr_err_c } = getETransferInfoResponse.data.elData || {};
+        request.etr_reg_yn = etr_err_c?.indexOf('404') >= 0 ? 'N' : 'Y';
+      }
+    } else {
+      request.etr_reg_yn = isETransferRegistered === 'true' ? 'Y' : 'N';
+    }
     request.etr_reg_yn = 'N';
     request.chg_yn = 'N'; //TODO: Check address change
     request.file_upd_yn = 'N'; //TODO: Check photo file uploaded
@@ -256,12 +279,12 @@ const ChangeProfile = ({ translation }) => {
       } else {
         handleRequestChangeProfile(requestChangeProfile);
       }
-      // setShowToast({
-      //   isShow: true,
-      //   message: 'Your profile information has been changed',
-      //   type: 'success',
-      // });
-      // return;
+      setShowToast({
+        isShow: true,
+        message: 'Your profile information has been changed',
+        type: 'success',
+      });
+      return;
     }
     const responseErrorMessage = changeUserInfoResponse?.data?.elHeader?.resMsg;
     if (responseErrorMessage) {
@@ -311,7 +334,6 @@ const ChangeProfile = ({ translation }) => {
       user.country = defaultAddress?.adr_nat_c || 'CA'; //Set default is Canada
       user.province = defaultAddress?.state_c;
       user.postalCode = defaultAddress?.cus_adr_zipc;
-      user.aptNumber = defaultAddress?.adr_strt_nm;
       user.streetNumber = defaultAddress?.adr_houseno_in_ctt;
       user.streetName = defaultAddress?.adr_colny_nm;
       user.city = defaultAddress?.cus_city_nm;
@@ -319,6 +341,7 @@ const ChangeProfile = ({ translation }) => {
       user.address2 = defaultAddress?.cus_adr2;
       user.address3 = defaultAddress?.cus_adr3;
       reset(user);
+      setDefaultAddressInfo(user);
       requestGetCommonCode(
         [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
       );
@@ -412,6 +435,7 @@ const ChangeProfile = ({ translation }) => {
               onOpenProvinceBottom={handleOpenSelectProvinceBottom}
               provinceOptions={provinceOptions}
               isDisableAddress={Number(userInfo?.noproc_cnt || 0) > 0}
+              setShowAlert={setShowAlert}
             />
           </FormProvider>
         </div>
