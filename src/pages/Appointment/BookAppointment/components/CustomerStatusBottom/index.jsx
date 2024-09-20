@@ -110,6 +110,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
                     label="Name"
                     type="text"
                     disabled={isUsingExistCustomer}
+                    maxLength={300}
                     {...field}
                   />
                 )}
@@ -122,6 +123,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
                     label="Phone number"
                     type="text"
                     disabled={isUsingExistCustomer}
+                    maxLength={50}
                     {...field}
                   />
                 )}
@@ -134,6 +136,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
                     label="Email"
                     type="text"
                     disabled={isUsingExistCustomer}
+                    maxLength={50}
                     {...field}
                   />
                 )}
@@ -159,6 +162,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
                   <Input
                     label="Additional Comments(Optional)"
                     type="text"
+                    maxLength={4000}
                     {...field}
                   />
                 )}

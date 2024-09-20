@@ -24,7 +24,7 @@ const BranchDirectory = () => {
     sendRequest: sendRequestGetBranch,
   } = useGetBranchDirectory();
 
-  branchList?.sort((branchPre, branchNex) => (branchPre.eng_br_nm > branchNex.eng_br_nm ? 1 : -1));
+  branchList?.sort((branchPre, branchNex) => (branchPre.lcl_br_nm > branchNex.lcl_br_nm ? 1 : -1));
 
   const [viewMapItem, setViewMapItem] = useState({
     open: false,
@@ -79,7 +79,7 @@ const BranchDirectory = () => {
                   key={branch.brno}
                 >
                   <Accordion
-                    title={branch.eng_br_nm}
+                    title={branch.lcl_br_nm}
                     caption={branch.br_adr}
                     isExpand={index === 0}
                   >
