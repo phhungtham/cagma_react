@@ -1,26 +1,15 @@
-import React from 'react';
-
 const PlusIcon = props => {
-  const { iconWidth = '10', iconHeight = '10' } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={iconWidth}
-      height={iconHeight}
-      viewBox="0 0 10 10"
+      width="1em"
+      height="1em"
+      viewBox="0 0 17 16"
       fill="none"
     >
       <path
-        d="M1 5L9 5.00029"
-        stroke="white"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-      />
-      <path
-        d="M5 1L5 9"
-        stroke="white"
-        strokeWidth="1.25"
-        strokeLinecap="round"
+        d="M9.125 2.5C9.125 2.15482 8.84518 1.875 8.5 1.875C8.15482 1.875 7.875 2.15482 7.875 2.5V7.37518L3.00002 7.375C2.65484 7.37499 2.37501 7.6548 2.375 7.99998C2.37499 8.34516 2.6548 8.62499 2.99998 8.625L7.875 8.62518V13.5C7.875 13.8452 8.15482 14.125 8.5 14.125C8.84518 14.125 9.125 13.8452 9.125 13.5V8.62522L14 8.6254C14.3452 8.62542 14.625 8.3456 14.625 8.00043C14.625 7.65525 14.3452 7.37542 14 7.3754L9.125 7.37522V2.5Z"
+        fill="currentColor"
       />
     </svg>
   );

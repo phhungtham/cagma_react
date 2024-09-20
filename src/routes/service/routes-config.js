@@ -4,6 +4,7 @@ import AppointmentHome from '@pages/Appointment/AppointmentHome';
 import AppointmentManagement from '@pages/Appointment/AppointmentManagement';
 import BookAppointment from '@pages/Appointment/BookAppointment';
 import BranchDirectory from '@pages/Appointment/BranchDirectory';
+import CardMain from '@pages/Card/CardMain';
 import CommonTestPage from '@pages/CommonTestPage/CommonTestPage';
 import DemoComponent from '@pages/DemoComponent/DemoComponent';
 import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
@@ -71,8 +72,13 @@ const RoutesConfig = [
     private: false,
   },
   {
-    path: '/book-appointment',
+    path: routePaths.bookAppointment,
     component: BookAppointment,
+    private: false,
+  },
+  {
+    path: routePaths.cards,
+    component: CardMain,
     private: false,
   },
   {

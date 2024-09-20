@@ -80,21 +80,10 @@ $background-colors: (
   @return map-get($background-colors, $color);
 }
 
-$btn-bg-colors: (
-  color-blue: $color-blue-500,
-  color-medium-blue: $color-blue-900,
-  color-dark-blue: $color-blue-900,
-  color-grey: #2c3b4e,
-  color-transparent: transparent,
-);
-
-@function bt-bg-color($color) {
-  @return map-get($btn-bg-colors, $color);
-}
 //button-colorbackground-active
 $button-type-maps: (
   filled__primary: (
-    background-nor: bt-bg-color(color-blue),
+    background-nor: $color-blue-500,
     background-active: $color-blue-900,
     background-disabled: $color-gray-250,
     text-color: text-color(color-white),
@@ -109,12 +98,20 @@ $button-type-maps: (
     text-color-active: $color-blue-900,
     text-color-disable: $color-blue-200,
   ),
+  filled__secondary-gray: (
+    background-nor: $color-gray-100,
+    background-active: $color-gray-400,
+    background-disabled: $color-gray-100,
+    text-color: $color-gray-900,
+    text-color-active: $color-gray-900,
+    text-color-disable: $color-gray-400,
+  ),
   text__primary: (
     background-nor: transparent,
-    background-active: bt-bg-color(color-grey),
+    background-active: transparent,
     text-color: $color-blue-500,
-    text-color-active: text-color(color-white),
-    text-color-disable: text-color(color-white-blur),
+    text-color-active: $color-blue-900,
+    text-color-disable: $color-gray-400,
   ),
   outlined__primary: (
     background-nor: $color-white,

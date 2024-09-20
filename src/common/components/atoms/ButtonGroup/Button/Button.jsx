@@ -6,7 +6,7 @@ export const Button = ({
   disable,
   onClick,
   variant,
-  iconPosition,
+  startIcon,
   size,
   children,
   endIcon,
@@ -20,7 +20,8 @@ export const Button = ({
       {...otherProps}
       disabled={disable}
     >
-      <section className={`btn__contain ${iconPosition}`}>
+      <section className="btn__contain">
+        {startIcon && <span className={`btn__icon icon__${size}`}>{startIcon}</span>}
         {label}
         {endIcon && <span className={`btn__icon icon__${size}`}>{endIcon}</span>}
       </section>
@@ -42,6 +43,7 @@ Button.propTypes = {
     'outlined__primary',
     'outlined__gray',
     'filled__secondary-blue',
+    'filled__secondary-gray',
   ]),
 };
 

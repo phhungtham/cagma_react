@@ -6,4 +6,5 @@ export const routePaths = {
   branchDirectory: '/branch-directory',
   appointmentManagement: '/appointment-management',
   bookAppointment: '/book-appointment',
+  cards: '/cards',
 };
