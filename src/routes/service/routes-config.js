@@ -4,6 +4,7 @@ import AppointmentHome from '@pages/Appointment/AppointmentHome';
 import AppointmentManagement from '@pages/Appointment/AppointmentManagement';
 import BookAppointment from '@pages/Appointment/BookAppointment';
 import BranchDirectory from '@pages/Appointment/BranchDirectory';
+import ActiveCard from '@pages/Card/ActiveCard';
 import AddNewCard from '@pages/Card/AddNewCard';
 import CardMain from '@pages/Card/CardMain';
 import CommonTestPage from '@pages/CommonTestPage/CommonTestPage';
@@ -85,6 +86,11 @@ const RoutesConfig = [
   {
     path: routePaths.addNewCard,
     component: AddNewCard,
+    private: false,
+  },
+  {
+    path: routePaths.activeCard,
+    component: ActiveCard,
     private: false,
   },
   {

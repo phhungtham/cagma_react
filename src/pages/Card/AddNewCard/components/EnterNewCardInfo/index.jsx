@@ -18,7 +18,7 @@ import { moveBack } from '@utilities/index';
 import { enterCardFormSchema } from './schema';
 import './styles.scss';
 
-const EnterCardInfo = ({ onSubmit }) => {
+const EnterNewCardInfo = ({ onSubmit }) => {
   const { sendRequest: requestGetCommonCode, data: commonCodeData } = useCommonCode();
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
@@ -119,6 +119,7 @@ const EnterCardInfo = ({ onSubmit }) => {
                 render={({ field }) => (
                   <Input
                     label="Street Number"
+                    placeholder="Please input Detail text"
                     {...field}
                   />
                 )}
@@ -129,6 +130,7 @@ const EnterCardInfo = ({ onSubmit }) => {
                 render={({ field }) => (
                   <Input
                     label="Street Name"
+                    placeholder="Please input Detail text"
                     {...field}
                   />
                 )}
@@ -140,6 +142,7 @@ const EnterCardInfo = ({ onSubmit }) => {
                   return (
                     <Input
                       label="APT Number/SUITE Number"
+                      placeholder="Please input Detail text"
                       {...field}
                     />
                   );
@@ -151,6 +154,7 @@ const EnterCardInfo = ({ onSubmit }) => {
                 render={({ field }) => (
                   <Input
                     label="City"
+                    placeholder="Please input Detail text"
                     {...field}
                   />
                 )}
@@ -173,6 +177,7 @@ const EnterCardInfo = ({ onSubmit }) => {
                 render={({ field }) => (
                   <Input
                     label="Postal Code"
+                    placeholder="Please input 6numerics"
                     {...field}
                   />
                 )}
@@ -209,4 +214,4 @@ const EnterCardInfo = ({ onSubmit }) => {
   );
 };
 
-export default EnterCardInfo;
+export default EnterNewCardInfo;

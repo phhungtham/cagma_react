@@ -90,7 +90,8 @@ const TermsAndConditions = ({ onSubmit }) => {
             <div className="banner__desc">
               <div className="page__title">Consumer Classic Access Card</div>
               <div className="card__desc">
-                <span>Enhance your life style with Shinhan Debit Card! Available for POS/ATM transactions</span>
+                <p>Enhance your life style with Shinhan Debit Card!</p>
+                <p>Available for POS/ATM transactions</p>
               </div>
             </div>
             <div className="banner__spec" />

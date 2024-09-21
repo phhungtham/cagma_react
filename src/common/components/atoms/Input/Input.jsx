@@ -75,6 +75,12 @@ const Input = forwardRef((props, ref) => {
     if (regex) {
       value = value.replace(regex, '');
     }
+    //Handle for case input type number
+    if (maxLength) {
+      if (value?.length > maxLength) {
+        value = value.slice(0, maxLength);
+      }
+    }
     onChange(value);
     setInputValues(value);
   };

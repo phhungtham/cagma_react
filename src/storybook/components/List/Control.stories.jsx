@@ -38,11 +38,3 @@ SwitchActive.args = {
   captionSegments: { type: 1, caption1: 'Transaction notifications' },
   control: { name: 'switch', position: 'right', active: true },
 };
-
-export const Button = Template.bind({});
-Button.args = {
-  title: 'Title',
-  subTitle: 'Sub Title',
-  captionSegments: { type: 1, caption1: 'Transaction notifications' },
-  control: { name: 'button', label: 'Button' },
-};

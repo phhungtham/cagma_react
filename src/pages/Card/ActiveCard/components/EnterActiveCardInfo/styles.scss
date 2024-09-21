@@ -1,0 +1,46 @@
+@import 'styles/utilities/variables';
+@import 'styles/utilities/_mixin.scss';
+
+.active-card__container {
+  padding: 20px 24px 150px;
+}
+
+.active-attempts {
+  margin-top: 16px;
+  border-radius: 16px;
+  background-color: $color-gray-100;
+  height: 94px;
+  @include flexCenter();
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 19px;
+  .active-attempts__desc {
+    color: $color-gray-500;
+  }
+  .active-attempts__number {
+    font-weight: 500;
+  }
+}
+
+.active-block__info {
+  padding: 20px 0 16px;
+  .active-block__ctas {
+    margin-top: 32px;
+    @include flexCenter();
+    .call__icon {
+      color: #4f8bf4;
+      font-size: 24px;
+    }
+    .chat__icon {
+      font-size: 24px;
+    }
+  }
+  .active-block__button {
+    width: 100px;
+    @include flexCenter();
+    .btn__icon__wrapper {
+      max-width: unset;
+    }
+  }
+}

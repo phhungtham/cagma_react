@@ -28,6 +28,7 @@ export { default as DepositNotifyIcon } from './DepositNotify';
 export { default as DocumentIcon } from './DocumentIcon';
 export { default as EqualIcon } from './EqualIcon';
 export { default as ErrorIcon } from './ErrorIcon';
+export { default as FillChatIcon } from './FillChatIcon';
 export { default as FillDeleteIcon } from './FillDeleteIcon';
 export { default as FillPhoneIcon } from './FillPhoneIcon';
 export { default as FillTooltipIcon } from './FillTooltipIcon';

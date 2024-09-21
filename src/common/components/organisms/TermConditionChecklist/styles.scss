@@ -3,6 +3,9 @@
 .term-condition-checklist-wrapper {
   .checklist__check-all {
     padding-bottom: 20px;
+    .checkbox {
+      align-items: flex-start;
+    }
     .checkbox__label {
       font-size: 16px;
       font-weight: 500;

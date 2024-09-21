@@ -98,7 +98,7 @@ $input-on-background: background-color(dark-sky-blue);
       @include textFieldStyles();
       height: 105px;
 
-      @include customPlaceholder(text-color(color-grey-blur));
+      @include customPlaceholder($color-gray-400);
 
       &:focus {
         outline: none;
@@ -152,7 +152,7 @@ $input-on-background: background-color(dark-sky-blue);
         background-color: background-color(color-white);
       }
       input {
-        @include customPlaceholder(text-color(color-grey-blur));
+        @include customPlaceholder($color-gray-400);
       }
     }
     &.input__completed {

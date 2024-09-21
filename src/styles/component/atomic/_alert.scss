@@ -46,7 +46,7 @@
     transform: translateY(120%);
 
     &.close-button {
-      padding-top: 54px;
+      padding-top: 58px;
     }
     &.animate {
       animation: slideDown 0.2s linear;
@@ -62,11 +62,8 @@
     &__close {
       position: absolute;
       text-align: end;
-      margin-bottom: 16px;
-      font-size: 2px;
-
-      top: 24px;
-      right: 22px;
+      top: 20px;
+      right: 18px;
     }
 
     &__header {

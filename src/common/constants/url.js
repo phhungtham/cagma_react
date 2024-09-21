@@ -9,4 +9,5 @@ export const fileUrls = {
 export const externalUrls = {
   branchInfo: 'http://www.shinhan.ca/about-us/find-us/branch-info',
   contactUs: 'https://www.shinhan.ca/about-us/find-us/contact-us',
+  findATM: 'https://www.theexchangenetwork.ca/Find-An-ATM.aspx',
 };

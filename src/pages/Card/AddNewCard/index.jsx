@@ -4,7 +4,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AddNewCardSuccess from './components/AddNewCardSuccess';
-import EnterCardInfo from './components/EnterCardInfo';
+import EnterNewCardInfo from './components/EnterNewCardInfo';
 import TermsAndConditions from './components/TermsAndConditions';
 import { ADD_NEW_CARD_STEP } from './constants';
 
@@ -17,7 +17,7 @@ const AddNewCard = ({ translation }) => {
     setCurrentStep(ADD_NEW_CARD_STEP.ENTER_INFORMATION);
   };
 
-  const onSubmitAddNewCard = values => {
+  const handleSubmitAddNewCard = values => {
     setAddCardSuccessInfo({
       streetNumber: '123',
       streetName: 'Young ST',
@@ -37,7 +37,7 @@ const AddNewCard = ({ translation }) => {
         {showLoading && <Spinner />}
         {currentStep === ADD_NEW_CARD_STEP.TERMS_CONDITIONS && <TermsAndConditions onSubmit={onSubmitAgreeTerms} />}
 
-        {currentStep === ADD_NEW_CARD_STEP.ENTER_INFORMATION && <EnterCardInfo onSubmit={onSubmitAddNewCard} />}
+        {currentStep === ADD_NEW_CARD_STEP.ENTER_INFORMATION && <EnterNewCardInfo onSubmit={handleSubmitAddNewCard} />}
         {currentStep === ADD_NEW_CARD_STEP.COMPLETED && <AddNewCardSuccess cardInfo={addCardSuccessInfo} />}
       </div>
       {/* <Alert

@@ -9,6 +9,10 @@ $font-weights: (
   color: $color-blue-500;
 }
 
+.text-error {
+  color: $color-error;
+}
+
 @each $key, $val in $font-weights {
   .font-#{$key} {
     font-weight: $val;

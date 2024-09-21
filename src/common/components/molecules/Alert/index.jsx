@@ -16,6 +16,7 @@ const Alert = ({
   secondButton,
   isCloseButton,
   textAlign,
+  children,
 }) => {
   const [animate, setAnimate] = useState(false);
 
@@ -66,6 +67,7 @@ const Alert = ({
           {subtitle && <p className="alert__subtitle">{subtitle}</p>}
           {caption && <p className="alert__caption">{caption}</p>}
         </section>
+        {children}
         <section className="alert__footer">
           <DuoButton
             firstButton={firstDoulButton}
