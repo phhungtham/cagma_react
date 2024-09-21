@@ -1,4 +1,4 @@
-import { fileUrls } from '@common/constants/file';
+import { fileUrls } from '@common/constants/url';
 
 export const ADD_NEW_CARD_STEP = {
   TERMS_CONDITIONS: 'termsConditions',
@@ -7,19 +7,19 @@ export const ADD_NEW_CARD_STEP = {
 };
 
 export const termConditionConfig = {
-  selectAllLabel: 'I fully understand and agree to all of the below',
+  selectAllLabel: 'I agree to the Application and Agreement of the Shinhan Access Card',
   options: [
     {
-      label: '[Mandatory] User Agreement',
+      label: 'Access Card Application',
       value: '1',
-      title: 'User Agreement',
-      fileUrl: fileUrls.openAccountAgreeTerm,
+      title: 'Access Card Application',
+      fileUrl: fileUrls.cardHolderAgreement,
     },
     {
-      label: '[Mandatory] Product Feature',
+      label: 'Cardholder Agreement',
       value: '2',
-      title: 'Product Feature',
-      fileUrl: fileUrls.openAccountProductFeature,
+      title: 'Cardholder Agreement',
+      fileUrl: fileUrls.cardHolderAgreement,
     },
   ],
 };

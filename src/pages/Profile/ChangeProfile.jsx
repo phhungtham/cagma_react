@@ -20,8 +20,8 @@ import {
   getSubJobCode,
 } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
-import { fileUrls } from '@common/constants/file';
 import { SecurityMediaType } from '@common/constants/plugin';
+import { fileUrls } from '@common/constants/url';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
 import useReducers from '@hooks/useReducers';

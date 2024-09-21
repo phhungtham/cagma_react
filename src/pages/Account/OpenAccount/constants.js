@@ -1,4 +1,4 @@
-import { fileUrls } from '@common/constants/file';
+import { fileUrls } from '@common/constants/url';
 
 export const termConditionConfig = {
   selectAllLabel: 'I fully understand and agree to all of the below',

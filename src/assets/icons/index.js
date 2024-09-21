@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export { default as AnswerIcon } from './Answer';
 export { default as ArrowDown } from './ArrowDown';
 export { default as ArrowIcon } from './ArrowIcon';
@@ -28,6 +29,7 @@ export { default as DocumentIcon } from './DocumentIcon';
 export { default as EqualIcon } from './EqualIcon';
 export { default as ErrorIcon } from './ErrorIcon';
 export { default as FillDeleteIcon } from './FillDeleteIcon';
+export { default as FillPhoneIcon } from './FillPhoneIcon';
 export { default as FillTooltipIcon } from './FillTooltipIcon';
 export { default as FilterIcon } from './FilterIcon';
 export { default as FlipIcon } from './FlipIcon';
@@ -71,3 +73,4 @@ export { default as ViewPDFIcon } from './ViewPDFIcon';
 export { default as WarningIcon } from './Warning';
 export { default as WaveDivider } from './WaveDivider';
 export { default as WithdrawNotifyIcon } from './WithdrawNotify';
+

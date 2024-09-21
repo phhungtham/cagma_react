@@ -3,21 +3,25 @@ $icon-circle-sizes: (
     border-radius: 16px,
     padding: 10px,
     height: 56px,
+    width: 56px,
   ),
   lg: (
     border-radius: 14px,
     padding: 10px,
     height: 44px,
+    width: 44px,
   ),
   md: (
     border-radius: 12px,
     padding: 10px,
     height: 36px,
+    width: 36px,
   ),
   sm: (
     border-radius: 10px,
     padding: 8px,
     height: 32px,
+    width: 32px,
   ),
 );
 
@@ -25,6 +29,7 @@ $icon-circle-sizes: (
   &.btn__icon__circle {
     @each $size, $map in $icon-circle-sizes {
       &.icon--#{$size} {
+        max-width: map-get($map, width);
         .btn__icon__main {
           background: $color-gray-100;
           display: flex;

@@ -1,10 +1,15 @@
 import { useState } from 'react';
 
-import BannerBook from '@assets/images/open-account-book.png';
+import { FillPhoneIcon } from '@assets/icons';
+import BannerImg from '@assets/images/add-new-card-banner.png';
+import SearchBranchIcon from '@assets/images/icon-fill-atm-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
+import { externalUrls } from '@common/constants/url';
+import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { moveBack } from '@utilities/index';
 
 import { termConditionConfig } from '../../constants';
@@ -64,6 +69,14 @@ const TermsAndConditions = ({ onSubmit }) => {
     setViewTermBottom({ ...viewTermBottom, open: false });
   };
 
+  const handleNavigateBranchInfo = () => {
+    openURLInBrowser(externalUrls.branchInfo);
+  };
+
+  const handleNavigateContactUs = () => {
+    openURLInBrowser(externalUrls.contactUs);
+  };
+
   return (
     <div className="add-new-card term-conditions__wrapper">
       <Header
@@ -71,22 +84,44 @@ const TermsAndConditions = ({ onSubmit }) => {
         onClick={moveBack}
       />
       <div className="add-new-card term-conditions__content">
-        <h1 className="page__title">Terms&Conditions</h1>
-        <div className="term-condition__banner">
-          <div className="banner__desc">
-            <div className="product__desc">
-              <span>
-                This product provides high interest rate even for a day saving with convenient deposit and withdrawal
-                system.
-              </span>
+        <div className="page__container">
+          <h1 className="page__title">Terms&Conditions</h1>
+          <div className="term-condition__banner">
+            <div className="banner__desc">
+              <div className="page__title">Consumer Classic Access Card</div>
+              <div className="card__desc">
+                <span>Enhance your life style with Shinhan Debit Card! Available for POS/ATM transactions</span>
+              </div>
+            </div>
+            <div className="banner__spec" />
+            <div className="banner__image">
+              <img src={BannerImg} />
             </div>
           </div>
-          <div className="banner__spec" />
-          <div className="banner__image">
-            <img src={BannerBook} />
+          <div className="term-condition__more-info">
+            <div className="more-info__desc">More information, check the link below</div>
+            <div className="more-info__links">
+              <IconButton
+                size="lg"
+                type="circle"
+                label="Search Branch"
+                icon={<img src={SearchBranchIcon} />}
+                onClick={handleNavigateBranchInfo}
+              />
+              <IconButton
+                size="lg"
+                type="circle"
+                label="Contact Us"
+                className="contact-us__icon"
+                icon={<FillPhoneIcon />}
+                onClick={handleNavigateContactUs}
+              />
+            </div>
           </div>
         </div>
-        <div className="term-condition__checklist">
+
+        <div className="divider__group" />
+        <div className="term-condition__checklist page__container">
           <TermConditionChecklist
             config={termConditionConfig}
             onClickViewTerm={onClickViewTermDetail}

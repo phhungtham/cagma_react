@@ -17,7 +17,7 @@ const AddNewCard = ({ translation }) => {
 
   return (
     <>
-      <div className="add-new-card__wrapper">
+      <div className="add-new-card__wrapper page__wrapper">
         {showLoading && <Spinner />}
         {currentStep === ADD_NEW_CARD_STEP.TERMS_CONDITIONS && <TermsAndConditions onSubmit={onSubmitAgreeTerms} />}
 

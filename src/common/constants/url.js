@@ -3,4 +3,10 @@ export const fileUrls = {
   openAccountProductFeature: 'https://gmcadev.shinhanglobal.com/pdf/5117020027_agree_en.pdf',
   electronicCommunicationAgreement:
     'https://gmcadev.shinhanglobal.com/img/511/pdf/Electronic_Communication_Agreement.pdf',
+  cardHolderAgreement: 'https://gmcadev.shinhanglobal.com/img/511/pdf/511_access_card_agreement.pdf',
+};
+
+export const externalUrls = {
+  branchInfo: 'http://www.shinhan.ca/about-us/find-us/branch-info',
+  contactUs: 'https://www.shinhan.ca/about-us/find-us/contact-us',
 };
