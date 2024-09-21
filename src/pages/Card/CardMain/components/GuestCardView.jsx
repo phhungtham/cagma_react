@@ -17,7 +17,11 @@ const guestCardOptions = [
 ];
 
 const GuestCardView = () => {
-  const onSelectItem = item => {};
+  const onSelectItem = item => {
+    if (item.value === CardActionTypes.ACTIVE) {
+      // moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
+    }
+  };
 
   return (
     <div className="guest-card-view__wrapper page__container">

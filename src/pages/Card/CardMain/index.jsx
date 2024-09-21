@@ -12,7 +12,7 @@ import './styles.scss';
 
 const CardMain = () => {
   const isLogin = useSelector(loginSelector);
-  const [card, setCard] = useState({});
+  const [card, setCard] = useState();
   return (
     <>
       <div className="card-main__wrapper page__wrapper">

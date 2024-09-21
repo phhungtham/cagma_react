@@ -58,7 +58,7 @@ const RoutesConfig = [
     private: false,
   },
   {
-    path: '/appointment',
+    path: routePaths.appointment,
     component: AppointmentHome,
     private: false,
   },

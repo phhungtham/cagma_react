@@ -1,5 +1,6 @@
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { moveHome } from '@utilities/index';
 
 import { openAccountSuccessFields } from '../../constants';
 import './styles.scss';
@@ -8,7 +9,9 @@ const OpenAccountSuccessful = ({ openAccountInfo }) => {
   const { creditChecked, productName } = openAccountInfo || {};
   const onClickViewAccount = () => {};
 
-  const onClickNavigateHome = () => {};
+  const onClickNavigateHome = () => {
+    moveHome();
+  };
 
   return (
     <>

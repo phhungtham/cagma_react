@@ -23,3 +23,34 @@ export const termConditionConfig = {
     },
   ],
 };
+
+export const AddNewCardSuccessFields = [
+  {
+    label: 'Street Number',
+    value: 'streetNumber',
+  },
+  {
+    label: 'Street Name',
+    value: 'streetName',
+  },
+  {
+    label: 'APT Number/ SUITE Number',
+    value: 'aptNumber',
+  },
+  {
+    label: 'City',
+    value: 'city',
+  },
+  {
+    label: 'Province',
+    value: 'province',
+  },
+  {
+    label: 'Postal Code',
+    value: 'postalCode',
+  },
+  {
+    label: 'Issue Date',
+    value: 'issueDate',
+  },
+];

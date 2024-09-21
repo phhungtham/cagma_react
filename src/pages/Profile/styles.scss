@@ -64,20 +64,6 @@
   }
 
   .form__wrapper {
-    padding: 16px 24px 0;
-
-    .form__section {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .form__section__title {
-      font-size: 17px;
-      font-weight: 700;
-      color: $color-gray-700;
-    }
-
     .btn__send {
       position: absolute;
       right: 20px;

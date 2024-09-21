@@ -45,8 +45,6 @@ const EnterAccountInformation = ({ onSubmit, interestRate, productName }) => {
     resolver: yupResolver(openAccountSchema),
   });
 
-  console.log('errors :>> ', errors);
-
   const [amount, intendedUseAccountDisplay] = watch(['amount', 'intendedUseAccountDisplay']);
   const showInterestRateSection = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
 
@@ -67,19 +65,19 @@ const EnterAccountInformation = ({ onSubmit, interestRate, productName }) => {
   };
 
   const onSelectAccount = account => {
-    setValue('accountNo', account.lcl_ac_no);
+    setValue('accountNo', account.lcl_ac_no, { shouldValidate: true });
     setSelectedAccount(account);
     setShowMyAccountBottom(false);
   };
 
   const onSelectIntendedUseAccount = intended => {
-    setValue('intendedUseAccount', intended.value);
-    setValue('intendedUseAccountDisplay', intended.label);
+    setValue('intendedUseAccount', intended.value, { shouldValidate: true });
+    setValue('intendedUseAccountDisplay', intended.label, { shouldValidate: true });
     setShowIntendedUseAccountBottom(false);
   };
 
   const onChangeAmount = value => {
-    setValue('amount', value?.amount || '');
+    setValue('amount', value?.amount || '', { shouldValidate: true });
     setShowEnterAmountBottom(false);
   };
 
@@ -99,7 +97,7 @@ const EnterAccountInformation = ({ onSubmit, interestRate, productName }) => {
 
   useEffect(() => {
     if (cardCountInfo && cardCountInfo.count === 0) {
-      setValue('debitCardIssuance', true);
+      setValue('debitCardIssuance', true, { shouldValidate: true });
     }
   }, [cardCountInfo]);
 

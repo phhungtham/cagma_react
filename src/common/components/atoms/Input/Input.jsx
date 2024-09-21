@@ -12,7 +12,7 @@ const Input = forwardRef((props, ref) => {
   const {
     // autoComplete,
     // children,
-    clazz,
+    clazz = '',
     disabled,
     errorMessage,
     label,

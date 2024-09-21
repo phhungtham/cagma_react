@@ -146,7 +146,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
             </section>
             <div className="divider__item__solid" />
             <div className="form__section pt-7">
-              <span className="form-section__title">Preferred Language</span>
+              <span className="form__section__title">Preferred Language</span>
               <Controller
                 render={({ field }) => (
                   <BoxRadio

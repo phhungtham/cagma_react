@@ -28,16 +28,16 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
   const handleSelectDate = cbData => {
     if (cbData) {
       const selectedDate = cbData?.data ? JSON.parse(cbData.data)?.selectDate : '';
-      setValue('dob', selectedDate);
-      setValue('dob_display', formatYYYYMMDDToDisplay(selectedDate));
+      setValue('dob', selectedDate, { shouldValidate: true });
+      setValue('dob_display', formatYYYYMMDDToDisplay(selectedDate), { shouldValidate: true });
     }
   };
 
   const handleOpenCalendar = () => {
     if (AppCfg.ENV === 'development') {
       //For dummy data because it call native calendar
-      setValue('dob', '19980523');
-      setValue('dob_display', formatYYYYMMDDToDisplay('19980523'));
+      setValue('dob', '19980523', { shouldValidate: true });
+      setValue('dob_display', formatYYYYMMDDToDisplay('19980523'), { shouldValidate: true });
     }
     openCalendar(handleSelectDate, { selectDate: dob || undefined });
   };
@@ -47,7 +47,7 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
   };
 
   const handleSelectProvince = item => {
-    setValue('province', item.value);
+    setValue('province', item.value, { shouldValidate: true });
     setShowSelectProvinceBottom(false);
   };
 

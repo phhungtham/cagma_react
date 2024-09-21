@@ -1,11 +1,11 @@
 @import 'styles/utilities/variables';
 @import 'styles/utilities/mixin';
 
-.open-account-successful__wrapper {
+.add-new-card-successful__wrapper {
   height: 100vh;
   overflow-y: auto;
-  padding: 56px 24px;
-  .open-account {
+  padding: 56px 24px 150px;
+  .add-new-card {
     &__header {
       @include flexCenter();
       flex-direction: column;
@@ -22,9 +22,6 @@
       font-weight: 700;
       line-height: 28px;
       text-align: center;
-      .product-type {
-        color: $color-blue-500;
-      }
       .note {
         padding: 0 20px;
         margin-top: 12px;
@@ -39,22 +36,23 @@
       flex-direction: column;
       gap: 16px;
       padding: 16px 0;
-      .account-item {
-        display: flex;
-        font-size: 14px;
-        line-height: 19px;
-        gap: 16px;
-      }
-
-      .account-label {
-        width: 130px;
-        flex-shrink: 0;
-        color: $color-gray-500;
-      }
-
-      .account-value {
-        font-weight: 500;
-      }
+      border-bottom: 1px solid $color-gray-200;
     }
+  }
+  .card-item {
+    display: flex;
+    font-size: 14px;
+    line-height: 19px;
+    gap: 16px;
+  }
+
+  .card-label {
+    width: 112px;
+    flex-shrink: 0;
+    color: $color-gray-500;
+  }
+
+  .card-value {
+    font-weight: 500;
   }
 }

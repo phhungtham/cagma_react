@@ -1,8 +1,15 @@
 import { ArrowRight, PlusIcon } from '@assets/icons';
 import cardEmptyImg from '@assets/images/card-empty.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { MENU_CODE } from '@configs/global/constants';
+import { routePaths } from '@routes/paths';
+import { moveNext } from '@utilities/index';
 
 const EmptyCardView = () => {
+  const handleNavigateAddNewCard = () => {
+    moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
+  };
+
   return (
     <div className="empty-card-view__wrapper page__container">
       <div className="empty-card__content">
@@ -23,7 +30,7 @@ const EmptyCardView = () => {
             variant="filled__secondary-blue"
             size="lg"
             startIcon={<PlusIcon />}
-            onClick={() => {}}
+            onClick={handleNavigateAddNewCard}
           />
         </div>
         <div className="empty-card__note">

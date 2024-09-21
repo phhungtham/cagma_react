@@ -7,13 +7,6 @@ export const SELECT_TYPE = {
   PROVINCE: 'province',
 };
 
-export const initSelectBottom = {
-  isShow: false,
-  type: '',
-  options: [],
-  title: '',
-};
-
 export const selectBottomTypeMapField = {
   [SELECT_TYPE.EMPLOYMENT]: 'employment',
   [SELECT_TYPE.OCCUPATION1]: 'occupation1',

@@ -10,6 +10,7 @@ import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import { addressTypeMapping } from '@common/constants/address';
+import { initSelectBottom } from '@common/constants/bottomsheet';
 import {
   EmploymentMap,
   getAddressTypeCode,
@@ -44,7 +45,6 @@ import ProfileAvatar from './components/ProfileAvatar';
 import {
   employmentValuesDisableOccupation,
   fieldsToCheckAddress,
-  initSelectBottom,
   profileFormMapFields,
   ProfileTransactionFunctionType,
   SELECT_TYPE,

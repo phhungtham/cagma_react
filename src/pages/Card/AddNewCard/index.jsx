@@ -3,16 +3,32 @@ import { useState } from 'react';
 import Spinner from '@common/components/atoms/Spinner';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
+import AddNewCardSuccess from './components/AddNewCardSuccess';
+import EnterCardInfo from './components/EnterCardInfo';
 import TermsAndConditions from './components/TermsAndConditions';
 import { ADD_NEW_CARD_STEP } from './constants';
-import './styles.scss';
 
 const AddNewCard = ({ translation }) => {
   const [currentStep, setCurrentStep] = useState(ADD_NEW_CARD_STEP.TERMS_CONDITIONS);
+  const [addCardSuccessInfo, setAddCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
 
   const onSubmitAgreeTerms = () => {
     setCurrentStep(ADD_NEW_CARD_STEP.ENTER_INFORMATION);
+  };
+
+  const onSubmitAddNewCard = values => {
+    setAddCardSuccessInfo({
+      streetNumber: '123',
+      streetName: 'Young ST',
+      aptNumber: '123',
+      city: 'Toronto',
+      province: 'On-ontrairo',
+      postalCode: 'A9A9A9',
+      issueDate: 'Jun 09, 2024',
+      accountNo: '700 000 000000',
+    });
+    setCurrentStep(ADD_NEW_CARD_STEP.COMPLETED);
   };
 
   return (
@@ -21,16 +37,8 @@ const AddNewCard = ({ translation }) => {
         {showLoading && <Spinner />}
         {currentStep === ADD_NEW_CARD_STEP.TERMS_CONDITIONS && <TermsAndConditions onSubmit={onSubmitAgreeTerms} />}
 
-        {/* {currentStep === OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION && (
-          <EnterAccountInformation
-            onSubmit={onSubmitOpenAccountForm}
-            interestRate={ntfct_intrt}
-            productName={lcl_prdt_nm}
-          />
-        )}
-        {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && (
-          <OpenAccountSuccessful openAccountInfo={openAccountSuccessInfo} />
-        )} */}
+        {currentStep === ADD_NEW_CARD_STEP.ENTER_INFORMATION && <EnterCardInfo onSubmit={onSubmitAddNewCard} />}
+        {currentStep === ADD_NEW_CARD_STEP.COMPLETED && <AddNewCardSuccess cardInfo={addCardSuccessInfo} />}
       </div>
       {/* <Alert
         isCloseButton={false}
