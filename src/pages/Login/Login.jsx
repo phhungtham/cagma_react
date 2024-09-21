@@ -48,13 +48,13 @@ const Login = () => {
   const navigate = useNavigate();
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
-      userName: 'CATEST25',
+      userName: 'WTLEE815',
       password: 'qwer1234',
     },
   });
   const isLoginSuccess = useSelector(loginStatusSelector);
   const loginMessage = useSelector(loginStatusMsg);
-  const [currentAccount, setCurrentAccount] = useState('CATEST25');
+  const [currentAccount, setCurrentAccount] = useState('WTLEE815');
 
   const renderNotify = () => {
     if (isLoginSuccess) {
@@ -77,7 +77,7 @@ const Login = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       setAuthenticated();
-      navigate(routePaths.changeProfile);
+      navigate(routePaths.appointment);
     }
   }, [isLoginSuccess]);
 

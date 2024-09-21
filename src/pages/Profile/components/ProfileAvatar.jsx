@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { SettingIcon } from '@assets/icons';
-import avatarURL from '@assets/images/jack-icon.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Alert from '@common/components/molecules/Alert';
 import callCamera from '@utilities/gmCommon/callCamera';
@@ -13,7 +12,7 @@ import saveProfileImg from '@utilities/gmCommon/saveProfileImg';
 import ChangePhotoBottom from './ChangePhotoBottom';
 
 const ProfileAvatar = ({ userName, setShowToast }) => {
-  const [avatarUrl, setAvatarUrl] = useState(avatarURL);
+  const [avatarUrl, setAvatarUrl] = useState();
   const [showDefaultAvatar, setShowDefaultAvatar] = useState(false);
   const [showChangeProfilePhotoBottom, setShowChangeProfilePhotoBottom] = useState(false);
   const [showAlertDeletePhoto, setShowAlertDeletePhoto] = useState(false);
@@ -100,7 +99,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
       <div className="profile__avatar__wrapper">
         <div className="profile__avatar">
           <div className="avatar__img">
-            {avatarURL && !showDefaultAvatar ? (
+            {avatarUrl && !showDefaultAvatar ? (
               <img
                 src={avatarUrl}
                 alt="profile"
