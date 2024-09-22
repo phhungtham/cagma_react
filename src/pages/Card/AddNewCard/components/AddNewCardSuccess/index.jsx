@@ -2,7 +2,7 @@ import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { moveHome } from '@utilities/index';
 
-import { AddNewCardSuccessFields } from '../../constants';
+import { addNewCardSuccessFields } from '../../constants';
 import './styles.scss';
 
 const AddNewCardSuccess = ({ cardInfo }) => {
@@ -41,7 +41,7 @@ const AddNewCardSuccess = ({ cardInfo }) => {
         <div className="add-new-card__info mt-4">
           <div className="form__section__title">Way to receive</div>
           <div className="divider__item__black" />
-          {AddNewCardSuccessFields.map(({ label, value }) => (
+          {addNewCardSuccessFields.map(({ label, value }) => (
             <div
               className="card-item"
               key={value}

@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
-export const newCardFormSchema = Yup.object().shape({
-  accountNo: Yup.string().required('Required field'),
+export const reissueCardAddressSchema = Yup.object().shape({
   streetNumber: Yup.string().required('Required field'),
   streetName: Yup.string().required('Required field'),
   aptNumber: Yup.string().required('Required field'),

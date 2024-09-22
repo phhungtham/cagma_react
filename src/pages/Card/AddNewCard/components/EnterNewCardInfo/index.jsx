@@ -15,7 +15,7 @@ import useCommonCode from '@hooks/useCommonCode';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 
-import { enterCardFormSchema } from './schema';
+import { newCardFormSchema } from './schema';
 import './styles.scss';
 
 const EnterNewCardInfo = ({ onSubmit }) => {
@@ -33,7 +33,7 @@ const EnterNewCardInfo = ({ onSubmit }) => {
     formState: { errors, isValid },
   } = useForm({
     mode: 'onChange',
-    resolver: yupResolver(enterCardFormSchema),
+    resolver: yupResolver(newCardFormSchema),
   });
 
   const onOpenMyAccountBottom = () => {

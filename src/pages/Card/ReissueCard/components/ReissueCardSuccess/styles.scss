@@ -1,0 +1,58 @@
+@import 'styles/utilities/variables';
+@import 'styles/utilities/mixin';
+
+.reissue-card-successful__wrapper {
+  height: 100vh;
+  overflow-y: auto;
+  padding: 56px 24px 150px;
+  .reissue-card {
+    &__header {
+      @include flexCenter();
+      flex-direction: column;
+      padding-top: 24px;
+      padding-bottom: 32px;
+    }
+    &__img {
+      width: 64px;
+      height: 64px;
+    }
+    &__title {
+      margin-top: 16px;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 28px;
+      text-align: center;
+    }
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid $color-gray-200;
+    }
+    &__ctas {
+      margin-top: 32px;
+      @include flexCenter();
+      .call__icon {
+        font-size: 24px;
+        color: #4f8bf4;
+      }
+    }
+  }
+  .card-item {
+    display: flex;
+    font-size: 14px;
+    line-height: 19px;
+    gap: 16px;
+  }
+
+  .card-label {
+    width: 112px;
+    flex-shrink: 0;
+    color: $color-gray-500;
+  }
+
+  .card-value {
+    font-weight: 500;
+  }
+}

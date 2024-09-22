@@ -9,4 +9,5 @@ export const routePaths = {
   cards: '/cards',
   addNewCard: '/add-new-card',
   activeCard: '/active-card',
+  reissueCard: '/reissue-card',
 };

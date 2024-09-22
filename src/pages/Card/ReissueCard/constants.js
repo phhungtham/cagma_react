@@ -1,16 +1,51 @@
 import { fileUrls } from '@common/constants/url';
 
-export const ADD_NEW_CARD_STEP = {
-  TERMS_CONDITIONS: 'termsConditions',
-  ENTER_INFORMATION: 'enterInformation',
+export const REISSUE_CARD_STEP = {
+  ENTER_CARD_INFORMATION: 'enterInformation',
+  ENTER_ADDRESS_INFORMATION: 'enterAddressInformation',
   COMPLETED: 'completed',
 };
 
-export const termConditionConfig = {
+export const ReissueCardDetails = [
+  {
+    label: 'Card Number',
+    value: 'cardNumber',
+  },
+  {
+    label: 'Primary Account No.',
+    value: 'primaryAcNo',
+  },
+  {
+    label: 'Secondary Account No.',
+    value: 'secondAcNo',
+  },
+  {
+    label: 'Contactless Transaction',
+    value: 'contactlessTransaction',
+  },
+  {
+    label: 'Daily Withdrawal Limit',
+    value: 'dailyWithdrawalLimit',
+  },
+  {
+    label: 'Daily POS Limit',
+    value: 'dailyPOSLimit',
+  },
+  {
+    label: 'Issue Date',
+    value: 'issueDate',
+  },
+  {
+    label: 'Expiry Date(MMYY)',
+    value: 'expireDate',
+  },
+];
+
+export const reissueCardTermsConfig = {
   selectAllLabel: 'I agree to the Application and Agreement of the Shinhan Access Card',
   options: [
     {
-      label: 'Access Card Application',
+      label: '[T&C] Access Card Application',
       value: '1',
       title: 'Access Card Application',
       fileUrl: fileUrls.cardHolderAgreement,
@@ -24,7 +59,7 @@ export const termConditionConfig = {
   ],
 };
 
-export const addNewCardSuccessFields = [
+export const reissueCardSuccessFields = [
   {
     label: 'Street Number',
     value: 'streetNumber',

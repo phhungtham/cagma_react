@@ -1,8 +1,15 @@
 import cardActiveImg from '@assets/images/debit-card.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { MENU_CODE } from '@common/constants/common';
 import { cardSummaryFields, cardSummaryTest } from '@pages/Card/constants';
+import { routePaths } from '@routes/paths';
+import { moveNext } from '@utilities/index';
 
 const ActiveCardView = () => {
+  const handleNavigateReissueCard = () => {
+    moveNext(MENU_CODE.REISSUE_CARD, {}, routePaths.reissueCard);
+  };
+
   return (
     <div className="active-card-view__wrapper">
       <div className="active-card__content page__container">
@@ -23,6 +30,7 @@ const ActiveCardView = () => {
               label="Reissue"
               size="xl"
               variant="filled__secondary-gray"
+              onClick={handleNavigateReissueCard}
             />
             <Button
               label="Report Loss"

@@ -11,10 +11,11 @@ export const MENU_CODE = {
   CARD_MAIN: '',
   ADD_NEW_CARD: 'CACA010100',
   ACTIVE_CARD: 'CACA010101',
-  REPORT_LOST: 'CACA010102',
+  REPORT_LOST_CARD: 'CACA010102',
+  REISSUE_CARD: '',
 };
 
-export const SupportContactPhoneNumber = '1-855-744-6426';
+export const SupportContactPhoneNumber = '18557446426';
 
 export const SH_LCL_CORP_C = '161';
 
