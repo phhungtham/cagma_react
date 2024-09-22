@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import LoadingInfinite from '@common/components/atoms/LoadingInfinite';
 import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
-import { EMPTY_OBJ } from '@configs/global/constants';
+import { EMPTY_OBJ } from '@common/constants/common';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { addDateWithMonth } from '@utilities/dateTimeUtils';

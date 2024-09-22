@@ -11,10 +11,10 @@ import SelectTimeBottom from '@common/components/organisms/bottomSheets/SelectTi
 import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBottom';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
+import { MENU_CODE } from '@common/constants/common';
 import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
 import { CurrencyCode } from '@common/constants/currency';
 import { SelectTermDurationTypes } from '@common/constants/terms';
-import { MENU_CODE } from '@configs/global/constants';
 import useCommonCode from '@hooks/useCommonCode';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';

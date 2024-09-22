@@ -1,4 +1,4 @@
-import { SH_LCL_CORP_C } from '@configs/global/constants';
+import { SH_LCL_CORP_C } from '@common/constants/common';
 import { getDateFormat } from '@utilities/dateTimeUtils';
 import extendSession from '@utilities/gmCommon/extendSession';
 import axios from 'axios';

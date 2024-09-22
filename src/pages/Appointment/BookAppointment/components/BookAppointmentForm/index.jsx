@@ -82,9 +82,8 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
     setShowPurposeAppointmentBottom(true);
   };
 
-  const handleSelectDate = cbData => {
-    if (cbData) {
-      const selectedDate = cbData?.data ? JSON.parse(cbData.data)?.selectDate : '';
+  const handleSelectDate = selectedDate => {
+    if (selectedDate) {
       setValue('date', selectedDate, { shouldValidate: true });
       setValue('dateDisplay', formatYYYYMMDDToDisplay(selectedDate), { shouldValidate: true });
     }

@@ -1,7 +1,7 @@
 import { ArrowRight, PlusIcon } from '@assets/icons';
 import cardEmptyImg from '@assets/images/card-empty.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import { MENU_CODE } from '@configs/global/constants';
+import { MENU_CODE } from '@common/constants/common';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 

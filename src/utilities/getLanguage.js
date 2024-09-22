@@ -1,4 +1,4 @@
-import { APP_LANGUAGE } from '../configs/global/constants';
+import { APP_LANGUAGE } from '@common/constants/common';
 
 const getLanguageFM = (lang = '', isRequest = true) => {
   if (!lang || lang === '') {

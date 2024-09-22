@@ -45,8 +45,8 @@
   }
 
   .px-#{$i} {
-    padding-left: $i * 4px;
-    padding-right: $i * 4px;
+    padding-left: $i * 4px !important;
+    padding-right: $i * 4px !important;
   }
 
   .gap-#{$i} {

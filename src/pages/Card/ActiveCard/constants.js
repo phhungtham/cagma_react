@@ -1,5 +1,6 @@
 export const ACTIVE_CARD_STEP = {
-  ENTER_INFORMATION: 'enterInformation',
+  ENTER_CARD_INFORMATION: 'enterInformation',
+  ENTER_ACCOUNT_INFORMATION: 'enterAccountInformation',
   COMPLETED: 'completed',
 };
 

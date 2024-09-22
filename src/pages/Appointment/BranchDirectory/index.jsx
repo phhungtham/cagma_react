@@ -6,7 +6,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Spinner from '@common/components/atoms/Spinner';
 import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBottom';
 import Header from '@common/components/organisms/Header';
-import { MENU_CODE } from '@configs/global/constants';
+import { MENU_CODE } from '@common/constants/common';
 import useGetBranchDirectory from '@hooks/useGetBranchDirectory';
 import { routePaths } from '@routes/paths';
 import { callPhone, moveBack, moveNext } from '@utilities/index';

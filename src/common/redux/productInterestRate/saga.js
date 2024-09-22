@@ -1,5 +1,5 @@
+import { EMPTY_OBJ } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
-import { EMPTY_OBJ } from '@configs/global/constants';
 import workerSaga from '@shared/redux/sagaworker';
 import { all, takeLatest } from 'redux-saga/effects';
 import { Method } from 'shared/api';

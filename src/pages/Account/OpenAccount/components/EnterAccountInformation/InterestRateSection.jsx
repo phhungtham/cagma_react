@@ -25,9 +25,8 @@ const InterestRateSection = ({ control, watch, interestRate, setValue }) => {
 
   const [thirdPartyChecked, dob] = watch(['thirdPartyChecked', 'dob']);
 
-  const handleSelectDate = cbData => {
-    if (cbData) {
-      const selectedDate = cbData?.data ? JSON.parse(cbData.data)?.selectDate : '';
+  const handleSelectDate = selectedDate => {
+    if (selectedDate) {
       setValue('dob', selectedDate, { shouldValidate: true });
       setValue('dob_display', formatYYYYMMDDToDisplay(selectedDate), { shouldValidate: true });
     }

@@ -5,7 +5,8 @@ const openCalendar = (cb, { selectDate, startDate, endDate }) => {
   if (AppCfg.ENV === 'development') return;
   return $h.exec(
     result => {
-      cb(result);
+      const selectedDate = result?.data ? JSON.parse(result.data)?.selectDate : '';
+      cb(selectedDate);
     },
     'GMCommon',
     'openCalendar',

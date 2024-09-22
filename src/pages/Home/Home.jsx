@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
+import { delay } from '@common/constants/common';
 import setHybridReady from '@utilities/gmCommon/setHybridReady';
-import { delay } from 'configs/global/constants';
 
 import './Home.scss';
 

@@ -1,25 +1,30 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { FillChatIcon, FillPhoneIcon } from '@assets/icons';
 import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import Alert from '@common/components/molecules/Alert';
+import { SupportContactPhoneNumber } from '@common/constants/common';
 import { externalUrls } from '@common/constants/url';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
-import { callPhone, moveHome } from '@utilities/index';
+import { callPhone } from '@utilities/index';
+import { loginSelector } from 'app/redux/selector';
 
 import ActiveCardSuccess from './components/ActiveCardSuccess';
+import EnterAccountInfo from './components/EnterAccountInfo';
 import EnterActiveCardInfo from './components/EnterActiveCardInfo';
 import { ACTIVE_CARD_STEP } from './constants';
 
 const maxEnterIncorrectNumber = 5;
 
 const ActiveCard = () => {
-  const [currentStep, setCurrentStep] = useState(ACTIVE_CARD_STEP.ENTER_INFORMATION);
+  const [currentStep, setCurrentStep] = useState(ACTIVE_CARD_STEP.ENTER_CARD_INFORMATION);
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
   const [showActiveBlockAlert, setShowActiveBlockAlert] = useState(false);
   const [incorrectInfoNumber, setIncorrectInfoNumber] = useState(0);
   const [activeCardSuccessInfo, setActiveCardSuccessInfo] = useState();
+  const isLogin = useSelector(loginSelector);
 
   const handleSubmitActiveCard = values => {
     //TODO: Open Security passcode bottom sheet
@@ -32,8 +37,17 @@ const ActiveCard = () => {
     }
   };
 
+  const handleSubmitAccountForm = values => {
+    setActiveCardSuccessInfo({
+      cardName: 'Visa Consumer Classic Access Card',
+      cardNo: '1234********1234',
+      accountNumber: '700 000 987654',
+    });
+    setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+  };
+
   const onClickCallPhone = () => {
-    callPhone('1-855-744-6426');
+    callPhone(SupportContactPhoneNumber);
   };
 
   const handleNavigateBranchInfo = () => {
@@ -46,22 +60,37 @@ const ActiveCard = () => {
 
   const handleNavigateHome = () => {
     setShowActiveBlockAlert(false);
-    moveHome();
-    setActiveCardSuccessInfo({
-      cardName: 'Visa Consumer Classic Access Card',
-      cardNo: '1234********1234',
-      accountNumber: '700 000 987654',
-    });
-    setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+    // moveHome();
+    if (isLogin) {
+      setActiveCardSuccessInfo({
+        cardName: 'Visa Consumer Classic Access Card',
+        cardNo: '1234********1234',
+        accountNumber: '700 000 987654',
+      });
+      setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+    } else {
+      setCurrentStep(ACTIVE_CARD_STEP.ENTER_ACCOUNT_INFORMATION);
+    }
   };
 
   return (
     <>
       <div className="active-card__wrapper">
-        {currentStep === ACTIVE_CARD_STEP.ENTER_INFORMATION && (
-          <EnterActiveCardInfo onSubmit={handleSubmitActiveCard} />
+        {currentStep === ACTIVE_CARD_STEP.ENTER_CARD_INFORMATION && (
+          <EnterActiveCardInfo
+            onSubmit={handleSubmitActiveCard}
+            isLogin={isLogin}
+          />
         )}
-        {currentStep === ACTIVE_CARD_STEP.COMPLETED && <ActiveCardSuccess cardInfo={activeCardSuccessInfo} />}
+        {currentStep === ACTIVE_CARD_STEP.ENTER_ACCOUNT_INFORMATION && (
+          <EnterAccountInfo onSubmit={handleSubmitAccountForm} />
+        )}
+        {currentStep === ACTIVE_CARD_STEP.COMPLETED && (
+          <ActiveCardSuccess
+            cardInfo={activeCardSuccessInfo}
+            isLogin={isLogin}
+          />
+        )}
       </div>
       <Alert
         isCloseButton={false}

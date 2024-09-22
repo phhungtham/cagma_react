@@ -1,5 +1,5 @@
+import { AVATAR_SIZES } from '@common/constants/common';
 import { SOLAvatar } from 'assets/icons';
-import { AVATAR_SIZES } from 'configs/global/constants';
 import { PropTypes } from 'prop-types';
 
 const Profile = props => {

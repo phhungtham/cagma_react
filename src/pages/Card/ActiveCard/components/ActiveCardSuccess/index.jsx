@@ -1,22 +1,20 @@
-import { FillChatIcon } from '@assets/icons';
+import { FillChatIcon, FillPhoneIcon } from '@assets/icons';
 import completeImg from '@assets/images/complete.png';
 import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
 import FindATMIcon from '@assets/images/icon-fill-m-cash-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import InfoBox from '@common/components/atoms/InfoBox';
+import { MENU_CODE, SupportContactPhoneNumber } from '@common/constants/common';
 import { externalUrls } from '@common/constants/url';
-import { MENU_CODE } from '@configs/global/constants';
 import { routePaths } from '@routes/paths';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
-import { moveHome, moveNext } from '@utilities/index';
+import { callPhone, moveHome, moveNext } from '@utilities/index';
 
 import { ActiveCardSuccessFields } from '../../constants';
 import './styles.scss';
 
-const ActiveCardSuccess = ({ cardInfo }) => {
-  console.log('cardInfo :>> ', cardInfo);
-
+const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
   const handleNavigateCardMain = () => {
     moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
   };
@@ -37,6 +35,10 @@ const ActiveCardSuccess = ({ cardInfo }) => {
     openURLInBrowser(externalUrls.contactUs);
   };
 
+  const onClickCallPhone = () => {
+    callPhone(SupportContactPhoneNumber);
+  };
+
   return (
     <>
       <div className="active-card-successful__wrapper">
@@ -50,7 +52,7 @@ const ActiveCardSuccess = ({ cardInfo }) => {
           <div className="active-card__title">
             <div className="text-primary">Access Card</div>
             <div className="complete-message">has been activated</div>
-            <div className="note">Please register your PIN at a Shinhan Bank ATM</div>
+            {isLogin && <div className="note">Please register your PIN at a Shinhan Bank ATM</div>}
           </div>
         </div>
         <div className="divider__item__black" />
@@ -75,14 +77,25 @@ const ActiveCardSuccess = ({ cardInfo }) => {
         </div>
         <div className="active-success__ctas">
           <div className="active-success__button">
-            <IconButton
-              size="lg"
-              type="circle"
-              label="Find ATM"
-              className="active-success__icon"
-              icon={<img src={FindATMIcon} />}
-              onClick={handleNavigateFindATM}
-            />
+            {isLogin ? (
+              <IconButton
+                size="lg"
+                type="circle"
+                label="Find ATM"
+                className="active-success__icon"
+                icon={<img src={FindATMIcon} />}
+                onClick={handleNavigateFindATM}
+              />
+            ) : (
+              <IconButton
+                size="lg"
+                type="circle"
+                label="Call"
+                className="call__icon"
+                icon={<FillPhoneIcon />}
+                onClick={onClickCallPhone}
+              />
+            )}
           </div>
           <div className="active-success__button">
             <IconButton

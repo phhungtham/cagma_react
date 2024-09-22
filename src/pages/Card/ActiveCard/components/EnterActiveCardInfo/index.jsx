@@ -1,6 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,7 +10,7 @@ import { moveBack } from '@utilities/index';
 import { activeCardFormSchema } from './schema';
 import './styles.scss';
 
-const EnterActiveCardInfo = ({ onSubmit }) => {
+const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
   const {
     handleSubmit,
     control,
@@ -30,6 +31,12 @@ const EnterActiveCardInfo = ({ onSubmit }) => {
         <h1 className="page__title">Activate Card</h1>
         <div className="active-card__form mt-4">
           <div className="form__section">
+            {!isLogin && (
+              <InfoBox
+                variant="informative"
+                label="To get started, please enter your current 16-digit Access Card number."
+              />
+            )}
             <Controller
               render={({ field }) => (
                 <Input
