@@ -1,7 +1,6 @@
-import { FillChatIcon, FillPhoneIcon } from '@assets/icons';
+import { FillPhoneIcon } from '@assets/icons';
 import completeImg from '@assets/images/complete.png';
 import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
-import FindATMIcon from '@assets/images/icon-fill-m-cash-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import InfoBox from '@common/components/atoms/InfoBox';
@@ -11,10 +10,10 @@ import { routePaths } from '@routes/paths';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { callPhone, moveHome, moveNext } from '@utilities/index';
 
-import { activeCardSuccessFields } from '../../constants';
+import { reportLostCardSuccessFields } from '../../constants';
 import './styles.scss';
 
-const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
+const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
   const handleNavigateCardMain = () => {
     moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
   };
@@ -41,23 +40,22 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
 
   return (
     <>
-      <div className="active-card-successful__wrapper">
-        <div className="active-card__header">
-          <div className="active-card__img">
+      <div className="report-lost-card-successful__wrapper">
+        <div className="report-lost-card__header">
+          <div className="report-lost-card__img">
             <img
               src={completeImg}
               alt="Complete"
             />
           </div>
-          <div className="active-card__title">
-            <div className="text-primary">Access Card</div>
-            <div className="complete-message">has been activated</div>
-            {isLogin && <div className="note">Please register your PIN at a Shinhan Bank ATM</div>}
+          <div className="report-lost-card__title">
+            <div className="text-primary">Register the accident report</div>
+            <div className="complete-message">has been completed</div>
           </div>
         </div>
         <div className="divider__item__black" />
-        <div className="active-card__info">
-          {activeCardSuccessFields.map(({ label, value }) => (
+        <div className="report-lost-card__info">
+          {reportLostCardSuccessFields.map(({ label, value }) => (
             <div
               className="card-item"
               key={value}
@@ -72,36 +70,15 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
         <div className="mt-6">
           <InfoBox
             variant="informative"
-            label="For more information, Please contact center."
+            label="After the accident report, cannot use the card. To release the card, you may need to visit the branch nearby or use the manage accident report page."
           />
         </div>
         <div className="active-success__ctas">
           <div className="active-success__button">
-            {isLogin ? (
-              <IconButton
-                size="lg"
-                type="circle"
-                label="Find ATM"
-                className="active-success__icon"
-                icon={<img src={FindATMIcon} />}
-                onClick={handleNavigateFindATM}
-              />
-            ) : (
-              <IconButton
-                size="lg"
-                type="circle"
-                label="Call"
-                className="call__icon"
-                icon={<FillPhoneIcon />}
-                onClick={onClickCallPhone}
-              />
-            )}
-          </div>
-          <div className="active-success__button">
             <IconButton
               size="lg"
               type="circle"
-              label="Branch Info"
+              label="Search Branch"
               icon={<img src={BranchInfoIcon} />}
               onClick={handleNavigateBranchInfo}
             />
@@ -110,10 +87,10 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
             <IconButton
               size="lg"
               type="circle"
-              label="Contact us"
-              className="chat__icon"
-              icon={<FillChatIcon />}
-              onClick={handleNavigateContactUs}
+              label="Reserve Consultation"
+              className="call__icon"
+              icon={<FillPhoneIcon />}
+              onClick={onClickCallPhone}
             />
           </div>
         </div>
@@ -136,4 +113,4 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
   );
 };
 
-export default ActiveCardSuccess;
+export default ReportLostCardSuccess;

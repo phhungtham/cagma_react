@@ -4,7 +4,7 @@ export const ACTIVE_CARD_STEP = {
   COMPLETED: 'completed',
 };
 
-export const ActiveCardSuccessFields = [
+export const activeCardSuccessFields = [
   {
     label: 'Card name',
     value: 'cardName',

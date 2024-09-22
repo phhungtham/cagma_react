@@ -10,6 +10,10 @@ const EmptyCardView = () => {
     moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
   };
 
+  const handleNavigateActiveCard = () => {
+    moveNext(MENU_CODE.ACTIVE_CARD, {}, routePaths.activeCard);
+  };
+
   return (
     <div className="empty-card-view__wrapper page__container">
       <div className="empty-card__content">
@@ -40,7 +44,7 @@ const EmptyCardView = () => {
             variant="text__primary"
             size="sm"
             endIcon={<ArrowRight />}
-            onClick={() => {}}
+            onClick={handleNavigateActiveCard}
           />
         </div>
       </div>

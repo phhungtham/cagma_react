@@ -21,7 +21,7 @@ const CardMain = () => {
           onClick={moveBack}
         />
         <div className="card-main__content">
-          {isLogin ? <>{card ? <ActiveCardView /> : <EmptyCardView />}</> : <GuestCardView />}
+          {!isLogin ? <>{card ? <ActiveCardView /> : <EmptyCardView />}</> : <GuestCardView />}
         </div>
       </div>
     </>

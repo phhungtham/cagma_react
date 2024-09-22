@@ -10,6 +10,10 @@ const ActiveCardView = () => {
     moveNext(MENU_CODE.REISSUE_CARD, {}, routePaths.reissueCard);
   };
 
+  const handleNavigateReportLostCard = () => {
+    moveNext(MENU_CODE.REPORT_LOST_CARD, {}, routePaths.reportLostCard);
+  };
+
   return (
     <div className="active-card-view__wrapper">
       <div className="active-card__content page__container">
@@ -36,6 +40,7 @@ const ActiveCardView = () => {
               label="Report Loss"
               size="xl"
               variant="filled__secondary-blue"
+              onClick={handleNavigateReportLostCard}
             />
           </div>
         </div>

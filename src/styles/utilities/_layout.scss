@@ -70,6 +70,16 @@
   align-items: center;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .opacity-0 {
   opacity: 0;
 }

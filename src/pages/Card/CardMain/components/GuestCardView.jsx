@@ -28,6 +28,10 @@ const typeWithNavigateParams = {
     menuCode: MENU_CODE.REISSUE_CARD,
     path: routePaths.reissueCard,
   },
+  [CardActionTypes.REPORT_LOST]: {
+    menuCode: MENU_CODE.REPORT_LOST_CARD,
+    path: routePaths.reportLostCard,
+  },
 };
 
 const GuestCardView = () => {
