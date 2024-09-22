@@ -222,7 +222,7 @@ $input-on-background: background-color(dark-sky-blue);
     font-size: 12px;
     font-weight: 400;
     line-height: 16px;
-    color: text-color(santa-gray);
+    color: $color-gray-550;
 
     &.error {
       color: $color-error;

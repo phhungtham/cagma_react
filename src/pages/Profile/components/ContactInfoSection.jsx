@@ -7,7 +7,6 @@ import Dropdown from '@common/components/atoms/Dropdown';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import { endpoints } from '@common/constants/endpoint';
-import { notAllowNumberRegex } from '@common/constants/regex';
 import { apiCall } from '@shared/api';
 
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX, employmentValuesDisableOccupation } from '../constants';
@@ -203,7 +202,7 @@ const ContactInfoSection = ({
           render={({ field }) => (
             <Input
               label="Verification code"
-              type={'text'}
+              type="number"
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
               endAdornment={
                 <Button
@@ -214,7 +213,6 @@ const ContactInfoSection = ({
                   onClick={handleSendEmailVerifyCode}
                 />
               }
-              regex={notAllowNumberRegex}
               maxLength={6}
               errorMessage={errors?.verificationCode?.message || ''}
               {...field}

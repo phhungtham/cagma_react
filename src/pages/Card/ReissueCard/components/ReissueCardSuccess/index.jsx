@@ -7,7 +7,7 @@ import { callPhone, moveHome } from '@utilities/index';
 import { reissueCardSuccessFields } from '../../constants';
 import './styles.scss';
 
-const ReissueCardSuccess = ({ cardInfo }) => {
+const ReissueCardSuccess = ({ cardInfo, isLogin }) => {
   const onClickNavigateHome = () => {
     moveHome();
   };
@@ -28,7 +28,7 @@ const ReissueCardSuccess = ({ cardInfo }) => {
           </div>
           <div className="reissue-card__title">
             <div className="text-primary">Your card reissue request</div>
-            <div className="complete-message">has been completed</div>
+            <div className="complete-message">{isLogin ? 'has been completed' : 'is complete'}</div>
           </div>
         </div>
         <div className="reissue-card__info">

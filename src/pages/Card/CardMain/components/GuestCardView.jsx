@@ -1,5 +1,8 @@
 import { ArrowRight } from '@assets/icons';
+import { MENU_CODE } from '@common/constants/common';
 import { CardActionTypes } from '@pages/Card/constants';
+import { routePaths } from '@routes/paths';
+import { moveNext } from '@utilities/index';
 
 const guestCardOptions = [
   {
@@ -16,11 +19,22 @@ const guestCardOptions = [
   },
 ];
 
+const typeWithNavigateParams = {
+  [CardActionTypes.ACTIVE]: {
+    menuCode: MENU_CODE.ACTIVE_CARD,
+    path: routePaths.activeCard,
+  },
+  [CardActionTypes.REISSUE]: {
+    menuCode: MENU_CODE.REISSUE_CARD,
+    path: routePaths.reissueCard,
+  },
+};
+
 const GuestCardView = () => {
   const onSelectItem = item => {
-    if (item.value === CardActionTypes.ACTIVE) {
-      // moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
-    }
+    const type = item?.value;
+    const { menuCode, path } = typeWithNavigateParams[type];
+    moveNext(menuCode, {}, path);
   };
 
   return (
