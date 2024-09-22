@@ -1,3 +1,5 @@
+import { CustomerTypes } from '@common/constants/account';
+
 export const CardActionTypes = {
   ACTIVE: 'active',
   REISSUE: 'reissue',
@@ -34,3 +36,19 @@ export const cardSummaryTest = {
   issueDate: 'Jun 11, 2024',
   expireDate: 'Jun 11, 9999',
 };
+
+export const ReportLostNotLoggedType = {
+  ENTER_CARD_NUMBER: 'enterCardNumber',
+  ENTER_CUSTOMER_INFO: 'enterCustomerInfo',
+};
+
+export const customerTypeOptions = [
+  {
+    label: 'Personal',
+    value: CustomerTypes.PERSONAL,
+  },
+  {
+    label: 'Business',
+    value: CustomerTypes.BUSINESS,
+  },
+];

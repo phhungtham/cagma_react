@@ -8,7 +8,7 @@ import { moveBack } from '@utilities/index';
 
 import { reportLostCardFormSchema } from './schema';
 
-const EnterReportLostInfo = ({ onSubmit, isLogin }) => {
+const EnterReportLostReason = ({ onSubmit, isLogin }) => {
   const {
     handleSubmit,
     control,
@@ -22,7 +22,7 @@ const EnterReportLostInfo = ({ onSubmit, isLogin }) => {
   return (
     <>
       <Header
-        title="Cards"
+        title="Access Card Service"
         onClick={moveBack}
       />
       <div className="page__form">
@@ -56,4 +56,4 @@ const EnterReportLostInfo = ({ onSubmit, isLogin }) => {
   );
 };
 
-export default EnterReportLostInfo;
+export default EnterReportLostReason;

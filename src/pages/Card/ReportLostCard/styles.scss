@@ -5,3 +5,19 @@
   height: 135px;
   margin-top: 20px;
 }
+
+.report-lost-card-info__form {
+  .btn__send {
+    position: absolute;
+    right: 20px;
+    width: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .input__remaining.has-endAdornment {
+    right: 115px !important;
+  }
+}

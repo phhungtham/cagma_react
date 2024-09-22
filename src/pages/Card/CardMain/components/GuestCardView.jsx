@@ -1,64 +1,73 @@
+import { useState } from 'react';
+
 import { ArrowRight } from '@assets/icons';
+import Alert from '@common/components/molecules/Alert';
 import { MENU_CODE } from '@common/constants/common';
-import { CardActionTypes } from '@pages/Card/constants';
+import { CardActionTypes, ReportLostNotLoggedType } from '@pages/Card/constants';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 
-const guestCardOptions = [
-  {
-    label: 'Activate your Access Card',
-    value: CardActionTypes.ACTIVE,
-  },
-  {
-    label: 'Reissue your Access Card',
-    value: CardActionTypes.REISSUE,
-  },
-  {
-    label: 'Report a Lost/Stolen Access Card',
-    value: CardActionTypes.REPORT_LOST,
-  },
-];
-
-const typeWithNavigateParams = {
-  [CardActionTypes.ACTIVE]: {
-    menuCode: MENU_CODE.ACTIVE_CARD,
-    path: routePaths.activeCard,
-  },
-  [CardActionTypes.REISSUE]: {
-    menuCode: MENU_CODE.REISSUE_CARD,
-    path: routePaths.reissueCard,
-  },
-  [CardActionTypes.REPORT_LOST]: {
-    menuCode: MENU_CODE.REPORT_LOST_CARD,
-    path: routePaths.reportLostCard,
-  },
-};
+import { CardTypeWithNavigateParams, guestCardOptions } from '../constants';
 
 const GuestCardView = () => {
+  const [showReportLostOptionAlert, setShowReportLostOptionAlert] = useState(false);
+
   const onSelectItem = item => {
     const type = item?.value;
-    const { menuCode, path } = typeWithNavigateParams[type];
-    moveNext(menuCode, {}, path);
+    const { menuCode, path } = CardTypeWithNavigateParams[type];
+    if (type === CardActionTypes.REPORT_LOST) {
+      setShowReportLostOptionAlert(true);
+    } else {
+      moveNext(menuCode, {}, path);
+    }
+  };
+
+  const handleNavigateReportLost = type => {
+    moveNext(
+      MENU_CODE.REPORT_LOST_CARD,
+      {
+        param: JSON.stringify({ type }),
+      },
+      routePaths.reportLostCard
+    );
+    setShowReportLostOptionAlert(false);
   };
 
   return (
-    <div className="guest-card-view__wrapper page__container">
-      <div className="guest-card__header">
-        <div className="page__title">Access Card Service</div>
+    <>
+      <div className="guest-card-view__wrapper page__container">
+        <div className="guest-card__header">
+          <div className="page__title">Access Card Service</div>
+        </div>
+        <div className="guest-card__options">
+          {guestCardOptions.map(item => (
+            <div
+              className="guest-card__option"
+              key={item.value}
+              onClick={() => onSelectItem(item)}
+            >
+              <span className="option__label">{item.label}</span>
+              <ArrowRight />
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="guest-card__options">
-        {guestCardOptions.map(item => (
-          <div
-            className="guest-card__option"
-            key={item.value}
-            onClick={() => onSelectItem(item)}
-          >
-            <span className="option__label">{item.label}</span>
-            <ArrowRight />
-          </div>
-        ))}
-      </div>
-    </div>
+      <Alert
+        isCloseButton={false}
+        isShowAlert={showReportLostOptionAlert}
+        title="Do you know your Access Card Number?"
+        subtitle="Let us help you lock your Access Card securely. If you know your card number, reporting it lost will be easier. Would you like to enter your card number now?"
+        textAlign="left"
+        firstButton={{
+          onClick: () => handleNavigateReportLost(ReportLostNotLoggedType.ENTER_CARD_NUMBER),
+          label: 'Enter Card Number',
+        }}
+        secondButton={{
+          onClick: () => handleNavigateReportLost(ReportLostNotLoggedType.ENTER_CUSTOMER_INFO),
+          label: 'Skip',
+        }}
+      />
+    </>
   );
 };
 

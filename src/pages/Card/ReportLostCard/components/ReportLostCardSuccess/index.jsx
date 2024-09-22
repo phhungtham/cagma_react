@@ -22,16 +22,8 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
     moveHome();
   };
 
-  const handleNavigateFindATM = () => {
-    openURLInBrowser(externalUrls.findATM);
-  };
-
   const handleNavigateBranchInfo = () => {
     openURLInBrowser(externalUrls.branchInfo);
-  };
-
-  const handleNavigateContactUs = () => {
-    openURLInBrowser(externalUrls.contactUs);
   };
 
   const onClickCallPhone = () => {
@@ -50,58 +42,65 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
           </div>
           <div className="report-lost-card__title">
             <div className="text-primary">Register the accident report</div>
-            <div className="complete-message">has been completed</div>
+            <div className="complete-message">{isLogin ? 'has been completed' : 'is now complete'}</div>
           </div>
         </div>
-        <div className="divider__item__black" />
-        <div className="report-lost-card__info">
-          {reportLostCardSuccessFields.map(({ label, value }) => (
-            <div
-              className="card-item"
-              key={value}
-            >
-              <span className="card-label">{label}</span>
-              <span className="card-value">
-                <span>{cardInfo?.[value]}</span>
-              </span>
+        {isLogin && (
+          <>
+            <div className="divider__item__black" />
+            <div className="report-lost-card__info">
+              {reportLostCardSuccessFields.map(({ label, value }) => (
+                <div
+                  className="card-item"
+                  key={value}
+                >
+                  <span className="card-label">{label}</span>
+                  <span className="card-value">
+                    <span>{cardInfo?.[value]}</span>
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <div className="mt-6">
-          <InfoBox
-            variant="informative"
-            label="After the accident report, cannot use the card. To release the card, you may need to visit the branch nearby or use the manage accident report page."
-          />
-        </div>
-        <div className="active-success__ctas">
-          <div className="active-success__button">
-            <IconButton
-              size="lg"
-              type="circle"
-              label="Search Branch"
-              icon={<img src={BranchInfoIcon} />}
-              onClick={handleNavigateBranchInfo}
-            />
-          </div>
-          <div className="active-success__button">
-            <IconButton
-              size="lg"
-              type="circle"
-              label="Reserve Consultation"
-              className="call__icon"
-              icon={<FillPhoneIcon />}
-              onClick={onClickCallPhone}
-            />
-          </div>
-        </div>
+            <div className="mt-6">
+              <InfoBox
+                variant="informative"
+                label="After the accident report, cannot use the card. To release the card, you may need to visit the branch nearby or use the manage accident report page."
+              />
+            </div>
+            <div className="active-success__ctas">
+              <div className="active-success__button">
+                <IconButton
+                  size="lg"
+                  type="circle"
+                  label="Search Branch"
+                  icon={<img src={BranchInfoIcon} />}
+                  onClick={handleNavigateBranchInfo}
+                />
+              </div>
+              <div className="active-success__button">
+                <IconButton
+                  size="lg"
+                  type="circle"
+                  label="Reserve Consultation"
+                  className="call__icon"
+                  icon={<FillPhoneIcon />}
+                  onClick={onClickCallPhone}
+                />
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div className="footer__fixed">
-        <Button
-          variant="filled__secondary-blue"
-          label="View Cards"
-          className="btn__cta"
-          onClick={handleNavigateCardMain}
-        />
+        {isLogin && (
+          <Button
+            variant="filled__secondary-blue"
+            label="View Cards"
+            className="btn__cta"
+            onClick={handleNavigateCardMain}
+          />
+        )}
+
         <Button
           variant="filled__primary"
           label="Home"

@@ -1,3 +1,5 @@
+import { CustomerTypes } from '@common/constants/account';
+
 export const bookAppointmentSuccessFields = [
   {
     label: 'Method',
@@ -60,11 +62,6 @@ export const bookAppointmentFormMapFields = {
   phoneNumber: 'apint_user_telno',
   lang: 'apint_lang_gbn',
   comment: 'apint_memo',
-};
-
-export const CustomerTypes = {
-  PERSONAL: '1',
-  BUSINESS: '2',
 };
 
 export const customerTypeOptions = [

@@ -1,19 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import reportLostImg from '@assets/images/loud-speaker.png';
 import Alert from '@common/components/molecules/Alert';
+import { loginSelector, nativeParamsSelector } from 'app/redux/selector';
 
-import EnterReportLostInfo from './components/EnterReportLostInfo';
+import { ReportLostNotLoggedType } from '../constants';
+import EnterReportLostCardInfo from './components/EnterReportLostCardInfo';
+import EnterReportLostCustomerInfo from './components/EnterReportLostCustomerInfo';
+import EnterReportLostReason from './components/EnterReportLostReason';
 import ReportLostCardSuccess from './components/ReportLostCardSuccess';
 import { REPORT_LOST_CARD_STEP } from './constants';
 import './styles.scss';
 
 const ReportLostCard = () => {
   const [currentStep, setCurrentStep] = useState(REPORT_LOST_CARD_STEP.ENTER_INFORMATION);
+  const [notLoggedFormType, setNotLoggedFormType] = useState(ReportLostNotLoggedType.ENTER_CUSTOMER_INFO);
   const [showConfirmAlert, setShowConfirmAlert] = useState(false);
   const [reportLostCardSuccessInfo, setReportLostCardSuccessInfo] = useState();
+  const nativeParams = useSelector(nativeParamsSelector);
+  const isLogin = useSelector(loginSelector);
+
+  console.log('nativeParams :>> ', nativeParams);
 
   const handleSubmitForm = () => {
+    setShowConfirmAlert(true);
+  };
+
+  const handleSubmitCardInfo = () => {
+    setShowConfirmAlert(true);
+  };
+
+  const handleSubmitCustomerInfo = () => {
     setShowConfirmAlert(true);
   };
 
@@ -28,12 +46,35 @@ const ReportLostCard = () => {
     setCurrentStep(REPORT_LOST_CARD_STEP.COMPLETED);
   };
 
+  useEffect(() => {
+    if (nativeParams?.type) {
+      setNotLoggedFormType(nativeParams.type);
+    }
+  }, []);
+
   return (
     <>
       <div className="report-lost-card__wrapper">
-        {currentStep === REPORT_LOST_CARD_STEP.ENTER_INFORMATION && <EnterReportLostInfo onSubmit={handleSubmitForm} />}
+        {currentStep === REPORT_LOST_CARD_STEP.ENTER_INFORMATION && (
+          <>
+            {isLogin ? (
+              <EnterReportLostReason onSubmit={handleSubmitForm} />
+            ) : (
+              <>
+                {notLoggedFormType === ReportLostNotLoggedType.ENTER_CARD_NUMBER ? (
+                  <EnterReportLostCardInfo onSubmit={handleSubmitCardInfo} />
+                ) : (
+                  <EnterReportLostCustomerInfo onSubmit={handleSubmitCustomerInfo} />
+                )}
+              </>
+            )}
+          </>
+        )}
         {currentStep === REPORT_LOST_CARD_STEP.COMPLETED && (
-          <ReportLostCardSuccess cardInfo={reportLostCardSuccessInfo} />
+          <ReportLostCardSuccess
+            cardInfo={reportLostCardSuccessInfo}
+            isLogin={isLogin}
+          />
         )}
       </div>
       <Alert

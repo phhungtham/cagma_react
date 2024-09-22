@@ -8,6 +8,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import SelectTimeBottom from '@common/components/organisms/bottomSheets/SelectTimeBottom';
 import Header from '@common/components/organisms/Header';
+import { CustomerTypes } from '@common/constants/account';
 import { getPurposeAppointment, getSubPurposeAppointment } from '@common/constants/commonCode';
 import { hoursFullOptions, minuteHalfOptions } from '@common/constants/dateTime';
 import { AppCfg } from '@configs/appConfigs';
@@ -31,7 +32,6 @@ import {
   bookAppointmentFormDefaultValues,
   businessPurposeKeys,
   customerTypeOptions,
-  CustomerTypes,
   personalPurposeKeys,
 } from '../../constants';
 import CustomerStatusBottom from '../CustomerStatusBottom';

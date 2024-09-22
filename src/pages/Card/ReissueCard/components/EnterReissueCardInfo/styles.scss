@@ -2,11 +2,14 @@
   .btn__send {
     position: absolute;
     right: 20px;
-    width: 67px;
+    width: 88px;
     display: flex;
     align-items: center;
     justify-content: center;
     top: 50%;
     transform: translateY(-50%);
+  }
+  .input__remaining.has-endAdornment {
+    right: 115px !important;
   }
 }
