@@ -6,7 +6,7 @@ export const REISSUE_CARD_STEP = {
   COMPLETED: 'completed',
 };
 
-export const ReissueCardDetails = [
+export const reissueCardDetails = [
   {
     label: 'Card Number',
     value: 'cardNumber',

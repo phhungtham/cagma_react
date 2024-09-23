@@ -9,6 +9,7 @@ import AddNewCard from '@pages/Card/AddNewCard';
 import CardMain from '@pages/Card/CardMain';
 import ReissueCard from '@pages/Card/ReissueCard';
 import ReportLostCard from '@pages/Card/ReportLostCard';
+import ReportReleaseCard from '@pages/Card/ReportReleaseCard';
 import CommonTestPage from '@pages/CommonTestPage/CommonTestPage';
 import DemoComponent from '@pages/DemoComponent/DemoComponent';
 import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
@@ -103,6 +104,11 @@ const RoutesConfig = [
   {
     path: routePaths.reportLostCard,
     component: ReportLostCard,
+    private: false,
+  },
+  {
+    path: routePaths.releaseCard,
+    component: ReportReleaseCard,
     private: false,
   },
   {

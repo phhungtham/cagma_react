@@ -17,7 +17,7 @@ import useCommonCode from '@hooks/useCommonCode';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 
-import { ReissueCardDetails, reissueCardTermsConfig } from '../../constants';
+import { reissueCardDetails, reissueCardTermsConfig } from '../../constants';
 import { reissueCardAddressSchema } from './schema';
 import './styles.scss';
 
@@ -135,7 +135,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
                 <span>Card details</span>
               </div>
               <div className="card__details mt-3">
-                {ReissueCardDetails.map(({ label, value }) => (
+                {reissueCardDetails.map(({ label, value }) => (
                   <div
                     className="card__item"
                     key={label}

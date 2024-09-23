@@ -11,4 +11,5 @@ export const routePaths = {
   activeCard: '/cards/active',
   reissueCard: '/cards/reissue',
   reportLostCard: '/cards/report-lost',
+  releaseCard: '/cards/release',
 };
