@@ -150,8 +150,8 @@ const EnterReportLostCardInfo = ({ onSubmit, isLogin }) => {
               render={({ field }) => (
                 <Input
                   label="Email Address"
+                  placeholder="emailname@email.com"
                   type="text"
-                  placeholder="6 digits"
                   endAdornment={
                     <Button
                       label={alreadySendEmailVerification ? 'Resend' : 'Request'}
@@ -173,6 +173,7 @@ const EnterReportLostCardInfo = ({ onSubmit, isLogin }) => {
                   <Input
                     label="Verification code"
                     type="number"
+                    placeholder="6 digits"
                     remainingTime={EMAIL_VERIFY_IN_SECONDS}
                     endAdornment={
                       <Button

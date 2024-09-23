@@ -7,6 +7,7 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Header from '@common/components/organisms/Header';
+import { CustomerTypes } from '@common/constants/account';
 import { isDevelopmentEnv } from '@common/constants/common';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { customerTypeOptions } from '@pages/Card/constants';
@@ -14,7 +15,7 @@ import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import { moveBack } from '@utilities/index';
 
-import { reportLostCardInfoSchema } from './schema';
+import { reportLostCardCustomerInfoSchema } from './schema';
 
 const EMAIL_VERIFY_IN_SECONDS = 180;
 
@@ -32,11 +33,14 @@ const EnterReportLostCustomerInfo = ({ onSubmit, isLogin }) => {
     watch,
     formState: { errors, isValid },
   } = useForm({
+    defaultValues: {
+      customerType: CustomerTypes.PERSONAL,
+    },
     mode: 'onChange',
-    resolver: yupResolver(reportLostCardInfoSchema),
+    resolver: yupResolver(reportLostCardCustomerInfoSchema),
   });
 
-  const [verificationCode] = watch(['verificationCode']);
+  const [verificationCode, customerType] = watch(['verificationCode', 'customerType']);
   const invalidVerificationCode = verificationCode?.length !== 6;
 
   const handleRequestGetEmailVerifyCode = async () => {
@@ -138,39 +142,59 @@ const EnterReportLostCustomerInfo = ({ onSubmit, isLogin }) => {
               control={control}
               name="customerType"
             />
-            <Controller
-              render={({ field }) => (
-                <Input
-                  label="First Name"
-                  placeholder="Please input Detail text"
-                  {...field}
+            {customerType === CustomerTypes.PERSONAL ? (
+              <>
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      label="First Name"
+                      placeholder="Please input Detail text"
+                      {...field}
+                    />
+                  )}
+                  control={control}
+                  name="firstName"
                 />
-              )}
-              control={control}
-              name="firstName"
-            />
-            <Controller
-              render={({ field }) => (
-                <Input
-                  label="Last Name"
-                  placeholder="Please input Detail text"
-                  {...field}
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      label="Last Name"
+                      placeholder="Please input Detail text"
+                      {...field}
+                    />
+                  )}
+                  control={control}
+                  name="lastName"
                 />
-              )}
-              control={control}
-              name="lastName"
-            />
-            <Controller
-              render={({ field: { value } }) => (
-                <InputDate
-                  label="Date of Birth"
-                  onFocus={handleOpenCalendar}
-                  value={value}
+                <Controller
+                  render={({ field: { value } }) => (
+                    <InputDate
+                      label="Date of Birth"
+                      onFocus={handleOpenCalendar}
+                      value={value}
+                    />
+                  )}
+                  control={control}
+                  name="dob_display"
                 />
-              )}
-              control={control}
-              name="dob_display"
-            />
+              </>
+            ) : (
+              <>
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      label="Corporate Account Number"
+                      type="number"
+                      placeholder="Please input 12 numerics"
+                      {...field}
+                    />
+                  )}
+                  control={control}
+                  name="companyAcNo"
+                />
+              </>
+            )}
+
             <Controller
               render={({ field }) => (
                 <Input
@@ -199,8 +223,8 @@ const EnterReportLostCustomerInfo = ({ onSubmit, isLogin }) => {
               render={({ field }) => (
                 <Input
                   label="Email Address"
+                  placeholder="emailname@email.com"
                   type="text"
-                  placeholder="6 digits"
                   endAdornment={
                     <Button
                       label={alreadySendEmailVerification ? 'Resend' : 'Request'}
@@ -222,6 +246,7 @@ const EnterReportLostCustomerInfo = ({ onSubmit, isLogin }) => {
                   <Input
                     label="Verification code"
                     type="number"
+                    placeholder="6 digits"
                     remainingTime={EMAIL_VERIFY_IN_SECONDS}
                     endAdornment={
                       <Button

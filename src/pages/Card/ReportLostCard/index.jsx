@@ -54,7 +54,7 @@ const ReportLostCard = () => {
 
   return (
     <>
-      <div className="report-lost-card__wrapper">
+      <div className="report-lost-card__wrapper page__wrapper">
         {currentStep === REPORT_LOST_CARD_STEP.ENTER_INFORMATION && (
           <>
             {isLogin ? (
