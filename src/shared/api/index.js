@@ -21,24 +21,30 @@ export const Method = {
   PUT: 'put',
   DELETE: 'delete',
 };
+
+const HeaderUploadFile = {
+  Accept: '*/*',
+  'Content-Type': 'multipart/form-data',
+};
+
 const HeadersDefault = {
   'Content-Type': 'application/json',
   Accept: 'text/*, application/json',
 };
 
 export async function apiCall(url, method, payload, options = {}) {
-  const { isExtendSession = true } = options;
+  const { isExtendSession = true, isUploadFile } = options;
   const result = { code: 0, data: null, errors: [] };
   try {
     const response = await axios({
       method: method,
       url: buildURL(url),
       headers: {
-        ...HeadersDefault,
+        ...(isUploadFile ? HeaderUploadFile : HeadersDefault),
         'Proworks-lang': localStorageService.getLanguageCode(),
         'g-trace-id': createGtraceId(),
       },
-      data: transformRequest(payload),
+      data: isUploadFile ? payload : transformRequest(payload),
       withCredentials: true,
       transformResponse: data => toJson(data, null),
     });

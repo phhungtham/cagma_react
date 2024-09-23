@@ -1,4 +1,5 @@
 export const endpoints = {
+  uploadFile: '/jsp/photoFileUpload.jsp?upload_type=addr',
   openAccount: '/ca/pr/CAPR020.pwkjson',
   inquiryProductInterestRate: '/ca/pr/CAPR002.pwkjson',
   inquiryUserInformation: '/ca/me/CAME001.pwkjson',
