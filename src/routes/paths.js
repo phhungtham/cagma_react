@@ -7,8 +7,8 @@ export const routePaths = {
   appointmentManagement: '/appointment-management',
   bookAppointment: '/book-appointment',
   cards: '/cards',
-  addNewCard: '/add-new-card',
-  activeCard: '/active-card',
-  reissueCard: '/reissue-card',
-  reportLostCard: '/report-lost-card',
+  addNewCard: '/cards/new',
+  activeCard: '/cards/active',
+  reissueCard: '/cards/reissue',
+  reportLostCard: '/cards/report-lost',
 };
