@@ -240,15 +240,15 @@ const ChangeProfile = ({ translation }) => {
     }
     setShowLoading(true);
     const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
-    if (isETransferRegistered === '') {
-      const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
-      if (getETransferInfoResponse?.data?.elData) {
-        const { etr_err_c } = getETransferInfoResponse.data.elData || {};
-        request.etr_reg_yn = etr_err_c?.indexOf('404') >= 0 ? 'N' : 'Y';
-      }
-    } else {
-      request.etr_reg_yn = isETransferRegistered === 'true' ? 'Y' : 'N';
-    }
+    // if (isETransferRegistered === '') {
+    //   const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
+    //   if (getETransferInfoResponse?.data?.elData) {
+    //     const { etr_err_c } = getETransferInfoResponse.data.elData || {};
+    //     request.etr_reg_yn = etr_err_c?.indexOf('404') >= 0 ? 'N' : 'Y';
+    //   }
+    // } else {
+    //   request.etr_reg_yn = isETransferRegistered === 'true' ? 'Y' : 'N';
+    // }
     request.etr_reg_yn = 'N';
     request.chg_yn = 'N'; //TODO: Check address change
     request.file_upd_yn = 'N'; //TODO: Check photo file uploaded
@@ -342,9 +342,6 @@ const ChangeProfile = ({ translation }) => {
       user.address3 = defaultAddress?.cus_adr3;
       reset(user);
       setDefaultAddressInfo(user);
-      requestGetCommonCode(
-        [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
-      );
       setShowLoading(false);
     }
   }, [userInfo]);
@@ -374,6 +371,7 @@ const ChangeProfile = ({ translation }) => {
       setAddressTypeOptions(convertedAddressTypes);
       setCountryOptions(convertedCountries);
       setProvinceOptions(convertedProvince);
+      getUserInfoRequest();
     }
   }, [commonCodeData]);
 
@@ -398,7 +396,9 @@ const ChangeProfile = ({ translation }) => {
 
   useEffect(() => {
     setShowLoading(true);
-    getUserInfoRequest();
+    requestGetCommonCode(
+      [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
+    );
     getETransferRegistered(getETransferRegisteredCallback);
   }, []);
 
