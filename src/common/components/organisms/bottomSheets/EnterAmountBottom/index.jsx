@@ -28,7 +28,9 @@ const InvalidType = {
 
 const EnterAmountBottom = ({
   onClose,
-  account,
+  title,
+  subTitle,
+  note,
   currencyOptions = [],
   currency = CurrencyCode.CAD,
   alert_msg,
@@ -37,6 +39,7 @@ const EnterAmountBottom = ({
   onChangeAmount,
   min,
   max,
+  btnText = 'Confirm',
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(currency);
   const [currentAmount, setCurrentAmount] = useState(amount);
@@ -135,9 +138,9 @@ const EnterAmountBottom = ({
         clazz="enter-amount__bottomsheet"
       >
         <div className="form__wrapper">
-          <div className="account-name">{account?.dep_ac_alnm_nm}</div>
-          <div className="account-number">{account?.lcl_ac_no_display}</div>
-          <div className="account-balance mb-8">{`Available Balance $${account?.def_ac_blc_display}`}</div>
+          {title && <div className="title">{title}</div>}
+          {subTitle && <div className="sub-title">{subTitle}</div>}
+          {note && <div className="note mb-8">{note}</div>}
           {hasExchangeRate && (
             <div className="currency-selection mb-6">
               {currencyOptions.map(({ label, value }) => (
@@ -186,7 +189,7 @@ const EnterAmountBottom = ({
           )}
           <div className="btn-submit__wrapper">
             <Button
-              label="Next"
+              label={btnText}
               variant="filled__primary"
               className="btn-submit"
               onClick={onClickConfirm}

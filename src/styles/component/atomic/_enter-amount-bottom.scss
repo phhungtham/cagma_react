@@ -24,18 +24,18 @@
   .form__wrapper {
     text-align: center;
     padding: 0 24px;
-    .account-name {
+    .title {
       font-size: 15px;
       font-weight: 500;
       line-height: 20px;
     }
-    .account-number {
+    .sub-title {
       margin-top: 4px;
       font-size: 14px;
       line-height: 19px;
       color: $color-gray-700;
     }
-    .account-balance {
+    .note {
       margin-top: 8px;
       font-size: 13px;
       line-height: 18px;

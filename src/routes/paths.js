@@ -12,4 +12,5 @@ export const routePaths = {
   reissueCard: '/cards/reissue',
   reportLostCard: '/cards/report-lost',
   releaseCard: '/cards/release',
+  transferLimitSetting: '/setting/transfer-limit',
 };

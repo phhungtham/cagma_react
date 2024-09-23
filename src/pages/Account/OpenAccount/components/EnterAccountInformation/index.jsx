@@ -190,12 +190,15 @@ const EnterAccountInformation = ({ onSubmit, interestRate, productName }) => {
       {showEnterAmountBottom && (
         <EnterAmountBottom
           onClose={() => setShowEnterAmountBottom(false)}
-          account={selectedAccount}
+          title={selectedAccount?.dep_ac_alnm_nm}
+          subTitle={selectedAccount?.lcl_ac_no_display}
+          note={`Available Balance $${selectedAccount?.def_ac_blc_display || '0.00'}`}
           currency={CurrencyCode.CAD}
           amount={amount}
           min={enterAmountMin}
           max={enterAmountMax}
           onChangeAmount={onChangeAmount}
+          btnText="Next"
         />
       )}
       {showSelectTermsBottom && (

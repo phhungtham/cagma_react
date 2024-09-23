@@ -16,6 +16,7 @@ import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
 import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
 import Home from '@pages/Home/Home';
 import Login from '@pages/Login/Login';
+import TransferLimitSetting from '@pages/PersonalSetting/TransferLimitSetting';
 import ProductList from '@pages/Product/ProductList';
 import ChangeProfile from '@pages/Profile/ChangeProfile';
 import { routePaths } from '@routes/paths';
@@ -109,6 +110,11 @@ const RoutesConfig = [
   {
     path: routePaths.releaseCard,
     component: ReportReleaseCard,
+    private: false,
+  },
+  {
+    path: routePaths.transferLimitSetting,
+    component: TransferLimitSetting,
     private: false,
   },
   {
