@@ -24,12 +24,16 @@ const AddressInfoSection = ({
   setShowAlert,
 }) => {
   const { control, watch, setValue } = useFormContext();
-  const [country, addressType] = watch(['country', 'addressType']);
+  const [country, addressType, aptNumber, streetNumber, streetName] = watch([
+    'country',
+    'addressType',
+    'aptNumber',
+    'streetNumber',
+    'streetName',
+  ]);
   const isCanadaCountrySelected = country === 'CA';
   const isShowProofAddress = addressType === addressTypeMapping.home;
-
   const { file, handleUploadFile, error, setFile } = useFileUpload(maxUploadAddressSize, allowedFileTypes);
-
   const fileInputRef = useRef(null);
 
   const handleUpload = event => {
@@ -64,6 +68,11 @@ const AddressInfoSection = ({
   useEffect(() => {
     setValue('isUpload', file !== '');
   }, [file]);
+
+  const handleFieldAddressOnBlur = () => {
+    const updatedAddress = [aptNumber, streetNumber, streetName].filter(Boolean).join(' ');
+    setValue('address1', updatedAddress);
+  };
 
   return (
     <div className="form__section pt-9">
@@ -137,6 +146,7 @@ const AddressInfoSection = ({
                 label={'APT Number/SUITE Number'}
                 disabled={isDisableAddress}
                 {...field}
+                onBlur={handleFieldAddressOnBlur}
               />
             );
           }}
@@ -149,6 +159,7 @@ const AddressInfoSection = ({
               label={'Street Number'}
               disabled={isDisableAddress}
               {...field}
+              onBlur={handleFieldAddressOnBlur}
             />
           )}
           control={control}
@@ -160,6 +171,7 @@ const AddressInfoSection = ({
               label={'Street Name'}
               disabled={isDisableAddress}
               {...field}
+              onBlur={handleFieldAddressOnBlur}
             />
           )}
           control={control}

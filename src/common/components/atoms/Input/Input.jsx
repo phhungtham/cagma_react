@@ -38,11 +38,9 @@ const Input = forwardRef((props, ref) => {
     regex,
     ...otherProps
   } = props;
-
   const [inputValues, setInputValues] = useState(value);
   const [customClass, setCustomClass] = useState('');
   const [errorTextField, setErrorTextField] = useState(errorMessage);
-
   const timerRef = useRef(null);
   const countRef = useRef(remainingTime);
   const displayRef = useRef(null);
@@ -100,9 +98,7 @@ const Input = forwardRef((props, ref) => {
 
   useEffect(() => {
     setInputValues(value);
-    if (value) {
-      setCustomClass('input__completed');
-    }
+    setCustomClass(value ? 'input__completed' : '');
   }, [value]);
 
   useEffect(() => {
@@ -150,7 +146,6 @@ const Input = forwardRef((props, ref) => {
       // };
     }
   }, []);
-
   return (
     <div className={`text__field ${clazz}`}>
       {isMemo && (
