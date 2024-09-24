@@ -20,7 +20,7 @@ import AppointmentDetailBottom from '../components/AppointmentDetailBottom';
 import { BookAppointmentType } from '../constants';
 import './styles.scss';
 
-const maxAppointmentDisplay = 10;
+const maxAppointmentDisplay = 3;
 
 const AppointmentHome = () => {
   const {
@@ -30,7 +30,7 @@ const AppointmentHome = () => {
     error: getAppointmentsError,
   } = useGetAppointments();
   const [showLoading, setShowLoading] = useState(false);
-  const [upcomingAppointments, setUpcomingAppointments] = useState([]);
+  const [appointments, setAppointments] = useState([]);
   const [showAppointmentDetailBottom, setShowAppointmentDetailBottom] = useState({
     isShow: false,
     appointment: {},
@@ -134,11 +134,12 @@ const AppointmentHome = () => {
   }, [getAppointmentsError]);
 
   useEffect(() => {
-    if (appointmentData?.upcomingList) {
-      const appointmentsForDisplay = appointmentData.upcomingList.slice(0, maxAppointmentDisplay);
-      setUpcomingAppointments(appointmentsForDisplay);
+    if (appointmentData?.upcomingList || appointmentData?.previousList) {
+      const appointmentList = [...(appointmentData?.upcomingList || []), ...(appointmentData?.previousList || [])];
+      const appointmentsForDisplay = appointmentList.slice(0, maxAppointmentDisplay);
+      setAppointments(appointmentsForDisplay);
     } else {
-      setUpcomingAppointments([]);
+      setAppointments([]);
     }
   }, [appointmentData]);
 
@@ -209,7 +210,7 @@ const AppointmentHome = () => {
               </div>
             </div>
           </div>
-          {upcomingAppointments?.length > 0 && (
+          {appointments?.length > 0 && (
             <div className="appointment-details__wrapper">
               <div className="details__header">
                 <div className="details__header__title">Appointment details</div>
@@ -221,7 +222,7 @@ const AppointmentHome = () => {
                 </div>
               </div>
               <div className="details__list">
-                {upcomingAppointments.map(appointment => (
+                {appointments.map(appointment => (
                   <Fragment key={appointment.id}>
                     <AppointmentCard
                       appointmentInfo={appointment}

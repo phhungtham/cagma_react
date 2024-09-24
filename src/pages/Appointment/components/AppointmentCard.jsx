@@ -35,7 +35,7 @@ const AppointmentCard = ({ onClick, appointmentInfo, statusList }) => {
         </div>
         <div className="item-card__info">
           <div className="item-card__id">#{id}</div>
-          {!isUsingZoom && <div className="item-card__branch-name">{branchName}</div>}
+          <div className="item-card__branch-name">{branchName}</div>
           <div className="item-card__time mt-1">
             <span className="item-card__date">{date}</span>
             <span className="divider__vertical" />
