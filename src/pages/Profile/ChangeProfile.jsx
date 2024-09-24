@@ -201,6 +201,17 @@ const ChangeProfile = ({ translation }) => {
     setShowLoading(true);
     const changeProfileResponse = await apiCall(endpoints.changeUserInfoTransaction, 'POST', request);
     setShowLoading(false);
+    const status = changeProfileResponse?.data?.elData?.result_cd;
+    const isUpdateSuccess = Number(status) === 1;
+    if (isUpdateSuccess) {
+      //TODO: Check change address for display other message
+      setShowToast({
+        isShow: true,
+        message: 'Your profile information has been changed',
+        type: 'success',
+      });
+      return;
+    }
     const responseErrorMessage = changeProfileResponse?.data?.elHeader?.resMsgVo?.msgText;
     if (responseErrorMessage) {
       setShowAlert({
@@ -279,12 +290,6 @@ const ChangeProfile = ({ translation }) => {
       } else {
         handleRequestChangeProfile(requestChangeProfile);
       }
-      setShowToast({
-        isShow: true,
-        message: 'Your profile information has been changed',
-        type: 'success',
-      });
-      return;
     }
     const responseErrorMessage = changeUserInfoResponse?.data?.elHeader?.resMsg;
     if (responseErrorMessage) {
