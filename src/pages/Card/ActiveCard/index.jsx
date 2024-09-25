@@ -98,6 +98,7 @@ const ActiveCard = () => {
         title="Card information is incorrect"
         subtitle="If your card information is entered incorrectly 5 times, online activation will be blocked. Please try again."
         textAlign="left"
+        onClose={() => setShowIncorrectInfoAlert(false)}
         firstButton={{
           onClick: () => setShowIncorrectInfoAlert(false),
           label: 'Confirm',
@@ -117,6 +118,7 @@ const ActiveCard = () => {
         title="Online Activation is blocked"
         subtitle="You have entered the card information incorrectly 5 times, and online activation is now blocked. Please contact your branch for assistance."
         textAlign="center"
+        onClose={() => setShowActiveBlockAlert(false)}
         firstButton={{
           onClick: handleNavigateHome,
           label: 'Home',

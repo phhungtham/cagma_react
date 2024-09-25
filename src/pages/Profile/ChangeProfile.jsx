@@ -466,6 +466,7 @@ const ChangeProfile = ({ translation }) => {
         isShowAlert={showSaveChangeConfirmAlert}
         title="Would you like to save changes?"
         textAlign="center"
+        onClose={() => setShowSaveChangeConfirmAlert(false)}
         firstButton={{
           onClick: onConfirmSaveForm,
           label: 'Save',
@@ -483,6 +484,7 @@ const ChangeProfile = ({ translation }) => {
         title={showAlert.title}
         subtitle={showAlert.content}
         textAlign="left"
+        onClose={() => setShowAlert({ isShow: false, title: '', content: '' })}
         firstButton={{
           onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
           label: 'Confirm',

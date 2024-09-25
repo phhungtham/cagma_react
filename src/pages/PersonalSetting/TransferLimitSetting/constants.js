@@ -25,3 +25,25 @@ export const transferLimitChangeDetails = [
     value: 'status',
   },
 ];
+
+export const transferLimitMessages = {
+  increased: {
+    title: 'Are you sure?',
+    content:
+      'Increased daily transfer limit will not be effective immediately. Upon review of your request, a representative will be in contact with you.',
+    valueMessage: 'increased',
+    statusSuccess: 'Your limit increase request has been submitted.',
+  },
+  decreased: {
+    title: 'Are you sure?',
+    content: 'A manual review is required to deduct and raise again.',
+    valueMessage: 'decrease',
+    statusSuccess: ' Your limit decrease has been processed.',
+  },
+  cancel: {
+    title: 'Are you sure?',
+    content: 'Do you want to delete the adjusted amount?',
+    valueMessage: 'cancel',
+    statusSuccess: 'Your limit change request has been cancelled.',
+  },
+};

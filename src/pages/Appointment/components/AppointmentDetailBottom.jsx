@@ -93,6 +93,7 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }
             <span>This action cannot be undone</span>
           </>
         }
+        onClose={onCloseCancelAppointment}
         textAlign="left"
         firstButton={{
           onClick: onClickConfirmCancel,

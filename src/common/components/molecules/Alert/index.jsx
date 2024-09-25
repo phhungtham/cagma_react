@@ -9,29 +9,24 @@ const Alert = ({
   subtitle,
   caption,
   isShowAlert,
-  handleCloseAlert,
   alertIcon,
   imageIcon,
   firstButton,
   secondButton,
   isCloseButton,
   textAlign,
+  onClose,
   children,
 }) => {
   const [animate, setAnimate] = useState(false);
 
-  const handleClose = () => {
-    handleCloseAlert();
+  const onCloseAlert = () => {
+    onClose?.();
   };
 
   useEffect(() => {
     isShowAlert && setAnimate(true);
   }, [isShowAlert]);
-
-  const closeAlert = () => {
-    firstDoulButton && firstDoulButton.onClick();
-    secondDoulButton && secondDoulButton.onClick();
-  };
 
   const firstDoulButton = firstButton ? { ...firstButton, className: 'alert__footer__button' } : null;
   const secondDoulButton = secondButton ? { ...secondButton, className: 'alert__footer__button' } : null;
@@ -40,7 +35,7 @@ const Alert = ({
     <div className={`alert__wrapper  ${isShowAlert && 'show'}`}>
       <div
         className={`overlay ${isShowAlert && 'show'}`}
-        onClick={closeAlert}
+        onClick={onCloseAlert}
       />
       <div
         className={`alert ${isShowAlert && 'show'} ${animate && 'animate'} ${isCloseButton && 'close-button'}`}
@@ -49,7 +44,7 @@ const Alert = ({
         {isCloseButton && (
           <section
             className="alert__close"
-            onClick={handleClose}
+            onClick={onCloseAlert}
           >
             <CloseIcon size="medium" />
           </section>

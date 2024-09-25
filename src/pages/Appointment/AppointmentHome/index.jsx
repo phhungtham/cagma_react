@@ -246,6 +246,7 @@ const AppointmentHome = () => {
         isShowAlert={showAlert.isShow}
         title={showAlert.title}
         subtitle={showAlert.content}
+        onClose={() => setShowAlert({ isShow: false, title: '', content: '' })}
         textAlign="left"
         firstButton={{
           onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),

@@ -6,7 +6,7 @@ import { moveHome, moveNext } from '@utilities/index';
 
 import './styles.scss';
 
-const TransferLimitSettingSuccess = ({ cardInfo }) => {
+const TransferLimitSettingSuccess = ({ cardInfo, title }) => {
   const handleNavigateCardMain = () => {
     moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
   };
@@ -26,8 +26,7 @@ const TransferLimitSettingSuccess = ({ cardInfo }) => {
             />
           </div>
           <div className="success__title">
-            <div className="text-primary">Release the accident report</div>
-            <div className="complete-message">has been completed</div>
+            <div className="complete-message">{title}</div>
           </div>
         </div>
       </div>

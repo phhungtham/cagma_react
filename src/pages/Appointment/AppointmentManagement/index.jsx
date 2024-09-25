@@ -206,6 +206,7 @@ const AppointmentManagement = () => {
         title={showAlert.title}
         subtitle={showAlert.content}
         textAlign="left"
+        onClose={() => setShowAlert({ isShow: false, title: '', content: '' })}
         firstButton={{
           onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
           label: 'Confirm',

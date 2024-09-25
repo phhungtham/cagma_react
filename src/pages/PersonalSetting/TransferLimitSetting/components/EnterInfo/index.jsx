@@ -13,7 +13,7 @@ import './styles.scss';
 
 const dailyTransferLimitMax = 15000;
 
-const TransferLimitSettingForm = ({ onSubmit, changeDetail }) => {
+const TransferLimitSettingForm = ({ onSubmit, changeDetail, onCancelLimit }) => {
   const [newLimit, setNewLimit] = useState();
   const [showEnterAmountBottom, setShowEnterAmountBottom] = useState(false);
 
@@ -29,7 +29,7 @@ const TransferLimitSettingForm = ({ onSubmit, changeDetail }) => {
   };
 
   const handleSubmitForm = () => {
-    onSubmit(Number(newLimit));
+    onSubmit(newLimit);
   };
 
   return (
@@ -59,6 +59,7 @@ const TransferLimitSettingForm = ({ onSubmit, changeDetail }) => {
                       variant="outlined__primary"
                       size="sm"
                       className="mt-4"
+                      onClick={onCancelLimit}
                     />
                   )}
                 </span>

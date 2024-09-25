@@ -92,6 +92,7 @@ const ReportLostCard = () => {
           </>
         }
         textAlign="left"
+        onClose={() => setShowConfirmAlert(false)}
         firstButton={{
           onClick: handleConfirmReport,
           label: 'Confirm',

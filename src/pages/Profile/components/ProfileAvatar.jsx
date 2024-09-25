@@ -135,6 +135,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
       <Alert
         isCloseButton={false}
         isShowAlert={showAlertDeletePhoto}
+        onClose={() => setShowAlertDeletePhoto(false)}
         title="Would you like to delete profile photo?"
         textAlign="center"
         firstButton={{
