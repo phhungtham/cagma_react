@@ -13,7 +13,7 @@ import './styles.scss';
 
 const dailyTransferLimitMax = 15000;
 
-const TransferLimitSettingForm = ({ onSubmit, changeDetail, onCancelLimit }) => {
+const TransferLimitSettingForm = ({ onSubmit, detail, onCancelLimit }) => {
   const [newLimit, setNewLimit] = useState();
   const [showEnterAmountBottom, setShowEnterAmountBottom] = useState(false);
 
@@ -51,8 +51,8 @@ const TransferLimitSettingForm = ({ onSubmit, changeDetail, onCancelLimit }) => 
                 key={label}
               >
                 <span className="box__label">{label}</span>
-                <span className={`box__value ${value === 'currentLimit' ? 'text-primary font-bold' : ''}`}>
-                  <span>{changeDetail?.[value]}</span>
+                <span className={`box__value ${value === 'currentLimitDisplay' ? 'text-primary font-bold' : ''}`}>
+                  <span>{detail?.[value]}</span>
                   {value === 'status' && (
                     <Button
                       label="Cancel the limits"
@@ -89,7 +89,7 @@ const TransferLimitSettingForm = ({ onSubmit, changeDetail, onCancelLimit }) => 
         <EnterAmountBottom
           onClose={() => setShowEnterAmountBottom(false)}
           title="New Daily Transfer Limits"
-          note="Daily Transfer Limits is $15,000.00"
+          note={`Daily Transfer Limits is ${detail?.limitDisplay}`}
           currency={CurrencyCode.CAD}
           amount={newLimit}
           max={dailyTransferLimitMax}

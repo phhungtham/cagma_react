@@ -6,44 +6,55 @@ export const TRANSFER_LIMIT_SETTING_STEP = {
 export const transferLimitChangeDetails = [
   {
     label: 'Daily Transfer Limits',
-    value: 'limit',
+    value: 'limitDisplay',
   },
   {
     label: 'Current Daily Transfer Limits',
-    value: 'currentLimit',
+    value: 'currentLimitDisplay',
   },
   {
     label: 'Application Date',
-    value: 'applicationDate',
+    value: 'applyDate',
   },
   {
     label: 'Last applied Date',
-    value: 'lastAppliedDate',
+    value: 'lastApplyDate',
   },
   {
     label: 'Status',
-    value: 'status',
+    value: 'statusDisplay',
   },
 ];
 
+export const TransferLimitType = {
+  INCREASE: 'increase',
+  DECREASE: 'decrease',
+  CANCEL: 'cancel',
+};
+
 export const transferLimitMessages = {
-  increased: {
-    title: 'Are you sure?',
-    content:
+  [TransferLimitType.INCREASE]: {
+    confirmMessage:
       'Increased daily transfer limit will not be effective immediately. Upon review of your request, a representative will be in contact with you.',
-    valueMessage: 'increased',
-    statusSuccess: 'Your limit increase request has been submitted.',
+    successMessage: '<p>Your limit increase request</p><p>has been submitted.</p>',
   },
-  decreased: {
-    title: 'Are you sure?',
-    content: 'A manual review is required to deduct and raise again.',
-    valueMessage: 'decrease',
-    statusSuccess: ' Your limit decrease has been processed.',
+  [TransferLimitType.DECREASE]: {
+    confirmMessage: 'A manual review is required to deduct and raise again.',
+    successMessage: '<p>Your limit decrease</p><p>has been processed.</p>',
   },
-  cancel: {
-    title: 'Are you sure?',
+  [TransferLimitType.CANCEL]: {
     content: 'Do you want to delete the adjusted amount?',
-    valueMessage: 'cancel',
-    statusSuccess: 'Your limit change request has been cancelled.',
+    statusSuccess: '<p>Your limit change request</p><p>has been cancelled.</p>',
   },
+};
+
+export const transferLimitMapResponseFields = {
+  limit: 'limit_amt',
+  limitDisplay: 'limit_amt_display',
+  currentLimit: 'now_limit_amt',
+  currentLimitDisplay: 'now_limit_amt_display',
+  applyDate: 'limit_chg_req_display',
+  lastApplyDate: 'limit_chg_dt_display',
+  status: 'limit_chg_agree',
+  statusDisplay: 'limit_chg_agree_display',
 };

@@ -1,8 +1,8 @@
 import { SH_LCL_CORP_C } from '@common/constants/common';
+import { toJson } from '@utilities/convert';
 import { getDateFormat } from '@utilities/dateTimeUtils';
 import extendSession from '@utilities/gmCommon/extendSession';
 import axios from 'axios';
-import { toJson } from 'common/utils/convert';
 import AppCfg from 'configs/appConfigs/enviroment';
 import { localStorageService } from 'storage';
 import { transformRequest } from 'utilities/transform';

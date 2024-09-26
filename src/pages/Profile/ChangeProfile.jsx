@@ -121,7 +121,6 @@ const ChangeProfile = ({ translation }) => {
 
   const onClickMoveBack = () => {
     if (isFormDirty) {
-      debugger;
       setShowSaveChangeConfirmAlert(true);
       return;
     }
@@ -253,6 +252,21 @@ const ChangeProfile = ({ translation }) => {
     return true;
   };
 
+  const checkAlreadyRegisterETransfer = async () => {
+    if (isETransferRegistered === '') {
+      const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
+      if (getETransferInfoResponse?.data?.elData) {
+        const { etr_err_c } = getETransferInfoResponse.data.elData || {};
+        const isRegistered = etr_err_c?.indexOf('404') >= 0;
+        setIsETransferRegistered(String(isRegistered));
+        return isRegistered;
+      }
+    } else {
+      return String(isETransferRegistered) === 'true';
+    }
+    return false;
+  };
+
   const handleSubmitSaveForm = async values => {
     let transactionFunctionType = ProfileChangeType.CONTACT_ADDRESS;
     const isChangeContactInfo = !isEqual(defaultUserInfo, values, fieldsToCheckContactInfo);
@@ -293,18 +307,11 @@ const ChangeProfile = ({ translation }) => {
     if (values.country === 'CA') {
       values.address1 = values.addressLine1;
     }
+    setShowLoading(true);
     const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
-    //TODO: Check register e-transfer
-    // if (isETransferRegistered === '') {
-    //   const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
-    //   if (getETransferInfoResponse?.data?.elData) {
-    //     const { etr_err_c } = getETransferInfoResponse.data.elData || {};
-    //     request.etr_reg_yn = etr_err_c?.indexOf('404') >= 0 ? 'N' : 'Y';
-    //   }
-    // } else {
-    //   request.etr_reg_yn = isETransferRegistered === 'true' ? 'Y' : 'N';
-    // }
-    request.etr_reg_yn = 'N';
+    const isRegisterETransfer = await checkAlreadyRegisterETransfer();
+    request.etr_reg_yn = isRegisterETransfer ? 'Y' : 'N';
+    // request.etr_reg_yn = 'N';
     request.chg_yn = isChangeAddress ? 'Y' : 'N';
     request.file_upd_yn = values.uploaded ? 'Y' : 'N';
     request.trx_func_d = transactionFunctionType;
@@ -325,7 +332,6 @@ const ChangeProfile = ({ translation }) => {
       request.cus_adr2 = values.address2;
       request.cus_adr1 = values.address1;
     }
-    setShowLoading(true);
     const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
     if (changeUserInfoResponse?.data?.elData) {
       const userResponse = changeUserInfoResponse.data.elData;
@@ -420,7 +426,9 @@ const ChangeProfile = ({ translation }) => {
       setDefaultUserInfo(user);
       setUserId(defaultAddress?.cusno);
       trigger();
-      setShowLoading(false);
+      requestGetCommonCode(
+        [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
+      );
     }
   }, [userInfo]);
 
@@ -454,7 +462,7 @@ const ChangeProfile = ({ translation }) => {
       setAddressTypeOptions(convertedAddressTypes);
       setCountryOptions(convertedCountries);
       setProvinceOptions(convertedProvince);
-      getUserInfoRequest();
+      setShowLoading(false);
     }
   }, [commonCodeData]);
 
@@ -479,9 +487,9 @@ const ChangeProfile = ({ translation }) => {
 
   useEffect(() => {
     setShowLoading(true);
-    requestGetCommonCode(
-      [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
-    );
+
+    getUserInfoRequest();
+
     getETransferRegistered(getETransferRegisteredCallback);
   }, []);
 

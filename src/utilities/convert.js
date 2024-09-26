@@ -29,3 +29,11 @@ export const commonCodeDataToOptions = (commonCodeData = []) => {
     };
   });
 };
+
+export const toJson = (str, defaultValue) => {
+  try {
+    return JSON.parse(str);
+  } catch (error) {
+    return defaultValue;
+  }
+};

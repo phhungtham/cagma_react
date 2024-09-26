@@ -1,6 +1,5 @@
 import Currency from '@common/components/atoms/Currency';
 import Span from '@common/components/atoms/Span';
-import { convertToOrdinal } from '@common/utils/convert';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
@@ -46,7 +45,7 @@ const TransactionHistory = props => {
             {orderNumber && (
               <Span
                 clazz="transaction__info__order"
-                text={convertToOrdinal(orderNumber)}
+                text={orderNumber}
               />
             )}
             {title && orderNumber && renderBarDivider()}

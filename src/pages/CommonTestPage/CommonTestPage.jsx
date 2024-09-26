@@ -283,6 +283,26 @@ const CommonTestPage = () => {
           label: 'initProfileImg',
           action: () => initProfileImg(handleInitProfileImgCallback),
         },
+        {
+          title: 'Show Secure Keyboard Char',
+          label: 'showSecureKeyboardChar',
+          action: () => initProfileImg(handleInitProfileImgCallback),
+        },
+        {
+          title: 'Hide Secure Keyboard Char',
+          label: 'hideSecureKeyboardChar',
+          action: () => initProfileImg(handleInitProfileImgCallback),
+        },
+        {
+          title: 'Show Secure Keyboard Number',
+          label: 'showSecureKeyboardNumber',
+          action: () => initProfileImg(handleInitProfileImgCallback),
+        },
+        {
+          title: 'Hide Secure Keyboard Number',
+          label: 'hideSecureKeyboardNumber',
+          action: () => initProfileImg(handleInitProfileImgCallback),
+        },
       ],
     },
     {

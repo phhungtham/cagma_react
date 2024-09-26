@@ -1,16 +1,11 @@
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import { MENU_CODE } from '@common/constants/common';
-import { routePaths } from '@routes/paths';
-import { moveHome, moveNext } from '@utilities/index';
+import { moveHome } from '@utilities/index';
 
+import { transferLimitMessages } from '../../constants';
 import './styles.scss';
 
-const TransferLimitSettingSuccess = ({ cardInfo, title }) => {
-  const handleNavigateCardMain = () => {
-    moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
-  };
-
+const TransferLimitSettingSuccess = ({ type }) => {
   const handleNavigateHome = () => {
     moveHome();
   };
@@ -26,7 +21,9 @@ const TransferLimitSettingSuccess = ({ cardInfo, title }) => {
             />
           </div>
           <div className="success__title">
-            <div className="complete-message">{title}</div>
+            <div className="complete-message">
+              <div dangerouslySetInnerHTML={{ __html: transferLimitMessages[type]?.successMessage }} />
+            </div>
           </div>
         </div>
       </div>

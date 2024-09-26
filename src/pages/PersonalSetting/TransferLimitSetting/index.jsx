@@ -1,110 +1,160 @@
 import { useEffect, useState } from 'react';
 
+import Spinner from '@common/components/atoms/Spinner';
 import Alert from '@common/components/molecules/Alert';
+import { endpoints } from '@common/constants/endpoint';
+import useApi from '@hooks/useApi';
+import { buildObjectMapFromResponse } from '@utilities/convert';
+import { convertToNumber } from '@utilities/currency';
 
 import TransferLimitSettingForm from './components/EnterInfo';
 import TransferLimitSettingSuccess from './components/SettingSuccess';
-import { TRANSFER_LIMIT_SETTING_STEP, transferLimitMessages } from './constants';
+import {
+  TRANSFER_LIMIT_SETTING_STEP,
+  transferLimitMapResponseFields,
+  transferLimitMessages,
+  TransferLimitType,
+} from './constants';
 
 const TransferLimitSetting = () => {
+  const { requestApi } = useApi();
   const [currentStep, setCurrentStep] = useState(TRANSFER_LIMIT_SETTING_STEP.ENTER_INFORMATION);
-  const [changeDetail, setChangeDetail] = useState();
-  const [alertState, setAlertState] = useState({
+  const [transferLimitDetail, setTransferLimitDetail] = useState();
+  const [currentSettingType, setCurrentSettingType] = useState();
+  const [showLoading, setShowLoading] = useState();
+  const [confirmAlert, setConfirmAlert] = useState({
     isShow: false,
     title: '',
     content: '',
-    valueMessage: '',
-    statusSuccess: '',
-    isError: false,
+  });
+  const [serverErrorAlert, setServerErrorAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
   });
 
-  const handleSubmitForm = limit => {
-    const limitNumber = parseFloat(limit.replace(/,/g, ''));
-    const currentLimit = changeDetail.currentLimit.split('$')[1].replace('.00', '');
-    const currentLimitNumber = parseFloat(currentLimit.replace(/,/g, ''));
+  const handleSubmitForm = newLimit => {
+    const newLimitNumber = convertToNumber(newLimit);
 
-    if (!limitNumber || limitNumber === 0) {
-      setAlertState({
+    if (!newLimitNumber || newLimitNumber === 0) {
+      setConfirmAlert({
         isShow: true,
         title: 'Please confirm the amount.',
         // eslint-disable-next-line quotes
         content: "You can't enter a zero dollar amount for an increase or decrease.",
-        isError: true,
       });
       return;
     }
-    if (limitNumber > currentLimitNumber) {
-      setAlertState({
+    let settingType = '';
+    if (newLimitNumber > Number(transferLimitDetail.currentLimit || 0)) {
+      settingType = TransferLimitType.INCREASE;
+    }
+    if (newLimitNumber < Number(transferLimitDetail.currentLimit || 0)) {
+      settingType = TransferLimitType.DECREASE;
+    }
+    setCurrentSettingType(settingType);
+    if (settingType) {
+      setConfirmAlert({
         isShow: true,
-        isError: false,
-        ...transferLimitMessages.increased,
+        title: 'Are you sure?',
+        content: transferLimitMessages[settingType]?.confirmMessage,
       });
     }
-    if (limitNumber < currentLimitNumber) {
-      setAlertState({
+  };
+
+  const requestGetTransferLimit = async () => {
+    setShowLoading(true);
+    const { isSuccess, error, data } = await requestApi(endpoints.getBankingTransferLimit, {});
+    setShowLoading(false);
+    if (isSuccess) {
+      const detail = buildObjectMapFromResponse(data, transferLimitMapResponseFields);
+      detail.limitDisplay = detail.limitDisplay ? `$${detail.limitDisplay}` : '';
+      detail.currentLimitDisplay = detail.currentLimitDisplay ? `$${detail.currentLimitDisplay}` : '';
+      setTransferLimitDetail(detail);
+    } else {
+      setServerErrorAlert({
         isShow: true,
-        isError: false,
-        ...transferLimitMessages.decreased,
+        content: error,
       });
     }
+  };
+
+  const handleCloseConfirmAlert = () => {
+    setConfirmAlert({
+      isShow: false,
+      title: '',
+      content: '',
+    });
+  };
+
+  const handleCloseServerAlert = () => {
+    setServerErrorAlert({
+      isShow: false,
+      title: '',
+      content: '',
+    });
   };
 
   useEffect(() => {
-    setChangeDetail({
-      limit: '$15,000.00',
-      currentLimit: '$12,000.00',
-      applicationDate: 'Jan 01, 2024',
-      lastAppliedDate: 'Jan 01, 2024',
-      status: 'Apply change limit',
-    });
+    requestGetTransferLimit();
   }, []);
 
   const handleConfirmTransferLimit = () => {
-    if (!alertState.isError) {
-      setCurrentStep(TRANSFER_LIMIT_SETTING_STEP.COMPLETED);
-    }
-    setAlertState({ ...alertState, isShow: false, title: '', content: '', valueMessage: '', isError: false });
+    // if (!alertState.isError) {
+    setCurrentStep(TRANSFER_LIMIT_SETTING_STEP.COMPLETED);
+    handleCloseConfirmAlert();
+    // }
+    // setAlertState({ ...alertState, isShow: false, title: '', content: '', valueMessage: '', isError: false });
   };
 
   const handleCancelLimit = () => {
-    setAlertState({
-      isShow: true,
-      ...transferLimitMessages.cancel,
-    });
+    // setAlertState({
+    //   isShow: true,
+    //   ...transferLimitMessages.cancel,
+    // });
   };
 
   return (
     <>
+      {showLoading && <Spinner />}
       <div className="transfer-limit-settings__wrapper page__wrapper">
         {currentStep === TRANSFER_LIMIT_SETTING_STEP.ENTER_INFORMATION && (
           <TransferLimitSettingForm
-            changeDetail={changeDetail}
+            detail={transferLimitDetail}
             onSubmit={handleSubmitForm}
             onCancelLimit={handleCancelLimit}
           />
         )}
         {currentStep === TRANSFER_LIMIT_SETTING_STEP.COMPLETED && (
-          <TransferLimitSettingSuccess title={alertState.statusSuccess} />
+          <TransferLimitSettingSuccess type={currentSettingType} />
         )}
       </div>
       <Alert
         isCloseButton={false}
-        isShowAlert={alertState.isShow}
-        title={alertState.title}
-        subtitle={alertState.content}
+        isShowAlert={confirmAlert.isShow}
+        title={confirmAlert.title}
+        subtitle={confirmAlert.content}
         textAlign="left"
-        onClose={() => {
-          setAlertState({ ...alertState, isShow: false });
-        }}
+        onClose={handleCloseConfirmAlert}
         firstButton={{
           onClick: () => handleConfirmTransferLimit(),
           label: 'Confirm',
         }}
         secondButton={{
-          onClick: () => {
-            setAlertState({ ...alertState, isShow: false });
-          },
+          onClick: handleCloseConfirmAlert,
           label: 'Cancel',
+        }}
+      />
+      <Alert
+        isCloseButton={false}
+        isShowAlert={serverErrorAlert.isShow}
+        title={serverErrorAlert.title}
+        subtitle={serverErrorAlert.content}
+        textAlign="left"
+        onClose={handleCloseServerAlert}
+        firstButton={{
+          onClick: handleCloseServerAlert,
+          label: 'Confirm',
         }}
       />
     </>
