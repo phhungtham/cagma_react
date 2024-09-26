@@ -21,7 +21,6 @@ import {
   getSubJobCode,
 } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
-import { SecurityMediaType } from '@common/constants/plugin';
 import { fileUrls } from '@common/constants/url';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
@@ -33,8 +32,9 @@ import {
   commonCodeDataToOptions,
   convertObjectBaseMappingFields,
 } from '@utilities/convert';
-import getETransferRegistered from '@utilities/gmCommon/getETransferRegistered';
-import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
+import getEtransferInfo from '@utilities/gmCommon/getEtransferInfo';
+import setEtransferInfo from '@utilities/gmCommon/setEtransferInfo';
+import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
 import { moveBack } from '@utilities/index';
 import { isEqual } from '@utilities/object';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -258,7 +258,9 @@ const ChangeProfile = ({ translation }) => {
       if (getETransferInfoResponse?.data?.elData) {
         const { etr_err_c } = getETransferInfoResponse.data.elData || {};
         const isRegistered = etr_err_c?.indexOf('404') >= 0;
+        debugger;
         setIsETransferRegistered(String(isRegistered));
+        setEtransferInfo(getETransferInfoResponse.data.elData);
         return isRegistered;
       }
     } else {
@@ -343,9 +345,7 @@ const ChangeProfile = ({ translation }) => {
       };
       if (usingSecurityCheck) {
         setShowLoading(false);
-        authSecurityMedia(() => handleRequestChangeProfile(requestChangeProfile), null, {
-          type: SecurityMediaType.MOTP,
-        });
+        enterSecurityPasscode(() => handleRequestChangeProfile(requestChangeProfile), null);
       } else {
         handleRequestChangeProfile(requestChangeProfile);
       }
@@ -487,10 +487,8 @@ const ChangeProfile = ({ translation }) => {
 
   useEffect(() => {
     setShowLoading(true);
-
     getUserInfoRequest();
-
-    getETransferRegistered(getETransferRegisteredCallback);
+    getEtransferInfo(getETransferRegisteredCallback);
   }, []);
 
   return (

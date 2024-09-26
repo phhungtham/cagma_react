@@ -29,6 +29,8 @@ import callSelectImage from '@utilities/gmCommon/callSelectImage';
 import initProfileImg from '@utilities/gmCommon/initProfileImg';
 import loadProfileImgInfo from '@utilities/gmCommon/loadProfileImgInfo';
 import saveProfileImg from '@utilities/gmCommon/saveProfileImg';
+import createSecurityPasscode from '@utilities/gmSecure/createSecurityPasscode';
+import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
 import hideSecureKeyboardChar from '@utilities/gmSecure/hideSecureKeyboardChar';
 import hideSecureKeyboardNumber from '@utilities/gmSecure/hideSecureKeyboardNumber';
 import showSecureKeyboardChar from '@utilities/gmSecure/showSecureKeyboardChar';
@@ -198,6 +200,14 @@ const CommonTestPage = () => {
     console.log('hide secure keyboard number data :>> ', data);
   };
 
+  const handleEnterSecurityPasscodeCallback = () => {
+    console.log('enter security passcode success');
+  };
+
+  const handleCreateSecurityPasscodeCallback = () => {
+    console.log('create security passcode success');
+  };
+
   const handleBackToHome = () => {
     moveBack();
   };
@@ -332,6 +342,16 @@ const CommonTestPage = () => {
           title: 'Decrypt CVC',
           label: 'decryptCVC',
           action: () => setShowBottomSheet({ ...showBottomSheet, decryptCVC: true }),
+        },
+        {
+          title: 'Enter Security Passcode',
+          label: 'enterSecurityPasscode',
+          action: () => enterSecurityPasscode(handleEnterSecurityPasscodeCallback),
+        },
+        {
+          title: 'Create Security Passcode',
+          label: 'createSecurityPasscode',
+          action: () => createSecurityPasscode(handleCreateSecurityPasscodeCallback),
         },
       ],
     },

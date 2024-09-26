@@ -1,7 +1,7 @@
 import { AppCfg } from '@configs/appConfigs';
 import { $h } from 'navigation/wmatrix_config';
 
-const authSecurityMedia = async (successCb, errorCb, { type }) => {
+const createSecurityPasscode = async (successCb, errorCb) => {
   if (AppCfg.ENV === 'development') return successCb();
   $h.exec(
     result => {
@@ -12,12 +12,8 @@ const authSecurityMedia = async (successCb, errorCb, { type }) => {
       }
     },
     'GMSecure',
-    'authSecurityMedia',
-    [
-      {
-        mediaType: type,
-      },
-    ]
+    'createSecurityPasscode',
+    []
   );
 };
-export default authSecurityMedia;
+export default createSecurityPasscode;
