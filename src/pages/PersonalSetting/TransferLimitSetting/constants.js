@@ -43,8 +43,8 @@ export const transferLimitMessages = {
     successMessage: '<p>Your limit decrease</p><p>has been processed.</p>',
   },
   [TransferLimitType.CANCEL]: {
-    content: 'Do you want to delete the adjusted amount?',
-    statusSuccess: '<p>Your limit change request</p><p>has been cancelled.</p>',
+    confirmMessage: 'Do you want to delete the adjusted amount?',
+    successMessage: '<p>Your limit change request</p><p>has been cancelled.</p>',
   },
 };
 
@@ -57,4 +57,11 @@ export const transferLimitMapResponseFields = {
   lastApplyDate: 'limit_chg_dt_display',
   status: 'limit_chg_agree',
   statusDisplay: 'limit_chg_agree_display',
+  currencyCode: 'ccy_c',
+};
+
+export const TransferLimitStatus = {
+  REQUEST_CHANGE: '1',
+  COMPLETED: '2',
+  CANCELED: '3',
 };

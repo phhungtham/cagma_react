@@ -19,6 +19,7 @@ import {
 const TransferLimitSetting = () => {
   const { requestApi } = useApi();
   const [currentStep, setCurrentStep] = useState(TRANSFER_LIMIT_SETTING_STEP.ENTER_INFORMATION);
+  const [newLimit, setNewLimit] = useState();
   const [transferLimitDetail, setTransferLimitDetail] = useState();
   const [currentSettingType, setCurrentSettingType] = useState();
   const [showLoading, setShowLoading] = useState();
@@ -33,8 +34,9 @@ const TransferLimitSetting = () => {
     content: '',
   });
 
-  const handleSubmitForm = newLimit => {
-    const newLimitNumber = convertToNumber(newLimit);
+  const handleSubmitForm = limit => {
+    const newLimitNumber = convertToNumber(limit);
+    setNewLimit(newLimitNumber);
 
     if (!newLimitNumber || newLimitNumber === 0) {
       setConfirmAlert({
@@ -48,8 +50,7 @@ const TransferLimitSetting = () => {
     let settingType = '';
     if (newLimitNumber > Number(transferLimitDetail.currentLimit || 0)) {
       settingType = TransferLimitType.INCREASE;
-    }
-    if (newLimitNumber < Number(transferLimitDetail.currentLimit || 0)) {
+    } else {
       settingType = TransferLimitType.DECREASE;
     }
     setCurrentSettingType(settingType);
@@ -95,24 +96,55 @@ const TransferLimitSetting = () => {
     });
   };
 
-  useEffect(() => {
-    requestGetTransferLimit();
-  }, []);
+  const requestChangeLimit = async () => {
+    const payload = {
+      now_limit_amt: newLimit,
+    };
+    const result = await requestApi(endpoints.changeTransferLimit, payload);
+    return result;
+  };
 
-  const handleConfirmTransferLimit = () => {
-    // if (!alertState.isError) {
-    setCurrentStep(TRANSFER_LIMIT_SETTING_STEP.COMPLETED);
+  const requestCancelChange = async () => {
+    const payload = {
+      limit_chg_agree: transferLimitDetail?.status,
+    };
+    const result = await requestApi(endpoints.cancelRequestChangeLimit, payload);
+    return result;
+  };
+
+  const handleConfirmTransferLimit = async () => {
     handleCloseConfirmAlert();
-    // }
-    // setAlertState({ ...alertState, isShow: false, title: '', content: '', valueMessage: '', isError: false });
+    setShowLoading(true);
+    let result = {};
+    if (currentSettingType === TransferLimitType.CANCEL) {
+      result = await requestCancelChange();
+    } else {
+      result = await requestChangeLimit();
+    }
+    setShowLoading(false);
+    const { data, error } = result;
+    if (data?.result_cd === 1) {
+      setCurrentStep(TRANSFER_LIMIT_SETTING_STEP.COMPLETED);
+    } else {
+      setServerErrorAlert({
+        isShow: true,
+        content: error,
+      });
+    }
   };
 
   const handleCancelLimit = () => {
-    // setAlertState({
-    //   isShow: true,
-    //   ...transferLimitMessages.cancel,
-    // });
+    setCurrentSettingType(TransferLimitType.CANCEL);
+    setConfirmAlert({
+      isShow: true,
+      title: 'Are you sure?',
+      content: transferLimitMessages[TransferLimitType.CANCEL].confirmMessage,
+    });
   };
+
+  useEffect(() => {
+    requestGetTransferLimit();
+  }, []);
 
   return (
     <>

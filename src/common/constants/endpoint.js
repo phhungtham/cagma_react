@@ -13,4 +13,6 @@ export const endpoints = {
   getBranchDirectory: '/ca/co/CACO006.pwkjson',
   bookAppointment: '/ca/hc/CAHC001.pwkjson',
   getBankingTransferLimit: '/ca/me/CAME004.pwkjson',
+  changeTransferLimit: '/ca/me/CAME005.pwkjson',
+  cancelRequestChangeLimit: '/ca/me/CAME006.pwkjson',
 };

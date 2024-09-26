@@ -8,7 +8,7 @@ import { CurrencyCode } from '@common/constants/currency';
 import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack } from '@utilities/index';
 
-import { transferLimitChangeDetails } from '../../constants';
+import { transferLimitChangeDetails, TransferLimitStatus } from '../../constants';
 import './styles.scss';
 
 const dailyTransferLimitMax = 15000;
@@ -18,6 +18,7 @@ const TransferLimitSettingForm = ({ onSubmit, detail, onCancelLimit }) => {
   const [showEnterAmountBottom, setShowEnterAmountBottom] = useState(false);
 
   const isValid = !!newLimit;
+  const isShowBtnCancel = detail?.status === TransferLimitStatus.REQUEST_CHANGE;
 
   const handleOpenEnterAmountBottom = () => {
     setShowEnterAmountBottom(true);
@@ -41,10 +42,10 @@ const TransferLimitSettingForm = ({ onSubmit, detail, onCancelLimit }) => {
       <div className="page__form">
         <h1 className="page__title">Online Banking Transfer Limit</h1>
         <div className="py-4 mt-3">
-          <div className="form__section__title">
+          <div className="form__section__title mb-0">
             <span>Change details</span>
           </div>
-          <div className="box__details mt-3">
+          <div className="box__details mt-4">
             {transferLimitChangeDetails.map(({ label, value }) => (
               <div
                 className="box__item"
@@ -53,7 +54,7 @@ const TransferLimitSettingForm = ({ onSubmit, detail, onCancelLimit }) => {
                 <span className="box__label">{label}</span>
                 <span className={`box__value ${value === 'currentLimitDisplay' ? 'text-primary font-bold' : ''}`}>
                   <span>{detail?.[value]}</span>
-                  {value === 'status' && (
+                  {value === 'statusDisplay' && isShowBtnCancel && (
                     <Button
                       label="Cancel the limits"
                       variant="outlined__primary"
@@ -90,7 +91,7 @@ const TransferLimitSettingForm = ({ onSubmit, detail, onCancelLimit }) => {
           onClose={() => setShowEnterAmountBottom(false)}
           title="New Daily Transfer Limits"
           note={`Daily Transfer Limits is ${detail?.limitDisplay}`}
-          currency={CurrencyCode.CAD}
+          currency={detail?.currencyCode || CurrencyCode.CAD}
           amount={newLimit}
           max={dailyTransferLimitMax}
           onChangeAmount={onChangeAmount}
