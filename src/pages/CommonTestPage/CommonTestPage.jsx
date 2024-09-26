@@ -29,6 +29,10 @@ import callSelectImage from '@utilities/gmCommon/callSelectImage';
 import initProfileImg from '@utilities/gmCommon/initProfileImg';
 import loadProfileImgInfo from '@utilities/gmCommon/loadProfileImgInfo';
 import saveProfileImg from '@utilities/gmCommon/saveProfileImg';
+import hideSecureKeyboardChar from '@utilities/gmSecure/hideSecureKeyboardChar';
+import hideSecureKeyboardNumber from '@utilities/gmSecure/hideSecureKeyboardNumber';
+import showSecureKeyboardChar from '@utilities/gmSecure/showSecureKeyboardChar';
+import showSecureKeyboardNumber from '@utilities/gmSecure/showSecureKeyboardNumber';
 import {
   callPhone,
   clearHistory,
@@ -178,6 +182,22 @@ const CommonTestPage = () => {
     console.log('init profile image data :>> ', data);
   };
 
+  const handleShowKeyboardCharCallback = data => {
+    console.log('show secure keyboard char data :>> ', data);
+  };
+
+  const handleHideKeyboardCharCallback = data => {
+    console.log('hide secure keyboard char data :>> ', data);
+  };
+
+  const handleShowKeyboardNumberCallback = data => {
+    console.log('show secure keyboard number data :>> ', data);
+  };
+
+  const handleHideKeyboardNumberCallback = data => {
+    console.log('hide secure keyboard number data :>> ', data);
+  };
+
   const handleBackToHome = () => {
     moveBack();
   };
@@ -286,22 +306,22 @@ const CommonTestPage = () => {
         {
           title: 'Show Secure Keyboard Char',
           label: 'showSecureKeyboardChar',
-          action: () => initProfileImg(handleInitProfileImgCallback),
+          action: () => showSecureKeyboardChar(handleShowKeyboardCharCallback),
         },
         {
           title: 'Hide Secure Keyboard Char',
           label: 'hideSecureKeyboardChar',
-          action: () => initProfileImg(handleInitProfileImgCallback),
+          action: () => hideSecureKeyboardChar(handleHideKeyboardCharCallback),
         },
         {
           title: 'Show Secure Keyboard Number',
           label: 'showSecureKeyboardNumber',
-          action: () => initProfileImg(handleInitProfileImgCallback),
+          action: () => showSecureKeyboardNumber(handleShowKeyboardNumberCallback),
         },
         {
           title: 'Hide Secure Keyboard Number',
           label: 'hideSecureKeyboardNumber',
-          action: () => initProfileImg(handleInitProfileImgCallback),
+          action: () => hideSecureKeyboardNumber(handleHideKeyboardNumberCallback),
         },
       ],
     },
