@@ -312,12 +312,19 @@ const ChangeProfile = ({ translation }) => {
     request.cus_fst_nm = userInfo?.cus_fst_nm;
     request.cus_last_nm = userInfo?.cus_last_nm;
     request.cus_middle_nm = userInfo?.cus_middle_nm;
-    request.telno_nat_c = 'CA'; //TODO: Find in array home of userInfo to get nat_c
+    request.telno_nat_c = values.telno_nat_c;
     request.cus_pst_dspch_apnd_t = userInfo?.cus_pst_dspch_apnd_t;
     request.adr_vrfc_file_path_nm = values.filePath || '';
     request.adr_vrfc_file_nm = values.fileName || '';
     request.agrmt_downld_yn = 'Y';
     request.cus_city_nm = values.city || userInfo.cus_city_nm;
+    if (values.country === 'CA') {
+      request.cus_adr2 = values.city;
+      request.cus_adr1 = values.addressLine1;
+    } else {
+      request.cus_adr2 = values.address2;
+      request.cus_adr1 = values.address1;
+    }
     setShowLoading(true);
     const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
     if (changeUserInfoResponse?.data?.elData) {
@@ -390,6 +397,7 @@ const ChangeProfile = ({ translation }) => {
       user.address2 = defaultAddress?.cus_adr2;
       user.address3 = defaultAddress?.cus_adr3;
       user.isEmailVerified = false;
+      user.telno_nat_c = defaultAddress?.telno_nat_c;
       if (user.country === 'CA') {
         user.aptNumber = defaultAddress?.adr_strt_nm;
         user.streetNumber = defaultAddress?.adr_houseno_in_ctt;

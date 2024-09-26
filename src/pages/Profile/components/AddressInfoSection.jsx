@@ -106,17 +106,18 @@ const AddressInfoSection = ({
     if (addressType && userInfo) {
       const defaultAddress = (userInfo.r_CAME001_1Vo || []).find(item => String(item.cus_adr_t) === addressType) || {};
       const {
-        cus_adr_zipc,
-        cus_adr_telno,
-        cus_faxno,
-        adr_nat_c,
-        cus_adr1,
-        cus_adr2,
-        cus_adr3,
-        adr_strt_nm,
-        adr_houseno_in_ctt,
-        adr_colny_nm,
-        state_c,
+        cus_adr_zipc = '',
+        cus_adr_telno = '',
+        cus_faxno = '',
+        adr_nat_c = '',
+        cus_adr1 = '',
+        cus_adr2 = '',
+        cus_adr3 = '',
+        adr_strt_nm = '',
+        adr_houseno_in_ctt = '',
+        adr_colny_nm = '',
+        state_c = '',
+        telno_nat_c = '',
       } = defaultAddress;
 
       handleRemoveUpload();
@@ -125,6 +126,7 @@ const AddressInfoSection = ({
         setValue('phoneNumber', cus_adr_telno);
         setValue('faxNumber', cus_faxno);
         setValue('province', state_c);
+        setValue('telno_nat_c', telno_nat_c);
         if (adr_nat_c === 'CA' || adr_nat_c === '') {
           setValue('country', 'CA');
           setValue('addressLine1', cus_adr1);

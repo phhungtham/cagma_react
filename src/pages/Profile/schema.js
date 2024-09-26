@@ -48,4 +48,5 @@ export const changeProfileSchema = Yup.object().shape({
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
+  telno_nat_c: Yup.string(),
 });
