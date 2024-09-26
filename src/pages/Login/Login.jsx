@@ -77,7 +77,7 @@ const Login = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       setAuthenticated();
-      navigate(routePaths.appointment);
+      navigate(routePaths.changeProfile);
     }
   }, [isLoginSuccess]);
 

@@ -32,7 +32,7 @@ const SelectTermsBottom = ({ onClose, type = SelectTermDurationTypes.MONTH, onCh
   };
 
   const onBlurInput = () => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   const onClickConfirm = event => {

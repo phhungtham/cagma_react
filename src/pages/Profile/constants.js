@@ -39,7 +39,7 @@ export const profileFormMapFields = {
   address1: 'cus_adr1',
   address2: 'cus_adr2',
   address3: 'cus_adr3',
-  city: 'cus_city_nm',
+  city: 'cus_adr2',
 };
 
 export const employmentValuesDisableOccupation = [
@@ -49,14 +49,23 @@ export const employmentValuesDisableOccupation = [
   '10', //"Unemployed"
 ];
 
-export const EMAIL_VERIFY_IN_SECONDS = 180;
+export const EMAIL_VERIFY_IN_SECONDS = 180; //3 minutes
 export const EMAIL_VERIFY_RETRY_MAX = 5;
 
-export const ProfileTransactionFunctionType = {
-  ADDRESS_USER_INFO_CHANGE: '2',
-  ADDRESS_CHANGE: '4',
-  USER_INFO_CHANGE: '5',
+export const ProfileChangeType = {
+  CONTACT_ADDRESS: '2',
+  ADDRESS: '4',
+  CONTACT: '5',
 };
+
+export const fieldsToCheckContactInfo = [
+  'callNumber',
+  'employment',
+  'occupation1',
+  'occupation2',
+  'occupation3',
+  'email',
+];
 
 export const fieldsToCheckAddress = [
   'phoneNumber',
@@ -66,7 +75,7 @@ export const fieldsToCheckAddress = [
   'aptNumber',
   'streetNumber',
   'streetName',
-  'address1',
+  'addressLine1',
   'city',
   'province',
 ];

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { INPUT_MODE } from '@common/components/constants';
 import { PropTypes } from 'prop-types';
@@ -31,7 +31,7 @@ const InputPin = ({ clazz, mode, stepsNumber, errorMsg, onChange }) => {
 
   // auto open keyboard...
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
     setFocused(true);
   }, []);
 

@@ -57,10 +57,10 @@ const CalendarInput = ({ clazz, inputType, disabled, onDateChange, isHideCalenda
   const handleFocusInput = inputType => {
     dataTypeRef.current = inputType;
     if (inputType === 'startDate') {
-      inputStartRef.current.focus();
+      inputStartRef.current?.focus();
       inputStartRef.current.value = dateRange.startDateString;
     } else if (inputType === 'endDate') {
-      inputEndRef.current.focus();
+      inputEndRef.current?.focus();
       inputEndRef.current.value = dateRange.endDateString;
     }
   };

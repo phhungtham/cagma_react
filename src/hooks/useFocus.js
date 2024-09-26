@@ -4,7 +4,7 @@ const useFocus = fieldName => {
   useEffect(() => {
     const element = document.querySelector([`[name='${fieldName}']`]);
     if (!element) return;
-    element.focus();
+    element?.focus();
   }, [fieldName]);
 };
 export default useFocus;

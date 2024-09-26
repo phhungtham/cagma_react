@@ -1,5 +1,5 @@
 /* eslint-disable no-inline-styles/no-inline-styles */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { CameraIcon } from '@assets/icons';
@@ -8,9 +8,11 @@ import Dropdown from '@common/components/atoms/Dropdown';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import { addressTypeMapping } from '@common/constants/address';
-import useFileUpload from '@hooks/useFileUpload';
+import { FileErrorType } from '@common/constants/error';
+import { notAllowNumberRegex } from '@common/constants/regex';
+import useFile from '@hooks/useFile';
 
-const maxUploadAddressSize = 5 * 1024 * 1024;
+const maxUploadAddressSize = 5 * 1024 * 1024; //5MB
 const allowedFileTypes = ['image/png', 'image/jpeg'];
 
 const AddressInfoSection = ({
@@ -20,10 +22,13 @@ const AddressInfoSection = ({
   countryOptions,
   onOpenProvinceBottom,
   provinceOptions,
-  isDisableAddress,
   setShowAlert,
+  userId,
+  userInfo,
+  setShowLoading,
 }) => {
-  const { control, watch, setValue } = useFormContext();
+  const [file, setFile] = useState();
+  const { control, watch, setValue, trigger } = useFormContext();
   const [country, addressType, aptNumber, streetNumber, streetName] = watch([
     'country',
     'addressType',
@@ -33,13 +38,47 @@ const AddressInfoSection = ({
   ]);
   const isCanadaCountrySelected = country === 'CA';
   const isShowProofAddress = addressType === addressTypeMapping.home;
-  const { file, handleUploadFile, error, setFile } = useFileUpload(maxUploadAddressSize, allowedFileTypes);
+  const { handleUploadFile } = useFile();
   const fileInputRef = useRef(null);
+
+  const isDisableAddress = Number(userInfo?.noproc_cnt || 0) > 0;
+
+  const handleUploadCallback = result => {
+    const { file, success, error, fileLocation, fileName } = result;
+    setShowLoading(false);
+    if (success) {
+      setFile(URL.createObjectURL(file));
+      setValue('uploaded', true);
+      setValue('filePath', fileLocation);
+      setValue('fileName', fileName);
+    } else {
+      let content = error;
+      let title = 'Review the documents again';
+      if (error === FileErrorType.FORMAT) {
+        content = 'Please check the photo format again.';
+      } else if (error === FileErrorType.SIZE) {
+        content = 'The maximum file attachment size is 5MB. Please check the file size';
+      } else {
+        title = 'Sorry';
+      }
+      setShowAlert({
+        isShow: true,
+        title: title,
+        content: content,
+      });
+    }
+  };
 
   const handleUpload = event => {
     const uploadedFile = event.target?.files?.[0];
     if (uploadedFile) {
-      handleUploadFile(uploadedFile);
+      const options = {
+        maxFileSizeInByte: maxUploadAddressSize,
+        allowedFileTypes: allowedFileTypes,
+        userId: userId,
+      };
+      setShowLoading(true);
+      handleUploadFile(uploadedFile, options, handleUploadCallback);
     }
   };
 
@@ -47,32 +86,77 @@ const AddressInfoSection = ({
     fileInputRef.current.click();
   };
 
-  useEffect(() => {
-    if (error.mess) {
-      setShowAlert({
-        isShow: true,
-        title: 'Review the documents again',
-        content: error.mess,
-      });
-    }
-  }, [error]);
-
   const handleRemoveUpload = e => {
-    e.stopPropagation();
+    e?.stopPropagation();
     setFile('');
+    setValue('uploaded', false);
+    setValue('filePath', '');
+    setValue('fileName', '');
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
 
-  useEffect(() => {
-    setValue('isUpload', file !== '');
-  }, [file]);
-
   const handleFieldAddressOnBlur = () => {
     const updatedAddress = [aptNumber, streetNumber, streetName].filter(Boolean).join(' ');
-    setValue('address1', updatedAddress);
+    setValue('addressLine1', updatedAddress);
   };
+
+  useEffect(() => {
+    if (addressType && userInfo) {
+      const defaultAddress = (userInfo.r_CAME001_1Vo || []).find(item => String(item.cus_adr_t) === addressType) || {};
+      const {
+        cus_adr_zipc,
+        cus_adr_telno,
+        cus_faxno,
+        adr_nat_c,
+        cus_adr1,
+        cus_adr2,
+        cus_adr3,
+        adr_strt_nm,
+        adr_houseno_in_ctt,
+        adr_colny_nm,
+        state_c,
+      } = defaultAddress;
+
+      handleRemoveUpload();
+      if (defaultAddress) {
+        setValue('postalCode', cus_adr_zipc);
+        setValue('phoneNumber', cus_adr_telno);
+        setValue('faxNumber', cus_faxno);
+        setValue('province', state_c);
+        if (adr_nat_c === 'CA' || adr_nat_c === '') {
+          setValue('country', 'CA');
+          setValue('addressLine1', cus_adr1);
+          setValue('city', cus_adr2);
+          setValue('aptNumber', adr_strt_nm);
+          setValue('streetNumber', adr_houseno_in_ctt);
+          setValue('streetName', adr_colny_nm);
+          setValue('address1', '');
+          setValue('address2', '');
+          setValue('address3', '');
+        } else {
+          setValue('country', adr_nat_c);
+          setValue('address1', cus_adr1);
+          setValue('address2', cus_adr2);
+          setValue('address3', cus_adr3);
+          setValue('addressLine1', '');
+          setValue('city', '');
+          setValue('aptNumber', '');
+          setValue('streetNumber', '');
+          setValue('streetName', '');
+        }
+      } else {
+        setValue('postalCode', '');
+        setValue('phoneNumber', '');
+        setValue('faxNumber', '');
+        setValue('addressLine1', '');
+        setValue('city', '');
+        setValue('province', '');
+      }
+      trigger();
+    }
+  }, [addressType]);
 
   return (
     <div className="form__section pt-9">
@@ -84,7 +168,7 @@ const AddressInfoSection = ({
         name="addressType"
         render={({ field }) => (
           <Dropdown
-            label={'Address Type'}
+            label="Address Type"
             onFocus={onOpenAddressTypeBottom}
             options={addressTypeOptions}
             disabled={isDisableAddress}
@@ -95,8 +179,10 @@ const AddressInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label={'Phone Number'}
+            label="Phone Number"
+            regex={notAllowNumberRegex}
             disabled={isDisableAddress}
+            maxLength={30}
             {...field}
           />
         )}
@@ -106,8 +192,10 @@ const AddressInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label={'Fax Number'}
+            label="Fax Number"
+            regex={notAllowNumberRegex}
             disabled={isDisableAddress}
+            maxLength={20}
             {...field}
           />
         )}
@@ -117,7 +205,7 @@ const AddressInfoSection = ({
       <Controller
         render={({ field }) => (
           <Dropdown
-            label={'Country'}
+            label="Country"
             onFocus={onOpenCountryBottom}
             options={countryOptions}
             disabled={isDisableAddress}
@@ -128,23 +216,29 @@ const AddressInfoSection = ({
         name="country"
       />
       <Controller
-        render={({ field }) => (
+        render={({ field: { value, onChange } }) => (
           <Input
-            label={'Postal Code'}
+            label="Postal Code"
             disabled={isDisableAddress}
-            {...field}
+            value={value}
+            maxLength={10}
+            onChange={value => {
+              const upperCaseValue = value ? value.toUpperCase() : '';
+              onChange(upperCaseValue);
+            }}
           />
         )}
         control={control}
         name="postalCode"
       />
-      <div className={`${isCanadaCountrySelected ? 'address__info' : 'hidden__address '}`}>
+      <div className={`${isCanadaCountrySelected ? 'address__info' : 'hidden '}`}>
         <Controller
           render={({ field }) => {
             return (
               <Input
-                label={'APT Number/SUITE Number'}
+                label="APT Number/SUITE Number"
                 disabled={isDisableAddress}
+                maxLength={40}
                 {...field}
                 onBlur={handleFieldAddressOnBlur}
               />
@@ -156,8 +250,9 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label={'Street Number'}
+              label="Street Number"
               disabled={isDisableAddress}
+              maxLength={60}
               {...field}
               onBlur={handleFieldAddressOnBlur}
             />
@@ -168,8 +263,9 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label={'Street Name'}
+              label="Street Name"
               disabled={isDisableAddress}
+              maxLength={80}
               {...field}
               onBlur={handleFieldAddressOnBlur}
             />
@@ -180,19 +276,21 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Address 1"
+              label="Address line 1"
               disabled={isDisableAddress}
+              maxLength={200}
               {...field}
             />
           )}
           control={control}
-          name="address1"
+          name="addressLine1"
         />
         <Controller
           render={({ field }) => (
             <Input
-              label={'City'}
+              label="City"
               disabled={isDisableAddress}
+              maxLength={200}
               {...field}
             />
           )}
@@ -202,7 +300,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Dropdown
-              label={'Province'}
+              label="Province"
               onFocus={onOpenProvinceBottom}
               options={provinceOptions}
               disabled={isDisableAddress}
@@ -213,7 +311,7 @@ const AddressInfoSection = ({
           name="province"
         />
       </div>
-      <div className={`${isCanadaCountrySelected ? 'hidden__address' : 'address__info'}`}>
+      <div className={`${isCanadaCountrySelected ? 'hidden' : 'address__info'}`}>
         <Controller
           render={({ field }) => (
             <Input
@@ -280,7 +378,7 @@ const AddressInfoSection = ({
                 type="file"
                 ref={fileInputRef}
                 onChange={handleUpload}
-                // accept="image/*, application/pdf"
+                accept={allowedFileTypes.join(', ')}
                 className="upload__input__file"
               />
               {file && (
@@ -297,7 +395,7 @@ const AddressInfoSection = ({
             </div>
             <InfoBox
               variant="informative"
-              label="Your address can be easily updated via online by submitting a proff of address document. If you prefer the in-person help, please visit our branches."
+              label="Your address can be easily updated via online by submitting a proof of address document. If you prefer the in-person help, please visit our branches."
             />
           </div>
         </>

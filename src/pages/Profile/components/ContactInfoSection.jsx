@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { ViewDetailIcon } from '@assets/icons';
@@ -7,9 +7,11 @@ import Dropdown from '@common/components/atoms/Dropdown';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import { endpoints } from '@common/constants/endpoint';
+import { notAllowNumberRegex } from '@common/constants/regex';
 import { apiCall } from '@shared/api';
 
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX, employmentValuesDisableOccupation } from '../constants';
+import { changeProfileSchema } from '../schema';
 
 const ContactInfoSection = ({
   onOpenSelectEmploymentBottom,
@@ -20,6 +22,7 @@ const ContactInfoSection = ({
   occupation2Options,
   setShowLoading,
   setShowToast,
+  setShowAlert,
   onClickViewAgreement,
 }) => {
   const {
@@ -27,28 +30,40 @@ const ContactInfoSection = ({
     watch,
     setValue,
     setError,
+    clearErrors,
     formState: { errors },
   } = useFormContext();
 
-  //TODO: Hanle 3 minutes
-
-  const [employment, verificationCode, email] = watch(['employment', 'verificationCode', 'email']);
+  const [employment, verificationCode, email, isEmailVerified] = watch([
+    'employment',
+    'verificationCode',
+    'email',
+    'isEmailVerified',
+  ]);
 
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
   const [showEmailVerifyInfo, setShowEmailVerifyInfo] = useState(false);
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
-  const clearTimeOutRef = useRef();
+  //TODO: Handle use ref for call reset timer of child component
+  const [timer, setTimer] = useState();
 
+  const verifyCodeSessionNumberRef = useRef(null);
+  const clearTimeOutRef = useRef();
   const verifyEmailFailedNumber = useRef(0);
 
   const invalidVerificationCode = verificationCode?.length !== 6;
   const isDisabledOccupation = employmentValuesDisableOccupation.includes(employment);
 
-  const verifyCodeSessionNumberRef = useRef(null);
-
   const handleRequestGetEmailVerifyCode = async () => {
-    if (errors.email) {
+    const emailSchema = changeProfileSchema.pick(['email']);
+    const isEmailValid = emailSchema.isValidSync({ email });
+    if (!isEmailValid) {
+      setShowAlert({
+        isShow: true,
+        title: '',
+        content: 'Please check Your E-mail',
+      });
       return;
     }
     setShowLoading(true);
@@ -57,23 +72,42 @@ const ContactInfoSection = ({
       cus_email: email,
     };
     const requestVerifyResponse = await apiCall(endpoints.requestGetEmailVerifyCode, 'POST', request);
+    setShowLoading(false);
+    const headerResponse = requestVerifyResponse?.data?.elHeader || {};
+    if (!headerResponse.resSuc) {
+      return setShowAlert({
+        isShow: true,
+        title: 'Sorry!',
+        content: headerResponse.resMsg || 'Internal server error',
+      });
+    }
     const responseData = requestVerifyResponse?.data?.elData;
     const resultCode = responseData?.cnt;
     const isDuplicatedEmail = resultCode === 9;
     const isEmailAvailable = resultCode === 0;
-    setShowLoading(false);
     if (isDuplicatedEmail) {
-      //TODO: Show Error
-      return;
+      return setShowAlert({
+        isShow: true,
+        title: '',
+        content: 'This email is already in use',
+      });
     }
 
     if (isEmailAvailable) {
+      if (clearTimeOutRef.current) {
+        clearTimeout(clearTimeOutRef.current);
+      }
+      clearErrors('verificationCode');
+      setValue('isEmailVerified', false);
+      setDisabledVerifyButton(false);
+      setTimer({
+        reset: true,
+      });
+
       const { seqno, new_cus_email } = responseData || {};
       setValue('verifiedEmail', new_cus_email);
       verifyCodeSessionNumberRef.current = seqno;
-      //TODO: Handle clear time out when submit or failed 5 times.
-      //TODO: Focus to verify code input when clicking send button
-      //TODO: Handle reset update timeout for layout verification
+
       clearTimeOutRef.current = setTimeout(() => {
         setError('verificationCode', {
           type: 'timeout',
@@ -83,6 +117,7 @@ const ContactInfoSection = ({
       }, EMAIL_VERIFY_IN_SECONDS * 1000);
       setShowEmailVerifyCode(true);
       setShowEmailVerifyInfo(true);
+
       if (!alreadySendEmailVerification) {
         setAlreadySendEmailVerification(true);
       }
@@ -107,13 +142,13 @@ const ContactInfoSection = ({
       if (verifyEmailFailedNumber.current === EMAIL_VERIFY_RETRY_MAX) {
         setError('verificationCode', {
           type: 'wrong',
-          message: 'You’ve entered the wrong code %1 times. Resend E-mail and try again.',
+          message: `You’ve entered the wrong code ${EMAIL_VERIFY_RETRY_MAX} times. Resend E-mail and try again.`,
         });
         setDisabledVerifyButton(true);
       } else {
         setError('verificationCode', {
           type: 'wrong',
-          message: `You’ve entered the wrong code. (${verifyEmailFailedNumber.current}/5)`,
+          message: `You’ve entered the wrong code. (${verifyEmailFailedNumber.current}/${EMAIL_VERIFY_RETRY_MAX})`,
         });
       }
 
@@ -123,6 +158,7 @@ const ContactInfoSection = ({
     if (isVerifySuccess) {
       setShowEmailVerifyCode(false);
       setValue('isEmailVerified', true);
+      clearErrors('verificationCode');
       setShowToast({
         isShow: true,
         message: 'Email verification is complete.',
@@ -130,6 +166,14 @@ const ContactInfoSection = ({
       });
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (clearTimeOutRef.current) {
+        clearTimeout(clearTimeOutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="form__section">
@@ -139,8 +183,8 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label={'Name'}
-            type={'text'}
+            label="Name"
+            type="text"
             disabled
             {...field}
           />
@@ -151,8 +195,8 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label={'Date of Birth'}
-            type={'text'}
+            label="Date of Birth"
+            type="text"
             disabled
             {...field}
           />
@@ -163,8 +207,8 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label={'SIN'}
-            type={'text'}
+            label="SIN"
+            type="text"
             disabled
             {...field}
           />
@@ -180,8 +224,15 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label={'E-mail address'}
-            type={'text'}
+            label="E-mail Address"
+            type="text"
+            maxLength={40}
+            helperText={
+              isEmailVerified && !showEmailVerifyCode
+                ? 'You need to click the Save button after making changes to apply them.'
+                : ''
+            }
+            {...field}
             endAdornment={
               <Button
                 label={alreadySendEmailVerification ? 'Resend' : 'Send'}
@@ -190,8 +241,6 @@ const ContactInfoSection = ({
                 onClick={handleRequestGetEmailVerifyCode}
               />
             }
-            maxLength={64}
-            {...field}
           />
         )}
         control={control}
@@ -204,6 +253,7 @@ const ContactInfoSection = ({
               label="Verification code"
               type="number"
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
+              timer={timer}
               endAdornment={
                 <Button
                   label="Verify"
@@ -215,6 +265,7 @@ const ContactInfoSection = ({
               }
               maxLength={6}
               errorMessage={errors?.verificationCode?.message || ''}
+              helperText="You need to click the Save button after making changes to apply them."
               {...field}
             />
           )}
@@ -222,18 +273,13 @@ const ContactInfoSection = ({
           name="verificationCode"
         />
       )}
-      {showEmailVerifyInfo && (
-        <InfoBox
-          variant="notice"
-          label="You need to click the Save button after making changes to apply them."
-        />
-      )}
-
       <Controller
         render={({ field }) => (
           <Input
-            label={'Call Number'}
-            type={'text'}
+            label="Call Number"
+            type="text"
+            regex={notAllowNumberRegex}
+            maxLength={30}
             {...field}
           />
         )}
@@ -243,7 +289,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Dropdown
-            label={'Employment'}
+            label="Employment"
             onFocus={onOpenSelectEmploymentBottom}
             options={employmentOptions}
             {...field}
@@ -255,7 +301,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Dropdown
-            label={'Occupation1'}
+            label="Occupation1"
             onFocus={onOpenSelectOccupation1Bottom}
             options={occupation1Options}
             disabled={isDisabledOccupation}
@@ -268,7 +314,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Dropdown
-            label={'Occupation2'}
+            label="Occupation2"
             onFocus={onOpenSelectOccupation2Bottom}
             options={occupation2Options}
             disabled={isDisabledOccupation}
@@ -281,7 +327,8 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label={'Occupation3'}
+            label="Occupation3"
+            maxLength={100}
             {...field}
           />
         )}

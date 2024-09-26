@@ -117,14 +117,16 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
             <SettingIcon />
           </div>
         </div>
-        <div>
-          <Button
-            label="Delete"
-            variant="outlined__gray"
-            className="btn__delete btn__sm"
-            onClick={handleClickDeleteAvatar}
-          />
-        </div>
+        {!!avatarUrl && (
+          <div>
+            <Button
+              label="Delete"
+              variant="outlined__gray"
+              className="btn__delete btn__sm"
+              onClick={handleClickDeleteAvatar}
+            />
+          </div>
+        )}
       </div>
       <ChangePhotoBottom
         open={showChangeProfilePhotoBottom}

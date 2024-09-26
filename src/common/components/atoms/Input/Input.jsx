@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import { SIZE, TAG_NAME } from '@common/components/constants';
 import useComposeRefs from '@hooks/useComposeRefs';
@@ -36,6 +36,7 @@ const Input = forwardRef((props, ref) => {
     onClearInput,
     endAdornment,
     regex,
+    timer,
     ...otherProps
   } = props;
   const [inputValues, setInputValues] = useState(value);
@@ -84,7 +85,7 @@ const Input = forwardRef((props, ref) => {
   };
 
   const handleOnBlur = () => {
-    onBlur();
+    onBlur?.();
     handleFocusStatus('blur');
   };
 
@@ -94,6 +95,17 @@ const Input = forwardRef((props, ref) => {
     // setErrorTextField('');
     onChange();
     onClearInput();
+  };
+
+  const updateCountdown = () => {
+    if (countRef.current > 0) {
+      countRef.current -= 1;
+      if (displayRef.current) {
+        displayRef.current.textContent = formatSecondsDisplay(countRef.current); //Update DOM without rerendering
+      }
+    } else {
+      clearInterval(timerRef.current);
+    }
   };
 
   useEffect(() => {
@@ -107,45 +119,32 @@ const Input = forwardRef((props, ref) => {
 
   useEffect(() => {
     if (remainingTime) {
-      const updateCountdown = () => {
-        if (countRef.current > 0) {
-          countRef.current -= 1;
-          if (displayRef.current) {
-            displayRef.current.textContent = formatSecondsDisplay(countRef.current); //Update DOM without rerendering
-          }
-        } else {
-          clearInterval(timerRef.current);
-        }
-      };
-
       timerRef.current = setInterval(updateCountdown, 1000);
 
       return () => {
         clearInterval(timerRef.current);
       };
-      // let myInterval;
-      // if (!readOnly) {
-      //   myInterval = setInterval(() => {
-      //     if (seconds > 0) {
-      //       setSeconds(seconds - 1);
-      //     }
-      //     if (seconds === 0) {
-      //       if (minutes === 0) {
-      //         clearInterval(myInterval);
-      //       } else {
-      //         setMinutes(minutes - 1);
-      //         setSeconds(59);
-      //       }
-      //     }
-      //   }, 1000);
-      // } else {
-      //   setMinutes(null);
-      // }
-      // return () => {
-      //   clearInterval(myInterval);
-      // };
     }
   }, []);
+
+  useEffect(() => {
+    if (timer && timer.reset && timerRef.current) {
+      clearInterval(timerRef.current);
+      countRef.current = remainingTime;
+      timerRef.current = setInterval(updateCountdown, 1000);
+    }
+  }, [timer]);
+
+  useImperativeHandle(ref, () => ({
+    resetTimer() {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        countRef.current = remainingTime;
+        timerRef.current = setInterval(updateCountdown, 1000);
+      }
+    },
+  }));
+
   return (
     <div className={`text__field ${clazz}`}>
       {isMemo && (

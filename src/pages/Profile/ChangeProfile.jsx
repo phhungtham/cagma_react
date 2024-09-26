@@ -45,8 +45,9 @@ import ProfileAvatar from './components/ProfileAvatar';
 import {
   employmentValuesDisableOccupation,
   fieldsToCheckAddress,
+  fieldsToCheckContactInfo,
+  ProfileChangeType,
   profileFormMapFields,
-  ProfileTransactionFunctionType,
   SELECT_TYPE,
   selectBottomTypeMapField,
 } from './constants';
@@ -80,7 +81,8 @@ const ChangeProfile = ({ translation }) => {
 
   const [showSaveChangeConfirmAlert, setShowSaveChangeConfirmAlert] = useState(false);
   const [showViewAgreementTermBottom, setShowViewAgreementTermBottom] = useState(false);
-  const [defaultAddressInfo, setDefaultAddressInfo] = useState({});
+  const [defaultUserInfo, setDefaultUserInfo] = useState({});
+  const [userId, setUserId] = useState('');
 
   const [showAlert, setShowAlert] = useState({
     isShow: false,
@@ -106,13 +108,20 @@ const ChangeProfile = ({ translation }) => {
     reset,
     watch,
     getValues,
-    formState: { isDirty: isFormDirty },
+    trigger,
+    formState: { isDirty: isFormDirty, isValid, errors },
   } = methods;
 
-  const [employment, occupation1, isUpload] = watch(['employment', 'occupation1', 'isUpload']);
+  const [employment, occupation1, uploaded, addressType] = watch([
+    'employment',
+    'occupation1',
+    'uploaded',
+    'addressType',
+  ]);
 
   const onClickMoveBack = () => {
     if (isFormDirty) {
+      debugger;
       setShowSaveChangeConfirmAlert(true);
       return;
     }
@@ -167,7 +176,7 @@ const ChangeProfile = ({ translation }) => {
     setSelectBottom(initSelectBottom);
   };
 
-  const onChangeSelectBottom = item => {
+  const onChangeSelectBottom = async item => {
     const fieldName = selectBottomTypeMapField[selectBottom.type];
     const value = item.value;
     setValue(fieldName, value);
@@ -183,7 +192,12 @@ const ChangeProfile = ({ translation }) => {
     }
     if (fieldName === 'occupation1') {
       setValue('occupation2', null);
+      setValue('occupation3', '');
     }
+    if (fieldName === 'occupation2') {
+      setValue('occupation3', item.label);
+    }
+    await trigger();
     onCloseSelectBottom();
   };
 
@@ -204,13 +218,16 @@ const ChangeProfile = ({ translation }) => {
     const status = changeProfileResponse?.data?.elData?.result_cd;
     const isUpdateSuccess = Number(status) === 1;
     if (isUpdateSuccess) {
-      //TODO: Check change address for display other message
-      setShowToast({
+      getUserInfoRequest();
+      let message = 'Your profile information has been changed';
+      if (request.file_upd_yn === 'Y') {
+        message = 'Home address will be changed after reviewing submitted documents.';
+      }
+      return setShowToast({
         isShow: true,
-        message: 'Your profile information has been changed',
+        message: message,
         type: 'success',
       });
-      return;
     }
     const responseErrorMessage = changeProfileResponse?.data?.elHeader?.resMsgVo?.msgText;
     if (responseErrorMessage) {
@@ -222,35 +239,62 @@ const ChangeProfile = ({ translation }) => {
     }
   };
 
-  const checkRequireUploadProofAddress = values => {
-    if (defaultAddressInfo.addressType === addressTypeMapping.home) {
-      if (!isUpload) {
-        const isEqualHomeAddressInfo = isEqual(defaultAddressInfo, values, fieldsToCheckAddress);
-        return !isEqualHomeAddressInfo;
-      }
+  const checkRequireUploadProofAddress = () => {
+    if (addressType === addressTypeMapping.home) {
+      return !uploaded;
     }
     return false;
   };
 
-  const onSubmitSaveForm = async values => {
-    const isRequiredUploadProof = checkRequireUploadProofAddress(values);
-    if (isRequiredUploadProof) {
-      return setShowAlert({
-        isShow: true,
-        title: 'Review the documents again',
-        content: 'Please input Upload proof of address',
-      });
+  const checkEmailAlreadyVerified = values => {
+    if (values.email !== defaultUserInfo.email) {
+      return values.isEmailVerified;
     }
+    return true;
+  };
 
-    if (!values.isViewAgreement) {
-      return setShowAlert({
-        isShow: true,
-        title: 'Download Electronic Communication Agreement ',
-        content: 'Please download Electronic Communication Agreement',
-      });
+  const handleSubmitSaveForm = async values => {
+    let transactionFunctionType = ProfileChangeType.CONTACT_ADDRESS;
+    const isChangeContactInfo = !isEqual(defaultUserInfo, values, fieldsToCheckContactInfo);
+    if (isChangeContactInfo) {
+      transactionFunctionType = ProfileChangeType.CONTACT;
+      if (!values.isViewAgreement) {
+        return setShowAlert({
+          isShow: true,
+          title: 'Download Electronic Communication Agreement ',
+          content: 'Please download Electronic Communication Agreement',
+        });
+      }
+      const isEmailVerified = checkEmailAlreadyVerified(values);
+      if (!isEmailVerified) {
+        return setShowAlert({
+          isShow: true,
+          title: '',
+          content: 'Please verify your email',
+        });
+      }
     }
-    setShowLoading(true);
+    const isChangeAddress = !isEqual(defaultUserInfo, values, fieldsToCheckAddress);
+    if (isChangeAddress) {
+      if (transactionFunctionType === ProfileChangeType.CONTACT) {
+        transactionFunctionType = ProfileChangeType.CONTACT_ADDRESS;
+      } else {
+        transactionFunctionType = ProfileChangeType.ADDRESS;
+      }
+      const isRequiredUploadProof = checkRequireUploadProofAddress(values);
+      if (isRequiredUploadProof) {
+        return setShowAlert({
+          isShow: true,
+          title: 'Review the documents again',
+          content: 'Please input Upload proof of address',
+        });
+      }
+    }
+    if (values.country === 'CA') {
+      values.address1 = values.addressLine1;
+    }
     const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
+    //TODO: Check register e-transfer
     // if (isETransferRegistered === '') {
     //   const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
     //   if (getETransferInfoResponse?.data?.elData) {
@@ -261,18 +305,20 @@ const ChangeProfile = ({ translation }) => {
     //   request.etr_reg_yn = isETransferRegistered === 'true' ? 'Y' : 'N';
     // }
     request.etr_reg_yn = 'N';
-    request.chg_yn = 'N'; //TODO: Check address change
-    request.file_upd_yn = 'N'; //TODO: Check photo file uploaded
-    request.trx_func_d = ProfileTransactionFunctionType.USER_INFO_CHANGE;
+    request.chg_yn = isChangeAddress ? 'Y' : 'N';
+    request.file_upd_yn = values.uploaded ? 'Y' : 'N';
+    request.trx_func_d = transactionFunctionType;
     request.cus_adr_t = values.addressType;
-    request.cus_fst_nm = userInfo.cus_fst_nm;
-    request.cus_last_nm = userInfo.cus_last_nm;
-    request.cus_middle_nm = userInfo.cus_middle_nm;
-    request.telno_nat_c = 'CA'; //Find in array home of userInfo to get nat_c
-    request.cus_pst_dspch_apnd_t = userInfo.cus_pst_dspch_apnd_t;
-    request.adr_vrfc_file_path_nm = ''; //File path of upload avatar
-    request.adr_vrfc_file_nm = ''; //File path of upload avatar
-    request.agrmt_downld_yn = 'Y'; //e-transfer registered or not
+    request.cus_fst_nm = userInfo?.cus_fst_nm;
+    request.cus_last_nm = userInfo?.cus_last_nm;
+    request.cus_middle_nm = userInfo?.cus_middle_nm;
+    request.telno_nat_c = 'CA'; //TODO: Find in array home of userInfo to get nat_c
+    request.cus_pst_dspch_apnd_t = userInfo?.cus_pst_dspch_apnd_t;
+    request.adr_vrfc_file_path_nm = values.filePath || '';
+    request.adr_vrfc_file_nm = values.fileName || '';
+    request.agrmt_downld_yn = 'Y';
+    request.cus_city_nm = values.city || userInfo.cus_city_nm;
+    setShowLoading(true);
     const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
     if (changeUserInfoResponse?.data?.elData) {
       const userResponse = changeUserInfoResponse.data.elData;
@@ -329,24 +375,43 @@ const ChangeProfile = ({ translation }) => {
   useEffect(() => {
     if (userInfo) {
       const user = buildObjectMapFromResponse(userInfo, profileFormMapFields);
+      const addressType = userInfo.cus_pst_dspch_apnd_t || addressTypeMapping.home;
       const defaultAddress =
         (userInfo?.r_CAME001_1Vo || []).find(item => String(item.cus_adr_t) === addressTypeMapping.home) ||
         userInfo?.r_CAME001_1Vo?.[0];
-      user.addressType = defaultAddress?.cus_adr_t ? String(defaultAddress?.cus_adr_t) : null;
+      user.addressType = addressType;
       user.phoneNumber = defaultAddress?.cus_adr_telno;
       user.faxNumber = defaultAddress?.cus_faxno;
-      user.aptNumber = defaultAddress?.adr_strt_nm;
+
       user.country = defaultAddress?.adr_nat_c || 'CA'; //Set default is Canada
       user.province = defaultAddress?.state_c;
       user.postalCode = defaultAddress?.cus_adr_zipc;
-      user.streetNumber = defaultAddress?.adr_houseno_in_ctt;
-      user.streetName = defaultAddress?.adr_colny_nm;
-      user.city = defaultAddress?.cus_city_nm;
       user.address1 = defaultAddress?.cus_adr1;
       user.address2 = defaultAddress?.cus_adr2;
       user.address3 = defaultAddress?.cus_adr3;
+      user.isEmailVerified = false;
+      if (user.country === 'CA') {
+        user.aptNumber = defaultAddress?.adr_strt_nm;
+        user.streetNumber = defaultAddress?.adr_houseno_in_ctt;
+        user.streetName = defaultAddress?.adr_colny_nm;
+        user.addressLine1 = defaultAddress?.cus_adr1;
+        user.city = defaultAddress?.cus_adr2;
+        user.address1 = '';
+        user.address2 = '';
+        user.address3 = '';
+      } else {
+        user.aptNumber = '';
+        user.streetNumber = '';
+        user.streetName = '';
+        user.addressLine1 = '';
+        user.address1 = defaultAddress?.cus_adr1;
+        user.address2 = defaultAddress?.cus_adr2;
+        user.address3 = defaultAddress?.cus_adr3;
+      }
       reset(user);
-      setDefaultAddressInfo(user);
+      setDefaultUserInfo(user);
+      setUserId(defaultAddress?.cusno);
+      trigger();
       setShowLoading(false);
     }
   }, [userInfo]);
@@ -367,7 +432,12 @@ const ChangeProfile = ({ translation }) => {
       const convertedCountries = commonCodeDataToOptions(countries);
       const convertedProvince = commonCodeDataToOptions(provinces);
       const filteredAddressTypesForDisplay = (address || []).filter(item =>
-        [addressTypeMapping.home, addressTypeMapping.work, addressTypeMapping.alternativeMailing].includes(item?.key)
+        [
+          addressTypeMapping.home,
+          addressTypeMapping.work,
+          addressTypeMapping.actualWork,
+          addressTypeMapping.alternativeMailing,
+        ].includes(item?.key)
       );
       const convertedAddressTypes = commonCodeDataToOptions(filteredAddressTypesForDisplay);
       setEmploymentOptions(convertedEmployments);
@@ -428,6 +498,7 @@ const ChangeProfile = ({ translation }) => {
               occupation1Options={occupation1Options}
               onOpenSelectOccupation2Bottom={handleOpenSelectOccupation2Bottom}
               occupation2Options={occupation2Options}
+              setShowAlert={setShowAlert}
               setShowLoading={setShowLoading}
               setShowToast={setShowToast}
               onClickViewAgreement={handleShowAgreementTermBottom}
@@ -439,8 +510,10 @@ const ChangeProfile = ({ translation }) => {
               countryOptions={countryOptions}
               onOpenProvinceBottom={handleOpenSelectProvinceBottom}
               provinceOptions={provinceOptions}
-              isDisableAddress={Number(userInfo?.noproc_cnt || 0) > 0}
               setShowAlert={setShowAlert}
+              userId={userId}
+              setShowLoading={setShowLoading}
+              userInfo={userInfo}
             />
           </FormProvider>
         </div>
@@ -449,7 +522,8 @@ const ChangeProfile = ({ translation }) => {
             label="Save"
             variant="filled__primary"
             className="btn__cta"
-            onClick={handleSubmit(onSubmitSaveForm)}
+            onClick={handleSubmit(handleSubmitSaveForm)}
+            disable={!isValid}
           />
         </div>
       </div>
