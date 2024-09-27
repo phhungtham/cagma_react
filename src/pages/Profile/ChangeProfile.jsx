@@ -54,7 +54,7 @@ import {
 import { getUserInfoRequest } from './redux/userInfo/action';
 import { userInfoReducer } from './redux/userInfo/reducer';
 import { userInfoSaga } from './redux/userInfo/saga';
-import { getUserInfoFailedMsg, userInfoSelector } from './redux/userInfo/selector';
+import { getUserInfoFailedMsg, userInfoLoadState, userInfoSelector } from './redux/userInfo/selector';
 import { UserInfoFeatureName } from './redux/userInfo/type';
 import { changeProfileSchema } from './schema';
 import './styles.scss';
@@ -64,8 +64,9 @@ const ChangeProfile = ({ translation }) => {
   useSagas([{ key: UserInfoFeatureName, saga: userInfoSaga }]);
   const userInfo = useSelector(userInfoSelector);
   const getUserFailedMsg = useSelector(getUserInfoFailedMsg);
+  const isLoadingUser = useSelector(userInfoLoadState);
 
-  const { sendRequest: requestGetCommonCode, data: commonCodeData } = useCommonCode();
+  const { sendRequest: requestGetCommonCode, data: commonCodeData, isLoading: isLoadingCommonCode } = useCommonCode();
 
   const [showLoading, setShowLoading] = useState(false);
 
@@ -257,7 +258,7 @@ const ChangeProfile = ({ translation }) => {
       const getETransferInfoResponse = await apiCall(endpoints.inquiryETransferCustomerInfo, 'POST', {});
       if (getETransferInfoResponse?.data?.elData) {
         const { etr_err_c } = getETransferInfoResponse.data.elData || {};
-        const isRegistered = etr_err_c?.indexOf('404') >= 0;
+        const isRegistered = etr_err_c?.indexOf('404') === -1;
         setIsETransferRegistered(String(isRegistered));
         setEtransferInfo(getETransferInfoResponse.data.elData);
         return isRegistered;
@@ -427,9 +428,6 @@ const ChangeProfile = ({ translation }) => {
       setDefaultUserInfo(user);
       setUserId(defaultAddress?.cusno);
       trigger();
-      requestGetCommonCode(
-        [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
-      );
     }
   }, [userInfo]);
 
@@ -463,7 +461,7 @@ const ChangeProfile = ({ translation }) => {
       setAddressTypeOptions(convertedAddressTypes);
       setCountryOptions(convertedCountries);
       setProvinceOptions(convertedProvince);
-      setShowLoading(false);
+      getUserInfoRequest();
     }
   }, [commonCodeData]);
 
@@ -487,14 +485,15 @@ const ChangeProfile = ({ translation }) => {
   }, [getUserFailedMsg]);
 
   useEffect(() => {
-    setShowLoading(true);
-    getUserInfoRequest();
+    requestGetCommonCode(
+      [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
+    );
     getEtransferInfo(getETransferRegisteredCallback);
   }, []);
 
   return (
     <div className="change-profile__wrapper">
-      {showLoading && <Spinner />}
+      {(showLoading || isLoadingCommonCode || isLoadingUser) && <Spinner />}
       <Header
         title="Change Profile"
         onClick={onClickMoveBack}

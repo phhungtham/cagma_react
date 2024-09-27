@@ -352,7 +352,7 @@ const AddressInfoSection = ({
         />
       </div>
 
-      {isShowProofAddress && (
+      {isShowProofAddress && !isDisableAddress && (
         <>
           <div className="divider__item__solid mt-4" />
           <div className="form__section pt-4">
