@@ -13,3 +13,15 @@ export const PeriodUnitCodeDisplay = {
   [ProductPeriodUnitCode.QUARTER]: 'Quarter',
   [ProductPeriodUnitCode.YEAR]: 'Year',
 };
+
+export const ProductTab = {
+  BANKING: '1',
+  INVESTMENT: '2',
+  BORROWING: '3',
+};
+
+export const ProductTabDisplay = {
+  [ProductTab.BANKING]: 'Banking',
+  [ProductTab.INVESTMENT]: 'Investment',
+  [ProductTab.BORROWING]: 'Borrowing',
+};

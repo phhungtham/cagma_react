@@ -93,7 +93,7 @@ const TermAndConditions = ({ onSubmit, product }) => {
             </div>
             {product?.dep_sjt_class && product.dep_sjt_class !== DepositSubjectClass.REGULAR_SAVING && (
               <div className="product__item">
-                <div className="item__label">Tenor</div>
+                <div className="item__label">Terms</div>
                 <div className="item__value">
                   <span className="item__quantity">
                     {product?.prdt_st_trm_unit_cnt}~{product?.prdt_close_trm_unit_cnt}
