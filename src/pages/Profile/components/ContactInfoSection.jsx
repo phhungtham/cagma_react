@@ -42,7 +42,6 @@ const ContactInfoSection = ({
   ]);
 
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
-  const [showEmailVerifyInfo, setShowEmailVerifyInfo] = useState(false);
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   //TODO: Handle use ref for call reset timer of child component
@@ -116,7 +115,6 @@ const ContactInfoSection = ({
         setDisabledVerifyButton(true);
       }, EMAIL_VERIFY_IN_SECONDS * 1000);
       setShowEmailVerifyCode(true);
-      setShowEmailVerifyInfo(true);
 
       if (!alreadySendEmailVerification) {
         setAlreadySendEmailVerification(true);

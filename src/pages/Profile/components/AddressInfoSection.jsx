@@ -61,6 +61,9 @@ const AddressInfoSection = ({
       } else {
         title = 'Sorry';
       }
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
       setShowAlert({
         isShow: true,
         title: title,

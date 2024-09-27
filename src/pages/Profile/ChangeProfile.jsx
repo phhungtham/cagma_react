@@ -228,12 +228,12 @@ const ChangeProfile = ({ translation }) => {
         type: 'success',
       });
     }
-    const responseErrorMessage = changeProfileResponse?.data?.elHeader?.resMsgVo?.msgText;
+    const responseErrorMessage = changeProfileResponse?.data?.elHeader?.resMsg;
     if (responseErrorMessage) {
       setShowAlert({
         isShow: true,
         title: 'Sorry!',
-        content: changeProfileResponse.data.elHeader.resMsgVo.msgText,
+        content: changeProfileResponse.data.elHeader.resMsg,
       });
     }
   };
@@ -258,7 +258,6 @@ const ChangeProfile = ({ translation }) => {
       if (getETransferInfoResponse?.data?.elData) {
         const { etr_err_c } = getETransferInfoResponse.data.elData || {};
         const isRegistered = etr_err_c?.indexOf('404') >= 0;
-        debugger;
         setIsETransferRegistered(String(isRegistered));
         setEtransferInfo(getETransferInfoResponse.data.elData);
         return isRegistered;
@@ -334,6 +333,7 @@ const ChangeProfile = ({ translation }) => {
       request.cus_adr2 = values.address2;
       request.cus_adr1 = values.address1;
     }
+    await apiCall(endpoints.inquiryUserInformation, 'POST');
     const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
     if (changeUserInfoResponse?.data?.elData) {
       const userResponse = changeUserInfoResponse.data.elData;
@@ -349,6 +349,7 @@ const ChangeProfile = ({ translation }) => {
       } else {
         handleRequestChangeProfile(requestChangeProfile);
       }
+      return;
     }
     const responseErrorMessage = changeUserInfoResponse?.data?.elHeader?.resMsg;
     if (responseErrorMessage) {
