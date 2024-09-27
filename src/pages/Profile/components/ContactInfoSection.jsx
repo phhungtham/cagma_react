@@ -66,6 +66,7 @@ const ContactInfoSection = ({
       return;
     }
     setShowLoading(true);
+    //TODO: Check we should call this API before calling send email verification
     await apiCall(endpoints.inquiryUserInformation, 'POST');
     const request = {
       cus_email: email,
@@ -124,7 +125,6 @@ const ContactInfoSection = ({
 
   const handleSendEmailVerifyCode = async () => {
     setShowLoading(true);
-    // await apiCall(endpoints.inquiryUserInformation, 'POST');
     const request = {
       cert_no: verificationCode,
       seqno: verifyCodeSessionNumberRef.current,

@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import CheckBox from '@common/components/atoms/Checkbox';
 import BottomSheet from '@common/components/templates/BottomSheet';
 
-import { eAlertSettingMethodOptions } from '../constants';
+import { EAlertCustomerMethod, eAlertSettingMethodOptions } from '../constants';
 import './styles.scss';
 
-const CustomerInfoChangeBottom = ({ onClose, onSubmit }) => {
+const CustomerInfoChangeBottom = ({ onClose, onSubmit, setting }) => {
   const [checkedOptions, setCheckedOptions] = useState([]);
 
   const handleCheckOption = (value, checked) => {
@@ -18,11 +18,39 @@ const CustomerInfoChangeBottom = ({ onClose, onSubmit }) => {
     }
   };
 
-  const onClickReset = () => {};
+  const onClickReset = () => {
+    setCheckedOptions([]);
+  };
 
   const onClickApply = () => {
-    onSubmit(checkedOptions);
+    let values = {
+      customerEmailEnabled: false,
+      customerAppPushEnabled: false,
+    };
+    if (checkedOptions.includes(EAlertCustomerMethod.EMAIL)) {
+      values.customerEmailEnabled = true;
+    }
+    if (checkedOptions.includes(EAlertCustomerMethod.APP_PUSH)) {
+      values.customerAppPushEnabled = true;
+    }
+    onSubmit(values);
   };
+
+  const initValues = () => {
+    const { customerEmailEnabled, customerAppPushEnabled } = setting || {};
+    let checkedList = [];
+    if (customerEmailEnabled) {
+      checkedList.push(EAlertCustomerMethod.EMAIL);
+    }
+    if (customerAppPushEnabled) {
+      checkedList.push(EAlertCustomerMethod.APP_PUSH);
+    }
+    setCheckedOptions(checkedList);
+  };
+
+  useEffect(() => {
+    initValues();
+  }, [setting]);
 
   return (
     <BottomSheet

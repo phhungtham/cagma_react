@@ -13,4 +13,6 @@ export const routePaths = {
   reportLostCard: '/cards/report-lost',
   releaseCard: '/cards/release',
   transferLimitSetting: '/transfer-limit-setting',
+  eAlertsManagement: '/e-alerts-management',
+  eAlertsBalance: '/e-alerts-balance',
 };

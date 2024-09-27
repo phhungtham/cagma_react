@@ -1,11 +1,16 @@
+export const EAlertCustomerMethod = {
+  EMAIL: '1',
+  APP_PUSH: '2',
+};
+
 export const eAlertSettingMethodOptions = [
   {
     label: 'E-Mail',
-    value: '1',
+    value: EAlertCustomerMethod.EMAIL,
   },
   {
     label: 'App Push',
-    value: '2',
+    value: EAlertCustomerMethod.APP_PUSH,
   },
 ];
 
@@ -46,3 +51,8 @@ export const eAlertLowBalanceWarningOptions = [
     value: 'custom',
   },
 ];
+
+export const EAlertType = {
+  CUSTOMER_INFO: 7,
+  OFFER: 8,
+};

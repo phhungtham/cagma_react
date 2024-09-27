@@ -13,6 +13,7 @@ export const MENU_CODE = {
   ACTIVE_CARD: 'CACA010101',
   REPORT_LOST_CARD: 'CACA010102',
   REISSUE_CARD: '',
+  E_ALERT_BALANCE: '',
 };
 
 export const SupportContactPhoneNumber = '18557446426';

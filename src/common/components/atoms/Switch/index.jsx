@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from 'react';
-
 import PropTypes from 'prop-types';
 
 const Switch = ({ label, type, onChange, positionSelected, active, disabled, children }) => {
-  const [checkValue, setCheckValue] = useState(active);
   const hasIcon = type === 'data';
   const isListType = type === 'list';
   const positionRight = positionSelected === 'right';
 
-  const onChangeValue = e => setCheckValue(e.target.checked);
-
   const toggleChecked = () => {
     if (disabled) return;
-    onChange && onChange(!checkValue);
-    setCheckValue(!checkValue);
+    onChange && onChange(!active);
   };
-
-  useEffect(() => {
-    setCheckValue(active);
-  }, [active]);
 
   return (
     <div className="switch">
@@ -27,8 +17,7 @@ const Switch = ({ label, type, onChange, positionSelected, active, disabled, chi
         <input
           type="checkbox"
           className="switch__input"
-          checked={checkValue}
-          onChange={onChangeValue}
+          checked={!!active}
         />
         <button
           className={`switch__slider ${hasIcon && 'switch__has__icon'} ${disabled && 'disabled'}`}

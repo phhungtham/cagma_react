@@ -1,5 +1,6 @@
 export const endpoints = {
   uploadFile: '/jsp/photoFileUpload.jsp?upload_type=addr',
+  getAccountList: '/ca/iq/CAIQ006.pwkjson',
   openAccount: '/ca/pr/CAPR020.pwkjson',
   inquiryProductInterestRate: '/ca/pr/CAPR002.pwkjson',
   inquiryUserInformation: '/ca/me/CAME001.pwkjson',
@@ -15,4 +16,6 @@ export const endpoints = {
   getBankingTransferLimit: '/ca/me/CAME004.pwkjson',
   changeTransferLimit: '/ca/me/CAME005.pwkjson',
   cancelRequestChangeLimit: '/ca/me/CAME006.pwkjson',
+  getEAlertSetting: '/ca/st/CAST003.pwkjson',
+  updateEAlertSetting: '/ca/st/CAST004.pwkjson',
 };

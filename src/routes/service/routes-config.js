@@ -53,12 +53,12 @@ const RoutesConfig = [
     private: false,
   },
   {
-    path: '/e-alerts-management',
+    path: routePaths.eAlertsManagement,
     component: EAlertsManagement,
     private: false,
   },
   {
-    path: '/e-alerts-balance',
+    path: routePaths.eAlertsBalance,
     component: EAlertsBalance,
     private: false,
   },

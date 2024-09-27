@@ -334,7 +334,6 @@ const ChangeProfile = ({ translation }) => {
       request.cus_adr2 = values.address2;
       request.cus_adr1 = values.address1;
     }
-    await apiCall(endpoints.inquiryUserInformation, 'POST');
     const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
     if (changeUserInfoResponse?.data?.elData) {
       const userResponse = changeUserInfoResponse.data.elData;

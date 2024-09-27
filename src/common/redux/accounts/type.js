@@ -5,7 +5,3 @@ export const ActionType = {
   GET_ACCOUNT_LIST_REQUEST: `${FeatureName}/GET_ACCOUNT_LIST_REQUEST`,
   CLEAN_UP: `${FeatureName}/CLEAN_UP`,
 };
-
-export const AccountURLs = {
-  GET_ACCOUNTS: '/ca/iq/CAIQ006.pwkjson',
-};

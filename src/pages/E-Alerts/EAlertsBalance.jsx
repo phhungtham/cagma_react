@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ArrowRight } from '@assets/icons';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Toast from '@common/components/atoms/Toast';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import Header from '@common/components/organisms/Header';
+import { endpoints } from '@common/constants/endpoint';
+import useApi from '@hooks/useApi';
 import { moveBack } from '@utilities/index';
 
 import CustomerInfoChangeBottom from './components/CustomerInfoChangeBottom';
@@ -14,18 +16,27 @@ import MoneyLeavingAccountBottom from './components/MoneyLeavingAccountBottom';
 import './styles.scss';
 
 const EAlertsBalance = () => {
+  const { requestApi } = useApi();
   const [showCustomerInfoChangeBottom, setShowCustomerInfoChangeBottom] = useState(false);
   const [showMyAccountsBottom, setShowMyAccountBottoms] = useState(false);
   const [showMoneyLeavingAccountBottom, setShowMoneyLeavingAccountBottom] = useState(false);
   const [showMoneyIntoAccountBottom, setShowMoneyIntoAccountBottom] = useState(false);
   const [showLowBalanceWarningBottom, setShowLowBalanceWarningBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
-
+  const [showLoading, setShowLoading] = useState();
+  const [setting, setSetting] = useState();
+  const [serverErrorAlert, setServerErrorAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
     type: 'success',
   });
+
+  console.log('setting :>> ', setting);
 
   // const { handleSubmit, control, setValue } = useForm();
 
@@ -56,9 +67,28 @@ const EAlertsBalance = () => {
 
   const onSelectAccount = account => {
     setSelectedAccount(account);
+    debugger;
     console.log('account :>> ', account);
     setShowMyAccountBottoms(false);
   };
+
+  const requestGetEAlertSetting = async () => {
+    setShowLoading(true);
+    const { isSuccess, error, data } = await requestApi(endpoints.getEAlertSetting, {});
+    setShowLoading(false);
+    if (isSuccess) {
+      setSetting(data);
+    } else {
+      setServerErrorAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  useEffect(() => {
+    requestGetEAlertSetting();
+  }, []);
 
   return (
     <div className="eAlerts-balance__wrapper">
@@ -169,11 +199,13 @@ const EAlertsBalance = () => {
           message={showToast.message}
         />
       </section>
-      <MyAccountsBottom
-        open={showMyAccountsBottom}
-        onClose={() => setShowMyAccountBottoms(false)}
-        onSelect={onSelectAccount}
-      />
+      {showMyAccountsBottom && (
+        <MyAccountsBottom
+          open={showMyAccountsBottom}
+          onClose={() => setShowMyAccountBottoms(false)}
+          onSelect={onSelectAccount}
+        />
+      )}
     </div>
   );
 };
