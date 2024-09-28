@@ -1,0 +1,50 @@
+@import 'styles/utilities/variables';
+
+.body__wrapper {
+  .greeting {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 34px;
+    text-align: left;
+    padding: 20px 24px 16px 24px;
+  }
+  .info {
+    padding: 0px 24px;
+    // .info__icon {
+    //   flex: start;
+    // }
+  }
+  .form__wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 24px 0;
+    gap: 12px;
+    .calendar__icon {
+      position: absolute;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+    }
+  }
+}
+.footer {
+  &__fixed {
+    position: fixed;
+    padding: 24px 24px 30px;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-white;
+    gap: 8px;
+
+    .btn__cta {
+      width: 100%;
+    }
+  }
+}

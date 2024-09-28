@@ -19,6 +19,8 @@ import Login from '@pages/Login/Login';
 import TransferLimitSetting from '@pages/PersonalSetting/TransferLimitSetting';
 import ProductList from '@pages/Product/ProductList';
 import ChangeProfile from '@pages/Profile/ChangeProfile';
+import VerifyIDPage from '@pages/SignUpPage/VerifyIDPage';
+import VerifyInformationPage from '@pages/SignUpPage/VerifyInformationPage';
 import { routePaths } from '@routes/paths';
 
 const RoutesConfig = [
@@ -127,6 +129,16 @@ const RoutesConfig = [
     component: CommonTestPage,
     private: false,
     navigatePath: '/',
+  },
+  {
+    path: routePaths.verifyID,
+    component: VerifyIDPage,
+    private: false,
+  },
+  {
+    path: routePaths.verifyInformation,
+    component: VerifyInformationPage,
+    private: false,
   },
 ];
 
