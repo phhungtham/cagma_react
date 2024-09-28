@@ -1,12 +1,16 @@
 import completeImg from '@assets/images/complete.png';
+import PaymentIcon from '@assets/images/icon-fill-payment-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
+import { ProductCode } from '@common/constants/product';
 import { moveHome } from '@utilities/index';
 
-import { openAccountSuccessFields } from '../../constants';
+import { openAccountSuccessFields } from './constants';
 import './styles.scss';
 
-const OpenAccountSuccessful = ({ openAccountInfo }) => {
-  const { creditChecked, productName } = openAccountInfo || {};
+const OpenAccountSuccessful = ({ openAccountInfo, productName, productCode }) => {
+  const { creditChecked } = openAccountInfo || {};
+  const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
   const onClickViewAccount = () => {};
 
   const onClickNavigateHome = () => {
@@ -31,7 +35,7 @@ const OpenAccountSuccessful = ({ openAccountInfo }) => {
         </div>
         <div className="divider__item__black" />
         <div className="open-account__info">
-          {openAccountSuccessFields.map(({ label, value }) => (
+          {(openAccountSuccessFields[productCode] || []).map(({ label, value }) => (
             <div
               className="account-item"
               key={value}
@@ -43,6 +47,20 @@ const OpenAccountSuccessful = ({ openAccountInfo }) => {
             </div>
           ))}
         </div>
+        {showRRSPButton && (
+          <>
+            <div className="divider__item__solid" />
+            <div className="flex-center mt-8">
+              <IconButton
+                size="lg"
+                type="circle"
+                label="RRSP Contribution Receipt"
+                icon={<img src={PaymentIcon} />}
+                onClick={() => {}}
+              />
+            </div>
+          </>
+        )}
       </div>
       <div className="footer__fixed">
         <Button

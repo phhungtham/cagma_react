@@ -58,3 +58,5 @@ export const hoursFullOptions = [
   '22',
   '23',
 ];
+
+export const dateFormat = 'MMM D, YYYY';

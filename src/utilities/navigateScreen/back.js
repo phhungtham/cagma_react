@@ -1,5 +1,4 @@
 import { AppCfg } from '@configs/appConfigs';
-import { debounce } from 'debounce';
 import { $h } from 'navigation/wmatrix_config';
 
 const moveBack = () => {
@@ -13,4 +12,4 @@ const moveBack = () => {
     []
   );
 };
-export default debounce(moveBack, 200);
+export default moveBack;

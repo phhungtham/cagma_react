@@ -209,8 +209,8 @@ const ProductList = () => {
     );
   };
   const bankingProducts = products.filter(item => item.dep_sjt_class === '1');
-  const investmentProducts = products.filter(item => item.dep_sjt_class === '2');
-  const borrowingProducts = products.filter(item => item.dep_sjt_class === '3');
+  const investmentProducts = products.filter(item => ['2', '3'].includes(item.dep_sjt_class));
+  const borrowingProducts = [];
 
   return (
     <div className="product-list__wrapper">

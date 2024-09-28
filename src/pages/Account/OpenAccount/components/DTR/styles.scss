@@ -1,0 +1,19 @@
+@import 'styles/utilities/variables';
+
+.answer-tax__wrapper {
+  .answer-tax__desc,
+  .tax-question {
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 500;
+    color: $color-gray-600;
+  }
+}
+
+.guide-tax-bottom__wrapper {
+  .guide-tax__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}

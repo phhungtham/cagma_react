@@ -22,6 +22,9 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    &.investment {
+      background-color: $color-green-100;
+    }
   }
 
   .banner {

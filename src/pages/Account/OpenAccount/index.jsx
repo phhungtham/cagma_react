@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 import Spinner from '@common/components/atoms/Spinner';
 import Alert from '@common/components/molecules/Alert';
-import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
@@ -14,11 +13,12 @@ import { routePaths } from '@routes/paths';
 import { apiCall } from '@shared/api';
 import { convertObjectBaseMappingFields } from '@utilities/convert';
 import { formatCurrencyDisplay } from '@utilities/currency';
-import { moveBack, moveNext } from '@utilities/index';
+import { moveNext } from '@utilities/index';
 import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import CustomerInfoBottom from './components/CustomerInfoBottom';
+import DTR from './components/DTR';
 import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
@@ -134,7 +134,7 @@ const OpenAccount = ({ translation }) => {
   }, [showCustomerInfoBottom]);
 
   useEffect(() => {
-    if (jobData) {
+    if (jobData?.job_t) {
       const jobType = customer.job_t;
       const jobMapList = jobData.job_t || [];
       customer.job_display = jobMapList.find(item => item.key === jobType)?.value || '';
@@ -166,10 +166,6 @@ const OpenAccount = ({ translation }) => {
     <>
       <div className="open-account__wrapper">
         {(isLoadingCustomer || isLoadingOpenAccount) && <Spinner />}
-        <Header
-          title="Open Account"
-          onClick={moveBack}
-        />
         {currentStep === OPEN_ACCOUNT_STEP.VIEW_TERMS && (
           <TermAndConditions
             product={productInfo}
@@ -188,12 +184,22 @@ const OpenAccount = ({ translation }) => {
         {currentStep === OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION && (
           <EnterAccountInformation
             onSubmit={onSubmitOpenAccountForm}
-            interestRate={ntfct_intrt}
-            productName={lcl_prdt_nm}
+            product={productInfo}
           />
         )}
         {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && (
-          <OpenAccountSuccessful openAccountInfo={openAccountSuccessInfo} />
+          <OpenAccountSuccessful
+            openAccountInfo={openAccountSuccessInfo}
+            productName={lcl_prdt_nm}
+            productCode={prdt_c}
+          />
+        )}
+        {currentStep === OPEN_ACCOUNT_STEP.DTR && (
+          <DTR
+            openAccountInfo={openAccountSuccessInfo}
+            productName={lcl_prdt_nm}
+            productCode={prdt_c}
+          />
         )}
       </div>
       <Alert

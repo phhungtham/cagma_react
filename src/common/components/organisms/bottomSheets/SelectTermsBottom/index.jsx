@@ -4,18 +4,28 @@ import { ErrorIcon } from '@assets/icons';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Chips from '@common/components/atoms/Chips';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { SelectTermDurationTypes, selectTermsByDateOptions, selectTermsByMonthOptions } from '@common/constants/terms';
+import { dateFormat } from '@common/constants/dateTime';
+import { SelectTermDurationTypes } from '@common/constants/terms';
+import dayjs from 'dayjs';
 
 const typeWithUnitLabel = {
   [SelectTermDurationTypes.MONTH]: 'months',
   [SelectTermDurationTypes.DATE]: 'days',
 };
 
-const SelectTermsBottom = ({ onClose, type = SelectTermDurationTypes.MONTH, onChange, value, max = 60, min = 1 }) => {
+const SelectTermsBottom = ({
+  onClose,
+  type = SelectTermDurationTypes.MONTH,
+  onChange,
+  value,
+  max = 60,
+  min = 1,
+  options = [],
+}) => {
   const [isInvalidValue, setIsInvalidValue] = useState(false);
   const [termValue, setTermValue] = useState(value);
   const inputRef = useRef(null);
-  const options = type === SelectTermDurationTypes.MONTH ? selectTermsByMonthOptions : selectTermsByDateOptions;
+  // const options = type === SelectTermDurationTypes.MONTH ? selectTermsByMonthOptions : selectTermsByDateOptions;
 
   const handleCloseBottomSheet = () => {
     onClose();
@@ -38,6 +48,14 @@ const SelectTermsBottom = ({ onClose, type = SelectTermDurationTypes.MONTH, onCh
   const onClickConfirm = event => {
     onChange(termValue);
     event.preventDefault();
+  };
+
+  const getMaturityDate = () => {
+    const currentDate = dayjs();
+    const addType = type === SelectTermDurationTypes.MONTH ? 'month' : 'day';
+    const maturityDate = currentDate.add(termValue, addType);
+    const formattedDate = maturityDate.format(dateFormat);
+    return formattedDate;
   };
 
   useEffect(() => {
@@ -88,10 +106,12 @@ const SelectTermsBottom = ({ onClose, type = SelectTermDurationTypes.MONTH, onCh
               value={termValue}
             />
           </div>
-          <div className="maturity-date">
-            <span>Maturity date</span>
-            <span>May 25, 2026</span>
-          </div>
+          {termValue && (
+            <div className="maturity-date">
+              <span>Maturity date</span>
+              <span>{getMaturityDate()}</span>
+            </div>
+          )}
           <div className="btn-submit__wrapper">
             <Button
               label="Next"

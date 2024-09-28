@@ -1,3 +1,4 @@
+import { DepositSubjectClass } from '@common/constants/deposit';
 import { fileUrls } from '@common/constants/url';
 
 export const termConditionConfig = {
@@ -22,6 +23,7 @@ export const OPEN_ACCOUNT_STEP = {
   VIEW_TERMS: 'viewTerms',
   ENTER_ACCOUNT_INFORMATION: 'enterAccountInformation',
   COMPLETED: 'completed',
+  DTR: 'dtr',
 };
 
 export const customerInfoFields = [
@@ -55,29 +57,6 @@ export const customerInfoFields = [
   },
 ];
 
-export const openAccountSuccessFields = [
-  {
-    label: 'Product name',
-    value: 'productName',
-  },
-  {
-    label: 'Account no.',
-    value: 'acNo',
-  },
-  {
-    label: 'Interest rate',
-    value: 'interestRate',
-  },
-  {
-    label: 'Amount',
-    value: 'amount',
-  },
-  {
-    label: 'Deposit from',
-    value: 'depositFrom',
-  },
-];
-
 export const openAccountInfo = {
   productName: 'e-Saving(CAD)',
   acNo: '700 000 123123',
@@ -102,4 +81,10 @@ export const accountFormMapFields = {
   relationship: 'tpd_cus_relt_ctt',
   dob: 'tpd_bth_y4mm_dt',
   currency: 'trx_ccy_c',
+};
+
+export const ProductType = {
+  [DepositSubjectClass.REGULAR_SAVING]: 'banking',
+  [DepositSubjectClass.INSTALLMENT_SAVING]: 'investment',
+  [DepositSubjectClass.TERM_DEPOSIT_GIC]: 'investment',
 };

@@ -66,10 +66,13 @@
     align-items: center;
     justify-content: center;
   }
+  .third-party__section {
+    padding-top: 24px;
+  }
   .third_party-form__wrapper {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding-top: 20px;
+    margin-top: 20px;
   }
 }

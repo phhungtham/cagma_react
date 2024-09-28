@@ -4,7 +4,7 @@ import { itemHeight } from '@common/constants/dateTime';
 
 import '../../organisms/bottomSheets/bs_styles.scss';
 
-const ScrollSelect = ({ options, defaultValue, onChangeValue }) => {
+const ScrollSelect = ({ options = [], defaultValue, onChangeValue }) => {
   const containerRef = useRef(null);
   let scrollTimeout = null;
 
@@ -52,7 +52,7 @@ const ScrollSelect = ({ options, defaultValue, onChangeValue }) => {
       scrollToIndex(currentIdx < 0 ? 0 : currentIdx);
 
       const handleEventScroll = () => {
-        const scrollPosition = containerRef.current.scrollTop;
+        const scrollPosition = containerRef.current?.scrollTop;
         const newIndex = Math.round(scrollPosition / itemHeight);
         modifyClassByIndex(newIndex);
 

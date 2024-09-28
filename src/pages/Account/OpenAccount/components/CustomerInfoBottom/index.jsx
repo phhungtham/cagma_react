@@ -15,9 +15,7 @@ const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChan
     >
       <div className="customer-info-bottom__content">
         <section className="instruction-info">
-          <span>
-            By clicking New Account below, you agree that the information displayed above is true and correct.
-          </span>
+          <span>By clicking Next below, you agree that the information displayed above is true and correct.</span>
         </section>
         <div className="divider__item__black mt-4" />
         <div className="customer-info__detail">
@@ -50,7 +48,7 @@ const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChan
           />
           <Button
             variant="filled__primary"
-            label="New Account"
+            label="Next"
             onClick={onClickConfirm}
           />
         </div>

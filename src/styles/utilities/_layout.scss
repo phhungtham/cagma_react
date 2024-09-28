@@ -22,26 +22,26 @@
   }
 
   .mx-#{$i} {
-    margin-left: $i * 4px;
-    margin-right: $i * 4px;
+    margin-left: $i * 4px !important;
+    margin-right: $i * 4px !important;
   }
 
   .my-#{$i} {
-    margin-top: $i * 4px;
-    margin-bottom: $i * 4px;
+    margin-top: $i * 4px !important;
+    margin-bottom: $i * 4px !important;
   }
 
   .pt-#{$i} {
-    padding-top: $i * 4px;
+    padding-top: $i * 4px !important;
   }
 
   .pb-#{$i} {
-    padding-bottom: $i * 4px;
+    padding-bottom: $i * 4px !important;
   }
 
   .py-#{$i} {
-    padding-top: $i * 4px;
-    padding-bottom: $i * 4px;
+    padding-top: $i * 4px !important;
+    padding-bottom: $i * 4px !important;
   }
 
   .px-#{$i} {
