@@ -53,6 +53,15 @@
     }
   }
 
+  .note {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19px;
+    color: $color-gray-550;
+    text-align: center;
+  }
+
   .success-info__item {
     display: flex;
     font-size: 14px;
@@ -68,5 +77,9 @@
 
   .success-info__value {
     font-weight: 500;
+  }
+
+  .success-icon-buttons {
+    @include flexCenter();
   }
 }

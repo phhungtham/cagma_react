@@ -7,7 +7,7 @@ import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 
 import { eAlertSettingMethodOptions } from '../constants';
 
-const BalanceSettingBottomForm = ({ description, balanceOptions }) => {
+const BalanceSettingFormBottom = ({ description, balanceOptions }) => {
   const [selectedAmountOption, setSelectedAmountOption] = useState();
   const [checkedOptions, setCheckedOptions] = useState([]);
 
@@ -85,4 +85,4 @@ const BalanceSettingBottomForm = ({ description, balanceOptions }) => {
   );
 };
 
-export default BalanceSettingBottomForm;
+export default BalanceSettingFormBottom;

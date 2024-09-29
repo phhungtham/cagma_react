@@ -1,7 +1,7 @@
 import BottomSheet from '@common/components/templates/BottomSheet';
 
 import { eAlertLowBalanceWarningOptions } from '../constants';
-import BalanceSettingBottomForm from './BalanceSettingBottomForm';
+import BalanceSettingFormBottom from './BalanceSettingFormBottom';
 import './styles.scss';
 
 const LowBalanceWarningBottom = ({ onClose, onSubmit }) => {
@@ -13,7 +13,7 @@ const LowBalanceWarningBottom = ({ onClose, onSubmit }) => {
       clazz="money-leaving-account__wrapper"
       type="fit-content"
     >
-      <BalanceSettingBottomForm
+      <BalanceSettingFormBottom
         description="Send alert when available balance is less than"
         onConfirm={onSubmit}
         balanceOptions={eAlertLowBalanceWarningOptions}
