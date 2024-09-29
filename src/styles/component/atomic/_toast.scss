@@ -86,4 +86,7 @@
   .toast {
     width: calc(100vw - 48px);
   }
+  &.margin-bottom {
+    bottom: 75px;
+  }
 }

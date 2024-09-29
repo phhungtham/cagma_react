@@ -49,9 +49,6 @@ export const employmentValuesDisableOccupation = [
   '10', //"Unemployed"
 ];
 
-export const EMAIL_VERIFY_IN_SECONDS = 180; //3 minutes
-export const EMAIL_VERIFY_RETRY_MAX = 5;
-
 export const ProfileChangeType = {
   CONTACT_ADDRESS: '2',
   ADDRESS: '4',

@@ -201,6 +201,17 @@ $input-on-background: background-color(dark-sky-blue);
       transform: translateY(-50%);
       font-size: 18px;
     }
+
+    .btn__sm {
+      position: absolute;
+      right: 20px;
+      width: 67px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 
   .input__character__counter {

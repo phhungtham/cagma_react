@@ -40,6 +40,7 @@ Button.propTypes = {
   variant: PropTypes.oneOf([
     'filled__primary',
     'text__primary',
+    'text__gray',
     'outlined__primary',
     'outlined__gray',
     'filled__secondary-blue',

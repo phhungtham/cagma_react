@@ -4,24 +4,28 @@ $icon-circle-sizes: (
     padding: 0px 12px,
     height: 48px,
     font-size: 16px,
+    line-height: 21px,
   ),
   lg: (
     border-radius: 12px,
     padding: 0px 12px,
     height: 44px,
     font-size: 16px,
+    line-height: 21px,
   ),
   md: (
     border-radius: 10px,
     padding: 0px 12px,
     height: 40px,
     font-size: 15px,
+    line-height: 20px,
   ),
   sm: (
     border-radius: 8px,
     padding: 0px 12px,
     height: 32px,
     font-size: 14px,
+    line-height: 19px,
   ),
 );
 
@@ -85,6 +89,7 @@ $icon-circle-sizes: (
         padding: map-get($props, padding);
         min-height: map-get($props, height);
         font-size: map-get($props, font-size);
+        line-height: map-get($props, line-height);
       }
     }
   }

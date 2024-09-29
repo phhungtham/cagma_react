@@ -5,10 +5,12 @@ import ReserveIcon from '@assets/images/icon-fill-calendar-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import InfoBox from '@common/components/atoms/InfoBox';
+import { MENU_CODE } from '@common/constants/common';
 import { externalUrls } from '@common/constants/url';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
+import { routePaths } from '@routes/paths';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
-import { moveHome } from '@utilities/index';
+import { moveHome, moveNext } from '@utilities/index';
 
 import { ButtonResultLabel, VerifyMembershipResultMessages } from './constants';
 
@@ -19,6 +21,10 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
 
   const handleNavigateBranchInfo = () => {
     openURLInBrowser(externalUrls.branchInfo);
+  };
+
+  const handleNavigateAppointmentMain = () => {
+    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
   };
 
   const handleConfirm = () => {
@@ -67,7 +73,7 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
             type="circle"
             label="Reserve Consultation"
             icon={<img src={ReserveIcon} />}
-            onClick={handleNavigateBranchInfo}
+            onClick={handleNavigateAppointmentMain}
           />
         </div>
       </div>

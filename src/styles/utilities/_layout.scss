@@ -80,6 +80,10 @@
   align-items: center;
 }
 
+.flex-column {
+  flex-direction: column;
+}
+
 .opacity-0 {
   opacity: 0;
 }

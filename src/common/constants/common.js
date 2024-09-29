@@ -29,6 +29,9 @@ export const APP_LANGUAGE = {
   CA: 'ca',
 };
 
+export const EMAIL_VERIFY_IN_SECONDS = 180; //3 minutes
+export const EMAIL_VERIFY_RETRY_MAX = 5;
+
 export const delay = (timeout, value) =>
   new Promise(resolve => {
     setTimeout(() => {
