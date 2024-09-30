@@ -3,7 +3,7 @@
 .product-list__wrapper {
   height: 100vh;
   overflow-y: auto;
-  .product-list__content {
+  .scroll-anchor-tab__wrapper {
     & > div:last-child {
       min-height: calc(100vh - 282px);
     }

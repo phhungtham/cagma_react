@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import AnchorTab from '@common/components/atoms/AnchorTab';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
+import ScrollAnchorTabWrapper from '@common/components/templates/ScrollAnchorTabWrapper';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { PeriodUnitCodeDisplay, ProductTab, ProductTabDisplay } from '@common/constants/product';
@@ -20,7 +20,10 @@ import { productList, productLoadState } from './redux/selector';
 import { FeatureName } from './redux/type';
 import './styles.scss';
 
-const SCROLL_THRESHOLD = 5;
+const options = {
+  classHeader: '.header__wrapper',
+  classAnchor: '.anchor__tab__wrapper',
+};
 
 const ProductList = () => {
   useReducers([{ key: FeatureName, reducer: productReducer }]);
@@ -29,13 +32,25 @@ const ProductList = () => {
   const bankingTitleRef = useRef(null);
   const investmentTitleRef = useRef(null);
   const borrowingTitleRef = useRef(null);
-  const termConditionsRef = useRef(null);
+  const sections = useMemo(
+    () => [
+      { ref: bankingTitleRef, tab: ProductTab.BANKING, label: ProductTabDisplay[ProductTab.BANKING] },
+      {
+        ref: investmentTitleRef,
+        tab: ProductTab.INVESTMENT,
+        label: ProductTabDisplay[ProductTab.INVESTMENT],
+      },
+      // { ref: borrowingTitleRef, tab: ProductTab.BORROWING, label: ProductTabDisplay[ProductTab.BORROWING] },
+    ],
+    []
+  );
 
   const products = useSelector(productList) || [];
   const isLoadingProducts = useSelector(productLoadState);
 
-  const [isProgrammaticScrolling, setIsProgrammaticScrolling] = useState(false);
-  const [activeTab, setActiveTab] = useState(ProductTab.BANKING);
+  const bankingProducts = products.filter(item => item.dep_sjt_class === '1');
+  const investmentProducts = products.filter(item => ['2', '3'].includes(item.dep_sjt_class));
+  const borrowingProducts = [];
 
   const handleNavigateOpenAccount = product => {
     moveNext(
@@ -46,95 +61,6 @@ const ProductList = () => {
       routePaths.openAccount
     );
   };
-
-  // Smooth scroll to target and check when scroll finishes
-  const handleScrollToTitle = ref => {
-    const scrollContainer = termConditionsRef.current;
-
-    if (ref?.current && scrollContainer) {
-      const headerHeight = document.querySelector('.header__wrapper').offsetHeight;
-      const anchorTabHeight = document.querySelector('.anchor__tab__wrapper').offsetHeight;
-
-      const scrollToPosition =
-        ref.current.getBoundingClientRect().top + scrollContainer.scrollTop - headerHeight - anchorTabHeight - 20;
-
-      setIsProgrammaticScrolling(true);
-
-      scrollContainer.scrollTo({
-        top: scrollToPosition,
-        behavior: 'smooth',
-      });
-
-      // Use requestAnimationFrame to check when the scrolling is done
-      const checkScrollPosition = () => {
-        const currentScrollTop = scrollContainer.scrollTop;
-        const distanceToTarget = Math.abs(currentScrollTop - scrollToPosition);
-
-        // Check if the scroll position is within the threshold or we have reached the bottom
-        if (distanceToTarget < SCROLL_THRESHOLD) {
-          setIsProgrammaticScrolling(false); // Re-enable scroll event handler
-        } else {
-          requestAnimationFrame(checkScrollPosition); // Continue checking until target is reached
-        }
-      };
-      // Start checking the scroll position
-      requestAnimationFrame(checkScrollPosition);
-    }
-  };
-
-  const handleScrollToActive = () => {
-    if (isProgrammaticScrolling) return;
-
-    const scrollContainer = termConditionsRef.current;
-    const scrollTop = scrollContainer.scrollTop;
-
-    const headerHeight = document.querySelector('.header__wrapper').offsetHeight;
-    const anchorTabHeight = document.querySelector('.anchor__tab__wrapper').offsetHeight;
-
-    // Function to get the offset top and bottom of each section
-    const getSectionOffsets = selector => {
-      const section = document.querySelector(selector);
-      if (section) {
-        const offsetTop = section.offsetTop - headerHeight - anchorTabHeight - 20; // Adjusted for header and tab heights
-        const offsetBottom = offsetTop + section.offsetHeight; // Calculate bottom position
-        return { offsetTop, offsetBottom };
-      }
-      return { offsetTop: -Infinity, offsetBottom: -Infinity };
-    };
-
-    const { offsetTop: offsetTopBanking, offsetBottom: offsetBottomBanking } = getSectionOffsets('.banking__content');
-    const { offsetTop: offsetTopInvestment, offsetBottom: offsetBottomInvestment } =
-      getSectionOffsets('.investment__content');
-    const { offsetTop: offsetTopBorrowing, offsetBottom: offsetBottomBorrowing } =
-      getSectionOffsets('.borrowing__content');
-
-    // Determine active tab based on scroll position and section offsets
-    if (scrollTop >= offsetTopBanking && scrollTop < offsetBottomBanking) {
-      setActiveTab(ProductTab.BANKING);
-    } else if (scrollTop >= offsetTopInvestment && scrollTop < offsetBottomInvestment) {
-      setActiveTab(ProductTab.INVESTMENT);
-    } else if (scrollTop >= offsetTopBorrowing && scrollTop < offsetBottomBorrowing) {
-      setActiveTab(ProductTab.BORROWING);
-    }
-  };
-
-  // Attach scroll event listener
-  useEffect(() => {
-    const scrollContainer = termConditionsRef.current;
-
-    if (scrollContainer) {
-      const handleScroll = () => {
-        if (!isProgrammaticScrolling) {
-          handleScrollToActive();
-        }
-      };
-
-      scrollContainer.addEventListener('scroll', handleScroll);
-      return () => {
-        scrollContainer.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [isProgrammaticScrolling]);
 
   useEffect(() => {
     getProductListRequest({
@@ -155,7 +81,6 @@ const ProductList = () => {
         </div>
         {products.map(product => {
           const itemImg = bannerBaseProductCode[product.prdt_c];
-
           return (
             <div
               className={`product-list__banner ${tabClass}`}
@@ -208,9 +133,6 @@ const ProductList = () => {
       </div>
     );
   };
-  const bankingProducts = products.filter(item => item.dep_sjt_class === '1');
-  const investmentProducts = products.filter(item => ['2', '3'].includes(item.dep_sjt_class));
-  const borrowingProducts = [];
 
   return (
     <div className="product-list__wrapper">
@@ -219,33 +141,10 @@ const ProductList = () => {
         title="Product"
         onClick={moveBack}
       />
-      <AnchorTab
-        type="default"
-        segments={[
-          bankingProducts.length > 0 && {
-            label: ProductTabDisplay[ProductTab.BANKING],
-            value: ProductTab.BANKING,
-            handleClick: () => handleScrollToTitle(bankingTitleRef),
-          },
-          investmentProducts.length > 0 && {
-            label: ProductTabDisplay[ProductTab.INVESTMENT],
-            value: ProductTab.INVESTMENT,
-            handleClick: () => handleScrollToTitle(investmentTitleRef),
-          },
-          borrowingProducts.length > 0 && {
-            label: ProductTabDisplay[ProductTab.BORROWING],
-            value: ProductTab.BORROWING,
-            handleClick: () => handleScrollToTitle(borrowingTitleRef),
-          },
-        ].filter(Boolean)} // Filter out any falsey values
-        defaultActive={activeTab}
-        active={activeTab}
-      />
-
-      <div
-        className="product-list__content"
-        ref={termConditionsRef}
-        onScroll={handleScrollToActive}
+      <ScrollAnchorTabWrapper
+        defaultActiveTab={'2'}
+        sections={sections}
+        options={options}
       >
         {renderProductSection(
           bankingTitleRef,
@@ -268,7 +167,7 @@ const ProductList = () => {
           ProductTabDisplay[ProductTab.BORROWING],
           'borrowing'
         )}
-      </div>
+      </ScrollAnchorTabWrapper>
     </div>
   );
 };
