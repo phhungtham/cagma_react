@@ -30,6 +30,8 @@ export { default as EqualIcon } from './EqualIcon';
 export { default as ErrorIcon } from './ErrorIcon';
 export { default as FillChatIcon } from './FillChatIcon';
 export { default as FillDeleteIcon } from './FillDeleteIcon';
+export { default as FillEyeOffIcon } from './FillEyeOffIcon';
+export { default as FillEyeOnIcon } from './FillEyeOnIcon';
 export { default as FillPhoneIcon } from './FillPhoneIcon';
 export { default as FillTooltipIcon } from './FillTooltipIcon';
 export { default as FilterIcon } from './FilterIcon';

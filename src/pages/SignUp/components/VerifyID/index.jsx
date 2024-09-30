@@ -16,7 +16,7 @@ import { moveBack } from '@utilities/index';
 
 import { verifyIdFormSchema } from './schema';
 
-const VerifyID = ({ onConfirm }) => {
+const SignUpVerifyID = ({ onConfirm }) => {
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
   const {
     control,
@@ -136,4 +136,4 @@ const VerifyID = ({ onConfirm }) => {
   );
 };
 
-export default VerifyID;
+export default SignUpVerifyID;

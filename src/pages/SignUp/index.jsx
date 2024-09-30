@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
+import SignUpCreateID from './components/CreateID';
+import SignUpCreatePassword from './components/CreatePassword';
 import EKYCInProgress from './components/EKYCInProgress';
 import EKYCResult from './components/EKYCResult';
 import SignUpEnterEmail from './components/EnterEmail';
 import EnterPersonalDetail from './components/EnterPersonalDetail';
-import VerifyID from './components/VerifyID';
+import SignUpVerifyID from './components/VerifyID';
 import VerifyIdentityTerms from './components/VerifyIdentityTerms';
 import VerifyMembershipResult from './components/VerifyMembershipResult';
 import VerifyUserInfo from './components/VerifyUserInfo';
@@ -47,13 +49,18 @@ const SignUp = () => {
   };
 
   const handleNavigateCreateId = () => {
+    //TODO: Handle define layout for create your id
     setCurrentStep(SignUpStep.CREATE_ID);
+  };
+
+  const handleCreateId = () => {
+    setCurrentStep(SignUpStep.CREATE_PASSWORD);
   };
 
   return (
     <>
       <div className="sign-up__wrapper">
-        {currentStep === SignUpStep.VERIFY_ID && <VerifyID onConfirm={handleConfirmVerifyID} />}
+        {currentStep === SignUpStep.VERIFY_ID && <SignUpVerifyID onConfirm={handleConfirmVerifyID} />}
         {currentStep === SignUpStep.VERIFY_USER_INFO && <VerifyUserInfo onConfirm={handleConfirmVerifyUserInfo} />}
         {currentStep === SignUpStep.VERIFY_MEMBERSHIP_RESULT && (
           <VerifyMembershipResult
@@ -80,6 +87,8 @@ const SignUp = () => {
             onNavigate={handleNavigateCreateId}
           />
         )}
+        {currentStep === SignUpStep.CREATE_ID && <SignUpCreateID onConfirm={handleCreateId} />}
+        {currentStep === SignUpStep.CREATE_PASSWORD && <SignUpCreatePassword onConfirm={handleCreateId} />}
       </div>
     </>
   );

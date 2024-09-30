@@ -8,6 +8,7 @@ export const SignUpStep = {
   ENTER_PERSONAL_DETAIL: 'enterPersonalDetail',
   EKYC_RESULT: 'ekycResult',
   CREATE_ID: 'createId',
+  CREATE_PASSWORD: 'createPassword',
 };
 
 export const VerifyMembershipResultStatus = {
