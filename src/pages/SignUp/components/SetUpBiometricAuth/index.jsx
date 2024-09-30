@@ -15,6 +15,7 @@ const SetUpBiometricAuth = ({ type, onSkipSetUp }) => {
   const isUsingFaceId = type === BiometricAuthType.FACE_ID;
 
   const handleSetUpBiometricAuth = () => {
+    onSkipSetUp();
     //TODO: Handle setup
   };
 
