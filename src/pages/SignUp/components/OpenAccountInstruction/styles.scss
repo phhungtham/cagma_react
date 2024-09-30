@@ -1,0 +1,39 @@
+@import 'styles/utilities/variables';
+@import 'styles/utilities/mixin';
+
+.open-account-instruction__wrapper {
+  padding: 56px 24px 150px;
+
+  .instruction {
+    &__header {
+      @include flexCenter();
+      flex-direction: column;
+      padding-bottom: 24px;
+    }
+    &__img {
+      height: 152px;
+      @include flexCenter();
+    }
+    &__title {
+      margin-top: 16px;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 28px;
+      text-align: center;
+    }
+    &__note {
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 19px;
+      color: $color-gray-550;
+      text-align: center;
+    }
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid $color-gray-200;
+    }
+  }
+}

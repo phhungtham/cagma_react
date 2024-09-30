@@ -1,0 +1,40 @@
+@import 'styles/utilities/variables';
+
+.agree-terms-conditions__wrapper {
+  .terms-banner {
+    height: 220px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    img {
+      height: 100%;
+    }
+  }
+  .terms-instructions {
+    color: $color-gray-700;
+    font-size: 15px;
+    line-height: 20px;
+    list-style-position: outside;
+    list-style-type: disc;
+    padding-left: 24px;
+    .instruction-item {
+      &::marker {
+        color: $color-gray-600;
+      }
+    }
+  }
+  .terms-subs {
+    color: $color-gray-550;
+    font-size: 13px;
+    line-height: 18px;
+    padding-left: 40px;
+    position: relative;
+    &::before {
+      content: '-';
+      left: 0;
+      position: absolute;
+      padding-left: 25px;
+    }
+  }
+}

@@ -24,7 +24,7 @@ const EnterPersonalDetail = ({ onSubmit }) => {
 
   return (
     <>
-      <div className="page__wrapper">
+      <div>
         <Header
           title="Sign up"
           onClick={moveBack}

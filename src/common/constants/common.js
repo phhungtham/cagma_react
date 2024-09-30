@@ -38,3 +38,8 @@ export const delay = (timeout, value) =>
       resolve(value);
     }, timeout);
   });
+
+export const BiometricAuthType = {
+  FACE_ID: 'faceId',
+  TOUCH_ID: 'touchId',
+};

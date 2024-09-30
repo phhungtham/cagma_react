@@ -17,15 +17,20 @@ const TermConditionChecklist = ({ config, onClickViewTerm, onCheckOption, onChec
 
   return (
     <div className="term-condition-checklist-wrapper">
-      <div className="checklist__check-all">
-        <CheckBox
-          size="large"
-          label={selectAllLabel}
-          onChange={checked => handleSelectAll(checked)}
-          checked={checkedOptions?.length === options.length}
-        />
-      </div>
-      <div className="divider__item__solid" />
+      {!!selectAllLabel && (
+        <>
+          <div className="checklist__check-all">
+            <CheckBox
+              size="large"
+              label={selectAllLabel}
+              onChange={checked => handleSelectAll(checked)}
+              checked={checkedOptions?.length === options.length}
+            />
+          </div>
+          <div className="divider__item__solid" />
+        </>
+      )}
+
       <div className="checklist___options">
         {options.map(({ label, value }) => (
           <div

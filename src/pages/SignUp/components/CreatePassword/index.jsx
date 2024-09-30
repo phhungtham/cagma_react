@@ -97,7 +97,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
                   endAdornment={
                     <div
                       className="input__icon password__icon"
-                      onClick={toggleShowPassword}
+                      onClick={toggleShowConfirmPassword}
                     >
                       {showConfirmPassword ? <FillEyeOnIcon /> : <FillEyeOffIcon />}
                     </div>

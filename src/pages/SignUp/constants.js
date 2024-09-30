@@ -9,6 +9,12 @@ export const SignUpStep = {
   EKYC_RESULT: 'ekycResult',
   CREATE_ID: 'createId',
   CREATE_PASSWORD: 'createPassword',
+  AGREE_TERMS_CONDITIONS: 'agreeTermsConditions',
+  CREATE_PASSCODE: 'createPasscode',
+  SIGN_UP_COMPLETE: 'signUpComplete',
+  SET_UP_BIOMETRIC_AUTH: 'setUpBiometricAuth',
+  SET_UP_ALERTS: 'setUpAlerts',
+  OPEN_ACCOUNT_INSTRUCTION: 'openAccountInstruction',
 };
 
 export const VerifyMembershipResultStatus = {
