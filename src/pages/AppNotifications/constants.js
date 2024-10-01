@@ -67,3 +67,20 @@ export const promotionListDummy = [
     read: true,
   },
 ];
+
+export const NotificationRequestType = {
+  TRANSACTION: '01',
+  OFFER: 'etc',
+};
+
+export const NotificationTabIndex = {
+  TRANSACTIONS: 0,
+  OFFERS: 1,
+  PROMOTIONS: 2,
+};
+
+export const NotificationTabLabel = {
+  TRANSACTIONS: 'Transactions',
+  OFFERS: 'Your Offers',
+  PROMOTIONS: 'Promotions',
+};

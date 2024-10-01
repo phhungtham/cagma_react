@@ -2,16 +2,23 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import LoadingInfinite from '@common/components/atoms/LoadingInfinite';
+import Spinner from '@common/components/atoms/Spinner';
 import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
 import { EMPTY_OBJ } from '@common/constants/common';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { addDateWithMonth } from '@utilities/dateTimeUtils';
-import { isEmpty, moveBack } from '@utilities/index';
+import { getLanguageFM, isEmpty, moveBack } from '@utilities/index';
 import { setLoginState } from 'app/redux/action';
 import { appGlobalReducer } from 'app/redux/reducer';
-import { appPathSelector, loginSelector, nativeParamsSelector, nativeRedirectStateSelector } from 'app/redux/selector';
+import {
+  appLanguage,
+  appPathSelector,
+  loginSelector,
+  nativeParamsSelector,
+  nativeRedirectStateSelector,
+} from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { APP_GLOBAL } from '../../app/redux/type';
@@ -19,48 +26,43 @@ import PromotionDetailBottom from './components/PromotionDetailBottom';
 import PromotionsTab from './components/PromotionsTab';
 import TransactionsTab from './components/TransactionsTab';
 import YourOffersTab from './components/YourOffersTab';
-import { offerListDummy, promotionListDummy, transactionListDummy } from './constants';
+import { NotificationRequestType, NotificationTabIndex, NotificationTabLabel } from './constants';
 import {
   cleanupAppNotification,
-  getBenefitNotificationList,
-  getCheckingNotificationList,
-  getNoticesNotificationList,
+  getOfferNotificationList,
+  getPromotionNotificationList,
+  getTransactionNotificationList,
   setBannerSeqState,
   setTabIndex as setReduxTabIndex,
 } from './redux/action';
 import { appNotificationReducer } from './redux/reducer';
 import { appNotificationSaga } from './redux/saga';
 import {
-  checkingLoadState,
-  listCheckingLoadMoreCnt,
-  listNoticesLoadMoreCnt,
-  noticesLoadState,
+  listOfferLoadMoreCnt,
+  listTransactionLoadMoreCnt,
   offerList,
+  offerLoadState,
   promotionList,
+  promotionLoadState,
   tabIdx,
   transactionList,
+  transactionLoadState,
 } from './redux/selector';
-import { FeatureAppNotificationName, NotificationTab } from './redux/type';
+import { AppNotificationFeatureName } from './redux/type';
 
 const AppNotifications = ({ translate }) => {
-  const TABS = {
-    TRANSACTIONS: translate('Transactions'),
-    YOUR_OFFERS: translate('Your Offers'),
-    PROMOTIONS: translate('Promotions'),
-  };
-
   useReducers([
-    { key: FeatureAppNotificationName, reducer: appNotificationReducer },
+    { key: AppNotificationFeatureName, reducer: appNotificationReducer },
     { key: APP_GLOBAL, reducer: appGlobalReducer },
   ]);
-  useSagas([{ key: FeatureAppNotificationName, saga: appNotificationSaga }]);
-  // const appLang = useSelector(appLanguage);
-  const listCheckingCount = useSelector(listCheckingLoadMoreCnt);
-  const listNoticesCount = useSelector(listNoticesLoadMoreCnt);
+  useSagas([{ key: AppNotificationFeatureName, saga: appNotificationSaga }]);
+  const appLang = useSelector(appLanguage);
+  const listTransactionCount = useSelector(listTransactionLoadMoreCnt);
+  const listOfferCount = useSelector(listOfferLoadMoreCnt);
   const reduxTabIndex = useSelector(tabIdx);
   const [tabIndex, setTabIndex] = useState(reduxTabIndex);
   const [showPromotionDetail, setShowPromotionDetail] = useState(false);
-  const [, setCurrentBenefitDetail] = useState({});
+  const [currentPromotionDetail, setCurrentPromotionDetail] = useState({});
   // const [eventDayRemain, setEventDayRemain] = useState(0);
   const [loadMoreNotify, setLoadMoreNotify] = useState(false);
   // const [benenefitDetailScroll, setBenenefitDetailScroll] = useState('');
@@ -70,50 +72,51 @@ const AppNotifications = ({ translate }) => {
   // const benefitDetailRef = useRef(null);
   const notificationListRef = useRef(null);
 
-  const initRequestCheckingNotify = {
+  const initRequestTransactionsNotify = {
     push_lang_c: null,
     inq_cnt: 0,
     inq_st_dt: addDateWithMonth(3),
-    ums_svc_c: '01',
+    ums_svc_c: NotificationRequestType.TRANSACTION,
   };
 
-  const initRequestNoticesNotify = {
+  const initRequestOffersNotify = {
     push_lang_c: null,
     inq_cnt: 0,
     inq_st_dt: addDateWithMonth(3),
-    ums_svc_c: '10',
+    ums_svc_c: NotificationRequestType.OFFER,
   };
 
-  const [reqDataChecking, setReqDataChecking] = useState({ ...initRequestCheckingNotify });
-  const [reqDataNotices, setReqDataNotices] = useState({ ...initRequestNoticesNotify });
+  const [requestTransactionParams, setRequestTransactionParams] = useState({ ...initRequestTransactionsNotify });
+  const [requestOfferParams, setRequestOfferParams] = useState({ ...initRequestOffersNotify });
 
   // selectors
-  const listTransactionNotify = useSelector(transactionList) || transactionListDummy;
-  const listOfferNotify = useSelector(offerList) || offerListDummy;
-  const listPromotionNotify = useSelector(promotionList) || promotionListDummy;
-  const loadCheckingState = useSelector(checkingLoadState);
-  const loadNoticesState = useSelector(noticesLoadState);
+  const listTransactionNotify = useSelector(transactionList);
+  const listOfferNotify = useSelector(offerList);
+  const listPromotionNotify = useSelector(promotionList);
+  const loadTransactionState = useSelector(transactionLoadState);
+  const loadOfferState = useSelector(offerLoadState);
+  const loadPromotionState = useSelector(promotionLoadState);
   // const checkingLoadErrors = useSelector(checkingLoadFailed);
   // const benefitsLoadErrors = useSelector(benefitsLoadFailed);
   const isNativeRedirect = useSelector(nativeRedirectStateSelector || false);
   const nativeParams = useSelector(nativeParamsSelector);
-  // const currentLang = getLanguageFM(appLang, false);
+  const currentLang = getLanguageFM(appLang, false);
   const appPath = useSelector(appPathSelector);
 
   useEffect(() => {
-    if (appPath !== '/notification') return;
+    // if (appPath !== '/notification') return;
     // setShowBenefitDetail(false);
     if (reduxTabIndex !== undefined) {
       switch (reduxTabIndex) {
-        case 0:
-          firstLoadCheckingList();
+        case [NotificationTabIndex.TRANSACTIONS]:
+          getTransactionListFirstTime();
           break;
-        case 1:
-          firstLoadNoticesList();
+        case [NotificationTabIndex.OFFERS]:
+          getOfferListFirstTime();
           break;
-        case 2:
-          setTabIndex(2);
-          getBenefitNotificationList();
+        case [NotificationTabIndex.PROMOTIONS]:
+          setTabIndex(NotificationTabIndex.PROMOTIONS);
+          getPromotionNotificationList();
           break;
         default:
           break;
@@ -121,8 +124,8 @@ const AppNotifications = ({ translate }) => {
       return;
     }
     if (isEmpty(nativeParams)) {
-      firstLoadCheckingList();
-      setReqDataNotices({ ...initRequestNoticesNotify }); // reset notice request data
+      getTransactionListFirstTime();
+      setRequestOfferParams({ ...initRequestOffersNotify }); // reset offer request data
     }
     return () => {
       cleanupAppNotification();
@@ -133,21 +136,21 @@ const AppNotifications = ({ translate }) => {
     // handle case receive push notify and show tab...
     // ums_svc_c : 6 - Benefit tab
     // ums_svc_c : 1 - Checking tab
-    // ums_svc_c : 10 - Notices tab
+    // ums_svc_c : 10 - Offers tab
     // ums_svc_c : null - Checking tab
     if (isEmpty(nativeParams) || nativeParams === undefined || reduxTabIndex !== undefined) return;
     switch (nativeParams?.ums_svc_c) {
       case '06':
         setTabIndex(2);
-        getBenefitNotificationList();
+        getPromotionNotificationList();
         break;
       case '10':
-        firstLoadNoticesList();
+        getOfferListFirstTime();
         break;
       case '01':
       case null:
       default:
-        firstLoadCheckingList();
+        getTransactionListFirstTime();
         break;
     }
     return () => {
@@ -155,16 +158,16 @@ const AppNotifications = ({ translate }) => {
     };
   }, [nativeParams]);
 
-  const firstLoadCheckingList = () => {
-    setTabIndex(0);
-    getCheckingNotificationList({ ...initRequestCheckingNotify });
-    setReqDataChecking({ ...initRequestCheckingNotify });
+  const getTransactionListFirstTime = () => {
+    setTabIndex(NotificationTabIndex.TRANSACTIONS);
+    getTransactionNotificationList({ ...initRequestTransactionsNotify });
+    setRequestTransactionParams({ ...initRequestTransactionsNotify });
   };
 
-  const firstLoadNoticesList = () => {
+  const getOfferListFirstTime = () => {
     setTabIndex(1);
-    getNoticesNotificationList({ ...initRequestNoticesNotify });
-    setReqDataNotices({ ...initRequestNoticesNotify });
+    getOfferNotificationList({ ...initRequestOffersNotify });
+    setRequestOfferParams({ ...initRequestOffersNotify });
   };
 
   useEffect(() => {
@@ -181,13 +184,13 @@ const AppNotifications = ({ translate }) => {
     // benefitDetailRef.current?.scrollTop = 0;
     if (!showPromotionDetail) {
       setTimeout(() => {
-        setCurrentBenefitDetail(EMPTY_OBJ);
+        setCurrentPromotionDetail(EMPTY_OBJ);
       }, 200);
     }
   }, [showPromotionDetail]);
 
   const handleAppNotificationTouchMove = () => {
-    /* When the user touch to the bottom of the checking list or notice list, fetch more data */
+    /* When the user touch to the bottom of the checking list or offer list, fetch more data */
     if (tabIndex === 0 || tabIndex === 1) {
       fetchDataWhenScrollBottom();
     }
@@ -217,18 +220,19 @@ const AppNotifications = ({ translate }) => {
   const fetchMoreListNotify = () => {
     if (tabIndex === 0) {
       const newListChecking = {
-        ...reqDataChecking,
-        inq_cnt: listCheckingCount !== 0 ? (reqDataChecking.inq_cnt += 50) : reqDataChecking.inq_cnt,
+        ...requestTransactionParams,
+        inq_cnt:
+          listTransactionCount !== 0 ? (requestTransactionParams.inq_cnt += 50) : requestTransactionParams.inq_cnt,
       };
-      getCheckingNotificationList(newListChecking);
-      setReqDataChecking(newListChecking);
+      getTransactionNotificationList(newListChecking);
+      setRequestTransactionParams(newListChecking);
     } else if (tabIndex === 1) {
-      const newListNotices = {
-        ...reqDataNotices,
-        inq_cnt: listNoticesCount !== 0 ? (reqDataNotices.inq_cnt += 50) : reqDataNotices.inq_cnt,
+      const newListOffer = {
+        ...requestOfferParams,
+        inq_cnt: listOfferCount !== 0 ? (requestOfferParams.inq_cnt += 50) : requestOfferParams.inq_cnt,
       };
-      getNoticesNotificationList(newListNotices);
-      setReqDataNotices(newListNotices);
+      getOfferNotificationList(newListOffer);
+      setRequestOfferParams(newListOffer);
     }
   };
 
@@ -247,14 +251,8 @@ const AppNotifications = ({ translate }) => {
   // };
 
   const handleViewPromotionDetail = data => {
-    // if (tabIndex === 0) {
-    //   const screenType = Number(data?.dep_sjt_class);
-    //   const accountNumber = data?.ums_ntc_acno;
-    //   setReduxTabIndex(tabIndex);
-    //   moveToAccountDetailScreen(screenType, accountNumber);
-    // }
     setShowPromotionDetail(true);
-    setCurrentBenefitDetail(data);
+    setCurrentPromotionDetail(data);
   };
 
   // add button Try it now
@@ -277,16 +275,16 @@ const AppNotifications = ({ translate }) => {
 
   const handleTabChange = (tabName, tabIndex) => {
     setTabIndex(tabIndex);
-    if (tabIndex === NotificationTab.TRANSACTIONS && !listTransactionNotify.length) {
-      getCheckingNotificationList({
-        ...reqDataChecking,
+    if (tabIndex === NotificationTabIndex.TRANSACTIONS && !listTransactionNotify?.length) {
+      getTransactionNotificationList({
+        ...requestTransactionParams,
       });
-    } else if (tabIndex === NotificationTab.YOUR_OFFERS && !listOfferNotify.length) {
-      getNoticesNotificationList({
-        ...reqDataNotices,
+    } else if (tabIndex === NotificationTabIndex.OFFERS && !listOfferNotify?.length) {
+      getOfferNotificationList({
+        ...requestOfferParams,
       });
-    } else if (tabIndex === NotificationTab.PROMOTIONS && !listPromotionNotify.length) {
-      getBenefitNotificationList();
+    } else if (tabIndex === NotificationTabIndex.PROMOTIONS && !listPromotionNotify?.length) {
+      getPromotionNotificationList();
     }
   };
 
@@ -334,14 +332,16 @@ const AppNotifications = ({ translate }) => {
   //   }
   // }, [showPromotionDetail, eventDayRemain]);
 
+  console.log('loadPromotionState :>> ', loadPromotionState);
+  console.log('listPromotionNotify :>> ', listPromotionNotify);
+
   return (
     <div className="notification__wrapper">
-      {/* {loadCheckingState && listCheckingNotiy?.length === 0 && <Spinner />}
-      {loadNoticesState && listNoticesNotiy?.length === 0 && <Spinner />}
-      {loadBenefitState && listBenefitNotify?.length === 0 && <Spinner />} */}
+      {loadTransactionState && !listTransactionNotify?.length && <Spinner />}
+      {loadOfferState && !listOfferNotify?.length && <Spinner />}
+      {loadPromotionState && !listPromotionNotify?.length && <Spinner />}
       <div className="notification__header">
         <Header
-          // title={translate('mymen_KHHO202001')}
           title="App Notifications"
           onClick={() => {
             moveBack();
@@ -353,13 +353,13 @@ const AppNotifications = ({ translate }) => {
         <Tabs
           tabList={[
             {
-              title: TABS.TRANSACTIONS,
+              title: NotificationTabLabel.TRANSACTIONS,
             },
             {
-              title: TABS.YOUR_OFFERS,
+              title: NotificationTabLabel.OFFERS,
             },
             {
-              title: TABS.PROMOTIONS,
+              title: NotificationTabLabel.PROMOTIONS,
             },
           ]}
           isLoginAlready={!isLogin}
@@ -368,23 +368,24 @@ const AppNotifications = ({ translate }) => {
         >
           {!isLogin ? (
             <>
-              {tabIndex === NotificationTab.TRANSACTIONS && (
+              {tabIndex === NotificationTabIndex.TRANSACTIONS && (
                 <TransactionsTab
                   ref={notificationListRef}
                   transactionList={listTransactionNotify}
                 />
               )}
-              {tabIndex === NotificationTab.YOUR_OFFERS && (
+              {tabIndex === NotificationTabIndex.OFFERS && (
                 <YourOffersTab
                   ref={notificationListRef}
                   offerList={listOfferNotify}
                 />
               )}
-              {tabIndex === NotificationTab.PROMOTIONS && (
+              {tabIndex === NotificationTabIndex.PROMOTIONS && (
                 <PromotionsTab
                   ref={notificationListRef}
                   promotionList={listPromotionNotify}
                   onClick={handleViewPromotionDetail}
+                  currentLang={currentLang}
                 />
               )}
             </>
@@ -393,11 +394,12 @@ const AppNotifications = ({ translate }) => {
               ref={notificationListRef}
               promotionList={listPromotionNotify}
               onClick={handleViewPromotionDetail}
+              currentLang={currentLang}
             />
           )}
         </Tabs>
 
-        {/* Benefit detail */}
+        {/* Promotion detail */}
         {/* <BottomSheet
           clazz="notification__bottom__sheet"
           type="max"
@@ -459,6 +461,7 @@ const AppNotifications = ({ translate }) => {
         <PromotionDetailBottom
           onClose={() => setShowPromotionDetail(false)}
           onClickSubmit={() => {}}
+          data={currentPromotionDetail}
         />
       )}
       {/* <Alert
@@ -471,8 +474,8 @@ const AppNotifications = ({ translate }) => {
           label: translate('lbl_cta_3006'),
         }}
       /> */}
-      {loadMoreNotify && loadCheckingState && listTransactionNotify.length > 0 && <LoadingInfinite />}
-      {loadMoreNotify && loadNoticesState && listOfferNotify.length > 0 && <LoadingInfinite />}
+      {loadMoreNotify && loadTransactionState && listTransactionNotify.length > 0 && <LoadingInfinite />}
+      {loadMoreNotify && loadOfferState && listOfferNotify.length > 0 && <LoadingInfinite />}
     </div>
   );
 };

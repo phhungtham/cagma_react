@@ -1,26 +1,33 @@
 import { EMPTY_OBJ } from '@common/constants/common';
+import { endpoints } from '@common/constants/endpoint';
 import { all, takeLatest } from 'redux-saga/effects';
 import { Method } from 'shared/api';
 
 import workerSaga from '../../../shared/redux/sagaworker';
-import { ActionType, AppNotifyURLs } from './type';
+import { ActionType } from './type';
 
-export function* getCheckingNotifyList() {
-  yield takeLatest(ActionType.GET_CHECKING_NOTIFY_REQUEST, workerSaga, AppNotifyURLs.CHECKING_NOTIFY, Method.POST, {
+export function* getTransactionNotifyList() {
+  yield takeLatest(
+    ActionType.GET_TRANSACTIONS_NOTIFY_REQUEST,
+    workerSaga,
+    endpoints.getTransactionNotify,
+    Method.POST,
+    {
+      dataPath: '',
+      defaultResponse: EMPTY_OBJ,
+    }
+  );
+}
+
+export function* getOfferNotifyList() {
+  yield takeLatest(ActionType.GET_OFFERS_NOTIFY_REQUEST, workerSaga, endpoints.getOffersNotify, Method.POST, {
     dataPath: '',
     defaultResponse: EMPTY_OBJ,
   });
 }
 
-export function* getNoticesNotifyList() {
-  yield takeLatest(ActionType.GET_NOTICES_NOTIFY_REQUEST, workerSaga, AppNotifyURLs.NOTICES_NOTIFY, Method.POST, {
-    dataPath: '',
-    defaultResponse: EMPTY_OBJ,
-  });
-}
-
-export function* getBenefitNotifyList() {
-  yield takeLatest(ActionType.GET_BENEFITS_NOTIFY_REQUEST, workerSaga, AppNotifyURLs.BENEFIT_NOTIFY, Method.POST, {
+export function* getPromotionNotifyList() {
+  yield takeLatest(ActionType.GET_PROMOTIONS_NOTIFY_REQUEST, workerSaga, endpoints.getPromotionNotify, Method.POST, {
     dataPath: '',
     defaultResponse: EMPTY_OBJ,
     isExtendSession: false,
@@ -28,5 +35,5 @@ export function* getBenefitNotifyList() {
 }
 
 export function* appNotificationSaga() {
-  yield all([getCheckingNotifyList(), getNoticesNotifyList(), getBenefitNotifyList()]);
+  yield all([getTransactionNotifyList(), getOfferNotifyList(), getPromotionNotifyList()]);
 }

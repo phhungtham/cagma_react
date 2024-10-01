@@ -6,7 +6,8 @@ import BottomSheet from '@common/components/templates/BottomSheet';
 
 import './styles.scss';
 
-const PromotionDetailBottom = ({ onClose }) => {
+const PromotionDetailBottom = ({ onClose, data }) => {
+  console.log('data :>> ', data);
   return (
     <BottomSheet
       open

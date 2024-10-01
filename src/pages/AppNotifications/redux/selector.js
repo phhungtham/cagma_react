@@ -1,53 +1,53 @@
-import { FeatureAppNotificationName } from './type';
+import { AppNotificationFeatureName } from './type';
 
 export const transactionList = state => {
-  return state[FeatureAppNotificationName]?.listTransactionNotify?.list;
+  return state[AppNotificationFeatureName]?.listTransactionNotify?.list;
 };
 
 export const offerList = state => {
-  return state[FeatureAppNotificationName]?.listOfferNotify?.list;
+  return state[AppNotificationFeatureName]?.listOfferNotify?.list;
 };
 
 export const promotionList = state => {
-  return state[FeatureAppNotificationName]?.listpromotionNotify?.list;
+  return state[AppNotificationFeatureName]?.listPromotionNotify?.list;
 };
 
-export const listCheckingLoadMoreCnt = state => {
-  return state[FeatureAppNotificationName]?.listCheckingCount;
+export const listTransactionLoadMoreCnt = state => {
+  return state[AppNotificationFeatureName]?.listTransactionCount;
 };
 
-export const listNoticesLoadMoreCnt = state => {
-  return state[FeatureAppNotificationName]?.listNoticesCount;
+export const listOfferLoadMoreCnt = state => {
+  return state[AppNotificationFeatureName]?.listOfferCount;
 };
 
-export const checkingLoadState = state => {
-  return state[FeatureAppNotificationName]?.loadCheckingState;
+export const transactionLoadState = state => {
+  return state[AppNotificationFeatureName]?.loadTransactionState;
 };
 
-export const noticesLoadState = state => {
-  return state[FeatureAppNotificationName]?.loadNoticesState;
+export const offerLoadState = state => {
+  return state[AppNotificationFeatureName]?.loadOfferState;
 };
 
-export const benefitsLoadState = state => {
-  return state[FeatureAppNotificationName]?.loadBenefitState;
+export const promotionLoadState = state => {
+  return state[AppNotificationFeatureName]?.loadPromotionState;
 };
 
-export const checkingLoadFailed = state => {
-  return state[FeatureAppNotificationName]?.loadCheckingListFailed;
+export const transactionLoadFailed = state => {
+  return state[AppNotificationFeatureName]?.loadTransactionListFailed;
 };
 
-export const noticesLoadFailed = state => {
-  return state[FeatureAppNotificationName]?.loadNoticesListFailed;
+export const offerLoadFailed = state => {
+  return state[AppNotificationFeatureName]?.loadOffersListFailed;
 };
 
-export const benefitsLoadFailed = state => {
-  return state[FeatureAppNotificationName]?.loadBenefitListFailed;
+export const promotionLoadFailed = state => {
+  return state[AppNotificationFeatureName]?.loadPromotionListFailed;
 };
 
 export const bannerSeqState = state => {
-  return state[FeatureAppNotificationName]?.loadBannerSeq;
+  return state[AppNotificationFeatureName]?.loadBannerSeq;
 };
 
 export const tabIdx = state => {
-  return state[FeatureAppNotificationName]?.tabIdx;
+  return state[AppNotificationFeatureName]?.tabIdx;
 };

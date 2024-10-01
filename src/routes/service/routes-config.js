@@ -49,7 +49,7 @@ const RoutesConfig = [
     private: false,
   },
   {
-    path: '/notification',
+    path: routePaths.notification,
     component: AppNotifications,
     private: false,
   },

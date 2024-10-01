@@ -113,20 +113,6 @@
       }
     }
   }
-  &__empty {
-    position: absolute;
-    top: 16%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    &__text {
-      font-weight: 400;
-      font-size: 15px;
-      line-height: 1.5;
-      text-align: center;
-      color: $color-gray-500;
-    }
-  }
   &__list {
     overflow-y: scroll;
 

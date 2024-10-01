@@ -25,8 +25,9 @@ const EAlertsManagement = () => {
     customerEmailEnabled: false,
     customerAppPushEnabled: false,
     balanceEnabled: false,
+    accountCount: 0,
   });
-  const [serverErrorAlert, setServerErrorAlert] = useState({
+  const [alert, setAlert] = useState({
     isShow: false,
     title: '',
     content: '',
@@ -43,8 +44,8 @@ const EAlertsManagement = () => {
     setShowCustomerInfoChangeBottom(true);
   };
 
-  const handleCloseServerAlert = () => {
-    setServerErrorAlert({
+  const handleCloseAlert = () => {
+    setAlert({
       isShow: false,
       title: '',
       content: '',
@@ -52,6 +53,13 @@ const EAlertsManagement = () => {
   };
 
   const handleNavigateBalanceSetting = () => {
+    if (!setting.accountCount) {
+      return setAlert({
+        isShow: true,
+        title: 'There’s no account',
+        content: 'Balance can only be set when there is an account.',
+      });
+    }
     moveNext(MENU_CODE.E_ALERT_BALANCE, {}, routePaths.eAlertsBalance);
   };
 
@@ -65,15 +73,17 @@ const EAlertsManagement = () => {
         cus_info_email_yn: customerEmailEnabled,
         cus_info_push_yn: customerAppPushEnabled,
         bal_yn: balanceEnabled,
+        grid_cnt_01: accountCount,
       } = data || {};
       setSetting({
         offerEnabled: Number(offerEnabled) === 1,
         customerEmailEnabled: Number(customerEmailEnabled) === 1,
         customerAppPushEnabled: Number(customerAppPushEnabled) === 1,
         balanceEnabled: Number(balanceEnabled) === 1,
+        accountCount: accountCount,
       });
     } else {
-      setServerErrorAlert({
+      setAlert({
         isShow: true,
         content: error,
       });
@@ -85,7 +95,7 @@ const EAlertsManagement = () => {
     const { isSuccess, error, data } = await requestApi(endpoints.updateEAlertSetting, payload);
     setShowLoading(false);
     if (!isSuccess) {
-      return setServerErrorAlert({
+      return setAlert({
         isShow: true,
         content: error,
       });
@@ -126,7 +136,6 @@ const EAlertsManagement = () => {
     const { result_cd } = await requestUpdateSetting({
       select_d: EAlertType.OFFER,
       push_yn: active ? '01' : '00',
-      email_yn: '01',
     });
 
     if (Number(result_cd) === 1) {
@@ -216,13 +225,13 @@ const EAlertsManagement = () => {
       </div>
       <Alert
         isCloseButton={false}
-        isShowAlert={serverErrorAlert.isShow}
-        title={serverErrorAlert.title}
-        subtitle={serverErrorAlert.content}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
         textAlign="left"
-        onClose={handleCloseServerAlert}
+        onClose={handleCloseAlert}
         firstButton={{
-          onClick: handleCloseServerAlert,
+          onClick: handleCloseAlert,
           label: 'Confirm',
         }}
       />

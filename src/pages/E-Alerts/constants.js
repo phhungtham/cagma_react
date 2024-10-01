@@ -53,6 +53,9 @@ export const eAlertLowBalanceWarningOptions = [
 ];
 
 export const EAlertType = {
+  DEPOSIT: 4,
+  WITHDRAWAL: 5,
+  BALANCE: 6,
   CUSTOMER_INFO: 7,
   OFFER: 8,
 };

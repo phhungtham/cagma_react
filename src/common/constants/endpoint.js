@@ -17,5 +17,7 @@ export const endpoints = {
   changeTransferLimit: '/ca/me/CAME005.pwkjson',
   cancelRequestChangeLimit: '/ca/me/CAME006.pwkjson',
   getEAlertSetting: '/ca/st/CAST003.pwkjson',
-  updateEAlertSetting: '/ca/st/CAST004.pwkjson',
+  getTransactionNotify: '/ca/ho/CAHO001.pwkjson',
+  getOffersNotify: '/ca/ho/CAHO001.pwkjson',
+  getPromotionNotify: '/ca/ho/CAHO002.pwkjson',
 };

@@ -1,69 +1,78 @@
 import { ActionType } from './type';
 
 const initState = {
-  loadCheckingState: false,
-  loadBenefitState: false,
-  listBenefitNotify: {},
-  listCheckingNotify: {
+  loadTransactionState: false,
+  loadTransactionListFailed: '',
+  listTransactionCount: null,
+  listTransactionNotify: {
     list: [],
     list_cnt: 0,
     total_cnt: 0,
   },
-  listCheckingCount: null,
-  loadCheckingListFailed: '',
-  loadBenefitListFailed: '',
+
+  loadOfferState: false,
+  loadOfferListFailed: '',
+  listOfferCount: null,
+  listOfferNotify: {
+    list: [],
+    list_cnt: 0,
+    total_cnt: 0,
+  },
+
+  loadPromotionState: false,
+  listPromotionNotify: {},
+  loadPromotionListFailed: '',
+  listPromotionCount: null,
+
   tabIdx: undefined,
   loadBannerSeq: '',
-  loadNoticesState: false,
-  listNoticesNotify: {
-    list: [],
-    list_cnt: 0,
-    total_cnt: 0,
-  },
-  listNoticesCount: null,
-  loadNoticesListFailed: '',
 };
 
 export const appNotificationReducer = (state = initState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case ActionType.GET_CHECKING_NOTIFY_REQUEST:
-      return { ...state, loadCheckingState: true };
+    case ActionType.GET_TRANSACTIONS_NOTIFY_REQUEST:
+      return { ...state, loadTransactionState: true };
 
-    case ActionType.GET_NOTICES_NOTIFY_REQUEST:
-      return { ...state, loadNoticesState: true };
+    case ActionType.GET_OFFERS_NOTIFY_REQUEST:
+      return { ...state, loadOfferState: true };
 
-    case ActionType.GET_BENEFITS_NOTIFY_REQUEST:
-      return { ...state, loadBenefitState: true };
+    case ActionType.GET_PROMOTIONS_NOTIFY_REQUEST:
+      return { ...state, loadPromotionState: true };
 
-    case ActionType.GET_CHECKING_NOTIFY_REQUEST_SUCCESS:
+    case ActionType.GET_TRANSACTIONS_NOTIFY_REQUEST_SUCCESS:
       if (!payload.elData.list)
-        return { ...state, loadCheckingState: false, listCheckingCount: payload.elData.list_cnt };
+        return { ...state, loadTransactionState: false, listTransactionCount: payload.elData.list_cnt };
       return {
         ...state,
-        listCheckingNotify: { ...payload.elData, list: [...state.listCheckingNotify.list, ...payload.elData.list] },
-        loadCheckingState: false,
+        listTransactionNotify: {
+          ...payload.elData,
+          list: [...state.listTransactionNotify.list, ...payload.elData.list],
+        },
+        loadTransactionState: false,
       };
 
-    case ActionType.GET_NOTICES_NOTIFY_REQUEST_SUCCESS:
-      if (!payload.elData.list) return { ...state, loadNoticesState: false, listNoticesCount: payload.elData.list_cnt };
+    case ActionType.GET_OFFERS_NOTIFY_REQUEST_SUCCESS:
+      if (!payload.elData.list) return { ...state, loadOfferState: false, listOfferCount: payload.elData.list_cnt };
       return {
         ...state,
-        listNoticesNotify: { ...payload.elData, list: [...state.listNoticesNotify.list, ...payload.elData.list] },
-        loadNoticesState: false,
+        listOfferNotify: { ...payload.elData, list: [...state.listOfferNotify.list, ...payload.elData.list] },
+        loadOfferState: false,
       };
 
-    case ActionType.GET_BENEFITS_NOTIFY_REQUEST_SUCCESS:
-      return { ...state, listBenefitNotify: payload.elData, loadBenefitState: false };
+    case ActionType.GET_PROMOTIONS_NOTIFY_REQUEST_SUCCESS:
+      if (!payload.elData.list)
+        return { ...state, loadPromotionState: false, listPromotionCount: payload.elData.list_cnt };
+      return { ...state, listPromotionNotify: payload.elData, loadPromotionState: false };
 
-    case ActionType.GET_CHECKING_NOTIFY_REQUEST_FAILED:
-      return { loadCheckingListFailed: payload.elHeader.resMsgVo, loadCheckingState: false };
+    case ActionType.GET_TRANSACTIONS_NOTIFY_REQUEST_FAILED:
+      return { loadTransactionListFailed: payload.elHeader.resMsgVo, loadTransactionState: false };
 
-    case ActionType.GET_NOTICES_NOTIFY_REQUEST_FAILED:
-      return { loadNoticesListFailed: payload.elHeader.resMsgVo, loadNoticesState: false };
+    case ActionType.GET_OFFERS_NOTIFY_REQUEST_FAILED:
+      return { loadOfferListFailed: payload.elHeader.resMsgVo, loadOfferState: false };
 
-    case ActionType.GET_BENEFITS_NOTIFY_REQUEST_FAILED:
-      return { loadBenefitListFailed: payload.elHeader.resMsgVo, loadBenefitState: false };
+    case ActionType.GET_PROMOTIONS_NOTIFY_REQUEST_FAILED:
+      return { loadPromotionListFailed: payload.elHeader.resMsgVo, loadPromotionState: false };
 
     case ActionType.GET_BANNER_SEQ:
       return { ...state, loadBannerSeq: payload };
