@@ -1,13 +1,35 @@
+import { useMemo, useState } from 'react';
+
 import { ShareLineIcon } from '@assets/icons';
-import testImg from '@assets/images/promotion-detail-test.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import Image from '@common/components/atoms/Image';
 import Label from '@common/components/atoms/Label';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { AppCfg } from '@configs/appConfigs';
+import { totalNumOfDaysBetweenDates } from '@utilities/dateTimeUtils';
+import imgSrcDetected from '@utilities/imgSrcDetected';
+import parserDataToHtml from '@utilities/parserHtml';
 
 import './styles.scss';
 
-const PromotionDetailBottom = ({ onClose, data }) => {
-  console.log('data :>> ', data);
+const maxDateRemaining = 31;
+
+const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry }) => {
+  const { banner_per_from_display: fromDate, banner_per_to_display: toDate } = data || {};
+  const [eventDayRemain, setEventDayRemain] = useState(0);
+
+  const isShowRemainingDateLabel = useMemo(() => {
+    if (data?.banner_per_to) {
+      const remainingDate = totalNumOfDaysBetweenDates(data.banner_per_to);
+      // show event time remaining within the last 31 days..
+      if (remainingDate >= 0 && remainingDate < maxDateRemaining) {
+        setEventDayRemain(remainingDate);
+        return true;
+      }
+    }
+    return false;
+  }, [data]);
+
   return (
     <BottomSheet
       open
@@ -19,44 +41,38 @@ const PromotionDetailBottom = ({ onClose, data }) => {
       <div className="promotion-detail-bottom__content">
         <div className="promotion__header">
           <div className="promotion__title__wrapper">
-            <div className="promotion__title">Spring has sprung!</div>
+            <div className="promotion__title">{parserDataToHtml(data[`banner_main_content_${currentLang}`])}</div>
             <div className="promotion__share">
               <ShareLineIcon />
             </div>
           </div>
           <div className="promotion__period">
-            <Label
-              type="outline"
-              variant="primary"
-              clazz="mr-2"
-            />
-            <span>Mar 18, 2024</span>
-            <span> ~ </span>
-            <span>Mar 25, 2024</span>
+            {isShowRemainingDateLabel && (
+              <Label
+                type="outline"
+                variant="blue"
+                clazz="mr-2"
+                label={`D-${eventDayRemain}`}
+              />
+            )}
+            <span>{`${fromDate} ~ ${toDate}`}</span>
           </div>
         </div>
         <div className="promotion__main">
-          <div className="promotion__main__img">
-            <img
-              src={testImg}
-              alt="Promotion Main"
+          <div className="main__img">
+            <Image
+              src={imgSrcDetected(AppCfg.BASE_URL_IMAGE, data[`banner_bottom_promotion_url_${currentLang}`])}
+              alt="promotion banner"
             />
           </div>
-          <div className="promotion__main__caption">
-            <div>Flip through the diary to find a lovely character!</div>
-            <div>200 random people are chosen every day!</div>
-          </div>
-          <div className="promotion__main__desc">
-            Get a jelly crew 10,000 won coupon by recommending it to your friend, ! (Limited to 100 USD worth purchases)
-              Friends and I got coupons!
-          </div>
-          <div className="promotion__main__sub">* First come, first served for 10,000 candidates</div>
+          <div className="main__desc">{parserDataToHtml(data[`banner_sub_content_${currentLang}`])}</div>
         </div>
-        <div className="bottom__footer btn__ctas">
+        <div className="btn__ctas">
           <Button
             label="Try it now!"
             className="w-full"
             variant="filled__primary"
+            onClick={onClickTry}
           />
         </div>
       </div>

@@ -5,16 +5,17 @@ import LoadingInfinite from '@common/components/atoms/LoadingInfinite';
 import Spinner from '@common/components/atoms/Spinner';
 import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
-import { EMPTY_OBJ } from '@common/constants/common';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { addDateWithMonth } from '@utilities/dateTimeUtils';
-import { getLanguageFM, isEmpty, moveBack } from '@utilities/index';
-import { setLoginState } from 'app/redux/action';
+import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
+import { getLanguageFM, isEmpty, moveBack, moveNext } from '@utilities/index';
+import { setIsNativeClickBack, setLoginState } from 'app/redux/action';
 import { appGlobalReducer } from 'app/redux/reducer';
 import {
   appLanguage,
   appPathSelector,
+  backEventSelector,
   loginSelector,
   nativeParamsSelector,
   nativeRedirectStateSelector,
@@ -38,6 +39,7 @@ import {
 import { appNotificationReducer } from './redux/reducer';
 import { appNotificationSaga } from './redux/saga';
 import {
+  bannerSeqState,
   listOfferLoadMoreCnt,
   listTransactionLoadMoreCnt,
   offerList,
@@ -63,10 +65,8 @@ const AppNotifications = ({ translate }) => {
   const [tabIndex, setTabIndex] = useState(reduxTabIndex);
   const [showPromotionDetail, setShowPromotionDetail] = useState(false);
   const [currentPromotionDetail, setCurrentPromotionDetail] = useState({});
-  // const [eventDayRemain, setEventDayRemain] = useState(0);
   const [loadMoreNotify, setLoadMoreNotify] = useState(false);
-  // const [benenefitDetailScroll, setBenenefitDetailScroll] = useState('');
-  // const [benefitListDisplay, setBenefitListDisplay] = useState([]);
+  const [promotionListDisplay, setPromotionListDisplay] = useState([]);
   // const { isLoading } = useLoginInfo({ isSend: true });
   const isLogin = useSelector(loginSelector);
   // const benefitDetailRef = useRef(null);
@@ -96,12 +96,111 @@ const AppNotifications = ({ translate }) => {
   const loadTransactionState = useSelector(transactionLoadState);
   const loadOfferState = useSelector(offerLoadState);
   const loadPromotionState = useSelector(promotionLoadState);
+  const loadBannerSeq = useSelector(bannerSeqState);
   // const checkingLoadErrors = useSelector(checkingLoadFailed);
   // const benefitsLoadErrors = useSelector(benefitsLoadFailed);
   const isNativeRedirect = useSelector(nativeRedirectStateSelector || false);
   const nativeParams = useSelector(nativeParamsSelector);
   const currentLang = getLanguageFM(appLang, false);
   const appPath = useSelector(appPathSelector);
+  const isNativeBack = useSelector(backEventSelector || false);
+
+  const getTransactionListFirstTime = () => {
+    setTabIndex(NotificationTabIndex.TRANSACTIONS);
+    getTransactionNotificationList({ ...initRequestTransactionsNotify });
+    setRequestTransactionParams({ ...initRequestTransactionsNotify });
+  };
+
+  const getOfferListFirstTime = () => {
+    setTabIndex(1);
+    getOfferNotificationList({ ...initRequestOffersNotify });
+    setRequestOfferParams({ ...initRequestOffersNotify });
+  };
+
+  const handleAppNotificationTouchMove = () => {
+    /* When the user touch to the bottom of the checking list or offer list, fetch more data */
+    if (tabIndex === 0 || tabIndex === 1) {
+      fetchDataWhenScrollBottom();
+    }
+  };
+
+  const fetchDataWhenScrollBottom = () => {
+    const elementScroll = notificationListRef.current;
+    const listAllItem = document.querySelectorAll('.notification');
+    const lastItemEle = listAllItem.length ? listAllItem[listAllItem.length - 1] : null;
+
+    const elementScrollOffset = elementScroll.scrollTop;
+    const elementScrollHeight = elementScroll.clientHeight;
+    const paddingEleStr = window.getComputedStyle(elementScroll).paddingBottom;
+    const paddingEleNumber = +paddingEleStr.substring(0, paddingEleStr.length - 2);
+    const lastRowOffset = lastItemEle.offsetTop + lastItemEle.clientHeight + paddingEleNumber;
+    if (lastRowOffset > Math.floor(elementScrollOffset + elementScrollHeight + 1)) {
+      setLoadMoreNotify(false);
+    } else {
+      setLoadMoreNotify(true);
+    }
+  };
+
+  const handleViewPromotionDetail = data => {
+    setShowPromotionDetail(true);
+    setCurrentPromotionDetail(data);
+  };
+
+  const handleClickTryItNow = () => {
+    const { infomgt_link: linkType, link_url: linkUrl } = currentPromotionDetail || {};
+    if (!linkUrl) return;
+    if (linkType === '4') {
+      setReduxTabIndex(tabIndex);
+      openURLInBrowser(linkUrl);
+    } else if (linkType === '1' || linkType === '2' || linkType === '3') {
+      setReduxTabIndex(tabIndex);
+      moveNext(linkUrl);
+    } else {
+      return;
+    }
+  };
+
+  const handleTabChange = (tabName, tabIndex) => {
+    setTabIndex(tabIndex);
+    if (tabIndex === NotificationTabIndex.TRANSACTIONS && !listTransactionNotify?.length) {
+      getTransactionNotificationList({
+        ...requestTransactionParams,
+      });
+    } else if (tabIndex === NotificationTabIndex.OFFERS && !listOfferNotify?.length) {
+      getOfferNotificationList({
+        ...requestOfferParams,
+      });
+    } else if (tabIndex === NotificationTabIndex.PROMOTIONS && !listPromotionNotify?.length) {
+      getPromotionNotificationList();
+    }
+  };
+
+  const refreshLoginState = () => {
+    setTimeout(() => {
+      setReduxTabIndex(undefined);
+      setBannerSeqState('');
+      setLoginState('');
+    }, 500);
+  };
+
+  const fetchMoreListNotify = () => {
+    if (tabIndex === 0) {
+      const newListChecking = {
+        ...requestTransactionParams,
+        inq_cnt:
+          listTransactionCount !== 0 ? (requestTransactionParams.inq_cnt += 50) : requestTransactionParams.inq_cnt,
+      };
+      getTransactionNotificationList(newListChecking);
+      setRequestTransactionParams(newListChecking);
+    } else if (tabIndex === 1) {
+      const newListOffer = {
+        ...requestOfferParams,
+        inq_cnt: listOfferCount !== 0 ? (requestOfferParams.inq_cnt += 50) : requestOfferParams.inq_cnt,
+      };
+      getOfferNotificationList(newListOffer);
+      setRequestOfferParams(newListOffer);
+    }
+  };
 
   useEffect(() => {
     // if (appPath !== '/notification') return;
@@ -135,9 +234,9 @@ const AppNotifications = ({ translate }) => {
   useEffect(() => {
     // handle case receive push notify and show tab...
     // ums_svc_c : 6 - Benefit tab
-    // ums_svc_c : 1 - Checking tab
+    // ums_svc_c : 1 - Transaction tab
     // ums_svc_c : 10 - Offers tab
-    // ums_svc_c : null - Checking tab
+    // ums_svc_c : null - Transaction tab
     if (isEmpty(nativeParams) || nativeParams === undefined || reduxTabIndex !== undefined) return;
     switch (nativeParams?.ums_svc_c) {
       case '06':
@@ -158,18 +257,6 @@ const AppNotifications = ({ translate }) => {
     };
   }, [nativeParams]);
 
-  const getTransactionListFirstTime = () => {
-    setTabIndex(NotificationTabIndex.TRANSACTIONS);
-    getTransactionNotificationList({ ...initRequestTransactionsNotify });
-    setRequestTransactionParams({ ...initRequestTransactionsNotify });
-  };
-
-  const getOfferListFirstTime = () => {
-    setTabIndex(1);
-    getOfferNotificationList({ ...initRequestOffersNotify });
-    setRequestOfferParams({ ...initRequestOffersNotify });
-  };
-
   useEffect(() => {
     if (notificationListRef.current) {
       // header motion...
@@ -181,60 +268,45 @@ const AppNotifications = ({ translate }) => {
   }, [tabIndex, notificationListRef.current]);
 
   useEffect(() => {
-    // benefitDetailRef.current?.scrollTop = 0;
-    if (!showPromotionDetail) {
-      setTimeout(() => {
-        setCurrentPromotionDetail(EMPTY_OBJ);
-      }, 200);
-    }
-  }, [showPromotionDetail]);
-
-  const handleAppNotificationTouchMove = () => {
-    /* When the user touch to the bottom of the checking list or offer list, fetch more data */
-    if (tabIndex === 0 || tabIndex === 1) {
-      fetchDataWhenScrollBottom();
-    }
-  };
-
-  const fetchDataWhenScrollBottom = () => {
-    const elementScroll = notificationListRef.current;
-    const listAllItem = document.querySelectorAll('.notification');
-    const lastItemEle = listAllItem.length ? listAllItem[listAllItem.length - 1] : null;
-
-    const elementScrollOffset = elementScroll.scrollTop;
-    const elementScrollHeight = elementScroll.clientHeight;
-    const paddingEleStr = window.getComputedStyle(elementScroll).paddingBottom;
-    const paddingEleNumber = +paddingEleStr.substring(0, paddingEleStr.length - 2);
-    const lastRowOffset = lastItemEle.offsetTop + lastItemEle.clientHeight + paddingEleNumber;
-    if (lastRowOffset > Math.floor(elementScrollOffset + elementScrollHeight + 1)) {
-      setLoadMoreNotify(false);
-    } else {
-      setLoadMoreNotify(true);
-    }
-  };
-
-  useEffect(() => {
     loadMoreNotify && fetchMoreListNotify();
   }, [loadMoreNotify]);
 
-  const fetchMoreListNotify = () => {
-    if (tabIndex === 0) {
-      const newListChecking = {
-        ...requestTransactionParams,
-        inq_cnt:
-          listTransactionCount !== 0 ? (requestTransactionParams.inq_cnt += 50) : requestTransactionParams.inq_cnt,
-      };
-      getTransactionNotificationList(newListChecking);
-      setRequestTransactionParams(newListChecking);
-    } else if (tabIndex === 1) {
-      const newListOffer = {
-        ...requestOfferParams,
-        inq_cnt: listOfferCount !== 0 ? (requestOfferParams.inq_cnt += 50) : requestOfferParams.inq_cnt,
-      };
-      getOfferNotificationList(newListOffer);
-      setRequestOfferParams(newListOffer);
+  useEffect(() => {
+    //TODO: Confirm
+    // display only "display_pos"== "8" and sort with banner_seq big to small
+    // 8: Benefits
+    if (!listPromotionNotify) return;
+    if (tabIndex === NotificationTabIndex.PROMOTIONS) {
+      const filteredPromotion = listPromotionNotify.filter(item => {
+        return item?.display_pos === '8';
+      });
+      filteredPromotion.sort((firstData, secondData) => secondData.banner_seq - firstData.banner_seq);
+      setPromotionListDisplay(filteredPromotion);
     }
-  };
+  }, [tabIndex, listPromotionNotify]);
+
+  useEffect(() => {
+    if (nativeParams !== undefined && !isEmpty(nativeParams) && promotionListDisplay && loadBannerSeq === '') {
+      const promotion = promotionListDisplay.find(e => e.banner_seq.toString() === nativeParams?.banner_seq_benefit);
+      if (promotion && tabIndex === 2) {
+        handleViewPromotionDetail(promotion);
+        setBannerSeqState(promotion.banner_seq.toString());
+      }
+    }
+  }, [promotionListDisplay, nativeParams]);
+
+  useEffect(() => {
+    if (showPromotionDetail && isNativeBack) {
+      setShowPromotionDetail(false);
+    }
+    if (!showPromotionDetail && isNativeBack) {
+      moveBack();
+      refreshLoginState();
+    }
+    return () => {
+      setIsNativeClickBack(false);
+    };
+  }, [isNativeBack, showPromotionDetail]);
 
   // const moveToAccountDetailScreen = (screenType, accountNumber) => {
   //   const accountNumberParam = JSON.stringify({
@@ -250,91 +322,6 @@ const AppNotifications = ({ translate }) => {
   //   return;
   // };
 
-  const handleViewPromotionDetail = data => {
-    setShowPromotionDetail(true);
-    setCurrentPromotionDetail(data);
-  };
-
-  // add button Try it now
-  // const handleClickTryItNow = () => {
-  //   if (!currentBenefitDetail.link_url) return;
-  //   if (currentBenefitDetail.infomgt_link === '4') {
-  //     setReduxTabIndex(tabIndex);
-  //     showPDFView(currentBenefitDetail.link_url);
-  //   } else if (
-  //     currentBenefitDetail.infomgt_link === '1' ||
-  //     currentBenefitDetail.infomgt_link === '2' ||
-  //     currentBenefitDetail.infomgt_link === '3'
-  //   ) {
-  //     setReduxTabIndex(tabIndex);
-  //     moveNext(currentBenefitDetail.link_url);
-  //   } else {
-  //     return;
-  //   }
-  // };
-
-  const handleTabChange = (tabName, tabIndex) => {
-    setTabIndex(tabIndex);
-    if (tabIndex === NotificationTabIndex.TRANSACTIONS && !listTransactionNotify?.length) {
-      getTransactionNotificationList({
-        ...requestTransactionParams,
-      });
-    } else if (tabIndex === NotificationTabIndex.OFFERS && !listOfferNotify?.length) {
-      getOfferNotificationList({
-        ...requestOfferParams,
-      });
-    } else if (tabIndex === NotificationTabIndex.PROMOTIONS && !listPromotionNotify?.length) {
-      getPromotionNotificationList();
-    }
-  };
-
-  // const benefitBottomScroll = () => {
-  //   const scrollTop = benefitDetailRef.current.scrollTop;
-  //   if (scrollTop > 20) {
-  //     setBenenefitDetailScroll('btsheet_detail_scroll');
-  //   } else {
-  //     setBenenefitDetailScroll('');
-  //   }
-  // };
-
-  // const checkEventTime = date => {
-  //   if (!date) return;
-  //   const distanceDate = totalNumOfDaysBetweenDates(date);
-
-  //   // show event time remaining within the last 31 days..
-  //   if (distanceDate >= 0 && distanceDate < 31) {
-  //     setEventDayRemain(distanceDate);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
-  const refeshLoginState = () => {
-    setTimeout(() => {
-      setReduxTabIndex(undefined);
-      setBannerSeqState('');
-      setLoginState('');
-    }, 500);
-  };
-
-  // const timeEventLabelJSX = useMemo(() => {
-  //   if (showPromotionDetail) {
-  //     return (
-  //       checkEventTime(currentBenefitDetail.banner_per_to) && (
-  //         <Label
-  //           clazz={benenefitDetailScroll}
-  //           label={`D-${eventDayRemain}`}
-  //           variant="primary"
-  //         />
-  //       )
-  //     );
-  //   }
-  // }, [showPromotionDetail, eventDayRemain]);
-
-  console.log('loadPromotionState :>> ', loadPromotionState);
-  console.log('listPromotionNotify :>> ', listPromotionNotify);
-
   return (
     <div className="notification__wrapper">
       {loadTransactionState && !listTransactionNotify?.length && <Spinner />}
@@ -345,7 +332,7 @@ const AppNotifications = ({ translate }) => {
           title="App Notifications"
           onClick={() => {
             moveBack();
-            refeshLoginState();
+            refreshLoginState();
           }}
         />
       </div>
@@ -398,70 +385,14 @@ const AppNotifications = ({ translate }) => {
             />
           )}
         </Tabs>
-
-        {/* Promotion detail */}
-        {/* <BottomSheet
-          clazz="notification__bottom__sheet"
-          type="max"
-          open={showBenefitDetail}
-          onClose={() => {
-            setShowBenefitDetail(false);
-          }}
-        >
-          <section className="benefit__detail__header">
-            <div className={`top ${benenefitDetailScroll}`}>
-              <div className="top__info">
-                {timeEventLabelJSX}
-                <div className="time">
-                  <Span
-                    clazz="time__start"
-                    text={formatDate(currentBenefitDetail.banner_per_from)}
-                  />
-                  <Span text="-" />
-                  <Span
-                    clazz="time__end"
-                    text={formatDate(currentBenefitDetail.banner_per_to)}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="title">
-              <Span text={parserDataToHtml(currentBenefitDetail[`banner_main_content_${currentLang}`])} />
-            </div>
-          </section>
-
-          <section
-            className="benefit__detail__content"
-            ref={benefitDetailRef}
-            onScroll={benefitBottomScroll}
-          >
-            <div className="benefit__detail__promotions">
-              <Image
-                src={imgSrcDetected(
-                  AppCfg.BASE_URL_IMAGE,
-                  currentBenefitDetail[`banner_bottom_promotion_url_${currentLang}`]
-                )}
-                alt="benefit_promotion"
-              />
-              <Span text={parserDataToHtml(currentBenefitDetail[`banner_sub_content_${currentLang}`])} />
-              <div className="btn__wrapper">
-                <button
-                  className="btn__try__it__now"
-                  onClick={handleClickTryItNow}
-                >
-                  {translate('lbl_cta_3247')}
-                </button>
-              </div>
-            </div>
-          </section>
-        </BottomSheet> */}
       </div>
       {/* show alert notify when get data failed */}
       {showPromotionDetail && (
         <PromotionDetailBottom
           onClose={() => setShowPromotionDetail(false)}
-          onClickSubmit={() => {}}
+          onClickTry={handleClickTryItNow}
           data={currentPromotionDetail}
+          currentLang={currentLang}
         />
       )}
       {/* <Alert
