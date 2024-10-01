@@ -36,7 +36,7 @@ const Input = forwardRef((props, ref) => {
     onClearInput,
     endAdornment,
     regex,
-    timer,
+    onResetTimer,
     ...otherProps
   } = props;
   const [inputValues, setInputValues] = useState(value);
@@ -128,23 +128,17 @@ const Input = forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
-    if (timer && timer.reset && timerRef.current) {
-      clearInterval(timerRef.current);
-      countRef.current = remainingTime;
-      timerRef.current = setInterval(updateCountdown, 1000);
-    }
-  }, [timer]);
-
-  useImperativeHandle(ref, () => ({
-    resetTimer() {
-      if (timerRef.current) {
+    if (onResetTimer && typeof onResetTimer === 'function') {
+      onResetTimer(() => {
         clearInterval(timerRef.current);
         countRef.current = remainingTime;
         timerRef.current = setInterval(updateCountdown, 1000);
-      }
-    },
-  }));
-
+      });
+    }
+    return () => {
+      clearInterval(timerRef.current);
+    };
+  }, []);
   return (
     <div className={`text__field ${clazz}`}>
       {isMemo && (
@@ -254,6 +248,7 @@ Input.propTypes = {
   mode: PropTypes.oneOf(['normal', 'onBackground']),
   type: PropTypes.oneOf(['text', 'password', 'number', 'email']),
   onClearInput: PropTypes.func,
+  onResetTimer: PropTypes.func,
 };
 
 Input.defaultProps = {
@@ -277,6 +272,7 @@ Input.defaultProps = {
   onFocus: () => {},
   onBlur: () => {},
   onClearInput: () => {},
+  onResetTimer: () => {},
 };
 
 export default Input;

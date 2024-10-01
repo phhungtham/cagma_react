@@ -46,7 +46,6 @@ const ContactInfoSection = ({
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   //TODO: Handle use ref for call reset timer of child component
-  const [timer, setTimer] = useState();
 
   const verifyCodeSessionNumberRef = useRef(null);
   const clearTimeOutRef = useRef();
@@ -54,6 +53,7 @@ const ContactInfoSection = ({
 
   const invalidVerificationCode = verificationCode?.length !== 6;
   const isDisabledOccupation = employmentValuesDisableOccupation.includes(employment);
+  const verifyTimerResetRef = useRef(null);
 
   const handleRequestGetEmailVerifyCode = async () => {
     const emailSchema = changeProfileSchema.pick(['email']);
@@ -101,9 +101,8 @@ const ContactInfoSection = ({
       clearErrors('verificationCode');
       setValue('isEmailVerified', false);
       setDisabledVerifyButton(false);
-      setTimer({
-        reset: true,
-      });
+
+      if (verifyTimerResetRef.current) verifyTimerResetRef.current();
 
       const { seqno, new_cus_email } = responseData || {};
       setValue('verifiedEmail', new_cus_email);
@@ -252,7 +251,7 @@ const ContactInfoSection = ({
               label="Verification code"
               type="number"
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
-              timer={timer}
+              onResetTimer={cb => (verifyTimerResetRef.current = cb)}
               endAdornment={
                 <Button
                   label="Verify"
