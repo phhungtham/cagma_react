@@ -67,7 +67,6 @@ const EAlertsBalance = () => {
 
   const onSelectAccount = account => {
     setSelectedAccount(account);
-    debugger;
     console.log('account :>> ', account);
     setShowMyAccountBottoms(false);
   };

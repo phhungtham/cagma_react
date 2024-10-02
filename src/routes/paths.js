@@ -1,4 +1,5 @@
 export const routePaths = {
+  notification: '/notification',
   productList: '/products',
   openAccount: '/open-account',
   changeProfile: '/change-profile',

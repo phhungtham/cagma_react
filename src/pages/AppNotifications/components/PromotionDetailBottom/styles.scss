@@ -2,6 +2,7 @@
 @import 'styles/utilities/mixin';
 
 .promotion-detail-bottom__content {
+  padding-bottom: 150px;
   .promotion {
     &__header {
       padding: 16px 0;
@@ -29,26 +30,20 @@
     }
     &__main {
       padding-top: 16px;
-      &__img {
-        height: 208px;
+      .main__img {
+        display: flex;
+        justify-content: center;
+        img {
+          height: 100%;
+          width: 100%;
+          border-radius: 16px;
+        }
       }
-      &__caption {
+      .main__desc {
         margin-top: 24px;
-        font-size: 15px;
-        font-weight: 700;
-        line-height: 20px;
-      }
-      &__desc {
-        margin-top: 8px;
         font-size: 15px;
         line-height: 20px;
         color: $color-gray-700;
-      }
-      &__sub {
-        margin-top: 8px;
-        font-size: 13px;
-        line-height: 18px;
-        color: $color-gray-550;
       }
     }
   }

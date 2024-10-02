@@ -2,13 +2,13 @@ import { dispatch } from 'shared/redux/store';
 
 import { ActionType } from './type';
 
-export const getCheckingNotificationList = payload =>
-  dispatch({ type: ActionType.GET_CHECKING_NOTIFY_REQUEST, payload });
+export const getTransactionNotificationList = payload =>
+  dispatch({ type: ActionType.GET_TRANSACTIONS_NOTIFY_REQUEST, payload });
 
-export const getNoticesNotificationList = payload => dispatch({ type: ActionType.GET_NOTICES_NOTIFY_REQUEST, payload });
+export const getOfferNotificationList = payload => dispatch({ type: ActionType.GET_OFFERS_NOTIFY_REQUEST, payload });
 
-export const getBenefitNotificationList = payload =>
-  dispatch({ type: ActionType.GET_BENEFITS_NOTIFY_REQUEST, payload });
+export const getPromotionNotificationList = payload =>
+  dispatch({ type: ActionType.GET_PROMOTIONS_NOTIFY_REQUEST, payload });
 
 export const setBannerSeqState = payload => dispatch({ type: ActionType.GET_BANNER_SEQ, payload: payload });
 

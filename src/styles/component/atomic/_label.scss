@@ -36,7 +36,7 @@
 
 // TODO: DEFINE Outline Label
 @include Outline(basic__outline, text__basic__outline, #2c3b4e, $color-gray-900);
-@include Outline(primary__outline, text__primary__outline, #3270ea, $color-gray-900);
+@include Outline(blue__outline, text__blue__outline, $color-blue-500, $color-blue-500);
 @include Outline(gray__outline, text__gray__outline, #808892, $color-gray-900);
 @include Outline(sky-blue__outline, text__sky-blue__outline, #14aec6, $color-gray-900);
 @include Outline(mint__outline, text__mint__outline, #2eb086, $color-gray-900);

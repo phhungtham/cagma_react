@@ -11,8 +11,8 @@ const getLanguageFM = (lang = '', isRequest = true) => {
       case APP_LANGUAGE.KO:
         return isRequest ? 'KO' : 'ko';
 
-      case APP_LANGUAGE.KM:
-        return isRequest ? 'KH' : 'ac';
+      case APP_LANGUAGE.CA:
+        return isRequest ? 'CA' : 'ac';
 
       default:
         return;

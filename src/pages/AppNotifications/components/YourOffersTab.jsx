@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 
-import no_notification from '@assets/images/bell-no-result.png';
-import Span from '@common/components/atoms/Span';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
+
+import EmptyNotification from './EmptyNotification';
 
 const YourOffersTab = forwardRef(({ offerList, translate }, ref) => {
   console.log('offerList :>> ', offerList);
@@ -25,16 +25,7 @@ const YourOffersTab = forwardRef(({ offerList, translate }, ref) => {
           </div>
         ))
       ) : (
-        <div className="notification__empty">
-          <img
-            src={no_notification}
-            alt={'no_notification'}
-          />
-          <Span
-            clazz="notification__empty__text"
-            text={translate('No notifications')}
-          />
-        </div>
+        <EmptyNotification />
       )}
     </div>
   );
