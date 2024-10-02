@@ -12,7 +12,7 @@ const callCamera = cb => {
   if (AppCfg.ENV === 'development') return;
   return $h.exec(
     result => {
-      cb(result?.data);
+      cb(result);
     },
     'GMCommon',
     'callCamera',

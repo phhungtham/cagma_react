@@ -20,7 +20,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   const firstCharacterOfName = userName?.[0];
 
   const handleProfileImg = result => {
-    console.log('Profile image result:', result);
+    console.log('handleProfileImg:', result);
     const { statusCode, imageInfo } = result || {};
     const isLoadSuccess = Number(statusCode) === 1000;
 
@@ -45,7 +45,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleDeleteProfileCallback = result => {
-    console.log('Profile image result:', result);
+    console.log('handleDeleteProfileCallback:', result);
     const { statusCode } = result || {};
     const isDeleteSuccess = Number(statusCode) === 1000;
     if (isDeleteSuccess) {
@@ -65,7 +65,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleUpdateAvatarCallback = result => {
-    console.log('Profile image result:', result);
+    console.log('handleUpdateAvatarCallback:', result);
     const { statusCode } = result || {};
     const isUpdateSuccess = Number(statusCode) === 1000;
     if (isUpdateSuccess) {
@@ -78,7 +78,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleCallCameraCallback = fileInfo => {
-    console.log('Profile image result:', fileInfo);
+    console.log('handleCallCameraCallback:', fileInfo);
     if (fileInfo) {
       const { imageInfo } = fileInfo;
       setAvatarUrl(imageInfo);
@@ -87,7 +87,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleCallSelectImageCallback = fileInfo => {
-    console.log('Profile image result:', fileInfo);
+    console.log('handleCallSelectImageCallback:', fileInfo);
     if (fileInfo) {
       const { imageInfo } = fileInfo;
       setAvatarUrl(imageInfo);
