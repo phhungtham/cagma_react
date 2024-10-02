@@ -132,4 +132,22 @@
   .term-condition__checklist {
     margin-top: 20px;
   }
+
+  .borrowing-block {
+    &__info {
+      padding: 20px 0 16px;
+    }
+    &__ctas {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__button {
+      width: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }

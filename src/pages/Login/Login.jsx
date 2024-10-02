@@ -26,6 +26,7 @@ import './styles.scss';
 const listAccount = [
   'WTLEE815',
   'MYGODFIVE5',
+  'PERS114',
   'CATEST24',
   'CATEST25',
   'CATEST26',
@@ -77,7 +78,7 @@ const Login = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       setAuthenticated();
-      navigate(routePaths.productList);
+      navigate(routePaths.notification);
     }
   }, [isLoginSuccess]);
 

@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { ArrowRight } from '@assets/icons';
 import Dropdown from '@common/components/atoms/Dropdown';
+import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
+import Alert from '@common/components/molecules/Alert';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
@@ -25,6 +27,7 @@ const EAlertsBalance = () => {
   const [selectedAccount, setSelectedAccount] = useState();
   const [showLoading, setShowLoading] = useState();
   const [setting, setSetting] = useState();
+  const [accounts, setAccounts] = useState([]);
   const [serverErrorAlert, setServerErrorAlert] = useState({
     isShow: false,
     title: '',
@@ -36,7 +39,7 @@ const EAlertsBalance = () => {
     type: 'success',
   });
 
-  console.log('setting :>> ', setting);
+  console.log('selectedAccount :>> ', selectedAccount);
 
   // const { handleSubmit, control, setValue } = useForm();
 
@@ -71,6 +74,14 @@ const EAlertsBalance = () => {
     setShowMyAccountBottoms(false);
   };
 
+  const handleCloseServerAlert = () => {
+    setServerErrorAlert({
+      isShow: false,
+      title: '',
+      content: '',
+    });
+  };
+
   const requestGetEAlertSetting = async () => {
     setShowLoading(true);
     const { isSuccess, error, data } = await requestApi(endpoints.getEAlertSetting, {});
@@ -86,11 +97,21 @@ const EAlertsBalance = () => {
   };
 
   useEffect(() => {
+    if (setting?.grid_01) {
+      setAccounts(setting.grid_01);
+      if (!selectedAccount) {
+        setSelectedAccount(setting.grid_01?.[0]);
+      }
+    }
+  }, [setting]);
+
+  useEffect(() => {
     requestGetEAlertSetting();
   }, []);
 
   return (
     <div className="eAlerts-balance__wrapper">
+      {showLoading && <Spinner />}
       <Header
         title="Balance"
         onClick={moveBack}
@@ -203,8 +224,21 @@ const EAlertsBalance = () => {
           open={showMyAccountsBottom}
           onClose={() => setShowMyAccountBottoms(false)}
           onSelect={onSelectAccount}
+          accounts={accounts}
         />
       )}
+      <Alert
+        isCloseButton={false}
+        isShowAlert={serverErrorAlert.isShow}
+        title={serverErrorAlert.title}
+        subtitle={serverErrorAlert.content}
+        textAlign="left"
+        onClose={handleCloseServerAlert}
+        firstButton={{
+          onClick: handleCloseServerAlert,
+          label: 'Confirm',
+        }}
+      />
     </div>
   );
 };

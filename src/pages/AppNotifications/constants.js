@@ -70,7 +70,8 @@ export const promotionListDummy = [
 
 export const NotificationRequestType = {
   TRANSACTION: '01',
-  OFFER: 'etc',
+  OFFER: '06',
+  PROMOTION: 'CAHO002',
 };
 
 export const NotificationTabIndex = {
@@ -84,3 +85,10 @@ export const NotificationTabLabel = {
   OFFERS: 'Your Offers',
   PROMOTIONS: 'Promotions',
 };
+
+export const NotificationLinkType = {
+  EXTERNAL_LINK: ['4'],
+  INTERNAL_LINK: ['1', '2', '3'],
+};
+
+export const initRecentMonthNumber = 3;

@@ -37,3 +37,10 @@ export const toJson = (str, defaultValue) => {
     return defaultValue;
   }
 };
+
+export const truncateText = (text, limit) => {
+  if (text?.length > limit) {
+    return text.substring(0, limit) + '...';
+  }
+  return text;
+};
