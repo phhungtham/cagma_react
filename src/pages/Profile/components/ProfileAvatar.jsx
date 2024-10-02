@@ -20,7 +20,16 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   const firstCharacterOfName = userName?.[0];
 
   const handleProfileImg = result => {
-    //TODO: Update Avatar. Pending because the plugin still not develop
+    console.log('Profile image result:', result);
+    const { statusCode, imageInfo } = result || {};
+    const isLoadSuccess = Number(statusCode) === 1000;
+
+    if (isLoadSuccess && imageInfo) {
+      setAvatarUrl(imageInfo);
+      setShowDefaultAvatar(false);
+    } else {
+      setShowDefaultAvatar(true);
+    }
   };
 
   const onOpenChangePhotoBottom = () => {
@@ -36,6 +45,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleDeleteProfileCallback = result => {
+    console.log('Profile image result:', result);
     const { statusCode } = result || {};
     const isDeleteSuccess = Number(statusCode) === 1000;
     if (isDeleteSuccess) {
@@ -55,6 +65,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleUpdateAvatarCallback = result => {
+    console.log('Profile image result:', result);
     const { statusCode } = result || {};
     const isUpdateSuccess = Number(statusCode) === 1000;
     if (isUpdateSuccess) {
@@ -67,6 +78,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleCallCameraCallback = fileInfo => {
+    console.log('Profile image result:', fileInfo);
     if (fileInfo) {
       const { imageInfo } = fileInfo;
       setAvatarUrl(imageInfo);
@@ -75,6 +87,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleCallSelectImageCallback = fileInfo => {
+    console.log('Profile image result:', fileInfo);
     if (fileInfo) {
       const { imageInfo } = fileInfo;
       setAvatarUrl(imageInfo);
