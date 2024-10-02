@@ -1,15 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import ExclamationMarkIcon from '@assets/images/exclamation-mark.png';
+import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
+import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import Spinner from '@common/components/atoms/Spinner';
+import Alert from '@common/components/molecules/Alert';
 import Header from '@common/components/organisms/Header';
 import ScrollAnchorTabWrapper from '@common/components/templates/ScrollAnchorTabWrapper';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { PeriodUnitCodeDisplay, ProductTab, ProductTabDisplay } from '@common/constants/product';
+import { externalUrls } from '@common/constants/url';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
+import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { moveBack, moveNext } from '@utilities/index';
 
 import BorrowingSection from '../components/BorrowingSection';
@@ -34,6 +40,8 @@ const ProductList = () => {
   const investmentTitleRef = useRef(null);
   const borrowingTitleRef = useRef(null);
   const [borrowingProduct, setBorrowingProducts] = useState([]);
+  const [showBorrowingInstructionBottom, setShowBorrowingInstructionBottom] = useState(false);
+
   const sections = useMemo(
     () => [
       { ref: bankingTitleRef, tab: ProductTab.BANKING, label: ProductTabDisplay[ProductTab.BANKING] },
@@ -56,7 +64,7 @@ const ProductList = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setBorrowingProducts(dataBorrowing);
-    }, 3500);
+    }, 3000);
 
     return () => {
       clearTimeout(timeoutId);
@@ -79,6 +87,10 @@ const ProductList = () => {
     });
   }, []);
 
+  const handleClickBorrowingItem = () => {
+    setShowBorrowingInstructionBottom(true);
+  };
+
   const renderProductSection = (ref, products, tabClass, title, className) => {
     // Return null if there are no products
     if (products.length === 0) return null;
@@ -95,7 +107,7 @@ const ProductList = () => {
             <div
               className={`product-list__banner ${tabClass}`}
               key={product?.prdt_c}
-              onClick={() => handleNavigateOpenAccount(product)}
+              onClick={() => (checkTitleBorrowing ? handleClickBorrowingItem() : handleNavigateOpenAccount(product))}
             >
               {!checkTitleBorrowing && (
                 <>
@@ -149,6 +161,18 @@ const ProductList = () => {
     );
   };
 
+  const handleNavigateBranchInfo = () => {
+    openURLInBrowser(externalUrls.branchInfo);
+  };
+
+  const handleNavigateMoreInformation = () => {
+    openURLInBrowser(externalUrls.loan);
+  };
+
+  const handleBookAppointment = () => {
+    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
+  };
+
   return (
     <div className="product-list__wrapper">
       {isLoadingProducts && <Spinner />}
@@ -183,6 +207,43 @@ const ProductList = () => {
           'borrowing'
         )}
       </ScrollAnchorTabWrapper>
+      <Alert
+        isCloseButton
+        isShowAlert={showBorrowingInstructionBottom}
+        title="Want to Find out more?"
+        subtitle="Visit our website for more details or talk to one of our advisors.  We are more than happy to discuss and plan your financials together."
+        textAlign="center"
+        onClose={() => setShowBorrowingInstructionBottom(false)}
+        firstButton={{
+          onClick: () => handleBookAppointment(),
+          label: 'Book an Appointment',
+        }}
+      >
+        <div className="borrowing-block__info">
+          <div className="divider__item__solid" />
+          <div className="borrowing-block__ctas">
+            <div className="borrowing-block__button">
+              <IconButton
+                size="lg"
+                type="circle"
+                label="More Information"
+                className="call__icon"
+                icon={<img src={ExclamationMarkIcon} />}
+                onClick={handleNavigateMoreInformation}
+              />
+            </div>
+            <div className="borrowing-block__button">
+              <IconButton
+                size="lg"
+                type="circle"
+                label="Branch Info"
+                icon={<img src={BranchInfoIcon} />}
+                onClick={handleNavigateBranchInfo}
+              />
+            </div>
+          </div>
+        </div>
+      </Alert>
     </div>
   );
 };
