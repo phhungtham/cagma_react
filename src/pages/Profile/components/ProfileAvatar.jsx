@@ -71,9 +71,10 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
     if (isUpdateSuccess) {
       setShowToast({
         isShow: true,
-        message: 'Your profile photo has been deleted.',
+        message: 'Your profile photo has been updated.',
         type: 'success',
       });
+      loadProfileImgInfo(handleProfileImg);
     }
   };
 
@@ -100,7 +101,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleCallPluginSelectImage = () => {
-    callSelectImage(handleCallSelectImageCallback);
+    saveProfileImg(handleUpdateAvatarCallback);
   };
 
   useEffect(() => {
