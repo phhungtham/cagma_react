@@ -15,7 +15,7 @@ const loadProfileImgInfo = cb => {
   if (AppCfg.ENV === 'development') return;
   return $h.exec(
     result => {
-      cb(result);
+      cb(result?.data);
     },
     'GMCommon',
     'loadProfileImgInfo',
