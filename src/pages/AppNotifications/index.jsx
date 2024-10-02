@@ -3,10 +3,12 @@ import { useSelector } from 'react-redux';
 
 import LoadingInfinite from '@common/components/atoms/LoadingInfinite';
 import Spinner from '@common/components/atoms/Spinner';
+import Alert from '@common/components/molecules/Alert';
 import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
+import { alertMove } from '@utilities/alertMove';
 import { addDateWithMonth } from '@utilities/dateTimeUtils';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { getLanguageFM, isEmpty, moveBack, moveNext } from '@utilities/index';
@@ -27,7 +29,13 @@ import PromotionDetailBottom from './components/PromotionDetailBottom';
 import PromotionsTab from './components/PromotionsTab';
 import TransactionsTab from './components/TransactionsTab';
 import YourOffersTab from './components/YourOffersTab';
-import { NotificationRequestType, NotificationTabIndex, NotificationTabLabel } from './constants';
+import {
+  initRecentMonthNumber,
+  NotificationLinkType,
+  NotificationRequestType,
+  NotificationTabIndex,
+  NotificationTabLabel,
+} from './constants';
 import {
   cleanupAppNotification,
   getOfferNotificationList,
@@ -43,11 +51,13 @@ import {
   listOfferLoadMoreCnt,
   listTransactionLoadMoreCnt,
   offerList,
+  offerLoadFailed,
   offerLoadState,
   promotionList,
   promotionLoadState,
   tabIdx,
   transactionList,
+  transactionLoadFailed,
   transactionLoadState,
 } from './redux/selector';
 import { AppNotificationFeatureName } from './redux/type';
@@ -67,22 +77,20 @@ const AppNotifications = ({ translate }) => {
   const [currentPromotionDetail, setCurrentPromotionDetail] = useState({});
   const [loadMoreNotify, setLoadMoreNotify] = useState(false);
   const [promotionListDisplay, setPromotionListDisplay] = useState([]);
-  // const { isLoading } = useLoginInfo({ isSend: true });
   const isLogin = useSelector(loginSelector);
-  // const benefitDetailRef = useRef(null);
   const notificationListRef = useRef(null);
 
   const initRequestTransactionsNotify = {
     push_lang_c: null,
     inq_cnt: 0,
-    inq_st_dt: addDateWithMonth(3),
+    inq_st_dt: addDateWithMonth(initRecentMonthNumber),
     ums_svc_c: NotificationRequestType.TRANSACTION,
   };
 
   const initRequestOffersNotify = {
     push_lang_c: null,
     inq_cnt: 0,
-    inq_st_dt: addDateWithMonth(3),
+    inq_st_dt: addDateWithMonth(initRecentMonthNumber),
     ums_svc_c: NotificationRequestType.OFFER,
   };
 
@@ -90,15 +98,15 @@ const AppNotifications = ({ translate }) => {
   const [requestOfferParams, setRequestOfferParams] = useState({ ...initRequestOffersNotify });
 
   // selectors
-  const listTransactionNotify = useSelector(transactionList);
-  const listOfferNotify = useSelector(offerList);
-  const listPromotionNotify = useSelector(promotionList);
+  const listTransactionNotify = useSelector(transactionList) || [];
+  const listOfferNotify = useSelector(offerList) || [];
+  const listPromotionNotify = useSelector(promotionList) || [];
   const loadTransactionState = useSelector(transactionLoadState);
   const loadOfferState = useSelector(offerLoadState);
   const loadPromotionState = useSelector(promotionLoadState);
   const loadBannerSeq = useSelector(bannerSeqState);
-  // const checkingLoadErrors = useSelector(checkingLoadFailed);
-  // const benefitsLoadErrors = useSelector(benefitsLoadFailed);
+  const transactionLoadErrors = useSelector(transactionLoadFailed);
+  const offerLoadErrors = useSelector(offerLoadFailed);
   const isNativeRedirect = useSelector(nativeRedirectStateSelector || false);
   const nativeParams = useSelector(nativeParamsSelector);
   const currentLang = getLanguageFM(appLang, false);
@@ -149,10 +157,10 @@ const AppNotifications = ({ translate }) => {
   const handleClickTryItNow = () => {
     const { infomgt_link: linkType, link_url: linkUrl } = currentPromotionDetail || {};
     if (!linkUrl) return;
-    if (linkType === '4') {
+    if (NotificationLinkType.EXTERNAL_LINK.includes(linkType)) {
       setReduxTabIndex(tabIndex);
       openURLInBrowser(linkUrl);
-    } else if (linkType === '1' || linkType === '2' || linkType === '3') {
+    } else if (NotificationLinkType.INTERNAL_LINK.includes(linkType)) {
       setReduxTabIndex(tabIndex);
       moveNext(linkUrl);
     } else {
@@ -223,8 +231,13 @@ const AppNotifications = ({ translate }) => {
       return;
     }
     if (isEmpty(nativeParams)) {
-      getTransactionListFirstTime();
-      setRequestOfferParams({ ...initRequestOffersNotify }); // reset offer request data
+      if (!isLogin) {
+        setTabIndex(NotificationTabIndex.PROMOTIONS);
+        getPromotionNotificationList();
+      } else {
+        getTransactionListFirstTime();
+        setRequestOfferParams({ ...initRequestOffersNotify }); // reset offer request data
+      }
     }
     return () => {
       cleanupAppNotification();
@@ -246,7 +259,7 @@ const AppNotifications = ({ translate }) => {
       case '10':
         getOfferListFirstTime();
         break;
-      case '01':
+      case NotificationRequestType.TRANSACTION:
       case null:
       default:
         getTransactionListFirstTime();
@@ -349,11 +362,11 @@ const AppNotifications = ({ translate }) => {
               title: NotificationTabLabel.PROMOTIONS,
             },
           ]}
-          isLoginAlready={!isLogin}
+          isLoginAlready={isLogin}
           tabIndex={tabIndex}
           onTabChange={handleTabChange}
         >
-          {!isLogin ? (
+          {isLogin ? (
             <>
               {tabIndex === NotificationTabIndex.TRANSACTIONS && (
                 <TransactionsTab
@@ -395,16 +408,15 @@ const AppNotifications = ({ translate }) => {
           currentLang={currentLang}
         />
       )}
-      {/* <Alert
+      <Alert
         isCloseButton={false}
-        isShowAlert={checkingLoadErrors || benefitsLoadErrors}
-        subtitle={checkingLoadErrors?.msgText || benefitsLoadErrors?.msgText}
-        alertType={checkingLoadErrors?.msgType || benefitsLoadErrors?.msgType}
+        isShowAlert={transactionLoadErrors || offerLoadErrors}
+        subtitle={transactionLoadErrors?.msgText || offerLoadErrors?.msgText}
         firstButton={{
-          onClick: () => alertMove(checkingLoadErrors?.msgId),
-          label: translate('lbl_cta_3006'),
+          onClick: () => alertMove(transactionLoadErrors?.msgId),
+          label: 'Confirm',
         }}
-      /> */}
+      />
       {loadMoreNotify && loadTransactionState && listTransactionNotify.length > 0 && <LoadingInfinite />}
       {loadMoreNotify && loadOfferState && listOfferNotify.length > 0 && <LoadingInfinite />}
     </div>

@@ -13,12 +13,12 @@ const PromotionsTab = forwardRef(({ promotionList, translate, onClick, currentLa
   return (
     <div
       ref={ref}
-      className="notification__list checking"
+      className="notification__list"
     >
       {promotionList?.length > 0 ? (
         promotionList.map(item => (
           <div
-            className={`promotion__item__wrapper ${item.read ? 'read' : 'unread'}`}
+            className="promotion__item__wrapper"
             key={item?.banner_seq}
             onClick={() => onClick(item)}
           >

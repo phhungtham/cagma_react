@@ -37,7 +37,7 @@ export const transactionLoadFailed = state => {
 };
 
 export const offerLoadFailed = state => {
-  return state[AppNotificationFeatureName]?.loadOffersListFailed;
+  return state[AppNotificationFeatureName]?.loadOfferListFailed;
 };
 
 export const promotionLoadFailed = state => {

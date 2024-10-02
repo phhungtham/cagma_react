@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 
+import { detectNotifyStatus } from '@common/utils/detect';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import EmptyNotification from './EmptyNotification';
@@ -9,18 +10,20 @@ const YourOffersTab = forwardRef(({ offerList, translate }, ref) => {
   return (
     <div
       ref={ref}
-      className="notification__list checking"
+      className="notification__list"
     >
       {offerList?.length > 0 ? (
         offerList.map((item, index) => (
           <div
-            className={`offer__item__wrapper ${item.read ? 'read' : 'unread'}`}
+            className={`transaction__item__wrapper ${detectNotifyStatus(item.push_confm_yn) ? 'read' : 'unread'}`}
             key={index}
           >
             <div className="offer__item">
-              <div className="offer__label">{item.label}</div>
-              <div className="offer__title mt-1">{item.title}</div>
-              <div className="offer__time">{item.time}</div>
+              <div className="offer__label">{item.push_msg_ttl}</div>
+              <div className="offer__title mt-1">{item.push_msg_ctt}</div>
+              <div className="offer__time">
+                {`${item.gms_stt_date_display} ${item.gms_stt_time_display.slice(0, 5)}`}
+              </div>
             </div>
           </div>
         ))
