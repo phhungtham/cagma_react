@@ -70,7 +70,8 @@ export const promotionListDummy = [
 
 export const NotificationRequestType = {
   TRANSACTION: '01',
-  OFFER: 'etc',
+  OFFER: '06',
+  PROMOTION: 'CAHO002',
 };
 
 export const NotificationTabIndex = {

@@ -6,6 +6,7 @@ import Image from '@common/components/atoms/Image';
 import Label from '@common/components/atoms/Label';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { AppCfg } from '@configs/appConfigs';
+import { truncateText } from '@utilities/convert';
 import { totalNumOfDaysBetweenDates } from '@utilities/dateTimeUtils';
 import imgSrcDetected from '@utilities/imgSrcDetected';
 import parserDataToHtml from '@utilities/parserHtml';
@@ -30,6 +31,10 @@ const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry }) 
     return false;
   }, [data]);
 
+  const handleShare = () => {
+    //TODO: Call Plugin for share
+  };
+
   return (
     <BottomSheet
       open
@@ -41,9 +46,13 @@ const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry }) 
       <div className="promotion-detail-bottom__content">
         <div className="promotion__header">
           <div className="promotion__title__wrapper">
-            <div className="promotion__title">{parserDataToHtml(data[`banner_main_content_${currentLang}`])}</div>
+            <div className="promotion__title">
+              {truncateText(parserDataToHtml(data[`banner_main_content_${currentLang}`]), 50)}
+            </div>
             <div className="promotion__share">
-              <ShareLineIcon />
+              <span onClick={handleShare}>
+                <ShareLineIcon />
+              </span>
             </div>
           </div>
           <div className="promotion__period">

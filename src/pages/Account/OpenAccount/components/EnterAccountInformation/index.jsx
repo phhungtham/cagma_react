@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import TextDropdown from '@common/components/atoms/Dropdown/TextDropdown';
@@ -15,8 +16,15 @@ import { dateFormat } from '@common/constants/dateTime';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { ProductCode, ProductPeriodUnitCode } from '@common/constants/product';
 import { SelectTermDurationTypes } from '@common/constants/terms';
+import { getAccountListRequest } from '@common/redux/accounts/action';
+import { accountReducer } from '@common/redux/accounts/reducer';
+import { accountSaga } from '@common/redux/accounts/saga';
+import { accountList, accountLoadState } from '@common/redux/accounts/selector';
+import { FeatureName } from '@common/redux/accounts/type';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCardCount from '@hooks/useCardCount';
+import useReducers from '@hooks/useReducers';
+import useSagas from '@hooks/useSagas';
 import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack } from '@utilities/index';
 import dayjs from 'dayjs';
@@ -33,7 +41,6 @@ const enterAmountMin = 10;
 const enterAmountMax = 1000;
 
 const EnterAccountInformation = ({ onSubmit, product }) => {
-  console.log('product :>> ', product);
   const { data: cardCountInfo, isLoading: isLoadingGetCardCount, requestGetCardCount } = useCardCount();
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [showSelectTermsBottom, setShowSelectTermsBottom] = useState(false);
@@ -45,6 +52,14 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
   const [showThirdPartyForm, setShowThirdPartyForm] = useState(false);
   const [showInterestRateSection, setShowInterestRateSection] = useState(false);
   const [showReferralCodeSection, setShowReferralCodeSection] = useState(false);
+  const [filteredAccounts, setFilteredAccounts] = useState([]);
+
+  useReducers([{ key: FeatureName, reducer: accountReducer }]);
+  useSagas([{ key: FeatureName, saga: accountSaga }]);
+
+  const accounts = useSelector(accountList);
+  const isLoadingGetAccounts = useSelector(accountLoadState);
+
   const {
     ntfct_intrt: interestRate,
     lcl_prdt_nm: productName,
@@ -138,6 +153,18 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
     return formattedDate;
   };
 
+  const isBankingAccount = account => {
+    if (account?.acno_jiacno_gbn !== '1') {
+      return false;
+    }
+    const acnoPrefix = account?.lcl_ac_no || '';
+    if (['700', '701', '702', '703'].includes(acnoPrefix.substring(0, 3))) {
+      return true;
+    }
+
+    return false;
+  };
+
   const checkShowThirdPartyForm = () => {
     let showThirdParty = false;
     let showInterestRate = false;
@@ -198,6 +225,24 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
     checkShowThirdPartyForm();
   }, [amount, intendedUseAccountDisplay, selectedAccount, term]);
 
+  useEffect(() => {
+    if (accounts?.length) {
+      let newAccounts = accounts;
+      newAccounts = accounts.filter(account => {
+        return isBankingAccount(account);
+      });
+      setFilteredAccounts(newAccounts);
+      const defaultAccount = newAccounts.find(account => String(account.base_ac_t) === '1');
+      if (defaultAccount) {
+        onSelectAccount(defaultAccount);
+      }
+    }
+  }, [accounts]);
+
+  useEffect(() => {
+    getAccountListRequest();
+  }, []);
+
   return (
     <>
       <Header
@@ -205,7 +250,7 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
         onClick={moveBack}
       />
       <div className="enter-account-information__wrapper">
-        {isLoadingGetCardCount && <Spinner />}
+        {(isLoadingGetCardCount || isLoadingGetAccounts) && <Spinner />}
         <div className="enter-account-information__content">
           <FormProvider {...methods}>
             <div className="enter-account__form">
@@ -296,9 +341,9 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
               label="Open"
               variant="filled__primary"
               className="btn__cta"
-              onClick={onSubmitOpenAccount}
-              // onClick={handleSubmit(onSubmitOpenAccount)}
-              // disable={!isValid}
+              // onClick={onSubmitOpenAccount}
+              onClick={handleSubmit(onSubmitOpenAccount)}
+              disable={!isValid}
             />
           </div>
         </div>
@@ -308,6 +353,7 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
             onClose={() => setShowMyAccountBottom(false)}
             onSelect={onSelectAccount}
             type={AccountType.BANKING}
+            accounts={filteredAccounts}
           />
         )}
 

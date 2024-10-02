@@ -24,10 +24,12 @@ const PromotionsTab = forwardRef(({ promotionList, translate, onClick, currentLa
           >
             <div className="promotion__item">
               <div className="promotion__img">
-                <Image
-                  src={imgSrcDetected(AppCfg.BASE_URL_IMAGE, item.banner_image_url)}
-                  alt="promotion logo"
-                />
+                {item.banner_image_url && (
+                  <Image
+                    src={imgSrcDetected(AppCfg.BASE_URL_IMAGE, item.banner_image_url)}
+                    alt="promotion logo"
+                  />
+                )}
               </div>
               <div className="promotion__item__main">
                 <div className="promotion__title">{parserDataToHtml(item[`banner_main_content_${currentLang}`])}</div>

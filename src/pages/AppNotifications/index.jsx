@@ -62,6 +62,7 @@ import {
 } from './redux/selector';
 import { AppNotificationFeatureName } from './redux/type';
 
+//TODO: Test case add params ums_svc_c and native params when login
 const AppNotifications = ({ translate }) => {
   useReducers([
     { key: AppNotificationFeatureName, reducer: appNotificationReducer },
@@ -77,7 +78,7 @@ const AppNotifications = ({ translate }) => {
   const [currentPromotionDetail, setCurrentPromotionDetail] = useState({});
   const [loadMoreNotify, setLoadMoreNotify] = useState(false);
   const [promotionListDisplay, setPromotionListDisplay] = useState([]);
-  const isLogin = useSelector(loginSelector);
+  const isLogin = useSelector(loginSelector) || true;
   const notificationListRef = useRef(null);
 
   const initRequestTransactionsNotify = {
@@ -120,12 +121,13 @@ const AppNotifications = ({ translate }) => {
   };
 
   const getOfferListFirstTime = () => {
-    setTabIndex(1);
+    setTabIndex(NotificationTabIndex.OFFERS);
     getOfferNotificationList({ ...initRequestOffersNotify });
     setRequestOfferParams({ ...initRequestOffersNotify });
   };
 
   const handleAppNotificationTouchMove = () => {
+    debugger;
     /* When the user touch to the bottom of the checking list or offer list, fetch more data */
     if (tabIndex === 0 || tabIndex === 1) {
       fetchDataWhenScrollBottom();
@@ -246,17 +248,13 @@ const AppNotifications = ({ translate }) => {
 
   useEffect(() => {
     // handle case receive push notify and show tab...
-    // ums_svc_c : 6 - Benefit tab
-    // ums_svc_c : 1 - Transaction tab
-    // ums_svc_c : 10 - Offers tab
-    // ums_svc_c : null - Transaction tab
     if (isEmpty(nativeParams) || nativeParams === undefined || reduxTabIndex !== undefined) return;
     switch (nativeParams?.ums_svc_c) {
-      case '06':
-        setTabIndex(2);
+      case NotificationRequestType.PROMOTION:
+        setTabIndex(NotificationTabIndex.PROMOTIONS);
         getPromotionNotificationList();
         break;
-      case '10':
+      case NotificationRequestType.OFFER:
         getOfferListFirstTime();
         break;
       case NotificationRequestType.TRANSACTION:
@@ -285,9 +283,8 @@ const AppNotifications = ({ translate }) => {
   }, [loadMoreNotify]);
 
   useEffect(() => {
-    //TODO: Confirm
     // display only "display_pos"== "8" and sort with banner_seq big to small
-    // 8: Benefits
+    // 8: Promotion
     if (!listPromotionNotify) return;
     if (tabIndex === NotificationTabIndex.PROMOTIONS) {
       const filteredPromotion = listPromotionNotify.filter(item => {
@@ -371,7 +368,7 @@ const AppNotifications = ({ translate }) => {
               {tabIndex === NotificationTabIndex.TRANSACTIONS && (
                 <TransactionsTab
                   ref={notificationListRef}
-                  transactionList={listTransactionNotify}
+                  transactionList={[...listTransactionNotify, ...listTransactionNotify]}
                 />
               )}
               {tabIndex === NotificationTabIndex.OFFERS && (
@@ -383,7 +380,7 @@ const AppNotifications = ({ translate }) => {
               {tabIndex === NotificationTabIndex.PROMOTIONS && (
                 <PromotionsTab
                   ref={notificationListRef}
-                  promotionList={listPromotionNotify}
+                  promotionList={promotionListDisplay}
                   onClick={handleViewPromotionDetail}
                   currentLang={currentLang}
                 />
@@ -392,7 +389,7 @@ const AppNotifications = ({ translate }) => {
           ) : (
             <PromotionsTab
               ref={notificationListRef}
-              promotionList={listPromotionNotify}
+              promotionList={promotionListDisplay}
               onClick={handleViewPromotionDetail}
               currentLang={currentLang}
             />
