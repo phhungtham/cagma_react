@@ -4,7 +4,6 @@ import { SettingIcon } from '@assets/icons';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Alert from '@common/components/molecules/Alert';
 import callCamera from '@utilities/gmCommon/callCamera';
-import callSelectImage from '@utilities/gmCommon/callSelectImage';
 import initProfileImg from '@utilities/gmCommon/initProfileImg';
 import loadProfileImgInfo from '@utilities/gmCommon/loadProfileImgInfo';
 import saveProfileImg from '@utilities/gmCommon/saveProfileImg';
@@ -65,17 +64,15 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleUpdateAvatarCallback = result => {
-    console.log('handleUpdateAvatarCallback:', result);
     const { statusCode } = result || {};
     const isUpdateSuccess = Number(statusCode) === 1000;
-    if (isUpdateSuccess) {
-      setShowToast({
-        isShow: true,
-        message: 'Your profile photo has been updated.',
-        type: 'success',
-      });
-      loadProfileImgInfo(handleProfileImg);
-    }
+    setShowToast({
+      isShow: true,
+      message: 'Your profile photo has been updated.',
+      type: 'success',
+    });
+    loadProfileImgInfo(handleProfileImg);
+    console.log('handleUpdateAvatarCallback:', result);
   };
 
   const handleCallCameraCallback = fileInfo => {
