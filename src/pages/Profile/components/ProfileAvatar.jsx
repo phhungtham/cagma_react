@@ -101,7 +101,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   const handleCallPluginSelectImage = () => {
-    saveProfileImg(handleUpdateAvatarCallback);
+    callSelectImage(handleCallSelectImageCallback);
   };
 
   useEffect(() => {
