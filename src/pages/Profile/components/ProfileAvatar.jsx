@@ -90,8 +90,8 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   const handleCallSelectImageCallback = fileInfo => {
     console.log('handleCallSelectImageCallback:', fileInfo);
     if (fileInfo) {
-      const { imageInfo } = fileInfo;
-      setAvatarUrl(imageInfo);
+      // const { imageInfo } = fileInfo;
+      // setAvatarUrl(imageInfo);
       saveProfileImg(handleUpdateAvatarCallback);
     }
   };
