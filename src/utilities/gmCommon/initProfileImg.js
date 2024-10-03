@@ -12,7 +12,7 @@ const initProfileImg = cb => {
   if (AppCfg.ENV === 'development') return cb({ statusCode: 1000 });
   return $h.exec(
     result => {
-      cb(result);
+      cb(result?.data);
     },
     'GMCommon',
     'initProfileImg',
