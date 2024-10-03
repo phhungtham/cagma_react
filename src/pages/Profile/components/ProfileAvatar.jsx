@@ -106,7 +106,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
 
   useEffect(() => {
     loadProfileImgInfo(handleProfileImg);
-  }, []);
+  }, [avatarUrl]);
 
   return (
     <>
