@@ -12,7 +12,7 @@ const saveProfileImg = cb => {
   if (AppCfg.ENV === 'development') return cb({ statusCode: 1000 });
   return $h.exec(
     result => {
-      cb(result?.data);
+      cb(result);
     },
     'GMCommon',
     'saveProfileImg',
