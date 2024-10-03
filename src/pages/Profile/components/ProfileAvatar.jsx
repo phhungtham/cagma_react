@@ -81,8 +81,8 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   const handleCallCameraCallback = fileInfo => {
     console.log('handleCallCameraCallback:', fileInfo);
     if (fileInfo) {
-      const { imageInfo } = fileInfo;
-      setAvatarUrl(imageInfo);
+      // const { imageInfo } = fileInfo;
+      // setAvatarUrl(imageInfo);
       saveProfileImg(handleUpdateAvatarCallback);
     }
   };
