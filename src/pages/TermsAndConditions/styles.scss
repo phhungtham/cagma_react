@@ -1,0 +1,16 @@
+@import 'styles/utilities/variables';
+
+.terms-conditions__page {
+  font-size: 16px;
+  line-height: 21px;
+  color: $color-gray-550;
+  height: 100vh;
+  overflow: auto;
+
+  .term-section-title {
+    font-weight: 700;
+    color: $color-gray-900;
+    font-size: 17px;
+    line-height: 22px;
+  }
+}
