@@ -1,3 +1,5 @@
+@import 'styles/utilities/variables';
+
 .customer-info__content,
 .balance-setting__content {
   padding-top: 16px;
@@ -18,7 +20,7 @@
   .setting-desc {
     font-size: 14px;
     line-height: 19px;
-    color: #475467;
+    color: $color-gray-600;
   }
   .money-options {
     display: flex;

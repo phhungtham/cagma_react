@@ -12,6 +12,7 @@
   justify-content: space-between;
 
   transition: height ease-in-out 0.15s;
+  gap: 16px;
 
   &.dropdown__focus {
     border: 1px solid border-color(color-primary) !important;
@@ -39,8 +40,7 @@
   }
 
   .dropdown__value {
-    width: 90%;
-    overflow: hidden;
+    width: 100%;
   }
 
   .dropdown__main {

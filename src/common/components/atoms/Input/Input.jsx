@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 
 import { SIZE, TAG_NAME } from '@common/components/constants';
 import useComposeRefs from '@hooks/useComposeRefs';

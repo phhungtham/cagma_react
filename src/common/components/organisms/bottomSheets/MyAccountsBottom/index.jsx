@@ -26,9 +26,9 @@ const MyAccountsBottom = ({ accounts = [], open, onClose, onSelect, type }) => {
                 onClick={() => onSelectAccount(account)}
               >
                 <div className="my-accounts__item__main">
-                  <div className="my-accounts__name">{account.dep_ac_alnm_nm}</div>
-                  <div className="my-accounts__number">{account.lcl_ac_no_display}</div>
-                  <div className="my-accounts__balance">Available Balance ${account.def_ac_blc_display}</div>
+                  <div className="my-accounts__name">{account.name}</div>
+                  <div className="my-accounts__number">{account.number}</div>
+                  <div className="my-accounts__balance">Available Balance ${account.balance}</div>
                 </div>
               </div>
             ))}

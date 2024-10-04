@@ -7,19 +7,42 @@ import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 
 import { EAlertCustomerMethod, eAlertSettingMethodOptions } from '../constants';
 
+const amountMaxLength = 22;
+const amountMinValue = 100;
+
 const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit }) => {
   const [selectedAmountOption, setSelectedAmountOption] = useState();
+  const [amount, setAmount] = useState();
   const [checkedOptions, setCheckedOptions] = useState([]);
+  const [error, setError] = useState('');
 
   const onChangeAmountOption = value => {
+    if (value === 'custom') {
+      setAmount(amount || 100);
+    } else {
+      setAmount(Number(value));
+    }
+    setError('');
     setSelectedAmountOption(value);
+  };
+
+  const handleChangeAmount = value => {
+    if (value?.length > amountMaxLength) {
+      return setAmount(amount);
+    }
+    if (Number(value || 0) < amountMinValue) {
+      setError('It must be at least $100');
+    } else {
+      setError('');
+    }
+    setAmount(value);
   };
 
   const onClickApply = () => {
     let values = {
       emailEnabled: false,
       pushEnabled: false,
-      amount: selectedAmountOption,
+      amount: amount,
     };
     if (checkedOptions.includes(EAlertCustomerMethod.EMAIL)) {
       values.emailEnabled = true;
@@ -44,15 +67,22 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit 
 
   useEffect(() => {
     if (data) {
+      const { emailEnabled, pushEnabled, amount } = data || {};
       let checkedList = [];
-      if (data.emailEnabled) {
+      if (emailEnabled) {
         checkedList.push(EAlertCustomerMethod.EMAIL);
       }
-      if (data.pushEnabled) {
+      if (pushEnabled) {
         checkedList.push(EAlertCustomerMethod.APP_PUSH);
       }
       setCheckedOptions(checkedList);
-      setSelectedAmountOption(data.amount);
+      const optionExist = (balanceOptions || []).find(item => Number(item.value) === Number(amount));
+      if (optionExist) {
+        setSelectedAmountOption(amount);
+      } else {
+        setSelectedAmountOption('custom');
+      }
+      setAmount(amount);
     }
   }, [data]);
 
@@ -72,6 +102,9 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit 
             <Input
               label="Amount"
               type="number"
+              onChange={handleChangeAmount}
+              value={amount}
+              errorMessage={error}
             />
           </div>
         )}
@@ -106,6 +139,7 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit 
           label="Apply"
           className="flex-7"
           onClick={onClickApply}
+          disable={!!error}
         />
       </div>
     </div>
