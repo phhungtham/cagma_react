@@ -24,7 +24,7 @@ export const keyBorrowing = {
   title: 'Borrowing',
 };
 
-export const dataBorrowing = [
+export const borrowings = [
   {
     name: 'Mortgage',
     desc: 'Find flexible and affordable mortgage options most suitable for you',

@@ -13,6 +13,7 @@ import useHttpStatus from '@hooks/useHttpStatus';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
+import { moveNext } from '@utilities/index';
 import { setAuthenticated } from 'shared/features/auth/action';
 import { Http } from 'shared/features/http';
 
@@ -78,7 +79,7 @@ const Login = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       setAuthenticated();
-      navigate(routePaths.notification);
+      moveNext('', { param: JSON.stringify({ ums_svc_c: 'CAHO002' }) }, routePaths.notification);
     }
   }, [isLoginSuccess]);
 

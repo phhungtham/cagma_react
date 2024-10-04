@@ -7,6 +7,7 @@ import Span from '../Span';
 const AnchorTab = props => {
   const { clazz, type, segments, defaultActive } = props;
   const [activeChip, setActiveChip] = useState(defaultActive);
+
   const handleClickChip = (index, chipItem) => {
     setActiveChip(chipItem.value);
     chipItem.handleClick(chipItem.value);
@@ -21,9 +22,7 @@ const AnchorTab = props => {
       {segments?.map((chip, idx) => (
         <div
           key={idx}
-          className={`anchor__tab__item ${type} ${clazz}${
-            activeChip === chip.value && type !== 'amount' && 'active__tab'
-          }`}
+          className={`anchor__tab__item ${type} ${clazz} ${activeChip === chip.value ? 'active__tab' : ''}`}
           onClick={() => handleClickChip(idx, chip)}
         >
           <Span
@@ -38,7 +37,7 @@ const AnchorTab = props => {
 
 AnchorTab.propTypes = {
   clazz: PropTypes.string,
-  type: PropTypes.oneOf(['amount', 'small', 'default']),
+  type: PropTypes.oneOf(['default']),
   // segments: PropTypes.arrayOf(
   //   PropTypes.shape({
   //     label: PropTypes.string.isRequired,
@@ -49,7 +48,6 @@ AnchorTab.propTypes = {
 };
 AnchorTab.defaultProps = {
   clazz: '',
-  type: 'amount',
   segments: [
     {
       label: 'Label',

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import AnchorTab from '../../atoms/AnchorTab';
 
@@ -92,7 +92,7 @@ const ScrollAnchorTabWrapper = ({ defaultActiveTab, sections, options, children 
         defaultActive={activeTab}
         active={activeTab}
       />
-      {children}
+      <div className="scroll-anchor__content">{children}</div>
     </div>
   );
 };

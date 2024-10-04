@@ -17,8 +17,8 @@ import { routePaths } from '@routes/paths';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { moveNext } from '@utilities/index';
 
-import BorrowingSection from '../components/BorrowingSection';
-import { bannerBaseProductCode, dataBorrowing, keyBorrowing } from './constants';
+import BorrowingList from './components/BorrowingList';
+import { bannerBaseProductCode, keyBorrowing } from './constants';
 import { getProductListRequest } from './redux/action';
 import { productReducer } from './redux/reducer';
 import { productSaga } from './redux/saga';
@@ -38,7 +38,6 @@ const ProductList = () => {
   const bankingTitleRef = useRef(null);
   const investmentTitleRef = useRef(null);
   const borrowingTitleRef = useRef(null);
-  const [borrowingProduct, setBorrowingProducts] = useState([]);
   const [showBorrowingInstructionBottom, setShowBorrowingInstructionBottom] = useState(false);
 
   const sections = useMemo(
@@ -57,18 +56,10 @@ const ProductList = () => {
   const products = useSelector(productList) || [];
   const isLoadingProducts = useSelector(productLoadState);
 
-  const bankingProducts = products.filter(item => item.dep_sjt_class === '1');
-  const investmentProducts = products.filter(item => ['2', '3'].includes(item.dep_sjt_class));
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setBorrowingProducts(dataBorrowing);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, []);
+  const bankingProducts = products.filter(item => item.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING);
+  const investmentProducts = products.filter(item =>
+    [DepositSubjectClass.INSTALLMENT_SAVING, DepositSubjectClass.TERM_DEPOSIT_GIC].includes(item.dep_sjt_class)
+  );
 
   const handleNavigateOpenAccount = product => {
     moveNext(
@@ -91,71 +82,71 @@ const ProductList = () => {
   };
 
   const renderProductSection = (ref, products, tabClass, title, className) => {
-    // Return null if there are no products
-    if (products.length === 0) return null;
+    if (!products?.length) return;
     return (
       <div
         ref={ref}
-        className={`${className}__content`}
+        className={`${className}__content product-type-section`}
       >
         <div className="product-list__title">{title}</div>
-        {products.map(product => {
-          const itemImg = bannerBaseProductCode[product.prdt_c];
-          const checkTitleBorrowing = title === keyBorrowing.title;
-          return (
-            <div
-              className={`product-list__banner ${tabClass}`}
-              key={product?.prdt_c}
-              onClick={() => (checkTitleBorrowing ? handleClickBorrowingItem() : handleNavigateOpenAccount(product))}
-            >
-              {!checkTitleBorrowing && (
-                <>
-                  <div className="banner__container">
-                    <div className="product-banner__desc">
-                      <div className="product__type">
-                        <span>{product?.lcl_prdt_nm}</span>
-                      </div>
-                      <div className="product__desc">
-                        <span>
-                          This product provides high interest rate even for a day saving with convenient deposit and
-                          withdrawal system.
-                        </span>
-                      </div>
-                    </div>
-                    <div className="product-banner__spec">
-                      <div className="product__item">
-                        <div className="item__label">Rate</div>
-                        <div className="item__value">
-                          <span className="item__unit">up to</span>
-                          <span className="item__quantity">~{product?.ntfct_intrt}</span>
-                          <span className="item__unit">%</span>
+        <div className="product-type-list">
+          {products.map(product => {
+            const itemImg = bannerBaseProductCode[product.prdt_c];
+            const checkTitleBorrowing = title === keyBorrowing.title;
+            return (
+              <div
+                className={`product-card__item ${tabClass}`}
+                key={product?.prdt_c}
+                onClick={() => (checkTitleBorrowing ? handleClickBorrowingItem() : handleNavigateOpenAccount(product))}
+              >
+                {!checkTitleBorrowing && (
+                  <>
+                    <div className="product-card__main">
+                      <div className="product-card__desc">
+                        <div className="product__type">
+                          <span>{product?.lcl_prdt_nm}</span>
+                        </div>
+                        <div className="product__desc">
+                          <span>
+                            This product provides high interest rate even for a day saving with convenient deposit and
+                            withdrawal system.
+                          </span>
                         </div>
                       </div>
-                      {product?.dep_sjt_class !== DepositSubjectClass.REGULAR_SAVING && (
+                      <div className="product-card__spec">
                         <div className="product__item">
-                          <div className="item__label">Term</div>
+                          <div className="item__label">Rate</div>
                           <div className="item__value">
-                            <span className="item__quantity">
-                              {product?.prdt_st_trm_unit_cnt}~{product?.prdt_close_trm_unit_cnt}
-                            </span>
-                            <span className="item__unit">{PeriodUnitCodeDisplay[product?.prdt_psb_trm_unit_c]}</span>
+                            <span className="item__unit">up to</span>
+                            <span className="item__quantity">{product?.ntfct_intrt}</span>
+                            <span className="item__unit">%</span>
                           </div>
                         </div>
-                      )}
+                        {product?.dep_sjt_class !== DepositSubjectClass.REGULAR_SAVING && (
+                          <div className="product__item">
+                            <div className="item__label">Term</div>
+                            <div className="item__value">
+                              <span className="item__quantity">
+                                {product?.prdt_st_trm_unit_cnt}~{product?.prdt_close_trm_unit_cnt}
+                              </span>
+                              <span className="item__unit">{PeriodUnitCodeDisplay[product?.prdt_psb_trm_unit_c]}</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <div className="product-banner__image">
-                    <img
-                      src={itemImg}
-                      alt="Banner"
-                    />
-                  </div>
-                </>
-              )}
-              {checkTitleBorrowing && <BorrowingSection product={product} />}
-            </div>
-          );
-        })}
+                    <div className="product-card__image">
+                      <img
+                        src={itemImg}
+                        alt="Banner"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   };
@@ -197,13 +188,7 @@ const ProductList = () => {
           ProductTabDisplay[ProductTab.INVESTMENT],
           'investment'
         )}
-        {renderProductSection(
-          borrowingTitleRef,
-          borrowingProduct,
-          'borrowing',
-          ProductTabDisplay[ProductTab.BORROWING],
-          'borrowing'
-        )}
+        <BorrowingList />
       </ScrollAnchorTabWrapper>
       <Alert
         isCloseButton
