@@ -483,12 +483,12 @@ const ChangeProfile = ({ translation }) => {
     }
   }, [getUserFailedMsg]);
 
-  useEffect(() => {
-    requestGetCommonCode(
-      [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
-    );
-    getEtransferInfo(getETransferRegisteredCallback);
-  }, []);
+  // useEffect(() => {
+  //   requestGetCommonCode(
+  //     [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
+  //   );
+  //   getEtransferInfo(getETransferRegisteredCallback);
+  // }, []);
 
   return (
     <div className="change-profile__wrapper">
