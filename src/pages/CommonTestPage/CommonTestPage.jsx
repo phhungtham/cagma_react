@@ -313,26 +313,6 @@ const CommonTestPage = () => {
           label: 'initProfileImg',
           action: () => initProfileImg(handleInitProfileImgCallback),
         },
-        {
-          title: 'Show Secure Keyboard Char',
-          label: 'showSecureKeyboardChar',
-          action: () => showSecureKeyboardChar(handleShowKeyboardCharCallback),
-        },
-        {
-          title: 'Hide Secure Keyboard Char',
-          label: 'hideSecureKeyboardChar',
-          action: () => hideSecureKeyboardChar(handleHideKeyboardCharCallback),
-        },
-        {
-          title: 'Show Secure Keyboard Number',
-          label: 'showSecureKeyboardNumber',
-          action: () => showSecureKeyboardNumber(handleShowKeyboardNumberCallback),
-        },
-        {
-          title: 'Hide Secure Keyboard Number',
-          label: 'hideSecureKeyboardNumber',
-          action: () => hideSecureKeyboardNumber(handleHideKeyboardNumberCallback),
-        },
       ],
     },
     {
@@ -352,6 +332,26 @@ const CommonTestPage = () => {
           title: 'Create Security Passcode',
           label: 'createSecurityPasscode',
           action: () => createSecurityPasscode(handleCreateSecurityPasscodeCallback),
+        },
+        {
+          title: 'Show Secure Keyboard Char',
+          label: 'showSecureKeyboardChar',
+          action: () => showSecureKeyboardChar(handleShowKeyboardCharCallback),
+        },
+        {
+          title: 'Hide Secure Keyboard Char',
+          label: 'hideSecureKeyboardChar',
+          action: () => hideSecureKeyboardChar(handleHideKeyboardCharCallback),
+        },
+        {
+          title: 'Show Secure Keyboard Number',
+          label: 'showSecureKeyboardNumber',
+          action: () => showSecureKeyboardNumber(handleShowKeyboardNumberCallback),
+        },
+        {
+          title: 'Hide Secure Keyboard Number',
+          label: 'hideSecureKeyboardNumber',
+          action: () => hideSecureKeyboardNumber(handleHideKeyboardNumberCallback),
         },
       ],
     },

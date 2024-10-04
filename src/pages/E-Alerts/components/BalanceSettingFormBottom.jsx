@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import CheckBox from '@common/components/atoms/Checkbox';
 import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 
-import { eAlertSettingMethodOptions } from '../constants';
+import { EAlertCustomerMethod, eAlertSettingMethodOptions } from '../constants';
 
-const BalanceSettingFormBottom = ({ description, balanceOptions }) => {
+const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit }) => {
   const [selectedAmountOption, setSelectedAmountOption] = useState();
   const [checkedOptions, setCheckedOptions] = useState([]);
 
@@ -16,10 +16,23 @@ const BalanceSettingFormBottom = ({ description, balanceOptions }) => {
   };
 
   const onClickApply = () => {
-    //TODO: Get form value
+    let values = {
+      emailEnabled: false,
+      pushEnabled: false,
+      amount: selectedAmountOption,
+    };
+    if (checkedOptions.includes(EAlertCustomerMethod.EMAIL)) {
+      values.emailEnabled = true;
+    }
+    if (checkedOptions.includes(EAlertCustomerMethod.APP_PUSH)) {
+      values.pushEnabled = true;
+    }
+    onSubmit(values);
   };
 
-  const onClickReset = () => {};
+  const onClickReset = () => {
+    setCheckedOptions([]);
+  };
 
   const onChangeMethod = (value, checked) => {
     if (checked) {
@@ -28,6 +41,20 @@ const BalanceSettingFormBottom = ({ description, balanceOptions }) => {
       setCheckedOptions(checkedOptions.filter(option => option !== value));
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      let checkedList = [];
+      if (data.emailEnabled) {
+        checkedList.push(EAlertCustomerMethod.EMAIL);
+      }
+      if (data.pushEnabled) {
+        checkedList.push(EAlertCustomerMethod.APP_PUSH);
+      }
+      setCheckedOptions(checkedList);
+      setSelectedAmountOption(data.amount);
+    }
+  }, [data]);
 
   return (
     <div className="balance-setting__content">

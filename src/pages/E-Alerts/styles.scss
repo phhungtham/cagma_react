@@ -72,8 +72,13 @@
       color: $color-gray-700;
     }
     &__account-dropdown {
-      .dropdown__wrapper.dropdown__completed {
-        height: 93px;
+      .dropdown__completed {
+        &.dropdown__wrapper {
+          height: 76px;
+        }
+        &.dropdown__label {
+          display: none;
+        }
       }
     }
     &__setting__wrapper {

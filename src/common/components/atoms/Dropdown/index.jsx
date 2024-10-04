@@ -5,31 +5,7 @@ import { ArrowDown, ArrowUp } from 'assets/icons';
 import PropTypes from 'prop-types';
 
 const Dropdown = forwardRef((props, ref) => {
-  const {
-    // autoComplete,
-    children,
-    clazz,
-    // defaultValue,
-    disabled,
-    errorMessage,
-    label,
-    // onChange,
-    onFocus,
-    // onBlur,
-    // name,
-    readOnly,
-    // isMemo,
-    // placeHolder,
-    // style,
-    // helperText,
-    // isCountCharacter,
-    mode,
-    value,
-    // onClearInput,
-    completedMode,
-    options,
-    // ...otherProps
-  } = props;
+  const { children, clazz, disabled, errorMessage, label, onFocus, readOnly, value, completedMode, options } = props;
 
   const [valueDisplay, setValueDisplay] = useState('');
   const [customClass, setCustomClass] = useState('');
@@ -70,13 +46,13 @@ const Dropdown = forwardRef((props, ref) => {
       <section
         className={`dropdown__wrapper ${!!valueDisplay ? 'has-value' : ''} ${customClass} ${
           errorTextField && 'dropdown__error'
-        } ${disabled && 'disable'} ${mode}`}
+        } ${disabled && 'disable'}`}
         tabIndex={-1} // Make the section focusable
         onBlur={handleOnBlur}
         onClick={handleFocusStatus}
       >
         <div className="dropdown__main">
-          <div className={`dropdown__label ${customClass} ${disabled && 'disable'} ${mode}`}>{label}</div>
+          <div className={`dropdown__label ${customClass} ${disabled && 'disable'}`}>{label}</div>
           <div className="dropdown__value">{valueDisplay}</div>
           {children}
         </div>
@@ -92,18 +68,12 @@ Dropdown.propTypes = {
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
-  helperText: PropTypes.string,
   label: PropTypes.string,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   name: PropTypes.string,
   readOnly: PropTypes.bool,
-  isCountCharacter: PropTypes.bool,
-  placeHolder: PropTypes.string,
-  style: PropTypes.object,
-  mode: PropTypes.oneOf(['normal', 'text']),
-  onClearInput: PropTypes.func,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -119,16 +89,11 @@ Dropdown.defaultProps = {
   size: SIZE.SMALL,
   label: '',
   readOnly: false,
-  placeHolder: '',
-  isCountCharacter: false,
   errorMessage: '',
-  helperText: '',
-  mode: 'normal',
   options: [],
   onChange: () => {},
   onFocus: () => {},
   onBlur: () => {},
-  onClearInput: () => {},
 };
 
 export default Dropdown;

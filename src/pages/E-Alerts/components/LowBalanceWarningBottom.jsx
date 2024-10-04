@@ -4,7 +4,7 @@ import { eAlertLowBalanceWarningOptions } from '../constants';
 import BalanceSettingFormBottom from './BalanceSettingFormBottom';
 import './styles.scss';
 
-const LowBalanceWarningBottom = ({ onClose, onSubmit }) => {
+const LowBalanceWarningBottom = ({ onClose, onSubmit, data }) => {
   return (
     <BottomSheet
       open
@@ -15,8 +15,9 @@ const LowBalanceWarningBottom = ({ onClose, onSubmit }) => {
     >
       <BalanceSettingFormBottom
         description="Send alert when available balance is less than"
-        onConfirm={onSubmit}
+        onSubmit={onSubmit}
         balanceOptions={eAlertLowBalanceWarningOptions}
+        data={data}
       />
     </BottomSheet>
   );
