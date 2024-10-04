@@ -345,7 +345,7 @@ const ChangeProfile = ({ translation }) => {
       };
       if (usingSecurityCheck) {
         setShowLoading(false);
-        enterSecurityPasscode(() => handleRequestChangeProfile(requestChangeProfile), null);
+        // enterSecurityPasscode(() => handleRequestChangeProfile(requestChangeProfile), null);
       } else {
         handleRequestChangeProfile(requestChangeProfile);
       }
