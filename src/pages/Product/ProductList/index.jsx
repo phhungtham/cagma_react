@@ -6,7 +6,6 @@ import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import Spinner from '@common/components/atoms/Spinner';
 import Alert from '@common/components/molecules/Alert';
-import Header from '@common/components/organisms/Header';
 import ScrollAnchorTabWrapper from '@common/components/templates/ScrollAnchorTabWrapper';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
@@ -16,7 +15,7 @@ import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
-import { moveBack, moveNext } from '@utilities/index';
+import { moveNext } from '@utilities/index';
 
 import BorrowingSection from '../components/BorrowingSection';
 import { bannerBaseProductCode, dataBorrowing, keyBorrowing } from './constants';
@@ -176,10 +175,9 @@ const ProductList = () => {
   return (
     <div className="product-list__wrapper">
       {isLoadingProducts && <Spinner />}
-      <Header
-        title="Product"
-        onClick={moveBack}
-      />
+      <div className="header__wrapper">
+        <span className="page__title">Product</span>
+      </div>
       <ScrollAnchorTabWrapper
         defaultActiveTab={'3'}
         sections={sections}

@@ -2,13 +2,15 @@
 
 .product-list__wrapper {
   height: 100vh;
-  overflow-y: auto;
+  .header__wrapper {
+    height: 60px;
+  }
   .scroll-anchor-tab__wrapper {
     & > div:last-child {
       min-height: calc(100vh - 282px);
     }
     margin-top: 56px;
-    padding: 20px 24px 150px;
+    padding: 16px 24px 150px;
     overflow-y: auto;
     height: calc(100vh - 56px - 56px);
     display: flex;

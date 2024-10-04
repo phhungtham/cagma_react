@@ -9,6 +9,7 @@ import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccoun
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
+import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack } from '@utilities/index';
 
 import CustomerInfoChangeBottom from './components/CustomerInfoChangeBottom';
@@ -24,10 +25,20 @@ const EAlertsBalance = () => {
   const [showMoneyLeavingAccountBottom, setShowMoneyLeavingAccountBottom] = useState(false);
   const [showMoneyIntoAccountBottom, setShowMoneyIntoAccountBottom] = useState(false);
   const [showLowBalanceWarningBottom, setShowLowBalanceWarningBottom] = useState(false);
-  const [selectedAccount, setSelectedAccount] = useState();
   const [showLoading, setShowLoading] = useState();
-  const [setting, setSetting] = useState();
-  const [accounts, setAccounts] = useState([]);
+  const [accounts, setAccounts] = useState();
+  const [selectedAccount, setSelectedAccount] = useState();
+  const [setting, setSetting] = useState({
+    moneyLeavingEmailEnabled: false,
+    moneyLeavingPushEnabled: false,
+    moneyLeavingAmount: 0,
+    moneyIntoEmailEnabled: false,
+    moneyIntoPushEnabled: false,
+    moneyIntoAmount: 0,
+    balanceEmailEnabled: false,
+    balancePushEnabled: false,
+    balanceAmount: 0,
+  });
   const [serverErrorAlert, setServerErrorAlert] = useState({
     isShow: false,
     title: '',
@@ -39,7 +50,9 @@ const EAlertsBalance = () => {
     type: 'success',
   });
 
-  console.log('selectedAccount :>> ', selectedAccount);
+  const isMoneyLeavingEnabled = setting.moneyLeavingEmailEnabled || setting.moneyLeavingPushEnabled;
+  const isMoneyIntoEnabled = setting.moneyIntoEmailEnabled || setting.moneyIntoPushEnabled;
+  const isLowBalanceEnabled = setting.balanceEmailEnabled || setting.balancePushEnabled;
 
   // const { handleSubmit, control, setValue } = useForm();
 
@@ -70,7 +83,6 @@ const EAlertsBalance = () => {
 
   const onSelectAccount = account => {
     setSelectedAccount(account);
-    console.log('account :>> ', account);
     setShowMyAccountBottoms(false);
   };
 
@@ -87,7 +99,11 @@ const EAlertsBalance = () => {
     const { isSuccess, error, data } = await requestApi(endpoints.getEAlertSetting, {});
     setShowLoading(false);
     if (isSuccess) {
-      setSetting(data);
+      const { grid_01: accounts } = data || {};
+      setAccounts(accounts);
+      if (accounts?.length) {
+        setSelectedAccount(accounts[0]);
+      }
     } else {
       setServerErrorAlert({
         isShow: true,
@@ -96,14 +112,75 @@ const EAlertsBalance = () => {
     }
   };
 
-  useEffect(() => {
-    if (setting?.grid_01) {
-      setAccounts(setting.grid_01);
-      if (!selectedAccount) {
-        setSelectedAccount(setting.grid_01?.[0]);
-      }
+  const requestUpdateSetting = async payload => {
+    setShowLoading(true);
+    const { isSuccess, error, data } = await requestApi(endpoints.updateEAlertSetting, payload);
+    setShowLoading(false);
+    if (!isSuccess) {
+      return setServerErrorAlert({
+        isShow: true,
+        content: error,
+      });
     }
-  }, [setting]);
+    return data;
+  };
+  //TODO: Handle call API
+  const handleSubmitLowBalance = async (values, type) => {
+    setShowLowBalanceWarningBottom(false);
+    const { emailEnabled, pushEnabled, amount } = values;
+    const { result_cd } = await requestUpdateSetting({
+      select_d: type,
+      push_yn: pushEnabled ? '01' : '00',
+      email_yn: emailEnabled ? '01' : '00',
+    });
+
+    if (Number(result_cd) === 1) {
+      let message = '';
+      // if (customerEmailEnabled || customerAppPushEnabled) {
+      //   message = 'Alerts notifications enabled';
+      // } else {
+      //   message = 'Alerts notifications disabled';
+      // }
+      // setSetting({
+      //   ...setting,
+      //   customerEmailEnabled,
+      //   customerAppPushEnabled,
+      // });
+      // setShowToast({
+      //   isShow: true,
+      //   message: message,
+      //   type: 'success',
+      // });
+    }
+  };
+
+  useEffect(() => {
+    if (selectedAccount) {
+      const {
+        withd_email_yn: moneyLeavingEmailEnabled,
+        withd_push_yn: moneyLeavingPushEnabled,
+        withd_ums_ntc_amt: moneyLeavingAmount,
+        dep_email_yn: moneyIntoEmailEnabled,
+        dep_push_yn: moneyIntoPushEnabled,
+        dep_ums_ntc_amt: moneyIntoAmount,
+        bal_email_yn: balanceEmailEnabled,
+        bal_push_yn: balancePushEnabled,
+        bal_ums_ntc_amt: balanceAmount,
+      } = selectedAccount;
+
+      setSetting({
+        moneyLeavingEmailEnabled: Number(moneyLeavingEmailEnabled) === 1,
+        moneyLeavingPushEnabled: Number(moneyLeavingPushEnabled) === 1,
+        moneyLeavingAmount,
+        moneyIntoEmailEnabled: Number(moneyIntoEmailEnabled) === 1,
+        moneyIntoPushEnabled: Number(moneyIntoPushEnabled) === 1,
+        moneyIntoAmount,
+        balanceEmailEnabled: Number(balanceEmailEnabled) === 1,
+        balancePushEnabled: Number(balancePushEnabled) === 1,
+        balanceAmount,
+      });
+    }
+  }, [selectedAccount]);
 
   useEffect(() => {
     requestGetEAlertSetting();
@@ -127,9 +204,10 @@ const EAlertsBalance = () => {
               label="Account"
               clazz="balance__account-dropdown"
               onFocus={onOpenMyAccountBottom}
-              value={selectedAccount?.name}
+              value={selectedAccount?.acno_nm}
+              hiddenLabel
             >
-              {selectedAccount ? <div className="balance__account-number">{selectedAccount?.number}</div> : ''}
+              {selectedAccount ? <div className="balance__account-number">{selectedAccount?.lcl_ac_no}</div> : ''}
             </Dropdown>
           </div>
         </div>
@@ -141,7 +219,7 @@ const EAlertsBalance = () => {
           >
             <div className="item__title">Money leaving your account</div>
             <div className="item__value">
-              <span className="">OFF</span>
+              <span className={isMoneyLeavingEnabled ? 'on' : ''}>{isMoneyLeavingEnabled ? 'ON' : 'OFF'}</span>
               <span className="arrow-icon">
                 <ArrowRight />
               </span>
@@ -153,14 +231,16 @@ const EAlertsBalance = () => {
           >
             <div className="item__title">
               <div>Money into your account</div>
-              <div className="item__sub">
-                <span>Over $500.00</span>
-                <span className="divider__vertical" />
-                <span>SMS</span>
-              </div>
+              {isMoneyIntoEnabled && (
+                <div className="item__sub">
+                  <span>Over $500.00</span>
+                  <span className="divider__vertical" />
+                  <span>SMS</span>
+                </div>
+              )}
             </div>
             <div className="item__value">
-              <span className="on">ON</span>
+              <span className={isMoneyIntoEnabled ? 'on' : ''}>{isMoneyIntoEnabled ? 'ON' : 'OFF'}</span>
               <span className="arrow-icon">
                 <ArrowRight />
               </span>
@@ -172,14 +252,27 @@ const EAlertsBalance = () => {
           >
             <div className="item__title">
               <div>Low balance</div>
-              <div className="item__sub">
-                <span>Under $500.00</span>
-                <span className="divider__vertical" />
-                <span>E-mail</span>
-              </div>
+              {isLowBalanceEnabled && (
+                <div className="item__sub">
+                  {/* TODO: Check Under or Over (Figma) */}
+                  <span>${formatCurrencyDisplay(setting.balanceAmount)}</span>
+                  {setting.balanceEmailEnabled && (
+                    <>
+                      <span className="divider__vertical" />
+                      <span>E-mail</span>
+                    </>
+                  )}
+                  {setting.balancePushEnabled && (
+                    <>
+                      <span className="divider__vertical" />
+                      <span>SMS</span>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
             <div className="item__value">
-              <span className="on">ON</span>
+              <span className={isLowBalanceEnabled ? 'on' : ''}>{isLowBalanceEnabled ? 'ON' : 'OFF'}</span>
               <span className="arrow-icon">
                 <ArrowRight />
               </span>
@@ -208,7 +301,12 @@ const EAlertsBalance = () => {
       {showLowBalanceWarningBottom && (
         <LowBalanceWarningBottom
           onClose={() => setShowLowBalanceWarningBottom(false)}
-          onSubmit={() => {}}
+          data={{
+            amount: setting.balanceAmount,
+            emailEnabled: setting.balanceEmailEnabled,
+            pushEnabled: setting.balancePushEnabled,
+          }}
+          onSubmit={handleSubmitLowBalance}
         />
       )}
       <section className="toast__overlay">
