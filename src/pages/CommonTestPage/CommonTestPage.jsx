@@ -35,17 +35,7 @@ import hideSecureKeyboardChar from '@utilities/gmSecure/hideSecureKeyboardChar';
 import hideSecureKeyboardNumber from '@utilities/gmSecure/hideSecureKeyboardNumber';
 import showSecureKeyboardChar from '@utilities/gmSecure/showSecureKeyboardChar';
 import showSecureKeyboardNumber from '@utilities/gmSecure/showSecureKeyboardNumber';
-import {
-  callPhone,
-  clearHistory,
-  decryptCVC,
-  getLoginInfo,
-  hideCertificationNumber,
-  moveBack,
-  moveHome,
-  moveNext,
-  showCertificationNumber,
-} from '@utilities/index';
+import { callPhone, clearHistory, decryptCVC, getLoginInfo, moveBack, moveHome, moveNext } from '@utilities/index';
 import { setAuthenticated } from 'shared/features/auth/action';
 
 import { submitLoginRequest } from '../Login/redux/action';
@@ -264,18 +254,6 @@ const CommonTestPage = () => {
       ],
     },
     {
-      label: '• ShowSecureKeypad',
-      items: [
-        {
-          title: 'Show Certification Number',
-          label: 'show certification',
-          action: () =>
-            showCertificationNumber({ title: 'Title', description: 'Description', maxLength: 4, errMsg: '' }),
-        },
-        { title: 'Hide Certification Number', label: 'hide certification', action: () => hideCertificationNumber() },
-      ],
-    },
-    {
       label: '• GMCommon',
       items: [
         {
@@ -346,7 +324,13 @@ const CommonTestPage = () => {
         {
           title: 'Show Secure Keyboard Number',
           label: 'showSecureKeyboardNumber',
-          action: () => showSecureKeyboardNumber(handleShowKeyboardNumberCallback),
+          action: () =>
+            showSecureKeyboardNumber({
+              title: 'TEST SECURE KEYBOARD NUMBER',
+              description: 'Please enter passcode!',
+              maxLength: 6,
+              errMsg: '',
+            }),
         },
         {
           title: 'Hide Secure Keyboard Number',
