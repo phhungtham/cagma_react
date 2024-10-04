@@ -260,7 +260,7 @@ const ChangeProfile = ({ translation }) => {
         const { etr_err_c } = getETransferInfoResponse.data.elData || {};
         const isRegistered = etr_err_c?.indexOf('404') === -1;
         setIsETransferRegistered(String(isRegistered));
-        // setEtransferInfo(getETransferInfoResponse.data.elData);
+        setEtransferInfo(getETransferInfoResponse.data.elData);
         return isRegistered;
       }
     } else {
@@ -345,7 +345,7 @@ const ChangeProfile = ({ translation }) => {
       };
       if (usingSecurityCheck) {
         setShowLoading(false);
-        // enterSecurityPasscode(() => handleRequestChangeProfile(requestChangeProfile), null);
+        enterSecurityPasscode(() => handleRequestChangeProfile(requestChangeProfile), null);
       } else {
         handleRequestChangeProfile(requestChangeProfile);
       }
@@ -483,12 +483,12 @@ const ChangeProfile = ({ translation }) => {
     }
   }, [getUserFailedMsg]);
 
-  // useEffect(() => {
-  //   requestGetCommonCode(
-  //     [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
-  //   );
-  //   getEtransferInfo(getETransferRegisteredCallback);
-  // }, []);
+  useEffect(() => {
+    requestGetCommonCode(
+      [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
+    );
+    getEtransferInfo(getETransferRegisteredCallback);
+  }, []);
 
   return (
     <div className="change-profile__wrapper">

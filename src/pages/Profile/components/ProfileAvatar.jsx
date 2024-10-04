@@ -104,13 +104,9 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
     callSelectImage(handleCallSelectImageCallback);
   };
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     loadProfileImgInfo(handleProfileImg);
-  //   }, 1000);
-
-  //   return () => clearTimeout(timeoutId);
-  // }, [avatarUrl]);
+  useEffect(() => {
+    loadProfileImgInfo(handleProfileImg);
+  }, [avatarUrl]);
 
   return (
     <>
