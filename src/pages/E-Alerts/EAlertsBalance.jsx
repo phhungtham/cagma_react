@@ -1,26 +1,29 @@
 import { useEffect, useState } from 'react';
 
 import { ArrowRight } from '@assets/icons';
+import ChequingIcon from '@assets/images/icon-fill-chequing.png';
+import InvestmentIcon from '@assets/images/icon-fill-investment-40.png';
+import SavingIcon from '@assets/images/icon-fill-saving-40.png';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import Alert from '@common/components/molecules/Alert';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import Header from '@common/components/organisms/Header';
+import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack } from '@utilities/index';
 
-import CustomerInfoChangeBottom from './components/CustomerInfoChangeBottom';
 import LowBalanceWarningBottom from './components/LowBalanceWarningBottom';
 import MoneyIntoAccountBottom from './components/MoneyIntoAccountBottom';
 import MoneyLeavingAccountBottom from './components/MoneyLeavingAccountBottom';
+import { EAlertType } from './constants';
 import './styles.scss';
 
 const EAlertsBalance = () => {
   const { requestApi } = useApi();
-  const [showCustomerInfoChangeBottom, setShowCustomerInfoChangeBottom] = useState(false);
   const [showMyAccountsBottom, setShowMyAccountBottoms] = useState(false);
   const [showMoneyLeavingAccountBottom, setShowMoneyLeavingAccountBottom] = useState(false);
   const [showMoneyIntoAccountBottom, setShowMoneyIntoAccountBottom] = useState(false);
@@ -72,15 +75,6 @@ const EAlertsBalance = () => {
     setShowLowBalanceWarningBottom(true);
   };
 
-  // const handleApplyMoneyLeavingAccount = checkOptions => {
-  //   setShowCustomerInfoChangeBottom(false);
-  //   setShowToast({
-  //     isShow: true,
-  //     message: 'Alerts notifications enabled',
-  //     type: 'success',
-  //   });
-  // };
-
   const onSelectAccount = account => {
     setSelectedAccount(account);
     setShowMyAccountBottoms(false);
@@ -97,12 +91,24 @@ const EAlertsBalance = () => {
   const requestGetEAlertSetting = async () => {
     setShowLoading(true);
     const { isSuccess, error, data } = await requestApi(endpoints.getEAlertSetting, {});
-    setShowLoading(false);
     if (isSuccess) {
-      const { grid_01: accounts } = data || {};
-      setAccounts(accounts);
-      if (accounts?.length) {
-        setSelectedAccount(accounts[0]);
+      const { grid_01: accountList } = data || {};
+      const newAccounts = (accountList || []).map(item => {
+        return {
+          ...item,
+          name: item.acno_nm,
+          number: item.lcl_ac_no,
+          balance: formatCurrencyDisplay(item.pabl_blc),
+        };
+      });
+      setAccounts(newAccounts);
+      if (accountList?.length) {
+        if (selectedAccount) {
+          const account = newAccounts.find(item => item.lcl_ac_no === selectedAccount?.lcl_ac_no);
+          setSelectedAccount(account);
+        } else {
+          setSelectedAccount(accountList[0]);
+        }
       }
     } else {
       setServerErrorAlert({
@@ -110,10 +116,19 @@ const EAlertsBalance = () => {
         content: error,
       });
     }
+    setShowLoading(false);
   };
 
-  const requestUpdateSetting = async payload => {
+  const requestUpdateSetting = async (values, type, fieldsMap) => {
     setShowLoading(true);
+    const { emailEnabled, pushEnabled, amount } = values;
+    const payload = {
+      select_d: type,
+      push_yn: pushEnabled ? '01' : '00',
+      email_yn: emailEnabled ? '01' : '00',
+      ums_ntc_amt: Number(amount),
+      ums_ntc_acno: selectedAccount?.lcl_ac_no,
+    };
     const { isSuccess, error, data } = await requestApi(endpoints.updateEAlertSetting, payload);
     setShowLoading(false);
     if (!isSuccess) {
@@ -122,36 +137,75 @@ const EAlertsBalance = () => {
         content: error,
       });
     }
-    return data;
-  };
-  //TODO: Handle call API
-  const handleSubmitLowBalance = async (values, type) => {
-    setShowLowBalanceWarningBottom(false);
-    const { emailEnabled, pushEnabled, amount } = values;
-    const { result_cd } = await requestUpdateSetting({
-      select_d: type,
-      push_yn: pushEnabled ? '01' : '00',
-      email_yn: emailEnabled ? '01' : '00',
-    });
+    const { result_cd } = data;
 
     if (Number(result_cd) === 1) {
       let message = '';
-      // if (customerEmailEnabled || customerAppPushEnabled) {
-      //   message = 'Alerts notifications enabled';
-      // } else {
-      //   message = 'Alerts notifications disabled';
-      // }
-      // setSetting({
-      //   ...setting,
-      //   customerEmailEnabled,
-      //   customerAppPushEnabled,
-      // });
-      // setShowToast({
-      //   isShow: true,
-      //   message: message,
-      //   type: 'success',
-      // });
+      if (pushEnabled || emailEnabled) {
+        message = 'Alerts notifications enabled';
+      } else {
+        message = 'Alerts notifications disabled';
+      }
+      await requestGetEAlertSetting();
+      setShowToast({
+        isShow: true,
+        message: message,
+        type: 'success',
+      });
     }
+  };
+
+  const handleSubmitLowBalance = async values => {
+    setShowLowBalanceWarningBottom(false);
+    await requestUpdateSetting(values, EAlertType.BALANCE, {
+      email: 'bal_email_yn',
+      push: 'bal_push_yn',
+      amount: 'bal_ums_ntc_amt',
+    });
+  };
+
+  const handleSubmitMoneyInto = async values => {
+    setShowMoneyIntoAccountBottom(false);
+    await requestUpdateSetting(values, EAlertType.DEPOSIT, {
+      email: 'dep_email_yn',
+      push: 'dep_push_yn',
+      amount: 'dep_ums_ntc_amt',
+    });
+  };
+
+  const handleSubmitMoneyLeaving = async values => {
+    setShowMoneyLeavingAccountBottom(false);
+    await requestUpdateSetting(values, EAlertType.WITHDRAWAL, {
+      email: 'withd_email_yn',
+      push: 'withd_push_yn',
+      amount: 'withd_ums_ntc_amt',
+    });
+  };
+
+  const RenderAccountIcon = () => {
+    if (!selectedAccount) {
+      return;
+    }
+    let icon = '';
+    const { dep_sjt_class, casol_prdt_c_display } = selectedAccount;
+    if (dep_sjt_class === DepositSubjectClass.REGULAR_SAVING) {
+      if (casol_prdt_c_display === 'Chequing') {
+        icon = ChequingIcon;
+      } else if (casol_prdt_c_display === 'Saving') {
+        icon = SavingIcon;
+      }
+    } else if ([DepositSubjectClass.INSTALLMENT_SAVING, DepositSubjectClass.TERM_DEPOSIT_GIC].includes(dep_sjt_class)) {
+      icon = InvestmentIcon;
+    }
+
+    return (
+      <div className="account-icon">
+        <img
+          src={icon}
+          alt="account icon"
+        />
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -205,7 +259,7 @@ const EAlertsBalance = () => {
               clazz="balance__account-dropdown"
               onFocus={onOpenMyAccountBottom}
               value={selectedAccount?.acno_nm}
-              hiddenLabel
+              startAdornment={<RenderAccountIcon />}
             >
               {selectedAccount ? <div className="balance__account-number">{selectedAccount?.lcl_ac_no}</div> : ''}
             </Dropdown>
@@ -217,7 +271,26 @@ const EAlertsBalance = () => {
             className="balance__setting-item"
             onClick={onOpenMoneyLeavingAccountBottom}
           >
-            <div className="item__title">Money leaving your account</div>
+            <div className="item__title">
+              Money leaving your account
+              {isMoneyLeavingEnabled && (
+                <div className="item__sub">
+                  <span>Over ${formatCurrencyDisplay(setting.moneyLeavingAmount)}</span>
+                  {setting.moneyLeavingEmailEnabled && (
+                    <>
+                      <span className="divider__vertical" />
+                      <span>E-mail</span>
+                    </>
+                  )}
+                  {setting.moneyLeavingPushEnabled && (
+                    <>
+                      <span className="divider__vertical" />
+                      <span>SMS</span>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
             <div className="item__value">
               <span className={isMoneyLeavingEnabled ? 'on' : ''}>{isMoneyLeavingEnabled ? 'ON' : 'OFF'}</span>
               <span className="arrow-icon">
@@ -233,9 +306,19 @@ const EAlertsBalance = () => {
               <div>Money into your account</div>
               {isMoneyIntoEnabled && (
                 <div className="item__sub">
-                  <span>Over $500.00</span>
-                  <span className="divider__vertical" />
-                  <span>SMS</span>
+                  <span>Over ${formatCurrencyDisplay(setting.moneyIntoAmount)}</span>
+                  {setting.moneyIntoEmailEnabled && (
+                    <>
+                      <span className="divider__vertical" />
+                      <span>E-mail</span>
+                    </>
+                  )}
+                  {setting.moneyIntoPushEnabled && (
+                    <>
+                      <span className="divider__vertical" />
+                      <span>SMS</span>
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -254,8 +337,7 @@ const EAlertsBalance = () => {
               <div>Low balance</div>
               {isLowBalanceEnabled && (
                 <div className="item__sub">
-                  {/* TODO: Check Under or Over (Figma) */}
-                  <span>${formatCurrencyDisplay(setting.balanceAmount)}</span>
+                  <span>Under ${formatCurrencyDisplay(setting.balanceAmount)}</span>
                   {setting.balanceEmailEnabled && (
                     <>
                       <span className="divider__vertical" />
@@ -280,22 +362,26 @@ const EAlertsBalance = () => {
           </div>
         </div>
       </div>
-      {showCustomerInfoChangeBottom && (
-        <CustomerInfoChangeBottom
-          onClose={() => setShowCustomerInfoChangeBottom(false)}
-          onSubmit={() => {}}
-        />
-      )}
       {showMoneyLeavingAccountBottom && (
         <MoneyLeavingAccountBottom
           onClose={() => setShowMoneyLeavingAccountBottom(false)}
-          onSubmit={() => {}}
+          data={{
+            amount: setting.moneyLeavingAmount,
+            emailEnabled: setting.moneyLeavingEmailEnabled,
+            pushEnabled: setting.moneyLeavingPushEnabled,
+          }}
+          onSubmit={handleSubmitMoneyLeaving}
         />
       )}
       {showMoneyIntoAccountBottom && (
         <MoneyIntoAccountBottom
           onClose={() => setShowMoneyIntoAccountBottom(false)}
-          onSubmit={() => {}}
+          data={{
+            amount: setting.moneyIntoAmount,
+            emailEnabled: setting.moneyIntoEmailEnabled,
+            pushEnabled: setting.moneyIntoPushEnabled,
+          }}
+          onSubmit={handleSubmitMoneyInto}
         />
       )}
       {showLowBalanceWarningBottom && (

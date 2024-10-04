@@ -227,7 +227,14 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
 
   useEffect(() => {
     if (accounts?.length) {
-      let newAccounts = accounts;
+      let newAccounts = (accounts || []).map(item => {
+        return {
+          ...item,
+          name: item.dep_ac_alnm_nm,
+          number: item.lcl_ac_no_display,
+          balance: item.def_ac_blc_display,
+        };
+      });
       newAccounts = accounts.filter(account => {
         return isBankingAccount(account);
       });

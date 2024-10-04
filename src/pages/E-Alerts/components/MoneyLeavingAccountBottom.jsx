@@ -4,7 +4,7 @@ import { eAlertMoneyBalanceOptions } from '../constants';
 import BalanceSettingFormBottom from './BalanceSettingFormBottom';
 import './styles.scss';
 
-const MoneyLeavingAccountBottom = ({ onClose, onSubmit }) => {
+const MoneyLeavingAccountBottom = ({ onClose, onSubmit, data }) => {
   return (
     <BottomSheet
       open
@@ -16,7 +16,8 @@ const MoneyLeavingAccountBottom = ({ onClose, onSubmit }) => {
       <BalanceSettingFormBottom
         description="Send alert when amount is greater than"
         balanceOptions={eAlertMoneyBalanceOptions}
-        onConfirm={onSubmit}
+        onSubmit={onSubmit}
+        data={data}
       />
     </BottomSheet>
   );

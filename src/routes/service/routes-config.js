@@ -20,6 +20,7 @@ import TransferLimitSetting from '@pages/PersonalSetting/TransferLimitSetting';
 import ProductList from '@pages/Product/ProductList';
 import ChangeProfile from '@pages/Profile/ChangeProfile';
 import SignUp from '@pages/SignUp';
+import TermsAndConditions from '@pages/TermsAndConditions';
 import { routePaths } from '@routes/paths';
 
 const RoutesConfig = [
@@ -116,6 +117,11 @@ const RoutesConfig = [
   {
     path: routePaths.transferLimitSetting,
     component: TransferLimitSetting,
+    private: false,
+  },
+  {
+    path: routePaths.termCondition,
+    component: TermsAndConditions,
     private: false,
   },
   {
