@@ -5,17 +5,20 @@ import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import EmptyNotification from './EmptyNotification';
 
-const YourOffersTab = forwardRef(({ offerList, translate }, ref) => {
-  console.log('offerList :>> ', offerList);
+const YourOffersTab = props => {
+  const { offerList, translate, notificationListRef } = props;
+
   return (
     <div
-      ref={ref}
+      ref={notificationListRef}
       className="notification__list"
     >
       {offerList?.length > 0 ? (
         offerList.map((item, index) => (
           <div
-            className={`transaction__item__wrapper ${detectNotifyStatus(item.push_confm_yn) ? 'read' : 'unread'}`}
+            className={`transaction__item__wrapper notification ${
+              detectNotifyStatus(item.push_confm_yn) ? 'read' : 'unread'
+            }`}
             key={index}
           >
             <div className="offer__item">
@@ -32,6 +35,6 @@ const YourOffersTab = forwardRef(({ offerList, translate }, ref) => {
       )}
     </div>
   );
-});
+};
 
 export default withHTMLParseI18n(YourOffersTab);

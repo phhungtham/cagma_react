@@ -1,21 +1,23 @@
-import { forwardRef } from 'react';
-
 import { detectNotifyStatus } from '@common/utils/detect';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import EmptyNotification from './EmptyNotification';
 import './styles.scss';
 
-const TransactionsTab = forwardRef(({ transactionList, translate }, ref) => {
+const TransactionsTab = props => {
+  const { transactionList, translate, notificationListRef } = props;
+
   return (
     <div
-      ref={ref}
+      ref={notificationListRef}
       className="notification__list"
     >
       {transactionList?.length > 0 ? (
         transactionList.map((item, index) => (
           <div
-            className={`transaction__item__wrapper ${detectNotifyStatus(item.push_confm_yn) ? 'read' : 'unread'}`}
+            className={`transaction__item__wrapper notification  ${
+              detectNotifyStatus(item.push_confm_yn) ? 'read' : 'unread'
+            }`}
             key={index}
           >
             <div className="transaction__item">
@@ -31,6 +33,6 @@ const TransactionsTab = forwardRef(({ transactionList, translate }, ref) => {
       )}
     </div>
   );
-});
+};
 
 export default withHTMLParseI18n(TransactionsTab);

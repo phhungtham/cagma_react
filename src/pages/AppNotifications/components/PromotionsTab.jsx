@@ -8,7 +8,8 @@ import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import EmptyNotification from './EmptyNotification';
 
-const PromotionsTab = forwardRef(({ promotionList, translate, onClick, currentLang }, ref) => {
+const PromotionsTab = forwardRef((props, ref) => {
+  const { promotionList, translate, onClick, currentLang } = props;
   promotionList?.sort((pre, nex) => (pre.banner_seq > nex.banner_seq ? 1 : -1));
   return (
     <div
