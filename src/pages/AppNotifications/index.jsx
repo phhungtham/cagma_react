@@ -6,6 +6,8 @@ import Spinner from '@common/components/atoms/Spinner';
 import Alert from '@common/components/molecules/Alert';
 import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
+import { MENU_CODE } from '@common/constants/common';
+import { DepositSubjectClass } from '@common/constants/deposit';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { alertMove } from '@utilities/alertMove';
@@ -318,20 +320,29 @@ const AppNotifications = ({ translate }) => {
     };
   }, [isNativeBack, showPromotionDetail]);
 
-  //TODO: Waiting API return dep_sjt_class and account number for navigate
-  // const moveToAccountDetailScreen = (screenType, accountNumber) => {
-  //   const accountNumberParam = JSON.stringify({
-  //     lcl_acno: accountNumber,
-  //   });
-  //   if (screenType === 1) {
-  //     moveNext(MENU_CODE.CHECKING, { param: accountNumberParam });
-  //   } else if (screenType === 2) {
-  //     moveNext(MENU_CODE.TIME_DEPOSIT, { param: accountNumberParam });
-  //   } else if (screenType === 3) {
-  //     moveNext(MENU_CODE.INSTALLMENT_DEPOSIT, { param: accountNumberParam });
-  //   }
-  //   return;
-  // };
+  const moveToAccountDetailScreen = (screenType, accountNumber) => {
+    debugger;
+    const accountNumberParam = JSON.stringify({
+      lcl_acno: accountNumber,
+    });
+    let menuCode = '';
+    if (screenType === DepositSubjectClass.REGULAR_SAVING) {
+      menuCode = MENU_CODE.ACCOUNT_ACTIVITY_BANKING;
+    } else if ([DepositSubjectClass.INSTALLMENT_SAVING, DepositSubjectClass.TERM_DEPOSIT_GIC].includes(screenType)) {
+      menuCode = MENU_CODE.ACCOUNT_ACTIVITY_INVESTMENT;
+    }
+    if (menuCode) {
+      moveNext(menuCode, { param: accountNumberParam });
+    }
+    return;
+  };
+
+  const handleClickTransaction = data => {
+    const screenType = data?.dep_sjt_class;
+    const accountNumber = data?.ums_ntc_acno;
+    setReduxTabIndex(tabIndex);
+    moveToAccountDetailScreen(screenType, accountNumber);
+  };
 
   return (
     <div className="notification__wrapper">
@@ -370,6 +381,7 @@ const AppNotifications = ({ translate }) => {
                 <TransactionsTab
                   notificationListRef={notificationListRef}
                   transactionList={listTransactionNotify}
+                  onClick={handleClickTransaction}
                 />
               )}
               {tabIndex === NotificationTabIndex.OFFERS && (

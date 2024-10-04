@@ -5,7 +5,7 @@ import EmptyNotification from './EmptyNotification';
 import './styles.scss';
 
 const TransactionsTab = props => {
-  const { transactionList, translate, notificationListRef } = props;
+  const { transactionList, translate, notificationListRef, onClick } = props;
 
   return (
     <div
@@ -19,6 +19,7 @@ const TransactionsTab = props => {
               detectNotifyStatus(item.push_confm_yn) ? 'read' : 'unread'
             }`}
             key={index}
+            onClick={() => onClick(item)}
           >
             <div className="transaction__item">
               <div className="transaction__title">{item.push_msg_ctt}</div>
