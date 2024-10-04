@@ -105,7 +105,11 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   };
 
   useEffect(() => {
-    loadProfileImgInfo(handleProfileImg);
+    const timeoutId = setTimeout(() => {
+      loadProfileImgInfo(handleProfileImg);
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
   }, [avatarUrl]);
 
   return (
