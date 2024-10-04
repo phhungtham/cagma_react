@@ -21,10 +21,10 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
 
   const handleProfileImg = result => {
     console.log('handleProfileImg:', result);
-    const { statusCode, imageInfo, imageExt, isDefaultImg } = result || {};
+    const { statusCode, imageInfo, imageExt } = result || {};
     const isLoadSuccess = Number(statusCode) === 1000;
 
-    if (isLoadSuccess && imageInfo && isDefaultImg === 'N') {
+    if (isLoadSuccess && imageInfo) {
       setAvatarUrl(`data:image/${imageExt};base64,${imageInfo}`);
       setShowDefaultAvatar(false);
     } else {
