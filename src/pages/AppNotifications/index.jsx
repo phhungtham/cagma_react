@@ -127,9 +127,8 @@ const AppNotifications = ({ translate }) => {
   };
 
   const handleAppNotificationTouchMove = () => {
-    debugger;
     /* When the user touch to the bottom of the checking list or offer list, fetch more data */
-    if (tabIndex === 0 || tabIndex === 1) {
+    if (tabIndex === NotificationTabIndex.TRANSACTIONS || tabIndex === NotificationTabIndex.OFFERS) {
       fetchDataWhenScrollBottom();
     }
   };
@@ -144,6 +143,7 @@ const AppNotifications = ({ translate }) => {
     const paddingEleStr = window.getComputedStyle(elementScroll).paddingBottom;
     const paddingEleNumber = +paddingEleStr.substring(0, paddingEleStr.length - 2);
     const lastRowOffset = lastItemEle.offsetTop + lastItemEle.clientHeight + paddingEleNumber;
+
     if (lastRowOffset > Math.floor(elementScrollOffset + elementScrollHeight + 1)) {
       setLoadMoreNotify(false);
     } else {
@@ -194,7 +194,7 @@ const AppNotifications = ({ translate }) => {
   };
 
   const fetchMoreListNotify = () => {
-    if (tabIndex === 0) {
+    if (tabIndex === NotificationTabIndex.TRANSACTIONS) {
       const newListChecking = {
         ...requestTransactionParams,
         inq_cnt:
@@ -202,7 +202,7 @@ const AppNotifications = ({ translate }) => {
       };
       getTransactionNotificationList(newListChecking);
       setRequestTransactionParams(newListChecking);
-    } else if (tabIndex === 1) {
+    } else if (tabIndex === NotificationTabIndex.OFFERS) {
       const newListOffer = {
         ...requestOfferParams,
         inq_cnt: listOfferCount !== 0 ? (requestOfferParams.inq_cnt += 50) : requestOfferParams.inq_cnt,
@@ -271,11 +271,11 @@ const AppNotifications = ({ translate }) => {
   useEffect(() => {
     if (notificationListRef.current) {
       // header motion...
-      notificationListRef.current.addEventListener('touchmove', handleAppNotificationTouchMove);
+      notificationListRef.current.addEventListener('scroll', handleAppNotificationTouchMove);
     }
     return () =>
       notificationListRef.current &&
-      notificationListRef.current.removeEventListener('touchmove', handleAppNotificationTouchMove);
+      notificationListRef.current.removeEventListener('scroll', handleAppNotificationTouchMove);
   }, [tabIndex, notificationListRef.current]);
 
   useEffect(() => {
@@ -367,13 +367,13 @@ const AppNotifications = ({ translate }) => {
             <>
               {tabIndex === NotificationTabIndex.TRANSACTIONS && (
                 <TransactionsTab
-                  ref={notificationListRef}
+                  notificationListRef={notificationListRef}
                   transactionList={[...listTransactionNotify, ...listTransactionNotify]}
                 />
               )}
               {tabIndex === NotificationTabIndex.OFFERS && (
                 <YourOffersTab
-                  ref={notificationListRef}
+                  notificationListRef={notificationListRef}
                   offerList={listOfferNotify}
                 />
               )}

@@ -28,7 +28,8 @@
   }
   &__list {
     overflow-y: scroll;
-
+    height: calc(100vh - 107px);
+    padding-bottom: 50px;
     &.checking {
       height: 100vh;
       padding-bottom: 170px;
