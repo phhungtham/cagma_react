@@ -318,6 +318,7 @@ const AppNotifications = ({ translate }) => {
     };
   }, [isNativeBack, showPromotionDetail]);
 
+  //TODO: Waiting API return dep_sjt_class and account number for navigate
   // const moveToAccountDetailScreen = (screenType, accountNumber) => {
   //   const accountNumberParam = JSON.stringify({
   //     lcl_acno: accountNumber,
@@ -368,7 +369,7 @@ const AppNotifications = ({ translate }) => {
               {tabIndex === NotificationTabIndex.TRANSACTIONS && (
                 <TransactionsTab
                   notificationListRef={notificationListRef}
-                  transactionList={[...listTransactionNotify, ...listTransactionNotify]}
+                  transactionList={listTransactionNotify}
                 />
               )}
               {tabIndex === NotificationTabIndex.OFFERS && (
