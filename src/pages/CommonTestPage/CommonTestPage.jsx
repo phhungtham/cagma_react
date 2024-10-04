@@ -314,7 +314,7 @@ const CommonTestPage = () => {
         {
           title: 'Show Secure Keyboard Char',
           label: 'showSecureKeyboardChar',
-          action: () => showSecureKeyboardChar(handleShowKeyboardCharCallback),
+          action: () => showSecureKeyboardChar({ maxLength: 30 }),
         },
         {
           title: 'Hide Secure Keyboard Char',
