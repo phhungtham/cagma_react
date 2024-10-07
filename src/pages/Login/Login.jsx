@@ -79,7 +79,7 @@ const Login = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       setAuthenticated();
-      moveNext('', { param: JSON.stringify({ ums_svc_c: 'CAHO002' }) }, routePaths.notification);
+      moveNext('', { param: JSON.stringify({ ums_svc_c: 'CAHO002' }) }, routePaths.productList);
     }
   }, [isLoginSuccess]);
 

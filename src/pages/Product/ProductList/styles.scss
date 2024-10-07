@@ -18,21 +18,15 @@
       padding: 16px 24px 150px;
     }
   }
+  .product-list__main {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
   .product-type-list {
     display: flex;
     flex-direction: column;
     gap: 16px;
-  }
-  .banking__content {
-    margin-bottom: 10px;
-  }
-  .investment__content {
-    margin-bottom: 10px;
-  }
-  .borrowing__content {
-    .banner__container {
-      width: 70%;
-    }
   }
   .product-list__title {
     font-size: 17px;
@@ -54,6 +48,9 @@
     }
     &.borrowing {
       background-color: $color-blue-350;
+      .product-card__main {
+        gap: 12px;
+      }
     }
   }
   .product-card__main {
@@ -61,12 +58,11 @@
     flex-direction: column;
     gap: 20px;
   }
-  .product-content {
-    .product-content__title {
-      font-size: 13px;
-      font-weight: 400;
-      line-height: 18px;
-    }
+  .product-borrowing__sub {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    width: 160px;
   }
 
   .product-type-section {
@@ -89,6 +85,7 @@
         font-size: 13px;
         line-height: 18px;
         color: $color-gray-600;
+        width: 180px;
       }
     }
     &__spec {
@@ -102,8 +99,10 @@
       bottom: 0;
       height: 176px;
       width: 140px;
+      display: flex;
+      align-items: flex-end;
       img {
-        height: 100%;
+        // height: 100%;
         width: 100%;
         // object-fit: contain;
       }
@@ -134,30 +133,28 @@
       font-weight: 600;
     }
   }
-
-  .term-condition__checklist {
-    margin-top: 20px;
-  }
 }
 
-.term-condition__checklist {
-  margin-top: 20px;
-}
-
-.borrowing-block {
-  &__info {
-    padding: 20px 0 16px;
+.borrowing-instruction-bottom__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .borrowing-title {
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 600;
   }
-  &__ctas {
-    margin-top: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .borrowing-description {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 21px;
+    color: $color-gray-550;
+    text-align: center;
   }
-  &__button {
-    width: 100px;
+  .borrowing-icon-buttons {
+    padding: 32px 0 16px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 56px;
   }
 }

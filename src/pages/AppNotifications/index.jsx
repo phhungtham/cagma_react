@@ -64,7 +64,6 @@ import {
 } from './redux/selector';
 import { AppNotificationFeatureName } from './redux/type';
 
-//TODO: Test case add params ums_svc_c and native params when login
 const AppNotifications = ({ translate }) => {
   useReducers([
     { key: AppNotificationFeatureName, reducer: appNotificationReducer },
@@ -80,7 +79,7 @@ const AppNotifications = ({ translate }) => {
   const [currentPromotionDetail, setCurrentPromotionDetail] = useState({});
   const [loadMoreNotify, setLoadMoreNotify] = useState(false);
   const [promotionListDisplay, setPromotionListDisplay] = useState([]);
-  const isLogin = useSelector(loginSelector) || true;
+  const isLogin = useSelector(loginSelector);
   const notificationListRef = useRef(null);
 
   const initRequestTransactionsNotify = {

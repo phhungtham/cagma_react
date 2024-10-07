@@ -1,6 +1,6 @@
 import { borrowings } from '../constants';
 
-const BorrowingList = () => {
+const BorrowingList = ({ onClick }) => {
   return (
     <div className="product-type-section">
       <div className="product-list__title">Borrowing</div>
@@ -9,9 +9,10 @@ const BorrowingList = () => {
           <div
             key={index}
             className="product-card__item borrowing"
+            onClick={onClick}
           >
-            <div className="banner__container">
-              <div className="product-banner__desc">
+            <div className="product-card__main">
+              <div className="product-card__desc">
                 <div className="product__type">
                   <span>{product.name}</span>
                 </div>
@@ -19,11 +20,11 @@ const BorrowingList = () => {
                   <span>{product.desc}</span>
                 </div>
               </div>
-              <div className="product-content">
-                <p className="product-content__title">{product.content}</p>
+              <div className="product-borrowing__sub">
+                <span>{product.content}</span>
               </div>
             </div>
-            <div className="product-banner__image">
+            <div className="product-card__image">
               <img
                 src={product.img}
                 alt="Banner"

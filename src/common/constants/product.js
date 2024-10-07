@@ -7,11 +7,11 @@ export const ProductPeriodUnitCode = {
 };
 
 export const PeriodUnitCodeDisplay = {
-  [ProductPeriodUnitCode.DAY]: 'days',
-  [ProductPeriodUnitCode.WEEK]: 'Week',
-  [ProductPeriodUnitCode.MONTH]: 'months',
-  [ProductPeriodUnitCode.QUARTER]: 'Quarter',
-  [ProductPeriodUnitCode.YEAR]: 'Year',
+  [ProductPeriodUnitCode.DAY]: 'Days',
+  [ProductPeriodUnitCode.WEEK]: 'Weeks',
+  [ProductPeriodUnitCode.MONTH]: 'Months',
+  [ProductPeriodUnitCode.QUARTER]: 'Quarters',
+  [ProductPeriodUnitCode.YEAR]: 'Years',
 };
 
 export const ProductTab = {
@@ -38,4 +38,9 @@ export const ProductCode = {
   E_Long_Maturity: '5117030041',
   TFSA_E_GIC: '5117030042',
   RRSP_E_GIC: '5117030043',
+};
+
+export const RequiredAccountBaseProductCode = {
+  [ProductCode.TFSA_E_GIC]: ProductCode.TFSA_E_SAVINGS,
+  [ProductCode.RRSP_E_GIC]: ProductCode.RRSP_E_SAVINGS,
 };
