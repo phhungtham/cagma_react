@@ -93,7 +93,8 @@ const ProductList = () => {
   };
 
   const handleClickOpenAccount = async product => {
-    if (!isLogin) {
+    //TODO: Just for test. It should be !isLogin
+    if (isLogin) {
       //TODO: Call Plugin Login of Native
       return moveNext(
         MENU_CODE.OPEN_ACCOUNT,
@@ -149,6 +150,13 @@ const ProductList = () => {
         });
       }
     }
+    return moveNext(
+      MENU_CODE.OPEN_ACCOUNT,
+      {
+        param: JSON.stringify(product),
+      },
+      routePaths.openAccount
+    );
   };
 
   const handleCloseServerAlert = () => {
