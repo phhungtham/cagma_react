@@ -261,7 +261,10 @@ const ProductList = () => {
               'investment',
               ProductTabDisplay[ProductTab.INVESTMENT]
             )}
-            <BorrowingList onClick={handleClickBorrowingItem} />
+            <BorrowingList
+              borrowingTitleRef={borrowingTitleRef}
+              onClick={handleClickBorrowingItem}
+            />
           </div>
         </ScrollAnchorTabWrapper>
         {showBorrowingInstructionBottom && (

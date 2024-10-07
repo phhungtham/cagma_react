@@ -1,8 +1,11 @@
 import { borrowings } from '../constants';
 
-const BorrowingList = ({ onClick }) => {
+const BorrowingList = ({ borrowingTitleRef, onClick }) => {
   return (
-    <div className="product-type-section">
+    <div
+      className="product-type-section"
+      ref={borrowingTitleRef}
+    >
       <div className="product-list__title">Borrowing</div>
       <div className="product-type-list">
         {borrowings.map((product, index) => (

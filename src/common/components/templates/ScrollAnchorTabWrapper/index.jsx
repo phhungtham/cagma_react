@@ -77,11 +77,7 @@ const ScrollAnchorTabWrapper = ({ defaultActiveTab, sections, options, children 
   };
 
   return (
-    <div
-      className="scroll-anchor-tab__wrapper"
-      ref={containerRef}
-      onScroll={handleScrollToActive}
-    >
+    <div className="scroll-anchor-tab__wrapper">
       <AnchorTab
         type="default"
         segments={sections.map(({ tab, label, ref }) => ({
@@ -92,7 +88,13 @@ const ScrollAnchorTabWrapper = ({ defaultActiveTab, sections, options, children 
         defaultActive={activeTab}
         active={activeTab}
       />
-      <div className="scroll-anchor__content">{children}</div>
+      <div
+        className="scroll-anchor__content"
+        ref={containerRef}
+        onScroll={handleScrollToActive}
+      >
+        {children}
+      </div>
     </div>
   );
 };
