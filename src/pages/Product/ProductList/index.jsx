@@ -170,7 +170,7 @@ const ProductList = () => {
         <span className="page__title">Product</span>
       </div>
       <ScrollAnchorTabWrapper
-        defaultActiveTab={'3'}
+        defaultActiveTab={'2'}
         sections={sections}
         options={options}
       >

@@ -75,7 +75,7 @@ const ScrollSelect = ({ options = [], defaultValue, onChangeValue }) => {
         }
       };
     }
-  }, [defaultValue]);
+  }, [defaultValue, options]);
 
   return (
     <div

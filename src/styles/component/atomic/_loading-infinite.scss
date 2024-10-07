@@ -1,12 +1,10 @@
 .infinite__loading {
   width: 32px;
   height: 32px;
-  animation: infiniteLoading 1s linear infinite;
   position: fixed;
   bottom: 10px;
   left: 50%;
-  transform: translate(-50%, -50%);
-
+  animation: infiniteLoading 1s linear infinite;
   & img {
     width: 100%;
     height: 100%;
@@ -15,9 +13,9 @@
 
 @keyframes infiniteLoading {
   0% {
-    transform: rotate(0);
+    transform: translateX(-50%) rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: translateX(-50%) rotate(360deg);
   }
 }

@@ -35,16 +35,16 @@
 @include Filled(brown__filled, text__brown__filled, #f1decd, #804714);
 
 // TODO: DEFINE Outline Label
-@include Outline(basic__outline, text__basic__outline, #2c3b4e, $color-gray-900);
-@include Outline(blue__outline, text__blue__outline, $color-blue-500, $color-blue-500);
-@include Outline(gray__outline, text__gray__outline, #808892, $color-gray-900);
-@include Outline(sky-blue__outline, text__sky-blue__outline, #14aec6, $color-gray-900);
-@include Outline(mint__outline, text__mint__outline, #2eb086, $color-gray-900);
-@include Outline(purple__outline, text__purple__outline, #7466ce, $color-gray-900);
-@include Outline(orange__outline, text__orange__outline, #f78812, $color-gray-900);
-@include Outline(coral__outline, text__coral__outline, #ff6a63, $color-gray-900);
-@include Outline(rose__outline, text__rose__outline, #b8405e, $color-gray-900);
-@include Outline(brown__outline, text__brown__outline, #896646, $color-gray-900);
+@include Outline(gray__outline, text__gray__outline, #808892, $color-black);
+@include Outline(blue__outline, text__blue__outline, $color-blue-500, $color-blue-600);
+@include Outline(basic__outline, text__basic__outline, #0aa6be, $color-aqua);
+@include Outline(sky-blue__outline, text__sky-blue__outline, #149f6e, $color-green-500);
+@include Outline(mint__outline, text__mint__outline, #7466ce, $color-purple-500);
+@include Outline(orange__outline, text__orange__outline, $color-orange-500, $color-orange-500);
+@include Outline(purple__outline, text__purple__outline, $color-orange-600, $color-orange-600);
+@include Outline(coral__outline, text__coral__outline, $color-red-500, $color-red-500);
+@include Outline(rose__outline, text__rose__outline, $color-brown-500, $color-brown-500);
+@include Outline(brown__outline, text__brown__outline, $color-gray-300, $color-gray-700);
 
 //TODO: DEFINE Ghost Label
 @include Ghost(text__primary__ghost, #3270ea);

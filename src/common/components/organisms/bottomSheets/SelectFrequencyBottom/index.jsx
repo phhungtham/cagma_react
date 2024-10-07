@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ScrollSelect from '@common/components/molecules/ScrollSelect';
@@ -7,29 +7,44 @@ import { FrequencyType } from '@common/constants/bottomsheet';
 import { PropTypes } from 'prop-types';
 
 import '../bs_styles.scss';
-import { frequencyMonthlyOptions, frequencyTypeOptions } from './constants';
+import { frequencyMonthlyOptions, frequencyTypeOptions, frequencyValueByTypeOptions } from './constants';
 
 //TODO: Handle logic
 const SelectFrequencyBottom = ({ open, onClose, onChange, value = {} }) => {
-  const [valueOptions, setValueOptions] = useState(frequencyMonthlyOptions);
   const valueRef = useRef({});
-
   const selectedType = value?.type || FrequencyType.MONTHLY;
   const selectedValue = value?.value || frequencyMonthlyOptions[0].value;
 
+  const [selectTypeOption, setSelectTypeOption] = useState(selectedValue);
+
   const handleConfirm = () => {
-    const { type, value } = valueRef.current;
+    const { value } = valueRef.current;
     onChange({
-      type,
+      selectTypeOption,
       value,
     });
   };
 
-  useEffect(() => {
-    if (selectedType) {
-      // setValueOptions(frequencyValueByTypeOptions[selectedType]);
-    }
-  }, [selectedType]);
+  const debounceChangeOption = (cb, delay) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(...args);
+      }, delay);
+    };
+  };
+
+  const valueOptions = useMemo(() => {
+    return frequencyValueByTypeOptions[selectTypeOption] || frequencyMonthlyOptions;
+  }, [selectTypeOption]);
+
+  const changeValueOptionType = useCallback(
+    debounceChangeOption(value => {
+      setSelectTypeOption(value);
+    }, 100),
+    []
+  );
 
   return (
     <BottomSheet
@@ -45,7 +60,7 @@ const SelectFrequencyBottom = ({ open, onClose, onChange, value = {} }) => {
             options={frequencyTypeOptions}
             defaultValue={selectedType}
             onChangeValue={value => {
-              valueRef.current.type = value;
+              changeValueOptionType(value);
             }}
           />
 
