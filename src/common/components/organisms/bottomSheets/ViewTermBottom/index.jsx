@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Document, Page } from 'react-pdf';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { PropTypes } from 'prop-types';
@@ -111,9 +112,9 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
             className="view-term__item"
             ref={containerRef}
           >
-            {/* <Document
+            <Document
               file={pdfFile}
-              onLoadSuccess={onDocumentLoadSuccess}
+              // onLoadSuccess={onDocumentLoadSuccess}
             >
               {[...Array(numPages)].map((_, index) => (
                 <Fragment key={index + 1}>
@@ -127,7 +128,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
                 </Fragment>
               ))}
               <div ref={bottomRef} />
-            </Document> */}
+            </Document>
           </div>
         </div>
         <div className="view-term__footer">
