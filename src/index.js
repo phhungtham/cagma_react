@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+import { pdfjs } from 'react-pdf';
 import { Provider } from 'react-redux';
 import { BrowserRouter, HashRouter as Router } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ import './i18n';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-// pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const RouterComponent = AppCfg.ENV === 'development' || AppCfg.ENV === 'dev' ? BrowserRouter : Router;
 root.render(
