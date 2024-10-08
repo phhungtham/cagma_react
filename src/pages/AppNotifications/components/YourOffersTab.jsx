@@ -1,6 +1,3 @@
-import { forwardRef } from 'react';
-
-import { detectNotifyStatus } from '@common/utils/detect';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import EmptyNotification from './EmptyNotification';
@@ -16,9 +13,7 @@ const YourOffersTab = props => {
       {offerList?.length > 0 ? (
         offerList.map((item, index) => (
           <div
-            className={`transaction__item__wrapper notification ${
-              detectNotifyStatus(item.push_confm_yn) ? 'read' : 'unread'
-            }`}
+            className={`transaction__item__wrapper notification ${item.push_confm_yn === 1 ? 'read' : 'unread'}`}
             key={index}
           >
             <div className="offer__item">

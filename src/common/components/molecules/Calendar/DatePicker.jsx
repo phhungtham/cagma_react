@@ -1,8 +1,8 @@
 import { useLayoutEffect, useRef } from 'react';
 import Calendar from 'react-calendar';
 
-import { convertDateTime } from '@common/utils/formater';
 import { replaceString } from '@utilities/debitCardUtils';
+import { convertDateTime } from '@utilities/formater';
 import { CalendarArrow, CalendarDoubleArrow } from 'assets/icons';
 import PropTypes from 'prop-types';
 

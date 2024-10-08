@@ -5,6 +5,7 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { formatCardNumber, formatExpiryDate } from '@utilities/formater';
 import { moveBack } from '@utilities/index';
 
 import { activeCardFormSchema } from './schema';
@@ -42,6 +43,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
                 <Input
                   label="Name"
                   placeholder="Please input Detail text"
+                  maxLength={100}
                   {...field}
                 />
               )}
@@ -49,13 +51,17 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
               name="name"
             />
             <Controller
-              render={({ field }) => (
+              render={({ field: { value, onChange } }) => (
                 <Input
                   label="Card Number"
                   placeholder="Please input 16 numerics"
-                  type="number"
-                  maxLength={16}
-                  {...field}
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength={19}
+                  value={value}
+                  onChange={inputValue => {
+                    onChange(formatCardNumber(inputValue));
+                  }}
                 />
               )}
               control={control}
@@ -67,22 +73,13 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
                   <Input
                     label="Expiry Date(MMYY)"
                     placeholder="Enter MM/YY"
-                    type="text"
+                    type="tel"
                     maxLength={5}
                     value={value}
                     pattern="\d{2}/\d{2}"
                     inputMode="numeric"
                     onChange={inputValue => {
-                      let valueEmptySlash = inputValue;
-                      //Handle case delete slash
-                      if (valueEmptySlash.length === 2 && value.length === 3) {
-                        valueEmptySlash = valueEmptySlash.substring(0, 1);
-                      } else if (valueEmptySlash.length >= 2) {
-                        valueEmptySlash = inputValue.replace(/\D/g, '');
-                        valueEmptySlash = `${valueEmptySlash.substring(0, 2)}/${valueEmptySlash.substring(2, 4)}`;
-                      }
-
-                      onChange(valueEmptySlash);
+                      onChange(formatExpiryDate(inputValue, value));
                     }}
                   />
                 );

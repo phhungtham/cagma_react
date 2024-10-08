@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { FillPhoneIcon } from '@assets/icons';
+import { FillChatIcon } from '@assets/icons';
 import BannerImg from '@assets/images/add-new-card-banner.png';
 import SearchBranchIcon from '@assets/images/icon-fill-atm-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -80,7 +80,7 @@ const TermsAndConditions = ({ onSubmit }) => {
   return (
     <div className="add-new-card term-conditions__wrapper">
       <Header
-        title="Add New Card"
+        title="Access Card Service"
         onClick={moveBack}
       />
       <div className="add-new-card term-conditions__content">
@@ -114,7 +114,7 @@ const TermsAndConditions = ({ onSubmit }) => {
                 type="circle"
                 label="Contact Us"
                 className="contact-us__icon"
-                icon={<FillPhoneIcon />}
+                icon={<FillChatIcon />}
                 onClick={handleNavigateContactUs}
               />
             </div>

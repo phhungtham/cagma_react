@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { convertDateTime } from '@common/utils/formater';
 // import { setIsShowCalendar } from '@components/VisaCard/redux/action';
 // import { debitCardReducer } from '@components/VisaCard/redux/reducer';
 // import { showCalendarSelector } from '@components/VisaCard/redux/selector';
 // import { FeatureDebitCardName } from '@components/VisaCard/redux/type';
 import { addDateWithMonth, getCurrentDate } from '@utilities/dateTimeUtils';
 import { replaceString } from '@utilities/debitCardUtils';
+import { convertDateTime } from '@utilities/formater';
 import { CalendarIcon } from 'assets/icons';
 import PropTypes from 'prop-types';
 

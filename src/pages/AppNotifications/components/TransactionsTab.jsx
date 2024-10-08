@@ -1,4 +1,3 @@
-import { detectNotifyStatus } from '@common/utils/detect';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import EmptyNotification from './EmptyNotification';
@@ -15,9 +14,7 @@ const TransactionsTab = props => {
       {transactionList?.length > 0 ? (
         transactionList.map((item, index) => (
           <div
-            className={`transaction__item__wrapper notification  ${
-              detectNotifyStatus(item.push_confm_yn) ? 'read' : 'unread'
-            }`}
+            className={`transaction__item__wrapper notification  ${item.push_confm_yn === 1 ? 'read' : 'unread'}`}
             key={index}
             onClick={() => onClick(item)}
           >
