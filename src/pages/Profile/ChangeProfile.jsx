@@ -585,13 +585,15 @@ const ChangeProfile = ({ translation }) => {
           message={showToast.message}
         />
       </section>
-      <ViewTermBottom
-        open={showViewAgreementTermBottom}
-        onClose={() => setShowViewAgreementTermBottom(false)}
-        title="Electronic Communication Agreement"
-        pdfFile={fileUrls.electronicCommunicationAgreement}
-        hiddenConfirmBtn
-      />
+      {showViewAgreementTermBottom && (
+        <ViewTermBottom
+          open={showViewAgreementTermBottom}
+          onClose={() => setShowViewAgreementTermBottom(false)}
+          title="Electronic Communication Agreement"
+          pdfFile={fileUrls.electronicCommunicationAgreement}
+          hiddenConfirmBtn
+        />
+      )}
     </div>
   );
 };
