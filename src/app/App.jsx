@@ -8,7 +8,6 @@ import { TooltipProvider } from '@common/components/atoms/Tooltip/TooltipContext
 import ErrorBoundary from '@common/components/ErrorBoundary';
 import Fallback from '@common/components/Fallback';
 import { AppCfg } from '@configs/appConfigs';
-import useDetectBrowser from '@hooks/useDetectBrowser';
 import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
 import publicRoutes from '@routes/service/public-routes';
@@ -37,7 +36,6 @@ const App = () => {
   const navigate = useNavigate();
   const currentLanguage = useSelector(appLanguage);
   const { i18n } = useTranslation();
-  const detectBrowser = useDetectBrowser();
 
   const scriptLoad = async isMobileDevice => {
     if (AppCfg.ENV === 'development') return;
