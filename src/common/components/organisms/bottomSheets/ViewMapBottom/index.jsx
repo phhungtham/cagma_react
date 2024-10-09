@@ -63,8 +63,7 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
     >
       <div className="view_map">
         <div className="map">
-          <LocationMap address={'test'} />
-          {/* <LocationMap address={encodeToURL(branchData?.br_adr || '')} /> */}
+          <LocationMap address={'2929 Barnet Highway Unit 2842'} />
         </div>
         <div className="content">
           <div className="title">{branchData?.lcl_br_nm || ''}</div>
