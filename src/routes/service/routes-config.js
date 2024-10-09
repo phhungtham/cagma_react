@@ -121,7 +121,7 @@ const RoutesConfig = [
   {
     path: '/demo',
     component: DemoComponent,
-    private: false,
+    private: true,
   },
   {
     path: '/react-test-page',
@@ -136,27 +136,4 @@ const RoutesConfig = [
   },
 ];
 
-// Reference: https://www.codemzy.com/blog/fix-chunkloaderror-react
-// eslint-disable-next-line no-unused-vars
-const lazyRetry = function (componentImport, name) {
-  if (!name) name = 'lazy';
-  return new Promise((resolve, reject) => {
-    // check if the window has already been refreshed
-    const hasRefreshed = JSON.parse(window.sessionStorage.getItem(`retry-${name}-refreshed`) || 'false');
-    // try to import the component
-    componentImport()
-      .then(component => {
-        window.sessionStorage.setItem(`retry-${name}-refreshed`, 'false'); // success so reset the refresh
-        resolve(component);
-      })
-      .catch(error => {
-        if (!hasRefreshed) {
-          // not been refreshed yet
-          window.sessionStorage.setItem(`retry-${name}-refreshed`, 'true'); // we are now going to refresh
-          return window.location.reload(); // refresh the page
-        }
-        reject(error); // Default error behaviour as already tried refresh
-      });
-  });
-};
 export default RoutesConfig;
