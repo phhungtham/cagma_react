@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import reportLostImg from '@assets/images/loud-speaker.png';
-import Alert from '@common/components/molecules/Alert';
+import Alert from '@common/components/atoms/Alert';
 import { loginSelector, nativeParamsSelector } from 'app/redux/selector';
 
 import { ReportLostNotLoggedType } from '../constants';

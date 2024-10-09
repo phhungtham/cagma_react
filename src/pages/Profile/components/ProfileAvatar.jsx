@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { SettingIcon } from '@assets/icons';
+import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import Alert from '@common/components/molecules/Alert';
 import callCamera from '@utilities/gmCommon/callCamera';
 import callSelectImage from '@utilities/gmCommon/callSelectImage';
 import initProfileImg from '@utilities/gmCommon/initProfileImg';

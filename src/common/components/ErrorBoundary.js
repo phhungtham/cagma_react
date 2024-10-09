@@ -4,7 +4,7 @@ import reloadWebView from '@utilities/gmCommon/reloadWebView';
 import { moveHome } from '@utilities/index';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
-import Alert from './molecules/Alert';
+import Alert from './atoms/Alert';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {

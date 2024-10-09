@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { FillChatIcon, FillPhoneIcon } from '@assets/icons';
 import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
+import Alert from '@common/components/atoms/Alert';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
-import Alert from '@common/components/molecules/Alert';
 import { SupportContactPhoneNumber } from '@common/constants/common';
 import { externalUrls } from '@common/constants/url';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';

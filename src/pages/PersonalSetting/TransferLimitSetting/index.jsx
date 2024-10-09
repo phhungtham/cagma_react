@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
-import Alert from '@common/components/molecules/Alert';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import { buildObjectMapFromResponse } from '@utilities/convert';

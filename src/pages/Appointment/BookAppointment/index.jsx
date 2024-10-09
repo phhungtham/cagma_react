@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
-import Alert from '@common/components/molecules/Alert';
 import { endpoints } from '@common/constants/endpoint';
 import { apiCall } from '@shared/api';
 import { convertObjectBaseMappingFields } from '@utilities/convert';

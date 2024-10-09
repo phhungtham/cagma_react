@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 import alertBannerImg from '@assets/images/alert-bell.png';
+import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Switch from '@common/components/atoms/Switch';
-import Alert from '@common/components/molecules/Alert';
 
 import './styles.scss';
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { ArrowRight } from '@assets/icons';
-import Alert from '@common/components/molecules/Alert';
+import Alert from '@common/components/atoms/Alert';
 import { MENU_CODE } from '@common/constants/common';
 import { CardActionTypes, ReportLostNotLoggedType } from '@pages/Card/constants';
 import { routePaths } from '@routes/paths';

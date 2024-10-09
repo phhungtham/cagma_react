@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import { ArrowRight } from '@assets/icons';
+import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Switch from '@common/components/atoms/Switch';
 import Toast from '@common/components/atoms/Toast';
-import Alert from '@common/components/molecules/Alert';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';

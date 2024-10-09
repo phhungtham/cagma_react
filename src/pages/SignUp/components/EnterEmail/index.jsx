@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { ArrowRight } from '@assets/icons';
+import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
-import Alert from '@common/components/molecules/Alert';
 import Header from '@common/components/organisms/Header';
 import { EMAIL_VERIFY_IN_SECONDS } from '@common/constants/common';
 import { moveBack } from '@utilities/index';

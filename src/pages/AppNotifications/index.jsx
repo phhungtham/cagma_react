@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import Alert from '@common/components/atoms/Alert';
 import LoadingInfinite from '@common/components/atoms/LoadingInfinite';
 import Spinner from '@common/components/atoms/Spinner';
 import Tabs from '@common/components/atoms/Tabs';
-import Alert from '@common/components/molecules/Alert';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';

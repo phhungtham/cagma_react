@@ -1,6 +1,4 @@
-import React from 'react';
-
-import Alert from '@common/components/molecules/Alert';
+import Alert from '@common/components/atoms/Alert';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Alert/Alert',

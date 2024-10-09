@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
+import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
-import Alert from '@common/components/molecules/Alert';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
-import Alert from '@common/components/molecules/Alert';
 import Header from '@common/components/organisms/Header';
 import { isDevelopmentEnv } from '@common/constants/common';
 import { yupResolver } from '@hookform/resolvers/yup';

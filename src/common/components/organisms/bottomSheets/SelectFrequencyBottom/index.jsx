@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import ScrollSelect from '@common/components/molecules/ScrollSelect';
+import ScrollSelect from '@common/components/atoms/ScrollSelect';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { FrequencyType } from '@common/constants/bottomsheet';
 import { PropTypes } from 'prop-types';

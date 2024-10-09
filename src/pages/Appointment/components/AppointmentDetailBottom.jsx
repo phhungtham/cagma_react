@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { FillDeleteIcon } from '@assets/icons';
 import zoomImg from '@assets/images/apparatus_zoom_40.png';
 import inPersonImg from '@assets/images/icon_fill_atm_40.png';
+import Alert from '@common/components/atoms/Alert';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
-import Alert from '@common/components/molecules/Alert';
 import BottomSheet from '@common/components/templates/BottomSheet';
 
 import { appointmentDetailFields } from '../constants';

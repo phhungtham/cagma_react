@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
-import Alert from '@common/components/molecules/Alert';
 import ScrollAnchorTabWrapper from '@common/components/templates/ScrollAnchorTabWrapper';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';

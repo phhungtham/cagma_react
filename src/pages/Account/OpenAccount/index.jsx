@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
-import Alert from '@common/components/molecules/Alert';
 import { MENU_CODE } from '@common/constants/common';
 import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
