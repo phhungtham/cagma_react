@@ -99,6 +99,7 @@ const App = () => {
             const data = e.detail;
             const path = String(data.src);
             if (window.location.pathname === path) {
+              //Reload page if navigate same current path. Prevent navigate keep state of page
               navigate(0);
             } else {
               navigate(path);
