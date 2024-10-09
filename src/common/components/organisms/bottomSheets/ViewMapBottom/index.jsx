@@ -25,6 +25,9 @@ const viewMapBranchFields = [
 
 const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
   const encodeToURL = str => {
+    if (!str) {
+      return '';
+    }
     return str
       .replace(/"/g, '%22')
       .replace(/#/g, '%23')
@@ -53,6 +56,8 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
     callPhone(branchData?.br_telno);
   };
 
+  const formattedAddress = encodeToURL(branchData?.br_adr || '');
+
   return (
     <BottomSheet
       open={open}
@@ -62,9 +67,7 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
       type="fit-content"
     >
       <div className="view_map">
-        <div className="map">
-          <LocationMap address="2929+Barnet+Highway+Unit+2842%2C+Coquitlam%2C+British+Columbia+V3B+5R5" />
-        </div>
+        <div className="map">{!!formattedAddress && <LocationMap address={formattedAddress} />}</div>
         <div className="content">
           <div className="title">{branchData?.lcl_br_nm || ''}</div>
           <div className="detail_info">
