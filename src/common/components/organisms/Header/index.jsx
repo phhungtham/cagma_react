@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 
 import { moveBack } from '@utilities/index';
-import { HamburgerIcon, HeaderBackIcon } from 'assets/icons';
+import { HeaderBackIcon } from 'assets/icons';
 
 import Span from '../../atoms/Span';
 
-const Header = ({ clazz, title, isHamburger = false, onClick = () => moveBack() }, ref) => {
+const Header = ({ clazz, title, onClick = () => moveBack() }, ref) => {
   return (
     <div
       ref={ref}
@@ -19,7 +19,6 @@ const Header = ({ clazz, title, isHamburger = false, onClick = () => moveBack() 
         <div className="header__title">
           <Span text={title} />
         </div>
-        {isHamburger && <HamburgerIcon />}
       </div>
     </div>
   );
