@@ -28,7 +28,7 @@ import {
   setNativeParams,
 } from './redux/action';
 import { appGlobalReducer } from './redux/reducer';
-import { appLanguage } from './redux/selector';
+import { appLanguage, appPathSelector } from './redux/selector';
 import { APP_GLOBAL } from './redux/type';
 
 const App = () => {
@@ -36,6 +36,7 @@ const App = () => {
   const navigate = useNavigate();
   const currentLanguage = useSelector(appLanguage);
   const { i18n } = useTranslation();
+  const appPath = useSelector(appPathSelector);
 
   const scriptLoad = async isMobileDevice => {
     if (AppCfg.ENV === 'development') return;
@@ -98,7 +99,7 @@ const App = () => {
           if (typeof e.detail === 'object') {
             const data = e.detail;
             const path = String(data.src);
-            if (window.location.pathname === path) {
+            if (appPath === path) {
               //Reload page if navigate same current path. Prevent navigate keep state of page
               navigate(0);
             } else {
