@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState } from 'react';
 
 import Spinner from '@common/components/atoms/Spinner';
+import Tabs from '@common/components/atoms/Tabs';
 import Toast from '@common/components/atoms/Toast';
 import Alert from '@common/components/molecules/Alert';
-import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
 import { getAppointmentStatus } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';

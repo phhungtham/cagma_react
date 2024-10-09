@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { ArrowRight } from '@assets/icons';
-import Tabs from '@common/components/molecules/Tabs';
+import Tabs from '@common/components/atoms/Tabs';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { PropTypes } from 'prop-types';
 

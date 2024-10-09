@@ -1,6 +1,4 @@
-import React from 'react';
-
-import CalendarInput from '@common/components/molecules/Calendar/CalendarInput';
+import CalendarInput from '@common/components/atoms/Calendar/CalendarInput';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Calendar/CalendarInputBox',

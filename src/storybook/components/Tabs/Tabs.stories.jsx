@@ -1,6 +1,4 @@
-import React from 'react';
-
-import Tabs from '@common/components/molecules/Tabs';
+import Tabs from '@common/components/atoms/Tabs';
 import Notification from '@common/components/organisms/Notification';
 
 export default {

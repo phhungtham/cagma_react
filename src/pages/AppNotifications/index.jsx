@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 import LoadingInfinite from '@common/components/atoms/LoadingInfinite';
 import Spinner from '@common/components/atoms/Spinner';
+import Tabs from '@common/components/atoms/Tabs';
 import Alert from '@common/components/molecules/Alert';
-import Tabs from '@common/components/molecules/Tabs';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';

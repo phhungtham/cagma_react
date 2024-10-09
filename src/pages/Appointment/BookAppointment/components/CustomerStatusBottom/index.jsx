@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
-import Tabs from '@common/components/molecules/Tabs';
+import Tabs from '@common/components/atoms/Tabs';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { preferredLanguages } from '@pages/Appointment/constants';

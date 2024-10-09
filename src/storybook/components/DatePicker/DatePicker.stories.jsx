@@ -1,6 +1,4 @@
-import React from 'react';
-
-import DatePicker from '@common/components/molecules/Calendar/DatePicker';
+import DatePicker from '@common/components/atoms/Calendar/DatePicker';
 
 export default {
   title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Calendar/DatePickerBox',
