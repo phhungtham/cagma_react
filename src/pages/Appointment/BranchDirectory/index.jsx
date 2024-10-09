@@ -125,13 +125,14 @@ const BranchDirectory = () => {
           </div>
         </div>
       </div>
-
-      <ViewMapBottom
-        open={viewMapItem.open}
-        onClose={handleCloseViewMap}
-        branchData={viewMapItem.branchData}
-        onBookAppointment={handleNavigateBookAppointment}
-      />
+      {viewMapItem.open && (
+        <ViewMapBottom
+          open={viewMapItem.open}
+          onClose={handleCloseViewMap}
+          branchData={viewMapItem.branchData}
+          onBookAppointment={handleNavigateBookAppointment}
+        />
+      )}
     </>
   );
 };
