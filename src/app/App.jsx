@@ -151,7 +151,7 @@ const App = () => {
   return (
     <ErrorBoundary>
       <TooltipProvider>
-        <div>
+        <div className="bg-white">
           <Suspense fallback={<Fallback />}>
             <Routes>
               {privateRoutes()}
