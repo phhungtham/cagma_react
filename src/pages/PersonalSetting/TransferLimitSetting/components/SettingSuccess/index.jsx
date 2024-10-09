@@ -7,7 +7,7 @@ import './styles.scss';
 
 const TransferLimitSettingSuccess = ({ type }) => {
   const handleNavigateHome = () => {
-    moveHome();
+    moveHome('initHome');
   };
 
   return (

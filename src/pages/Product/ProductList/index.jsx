@@ -7,12 +7,19 @@ import ScrollAnchorTabWrapper from '@common/components/templates/ScrollAnchorTab
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import { PeriodUnitCodeDisplay, ProductTab, ProductTabDisplay } from '@common/constants/product';
+import {
+  PeriodUnitCodeDisplay,
+  ProductCode,
+  ProductTab,
+  ProductTabDisplay,
+  RequiredAccountBaseProductCode,
+} from '@common/constants/product';
 import useApi from '@hooks/useApi';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
+import showLogin from '@utilities/navigateScreen/showLogin';
 import { loginSelector } from 'app/redux/selector';
 
 import BorrowingInstructionBottom from './components/BorrowingInstructionBottom';
@@ -86,10 +93,49 @@ const ProductList = () => {
     }
   };
 
-  const handleClickOpenAccount = async product => {
-    //TODO: Just for test. It should be !isLogin
-    // if (isLogin) {
-    //TODO: Call Plugin Login of Native
+  const handleNavigateOpenAccount = async product => {
+    let accountList = [];
+    if (accounts) {
+      accountList = accounts;
+    } else {
+      accountList = await getAccountsByProductType();
+    }
+    let isExistESavingAccount = false;
+    const productCode = product.prdt_c;
+    if (accountList?.length) {
+      //Must to has e-Saving account before create other account
+      isExistESavingAccount = accountList.some(account => account.prdt_c === ProductCode.E_SAVING);
+    }
+    if (!isExistESavingAccount && productCode !== ProductCode.E_SAVING) {
+      return setAlert({
+        isShow: true,
+        title: 'There is no e-saving account.',
+        content: 'Please open an e-saving account first.',
+      });
+    }
+    if ([ProductCode.E_SAVING, ProductCode.RRSP_E_SAVINGS, ProductCode.TFSA_E_SAVINGS].includes(productCode)) {
+      const isExistAccount = accountList.some(account => account.prdt_c === productCode);
+      if (isExistAccount) {
+        return setAlert({
+          isShow: true,
+          title: 'You’ve opened this account already.',
+          content: `Only one ${product.prdt_c_display} account can be held per customer.`,
+        });
+      }
+    }
+    //Required TFSA/RRSP E-Saving account before create TFSA/RRSP E-GIC account
+    if (Object.keys(RequiredAccountBaseProductCode).includes(productCode)) {
+      const requiredAccountProductCode = RequiredAccountBaseProductCode[productCode];
+      const isRequiredAccountExist = accountList.some(account => account.prdt_c === requiredAccountProductCode);
+      if (!isRequiredAccountExist) {
+        //TODO: Update title and message base Figma (Waiting Figma defined)
+        return setAlert({
+          isShow: true,
+          title: 'Required Account',
+          content: `You currently do not own a ${product.prdt_c_display} account.`,
+        });
+      }
+    }
     return moveNext(
       MENU_CODE.OPEN_ACCOUNT,
       {
@@ -97,60 +143,20 @@ const ProductList = () => {
       },
       routePaths.openAccount
     );
-    // }
-    // let accountList = [];
-    // if (accounts) {
-    //   accountList = accounts;
-    // } else {
-    //   accountList = await getAccountsByProductType();
-    // }
-    // let isExistESavingAccount = false;
-    // const productCode = product.prdt_c;
-    // if (accountList?.length) {
-    //   if (productCode !== ProductCode.E_SAVING) {
-    //     //Must to has e-Saving account before create other account
-    //     isExistESavingAccount = accountList.some(account => account.prdt_c === ProductCode.E_SAVING);
-    //   } else {
-    //     isExistESavingAccount = true;
-    //   }
-    // }
-    // if (!isExistESavingAccount) {
-    //   return setAlert({
-    //     isShow: true,
-    //     title: 'There is no e-saving account.',
-    //     content: 'Please open an e-saving account first.',
-    //   });
-    // }
-    // if ([ProductCode.E_SAVING, ProductCode.RRSP_E_SAVINGS, ProductCode.TFSA_E_SAVINGS].includes(productCode)) {
-    //   const isExistAccount = accountList.some(account => account.prdt_c === productCode);
-    //   if (isExistAccount) {
-    //     return setAlert({
-    //       isShow: true,
-    //       title: 'You’ve opened this account already.',
-    //       content: `Only one ${product.prdt_c_display} account can be held per customer.`,
-    //     });
-    //   }
-    // }
-    // //Required TFSA/RRSP E-Saving account before create TFSA/RRSP E-GIC account
-    // if (Object.keys(RequiredAccountBaseProductCode).includes(productCode)) {
-    //   const requiredAccountProductCode = RequiredAccountBaseProductCode[productCode];
-    //   const isRequiredAccountExist = accountList.some(account => account.prdt_c === requiredAccountProductCode);
-    //   if (!isRequiredAccountExist) {
-    //     //TODO: Update title and message base Figma (Waiting Figma defined)
-    //     return setAlert({
-    //       isShow: true,
-    //       title: 'Required Account',
-    //       content: `You currently do not own a ${product.prdt_c_display} account.`,
-    //     });
-    //   }
-    // }
-    // return moveNext(
-    //   MENU_CODE.OPEN_ACCOUNT,
-    //   {
-    //     param: JSON.stringify(product),
-    //   },
-    //   routePaths.openAccount
-    // );
+  };
+
+  const handleLoginStatus = (isLoginSuccess, product) => {
+    if (isLoginSuccess) {
+      handleNavigateOpenAccount(product);
+    }
+  };
+
+  const handleClickOpenAccount = async product => {
+    if (!isLogin) {
+      showLogin(handleLoginStatus, product);
+    } else {
+      handleNavigateOpenAccount(product);
+    }
   };
 
   const handleCloseServerAlert = () => {
