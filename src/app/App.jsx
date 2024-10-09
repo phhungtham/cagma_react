@@ -101,6 +101,7 @@ const App = () => {
             if (path === '/notification') {
               setInitLoginState('');
             }
+            console.log('redirect event values :>> ', e);
             if (e?.target?.location?.pathname === path) {
               //Reload page if navigate same current path. Prevent navigate keep state of page
               navigate(0);
