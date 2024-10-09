@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, useNavigate } from 'react-router-dom';
 
 import { TooltipProvider } from '@common/components/atoms/Tooltip/TooltipContext';
 import ErrorBoundary from '@common/components/ErrorBoundary';
@@ -28,17 +28,14 @@ import {
   setNativeParams,
 } from './redux/action';
 import { appGlobalReducer } from './redux/reducer';
-import { appLanguage, appPathSelector } from './redux/selector';
+import { appLanguage } from './redux/selector';
 import { APP_GLOBAL } from './redux/type';
 
 const App = () => {
   useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
-  const [currentPath, setCurrentPath] = useState();
   const navigate = useNavigate();
-  const location = useLocation();
   const currentLanguage = useSelector(appLanguage);
   const { i18n } = useTranslation();
-  const appPath = useSelector(appPathSelector);
 
   const scriptLoad = async isMobileDevice => {
     if (AppCfg.ENV === 'development') return;
@@ -104,14 +101,12 @@ const App = () => {
             if (path === '/notification') {
               setInitLoginState('');
             }
-            window.location.reload();
-            if (window.location.pathname === path) {
+            if (e?.target?.location?.pathname === path) {
               //Reload page if navigate same current path. Prevent navigate keep state of page
               navigate(0);
             } else {
               navigate(path);
             }
-            setCurrentPath(path);
             setAppPath(path);
             // get param from native side
             const params = JSON.parse(data.param);
