@@ -98,7 +98,11 @@ const App = () => {
           if (typeof e.detail === 'object') {
             const data = e.detail;
             const path = String(data.src);
-            navigate(path);
+            if (window.location.pathname === path) {
+              navigate(0);
+            } else {
+              navigate(path);
+            }
             setAppPath(path);
             if (path === '/notification') {
               setInitLoginState('');
