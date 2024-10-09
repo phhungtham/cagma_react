@@ -15,6 +15,7 @@ import {
   RequiredAccountBaseProductCode,
 } from '@common/constants/product';
 import useApi from '@hooks/useApi';
+import useLoginInfo from '@hooks/useLoginInfo';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
@@ -40,6 +41,7 @@ const options = {
 const ProductList = () => {
   useReducers([{ key: FeatureName, reducer: productReducer }]);
   useSagas([{ key: FeatureName, saga: productSaga }]);
+  const { isLoading } = useLoginInfo({ isSend: true });
   const isLogin = useSelector(loginSelector);
 
   const [showBorrowingInstructionBottom, setShowBorrowingInstructionBottom] = useState(false);
@@ -94,6 +96,13 @@ const ProductList = () => {
   };
 
   const handleNavigateOpenAccount = async product => {
+    return moveNext(
+      MENU_CODE.OPEN_ACCOUNT,
+      {
+        param: JSON.stringify(product),
+      },
+      routePaths.openAccount
+    );
     let accountList = [];
     if (accounts) {
       accountList = accounts;
