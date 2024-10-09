@@ -94,16 +94,16 @@ const ProductList = () => {
 
   const handleClickOpenAccount = async product => {
     //TODO: Just for test. It should be !isLogin
-    if (isLogin) {
-      //TODO: Call Plugin Login of Native
-      return moveNext(
-        MENU_CODE.OPEN_ACCOUNT,
-        {
-          param: JSON.stringify(product),
-        },
-        routePaths.openAccount
-      );
-    }
+    // if (isLogin) {
+    //TODO: Call Plugin Login of Native
+    return moveNext(
+      MENU_CODE.OPEN_ACCOUNT,
+      {
+        param: JSON.stringify(product),
+      },
+      routePaths.openAccount
+    );
+    // }
     let accountList = [];
     if (accounts) {
       accountList = accounts;
