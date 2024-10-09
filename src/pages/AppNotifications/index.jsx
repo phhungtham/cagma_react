@@ -320,7 +320,6 @@ const AppNotifications = ({ translate }) => {
   }, [isNativeBack, showPromotionDetail]);
 
   const moveToAccountDetailScreen = (screenType, accountNumber) => {
-    debugger;
     const accountNumberParam = JSON.stringify({
       lcl_acno: accountNumber,
     });
