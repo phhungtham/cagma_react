@@ -99,14 +99,14 @@ const App = () => {
           if (typeof e.detail === 'object') {
             const data = e.detail;
             const path = String(data.src);
-            // if (appPath === path) {
-            //   //Reload page if navigate same current path. Prevent navigate keep state of page
-            //   navigate(0);
-            // } else {
-            //   navigate(path);
-            // }
-            navigate(0);
+            if (appPath === path) {
+              //Reload page if navigate same current path. Prevent navigate keep state of page
+              navigate(0);
+            } else {
+              navigate(path);
+            }
             setAppPath(path);
+            // navigate(0);
             if (path === '/notification') {
               setInitLoginState('');
             }
@@ -151,7 +151,7 @@ const App = () => {
     polyfill();
     // for development
     if (process.env.NODE_ENV === 'development') {
-      setAppPath(window.location.pathname);
+      // setAppPath(window.location.pathname);
     }
   }, []);
 
