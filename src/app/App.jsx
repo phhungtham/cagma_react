@@ -102,7 +102,7 @@ const App = () => {
             if (path === '/notification') {
               setInitLoginState('');
             }
-            if (currentPath === path) {
+            if (path === '/transfer-limit-setting') {
               navigate(0);
             } else {
               setCurrentPath(path);
