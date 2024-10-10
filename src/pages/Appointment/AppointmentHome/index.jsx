@@ -14,6 +14,7 @@ import useGetAppointments from '@hooks/useGetAppointments';
 import { routePaths } from '@routes/paths';
 import { apiCall } from '@shared/api';
 import { moveBack, moveNext } from '@utilities/index';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AppointmentCard from '../components/AppointmentCard';
 import AppointmentDetailBottom from '../components/AppointmentDetailBottom';
@@ -22,7 +23,7 @@ import './styles.scss';
 
 const maxAppointmentDisplay = 3;
 
-const AppointmentHome = () => {
+const AppointmentHome = ({ translate }) => {
   const {
     data: appointmentData,
     isLoading: isLoadingAppointments,
@@ -165,6 +166,7 @@ const AppointmentHome = () => {
                 <div className="card__title">
                   <span>Receive a</span>
                   <span>financial advice via Zoom</span>
+                  {/* <span>{translate('lbl_CAME900000_0004')}</span> */}
                 </div>
                 <div className="card__desc">Zoom Appointment</div>
                 <div className="card__btn__wrapper">
@@ -265,4 +267,4 @@ const AppointmentHome = () => {
   );
 };
 
-export default AppointmentHome;
+export default withHTMLParseI18n(AppointmentHome);

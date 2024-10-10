@@ -177,6 +177,7 @@ const ProductList = () => {
   };
 
   useEffect(() => {
+    //TODO: Refactor call directly instead of using redux
     getProductListRequest({
       dep_sjt_class: '0',
     });

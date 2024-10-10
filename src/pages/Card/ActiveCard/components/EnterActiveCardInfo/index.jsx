@@ -5,11 +5,11 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { formatCardNumber, formatExpiryDate } from '@utilities/formater';
+import { formatDateExpiry } from '@utilities/dateTimeUtils';
+import { formatCardNumber } from '@utilities/formater';
 import { moveBack } from '@utilities/index';
 
 import { activeCardFormSchema } from './schema';
-import './styles.scss';
 
 const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
   const {
@@ -68,19 +68,17 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
               name="cardNumber"
             />
             <Controller
-              render={({ field: { value, onChange } }) => {
+              render={({ field }) => {
                 return (
                   <Input
                     label="Expiry Date(MMYY)"
                     placeholder="Enter MM/YY"
                     type="tel"
                     maxLength={5}
-                    value={value}
                     pattern="\d{2}/\d{2}"
                     inputMode="numeric"
-                    onChange={inputValue => {
-                      onChange(formatExpiryDate(inputValue, value));
-                    }}
+                    onKeyUp={formatDateExpiry}
+                    {...field}
                   />
                 );
               }}

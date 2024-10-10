@@ -32,3 +32,31 @@ export const CardTypeWithNavigateParams = {
     path: routePaths.reportLostCard,
   },
 };
+
+export const cardSummaryFields = [
+  {
+    label: 'Type of Card',
+    value: 'typeOfCard',
+  },
+  {
+    label: 'Daily Withdrawal Limit',
+    value: 'dailyWithdrawalLimit',
+  },
+  {
+    label: 'Daily POS Limit',
+    value: 'dailyPOSLimit',
+  },
+  {
+    label: 'Issue Date',
+    value: 'issueDate',
+  },
+  {
+    label: 'Expire Date',
+    value: 'expireDate',
+  },
+];
+
+export const CardAccidentType = {
+  NORMAL: 0,
+  REPORTED: 1,
+};

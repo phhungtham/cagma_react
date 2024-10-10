@@ -1,20 +1,19 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { FillChatIcon, FillPhoneIcon } from '@assets/icons';
-import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
 import Alert from '@common/components/atoms/Alert';
-import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
-import { SupportContactPhoneNumber } from '@common/constants/common';
-import { externalUrls } from '@common/constants/url';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
-import { callPhone } from '@utilities/index';
+import Spinner from '@common/components/atoms/Spinner';
+import { endpoints } from '@common/constants/endpoint';
+import useApi from '@hooks/useApi';
+import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
 import { loginSelector } from 'app/redux/selector';
 
 import ActiveCardSuccess from './components/ActiveCardSuccess';
+import CardActiveBlockedBottom from './components/CardActiveBlockedBottom';
 import EnterAccountInfo from './components/EnterAccountInfo';
 import EnterActiveCardInfo from './components/EnterActiveCardInfo';
 import { ACTIVE_CARD_STEP } from './constants';
+import './styles.scss';
 
 const maxEnterIncorrectNumber = 5;
 
@@ -24,17 +23,57 @@ const ActiveCard = () => {
   const [showActiveBlockAlert, setShowActiveBlockAlert] = useState(false);
   const [incorrectInfoNumber, setIncorrectInfoNumber] = useState(0);
   const [activeCardSuccessInfo, setActiveCardSuccessInfo] = useState();
+  const [showLoading, setShowLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
   const isLogin = useSelector(loginSelector);
+  const { requestApi } = useApi();
 
-  const handleSubmitActiveCard = values => {
-    //TODO: Open Security passcode bottom sheet
-    const incorrectNumber = incorrectInfoNumber + 1;
-    if (incorrectNumber >= maxEnterIncorrectNumber) {
-      setShowActiveBlockAlert(true);
+  const handleSubmitActiveCard = async values => {
+    setShowLoading(true);
+    const { name, cardNumber, expiryDate } = values;
+    const formattedDate = expiryDate.replace(/\D/g, '');
+    const month = formattedDate.substring(0, 2);
+    const year = '20' + formattedDate.substring(2, 4);
+    const lastDay = new Date(year, month, 0).getDate();
+    const cashcd_vldt_dt = `${year}${month}${lastDay}`;
+    const formattedCardNumber = cardNumber.replace(/\D/g, '');
+    const payload = {
+      cusnm: name,
+      cashcd_vldt_dt,
+      cashcd_no: formattedCardNumber,
+      dep_trx_dtl_d: '01',
+      dbcd_iss_rsn_c: '',
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      enterSecurityPasscode();
     } else {
-      setIncorrectInfoNumber(incorrectNumber);
-      setShowIncorrectInfoAlert(true);
+      // setAlert({
+      //   isShow: true,
+      //   content: error,
+      // });
+      //TODO: Check error code do detect error is input wrong information or other error
+      const incorrectNumber = incorrectInfoNumber + 1;
+      if (incorrectNumber >= maxEnterIncorrectNumber) {
+        setShowActiveBlockAlert(true);
+      } else {
+        setIncorrectInfoNumber(incorrectNumber);
+        setShowIncorrectInfoAlert(true);
+      }
     }
+  };
+
+  const handleCloseAlert = () => {
+    setAlert({
+      isShow: false,
+      title: '',
+      content: '',
+    });
   };
 
   const handleSubmitAccountForm = values => {
@@ -46,36 +85,10 @@ const ActiveCard = () => {
     setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
   };
 
-  const onClickCallPhone = () => {
-    callPhone(SupportContactPhoneNumber);
-  };
-
-  const handleNavigateBranchInfo = () => {
-    openURLInBrowser(externalUrls.branchInfo);
-  };
-
-  const handleNavigateContactUs = () => {
-    openURLInBrowser(externalUrls.contactUs);
-  };
-
-  const handleNavigateHome = () => {
-    setShowActiveBlockAlert(false);
-    // moveHome();
-    if (isLogin) {
-      setActiveCardSuccessInfo({
-        cardName: 'Visa Consumer Classic Access Card',
-        cardNo: '1234********1234',
-        accountNumber: '700 000 987654',
-      });
-      setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
-    } else {
-      setCurrentStep(ACTIVE_CARD_STEP.ENTER_ACCOUNT_INFORMATION);
-    }
-  };
-
   return (
     <>
       <div className="active-card__wrapper">
+        {showLoading && <Spinner />}
         {currentStep === ACTIVE_CARD_STEP.ENTER_CARD_INFORMATION && (
           <EnterActiveCardInfo
             onSubmit={handleSubmitActiveCard}
@@ -97,7 +110,7 @@ const ActiveCard = () => {
         isShowAlert={showIncorrectInfoAlert}
         title="Card information is incorrect"
         subtitle="If your card information is entered incorrectly 5 times, online activation will be blocked. Please try again."
-        textAlign="left"
+        textAlign="center"
         onClose={() => setShowIncorrectInfoAlert(false)}
         firstButton={{
           onClick: () => setShowIncorrectInfoAlert(false),
@@ -112,53 +125,19 @@ const ActiveCard = () => {
           </div>
         </div>
       </Alert>
+      {showActiveBlockAlert && <CardActiveBlockedBottom />}
       <Alert
-        isCloseButton
-        isShowAlert={showActiveBlockAlert}
-        title="Online Activation is blocked"
-        subtitle="You have entered the card information incorrectly 5 times, and online activation is now blocked. Please contact your branch for assistance."
-        textAlign="center"
-        onClose={() => setShowActiveBlockAlert(false)}
+        isCloseButton={false}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
+        textAlign="left"
+        onClose={handleCloseAlert}
         firstButton={{
-          onClick: handleNavigateHome,
-          label: 'Home',
+          onClick: handleCloseAlert,
+          label: 'Confirm',
         }}
-      >
-        <div className="active-block__info">
-          <div className="divider__item__solid" />
-          <div className="active-block__ctas">
-            <div className="active-block__button">
-              <IconButton
-                size="lg"
-                type="circle"
-                label="Call"
-                className="call__icon"
-                icon={<FillPhoneIcon />}
-                onClick={onClickCallPhone}
-              />
-            </div>
-            <div className="active-block__button">
-              <IconButton
-                size="lg"
-                type="circle"
-                label="Branch Info"
-                icon={<img src={BranchInfoIcon} />}
-                onClick={handleNavigateBranchInfo}
-              />
-            </div>
-            <div className="active-block__button">
-              <IconButton
-                size="lg"
-                type="circle"
-                label="Contact us"
-                className="chat__icon"
-                icon={<FillChatIcon />}
-                onClick={handleNavigateContactUs}
-              />
-            </div>
-          </div>
-        </div>
-      </Alert>
+      />
     </>
   );
 };

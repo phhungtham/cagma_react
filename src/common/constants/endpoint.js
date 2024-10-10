@@ -22,4 +22,7 @@ export const endpoints = {
   getTransactionNotify: '/ca/ho/CAHO001.pwkjson',
   getOffersNotify: '/ca/ho/CAHO001.pwkjson',
   getPromotionNotify: '/ca/ho/CAHO002.pwkjson',
+  cardVerificationStep1: '/ca/ca/CACA001.pwkjson',
+  getCardList: '/ca/ca/CACA009.pwkjson',
+  getReportCardDetail: '/ca/ca/CACA010.pwkjson',
 };
