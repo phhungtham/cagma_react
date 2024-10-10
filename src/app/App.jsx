@@ -86,7 +86,7 @@ const App = () => {
         if (path === '/notification') {
           setInitLoginState('');
         }
-        navigate(path);
+        window.location.assign(path);
         // if (appPath === path) {
         //   //TODO: Reload page if navigate same current path. Prevent navigate keep state of page
         //   navigate(0);
