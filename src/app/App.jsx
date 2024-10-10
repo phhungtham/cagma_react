@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Routes, useNavigate } from 'react-router-dom';
+import { Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { TooltipProvider } from '@common/components/atoms/Tooltip/TooltipContext';
 import ErrorBoundary from '@common/components/ErrorBoundary';
@@ -28,14 +28,17 @@ import {
   setNativeParams,
 } from './redux/action';
 import { appGlobalReducer } from './redux/reducer';
-import { appLanguage } from './redux/selector';
+import { appLanguage, appPathSelector } from './redux/selector';
 import { APP_GLOBAL } from './redux/type';
 
 const App = () => {
   useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
   const navigate = useNavigate();
   const currentLanguage = useSelector(appLanguage);
+  const location = useLocation();
+  const [currentPath, setCurrentPath] = useState('test');
   const { i18n } = useTranslation();
+  const appPath = useSelector(appPathSelector);
 
   const scriptLoad = async isMobileDevice => {
     if (AppCfg.ENV === 'development') return;
@@ -75,6 +78,29 @@ const App = () => {
       });
   };
 
+  const handleNavigate = e => {
+    try {
+      if (typeof e.detail === 'object') {
+        const data = e.detail;
+        const path = String(data.src);
+        if (path === '/notification') {
+          setInitLoginState('');
+        }
+        if (appPath === path) {
+          //TODO: Reload page if navigate same current path. Prevent navigate keep state of page
+          navigate(0);
+        } else {
+          navigate(path);
+        }
+        setAppPath(path);
+        // get param from native side
+        const params = JSON.parse(data.param);
+        setNativeParams(params);
+      }
+    } catch (error) {}
+    setIsNativeRedirect();
+  };
+
   useEffect(() => {
     const isMobileDevice = deviceDetected();
     scriptLoad(isMobileDevice);
@@ -91,29 +117,10 @@ const App = () => {
      * }
      * }
      */
-    document.addEventListener(
-      'redirect',
-      e => {
-        try {
-          if (typeof e.detail === 'object') {
-            const data = e.detail;
-            const path = String(data.src);
-            if (path === '/notification') {
-              setInitLoginState('');
-            }
-            navigate(path);
-            //TODO: Reload page if navigate same current path. Prevent navigate keep state of page
-            setAppPath(path);
-            // get param from native side
-            const params = JSON.parse(data.param);
-            setNativeParams(params);
-          }
-        } catch (error) {}
-        setIsNativeRedirect();
-      },
-      false
-    );
+    document.addEventListener('redirect', handleNavigate, false);
+  }, [location]);
 
+  useEffect(() => {
     // Get current language from native..
     document.addEventListener(
       'changeLanguage',
