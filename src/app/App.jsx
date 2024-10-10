@@ -102,11 +102,7 @@ const App = () => {
             if (path === '/notification') {
               setInitLoginState('');
             }
-            if (currentPath === '/change-profile' && path === '/transfer-limit-setting') {
-              navigate(0);
-            } else {
-              navigate(path);
-            }
+            window.location.href = path;
             setCurrentPath(path);
             //TODO: Reload page if navigate same current path. Prevent navigate keep state of page
             setAppPath(path);
