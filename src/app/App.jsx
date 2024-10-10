@@ -56,7 +56,7 @@ const App = () => {
 
   const getLanguageFile = async () => {
     if (!currentLanguage || currentLanguage === 'undefined') return;
-    const url = `../../../../websquare/langpack/161_${currentLanguage}.js`;
+    const url = `../../../../websquare/langpack/511_${currentLanguage}.js`;
     await fetch(url)
       .then(response => response.text())
       .then(data => {

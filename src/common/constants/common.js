@@ -24,7 +24,7 @@ export const MENU_CODE = {
 
 export const SupportContactPhoneNumber = '18557446426';
 
-export const SH_LCL_CORP_C = '161';
+export const SH_LCL_CORP_C = '511';
 
 export const isProductionEnv = process.env.NODE_ENV === 'production';
 export const isDevelopmentEnv = process.env.NODE_ENV === 'development';

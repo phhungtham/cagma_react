@@ -6,6 +6,7 @@ const showLogin = (cb, cbParams) => {
   if (AppCfg.ENV === 'development') return;
   return $h.exec(
     result => {
+      console.log('show login result :>> ', result);
       const { status } = result || {};
       const isLoginSuccess = Number(status) === 1000;
       if (isLoginSuccess) {
