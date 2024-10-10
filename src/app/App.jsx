@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Routes, useNavigate } from 'react-router-dom';
@@ -36,6 +36,7 @@ const App = () => {
   const navigate = useNavigate();
   const currentLanguage = useSelector(appLanguage);
   const { i18n } = useTranslation();
+  const [currentPath, setCurrentPath] = useState('');
 
   const scriptLoad = async isMobileDevice => {
     if (AppCfg.ENV === 'development') return;
@@ -101,7 +102,12 @@ const App = () => {
             if (path === '/notification') {
               setInitLoginState('');
             }
-            navigate(path);
+            if (currentPath === path) {
+              navigate(0);
+            } else {
+              setCurrentPath(path);
+              navigate(path);
+            }
             //TODO: Reload page if navigate same current path. Prevent navigate keep state of page
             setAppPath(path);
             // get param from native side
@@ -113,7 +119,9 @@ const App = () => {
       },
       false
     );
+  }, [currentPath]);
 
+  useEffect(() => {
     // Get current language from native..
     document.addEventListener(
       'changeLanguage',
