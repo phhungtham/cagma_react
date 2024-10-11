@@ -10,20 +10,23 @@ import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom
 import Header from '@common/components/organisms/Header';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getProvinceCode } from '@common/constants/commonCode';
+import { DepositSubjectClass } from '@common/constants/deposit';
+import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
-import useCommonCode from '@hooks/useCommonCode';
+import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 
 import { newCardFormSchema } from './schema';
 import './styles.scss';
 
-const EnterNewCardInfo = ({ onSubmit }) => {
-  const { sendRequest: requestGetCommonCode, data: commonCodeData } = useCommonCode();
+const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
+  const [accounts, setAccounts] = useState([]);
+  const { requestApi } = useApi();
 
   const {
     handleSubmit,
@@ -69,16 +72,51 @@ const EnterNewCardInfo = ({ onSubmit }) => {
     onSubmit(values);
   };
 
-  useEffect(() => {
-    if (commonCodeData) {
-      const { state_c: provinces } = commonCodeData || {};
+  const requestGetProvinces = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, { code: getProvinceCode });
+    setShowLoading(false);
+    if (isSuccess) {
+      const { state_c: provinces } = data || {};
       const convertedProvince = commonCodeDataToOptions(provinces);
       setProvinceOptions(convertedProvince);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
     }
-  }, [commonCodeData]);
+  };
+
+  const requestGetAccounts = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.getAccountList);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { cus_acno_list: accountList } = data || {};
+      let newAccounts = (accountList || []).map(item => {
+        return {
+          ...item,
+          name: item.dep_ac_alnm_nm,
+          number: item.lcl_ac_no_display,
+          balance: item.def_ac_blc_display,
+        };
+      });
+      const filteredAccounts = newAccounts.filter(
+        account => account.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING
+      );
+      setAccounts(filteredAccounts);
+      requestGetProvinces();
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
 
   useEffect(() => {
-    requestGetCommonCode(getProvinceCode);
+    requestGetAccounts();
   }, []);
 
   return (
@@ -96,12 +134,12 @@ const EnterNewCardInfo = ({ onSubmit }) => {
                 label="Linked to"
                 placeholder="Select"
                 onClick={onOpenMyAccountBottom}
-                value={selectedAccount?.dep_ac_alnm_nm}
+                value={selectedAccount?.name}
               >
                 {selectedAccount ? (
                   <div className="text-dropdown__sub">
-                    <span>{selectedAccount?.lcl_ac_no_display}</span>
-                    <span>${selectedAccount?.def_ac_blc_display}</span>
+                    <span>{selectedAccount?.number}</span>
+                    <span>${selectedAccount?.balance}</span>
                   </div>
                 ) : (
                   <></>
@@ -113,12 +151,13 @@ const EnterNewCardInfo = ({ onSubmit }) => {
           <div className="enter-card__form form__wrapper">
             <div className="form__section">
               <div className="form__section__title">
-                <span>Way to receive</span>
+                <span>Mailing address</span>
               </div>
               <Controller
                 render={({ field }) => (
                   <Input
                     label="Street Number"
+                    maxLength={100}
                     placeholder="Please input Detail text"
                     {...field}
                   />
@@ -130,6 +169,7 @@ const EnterNewCardInfo = ({ onSubmit }) => {
                 render={({ field }) => (
                   <Input
                     label="Street Name"
+                    maxLength={100}
                     placeholder="Please input Detail text"
                     {...field}
                   />
@@ -142,6 +182,7 @@ const EnterNewCardInfo = ({ onSubmit }) => {
                   return (
                     <Input
                       label="APT Number/SUITE Number"
+                      maxLength={100}
                       placeholder="Please input Detail text"
                       {...field}
                     />
@@ -154,6 +195,7 @@ const EnterNewCardInfo = ({ onSubmit }) => {
                 render={({ field }) => (
                   <Input
                     label="City"
+                    maxLength={50}
                     placeholder="Please input Detail text"
                     {...field}
                   />
@@ -177,6 +219,7 @@ const EnterNewCardInfo = ({ onSubmit }) => {
                 render={({ field }) => (
                   <Input
                     label="Postal Code"
+                    maxLength={110}
                     placeholder="Please input 6numerics"
                     {...field}
                   />
@@ -201,6 +244,7 @@ const EnterNewCardInfo = ({ onSubmit }) => {
         open={showMyAccountsBottom}
         onClose={() => setShowMyAccountBottom(false)}
         onSelect={onSelectAccount}
+        accounts={accounts}
       />
       <SelectBottom
         open={selectBottom.isShow}

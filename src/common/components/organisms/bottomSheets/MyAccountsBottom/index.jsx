@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import './styles.scss';
 
-const MyAccountsBottom = ({ accounts = [], open, onClose, onSelect, type }) => {
+const MyAccountsBottom = ({ accounts = [], open, onClose, onSelect }) => {
   const onSelectAccount = item => {
     onSelect(item);
   };

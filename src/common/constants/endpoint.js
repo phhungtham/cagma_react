@@ -1,5 +1,6 @@
 export const endpoints = {
   uploadFile: '/jsp/photoFileUpload.jsp?upload_type=addr',
+  getCommonCode: '/gm/co/GMCO004.pwkjson',
   getAccountsByProductType: '/ca/iq/CAIQ001.pwkjson',
   getAccountList: '/ca/iq/CAIQ006.pwkjson',
   getProductList: '/ca/pr/CAPR001.pwkjson',
@@ -27,4 +28,5 @@ export const endpoints = {
   getCardList: '/ca/ca/CACA009.pwkjson',
   getReportCardDetail: '/ca/ca/CACA010.pwkjson',
   reportReleaseCard: '/ca/ca/CACA012.pwkjson',
+  addNewCard: '/ca/ca/CACA014.pwkjson',
 };

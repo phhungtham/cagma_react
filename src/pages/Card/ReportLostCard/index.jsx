@@ -19,11 +19,13 @@ const ReportLostCard = () => {
   const [showConfirmAlert, setShowConfirmAlert] = useState(false);
   const [reportLostCardSuccessInfo, setReportLostCardSuccessInfo] = useState();
   const nativeParams = useSelector(nativeParamsSelector);
-  const isLogin = useSelector(loginSelector);
+  const isLogin = useSelector(loginSelector) || true;
+  const [accident, setAccident] = useState();
 
   console.log('nativeParams :>> ', nativeParams);
 
-  const handleSubmitForm = () => {
+  const handleSubmitForm = values => {
+    setAccident(values.accident);
     setShowConfirmAlert(true);
   };
 
@@ -36,14 +38,15 @@ const ReportLostCard = () => {
   };
 
   const handleConfirmReport = () => {
-    setReportLostCardSuccessInfo({
-      cardNumber: '1234********1234',
-      accountNo: '700 000 0000000',
-      issueDate: 'May 05, 2024',
-      status: 'Accident',
-    });
-    setShowConfirmAlert(false);
-    setCurrentStep(REPORT_LOST_CARD_STEP.COMPLETED);
+    // accident
+    // setReportLostCardSuccessInfo({
+    //   cardNumber: '1234********1234',
+    //   accountNo: '700 000 0000000',
+    //   issueDate: 'May 05, 2024',
+    //   status: 'Accident',
+    // });
+    // setShowConfirmAlert(false);
+    // setCurrentStep(REPORT_LOST_CARD_STEP.COMPLETED);
   };
 
   useEffect(() => {
@@ -80,6 +83,8 @@ const ReportLostCard = () => {
       <Alert
         isCloseButton={false}
         isShowAlert={showConfirmAlert}
+        onClose={() => setShowConfirmAlert(false)}
+        textAlign="center"
         title="Are you sure you want to report the card as lost?"
         subtitle={
           <>
@@ -91,8 +96,6 @@ const ReportLostCard = () => {
             <p>Do you want to register the accident report?</p>
           </>
         }
-        textAlign="left"
-        onClose={() => setShowConfirmAlert(false)}
         firstButton={{
           onClick: handleConfirmReport,
           label: 'Confirm',
