@@ -96,13 +96,6 @@ const ProductList = () => {
   };
 
   const handleNavigateOpenAccount = async product => {
-    return moveNext(
-      MENU_CODE.OPEN_ACCOUNT,
-      {
-        param: JSON.stringify(product),
-      },
-      routePaths.openAccount
-    );
     let accountList = [];
     if (accounts) {
       accountList = accounts;
