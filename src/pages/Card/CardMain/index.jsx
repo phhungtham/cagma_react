@@ -79,8 +79,9 @@ const CardMain = () => {
           onClick={moveBack}
         />
         <div className="card-main__content">
-          {/* //TODO: Hidden card layout after loading successfully */}
-          {isLogin ? <>{card ? <ActiveCardView card={card} /> : <EmptyCardView />}</> : <GuestCardView />}
+          {!showLoading && (
+            <>{isLogin ? <>{card ? <ActiveCardView card={card} /> : <EmptyCardView />}</> : <GuestCardView />}</>
+          )}
         </div>
       </div>
       <Alert

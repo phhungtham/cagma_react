@@ -8,6 +8,7 @@ import useApi from '@hooks/useApi';
 import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
 import { loginSelector } from 'app/redux/selector';
 
+import { formatCardDateRequest } from '../utils/format';
 import ActiveCardSuccess from './components/ActiveCardSuccess';
 import CardActiveBlockedBottom from './components/CardActiveBlockedBottom';
 import EnterAccountInfo from './components/EnterAccountInfo';
@@ -35,11 +36,7 @@ const ActiveCard = () => {
   const handleSubmitActiveCard = async values => {
     setShowLoading(true);
     const { name, cardNumber, expiryDate } = values;
-    const formattedDate = expiryDate.replace(/\D/g, '');
-    const month = formattedDate.substring(0, 2);
-    const year = '20' + formattedDate.substring(2, 4);
-    const lastDay = new Date(year, month, 0).getDate();
-    const cashcd_vldt_dt = `${year}${month}${lastDay}`;
+    const cashcd_vldt_dt = formatCardDateRequest(expiryDate);
     const formattedCardNumber = cardNumber.replace(/\D/g, '');
     const payload = {
       cusnm: name,

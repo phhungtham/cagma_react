@@ -5,7 +5,9 @@ import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
+import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
 
+import { CardAccidentType } from '../CardMain/constants';
 import ReportReleaseCardSuccess from './components/ReportReleaseCardSuccess';
 import ReportReleaseDetail from './components/ReportReleaseDetail';
 import { REPORT_RELEASE_CARD_STEP } from './constants';
@@ -22,14 +24,43 @@ const ReportReleaseCard = () => {
   });
   const { requestApi } = useApi();
 
-  const handleSubmitForm = () => {
-    setReportReleaseCardSuccessInfo({
-      cardNumber: '1234********1234',
-      accountNo: '700 000 0000000',
-      issueDate: 'May 05, 2024',
-      status: 'Accident',
-    });
-    setCurrentStep(REPORT_RELEASE_CARD_STEP.COMPLETED);
+  const handleRequestReleaseCard = async values => {
+    debugger;
+    setShowLoading(true);
+    const payload = {
+      glb_id: reportDetail.globalId,
+      cashcd_acdnt_c: reportDetail.cardAccountCode,
+      cashcd_acdnt_rls_desc: values.accident,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.reportReleaseCard, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const {
+        result_cd,
+        mask_cashcd_no: cardNumber,
+        cashcd_acno: accountNo,
+        issue_dt: issueDate,
+        acdnt_cnt: accidentCount,
+      } = data || {};
+      if (Number(result_cd) === 1) {
+        setReportReleaseCardSuccessInfo({
+          cardNumber: cardNumber,
+          accountNo: accountNo,
+          issueDate: issueDate,
+          status: accidentCount === CardAccidentType.REPORTED ? 'Accident' : 'Normal',
+        });
+        setCurrentStep(REPORT_RELEASE_CARD_STEP.COMPLETED);
+      }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const handleSubmitForm = async values => {
+    enterSecurityPasscode(() => handleRequestReleaseCard(values));
   };
 
   const handleCloseAlert = () => {
@@ -48,11 +79,19 @@ const ReportReleaseCard = () => {
     if (isSuccess) {
       const { r_GIBD2111_1Vo: reportDetails } = data || {};
       if (reportDetails?.length) {
-        const { regis_trx_dt: date, cashcd_acdnt_c_display: accountCode, cashcd_acdnt_desc: detail } = reportDetails[0];
+        const {
+          cashcd_acdnt_c: cardAccountCode,
+          regis_trx_dt: date,
+          cashcd_acdnt_c_display: accountCode,
+          cashcd_acdnt_desc: detail,
+          glb_id: globalId,
+        } = reportDetails[0];
         setReportDetail({
           date: formatYYYYMMDDToDisplay(date),
           accountCode,
           detail,
+          globalId,
+          cardAccountCode,
         });
       }
     } else {

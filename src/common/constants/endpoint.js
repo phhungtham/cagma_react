@@ -25,4 +25,5 @@ export const endpoints = {
   cardVerificationStep1: '/ca/ca/CACA001.pwkjson',
   getCardList: '/ca/ca/CACA009.pwkjson',
   getReportCardDetail: '/ca/ca/CACA010.pwkjson',
+  reportReleaseCard: '/ca/ca/CACA012.pwkjson',
 };
