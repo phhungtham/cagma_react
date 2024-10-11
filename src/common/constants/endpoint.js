@@ -2,6 +2,7 @@ export const endpoints = {
   uploadFile: '/jsp/photoFileUpload.jsp?upload_type=addr',
   getAccountsByProductType: '/ca/iq/CAIQ001.pwkjson',
   getAccountList: '/ca/iq/CAIQ006.pwkjson',
+  getProductList: '/ca/pr/CAPR001.pwkjson',
   openAccount: '/ca/pr/CAPR020.pwkjson',
   inquiryProductInterestRate: '/ca/pr/CAPR002.pwkjson',
   inquiryUserInformation: '/ca/me/CAME001.pwkjson',

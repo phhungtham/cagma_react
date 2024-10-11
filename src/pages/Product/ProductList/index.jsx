@@ -16,8 +16,6 @@ import {
 } from '@common/constants/product';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
-import useReducers from '@hooks/useReducers';
-import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 import showLogin from '@utilities/navigateScreen/showLogin';
@@ -26,11 +24,6 @@ import { loginSelector } from 'app/redux/selector';
 import BorrowingInstructionBottom from './components/BorrowingInstructionBottom';
 import BorrowingList from './components/BorrowingList';
 import { BannerMapProductCode, DescriptionMapProductCode } from './constants';
-import { getProductListRequest } from './redux/action';
-import { productReducer } from './redux/reducer';
-import { productSaga } from './redux/saga';
-import { productList, productLoadState } from './redux/selector';
-import { FeatureName } from './redux/type';
 import './styles.scss';
 
 const options = {
@@ -39,20 +32,19 @@ const options = {
 };
 
 const ProductList = () => {
-  useReducers([{ key: FeatureName, reducer: productReducer }]);
-  useSagas([{ key: FeatureName, saga: productSaga }]);
-  const { isLoading } = useLoginInfo({ isSend: true });
-  const isLogin = useSelector(loginSelector);
-
   const [showBorrowingInstructionBottom, setShowBorrowingInstructionBottom] = useState(false);
   const [accounts, setAccounts] = useState();
   const [showLoading, setShowLoading] = useState(false);
+  const [showLoadingGetProducts, setShowLoadingGetProducts] = useState(false);
+  const [products, setProducts] = useState([]);
   const { requestApi } = useApi();
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
     content: '',
   });
+  const { isLoading } = useLoginInfo({ isSend: true });
+  const isLogin = useSelector(loginSelector);
   const bankingTitleRef = useRef(null);
   const investmentTitleRef = useRef(null);
   const borrowingTitleRef = useRef(null);
@@ -69,9 +61,6 @@ const ProductList = () => {
     ],
     []
   );
-
-  const products = useSelector(productList) || [];
-  const isLoadingProducts = useSelector(productLoadState);
 
   const bankingProducts = products.filter(item => item.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING);
   const investmentProducts = products.filter(item =>
@@ -169,11 +158,25 @@ const ProductList = () => {
     });
   };
 
-  useEffect(() => {
-    //TODO: Refactor call directly instead of using redux
-    getProductListRequest({
+  const requestGetProducts = async () => {
+    setShowLoadingGetProducts(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.getProductList, {
       dep_sjt_class: '0',
     });
+    setShowLoadingGetProducts(false);
+    if (isSuccess) {
+      const { list } = data || {};
+      setProducts(list);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  useEffect(() => {
+    requestGetProducts();
   }, []);
 
   const handleClickBorrowingItem = () => {
@@ -247,29 +250,32 @@ const ProductList = () => {
   return (
     <>
       <div className="product-list__wrapper">
-        {(isLoadingProducts || showLoading) && <Spinner />}
+        {(showLoadingGetProducts || showLoading) && <Spinner />}
         <div className="header__wrapper">
           <span className="page__title">Product</span>
         </div>
-        <ScrollAnchorTabWrapper
-          defaultActiveTab={ProductTab.BANKING}
-          sections={sections}
-          options={options}
-        >
-          <div className="product-list__main">
-            {renderProductSection(bankingTitleRef, bankingProducts, 'banking', ProductTabDisplay[ProductTab.BANKING])}
-            {renderProductSection(
-              investmentTitleRef,
-              investmentProducts,
-              'investment',
-              ProductTabDisplay[ProductTab.INVESTMENT]
-            )}
-            <BorrowingList
-              borrowingTitleRef={borrowingTitleRef}
-              onClick={handleClickBorrowingItem}
-            />
-          </div>
-        </ScrollAnchorTabWrapper>
+        {!showLoadingGetProducts && (
+          <ScrollAnchorTabWrapper
+            defaultActiveTab={ProductTab.BANKING}
+            sections={sections}
+            options={options}
+          >
+            <div className="product-list__main">
+              {renderProductSection(bankingTitleRef, bankingProducts, 'banking', ProductTabDisplay[ProductTab.BANKING])}
+              {renderProductSection(
+                investmentTitleRef,
+                investmentProducts,
+                'investment',
+                ProductTabDisplay[ProductTab.INVESTMENT]
+              )}
+              <BorrowingList
+                borrowingTitleRef={borrowingTitleRef}
+                onClick={handleClickBorrowingItem}
+              />
+            </div>
+          </ScrollAnchorTabWrapper>
+        )}
+
         {showBorrowingInstructionBottom && (
           <BorrowingInstructionBottom onClose={() => setShowBorrowingInstructionBottom(false)} />
         )}
