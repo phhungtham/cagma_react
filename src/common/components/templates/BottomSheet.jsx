@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import useReducers from '@hooks/useReducers';
 import { setIsNativeClickBack } from 'app/redux/action';
-import { appGlobalReducer } from 'app/redux/reducer';
-import { APP_GLOBAL } from 'app/redux/type';
 import { CloseIcon } from 'assets/icons';
 import { PropTypes } from 'prop-types';
 
@@ -12,7 +9,6 @@ import Span from '../atoms/Span';
 const BottomSheet = props => {
   const { clazz, open, type, title, subTitle, dockerBar, closeIcon, onClose, srollUpOnClose = true, children } = props;
   const [animate, setAnimate] = useState(false);
-  useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
   useEffect(() => {
     open && setAnimate(true);
   }, [open]);

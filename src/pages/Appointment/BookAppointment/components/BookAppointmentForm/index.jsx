@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import TextDropdown from '@common/components/atoms/Dropdown/TextDropdown';
@@ -11,16 +10,10 @@ import Header from '@common/components/organisms/Header';
 import { CustomerTypes } from '@common/constants/account';
 import { getPurposeAppointment, getSubPurposeAppointment } from '@common/constants/commonCode';
 import { hoursFullOptions, minuteHalfOptions } from '@common/constants/dateTime';
+import { endpoints } from '@common/constants/endpoint';
 import { AppCfg } from '@configs/appConfigs';
 import { yupResolver } from '@hookform/resolvers/yup';
-import useCommonCode from '@hooks/useCommonCode';
-import useReducers from '@hooks/useReducers';
-import useSagas from '@hooks/useSagas';
-import { getCustomerInfoRequest } from '@pages/Account/OpenAccount/redux/customer/action';
-import { customerReducer } from '@pages/Account/OpenAccount/redux/customer/reducer';
-import { customerSaga } from '@pages/Account/OpenAccount/redux/customer/saga';
-import { customerInfo, customerLoadState } from '@pages/Account/OpenAccount/redux/customer/selector';
-import { CustomerFeatureName } from '@pages/Account/OpenAccount/redux/customer/type';
+import useApi from '@hooks/useApi';
 import PurposeAppointmentBottom from '@pages/Appointment/components/PurposeAppointmentBottom';
 import { BookAppointmentType, customerStatusFields, preferredLanguages } from '@pages/Appointment/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -39,16 +32,11 @@ import { bookAppointmentSchema } from './schema';
 import './styles.scss';
 
 const BookAppointmentForm = ({ type, onSubmit }) => {
-  useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
-  useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
+  // useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
+  // useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
 
-  const customer = useSelector(customerInfo);
-  const isLoadingGetCustomer = useSelector(customerLoadState);
-  const {
-    sendRequest: requestGetCommonCode,
-    data: commonCodeData,
-    isLoading: isLoadingGetCommonCode,
-  } = useCommonCode();
+  // const customer = useSelector(customerInfo);
+  // const isLoadingGetCustomer = useSelector(customerLoadState);
   const [showCustomerTypeBottom, setShowCustomerTypeBottom] = useState(false);
   const [showPurposeAppointmentBottom, setShowPurposeAppointmentBottom] = useState(false);
   const [showSelectTimeBottom, setShowSelectTimeBottom] = useState(false);
@@ -57,6 +45,9 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   const [purposeTabs, setPurposeTabs] = useState([]);
   const [purposeList, setPurposeList] = useState([]);
   const [subPurposeList, setSubPurposeList] = useState([]);
+  const [showLoading, setShowLoading] = useState(false);
+  const [customer, setCustomer] = useState();
+  const { requestApi } = useApi();
 
   const {
     handleSubmit,
@@ -144,9 +135,29 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
     onSubmit(values);
   };
 
+  const requestGetCustomer = async () => {
+    setShowLoading(true);
+    const { data } = await requestApi(endpoints.inquiryUserInformation);
+    setShowLoading(false);
+    setCustomer(data || {});
+  };
+
+  const requestGetCommonCode = async () => {
+    setShowLoading(true);
+    const { data } = await requestApi(endpoints.getCommonCode, {
+      code: [getPurposeAppointment, getSubPurposeAppointment].join(';'),
+    });
+    setShowLoading(false);
+    const { apint_purp: purposeList, apint_sub_purp: subPurposeList } = data || {};
+    const convertedPurposeList = commonCodeDataToOptions(purposeList);
+    const convertedSubPurposeList = commonCodeDataToOptions(subPurposeList);
+    setPurposeList(convertedPurposeList);
+    setSubPurposeList(convertedSubPurposeList);
+  };
+
   useEffect(() => {
     if (showCustomerStatusBottom && !customer) {
-      getCustomerInfoRequest();
+      requestGetCustomer();
     }
   }, [showCustomerStatusBottom]);
 
@@ -161,23 +172,13 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   }, [customerType]);
 
   useEffect(() => {
-    if (commonCodeData) {
-      const { apint_purp: purposeList, apint_sub_purp: subPurposeList } = commonCodeData || {};
-      const convertedPurposeList = commonCodeDataToOptions(purposeList);
-      const convertedSubPurposeList = commonCodeDataToOptions(subPurposeList);
-      setPurposeList(convertedPurposeList);
-      setSubPurposeList(convertedSubPurposeList);
-    }
-  }, [commonCodeData]);
-
-  useEffect(() => {
-    requestGetCommonCode([getPurposeAppointment, getSubPurposeAppointment].join(';'));
+    requestGetCommonCode();
   }, []);
 
   return (
     <>
       <div className="page__wrapper">
-        {(isLoadingGetCommonCode || isLoadingGetCustomer) && <Spinner />}
+        {showLoading && <Spinner />}
         <Header
           title="Book an Appointment"
           onClick={moveBack}

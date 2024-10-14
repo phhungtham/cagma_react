@@ -103,7 +103,6 @@ const App = () => {
             }
             // get param from native side
             const params = JSON.parse(data.param);
-            console.log('native params before navigate :>> ', params);
             setNativeParams(params);
             setAppPath(path);
             navigate(path);

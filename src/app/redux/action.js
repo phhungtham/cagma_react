@@ -7,5 +7,7 @@ export const setCurrentLanguage = payload => dispatch({ type: ActionType.LANGUAG
 export const setIsNativeClickBack = payload => dispatch({ type: ActionType.BACK_EVENT, payload: payload });
 export const setLoginState = payload => dispatch({ type: ActionType.APP_LOGIN, payload: payload });
 export const setInitLoginState = payload => dispatch({ type: ActionType.APP_LOGIN, payload: payload });
-export const setNativeParams = payload => dispatch({ type: ActionType.NATIVE_PARAMS, payload: payload });
+export const setNativeParams = payload => {
+  dispatch({ type: ActionType.NATIVE_PARAMS, payload: payload });
+};
 export const setAppPath = payload => dispatch({ type: ActionType.APP_PATH, payload: payload });

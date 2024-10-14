@@ -20,7 +20,6 @@ const BookAppointmentStep = {
 
 const BookAppointment = () => {
   const nativeParams = useSelector(nativeParamsSelector);
-  console.log('book an appointment nativeParams :>> ', nativeParams);
   const [showLoading, setShowLoading] = useState(false);
   const [showAlert, setShowAlert] = useState({
     isShow: false,
