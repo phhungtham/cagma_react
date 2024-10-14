@@ -35,7 +35,6 @@ Button.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
   size: PropTypes.oneOf(['default', 'xl', 'lg', 'md', 'sm']),
-  iconPosition: PropTypes.oneOf(['right', 'left']),
   type: PropTypes.oneOf(['submit', 'button']),
   variant: PropTypes.oneOf([
     'filled__primary',
@@ -51,7 +50,6 @@ Button.propTypes = {
 Button.defaultProps = {
   className: '',
   disable: false,
-  iconPosition: 'left',
   label: 'Button',
   onClick: undefined,
   variant: 'filled__primary',

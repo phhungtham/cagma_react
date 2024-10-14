@@ -77,7 +77,7 @@ const Alert = ({
 
 Alert.propTypes = {
   title: PropTypes.string,
-  subtitle: PropTypes.string,
+  subtitle: PropTypes.any,
   caption: PropTypes.string,
   textAlign: PropTypes.oneOf(['left', 'center']),
   isShowAlert: PropTypes.bool,

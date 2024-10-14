@@ -225,7 +225,7 @@ const AppointmentHome = ({ translate }) => {
               </div>
               <div className="details__list">
                 {appointments.map(appointment => (
-                  <Fragment key={appointment.id}>
+                  <Fragment key={appointment.apint_seq}>
                     <AppointmentCard
                       appointmentInfo={appointment}
                       onClick={handleViewAppointmentDetail}

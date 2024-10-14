@@ -14,6 +14,7 @@ const BoxRadio = ({ options, onChange, value: selectedValue, size, disabled }) =
         <div
           className={`box-radio__item ${value === selectedValue ? 'active' : ''} ${disabled ? 'disabled' : ''}`}
           onClick={() => onClickItem(value)}
+          key={value}
         >
           <span className="box-radio__label">{label}</span>
         </div>

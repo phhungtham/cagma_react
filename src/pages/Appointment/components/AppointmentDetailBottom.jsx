@@ -11,7 +11,6 @@ import { appointmentDetailFields } from '../constants';
 import './styles.scss';
 
 const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }) => {
-  console.log('appointment :>> ', appointment);
   const [showCancelAlert, setShowCancelAlert] = useState(false);
 
   const { isUsingZoom, date, time, isUpcoming, allowCancel } = appointment;
