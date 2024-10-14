@@ -334,32 +334,8 @@ const ChangeProfile = ({ translation }) => {
       request.cus_adr2 = values.address2;
       request.cus_adr1 = values.address1;
     }
-    const changeUserInfoResponse = await apiCall(endpoints.changeUserInfoPreTransaction, 'POST', request);
-    if (changeUserInfoResponse?.data?.elData) {
-      const userResponse = changeUserInfoResponse.data.elData;
-      const { secu_mdm_yn, gibintnbk_aplct_trx_mng_no } = userResponse || {};
-      const usingSecurityCheck = secu_mdm_yn === 1;
-      const requestChangeProfile = {
-        ...request,
-        gibintnbk_aplct_trx_mng_no,
-      };
-      if (usingSecurityCheck) {
-        setShowLoading(false);
-        enterSecurityPasscode(() => handleRequestChangeProfile(requestChangeProfile), null);
-      } else {
-        handleRequestChangeProfile(requestChangeProfile);
-      }
-      return;
-    }
-    const responseErrorMessage = changeUserInfoResponse?.data?.elHeader?.resMsg;
-    if (responseErrorMessage) {
-      setShowLoading(false);
-      setShowAlert({
-        isShow: true,
-        title: 'Sorry!',
-        content: changeUserInfoResponse?.data?.elHeader?.resMsg,
-      });
-    }
+    setShowLoading(false);
+    enterSecurityPasscode(() => handleRequestChangeProfile(request), null);
   };
 
   //Using sub job prefix for get list of occupation 2 based sub job list
