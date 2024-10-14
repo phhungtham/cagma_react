@@ -30,10 +30,14 @@ const ActiveCard = () => {
     title: '',
     content: '',
   });
-  const isLogin = useSelector(loginSelector);
+  const isLogin = useSelector(loginSelector) || true;
   const { requestApi } = useApi();
 
   const handleSubmitActiveCard = async values => {
+    if (incorrectInfoNumber >= maxEnterIncorrectNumber) {
+      setShowActiveBlockAlert(true);
+      return;
+    }
     setShowLoading(true);
     const { name, cardNumber, expiryDate } = values;
     const cashcd_vldt_dt = formatCardDateRequest(expiryDate);
@@ -56,10 +60,10 @@ const ActiveCard = () => {
       // });
       //TODO: Check error code do detect error is input wrong information or other error
       const incorrectNumber = incorrectInfoNumber + 1;
+      setIncorrectInfoNumber(incorrectNumber);
       if (incorrectNumber >= maxEnterIncorrectNumber) {
         setShowActiveBlockAlert(true);
       } else {
-        setIncorrectInfoNumber(incorrectNumber);
         setShowIncorrectInfoAlert(true);
       }
     }
@@ -122,7 +126,7 @@ const ActiveCard = () => {
           </div>
         </div>
       </Alert>
-      {showActiveBlockAlert && <CardActiveBlockedBottom />}
+      {showActiveBlockAlert && <CardActiveBlockedBottom onClose={() => setShowActiveBlockAlert(false)} />}
       <Alert
         isCloseButton={false}
         isShowAlert={alert.isShow}

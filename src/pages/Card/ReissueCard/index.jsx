@@ -18,6 +18,7 @@ const ReissueCard = () => {
   const [currentStep, setCurrentStep] = useState(REISSUE_CARD_STEP.ENTER_CARD_INFORMATION);
   const [cardInfo, setCardInfo] = useState({});
   const [reissueCardSuccessInfo, setReissueCardSuccessInfo] = useState();
+  console.log('reissueCardSuccessInfo :>> ', reissueCardSuccessInfo);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -30,7 +31,7 @@ const ReissueCard = () => {
     type: 'success',
   });
   const { requestApi } = useApi();
-  const isLogin = useSelector(loginSelector) || false;
+  const isLogin = useSelector(loginSelector) || true;
 
   const handleCloseAlert = () => {
     setAlert({
@@ -40,54 +41,97 @@ const ReissueCard = () => {
     });
   };
 
-  const handleSubmitCardInfo = async values => {
+  const requestGetCardInfo = async cardNumber => {
     setShowLoading(true);
-    const { cardNumber, expiryDate } = values;
-    const cashcd_vldt_dt = formatCardDateRequest(expiryDate);
-    const formattedCardNumber = cardNumber.replace(/\D/g, '');
-    const payload = {
-      cusnm: '',
-      cashcd_vldt_dt,
-      cashcd_no: formattedCardNumber,
-      dep_trx_dtl_d: '09',
-      dbcd_iss_rsn_c: 'S0351',
-    };
-    const { data, error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
+    const { data, error, isSuccess } = await requestApi(endpoints.getCardInfo, { cashcd_no: cardNumber });
     setShowLoading(false);
     if (isSuccess) {
-      // enterSecurityPasscode();
+      const {
+        cashcd_no_display: cardNumber,
+        cashcd_acno1_display: primaryAcNo,
+        cashcd_acno2_display: secondAcNo,
+        cashcd_s: contactlessTransaction,
+        day_cashcd_use_lmt_amt_display: dailyWithdrawalLimit,
+        day_pos_use_lmt_amt_display: dailyPOSLimit,
+        cashcd_iss_dt_display: issueDate,
+        cashcd_vldt_dt_display: expireDate,
+      } = data;
+      setCardInfo({
+        cardNumber,
+        primaryAcNo,
+        secondAcNo: secondAcNo || '-',
+        contactlessTransaction: Number(contactlessTransaction) === 10 ? 'YES' : 'NO',
+        dailyWithdrawalLimit: `$${dailyWithdrawalLimit}`,
+        dailyPOSLimit: `$${dailyPOSLimit}`,
+        issueDate,
+        expireDate: expireDate,
+      });
     } else {
       setAlert({
         isShow: true,
         content: error,
       });
     }
-    // if (isLogin) {
-    //   setCardInfo({
-    //     cardNumber: '5021 3000 0000 0000',
-    //     primaryAcNo: '700 000 00000',
-    //     secondAcNo: '-',
-    //     contactlessTransaction: 'NO',
-    //     dailyWithdrawalLimit: '$5,000.00',
-    //     dailyPOSLimit: '$5,000.00',
-    //     issueDate: 'Jan 01, 2024',
-    //     expireDate: '03/25',
-    //   });
-    // }
-    // setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
   };
 
-  const handleSubmitAddressInfo = values => {
-    setReissueCardSuccessInfo({
-      streetNumber: '123',
-      streetName: 'Young ST',
-      aptNumber: '123',
-      city: 'Toronto',
-      province: 'On-ontrairo',
-      postalCode: 'A9A9A9',
-      issueDate: 'Jun 09, 2024',
-    });
-    setCurrentStep(REISSUE_CARD_STEP.COMPLETED);
+  const handleSubmitCardInfo = async values => {
+    setShowLoading(true);
+    const { cardNumber, expiryDate } = values;
+    const cashcd_vldt_dt = formatCardDateRequest(expiryDate);
+    const formattedCardNumber = cardNumber.replace(/\D/g, '');
+    const payload = {
+      cashcd_vldt_dt,
+      cashcd_no: formattedCardNumber,
+      dep_trx_dtl_d: '09',
+    };
+    const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      if (isLogin) {
+        await requestGetCardInfo(formattedCardNumber);
+        setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
+      }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const handleSubmitAddressInfo = async values => {
+    setShowLoading(true);
+    const {
+      streetNumber: street_no,
+      streetName: street_nm,
+      aptNumber: apt_suite_no,
+      city,
+      province,
+      postalCode: post_cd,
+    } = values;
+    const payload = {
+      street_no,
+      street_nm,
+      apt_suite_no,
+      city,
+      province,
+      post_cd,
+    };
+    await requestApi(endpoints.inquiryUserInformation);
+    const { data, error, isSuccess } = await requestApi(endpoints.reissueCard, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      if (isLogin) {
+        //TODO: Handle reissue card
+        setReissueCardSuccessInfo(data);
+        setCurrentStep(REISSUE_CARD_STEP.COMPLETED);
+      }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
   };
 
   return (

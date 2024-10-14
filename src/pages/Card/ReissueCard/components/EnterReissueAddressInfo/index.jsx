@@ -123,7 +123,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
   return (
     <>
       <Header
-        title="Cards"
+        title="Access Card Service"
         onClick={moveBack}
       />
       <div className="reissue-card-address__wrapper page__form px-0">
@@ -148,10 +148,10 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
             </div>
           )}
 
-          <div className="form__section py-4">
+          <div className="form__section pt-4">
             {isLogin && (
               <div className="form__section__title">
-                <span>Way to receive</span>
+                <span>Mailing address</span>
               </div>
             )}
 
@@ -256,19 +256,6 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
               </>
             )}
           </div>
-          {isLogin && (
-            <div className="mt-4">
-              <InfoBox
-                variant="informative"
-                label={
-                  <>
-                    <p>If all the information above is correct, please continue to Activate.</p>
-                    <p>If you have any questions, please contact the branch for more information.</p>
-                  </>
-                }
-              />
-            </div>
-          )}
         </div>
         <div className={`divider__group ${isLogin ? 'mt-8' : 'mt-4'}`} />
         <div className="term-condition__checklist page__container">

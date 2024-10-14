@@ -28,9 +28,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
     control,
     setValue,
     watch,
-    setError,
-    clearErrors,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = methods;
 
   const [dob] = watch(['dob']);
@@ -58,7 +56,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
   return (
     <>
       <Header
-        title="Cards"
+        title="Access Card Service"
         onClick={moveBack}
       />
       <div className="page__form reissue-card-info__form">

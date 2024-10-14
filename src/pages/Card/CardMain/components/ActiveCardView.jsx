@@ -57,7 +57,7 @@ const ActiveCardView = ({ card }) => {
               onClick={handleNavigateReissueCard}
             />
             <Button
-              label={isReportedLostCard ? 'Release Lost' : 'Report Loss'}
+              label={isReportedLostCard ? 'Release Lost' : 'Report Lost'}
               size="xl"
               variant="filled__secondary-blue"
               onClick={isReportedLostCard ? handleNavigateReleaseLostCard : handleNavigateReportLostCard}

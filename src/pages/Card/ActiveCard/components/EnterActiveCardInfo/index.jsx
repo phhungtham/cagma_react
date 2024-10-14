@@ -15,9 +15,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
   const {
     handleSubmit,
     control,
-    setValue,
-    watch,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(activeCardFormSchema),
@@ -25,7 +23,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
   return (
     <>
       <Header
-        title="Cards"
+        title="Access Card Service"
         onClick={moveBack}
       />
       <div className="active-card__container">
