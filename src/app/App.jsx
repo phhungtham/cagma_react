@@ -101,11 +101,12 @@ const App = () => {
             if (path === '/notification') {
               setInitLoginState('');
             }
-            navigate(path);
-            setAppPath(path);
             // get param from native side
             const params = JSON.parse(data.param);
+            console.log('native params :>> ', params);
             setNativeParams(params);
+            setAppPath(path);
+            navigate(path);
           }
         } catch (error) {}
         setIsNativeRedirect();
