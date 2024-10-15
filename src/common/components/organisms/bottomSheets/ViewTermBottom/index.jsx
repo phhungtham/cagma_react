@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { PropTypes } from 'prop-types';
 
 import BottomSheet from '../../../templates/BottomSheet';
 import './style.scss';
+
+pdfjs.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@4.4.168/legacy/build/pdf.worker.min.mjs';
 
 const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hiddenConfirmBtn }) => {
   const [numPages, setNumPages] = useState(null);
@@ -111,7 +115,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
             className="view-term__item"
             ref={containerRef}
           >
-            {/* <Document
+            <Document
               file={pdfFile}
               onLoadSuccess={onDocumentLoadSuccess}
             >
@@ -127,7 +131,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
                 </Fragment>
               ))}
               <div ref={bottomRef} />
-            </Document> */}
+            </Document>
           </div>
         </div>
         <div className="view-term__footer">

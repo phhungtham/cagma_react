@@ -11,7 +11,6 @@ import './i18n';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const RouterComponent = AppCfg.ENV === 'development' || AppCfg.ENV === 'dev' ? BrowserRouter : Router;
 root.render(
