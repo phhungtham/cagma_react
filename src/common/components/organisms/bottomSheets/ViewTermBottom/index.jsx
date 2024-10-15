@@ -8,8 +8,9 @@ import { PropTypes } from 'prop-types';
 import BottomSheet from '../../../templates/BottomSheet';
 import './style.scss';
 
-pdfjs.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@4.4.168/legacy/build/pdf.worker.min.mjs';
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 const UrlTestPdf = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf'; //test
+
 const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hiddenConfirmBtn }) => {
   const [numPages, setNumPages] = useState(null);
   const containerRef = useRef(null);
