@@ -9,7 +9,7 @@ import BottomSheet from '../../../templates/BottomSheet';
 import './style.scss';
 
 pdfjs.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@4.4.168/legacy/build/pdf.worker.min.mjs';
-
+const UrlTestPdf = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf'; //test
 const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hiddenConfirmBtn }) => {
   const [numPages, setNumPages] = useState(null);
   const containerRef = useRef(null);
@@ -116,7 +116,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
             ref={containerRef}
           >
             <Document
-              file={pdfFile}
+              file={UrlTestPdf}
               onLoadSuccess={onDocumentLoadSuccess}
             >
               {[...Array(numPages)].map((_, index) => (
