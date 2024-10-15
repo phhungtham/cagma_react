@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Fragment } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -9,7 +8,6 @@ import BottomSheet from '../../../templates/BottomSheet';
 import './style.scss';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
-const UrlTestPdf = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf'; //test
 
 const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hiddenConfirmBtn }) => {
   const [numPages, setNumPages] = useState(null);
@@ -117,7 +115,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
             ref={containerRef}
           >
             <Document
-              file={UrlTestPdf}
+              file={pdfFile}
               onLoadSuccess={onDocumentLoadSuccess}
             >
               {[...Array(numPages)].map((_, index) => (

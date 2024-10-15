@@ -32,7 +32,7 @@ const ReissueCardSuccess = ({ cardInfo, isLogin }) => {
           </div>
         </div>
         <div className="reissue-card__info">
-          <div className="form__section__title">Way to receive</div>
+          <div className="form__section__title">Mailing address</div>
           <div className="divider__item__black" />
           {reissueCardSuccessFields.map(({ label, value }) => (
             <div

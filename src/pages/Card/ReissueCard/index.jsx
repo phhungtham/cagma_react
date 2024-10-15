@@ -86,7 +86,7 @@ const ReissueCard = () => {
     };
     const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
-    if (isSuccess) {
+    if (!isSuccess) {
       if (isLogin) {
         await requestGetCardInfo(formattedCardNumber);
         setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
@@ -108,6 +108,7 @@ const ReissueCard = () => {
       city,
       province,
       postalCode: post_cd,
+      provinceOptions,
     } = values;
     const payload = {
       street_no,
@@ -118,12 +119,29 @@ const ReissueCard = () => {
       post_cd,
     };
     await requestApi(endpoints.inquiryUserInformation);
-    const { data, error, isSuccess } = await requestApi(endpoints.reissueCard, payload);
+    const { data, error, isSuccess } = await requestApi(endpoints.reissueCardLogged, payload);
     setShowLoading(false);
-    if (isSuccess) {
+    if (!isSuccess) {
       if (isLogin) {
-        //TODO: Handle reissue card
-        setReissueCardSuccessInfo(data);
+        const {
+          street_no: streetNumber,
+          street_nm: streetName,
+          apt_suite_no: aptNumber,
+          cus_city_nm: city,
+          state_c: province,
+          adr_zipc: postalCode,
+          cashcd_iss_dt: issueDate,
+        } = data;
+        const provinceDisplay = provinceOptions.find(option => option.value === province)?.label || '';
+        setReissueCardSuccessInfo({
+          streetNumber,
+          streetName,
+          aptNumber,
+          city,
+          province: provinceDisplay,
+          postalCode,
+          issueDate,
+        });
         setCurrentStep(REISSUE_CARD_STEP.COMPLETED);
       }
     } else {

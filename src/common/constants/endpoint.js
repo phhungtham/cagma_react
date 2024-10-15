@@ -33,7 +33,7 @@ export const endpoints = {
   reportReleaseCard: '/ca/ca/CACA012.pwkjson',
   addNewCard: '/ca/ca/CACA014.pwkjson',
   getCardInfo: '/ca/ca/CACA003.pwkjson',
-  reissueCard: '/ca/ca/CACA006.pwkjson',
+  reissueCardLogged: '/ca/ca/CACA006.pwkjson',
   reportLostLogged: '/ca/ca/CACA011.pwkjson',
   reportLostNotLogged: '/ca/ca/CACA013.pwkjson',
 };

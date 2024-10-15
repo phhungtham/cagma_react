@@ -108,6 +108,10 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
     setValue('isAgreeEmail', checked, { shouldValidate: true });
   };
 
+  const handleSubmitReissue = values => {
+    onSubmit({ ...values, provinceOptions });
+  };
+
   useEffect(() => {
     if (commonCodeData) {
       const { state_c: provinces } = commonCodeData || {};
@@ -284,7 +288,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
           label="Reissue"
           variant="filled__primary"
           className="btn__cta"
-          onClick={handleSubmit(onSubmit)}
+          onClick={handleSubmit(handleSubmitReissue)}
           disable={!isValid || !isAllOptionChecked}
         />
       </div>
