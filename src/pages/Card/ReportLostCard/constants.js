@@ -21,3 +21,8 @@ export const reportLostCardSuccessFields = [
     value: 'status',
   },
 ];
+
+export const ReportLostCardType = {
+  UNKNOWN_CARD_NO: '0',
+  KNOW_CARD_NO: '1',
+};

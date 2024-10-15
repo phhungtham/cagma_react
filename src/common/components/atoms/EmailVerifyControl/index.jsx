@@ -29,6 +29,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast }) 
   const invalidVerificationCode = verificationCode?.length !== 6;
 
   const handleRequestGetEmailVerifyCode = async () => {
+    //TODO: Handle reset timer when resend email
     const emailSchema = schema.pick(['email']);
     const isEmailValid = emailSchema.isValidSync({ email: email });
     if (!isEmailValid || !email) {
@@ -122,7 +123,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast }) 
 
     if (isVerifySuccess) {
       setShowEmailVerifyCode(false);
-      setValue('isEmailVerified', true);
+      setValue('isEmailVerified', true, { shouldValidate: true });
       clearErrors('verificationCode');
       setShowToast({
         isShow: true,

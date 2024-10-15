@@ -9,7 +9,7 @@ import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBo
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { externalUrls } from '@common/constants/url';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
+import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveBack } from '@utilities/index';
 
 import { termConditionConfig } from '../../constants';
@@ -70,11 +70,17 @@ const TermsAndConditions = ({ onSubmit }) => {
   };
 
   const handleNavigateBranchInfo = () => {
-    openURLInBrowser(externalUrls.branchInfo);
+    openInternalWebview({
+      url: externalUrls.branchInfo,
+      title: 'Search Branch',
+    });
   };
 
   const handleNavigateContactUs = () => {
-    openURLInBrowser(externalUrls.contactUs);
+    openInternalWebview({
+      url: externalUrls.contactUs,
+      title: 'Contact Us',
+    });
   };
 
   return (

@@ -58,7 +58,7 @@ const GuestCardView = () => {
         onClose={() => setShowReportLostOptionAlert(false)}
         title="Do you know your Access Card Number?"
         subtitle="Let us help you lock your Access Card securely. If you know your card number, reporting it lost will be easier. Would you like to enter your card number now?"
-        textAlign="left"
+        textAlign="center"
         firstButton={{
           onClick: () => handleNavigateReportLost(ReportLostNotLoggedType.ENTER_CARD_NUMBER),
           label: 'Enter Card Number',

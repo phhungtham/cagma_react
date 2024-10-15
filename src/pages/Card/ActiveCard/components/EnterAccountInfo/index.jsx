@@ -20,7 +20,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
     control,
     setValue,
     watch,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(activeCardEnterAccountSchema),
@@ -51,7 +51,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
   return (
     <>
       <Header
-        title="Cards"
+        title="Access Card Service"
         onClick={moveBack}
       />
       <div className="page__form px-0">
@@ -85,7 +85,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
                 render={({ field }) => (
                   <Input
                     label="Postal Code"
-                    placeholder="Please input 6 numerics"
+                    placeholder="Please input 6numerics"
                     type="number"
                     maxLength={6}
                     {...field}
@@ -98,7 +98,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
                 render={({ field }) => (
                   <Input
                     label="Last 6-Digits of Your Account Number"
-                    placeholder="Please input 6 numerics"
+                    placeholder="Please input 6numerics"
                     type="number"
                     maxLength={6}
                     {...field}
@@ -129,7 +129,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
         <div className="page__container mt-7">
           <CheckBox
             size="large"
-            label="I agree to the use of the email address for sending confirmation email for replacement of Access Card"
+            label="By checking this box, I consent to the Bank's use of your email address for sending confirmation email for activate of Access Card."
             onChange={handleCheckTerms}
             checked={isAgree}
           />

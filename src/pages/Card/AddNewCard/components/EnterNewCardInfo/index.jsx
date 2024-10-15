@@ -69,7 +69,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
   };
 
   const onSubmitAddNewCard = values => {
-    onSubmit(values);
+    onSubmit({ ...values, provinceOptions });
   };
 
   const requestGetProvinces = async () => {

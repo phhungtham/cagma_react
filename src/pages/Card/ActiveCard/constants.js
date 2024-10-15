@@ -6,10 +6,6 @@ export const ACTIVE_CARD_STEP = {
 
 export const activeCardSuccessFields = [
   {
-    label: 'Card name',
-    value: 'cardName',
-  },
-  {
     label: 'Card no.',
     value: 'cardNo',
   },

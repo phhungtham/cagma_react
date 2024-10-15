@@ -1,14 +1,14 @@
-import { FillPhoneIcon } from '@assets/icons';
 import completeImg from '@assets/images/complete.png';
 import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
+import ReserveIcon from '@assets/images/icon-fill-calendar-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import InfoBox from '@common/components/atoms/InfoBox';
-import { MENU_CODE, SupportContactPhoneNumber } from '@common/constants/common';
+import { MENU_CODE } from '@common/constants/common';
 import { externalUrls } from '@common/constants/url';
 import { routePaths } from '@routes/paths';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
-import { callPhone, moveHome, moveNext } from '@utilities/index';
+import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
+import { moveHome, moveNext } from '@utilities/index';
 
 import { reportLostCardSuccessFields } from '../../constants';
 import './styles.scss';
@@ -23,11 +23,14 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
   };
 
   const handleNavigateBranchInfo = () => {
-    openURLInBrowser(externalUrls.branchInfo);
+    openInternalWebview({
+      url: externalUrls.branchInfo,
+      title: 'Search Branch',
+    });
   };
 
-  const onClickCallPhone = () => {
-    callPhone(SupportContactPhoneNumber);
+  const handleNavigateAppointment = () => {
+    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
   };
 
   return (
@@ -83,8 +86,8 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
                   type="circle"
                   label="Reserve Consultation"
                   className="call__icon"
-                  icon={<FillPhoneIcon />}
-                  onClick={onClickCallPhone}
+                  icon={<img src={ReserveIcon} />}
+                  onClick={handleNavigateAppointment}
                 />
               </div>
             </div>

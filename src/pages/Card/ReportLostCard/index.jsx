@@ -3,14 +3,19 @@ import { useSelector } from 'react-redux';
 
 import reportLostImg from '@assets/images/loud-speaker.png';
 import Alert from '@common/components/atoms/Alert';
+import Spinner from '@common/components/atoms/Spinner';
+import Toast from '@common/components/atoms/Toast';
+import { endpoints } from '@common/constants/endpoint';
+import useApi from '@hooks/useApi';
 import { loginSelector, nativeParamsSelector } from 'app/redux/selector';
 
 import { ReportLostNotLoggedType } from '../constants';
+import { formatCardDateRequest } from '../utils/format';
 import EnterReportLostCardInfo from './components/EnterReportLostCardInfo';
 import EnterReportLostCustomerInfo from './components/EnterReportLostCustomerInfo';
 import EnterReportLostReason from './components/EnterReportLostReason';
 import ReportLostCardSuccess from './components/ReportLostCardSuccess';
-import { REPORT_LOST_CARD_STEP } from './constants';
+import { REPORT_LOST_CARD_STEP, ReportLostCardType } from './constants';
 import './styles.scss';
 
 const ReportLostCard = () => {
@@ -19,34 +24,108 @@ const ReportLostCard = () => {
   const [showConfirmAlert, setShowConfirmAlert] = useState(false);
   const [reportLostCardSuccessInfo, setReportLostCardSuccessInfo] = useState();
   const nativeParams = useSelector(nativeParamsSelector);
-  const isLogin = useSelector(loginSelector) || true;
+  const isLogin = useSelector(loginSelector);
   const [accident, setAccident] = useState();
-
-  console.log('nativeParams :>> ', nativeParams);
+  const [formValues, setFormValues] = useState();
+  const [showLoading, setShowLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
+  const [showToast, setShowToast] = useState({
+    isShow: false,
+    message: '',
+    type: 'success',
+  });
+  const { requestApi } = useApi();
 
   const handleSubmitForm = values => {
     setAccident(values.accident);
     setShowConfirmAlert(true);
   };
 
-  const handleSubmitCardInfo = () => {
+  const handleSubmitCardInfo = values => {
+    setFormValues(values);
     setShowConfirmAlert(true);
   };
 
-  const handleSubmitCustomerInfo = () => {
+  const handleSubmitCustomerInfo = values => {
+    setFormValues(values);
     setShowConfirmAlert(true);
   };
 
-  const handleConfirmReport = () => {
-    // accident
-    // setReportLostCardSuccessInfo({
-    //   cardNumber: '1234********1234',
-    //   accountNo: '700 000 0000000',
-    //   issueDate: 'May 05, 2024',
-    //   status: 'Accident',
-    // });
-    // setShowConfirmAlert(false);
-    // setCurrentStep(REPORT_LOST_CARD_STEP.COMPLETED);
+  const handleCloseAlert = () => {
+    setAlert({
+      isShow: false,
+      title: '',
+      content: '',
+    });
+  };
+
+  const requestReportLostLogged = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.reportLostLogged, {
+      cashcd_acdnt_c: '74', //Default account code
+      cashcd_acdnt_desc: accident,
+    });
+    setShowLoading(false);
+    if (isSuccess) {
+      setReportLostCardSuccessInfo({
+        cardNumber: data?.mask_cashcd_no,
+        accountNo: data?.cashcd_acno,
+        issueDate: data?.issue_dt,
+        status: Number(data?.acdnt_cnt) === 1 ? 'Accident' : 'Normal',
+      });
+      setCurrentStep(REPORT_LOST_CARD_STEP.COMPLETED);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const requestReportLostNotLogged = async () => {
+    setShowLoading(true);
+    let payload = {};
+    if (notLoggedFormType === ReportLostNotLoggedType.ENTER_CARD_NUMBER) {
+      const { cardNumber, expiryDate, accident: cashcd_acdnt_desc } = formValues;
+      const cashcd_vldt_dt = formatCardDateRequest(expiryDate);
+      const formattedCardNumber = cardNumber.replace(/\D/g, '');
+      payload = {
+        report_type: ReportLostCardType.KNOW_CARD_NO,
+        cashcd_no: formattedCardNumber,
+        cashcd_vldt_dt,
+        cashcd_acdnt_desc,
+      };
+    } else {
+      const { accident: cashcd_acdnt_desc, dob: cus_bth_y4mm_dt } = formValues;
+      payload = {
+        report_type: ReportLostCardType.UNKNOWN_CARD_NO,
+        cashcd_acdnt_desc,
+        cus_bth_y4mm_dt,
+      };
+    }
+    const { error, isSuccess } = await requestApi(endpoints.reportLostNotLogged, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      setCurrentStep(REPORT_LOST_CARD_STEP.COMPLETED);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const handleConfirmReport = async () => {
+    setShowConfirmAlert(false);
+    if (isLogin) {
+      requestReportLostLogged();
+    } else {
+      requestReportLostNotLogged();
+    }
   };
 
   useEffect(() => {
@@ -58,6 +137,8 @@ const ReportLostCard = () => {
   return (
     <>
       <div className="report-lost-card__wrapper page__wrapper">
+        {showLoading && <Spinner />}
+
         {currentStep === REPORT_LOST_CARD_STEP.ENTER_INFORMATION && (
           <>
             {isLogin ? (
@@ -65,9 +146,19 @@ const ReportLostCard = () => {
             ) : (
               <>
                 {notLoggedFormType === ReportLostNotLoggedType.ENTER_CARD_NUMBER ? (
-                  <EnterReportLostCardInfo onSubmit={handleSubmitCardInfo} />
+                  <EnterReportLostCardInfo
+                    onSubmit={handleSubmitCardInfo}
+                    setAlert={setAlert}
+                    setShowLoading={setShowLoading}
+                    setShowToast={setShowToast}
+                  />
                 ) : (
-                  <EnterReportLostCustomerInfo onSubmit={handleSubmitCustomerInfo} />
+                  <EnterReportLostCustomerInfo
+                    onSubmit={handleSubmitCustomerInfo}
+                    setAlert={setAlert}
+                    setShowLoading={setShowLoading}
+                    setShowToast={setShowToast}
+                  />
                 )}
               </>
             )}
@@ -112,6 +203,26 @@ const ReportLostCard = () => {
           />
         </div>
       </Alert>
+      <section className="toast__overlay margin-bottom">
+        <Toast
+          isShowToast={showToast.isShow}
+          type={showToast.type}
+          onClose={() => setShowToast({ ...showToast, isShow: false })}
+          message={showToast.message}
+        />
+      </section>
+      <Alert
+        isCloseButton={false}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
+        textAlign="left"
+        onClose={handleCloseAlert}
+        firstButton={{
+          onClick: handleCloseAlert,
+          label: 'Confirm',
+        }}
+      />
     </>
   );
 };

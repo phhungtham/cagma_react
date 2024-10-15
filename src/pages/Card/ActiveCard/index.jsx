@@ -33,6 +33,25 @@ const ActiveCard = () => {
   const isLogin = useSelector(loginSelector) || true;
   const { requestApi } = useApi();
 
+  const requestActiveCardLogged = async payload => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.activeCardLogged, payload);
+    setShowLoading(false);
+    if (!isSuccess) {
+      const { cashcd_no: cardNo, cashcd_acno1: accountNumber } = data;
+      setActiveCardSuccessInfo({
+        cardNo,
+        accountNumber,
+      });
+      setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
   const handleSubmitActiveCard = async values => {
     if (incorrectInfoNumber >= maxEnterIncorrectNumber) {
       setShowActiveBlockAlert(true);
@@ -49,22 +68,33 @@ const ActiveCard = () => {
       dep_trx_dtl_d: '01',
       dbcd_iss_rsn_c: '',
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
+    const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
-    if (isSuccess) {
-      enterSecurityPasscode();
-    } else {
-      // setAlert({
-      //   isShow: true,
-      //   content: error,
-      // });
-      //TODO: Check error code do detect error is input wrong information or other error
-      const incorrectNumber = incorrectInfoNumber + 1;
-      setIncorrectInfoNumber(incorrectNumber);
-      if (incorrectNumber >= maxEnterIncorrectNumber) {
-        setShowActiveBlockAlert(true);
+    if (!isSuccess) {
+      if (isLogin) {
+        const activeCardLoggedPayload = {
+          cashcd_vldt_dt,
+          cashcd_no: formattedCardNumber,
+          cus_name: name,
+        };
+        enterSecurityPasscode(() => requestActiveCardLogged(activeCardLoggedPayload));
       } else {
-        setShowIncorrectInfoAlert(true);
+        setCurrentStep(ACTIVE_CARD_STEP.ENTER_ACCOUNT_INFORMATION);
+      }
+    } else {
+      if (isLogin) {
+        const incorrectNumber = incorrectInfoNumber + 1;
+        setIncorrectInfoNumber(incorrectNumber);
+        if (incorrectNumber >= maxEnterIncorrectNumber) {
+          setShowActiveBlockAlert(true);
+        } else {
+          setShowIncorrectInfoAlert(true);
+        }
+      } else {
+        setAlert({
+          isShow: true,
+          content: error,
+        });
       }
     }
   };
@@ -77,13 +107,46 @@ const ActiveCard = () => {
     });
   };
 
-  const handleSubmitAccountForm = values => {
-    setActiveCardSuccessInfo({
-      cardName: 'Visa Consumer Classic Access Card',
-      cardNo: '1234********1234',
-      accountNumber: '700 000 987654',
-    });
-    setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+  const requestActiveCardNotLogged = async payload => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.activeCardNotLogged, payload);
+    setShowLoading(false);
+    if (!isSuccess) {
+      const { cashcd_no: cardNo, cashcd_acno1: accountNumber } = data;
+      setActiveCardSuccessInfo({
+        cardNo,
+        accountNumber,
+      });
+      setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const handleSubmitAccountForm = async values => {
+    setShowLoading(true);
+    const { dob, email, lastSixAccountNumber, phoneNumber, postalCode } = values;
+    const payload = {
+      cus_bth_y4mm_dt: dob,
+      adr_zipc: postalCode,
+      cashcd_acno1: lastSixAccountNumber,
+    };
+    const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep2, payload);
+    setShowLoading(false);
+    if (!isSuccess) {
+      requestActiveCardNotLogged({
+        cus_email: email,
+        cell_telno: phoneNumber,
+      });
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
   };
 
   return (

@@ -72,7 +72,7 @@
     width: 100px;
     @include flexCenter();
     .btn__icon__wrapper {
-      max-width: unset;
+      max-width: unset !important;
     }
   }
 }

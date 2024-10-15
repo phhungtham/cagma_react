@@ -38,6 +38,8 @@ const CardMain = () => {
           cashcd_acno_display: cardAccountNumber,
           cashcd_iss_dt_display: issueDate,
           cashcd_vldt_dt_display: expireDate,
+          day_cashcd_use_lmt_amt_display: dailyWithdrawalLimit,
+          day_pos_use_lmt_amt_display: dailyPOSLimit,
         } = cardList[0];
         setCard({
           type: Number(accidentType),
@@ -46,6 +48,8 @@ const CardMain = () => {
           cardAccountNumber,
           issueDate,
           expireDate,
+          dailyWithdrawalLimit: `$${dailyWithdrawalLimit}`,
+          dailyPOSLimit: `$${dailyPOSLimit}`,
         });
       }
     } else {

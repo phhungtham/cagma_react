@@ -1,15 +1,15 @@
-import { FillChatIcon, FillPhoneIcon } from '@assets/icons';
+import { FillChatIcon } from '@assets/icons';
 import completeImg from '@assets/images/complete.png';
 import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
 import FindATMIcon from '@assets/images/icon-fill-m-cash-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import InfoBox from '@common/components/atoms/InfoBox';
-import { MENU_CODE, SupportContactPhoneNumber } from '@common/constants/common';
+import { MENU_CODE } from '@common/constants/common';
 import { externalUrls } from '@common/constants/url';
 import { routePaths } from '@routes/paths';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
-import { callPhone, moveHome, moveNext } from '@utilities/index';
+import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
+import { moveHome, moveNext } from '@utilities/index';
 
 import { activeCardSuccessFields } from '../../constants';
 import './styles.scss';
@@ -24,19 +24,24 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
   };
 
   const handleNavigateFindATM = () => {
-    openURLInBrowser(externalUrls.findATM);
+    openInternalWebview({
+      url: externalUrls.findATM,
+      title: 'Find ATM',
+    });
   };
 
   const handleNavigateBranchInfo = () => {
-    openURLInBrowser(externalUrls.branchInfo);
+    openInternalWebview({
+      url: externalUrls.branchInfo,
+      title: 'Branch Info',
+    });
   };
 
   const handleNavigateContactUs = () => {
-    openURLInBrowser(externalUrls.contactUs);
-  };
-
-  const onClickCallPhone = () => {
-    callPhone(SupportContactPhoneNumber);
+    openInternalWebview({
+      url: externalUrls.contactUs,
+      title: 'Contact Us',
+    });
   };
 
   return (
@@ -55,7 +60,6 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
             {isLogin && <div className="note">Please register your PIN at a Shinhan Bank ATM</div>}
           </div>
         </div>
-        <div className="divider__item__black" />
         <div className="active-card__info">
           {activeCardSuccessFields.map(({ label, value }) => (
             <div
@@ -77,25 +81,14 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
         </div>
         <div className="active-success__ctas">
           <div className="active-success__button">
-            {isLogin ? (
-              <IconButton
-                size="lg"
-                type="circle"
-                label="Find ATM"
-                className="active-success__icon"
-                icon={<img src={FindATMIcon} />}
-                onClick={handleNavigateFindATM}
-              />
-            ) : (
-              <IconButton
-                size="lg"
-                type="circle"
-                label="Call"
-                className="call__icon"
-                icon={<FillPhoneIcon />}
-                onClick={onClickCallPhone}
-              />
-            )}
+            <IconButton
+              size="lg"
+              type="circle"
+              label="Find ATM"
+              className="active-success__icon"
+              icon={<img src={FindATMIcon} />}
+              onClick={handleNavigateFindATM}
+            />
           </div>
           <div className="active-success__button">
             <IconButton

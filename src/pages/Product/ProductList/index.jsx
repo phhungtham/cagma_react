@@ -119,11 +119,10 @@ const ProductList = () => {
       const requiredAccountProductCode = RequiredAccountBaseProductCode[productCode];
       const isRequiredAccountExist = accountList.some(account => account.prdt_c === requiredAccountProductCode);
       if (!isRequiredAccountExist) {
-        //TODO: Update title and message base Figma (Waiting Figma defined)
         return setAlert({
           isShow: true,
-          title: 'Required Account',
-          content: `You currently do not own a ${product.prdt_c_display} account.`,
+          title: `There is no ${product.prdt_c_display} account`,
+          content: `You currently do not own a ${product.prdt_c_display} account`,
         });
       }
     }

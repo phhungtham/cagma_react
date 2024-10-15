@@ -28,7 +28,7 @@ const AddNewCard = ({ translation }) => {
 
   const handleSubmitAddNewCard = async values => {
     setShowLoading(true);
-    const { accountNo, streetNumber, streetName, aptNumber, province, postalCode } = values;
+    const { accountNo, streetNumber, streetName, aptNumber, province, postalCode, city, provinceOptions } = values;
     const payload = {
       cashcd_acno1: accountNo,
       cus_str_no: streetNumber,
@@ -36,28 +36,46 @@ const AddNewCard = ({ translation }) => {
       cus_apt_no: aptNumber,
       state_c: province,
       adr_zipc: postalCode,
+      cus_city_nm: city,
+      cus_email: 'email@gmail.com',
+      ca_cashcd_use_regn_d: '01',
+      all_chip_card_use_lmt_amt: 25,
+      caseby_chip_card_use_lmt_amt: 3,
+      cusnm: 'CUS-TEST',
+      all_chip_card_use_lmt_amt_yn: '1',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.addNewCard, payload);
     setShowLoading(false);
+    debugger;
     if (isSuccess) {
-      debugger;
+      const {
+        cus_str_no: streetNumber,
+        cus_str_nm: streetName,
+        cus_apt_no: aptNumber,
+        cus_city_nm: city,
+        state_c: province,
+        adr_zipc: postalCode,
+        cashcd_iss_dt: issueDate,
+        cashcd_acno1: accountNo,
+      } = data;
+      const provinceDisplay = provinceOptions.find(option => option.value === province)?.label || '';
+      setAddCardSuccessInfo({
+        streetNumber,
+        streetName,
+        aptNumber,
+        city,
+        province: provinceDisplay,
+        postalCode,
+        issueDate,
+        accountNo,
+      });
+      setCurrentStep(ADD_NEW_CARD_STEP.COMPLETED);
     } else {
       setAlert({
         isShow: true,
         content: error,
       });
     }
-    // setAddCardSuccessInfo({
-    //   streetNumber: '123',
-    //   streetName: 'Young ST',
-    //   aptNumber: '123',
-    //   city: 'Toronto',
-    //   province: 'On-ontrairo',
-    //   postalCode: 'A9A9A9',
-    //   issueDate: 'Jun 09, 2024',
-    //   accountNo: '700 000 000000',
-    // });
-    // setCurrentStep(ADD_NEW_CARD_STEP.COMPLETED);
   };
 
   return (
