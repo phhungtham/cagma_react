@@ -11,6 +11,7 @@ import { AppCfg } from '@configs/appConfigs';
 import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
 import publicRoutes from '@routes/service/public-routes';
+import extendSession from '@utilities/gmCommon/extendSession';
 import { languageStorageKeys } from '@utilities/transform';
 import { reloadLanguageResource } from 'i18n/reloadLanguageResource';
 import { $h, wmatrix } from 'navigation/wmatrix_config';
@@ -106,6 +107,7 @@ const App = () => {
             // get param from native side
             const params = JSON.parse(data.param);
             setNativeParams(params);
+            extendSession();
           }
         } catch (error) {}
         setIsNativeRedirect();
