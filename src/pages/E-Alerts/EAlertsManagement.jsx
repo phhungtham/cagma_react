@@ -168,7 +168,7 @@ const EAlertsManagement = ({ translate }) => {
 
       <div className="eAlerts-management__wrapper">
         <Header
-          title="e-Alerts Management"
+          title={translate('lbl_CAME900020_0001')}
           onClick={moveBack}
         />
         <div className="eAlerts-management__content">
