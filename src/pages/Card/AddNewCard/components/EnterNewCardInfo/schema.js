@@ -15,6 +15,11 @@ export const newCardFormSchema = Yup.object().shape({
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
+  totalContactless: Yup.string().when('applyContactless', {
+    is: true,
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
   getTransactionNotice: Yup.boolean().nullable(),
   email: Yup.string()
     .email('Please check your email')

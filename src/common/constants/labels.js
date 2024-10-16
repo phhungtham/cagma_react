@@ -14,10 +14,28 @@ export const eAlertLabels = {
   appPush: 'lbl_CAME900020_0013',
   alertNotiDisabled: 'lbl_CAME900020_0014',
   alertNotiEnabled: 'lbl_CAME900020_0015',
+  setupAlertActivity: 'lbl_CAME900020_0016',
+  account: 'lbl_CAME900020_0017',
+  moneyLeaving: 'lbl_CAME900020_0018',
+  moneyInto: 'lbl_CAME900020_0019',
+  lowBalance: 'lbl_CAME900020_0020',
+  moneyLeavingTitle: 'lbl_CAME900020_0021',
+  sendAlertAmountGreater: 'lbl_CAME900020_0022',
+  zeroCurrency: 'lbl_CAME900020_0023',
+  oneHundredCurrency: 'lbl_CAME900020_0024',
+  twoHundredCurrency: 'lbl_CAME900020_0025',
+  custom: 'lbl_CAME900020_0026',
+  methodsTitle: 'lbl_CAME900020_0027',
+  emailOption: 'lbl_CAME900020_0028',
+  appPushOption: 'lbl_CAME900020_0029',
+  amount: 'lbl_CAME900020_0030',
+  alertDisabled: 'lbl_CAME900020_0031',
+  alertEnabled: 'lbl_CAME900020_0032',
 };
 
 export const menuLabels = {
   eAlertManage: 'mymen_CAME900020',
+  balance: 'mymen_CAME900050',
 };
 
 export const ctaLabels = {

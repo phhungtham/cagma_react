@@ -42,6 +42,7 @@ const AddNewCard = ({ translation }) => {
       areaProvince,
       applyContactless,
       contactlessPerTransaction,
+      totalContactless,
     } = values;
     const payload = {
       cashcd_acno1: accountNo,
@@ -50,14 +51,13 @@ const AddNewCard = ({ translation }) => {
       cus_apt_no: aptNumber,
       state_c: province,
       adr_zipc: postalCode,
-      // adr_zipc: 'M5S3K4',
       cus_city_nm: city,
       cus_email: email,
       ca_cashcd_use_regn_d: areaProvince,
-      all_chip_card_use_lmt_amt: Number(contactlessPerTransaction),
-      caseby_chip_card_use_lmt_amt: 3,
-      cusnm: 'CUS-TEST',
       all_chip_card_use_lmt_amt_yn: applyContactless ? '1' : '0',
+      caseby_chip_card_use_lmt_amt: Number(contactlessPerTransaction),
+      all_chip_card_use_lmt_amt: Number(totalContactless),
+      cusnm: 'CUS-TEST',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.addNewCard, payload);
     setShowLoading(false);

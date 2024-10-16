@@ -12,9 +12,11 @@ import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccoun
 import Header from '@common/components/organisms/Header';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
+import { eAlertLabels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack } from '@utilities/index';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import LowBalanceWarningBottom from './components/LowBalanceWarningBottom';
 import MoneyIntoAccountBottom from './components/MoneyIntoAccountBottom';
@@ -22,7 +24,7 @@ import MoneyLeavingAccountBottom from './components/MoneyLeavingAccountBottom';
 import { EAlertType } from './constants';
 import './styles.scss';
 
-const EAlertsBalance = () => {
+const EAlertsBalance = ({ translate: t }) => {
   const { requestApi } = useApi();
   const [showMyAccountsBottom, setShowMyAccountBottoms] = useState(false);
   const [showMoneyLeavingAccountBottom, setShowMoneyLeavingAccountBottom] = useState(false);
@@ -142,9 +144,9 @@ const EAlertsBalance = () => {
     if (Number(result_cd) === 1) {
       let message = '';
       if (pushEnabled || emailEnabled) {
-        message = 'Alerts notifications enabled';
+        message = t(eAlertLabels.alertEnabled);
       } else {
-        message = 'Alerts notifications disabled';
+        message = t(eAlertLabels.alertDisabled);
       }
       await requestGetEAlertSetting();
       setShowToast({
@@ -239,12 +241,12 @@ const EAlertsBalance = () => {
   useEffect(() => {
     requestGetEAlertSetting();
   }, []);
-
+  //TODO: Handle implement label
   return (
     <div className="eAlerts-balance__wrapper">
       {showLoading && <Spinner />}
       <Header
-        title="Balance"
+        title={t(menuLabels.balance)}
         onClick={moveBack}
       />
       <div className="eAlerts-balance__content">
@@ -427,4 +429,4 @@ const EAlertsBalance = () => {
   );
 };
 
-export default EAlertsBalance;
+export default withHTMLParseI18n(EAlertsBalance);

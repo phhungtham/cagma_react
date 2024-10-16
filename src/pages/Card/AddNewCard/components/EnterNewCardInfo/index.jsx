@@ -7,13 +7,11 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import CheckBox from '@common/components/atoms/Checkbox';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
-import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAmountBottom';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import Header from '@common/components/organisms/Header';
 import { initSelectBottom } from '@common/constants/bottomsheet';
-import { getProvinceCode } from '@common/constants/commonCode';
-import { CurrencyCode } from '@common/constants/currency';
+import { getCardAreaProvinceCode, getProvinceCode } from '@common/constants/commonCode';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -28,10 +26,10 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [provinceOptions, setProvinceOptions] = useState([]);
+  const [areaProvinceOptions, setAreaProvinceOptions] = useState([]);
   const [currentProvinceFieldName, setCurrentProvinceFieldName] = useState();
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [accounts, setAccounts] = useState([]);
-  const [showEnterAmountBottom, setShowEnterAmountBottom] = useState(false);
   const { requestApi } = useApi();
 
   const {
@@ -45,11 +43,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
     resolver: yupResolver(newCardFormSchema),
   });
 
-  const [applyContactless, getTransactionNotice, contactlessPerTransaction] = watch([
-    'applyContactless',
-    'getTransactionNotice',
-    'contactlessPerTransaction',
-  ]);
+  const [applyContactless, getTransactionNotice] = watch(['applyContactless', 'getTransactionNotice']);
 
   const handleOpenMyAccountBottom = () => {
     setShowMyAccountBottom(true);
@@ -63,9 +57,10 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
 
   const handleOpenSelectProvinceBottom = fieldName => {
     setCurrentProvinceFieldName(fieldName);
+    const options = fieldName === 'province' ? provinceOptions : areaProvinceOptions;
     setSelectBottom({
       type: '',
-      options: provinceOptions,
+      options: options,
       isShow: true,
       title: 'Province',
     });
@@ -79,11 +74,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
     const value = item.value;
     setValue(currentProvinceFieldName, value, { shouldValidate: true });
     handleCloseSelectBottom();
-  };
-
-  const onChangeAmount = value => {
-    setValue('contactlessPerTransaction', value.amount, { shouldValidate: true });
-    setShowEnterAmountBottom(false);
   };
 
   const RenderAccountIcon = () => {
@@ -112,12 +102,16 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
 
   const requestGetProvinces = async () => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, { code: getProvinceCode });
+    const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
+      code: [getProvinceCode, getCardAreaProvinceCode].join(';'),
+    });
     setShowLoading(false);
     if (isSuccess) {
-      const { state_c: provinces } = data || {};
+      const { state_c: provinces, ca_cashcd_use_regn_d: areaProvinces } = data || {};
       const convertedProvince = commonCodeDataToOptions(provinces);
+      const convertedAreaProvince = commonCodeDataToOptions(areaProvinces);
       setProvinceOptions(convertedProvince);
+      setAreaProvinceOptions(convertedAreaProvince);
     } else {
       setAlert({
         isShow: true,
@@ -155,6 +149,12 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
       });
     }
   };
+
+  useEffect(() => {
+    const defaultContactlessValue = applyContactless ? '250' : '';
+    setValue('contactlessPerTransaction', defaultContactlessValue);
+    setValue('totalContactless', defaultContactlessValue);
+  }, [applyContactless]);
 
   useEffect(() => {
     requestGetAccounts();
@@ -286,7 +286,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                   <Dropdown
                     label="Province"
                     onFocus={() => handleOpenSelectProvinceBottom('areaProvince')}
-                    options={provinceOptions}
+                    options={areaProvinceOptions}
                     {...field}
                   />
                 )}
@@ -310,20 +310,34 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                   name="applyContactless"
                 />
                 {applyContactless && (
-                  <Controller
-                    render={({ field }) => (
-                      <Input
-                        label="Contactless per Transaction"
-                        placeholder=""
-                        readOnly
-                        onFocus={() => setShowEnterAmountBottom(true)}
-                        {...field}
-                        value={field.value ? `$${field.value}` : ''}
-                      />
-                    )}
-                    control={control}
-                    name="contactlessPerTransaction"
-                  />
+                  <>
+                    {/* //TODO: Handle maxlength is 22 */}
+                    <Controller
+                      render={({ field }) => (
+                        <Input
+                          label="Contactless per Transaction(CAD)"
+                          placeholder=""
+                          type="number"
+                          {...field}
+                        />
+                      )}
+                      control={control}
+                      name="contactlessPerTransaction"
+                    />
+                    {/* //TODO: Handle maxlength is 22 */}
+                    <Controller
+                      render={({ field }) => (
+                        <Input
+                          label="Total Contactless(CAD)"
+                          placeholder=""
+                          type="number"
+                          {...field}
+                        />
+                      )}
+                      control={control}
+                      name="totalContactless"
+                    />
+                  </>
                 )}
               </div>
             </div>
@@ -383,15 +397,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
         showArrow
         title={selectBottom.title}
       />
-      {showEnterAmountBottom && (
-        <EnterAmountBottom
-          onClose={() => setShowEnterAmountBottom(false)}
-          title="Contactless per Transaction"
-          currency={CurrencyCode.CAD}
-          amount={contactlessPerTransaction}
-          onChangeAmount={onChangeAmount}
-        />
-      )}
     </>
   );
 };

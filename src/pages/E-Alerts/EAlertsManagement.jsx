@@ -119,7 +119,7 @@ const EAlertsManagement = ({ translate: t }) => {
       if (customerEmailEnabled || customerAppPushEnabled) {
         message = t(labels.alertNotiEnabled);
       } else {
-        message = t(labels.alertNotiEnabled);
+        message = t(labels.alertNotiDisabled);
       }
       setSetting({
         ...setting,
