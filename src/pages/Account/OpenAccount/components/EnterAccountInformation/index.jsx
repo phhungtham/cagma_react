@@ -235,7 +235,7 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
           balance: item.def_ac_blc_display,
         };
       });
-      newAccounts = accounts.filter(account => {
+      newAccounts = newAccounts.filter(account => {
         return isBankingAccount(account);
       });
       setFilteredAccounts(newAccounts);
