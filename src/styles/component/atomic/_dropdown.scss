@@ -136,3 +136,41 @@
     font-weight: 500;
   }
 }
+
+.account-dropdown {
+  .dropdown__wrapper {
+    min-height: 76px !important;
+  }
+  .dropdown__main {
+    min-height: 44px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .account-icon {
+    display: flex;
+    height: 44px;
+    width: 44px;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  .dropdown__label {
+    display: none !important;
+  }
+  .dropdown__value {
+    margin-top: 0px !important;
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 500;
+  }
+  .account-number {
+    font-size: 14px;
+    line-height: 19px;
+    color: $color-gray-600;
+    margin-top: 2px;
+  }
+}

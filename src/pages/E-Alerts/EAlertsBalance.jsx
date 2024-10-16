@@ -191,7 +191,7 @@ const EAlertsBalance = () => {
     if (dep_sjt_class === DepositSubjectClass.REGULAR_SAVING) {
       if (casol_prdt_c_display === 'Chequing') {
         icon = ChequingIcon;
-      } else if (casol_prdt_c_display === 'Saving') {
+      } else {
         icon = SavingIcon;
       }
     } else if ([DepositSubjectClass.INSTALLMENT_SAVING, DepositSubjectClass.TERM_DEPOSIT_GIC].includes(dep_sjt_class)) {
@@ -256,12 +256,12 @@ const EAlertsBalance = () => {
           <div className="balance__my-account">
             <Dropdown
               label="Account"
-              clazz="balance__account-dropdown"
+              clazz="account-dropdown"
               onFocus={onOpenMyAccountBottom}
               value={selectedAccount?.acno_nm}
               startAdornment={<RenderAccountIcon />}
             >
-              {selectedAccount ? <div className="balance__account-number">{selectedAccount?.lcl_ac_no}</div> : ''}
+              {selectedAccount ? <div className="account-number">{selectedAccount?.lcl_ac_no}</div> : ''}
             </Dropdown>
           </div>
         </div>

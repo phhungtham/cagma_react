@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import ChequingIcon from '@assets/images/icon-fill-chequing.png';
+import SavingIcon from '@assets/images/icon-fill-saving-40.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Dropdown from '@common/components/atoms/Dropdown';
-import TextDropdown from '@common/components/atoms/Dropdown/TextDropdown';
 import Input from '@common/components/atoms/Input/Input';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
@@ -68,6 +69,26 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
     onCloseSelectBottom();
   };
 
+  const RenderAccountIcon = () => {
+    if (!selectedAccount) {
+      return;
+    }
+    let icon = SavingIcon;
+    const { casol_prdt_c_display } = selectedAccount;
+    if (casol_prdt_c_display === 'Chequing') {
+      icon = ChequingIcon;
+    }
+
+    return (
+      <div className="account-icon">
+        <img
+          src={icon}
+          alt="account icon"
+        />
+      </div>
+    );
+  };
+
   const onSubmitAddNewCard = values => {
     onSubmit({ ...values, provinceOptions });
   };
@@ -129,7 +150,17 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
         <div className="enter-card__container">
           <div className="page__container">
             <h1 className="page__title">Get your NEW Access Card</h1>
-            <section className="my-4">
+            <div className="box__details my-4">
+              <div className="box__item">
+                <span className="box__label">The Limit of the daily card</span>
+                <span className="box__value">$00,000.00</span>
+              </div>
+              <div className="box__item">
+                <span className="box__label">Daily POS Limit Amount</span>
+                <span className="box__value">$00,000.00</span>
+              </div>
+            </div>
+            {/* <section className="my-4">
               <TextDropdown
                 label="Linked to"
                 placeholder="Select"
@@ -145,11 +176,25 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                   <></>
                 )}
               </TextDropdown>
-            </section>
+            </section> */}
           </div>
           <div className="divider__group" />
           <div className="enter-card__form form__wrapper">
-            <div className="form__section">
+            <div className="form__section mt-2">
+              <div className="form__section__title">
+                <span>Linked Account</span>
+              </div>
+              <Dropdown
+                label="Account"
+                clazz="account-dropdown"
+                onFocus={onOpenMyAccountBottom}
+                value={selectedAccount?.name}
+                startAdornment={<RenderAccountIcon />}
+              >
+                {selectedAccount ? <div className="account-number">{selectedAccount?.number}</div> : ''}
+              </Dropdown>
+            </div>
+            <div className="form__section mt-6">
               <div className="form__section__title">
                 <span>Mailing address</span>
               </div>

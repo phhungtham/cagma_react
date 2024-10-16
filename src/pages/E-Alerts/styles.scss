@@ -72,37 +72,6 @@
       color: $color-gray-700;
       margin-top: 2px;
     }
-    &__account-dropdown {
-      .account-icon {
-        display: flex;
-        height: 44px;
-        width: 44px;
-        justify-content: center;
-        align-items: center;
-        img {
-          width: 40px;
-          height: 40px;
-        }
-      }
-      .dropdown__main {
-        height: 44px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-      .dropdown__wrapper {
-        min-height: 76px !important;
-      }
-      .dropdown__label {
-        display: none !important;
-      }
-      .dropdown__value {
-        margin-top: 0px !important;
-        font-size: 16px;
-        line-height: 21px;
-        font-weight: 500;
-      }
-    }
     &__setting__wrapper {
       padding: 12px 24px 0;
       .balance__setting-item {
