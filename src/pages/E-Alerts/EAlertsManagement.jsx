@@ -8,6 +8,7 @@ import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, eAlertLabels as labels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
 import { moveBack, moveNext } from '@utilities/index';
@@ -17,7 +18,7 @@ import CustomerInfoChangeBottom from './components/CustomerInfoChangeBottom';
 import { EAlertType } from './constants';
 import './styles.scss';
 
-const EAlertsManagement = ({ translate }) => {
+const EAlertsManagement = ({ translate: t }) => {
   const { requestApi } = useApi();
   const [showCustomerInfoChangeBottom, setShowCustomerInfoChangeBottom] = useState(false);
   const [showLoading, setShowLoading] = useState();
@@ -57,8 +58,8 @@ const EAlertsManagement = ({ translate }) => {
     if (!setting.accountCount) {
       return setAlert({
         isShow: true,
-        title: 'There’s no account',
-        content: 'Balance can only be set when there is an account.',
+        title: t(labels.noAccount),
+        content: t(labels.noAccountDesc),
       });
     }
     moveNext(MENU_CODE.E_ALERT_BALANCE, {}, routePaths.eAlertsBalance);
@@ -116,9 +117,9 @@ const EAlertsManagement = ({ translate }) => {
     if (Number(result_cd) === 1) {
       let message = '';
       if (customerEmailEnabled || customerAppPushEnabled) {
-        message = 'Alerts notifications enabled';
+        message = t(labels.offerNotiEnabled);
       } else {
-        message = 'Alerts notifications disabled';
+        message = t(labels.offerNotiDisabled);
       }
       setSetting({
         ...setting,
@@ -142,9 +143,9 @@ const EAlertsManagement = ({ translate }) => {
     if (Number(result_cd) === 1) {
       let message = '';
       if (active) {
-        message = 'Offers notifications enabled';
+        message = t(labels.offerNotiEnabled);
       } else {
-        message = 'Offers notifications disabled';
+        message = t(labels.offerNotiDisabled);
       }
       setSetting({
         ...setting,
@@ -168,7 +169,7 @@ const EAlertsManagement = ({ translate }) => {
 
       <div className="eAlerts-management__wrapper">
         <Header
-          title={translate('lbl_CAME900020_0001')}
+          title={t(menuLabels.eAlertManage)}
           onClick={moveBack}
         />
         <div className="eAlerts-management__content">
@@ -176,16 +177,18 @@ const EAlertsManagement = ({ translate }) => {
             className="alert__item"
             onClick={onClickShowCustomerInfoBottom}
           >
-            <div className="item__title">{translate('lbl_CAME900020_0001')}</div>
+            <div className="item__title">{t(labels.customerInformation)}</div>
             <div className="item__value">
-              <span className={isCustomerInfoEnabled ? 'on' : ''}>{isCustomerInfoEnabled ? 'ON' : 'OFF'}</span>
+              <span className={isCustomerInfoEnabled ? 'on' : ''}>
+                {isCustomerInfoEnabled ? t(labels.on) : t(labels.off)}
+              </span>
               <span className="arrow-icon">
                 <ArrowRight />
               </span>
             </div>
           </div>
           <div className="alert__item">
-            <div className="item__title">{translate('lbl_CAME900020_0002')}</div>
+            <div className="item__title">{t(labels.offers)}</div>
             <div className="item__value">
               <span className="switch-icon">
                 <Switch
@@ -199,9 +202,11 @@ const EAlertsManagement = ({ translate }) => {
             className="alert__item"
             onClick={handleNavigateBalanceSetting}
           >
-            <div className="item__title">{translate('lbl_CAME900020_0003')}</div>
+            <div className="item__title">{t(labels.balance)}</div>
             <div className="item__value">
-              <span className={setting.balanceEnabled ? 'on' : ''}>{setting.balanceEnabled ? 'ON' : 'OFF'}</span>
+              <span className={setting.balanceEnabled ? 'on' : ''}>
+                {setting.balanceEnabled ? t(labels.on) : t(labels.off)}
+              </span>
               <span className="arrow-icon">
                 <ArrowRight />
               </span>
@@ -233,7 +238,7 @@ const EAlertsManagement = ({ translate }) => {
         onClose={handleCloseAlert}
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>
