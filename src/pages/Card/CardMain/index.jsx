@@ -15,7 +15,7 @@ import GuestCardView from './components/GuestCardView';
 import './styles.scss';
 
 const CardMain = () => {
-  const isLogin = useSelector(loginSelector) || true;
+  const isLogin = useSelector(loginSelector);
   const [card, setCard] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({

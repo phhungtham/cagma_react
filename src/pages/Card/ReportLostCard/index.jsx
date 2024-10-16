@@ -100,6 +100,7 @@ const ReportLostCard = () => {
         cashcd_acdnt_desc,
       };
     } else {
+      //TODO: Handle report lost card case enter user information
       const { accident: cashcd_acdnt_desc, dob: cus_bth_y4mm_dt } = formValues;
       payload = {
         report_type: ReportLostCardType.UNKNOWN_CARD_NO,

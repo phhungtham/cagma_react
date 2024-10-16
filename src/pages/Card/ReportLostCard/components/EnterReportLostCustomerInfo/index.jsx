@@ -5,12 +5,9 @@ import EmailVerifyControl from '@common/components/atoms/EmailVerifyControl';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
-import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Header from '@common/components/organisms/Header';
-import { CustomerTypes } from '@common/constants/account';
 import { isDevelopmentEnv } from '@common/constants/common';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { customerTypeOptions } from '@pages/Card/constants';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import { moveBack } from '@utilities/index';
@@ -19,9 +16,6 @@ import { reportLostCardCustomerInfoSchema } from './schema';
 
 const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setShowToast }) => {
   const methods = useForm({
-    defaultValues: {
-      customerType: CustomerTypes.PERSONAL,
-    },
     mode: 'onChange',
     resolver: yupResolver(reportLostCardCustomerInfoSchema),
   });
@@ -65,69 +59,42 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
         <div className="report-lost-card-info__form py-4 mt-4">
           <div className="form__section">
             <FormProvider {...methods}>
-              <div className="form__label">Customer types</div>
-              <Controller
-                render={({ field }) => (
-                  <BoxRadio
-                    options={customerTypeOptions}
-                    {...field}
-                  />
-                )}
-                control={control}
-                name="customerType"
-              />
-              {customerType === CustomerTypes.PERSONAL ? (
-                <>
-                  <Controller
-                    render={({ field }) => (
-                      <Input
-                        label="First Name"
-                        placeholder="Please input Detail text"
-                        {...field}
-                      />
-                    )}
-                    control={control}
-                    name="firstName"
-                  />
-                  <Controller
-                    render={({ field }) => (
-                      <Input
-                        label="Last Name"
-                        placeholder="Please input Detail text"
-                        {...field}
-                      />
-                    )}
-                    control={control}
-                    name="lastName"
-                  />
-                  <Controller
-                    render={({ field: { value } }) => (
-                      <InputDate
-                        label="Date of Birth"
-                        onFocus={handleOpenCalendar}
-                        value={value}
-                      />
-                    )}
-                    control={control}
-                    name="dob_display"
-                  />
-                </>
-              ) : (
-                <>
-                  <Controller
-                    render={({ field }) => (
-                      <Input
-                        label="Corporate Account Number"
-                        type="number"
-                        placeholder="Please input 12 numerics"
-                        {...field}
-                      />
-                    )}
-                    control={control}
-                    name="companyAcNo"
-                  />
-                </>
-              )}
+              <div className="form__section__title mb-0">Customer Information</div>
+              <>
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      label="First Name"
+                      placeholder="Please input Detail text"
+                      {...field}
+                    />
+                  )}
+                  control={control}
+                  name="firstName"
+                />
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      label="Last Name"
+                      placeholder="Please input Detail text"
+                      {...field}
+                    />
+                  )}
+                  control={control}
+                  name="lastName"
+                />
+                <Controller
+                  render={({ field: { value } }) => (
+                    <InputDate
+                      label="Date of Birth"
+                      onFocus={handleOpenCalendar}
+                      value={value}
+                    />
+                  )}
+                  control={control}
+                  name="dob_display"
+                />
+              </>
 
               <Controller
                 render={({ field }) => (

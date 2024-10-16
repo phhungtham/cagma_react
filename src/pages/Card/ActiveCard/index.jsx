@@ -37,7 +37,7 @@ const ActiveCard = () => {
     setShowLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.activeCardLogged, payload);
     setShowLoading(false);
-    if (!isSuccess) {
+    if (isSuccess) {
       const { cashcd_no: cardNo, cashcd_acno1: accountNumber } = data;
       setActiveCardSuccessInfo({
         cardNo,
@@ -70,7 +70,7 @@ const ActiveCard = () => {
     };
     const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
-    if (!isSuccess) {
+    if (isSuccess) {
       if (isLogin) {
         const activeCardLoggedPayload = {
           cashcd_vldt_dt,
