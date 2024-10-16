@@ -11,12 +11,13 @@ import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
 import { moveBack, moveNext } from '@utilities/index';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import CustomerInfoChangeBottom from './components/CustomerInfoChangeBottom';
 import { EAlertType } from './constants';
 import './styles.scss';
 
-const EAlertsManagement = () => {
+const EAlertsManagement = ({ translate }) => {
   const { requestApi } = useApi();
   const [showCustomerInfoChangeBottom, setShowCustomerInfoChangeBottom] = useState(false);
   const [showLoading, setShowLoading] = useState();
@@ -175,7 +176,7 @@ const EAlertsManagement = () => {
             className="alert__item"
             onClick={onClickShowCustomerInfoBottom}
           >
-            <div className="item__title">Customer Information</div>
+            <div className="item__title">{translate('lbl_CAME900020_0001')}</div>
             <div className="item__value">
               <span className={isCustomerInfoEnabled ? 'on' : ''}>{isCustomerInfoEnabled ? 'ON' : 'OFF'}</span>
               <span className="arrow-icon">
@@ -184,7 +185,7 @@ const EAlertsManagement = () => {
             </div>
           </div>
           <div className="alert__item">
-            <div className="item__title">Offers</div>
+            <div className="item__title">{translate('lbl_CAME900020_0002')}</div>
             <div className="item__value">
               <span className="switch-icon">
                 <Switch
@@ -198,7 +199,7 @@ const EAlertsManagement = () => {
             className="alert__item"
             onClick={handleNavigateBalanceSetting}
           >
-            <div className="item__title">Balance</div>
+            <div className="item__title">{translate('lbl_CAME900020_0003')}</div>
             <div className="item__value">
               <span className={setting.balanceEnabled ? 'on' : ''}>{setting.balanceEnabled ? 'ON' : 'OFF'}</span>
               <span className="arrow-icon">
@@ -239,4 +240,4 @@ const EAlertsManagement = () => {
   );
 };
 
-export default EAlertsManagement;
+export default withHTMLParseI18n(EAlertsManagement);
