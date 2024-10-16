@@ -117,9 +117,9 @@ const EAlertsManagement = ({ translate: t }) => {
     if (Number(result_cd) === 1) {
       let message = '';
       if (customerEmailEnabled || customerAppPushEnabled) {
-        message = t(labels.offerNotiEnabled);
+        message = t(labels.alertNotiEnabled);
       } else {
-        message = t(labels.offerNotiDisabled);
+        message = t(labels.alertNotiEnabled);
       }
       setSetting({
         ...setting,
@@ -218,6 +218,7 @@ const EAlertsManagement = ({ translate: t }) => {
             setting={setting}
             onClose={() => setShowCustomerInfoChangeBottom(false)}
             onSubmit={handleApplyCustomerInfoChange}
+            translate={t}
           />
         )}
         <section className="toast__overlay">

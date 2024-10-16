@@ -1,3 +1,5 @@
+import { eAlertLabels } from '@common/constants/labels';
+
 export const EAlertCustomerMethod = {
   EMAIL: '1',
   APP_PUSH: '2',
@@ -5,11 +7,11 @@ export const EAlertCustomerMethod = {
 
 export const eAlertSettingMethodOptions = [
   {
-    label: 'E-Mail',
+    label: eAlertLabels.email,
     value: EAlertCustomerMethod.EMAIL,
   },
   {
-    label: 'App Push',
+    label: eAlertLabels.appPush,
     value: EAlertCustomerMethod.APP_PUSH,
   },
 ];

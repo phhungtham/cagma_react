@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import CheckBox from '@common/components/atoms/Checkbox';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { ctaLabels, eAlertLabels as labels } from '@common/constants/labels';
 
 import { EAlertCustomerMethod, eAlertSettingMethodOptions } from '../constants';
 import './styles.scss';
 
-const CustomerInfoChangeBottom = ({ onClose, onSubmit, setting }) => {
+const CustomerInfoChangeBottom = ({ onClose, onSubmit, setting, translate: t }) => {
   const [checkedOptions, setCheckedOptions] = useState([]);
 
   const handleCheckOption = (value, checked) => {
@@ -56,12 +57,12 @@ const CustomerInfoChangeBottom = ({ onClose, onSubmit, setting }) => {
     <BottomSheet
       open
       onClose={onClose}
-      title="Customer information changes"
+      title={t(labels.customerInfoChange)}
       clazz="customer-info-change__wrapper"
       type="fit-content"
     >
       <div className="customer-info__content">
-        <div className="title">Methods</div>
+        <div className="title">{t(labels.methods)}</div>
         <div className="checklist___options">
           {eAlertSettingMethodOptions.map(({ label, value }) => (
             <div
@@ -70,7 +71,7 @@ const CustomerInfoChangeBottom = ({ onClose, onSubmit, setting }) => {
             >
               <CheckBox
                 size="large"
-                label={label}
+                label={t(label)}
                 onChange={checked => handleCheckOption(value, checked)}
                 checked={checkedOptions.includes(value)}
               />
@@ -80,13 +81,13 @@ const CustomerInfoChangeBottom = ({ onClose, onSubmit, setting }) => {
         <div className="btn__ctas">
           <Button
             variant="filled__secondary-blue"
-            label="Reset"
+            label={t(ctaLabels.reset)}
             className="flex-3"
             onClick={onClickReset}
           />
           <Button
             variant="filled__primary"
-            label="Apply"
+            label={t(ctaLabels.apply)}
             className="flex-7"
             onClick={onClickApply}
           />

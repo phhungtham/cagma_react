@@ -8,6 +8,12 @@ export const eAlertLabels = {
   offerNotiEnabled: 'lbl_CAME900020_0007',
   noAccount: 'lbl_CAME900020_0008',
   noAccountDesc: 'lbl_CAME900020_0009',
+  customerInfoChange: 'lbl_CAME900020_0010',
+  methods: 'lbl_CAME900020_0011',
+  email: 'lbl_CAME900020_0012',
+  appPush: 'lbl_CAME900020_0013',
+  alertNotiDisabled: 'lbl_CAME900020_0014',
+  alertNotiEnabled: 'lbl_CAME900020_0015',
 };
 
 export const menuLabels = {
@@ -16,4 +22,6 @@ export const menuLabels = {
 
 export const ctaLabels = {
   confirm: 'lbl_CTA_9022',
+  apply: 'lbl_CTA_9023',
+  reset: 'lbl_CTA_9024',
 };
