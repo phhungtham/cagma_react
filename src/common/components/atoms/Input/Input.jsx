@@ -110,7 +110,7 @@ const Input = forwardRef((props, ref) => {
 
   useEffect(() => {
     setInputValues(value);
-    setCustomClass(value ? 'input__completed' : '');
+    setCustomClass(value || value === 0 ? 'input__completed' : '');
   }, [value]);
 
   useEffect(() => {

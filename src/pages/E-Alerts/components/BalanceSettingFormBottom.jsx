@@ -84,7 +84,7 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit 
       }
       setAmount(amount);
     }
-  }, [data]);
+  }, [JSON.stringify(data || {})]);
 
   return (
     <div className="balance-setting__content">
