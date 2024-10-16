@@ -4,13 +4,16 @@ import { Controller, useForm } from 'react-hook-form';
 import ChequingIcon from '@assets/images/icon-fill-chequing.png';
 import SavingIcon from '@assets/images/icon-fill-saving-40.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import CheckBox from '@common/components/atoms/Checkbox';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
+import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAmountBottom';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import Header from '@common/components/organisms/Header';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getProvinceCode } from '@common/constants/commonCode';
+import { CurrencyCode } from '@common/constants/currency';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -25,8 +28,10 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [provinceOptions, setProvinceOptions] = useState([]);
+  const [currentProvinceFieldName, setCurrentProvinceFieldName] = useState();
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [accounts, setAccounts] = useState([]);
+  const [showEnterAmountBottom, setShowEnterAmountBottom] = useState(false);
   const { requestApi } = useApi();
 
   const {
@@ -34,23 +39,30 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
     control,
     setValue,
     watch,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(newCardFormSchema),
   });
 
-  const onOpenMyAccountBottom = () => {
+  const [applyContactless, getTransactionNotice, contactlessPerTransaction] = watch([
+    'applyContactless',
+    'getTransactionNotice',
+    'contactlessPerTransaction',
+  ]);
+
+  const handleOpenMyAccountBottom = () => {
     setShowMyAccountBottom(true);
   };
 
-  const onSelectAccount = account => {
+  const handleSelectAccount = account => {
     setValue('accountNo', account.lcl_ac_no, { shouldValidate: true });
     setSelectedAccount(account);
     setShowMyAccountBottom(false);
   };
 
-  const handleOpenSelectProvinceBottom = () => {
+  const handleOpenSelectProvinceBottom = fieldName => {
+    setCurrentProvinceFieldName(fieldName);
     setSelectBottom({
       type: '',
       options: provinceOptions,
@@ -59,14 +71,19 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
     });
   };
 
-  const onCloseSelectBottom = () => {
+  const handleCloseSelectBottom = () => {
     setSelectBottom(initSelectBottom);
   };
 
-  const onChangeSelectBottom = item => {
+  const handleChangeSelectBottom = item => {
     const value = item.value;
-    setValue('province', value);
-    onCloseSelectBottom();
+    setValue(currentProvinceFieldName, value, { shouldValidate: true });
+    handleCloseSelectBottom();
+  };
+
+  const onChangeAmount = value => {
+    setValue('contactlessPerTransaction', value.amount, { shouldValidate: true });
+    setShowEnterAmountBottom(false);
   };
 
   const RenderAccountIcon = () => {
@@ -89,7 +106,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
     );
   };
 
-  const onSubmitAddNewCard = values => {
+  const handleSubmitAddNewCard = values => {
     onSubmit({ ...values, provinceOptions });
   };
 
@@ -126,6 +143,9 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
       const filteredAccounts = newAccounts.filter(
         account => account.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING
       );
+      if (filteredAccounts?.length) {
+        handleSelectAccount(filteredAccounts[0]);
+      }
       setAccounts(filteredAccounts);
       requestGetProvinces();
     } else {
@@ -151,6 +171,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
           <div className="page__container">
             <h1 className="page__title">Get your NEW Access Card</h1>
             <div className="box__details my-4">
+              {/* //TODO: Pending to waiting BE return limit amount */}
               <div className="box__item">
                 <span className="box__label">The Limit of the daily card</span>
                 <span className="box__value">$00,000.00</span>
@@ -160,23 +181,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                 <span className="box__value">$00,000.00</span>
               </div>
             </div>
-            {/* <section className="my-4">
-              <TextDropdown
-                label="Linked to"
-                placeholder="Select"
-                onClick={onOpenMyAccountBottom}
-                value={selectedAccount?.name}
-              >
-                {selectedAccount ? (
-                  <div className="text-dropdown__sub">
-                    <span>{selectedAccount?.number}</span>
-                    <span>${selectedAccount?.balance}</span>
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </TextDropdown>
-            </section> */}
           </div>
           <div className="divider__group" />
           <div className="enter-card__form form__wrapper">
@@ -187,7 +191,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
               <Dropdown
                 label="Account"
                 clazz="account-dropdown"
-                onFocus={onOpenMyAccountBottom}
+                onFocus={handleOpenMyAccountBottom}
                 value={selectedAccount?.name}
                 startAdornment={<RenderAccountIcon />}
               >
@@ -252,7 +256,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                 render={({ field }) => (
                   <Dropdown
                     label="Province"
-                    onFocus={handleOpenSelectProvinceBottom}
+                    onFocus={() => handleOpenSelectProvinceBottom('province')}
                     options={provinceOptions}
                     {...field}
                   />
@@ -273,6 +277,86 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                 name="postalCode"
               />
             </div>
+            <div className="form__section mt-6">
+              <div className="form__section__title">
+                <span>Use Area Information</span>
+              </div>
+              <Controller
+                render={({ field }) => (
+                  <Dropdown
+                    label="Province"
+                    onFocus={() => handleOpenSelectProvinceBottom('areaProvince')}
+                    options={provinceOptions}
+                    {...field}
+                  />
+                )}
+                control={control}
+                name="areaProvince"
+              />
+            </div>
+            <div className="divider__item__solid mt-5" />
+            <div className="mt-4">
+              <div className="form__section mt-4">
+                <Controller
+                  render={({ field }) => (
+                    <CheckBox
+                      size="large"
+                      label="Apply for Contactless"
+                      {...field}
+                      checked={field.value}
+                    />
+                  )}
+                  control={control}
+                  name="applyContactless"
+                />
+                {applyContactless && (
+                  <Controller
+                    render={({ field }) => (
+                      <Input
+                        label="Contactless per Transaction"
+                        placeholder=""
+                        readOnly
+                        onFocus={() => setShowEnterAmountBottom(true)}
+                        {...field}
+                        value={field.value ? `$${field.value}` : ''}
+                      />
+                    )}
+                    control={control}
+                    name="contactlessPerTransaction"
+                  />
+                )}
+              </div>
+            </div>
+            <div className="mt-4">
+              <div className="form__section mt-4">
+                <Controller
+                  render={({ field }) => (
+                    <CheckBox
+                      size="large"
+                      label="Get a Transaction Notice"
+                      {...field}
+                      checked={field.value}
+                    />
+                  )}
+                  control={control}
+                  name="getTransactionNotice"
+                />
+                {getTransactionNotice && (
+                  <Controller
+                    render={({ field }) => (
+                      <Input
+                        label="Email Address"
+                        maxLength={40}
+                        placeholder=""
+                        {...field}
+                      />
+                    )}
+                    control={control}
+                    name="email"
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </div>
         <div className="footer__fixed">
@@ -280,7 +364,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
             label="Get a New Card"
             variant="filled__primary"
             className="btn__cta"
-            onClick={handleSubmit(onSubmitAddNewCard)}
+            onClick={handleSubmit(handleSubmitAddNewCard)}
             disable={!isValid}
           />
         </div>
@@ -288,17 +372,26 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
       <MyAccountsBottom
         open={showMyAccountsBottom}
         onClose={() => setShowMyAccountBottom(false)}
-        onSelect={onSelectAccount}
+        onSelect={handleSelectAccount}
         accounts={accounts}
       />
       <SelectBottom
         open={selectBottom.isShow}
-        onClose={onCloseSelectBottom}
-        onSelect={onChangeSelectBottom}
+        onClose={handleCloseSelectBottom}
+        onSelect={handleChangeSelectBottom}
         options={selectBottom.options}
         showArrow
         title={selectBottom.title}
       />
+      {showEnterAmountBottom && (
+        <EnterAmountBottom
+          onClose={() => setShowEnterAmountBottom(false)}
+          title="Contactless per Transaction"
+          currency={CurrencyCode.CAD}
+          amount={contactlessPerTransaction}
+          onChangeAmount={onChangeAmount}
+        />
+      )}
     </>
   );
 };

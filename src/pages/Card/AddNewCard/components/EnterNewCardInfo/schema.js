@@ -8,4 +8,19 @@ export const newCardFormSchema = Yup.object().shape({
   city: Yup.string().required('Required field'),
   province: Yup.string().required('Required field'),
   postalCode: Yup.string().required('Required field'),
+  areaProvince: Yup.string().required('Required field'),
+  applyContactless: Yup.boolean().nullable(),
+  contactlessPerTransaction: Yup.string().when('applyContactless', {
+    is: true,
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  getTransactionNotice: Yup.boolean().nullable(),
+  email: Yup.string()
+    .email('Please check your email')
+    .when('getTransactionNotice', {
+      is: true,
+      then: schema => schema.required(),
+      otherwise: schema => schema.notRequired(),
+    }),
 });

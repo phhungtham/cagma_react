@@ -32,11 +32,6 @@ import { bookAppointmentSchema } from './schema';
 import './styles.scss';
 
 const BookAppointmentForm = ({ type, onSubmit }) => {
-  // useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
-  // useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
-
-  // const customer = useSelector(customerInfo);
-  // const isLoadingGetCustomer = useSelector(customerLoadState);
   const [showCustomerTypeBottom, setShowCustomerTypeBottom] = useState(false);
   const [showPurposeAppointmentBottom, setShowPurposeAppointmentBottom] = useState(false);
   const [showSelectTimeBottom, setShowSelectTimeBottom] = useState(false);
@@ -83,8 +78,8 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   const handleOpenCalendar = () => {
     if (AppCfg.ENV === 'development') {
       //For dummy data because it call native calendar
-      setValue('date', '20240930', { shouldValidate: true });
-      setValue('dateDisplay', formatYYYYMMDDToDisplay('20240930'), { shouldValidate: true });
+      setValue('date', '20241030', { shouldValidate: true });
+      setValue('dateDisplay', formatYYYYMMDDToDisplay('20241030'), { shouldValidate: true });
     }
     openCalendar(handleSelectDate, { selectDate: date || undefined });
   };

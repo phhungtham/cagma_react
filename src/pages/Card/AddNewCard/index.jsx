@@ -27,24 +27,37 @@ const AddNewCard = ({ translation }) => {
   };
 
   const handleSubmitAddNewCard = async values => {
+    debugger;
     setShowLoading(true);
-    const { accountNo, streetNumber, streetName, aptNumber, province, postalCode, city, provinceOptions } = values;
+    const {
+      accountNo,
+      streetNumber,
+      streetName,
+      aptNumber,
+      province,
+      postalCode,
+      city,
+      provinceOptions,
+      email,
+      areaProvince,
+      applyContactless,
+      contactlessPerTransaction,
+    } = values;
     const payload = {
       cashcd_acno1: accountNo,
       cus_str_no: streetNumber,
       cus_str_nm: streetName,
       cus_apt_no: aptNumber,
-      // state_c: province,
-      state_c: 'ON',
-      // adr_zipc: postalCode,
-      adr_zipc: 'M5S3K4',
+      state_c: province,
+      adr_zipc: postalCode,
+      // adr_zipc: 'M5S3K4',
       cus_city_nm: city,
-      cus_email: 'email@gmail.com',
-      ca_cashcd_use_regn_d: '01',
-      all_chip_card_use_lmt_amt: 25,
+      cus_email: email,
+      ca_cashcd_use_regn_d: areaProvince,
+      all_chip_card_use_lmt_amt: Number(contactlessPerTransaction),
       caseby_chip_card_use_lmt_amt: 3,
       cusnm: 'CUS-TEST',
-      all_chip_card_use_lmt_amt_yn: '1',
+      all_chip_card_use_lmt_amt_yn: applyContactless ? '1' : '0',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.addNewCard, payload);
     setShowLoading(false);
