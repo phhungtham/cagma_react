@@ -1,28 +1,29 @@
 import { CustomerTypes } from '@common/constants/account';
+import { bookAppointmentLabels as labels } from '@common/constants/labels';
 
 export const bookAppointmentSuccessFields = [
   {
-    label: 'Method',
+    label: labels.method,
     value: 'method',
   },
   {
-    label: 'Name of the Branch',
+    label: labels.branchName,
     value: 'branchName',
   },
   {
-    label: 'Address',
+    label: labels.address,
     value: 'address',
   },
   {
-    label: 'Appointment Date',
+    label: labels.appointmentDate,
     value: 'date',
   },
   {
-    label: 'Appointment  Time',
+    label: labels.appointmentTime,
     value: 'time',
   },
   {
-    label: 'Confirmation number',
+    label: labels.confirmNumber,
     value: 'confirmNumber',
   },
 ];
@@ -66,11 +67,11 @@ export const bookAppointmentFormMapFields = {
 
 export const customerTypeOptions = [
   {
-    label: 'Personal',
+    label: labels.personal,
     value: CustomerTypes.PERSONAL,
   },
   {
-    label: 'Small Business',
+    label: labels.smallBusiness,
     value: CustomerTypes.BUSINESS,
   },
 ];

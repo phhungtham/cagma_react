@@ -6,11 +6,12 @@ import inPersonImg from '@assets/images/icon_fill_atm_40.png';
 import Alert from '@common/components/atoms/Alert';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { ctaLabels, appointmentManageLabels as labels } from '@common/constants/labels';
 
 import { appointmentDetailFields } from '../constants';
 import './styles.scss';
 
-const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }) => {
+const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel, translate: t }) => {
   const [showCancelAlert, setShowCancelAlert] = useState(false);
 
   const { isUsingZoom, date, time, isUpcoming, allowCancel } = appointment;
@@ -49,7 +50,10 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }
               <div className="appointment__time">
                 {date} {time}
               </div>
-              <div className="appointment__method">{isUsingZoom ? 'Zoom appointment' : 'In person appointment'}</div>
+              <div className="appointment__method">
+                {/* //TODO: Missing label */}
+                {isUsingZoom ? t(labels.zoomAppointment) : 'In person appointment'}
+              </div>
             </div>
           </section>
           <div className="divider__item__black" />
@@ -59,7 +63,7 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }
                 className="appointment__item"
                 key={value}
               >
-                <span className="appointment__label">{label}</span>
+                <span className="appointment__label">{t(label)}</span>
                 <span className="appointment__value">
                   <span>{appointment[value]}</span>
                 </span>
@@ -73,7 +77,7 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }
                 <IconButton
                   size="lg"
                   type="circle"
-                  label="Cancel"
+                  label={t(labels.cancel)}
                   icon={<FillDeleteIcon />}
                   onClick={onShowCancelAppointmentAlert}
                 />
@@ -85,22 +89,21 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel }
       <Alert
         isCloseButton={false}
         isShowAlert={showCancelAlert}
-        title="Are you sure?"
+        title={t(labels.areYouSure)}
         subtitle={
           <>
-            <span>Are you sure you want to cancel Reservation?</span>
-            <span>This action cannot be undone</span>
+            <span>{t(labels.cancelConfirm)}</span>
           </>
         }
         onClose={onCloseCancelAppointment}
         textAlign="left"
         firstButton={{
           onClick: onClickConfirmCancel,
-          label: 'Cancel',
+          label: t(ctaLabels.cancel),
         }}
         secondButton={{
           onClick: onCloseCancelAppointment,
-          label: 'I’ll do it next time',
+          label: t(labels.doItNextTime),
         }}
       />
     </>

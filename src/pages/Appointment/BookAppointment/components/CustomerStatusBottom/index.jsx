@@ -6,6 +6,7 @@ import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Tabs from '@common/components/atoms/Tabs';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { bookAppointmentLabels as labels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { preferredLanguages } from '@pages/Appointment/constants';
 
@@ -26,7 +27,7 @@ const initValues = {
   comment: '',
 };
 
-const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
+const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t }) => {
   const [tabIndex, setTabIndex] = useState(StatusTab.EXISTING);
   const [initFirstTime, setInitFirstTime] = useState(true);
   const [newCustomerFormData, setNewCustomerFormData] = useState(initValues);
@@ -61,7 +62,8 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
   const handleSubmitForm = formValues => {
     formValues.customerStatusType =
       tabIndex === StatusTab.EXISTING ? CustomerStatusType.EXISTING : CustomerStatusType.NEW;
-    formValues.customerStatusTypeDisplay = tabIndex === StatusTab.EXISTING ? 'Existing customer' : 'New customer';
+    formValues.customerStatusTypeDisplay =
+      tabIndex === StatusTab.EXISTING ? t(labels.existingCustomer) : t(labels.newCustomer);
     onConfirm(formValues);
   };
 
@@ -85,7 +87,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
     <BottomSheet
       open={open}
       onClose={onClose}
-      title="Customer status"
+      title={t(labels.customerStatus2)}
       clazz="customer-status__wrapper include-footer"
       type="fit-content"
     >
@@ -93,10 +95,10 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
         <Tabs
           tabList={[
             {
-              title: 'Existing customer',
+              title: t(labels.existingCustomer),
             },
             {
-              title: 'New customer',
+              title: t(labels.newCustomer),
             },
           ]}
           tabIndex={tabIndex}
@@ -107,7 +109,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Name"
+                    label={t(labels.name2)}
                     type="text"
                     disabled={isUsingExistCustomer}
                     maxLength={300}
@@ -120,7 +122,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Phone number"
+                    label={t(labels.phoneNumber)}
                     type="text"
                     disabled={isUsingExistCustomer}
                     maxLength={50}
@@ -133,7 +135,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Email"
+                    label={t(labels.email2)}
                     type="text"
                     disabled={isUsingExistCustomer}
                     maxLength={50}
@@ -146,7 +148,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
             </section>
             <div className="divider__item__solid" />
             <div className="form__section pt-7">
-              <span className="form__section__title">Preferred Language</span>
+              <span className="form__section__title">{t(labels.preferredLang2)}</span>
               <Controller
                 render={({ field }) => (
                   <BoxRadio
@@ -160,7 +162,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Additional Comments(Optional)"
+                    label={t(labels.addComments2)}
                     type="text"
                     maxLength={4000}
                     {...field}

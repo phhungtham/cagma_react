@@ -5,7 +5,7 @@ import Label from '@common/components/atoms/Label';
 import { AppointmentStatusKeyWithLabel, labelStatusWithType, labelStatusWithVariant } from '../constants';
 import './styles.scss';
 
-const AppointmentCard = ({ onClick, appointmentInfo, statusList }) => {
+const AppointmentCard = ({ onClick, appointmentInfo, statusList, translate: t }) => {
   const {
     apint_visit_chk,
     apint_seq: id,
@@ -15,7 +15,7 @@ const AppointmentCard = ({ onClick, appointmentInfo, statusList }) => {
     lcl_br_nm: branchName,
   } = appointmentInfo || {};
   const isUsingZoom = apint_visit_chk === 'N';
-  // const statusDisplay = statusList?.find(item => item.value === status)?.label;
+  // const statusDisplay = statusList?.find(item => item.value === status)?.label; Currently, hardcode instead of using status list from API
 
   const onClickViewAppointmentDetail = () => {
     onClick(appointmentInfo);
@@ -46,7 +46,7 @@ const AppointmentCard = ({ onClick, appointmentInfo, statusList }) => {
       <div className="item-card__status">
         <Label
           type={labelStatusWithType[status]}
-          label={AppointmentStatusKeyWithLabel[status]}
+          label={t(AppointmentStatusKeyWithLabel[status])}
           variant={labelStatusWithVariant[status]}
         />
       </div>

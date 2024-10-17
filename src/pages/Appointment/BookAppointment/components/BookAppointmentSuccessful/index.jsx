@@ -1,13 +1,14 @@
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { MENU_CODE } from '@common/constants/common';
+import { ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
 import { routePaths } from '@routes/paths';
 import { moveHome, moveNext } from '@utilities/index';
 
 import { bookAppointmentSuccessFields } from '../../constants';
 import './styles.scss';
 
-const BookAppointmentSuccessful = ({ appointmentInfo }) => {
+const BookAppointmentSuccessful = ({ appointmentInfo, translate: t }) => {
   const onClickNavigateAppointmentManagement = () => {
     moveNext(MENU_CODE.APPOINTMENT_MANAGEMENT, {}, routePaths.appointmentManagement);
   };
@@ -27,8 +28,8 @@ const BookAppointmentSuccessful = ({ appointmentInfo }) => {
             />
           </div>
           <div className="book-appointment__title">
-            <div className="complete-message">Your appointment is requested successfully</div>
-            {appointmentInfo?.visitCheck === 'N' && <div className="note">Zoom link will be sent via email</div>}
+            <div className="complete-message">{t(labels.requestSuccess)}</div>
+            {appointmentInfo?.visitCheck === 'N' && <div className="note">{t(labels.zoomSendEmail)}</div>}
           </div>
         </div>
         <div className="divider__item__black" />
@@ -38,7 +39,7 @@ const BookAppointmentSuccessful = ({ appointmentInfo }) => {
               className="appointment-item"
               key={value}
             >
-              <span className="appointment-label">{label}</span>
+              <span className="appointment-label">{t(label)}</span>
               <span className="appointment-value">
                 <span>{appointmentInfo?.[value]}</span>
               </span>
@@ -49,13 +50,13 @@ const BookAppointmentSuccessful = ({ appointmentInfo }) => {
       <div className="footer__fixed book-appointment__footer">
         <Button
           variant="filled__secondary-blue"
-          label="View Appointment"
+          label={t(ctaLabels.viewAppointment)}
           className="btn__cta"
           onClick={onClickNavigateAppointmentManagement}
         />
         <Button
           variant="filled__primary"
-          label="Done"
+          label={t(ctaLabels.done)}
           className="btn__cta"
           onClick={onClickNavigateHome}
         />

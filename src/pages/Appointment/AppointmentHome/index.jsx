@@ -10,6 +10,7 @@ import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
+import { appointmentHomeLabels as labels, menuLabels } from '@common/constants/labels';
 import useGetAppointments from '@hooks/useGetAppointments';
 import { routePaths } from '@routes/paths';
 import { apiCall } from '@shared/api';
@@ -23,7 +24,7 @@ import './styles.scss';
 
 const maxAppointmentDisplay = 3;
 
-const AppointmentHome = ({ translate }) => {
+const AppointmentHome = ({ translate: t }) => {
   const {
     data: appointmentData,
     isLoading: isLoadingAppointments,
@@ -153,7 +154,7 @@ const AppointmentHome = ({ translate }) => {
       <div className="appointment-home__wrapper">
         {(isLoadingAppointments || showLoading) && <Spinner />}
         <Header
-          title="Appointment"
+          title={t(menuLabels.appointment)}
           onClick={moveBack}
         />
         <div className="appointment-home__content">
@@ -164,15 +165,13 @@ const AppointmentHome = ({ translate }) => {
             >
               <div className="card__content">
                 <div className="card__title">
-                  <span>Receive a</span>
-                  <span>financial advice via Zoom</span>
-                  {/* <span>{translate('lbl_CAME900000_0004')}</span> */}
+                  <span>{t(labels.receiveAdviceZoom)}</span>
                 </div>
-                <div className="card__desc">Zoom Appointment</div>
+                <div className="card__desc">{t(labels.zoomAppointment)}</div>
                 <div className="card__btn__wrapper">
                   <Button
                     variant="text__primary"
-                    label="Reserve"
+                    label="Reserve" //TODO: Missing label
                     size="sm"
                     endIcon={<ArrowRight />}
                   />
@@ -191,10 +190,9 @@ const AppointmentHome = ({ translate }) => {
             >
               <div className="card__content">
                 <div className="card__title">
-                  <span>Please visit our branch to </span>
-                  <span>receive a financial advice</span>
+                  <span>{t(labels.visitBranch)}</span>
                 </div>
-                <div className="card__desc">In-person Appointment</div>
+                <div className="card__desc">{t(labels.inPersonAppointment)}</div>
                 <div className="card__btn__wrapper">
                   <Button
                     variant="text__primary"
@@ -215,7 +213,7 @@ const AppointmentHome = ({ translate }) => {
           {appointments?.length > 0 && (
             <div className="appointment-details__wrapper">
               <div className="details__header">
-                <div className="details__header__title">Appointment details</div>
+                <div className="details__header__title">{t(labels.appointmentDetails)}</div>
                 <div
                   className="details__header__icon"
                   onClick={handleNavigateAppointmentManagement}
@@ -229,6 +227,7 @@ const AppointmentHome = ({ translate }) => {
                     <AppointmentCard
                       appointmentInfo={appointment}
                       onClick={handleViewAppointmentDetail}
+                      translate={t}
                     />
                   </Fragment>
                 ))}
@@ -242,6 +241,7 @@ const AppointmentHome = ({ translate }) => {
         appointment={showAppointmentDetailBottom.appointment}
         onClose={() => setShowAppointmentDetailBottom({ appointment: {}, isShow: false })}
         onConfirmCancel={handleCancelAppointment}
+        translate={t}
       />
       <Alert
         isCloseButton={false}

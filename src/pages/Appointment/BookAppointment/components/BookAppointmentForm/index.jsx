@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -11,6 +11,7 @@ import { CustomerTypes } from '@common/constants/account';
 import { getPurposeAppointment, getSubPurposeAppointment } from '@common/constants/commonCode';
 import { hoursFullOptions, minuteHalfOptions } from '@common/constants/dateTime';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, bookAppointmentLabels as labels, menuLabels } from '@common/constants/labels';
 import { AppCfg } from '@configs/appConfigs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
@@ -31,7 +32,7 @@ import CustomerStatusBottom from '../CustomerStatusBottom';
 import { bookAppointmentSchema } from './schema';
 import './styles.scss';
 
-const BookAppointmentForm = ({ type, onSubmit }) => {
+const BookAppointmentForm = ({ type, onSubmit, translate: t }) => {
   const [showCustomerTypeBottom, setShowCustomerTypeBottom] = useState(false);
   const [showPurposeAppointmentBottom, setShowPurposeAppointmentBottom] = useState(false);
   const [showSelectTimeBottom, setShowSelectTimeBottom] = useState(false);
@@ -59,6 +60,15 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
   const formValues = watch();
 
   const { customerType, subPurposeDisplay, date } = formValues;
+
+  const customerTypeFormattedOptions = useMemo(() => {
+    return customerTypeOptions.map(item => {
+      return {
+        label: t(item.label),
+        value: item.value,
+      };
+    });
+  }, []);
 
   const handleOpenCustomerTypeBottom = () => {
     setShowCustomerTypeBottom(true);
@@ -175,19 +185,19 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
       <div className="page__wrapper">
         {showLoading && <Spinner />}
         <Header
-          title="Book an Appointment"
+          title={t(menuLabels.bookAppointment)}
           onClick={moveBack}
         />
         <div className="book-appointment__content">
           <div className="book-appointment__form page__container">
             <h1 className="page__title">
-              {type === BookAppointmentType.IN_PERSON ? 'In person Appointment' : 'Zoom Appointment'}{' '}
+              {type === BookAppointmentType.IN_PERSON ? t(labels.inPersonAppointment) : t(labels.zoomAppointment)}
             </h1>
             <section className="mt-4">
               <Controller
                 render={({ field: { value } }) => (
                   <TextDropdown
-                    label="Customer type"
+                    label={t(labels.customerType)}
                     placeholder="Select"
                     onClick={handleOpenCustomerTypeBottom}
                     value={value}
@@ -201,7 +211,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
               <Controller
                 render={({ field: { value } }) => (
                   <TextDropdown
-                    label="Purpose"
+                    label={t(labels.purpose)}
                     placeholder="Select"
                     onClick={handleOpenPurposeAppointmentBottom}
                     value={value}
@@ -217,7 +227,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
               <Controller
                 render={({ field: { value } }) => (
                   <TextDropdown
-                    label="Date"
+                    label={t(labels.date)}
                     placeholder="Select"
                     onClick={handleOpenCalendar}
                     value={value}
@@ -231,7 +241,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
               <Controller
                 render={({ field: { value } }) => (
                   <TextDropdown
-                    label="Time"
+                    label={t(labels.time)}
                     placeholder="Select"
                     value={value}
                     onClick={handleOpenSelectTimeBottom}
@@ -246,7 +256,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
               <Controller
                 render={({ field: { value } }) => (
                   <TextDropdown
-                    label="Customer status"
+                    label={t(labels.customerStatus)}
                     placeholder="Select"
                     value={value}
                     onClick={handleOpenCustomerStatusBottom}
@@ -263,7 +273,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
                         className="customer-status__item"
                         key={label}
                       >
-                        <span className="customer-status__label">{label}</span>
+                        <span className="customer-status__label">{t(label)}</span>
                         <span className="customer-status__value">{formValues[value]}</span>
                       </div>
                     ))}
@@ -274,7 +284,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
           </div>
           <div className="footer__fixed">
             <Button
-              label="Book"
+              label={t(ctaLabels.book)}
               variant="filled__primary"
               className="btn__cta"
               disable={!isValid}
@@ -288,9 +298,9 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
           open={showCustomerTypeBottom}
           onClose={() => setShowCustomerTypeBottom(false)}
           onSelect={handleSelectCustomerType}
-          options={customerTypeOptions}
+          options={customerTypeFormattedOptions}
           showArrow={false}
-          title="Customer type"
+          title={t(labels.customerTypeSub)}
         />
       )}
       {showPurposeAppointmentBottom && (
@@ -301,6 +311,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
           purposeList={purposeList}
           purposeTabs={purposeTabs}
           subPurposeList={subPurposeList}
+          translate={t}
         />
       )}
       <SelectTimeBottom
@@ -315,6 +326,7 @@ const BookAppointmentForm = ({ type, onSubmit }) => {
         onClose={() => setShowCustomerStatusBottom(false)}
         onConfirm={handleChangeCustomerStatus}
         customer={customer}
+        translate={t}
       />
     </>
   );

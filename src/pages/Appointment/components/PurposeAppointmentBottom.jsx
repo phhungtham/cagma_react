@@ -3,9 +3,18 @@ import { useEffect, useState } from 'react';
 import { ArrowRight } from '@assets/icons';
 import Tabs from '@common/components/atoms/Tabs';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { bookAppointmentLabels as labels } from '@common/constants/labels';
 import { PropTypes } from 'prop-types';
 
-const PurposeAppointmentBottom = ({ open, onClose, onChange, purposeTabs, subPurposeList, purposeList }) => {
+const PurposeAppointmentBottom = ({
+  open,
+  onClose,
+  onChange,
+  purposeTabs,
+  subPurposeList,
+  purposeList,
+  translate: t,
+}) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [subPurposeListFiltered, setSubPurposeListFiltered] = useState([]);
 
@@ -41,7 +50,7 @@ const PurposeAppointmentBottom = ({ open, onClose, onChange, purposeTabs, subPur
     <BottomSheet
       open={open}
       onClose={onClose}
-      title="Purpose of appointment"
+      title={t(labels.purposeSub)}
       clazz="bottom__dropdown__wrapper purpose-appointment__wrapper"
       type="fit-content"
     >

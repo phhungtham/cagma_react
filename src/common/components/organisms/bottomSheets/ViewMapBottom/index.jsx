@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import LocationMap from '@common/components/atoms/LocationMap';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { bookAppointmentLabels as labels } from '@common/constants/labels';
 import { callPhone } from '@utilities/index';
 import { PropTypes } from 'prop-types';
 
@@ -23,7 +24,7 @@ const viewMapBranchFields = [
   },
 ];
 
-const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
+const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment, translate: t }) => {
   const encodeToURL = str => {
     if (!str) {
       return '';
@@ -62,7 +63,7 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
     <BottomSheet
       open={open}
       onClose={onClose}
-      title="View Map"
+      title={t(labels.viewMapTitle)}
       clazz="bottom__dropdown__wrapper"
       type="fit-content"
     >
@@ -83,13 +84,13 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment }) => {
 
         <div className="btn_container">
           <Button
-            label="Call"
+            label={t(labels.call)}
             variant="filled__secondary-blue"
             className="w-full"
             onClick={onClickCallPhone}
           />
           <Button
-            label="Book Appointment"
+            label={t(labels.bookAppointmentTitle)}
             variant="filled__primary"
             className="w-full"
             onClick={() => onBookAppointment(branchData)}

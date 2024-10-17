@@ -7,6 +7,7 @@ import { endpoints } from '@common/constants/endpoint';
 import { apiCall } from '@shared/api';
 import { convertObjectBaseMappingFields } from '@utilities/convert';
 import { nativeParamsSelector } from 'app/redux/selector';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { BookAppointmentType } from '../constants';
 import BookAppointmentForm from './components/BookAppointmentForm';
@@ -18,7 +19,7 @@ const BookAppointmentStep = {
   COMPLETED: 'completed',
 };
 
-const BookAppointment = () => {
+const BookAppointment = ({ translate: t }) => {
   const nativeParams = useSelector(nativeParamsSelector);
   const [showLoading, setShowLoading] = useState(false);
   const [showAlert, setShowAlert] = useState({
@@ -81,10 +82,14 @@ const BookAppointment = () => {
         <BookAppointmentForm
           type={type}
           onSubmit={handleBookAppointment}
+          translate={t}
         />
       )}
       {currentStep === BookAppointmentStep.COMPLETED && (
-        <BookAppointmentSuccessful appointmentInfo={appointmentSuccessData} />
+        <BookAppointmentSuccessful
+          appointmentInfo={appointmentSuccessData}
+          translate={t}
+        />
       )}
       <Alert
         isCloseButton={false}
@@ -102,4 +107,4 @@ const BookAppointment = () => {
   );
 };
 
-export default BookAppointment;
+export default withHTMLParseI18n(BookAppointment);

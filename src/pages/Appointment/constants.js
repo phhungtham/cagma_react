@@ -1,26 +1,28 @@
+import { appointmentHomeLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
+
 export const appointmentDetailFields = [
   {
-    label: 'Confirmation Number',
+    label: labels.confirmNumber,
     value: 'number',
   },
   {
-    label: 'Method',
+    label: labels.method,
     value: 'method',
   },
   {
-    label: 'Appointment Date',
+    label: labels.appointmentDate,
     value: 'date',
   },
   {
-    label: 'Appointment Time',
+    label: labels.appointmentTime,
     value: 'time',
   },
   {
-    label: 'Name of the Branch',
+    label: labels.branchName,
     value: 'branchName',
   },
   {
-    label: 'Branch Address',
+    label: labels.branchAddress,
     value: 'branchAddress',
   },
 ];
@@ -48,10 +50,10 @@ export const AppointmentStatusKey = {
 };
 
 export const AppointmentStatusKeyWithLabel = {
-  [AppointmentStatusKey.REQUESTED]: 'Requested',
-  [AppointmentStatusKey.CONFIRMED]: 'Confirmed',
-  [AppointmentStatusKey.COMPLETED]: 'Completed',
-  [AppointmentStatusKey.CANCELED]: 'Canceled',
+  [AppointmentStatusKey.REQUESTED]: appointmentHomeLabels.requested,
+  [AppointmentStatusKey.CONFIRMED]: appointmentHomeLabels.confirmed,
+  [AppointmentStatusKey.COMPLETED]: 'Completed', //TODO: Missing completed status
+  [AppointmentStatusKey.CANCELED]: appointmentHomeLabels.canceled,
 };
 
 export const labelStatusWithVariant = {
@@ -75,34 +77,34 @@ export const BookAppointmentType = {
 
 export const preferredLanguages = [
   {
-    label: 'English',
+    label: labels.english,
     value: 'en',
   },
   {
-    label: 'Korean',
+    label: labels.korean,
     value: 'ko',
   },
 ];
 
 export const customerStatusFields = [
   {
-    label: 'Name',
+    label: labels.name,
     value: 'name',
   },
   {
-    label: 'Phone no.',
+    label: labels.phoneNo,
     value: 'phoneNumber',
   },
   {
-    label: 'Email',
+    label: labels.email,
     value: 'email',
   },
   {
-    label: 'Preferred Language',
+    label: labels.preferredLang,
     value: 'langDisplay',
   },
   {
-    label: 'Additional Comments',
+    label: labels.addComments,
     value: 'comment',
   },
 ];

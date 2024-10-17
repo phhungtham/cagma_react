@@ -7,11 +7,13 @@ import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
 import { getAppointmentStatus } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
+import { appointmentManageLabels as labels, menuLabels } from '@common/constants/labels';
 import useCommonCode from '@hooks/useCommonCode';
 import useGetAppointments from '@hooks/useGetAppointments';
 import { apiCall } from '@shared/api';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AppointmentCard from '../components/AppointmentCard';
 import AppointmentDetailBottom from '../components/AppointmentDetailBottom';
@@ -19,7 +21,7 @@ import EmptyAppointment from './components/EmptyAppointment';
 import { AppointmentManageTab } from './constants';
 import './styles.scss';
 
-const AppointmentManagement = () => {
+const AppointmentManagement = ({ translate: t }) => {
   const {
     data: appointmentData,
     isLoading: isLoadingAppointments,
@@ -75,7 +77,7 @@ const AppointmentManagement = () => {
       });
       setShowToast({
         isShow: true,
-        message: 'Successfully canceled',
+        message: t(labels.cancelSuccess),
         type: 'success',
       });
       sendRequestGetAppointments();
@@ -156,17 +158,17 @@ const AppointmentManagement = () => {
       {(showLoading || isLoadingAppointments || isLoadingGetCommonCode) && <Spinner />}
       <div className="appointment-management__wrapper">
         <Header
-          title="Manage Appointment"
+          title={t(menuLabels.manageAppointment)}
           onClick={moveBack}
         />
         <div className="appointment-management__content">
           <Tabs
             tabList={[
               {
-                title: 'Upcoming',
+                title: t(labels.upcoming),
               },
               {
-                title: 'Previous',
+                title: t(labels.previous),
               },
             ]}
             tabIndex={tabIndex}
@@ -182,12 +184,13 @@ const AppointmentManagement = () => {
                           appointmentInfo={appointment}
                           onClick={handleViewAppointmentDetail}
                           statusList={statusList}
+                          translate={t}
                         />
                       </Fragment>
                     ))}
                   </div>
                 ) : (
-                  <EmptyAppointment />
+                  <EmptyAppointment translate={t} />
                 )}
               </>
             )}
@@ -199,6 +202,7 @@ const AppointmentManagement = () => {
         appointment={showAppointmentDetailBottom.appointment}
         onClose={() => setShowAppointmentDetailBottom({ appointment: {}, isShow: false })}
         onConfirmCancel={handleCancelAppointment}
+        translate={t}
       />
       <Alert
         isCloseButton={false}
@@ -224,4 +228,4 @@ const AppointmentManagement = () => {
   );
 };
 
-export default AppointmentManagement;
+export default withHTMLParseI18n(AppointmentManagement);

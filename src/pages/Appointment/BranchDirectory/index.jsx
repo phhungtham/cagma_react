@@ -7,15 +7,17 @@ import Spinner from '@common/components/atoms/Spinner';
 import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBottom';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
+import { bookAppointmentLabels as labels, menuLabels } from '@common/constants/labels';
 import useGetBranchDirectory from '@hooks/useGetBranchDirectory';
 import { routePaths } from '@routes/paths';
 import { callPhone, moveBack, moveNext } from '@utilities/index';
 import { nativeParamsSelector } from 'app/redux/selector';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { branchFields } from '../constants';
 import './styles.scss';
 
-const BranchDirectory = () => {
+const BranchDirectory = ({ translate: t }) => {
   const nativeParams = useSelector(nativeParamsSelector);
 
   const {
@@ -67,7 +69,7 @@ const BranchDirectory = () => {
       <div className="branch-directory__wrapper">
         {isLoadingGetBranch && <Spinner />}
         <Header
-          title="Branch Directory"
+          title={t(menuLabels.bookAppointment)}
           onClick={moveBack}
         />
         <div className="branch-directory__content">
@@ -106,13 +108,13 @@ const BranchDirectory = () => {
                       </div>
                       <div className="accordion__ctas">
                         <Button
-                          label="View map"
+                          label={t(labels.viewMap)}
                           variant="outlined__primary"
                           size="md"
                           onClick={() => handleOpenViewMap(branch)}
                         />
                         <Button
-                          label="Book Appointment"
+                          label={t(labels.bookAppointment)}
                           variant="filled__primary"
                           size="md"
                           onClick={() => handleNavigateBookAppointment(branch)}
@@ -131,10 +133,11 @@ const BranchDirectory = () => {
           onClose={handleCloseViewMap}
           branchData={viewMapItem.branchData}
           onBookAppointment={handleNavigateBookAppointment}
+          translate={t}
         />
       )}
     </>
   );
 };
 
-export default BranchDirectory;
+export default withHTMLParseI18n(BranchDirectory);

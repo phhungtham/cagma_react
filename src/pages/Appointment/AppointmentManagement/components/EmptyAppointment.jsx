@@ -1,10 +1,11 @@
 import appointmentEmptyImg from '@assets/images/appointment-empty.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { MENU_CODE } from '@common/constants/common';
+import { appointmentManageLabels as labels } from '@common/constants/labels';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 
-const EmptyAppointment = () => {
+const EmptyAppointment = ({ translate: t }) => {
   const handleNavigateAppointmentHome = () => {
     moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
   };
@@ -17,14 +18,13 @@ const EmptyAppointment = () => {
           alt="empty appointment"
         />
       </div>
-      <div className="appointment-empty__title">Book an Appointment</div>
+      <div className="appointment-empty__title">{t(labels.bookAppointment)}</div>
       <div className="appointment-empty__desc">
-        <p>Book an Appointment</p>
-        <p>In-person or by Zoom</p>
+        <span>{t(labels.bookAppointmentMethod)}</span>
       </div>
       <div className="appointment-empty__btn">
         <Button
-          label="Book"
+          label={t(labels.book)}
           variant="filled__secondary-blue"
           size="lg"
           onClick={handleNavigateAppointmentHome}
