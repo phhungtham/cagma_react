@@ -1,11 +1,12 @@
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { ctaLabels } from '@common/constants/labels';
 import { moveHome } from '@utilities/index';
 
 import { transferLimitMessages } from '../../constants';
 import './styles.scss';
 
-const TransferLimitSettingSuccess = ({ type }) => {
+const TransferLimitSettingSuccess = ({ type, translate: t }) => {
   const handleNavigateHome = () => {
     moveHome();
   };
@@ -30,7 +31,7 @@ const TransferLimitSettingSuccess = ({ type }) => {
       <div className="footer__fixed">
         <Button
           variant="filled__primary"
-          label="Confirm"
+          label={t(ctaLabels.confirm3)}
           className="btn__cta"
           onClick={handleNavigateHome}
         />

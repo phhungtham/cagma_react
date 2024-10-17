@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, manageLimitLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { buildObjectMapFromResponse } from '@utilities/convert';
 import { convertToNumber } from '@utilities/currency';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import TransferLimitSettingForm from './components/EnterInfo';
 import TransferLimitSettingSuccess from './components/SettingSuccess';
@@ -16,7 +18,7 @@ import {
   TransferLimitType,
 } from './constants';
 
-const TransferLimitSetting = () => {
+const TransferLimitSetting = ({ translate: t }) => {
   const { requestApi } = useApi();
   const [currentStep, setCurrentStep] = useState(TRANSFER_LIMIT_SETTING_STEP.ENTER_INFORMATION);
   const [newLimit, setNewLimit] = useState();
@@ -28,7 +30,7 @@ const TransferLimitSetting = () => {
     title: '',
     content: '',
   });
-  const [serverErrorAlert, setServerErrorAlert] = useState({
+  const [alert, setAlert] = useState({
     isShow: false,
     title: '',
     content: '',
@@ -39,11 +41,11 @@ const TransferLimitSetting = () => {
     setNewLimit(newLimitNumber);
 
     if (!newLimitNumber || newLimitNumber === 0) {
-      setConfirmAlert({
+      setAlert({
         isShow: true,
-        title: 'Please confirm the amount.',
+        title: t(labels.pleasConfirmAmount),
         // eslint-disable-next-line quotes
-        content: "You can't enter a zero dollar amount for an increase or decrease.",
+        content: t(labels.notAllowZero),
       });
       return;
     }
@@ -57,7 +59,7 @@ const TransferLimitSetting = () => {
     if (settingType) {
       setConfirmAlert({
         isShow: true,
-        title: 'Are you sure?',
+        title: t(labels.areYouSure),
         content: transferLimitMessages[settingType]?.confirmMessage,
       });
     }
@@ -73,7 +75,7 @@ const TransferLimitSetting = () => {
       detail.currentLimitDisplay = detail.currentLimitDisplay ? `$${detail.currentLimitDisplay}` : '';
       setTransferLimitDetail(detail);
     } else {
-      setServerErrorAlert({
+      setAlert({
         isShow: true,
         content: error,
       });
@@ -88,8 +90,8 @@ const TransferLimitSetting = () => {
     });
   };
 
-  const handleCloseServerAlert = () => {
-    setServerErrorAlert({
+  const handleCloseAlert = () => {
+    setAlert({
       isShow: false,
       title: '',
       content: '',
@@ -126,7 +128,7 @@ const TransferLimitSetting = () => {
     if (data?.result_cd === 1) {
       setCurrentStep(TRANSFER_LIMIT_SETTING_STEP.COMPLETED);
     } else {
-      setServerErrorAlert({
+      setAlert({
         isShow: true,
         content: error,
       });
@@ -137,7 +139,7 @@ const TransferLimitSetting = () => {
     setCurrentSettingType(TransferLimitType.CANCEL);
     setConfirmAlert({
       isShow: true,
-      title: 'Are you sure?',
+      title: t(labels.areYouSure),
       content: transferLimitMessages[TransferLimitType.CANCEL].confirmMessage,
     });
   };
@@ -155,10 +157,14 @@ const TransferLimitSetting = () => {
             detail={transferLimitDetail}
             onSubmit={handleSubmitForm}
             onCancelLimit={handleCancelLimit}
+            translate={t}
           />
         )}
         {currentStep === TRANSFER_LIMIT_SETTING_STEP.COMPLETED && (
-          <TransferLimitSettingSuccess type={currentSettingType} />
+          <TransferLimitSettingSuccess
+            type={currentSettingType}
+            translate={t}
+          />
         )}
       </div>
       <Alert
@@ -170,26 +176,26 @@ const TransferLimitSetting = () => {
         onClose={handleCloseConfirmAlert}
         firstButton={{
           onClick: () => handleConfirmTransferLimit(),
-          label: 'Confirm',
+          label: t(ctaLabels.confirm2),
         }}
         secondButton={{
           onClick: handleCloseConfirmAlert,
-          label: 'Cancel',
+          label: t(labels.cancel),
         }}
       />
       <Alert
         isCloseButton={false}
-        isShowAlert={serverErrorAlert.isShow}
-        title={serverErrorAlert.title}
-        subtitle={serverErrorAlert.content}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
         textAlign="left"
-        onClose={handleCloseServerAlert}
+        onClose={handleCloseAlert}
         firstButton={{
-          onClick: handleCloseServerAlert,
-          label: 'Confirm',
+          onClick: handleCloseAlert,
+          label: t(ctaLabels.confirm2),
         }}
       />
     </>
   );
 };
-export default TransferLimitSetting;
+export default withHTMLParseI18n(TransferLimitSetting);

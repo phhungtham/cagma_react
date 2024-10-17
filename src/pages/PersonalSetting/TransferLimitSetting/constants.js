@@ -1,3 +1,5 @@
+import { manageLimitLabels as labels } from '@common/constants/labels';
+
 export const TRANSFER_LIMIT_SETTING_STEP = {
   ENTER_INFORMATION: 'enterInformation',
   COMPLETED: 'completed',
@@ -5,23 +7,23 @@ export const TRANSFER_LIMIT_SETTING_STEP = {
 
 export const transferLimitChangeDetails = [
   {
-    label: 'Daily Transfer Limits',
+    label: labels.dailyLimit,
     value: 'limitDisplay',
   },
   {
-    label: 'Current Daily Transfer Limits',
+    label: labels.currentDailyLimit,
     value: 'currentLimitDisplay',
   },
   {
-    label: 'Application Date',
+    label: labels.applicationDate,
     value: 'applyDate',
   },
   {
-    label: 'Last applied Date',
+    label: labels.lastApplyDate,
     value: 'lastApplyDate',
   },
   {
-    label: 'Status',
+    label: labels.status,
     value: 'statusDisplay',
   },
 ];
@@ -34,17 +36,16 @@ export const TransferLimitType = {
 
 export const transferLimitMessages = {
   [TransferLimitType.INCREASE]: {
-    confirmMessage:
-      'Increased daily transfer limit will not be effective immediately. Upon review of your request, a representative will be in contact with you.',
-    successMessage: '<p>Your limit increase request</p><p>has been submitted.</p>',
+    confirmMessage: labels.reviewRequest,
+    successMessage: labels.increaseRequestSubmit,
   },
   [TransferLimitType.DECREASE]: {
-    confirmMessage: 'A manual review is required to deduct and raise again.',
-    successMessage: '<p>Your limit decrease</p><p>has been processed.</p>',
+    confirmMessage: labels.manualReview,
+    successMessage: labels.decreaseProcess,
   },
   [TransferLimitType.CANCEL]: {
-    confirmMessage: 'Do you want to delete the adjusted amount?',
-    successMessage: '<p>Your limit change request</p><p>has been cancelled.</p>',
+    confirmMessage: labels.deleteConfirm,
+    successMessage: labels.requestCancel,
   },
 };
 
