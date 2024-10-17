@@ -1,23 +1,25 @@
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { eAlertLabels } from '@common/constants/labels';
 
 import { eAlertMoneyBalanceOptions } from '../constants';
 import BalanceSettingFormBottom from './BalanceSettingFormBottom';
 import './styles.scss';
 
-const MoneyLeavingAccountBottom = ({ onClose, onSubmit, data }) => {
+const MoneyLeavingAccountBottom = ({ onClose, onSubmit, data, translate: t }) => {
   return (
     <BottomSheet
       open
       onClose={onClose}
-      title="Money leaving your account"
+      title={t(eAlertLabels.moneyLeavingTitle)}
       clazz="money-leaving-account__wrapper"
       type="fit-content"
     >
       <BalanceSettingFormBottom
-        description="Send alert when amount is greater than"
+        description={t(eAlertLabels.sendAlertAmountGreater)}
         balanceOptions={eAlertMoneyBalanceOptions}
         onSubmit={onSubmit}
         data={data}
+        translate={t}
       />
     </BottomSheet>
   );

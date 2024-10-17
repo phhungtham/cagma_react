@@ -46,9 +46,6 @@ const Input = forwardRef((props, ref) => {
   const countRef = useRef(remainingTime);
   const displayRef = useRef(null);
 
-  // const [minutes, setMinutes] = useState(remainingTime.minutes);
-  // const [seconds, setSeconds] = useState(remainingTime.seconds);
-
   const composeRef = useComposeRefs(ref);
 
   const handleFocusStatus = (focusMode = 'focus') => {
@@ -139,6 +136,7 @@ const Input = forwardRef((props, ref) => {
       clearInterval(timerRef.current);
     };
   }, []);
+
   return (
     <div className={`text__field ${clazz}`}>
       {isMemo && (

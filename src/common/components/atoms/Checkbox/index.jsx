@@ -1,8 +1,9 @@
 import { SIZE } from '@common/components/constants';
 import { CheckLargeIcon, CheckSmallIcon } from 'assets/icons';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
-const CheckBox = ({ clazz, size, label, disabled, hideCheckBox, onChange, checked }) => {
+const CheckBox = ({ clazz, size, label, disabled, hideCheckBox, onChange, checked, translate: t }) => {
   const sizeClassName = size === SIZE.SMALL ? 'checkbox__small' : 'checkbox__large';
   const disabledClassName = disabled ? 'disabled' : '';
   const selectedClassName = checked ? 'selected' : '';
@@ -26,7 +27,7 @@ const CheckBox = ({ clazz, size, label, disabled, hideCheckBox, onChange, checke
         </span>
       )}
 
-      <span className={`checkbox__label ${sizeClassName} ${disabledClassName}  `}>{label ? `${label}` : ''}</span>
+      <span className={`checkbox__label ${sizeClassName} ${disabledClassName}  `}>{label ? `${t(label)}` : ''}</span>
     </label>
   );
 };
@@ -49,4 +50,4 @@ CheckBox.defaultProps = {
   onChange: undefined,
 };
 
-export default CheckBox;
+export default withHTMLParseI18n(CheckBox);

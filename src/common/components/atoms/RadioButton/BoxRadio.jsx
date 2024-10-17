@@ -1,6 +1,7 @@
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import PropTypes from 'prop-types';
 
-const BoxRadio = ({ options, onChange, value: selectedValue, size, disabled }) => {
+const BoxRadio = ({ options, onChange, value: selectedValue, size, disabled, translate: t }) => {
   const onClickItem = itemValue => {
     if (disabled) {
       return;
@@ -16,7 +17,7 @@ const BoxRadio = ({ options, onChange, value: selectedValue, size, disabled }) =
           onClick={() => onClickItem(value)}
           key={value}
         >
-          <span className="box-radio__label">{label}</span>
+          <span className="box-radio__label">{t(label)}</span>
         </div>
       ))}
     </div>
@@ -40,4 +41,4 @@ BoxRadio.defaultProps = {
   size: 'md',
 };
 
-export default BoxRadio;
+export default withHTMLParseI18n(BoxRadio);

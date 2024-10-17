@@ -241,7 +241,6 @@ const EAlertsBalance = ({ translate: t }) => {
   useEffect(() => {
     requestGetEAlertSetting();
   }, []);
-  //TODO: Handle implement label
   return (
     <div className="eAlerts-balance__wrapper">
       {showLoading && <Spinner />}
@@ -251,13 +250,10 @@ const EAlertsBalance = ({ translate: t }) => {
       />
       <div className="eAlerts-balance__content">
         <div className="balance__header">
-          <div className="balance__title">
-            <p>Set up alerts</p>
-            <p>for account activity</p>
-          </div>
+          <div className="balance__title">{t(eAlertLabels.setupAlertActivity)}</div>
           <div className="balance__my-account">
             <Dropdown
-              label="Account"
+              label={t(eAlertLabels.account)}
               clazz="account-dropdown"
               onFocus={onOpenMyAccountBottom}
               value={selectedAccount?.acno_nm}
@@ -274,7 +270,7 @@ const EAlertsBalance = ({ translate: t }) => {
             onClick={onOpenMoneyLeavingAccountBottom}
           >
             <div className="item__title">
-              Money leaving your account
+              {t(eAlertLabels.moneyLeaving)}
               {isMoneyLeavingEnabled && (
                 <div className="item__sub">
                   <span>Over ${formatCurrencyDisplay(setting.moneyLeavingAmount)}</span>
@@ -294,7 +290,9 @@ const EAlertsBalance = ({ translate: t }) => {
               )}
             </div>
             <div className="item__value">
-              <span className={isMoneyLeavingEnabled ? 'on' : ''}>{isMoneyLeavingEnabled ? 'ON' : 'OFF'}</span>
+              <span className={isMoneyLeavingEnabled ? 'on' : ''}>
+                {isMoneyLeavingEnabled ? t(eAlertLabels.on) : t(eAlertLabels.off)}
+              </span>
               <span className="arrow-icon">
                 <ArrowRight />
               </span>
@@ -305,7 +303,7 @@ const EAlertsBalance = ({ translate: t }) => {
             onClick={onOpenMoneyIntoAccountBottom}
           >
             <div className="item__title">
-              <div>Money into your account</div>
+              <div>{t(eAlertLabels.moneyInto)}</div>
               {isMoneyIntoEnabled && (
                 <div className="item__sub">
                   <span>Over ${formatCurrencyDisplay(setting.moneyIntoAmount)}</span>
@@ -325,7 +323,9 @@ const EAlertsBalance = ({ translate: t }) => {
               )}
             </div>
             <div className="item__value">
-              <span className={isMoneyIntoEnabled ? 'on' : ''}>{isMoneyIntoEnabled ? 'ON' : 'OFF'}</span>
+              <span className={isMoneyIntoEnabled ? 'on' : ''}>
+                {isMoneyIntoEnabled ? t(eAlertLabels.on) : t(eAlertLabels.off)}
+              </span>
               <span className="arrow-icon">
                 <ArrowRight />
               </span>
@@ -336,7 +336,7 @@ const EAlertsBalance = ({ translate: t }) => {
             onClick={onOpenLowBalanceWarningBottom}
           >
             <div className="item__title">
-              <div>Low balance</div>
+              <div>{t(eAlertLabels.lowBalance)}</div>
               {isLowBalanceEnabled && (
                 <div className="item__sub">
                   <span>Under ${formatCurrencyDisplay(setting.balanceAmount)}</span>
@@ -356,7 +356,9 @@ const EAlertsBalance = ({ translate: t }) => {
               )}
             </div>
             <div className="item__value">
-              <span className={isLowBalanceEnabled ? 'on' : ''}>{isLowBalanceEnabled ? 'ON' : 'OFF'}</span>
+              <span className={isLowBalanceEnabled ? 'on' : ''}>
+                {isLowBalanceEnabled ? t(eAlertLabels.on) : t(eAlertLabels.off)}
+              </span>
               <span className="arrow-icon">
                 <ArrowRight />
               </span>
@@ -372,6 +374,7 @@ const EAlertsBalance = ({ translate: t }) => {
             emailEnabled: setting.moneyLeavingEmailEnabled,
             pushEnabled: setting.moneyLeavingPushEnabled,
           }}
+          translate={t}
           onSubmit={handleSubmitMoneyLeaving}
         />
       )}
@@ -383,6 +386,7 @@ const EAlertsBalance = ({ translate: t }) => {
             emailEnabled: setting.moneyIntoEmailEnabled,
             pushEnabled: setting.moneyIntoPushEnabled,
           }}
+          translate={t}
           onSubmit={handleSubmitMoneyInto}
         />
       )}
@@ -394,6 +398,7 @@ const EAlertsBalance = ({ translate: t }) => {
             emailEnabled: setting.balanceEmailEnabled,
             pushEnabled: setting.balancePushEnabled,
           }}
+          translate={t}
           onSubmit={handleSubmitLowBalance}
         />
       )}

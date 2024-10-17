@@ -4,13 +4,14 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import CheckBox from '@common/components/atoms/Checkbox';
 import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
+import { ctaLabels, eAlertLabels } from '@common/constants/labels';
 
 import { EAlertCustomerMethod, eAlertSettingMethodOptions } from '../constants';
 
 const amountMaxLength = 22;
 const amountMinValue = 100;
 
-const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit }) => {
+const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit, translate: t }) => {
   const [selectedAmountOption, setSelectedAmountOption] = useState();
   const [amount, setAmount] = useState();
   const [checkedOptions, setCheckedOptions] = useState([]);
@@ -100,7 +101,7 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit 
         {selectedAmountOption === 'custom' && (
           <div className="mt-3">
             <Input
-              label="Amount"
+              label={t(eAlertLabels.amount)}
               type="number"
               onChange={handleChangeAmount}
               value={amount}
@@ -110,7 +111,7 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit 
         )}
       </div>
       <div className="balance-setting__method mt-6">
-        <div className="title">Methods</div>
+        <div className="title">{t(eAlertLabels.methodsTitle)}</div>
         <div className="checklist___options">
           {eAlertSettingMethodOptions.map(({ label, value }) => (
             <div
@@ -130,13 +131,13 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit 
       <div className="btn__ctas">
         <Button
           variant="filled__secondary-blue"
-          label="Reset"
+          label={t(ctaLabels.reset)}
           className="flex-3"
           onClick={onClickReset}
         />
         <Button
           variant="filled__primary"
-          label="Apply"
+          label={t(ctaLabels.apply)}
           className="flex-7"
           onClick={onClickApply}
           disable={!!error}

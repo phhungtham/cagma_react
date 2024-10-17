@@ -164,7 +164,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
     <>
       <div className="enter-card__wrapper">
         <Header
-          title="Cards"
+          title="Access Card Service"
           onClick={moveBack}
         />
         <div className="enter-card__container">
@@ -311,26 +311,26 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                 />
                 {applyContactless && (
                   <>
-                    {/* //TODO: Handle maxlength is 22 */}
                     <Controller
                       render={({ field }) => (
                         <Input
                           label="Contactless per Transaction(CAD)"
                           placeholder=""
                           type="number"
+                          maxLength={22}
                           {...field}
                         />
                       )}
                       control={control}
                       name="contactlessPerTransaction"
                     />
-                    {/* //TODO: Handle maxlength is 22 */}
                     <Controller
                       render={({ field }) => (
                         <Input
                           label="Total Contactless(CAD)"
                           placeholder=""
                           type="number"
+                          maxLength={22}
                           {...field}
                         />
                       )}

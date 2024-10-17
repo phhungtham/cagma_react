@@ -18,38 +18,39 @@ export const eAlertSettingMethodOptions = [
 
 export const eAlertMoneyBalanceOptions = [
   {
-    label: '$0',
+    label: eAlertLabels.zeroCurrency,
     value: 0,
   },
   {
-    label: '$100',
+    label: eAlertLabels.oneHundredCurrency,
     value: 100,
   },
   {
-    label: '$200',
+    label: eAlertLabels.twoHundredCurrency,
     value: 200,
   },
   {
-    label: 'Custom',
+    label: eAlertLabels.custom,
     value: 'custom',
   },
 ];
 
 export const eAlertLowBalanceWarningOptions = [
   {
-    label: '$100',
+    label: eAlertLabels.oneHundredCurrency,
     value: 100,
   },
   {
-    label: '$200',
+    label: eAlertLabels.twoHundredCurrency,
     value: 200,
   },
+  //TODO: Missing label for $500
   {
     label: '$500',
     value: 500,
   },
   {
-    label: 'Custom',
+    label: eAlertLabels.custom,
     value: 'custom',
   },
 ];

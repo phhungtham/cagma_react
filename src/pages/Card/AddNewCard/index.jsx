@@ -27,7 +27,6 @@ const AddNewCard = ({ translation }) => {
   };
 
   const handleSubmitAddNewCard = async values => {
-    debugger;
     setShowLoading(true);
     const {
       accountNo,
@@ -52,16 +51,15 @@ const AddNewCard = ({ translation }) => {
       state_c: province,
       adr_zipc: postalCode,
       cus_city_nm: city,
-      cus_email: email,
+      cus_email: email || '',
       ca_cashcd_use_regn_d: areaProvince,
       all_chip_card_use_lmt_amt_yn: applyContactless ? '1' : '0',
-      caseby_chip_card_use_lmt_amt: Number(contactlessPerTransaction),
-      all_chip_card_use_lmt_amt: Number(totalContactless),
+      caseby_chip_card_use_lmt_amt: contactlessPerTransaction === '' ? '' : Number(contactlessPerTransaction),
+      all_chip_card_use_lmt_amt: totalContactless === '' ? '' : Number(totalContactless),
       cusnm: 'CUS-TEST',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.addNewCard, payload);
     setShowLoading(false);
-    debugger;
     if (isSuccess) {
       const {
         cus_str_no: streetNumber,
