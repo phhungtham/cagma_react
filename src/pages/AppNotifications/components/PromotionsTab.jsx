@@ -40,7 +40,7 @@ const PromotionsTab = forwardRef((props, ref) => {
           </div>
         ))
       ) : (
-        <EmptyNotification />
+        <EmptyNotification translate={translate} />
       )}
     </div>
   );

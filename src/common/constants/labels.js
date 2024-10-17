@@ -33,13 +33,22 @@ export const eAlertLabels = {
   alertEnabled: 'lbl_CAME900020_0032', //Alerts  notifications enabled
 };
 
+export const appNotiLabels = {
+  transactions: 'lbl_CAHO200010_0001', //Transactions
+  yourOffers: 'lbl_CAHO200010_0002', //Your Offers
+  promotions: 'lbl_CAHO200010_0003', //Promotions
+  noNotification: 'lbl_CAHO200010_0004', //No notifications
+};
+
 export const menuLabels = {
   eAlertManage: 'mymen_CAME900020', //mymen_CAME900020
   balance: 'mymen_CAME900050', //Balance
+  appNotification: 'mymen_CAHO200010', // SOL Alert
 };
 
 export const ctaLabels = {
   confirm: 'lbl_CTA_9022', //Confirm
   apply: 'lbl_CTA_9023', //Apply
   reset: 'lbl_CTA_9024', //Reset
+  tryItNow: 'lbl_CTA_1031', //Try it now!
 };

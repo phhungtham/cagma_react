@@ -1,3 +1,5 @@
+import { appNotiLabels } from '@common/constants/labels';
+
 export const NotificationRequestType = {
   TRANSACTION: '01',
   OFFER: '06',
@@ -11,9 +13,9 @@ export const NotificationTabIndex = {
 };
 
 export const NotificationTabLabel = {
-  TRANSACTIONS: 'Transactions',
-  OFFERS: 'Your Offers',
-  PROMOTIONS: 'Promotions',
+  TRANSACTIONS: appNotiLabels.transactions,
+  OFFERS: appNotiLabels.yourOffers,
+  PROMOTIONS: appNotiLabels.promotions,
 };
 
 export const NotificationLinkType = {

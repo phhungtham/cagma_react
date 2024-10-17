@@ -26,7 +26,7 @@ const YourOffersTab = props => {
           </div>
         ))
       ) : (
-        <EmptyNotification />
+        <EmptyNotification translate={translate} />
       )}
     </div>
   );

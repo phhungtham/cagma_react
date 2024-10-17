@@ -5,6 +5,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Image from '@common/components/atoms/Image';
 import Label from '@common/components/atoms/Label';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { ctaLabels } from '@common/constants/labels';
 import { AppCfg } from '@configs/appConfigs';
 import { truncateText } from '@utilities/convert';
 import { totalNumOfDaysBetweenDates } from '@utilities/dateTimeUtils';
@@ -15,7 +16,7 @@ import './styles.scss';
 
 const maxDateRemaining = 31;
 
-const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry }) => {
+const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry, translate: t }) => {
   const { banner_per_from_display: fromDate, banner_per_to_display: toDate } = data || {};
   const [eventDayRemain, setEventDayRemain] = useState(0);
 
@@ -78,7 +79,7 @@ const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry }) 
         </div>
         <div className="btn__ctas">
           <Button
-            label="Try it now!"
+            label={t(ctaLabels.tryItNow)}
             className="w-full"
             variant="filled__primary"
             onClick={onClickTry}

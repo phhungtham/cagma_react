@@ -8,6 +8,7 @@ import Tabs from '@common/components/atoms/Tabs';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
+import { menuLabels } from '@common/constants/labels';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { alertMove } from '@utilities/alertMove';
@@ -64,7 +65,7 @@ import {
 } from './redux/selector';
 import { AppNotificationFeatureName } from './redux/type';
 
-const AppNotifications = ({ translate }) => {
+const AppNotifications = ({ translate: t }) => {
   useReducers([
     { key: AppNotificationFeatureName, reducer: appNotificationReducer },
     { key: APP_GLOBAL, reducer: appGlobalReducer },
@@ -349,7 +350,7 @@ const AppNotifications = ({ translate }) => {
       {loadPromotionState && !listPromotionNotify?.length && <Spinner />}
       <div className="notification__header">
         <Header
-          title="App Notifications"
+          title={t(menuLabels.appNotification)}
           onClick={() => {
             moveBack();
             refreshLoginState();
@@ -360,13 +361,13 @@ const AppNotifications = ({ translate }) => {
         <Tabs
           tabList={[
             {
-              title: NotificationTabLabel.TRANSACTIONS,
+              title: t(NotificationTabLabel.TRANSACTIONS),
             },
             {
-              title: NotificationTabLabel.OFFERS,
+              title: t(NotificationTabLabel.OFFERS),
             },
             {
-              title: NotificationTabLabel.PROMOTIONS,
+              title: t(NotificationTabLabel.PROMOTIONS),
             },
           ]}
           isLoginAlready={isLogin}
@@ -380,12 +381,14 @@ const AppNotifications = ({ translate }) => {
                   notificationListRef={notificationListRef}
                   transactionList={listTransactionNotify}
                   onClick={handleClickTransaction}
+                  translate={t}
                 />
               )}
               {tabIndex === NotificationTabIndex.OFFERS && (
                 <YourOffersTab
                   notificationListRef={notificationListRef}
                   offerList={listOfferNotify}
+                  translate={t}
                 />
               )}
               {tabIndex === NotificationTabIndex.PROMOTIONS && (
@@ -394,6 +397,7 @@ const AppNotifications = ({ translate }) => {
                   promotionList={promotionListDisplay}
                   onClick={handleViewPromotionDetail}
                   currentLang={currentLang}
+                  translate={t}
                 />
               )}
             </>
@@ -403,6 +407,7 @@ const AppNotifications = ({ translate }) => {
               promotionList={promotionListDisplay}
               onClick={handleViewPromotionDetail}
               currentLang={currentLang}
+              translate={t}
             />
           )}
         </Tabs>
@@ -414,6 +419,7 @@ const AppNotifications = ({ translate }) => {
           onClickTry={handleClickTryItNow}
           data={currentPromotionDetail}
           currentLang={currentLang}
+          translate={t}
         />
       )}
       <Alert

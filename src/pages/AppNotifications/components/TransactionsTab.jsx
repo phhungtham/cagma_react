@@ -27,7 +27,7 @@ const TransactionsTab = props => {
           </div>
         ))
       ) : (
-        <EmptyNotification />
+        <EmptyNotification translate={translate} />
       )}
     </div>
   );
