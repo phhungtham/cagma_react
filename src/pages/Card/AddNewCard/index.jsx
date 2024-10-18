@@ -61,29 +61,26 @@ const AddNewCard = ({ translation }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.addNewCard, payload);
     setShowLoading(false);
     if (isSuccess) {
-      //TODO: Waiting BE append data to display
       const {
         cus_str_no: streetNumber,
         cus_str_nm: streetName,
         cus_apt_no: aptNumber,
         cus_city_nm: city,
-        state_c: province,
+        state_c_display: province,
         adr_zipc: postalCode,
         cashcd_iss_dt_display: issueDate,
-        cashcd_acno1: accountNo,
+        cashcd_acno1_display: accountNo,
       } = data;
-      const provinceDisplay = provinceOptions.find(option => option.value === province)?.label || '';
-      setAddCardSuccessInfo(data);
-      // setAddCardSuccessInfo({
-      //   streetNumber,
-      //   streetName,
-      //   aptNumber,
-      //   city,
-      //   province: provinceDisplay,
-      //   postalCode,
-      //   issueDate,
-      //   accountNo,
-      // });
+      setAddCardSuccessInfo({
+        streetNumber,
+        streetName,
+        aptNumber,
+        city,
+        province,
+        postalCode,
+        issueDate,
+        accountNo,
+      });
       setCurrentStep(ADD_NEW_CARD_STEP.COMPLETED);
     } else {
       setAlert({
