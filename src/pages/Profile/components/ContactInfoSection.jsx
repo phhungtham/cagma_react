@@ -8,6 +8,7 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
+import { changeProfileLabels as labels } from '@common/constants/labels';
 import { notAllowNumberRegex } from '@common/constants/regex';
 import { apiCall } from '@shared/api';
 
@@ -25,6 +26,7 @@ const ContactInfoSection = ({
   setShowToast,
   setShowAlert,
   onClickViewAgreement,
+  translate: t,
 }) => {
   const {
     control,
@@ -176,12 +178,12 @@ const ContactInfoSection = ({
   return (
     <div className="form__section">
       <div className="form__section__title">
-        <span>Contact Information</span>
+        <span>{t(labels.contactInfo)}</span>
       </div>
       <Controller
         render={({ field }) => (
           <Input
-            label="Name"
+            label={t(labels.name)}
             type="text"
             disabled
             {...field}
@@ -193,7 +195,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label="Date of Birth"
+            label={t(labels.dob)}
             type="text"
             disabled
             {...field}
@@ -205,7 +207,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label="SIN"
+            label={t(labels.sin)}
             type="text"
             disabled
             {...field}
@@ -216,13 +218,13 @@ const ContactInfoSection = ({
       />
       <InfoBox
         variant="notice"
-        label="If there are DTR changes, contact branch"
+        label={t(labels.contactBranch)}
         direction="middle"
       />
       <Controller
         render={({ field }) => (
           <Input
-            label="E-mail Address"
+            label={t(labels.mailAddress)}
             type="text"
             maxLength={40}
             helperText={
@@ -233,7 +235,7 @@ const ContactInfoSection = ({
             {...field}
             endAdornment={
               <Button
-                label={alreadySendEmailVerification ? 'Resend' : 'Send'}
+                label={alreadySendEmailVerification ? 'Resend' : t(labels.send)}
                 variant="outlined__primary"
                 className="btn__send btn__sm"
                 onClick={handleRequestGetEmailVerifyCode}
@@ -274,7 +276,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label="Call Number"
+            label={t(labels.callNumber)}
             type="text"
             regex={notAllowNumberRegex}
             maxLength={30}
@@ -287,7 +289,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Employment"
+            label={t(labels.employment)}
             onFocus={onOpenSelectEmploymentBottom}
             options={employmentOptions}
             {...field}
@@ -299,7 +301,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Occupation1"
+            label={t(labels.occupation1)}
             onFocus={onOpenSelectOccupation1Bottom}
             options={occupation1Options}
             disabled={isDisabledOccupation}
@@ -312,7 +314,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Occupation2"
+            label={t(labels.occupation2)}
             onFocus={onOpenSelectOccupation2Bottom}
             options={occupation2Options}
             disabled={isDisabledOccupation}
@@ -325,7 +327,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label="Occupation3"
+            label={t(labels.occupation3)}
             maxLength={100}
             {...field}
           />
@@ -337,7 +339,7 @@ const ContactInfoSection = ({
         className="agreement__download"
         onClick={onClickViewAgreement}
       >
-        <span>Electronic Communication Agreement</span>
+        <span>{t(labels.electronicAgree)}</span>
         <ViewDetailIcon />
       </div>
     </div>

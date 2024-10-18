@@ -39,7 +39,7 @@ const AddNewCardSuccess = ({ cardInfo }) => {
           </div>
         </div>
         <div className="add-new-card__info mt-4">
-          <div className="form__section__title">Way to receive</div>
+          <div className="form__section__title mb-0">Mailing address</div>
           <div className="divider__item__black" />
           {addNewCardSuccessFields.map(({ label, value }) => (
             <div

@@ -9,6 +9,7 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import { addressTypeMapping } from '@common/constants/address';
 import { FileErrorType } from '@common/constants/error';
+import { changeProfileLabels as labels } from '@common/constants/labels';
 import { notAllowNumberRegex } from '@common/constants/regex';
 import useFile from '@hooks/useFile';
 
@@ -26,6 +27,7 @@ const AddressInfoSection = ({
   userId,
   userInfo,
   setShowLoading,
+  translate: t,
 }) => {
   const [file, setFile] = useState();
   const { control, watch, setValue, trigger } = useFormContext();
@@ -166,14 +168,14 @@ const AddressInfoSection = ({
   return (
     <div className="form__section pt-9">
       <div className="form__section__title">
-        <span>Address Information</span>
+        <span>{t(labels.addressInfo)}</span>
       </div>
       <Controller
         control={control}
         name="addressType"
         render={({ field }) => (
           <Dropdown
-            label="Address Type"
+            label={t(labels.addressType)}
             onFocus={onOpenAddressTypeBottom}
             options={addressTypeOptions}
             disabled={isDisableAddress}
@@ -184,7 +186,7 @@ const AddressInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label="Phone Number"
+            label={t(labels.phoneNumber)}
             regex={notAllowNumberRegex}
             disabled={isDisableAddress}
             maxLength={30}
@@ -197,7 +199,7 @@ const AddressInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label="Fax Number"
+            label={t(labels.faxNumber)}
             regex={notAllowNumberRegex}
             disabled={isDisableAddress}
             maxLength={20}
@@ -210,7 +212,7 @@ const AddressInfoSection = ({
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Country"
+            label={t(labels.country)}
             onFocus={onOpenCountryBottom}
             options={countryOptions}
             disabled={isDisableAddress}
@@ -223,7 +225,7 @@ const AddressInfoSection = ({
       <Controller
         render={({ field: { value, onChange } }) => (
           <Input
-            label="Postal Code"
+            label={t(labels.postalCode)}
             disabled={isDisableAddress}
             value={value}
             maxLength={10}
@@ -241,7 +243,7 @@ const AddressInfoSection = ({
           render={({ field }) => {
             return (
               <Input
-                label="APT Number/SUITE Number"
+                label={t(labels.aptNumber)}
                 disabled={isDisableAddress}
                 maxLength={40}
                 {...field}
@@ -255,7 +257,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Street Number"
+              label={t(labels.streetNumber)}
               disabled={isDisableAddress}
               maxLength={60}
               {...field}
@@ -268,7 +270,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Street Name"
+              label={t(labels.streetName)}
               disabled={isDisableAddress}
               maxLength={80}
               {...field}
@@ -281,7 +283,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Address line 1"
+              label={t(labels.addressLine1)}
               disabled={isDisableAddress}
               maxLength={200}
               {...field}
@@ -293,7 +295,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="City"
+              label={t(labels.city)}
               disabled={isDisableAddress}
               maxLength={200}
               {...field}
@@ -305,7 +307,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Dropdown
-              label="Province"
+              label="Province" //TODO: Missing labels
               onFocus={onOpenProvinceBottom}
               options={provinceOptions}
               disabled={isDisableAddress}
@@ -320,7 +322,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Address 1"
+              label="Address 1" //TODO: Missing labels
               disabled={isDisableAddress}
               {...field}
             />
@@ -331,7 +333,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Address 2"
+              label="Address 2" //TODO: Missing labels
               disabled={isDisableAddress}
               {...field}
             />
@@ -342,7 +344,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Address 3"
+              label="Address 3" //TODO: Missing labels
               disabled={isDisableAddress}
               {...field}
             />

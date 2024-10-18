@@ -21,6 +21,7 @@ import {
   getSubJobCode,
 } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
+import { menuLabels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
@@ -59,7 +60,7 @@ import { UserInfoFeatureName } from './redux/userInfo/type';
 import { changeProfileSchema } from './schema';
 import './styles.scss';
 
-const ChangeProfile = ({ translation }) => {
+const ChangeProfile = ({ translate: t }) => {
   useReducers([{ key: UserInfoFeatureName, reducer: userInfoReducer }]);
   useSagas([{ key: UserInfoFeatureName, saga: userInfoSaga }]);
   const userInfo = useSelector(userInfoSelector);
@@ -470,7 +471,7 @@ const ChangeProfile = ({ translation }) => {
     <div className="change-profile__wrapper">
       {(showLoading || isLoadingCommonCode || isLoadingUser) && <Spinner />}
       <Header
-        title="Change Profile"
+        title={t(menuLabels.changeProfile)}
         onClick={onClickMoveBack}
       />
       <div className="change-profile__content">
@@ -491,6 +492,7 @@ const ChangeProfile = ({ translation }) => {
               setShowLoading={setShowLoading}
               setShowToast={setShowToast}
               onClickViewAgreement={handleShowAgreementTermBottom}
+              translate={t}
             />
             <AddressInfoSection
               onOpenAddressTypeBottom={handleOpenSelectAddressTypeBottom}
@@ -503,6 +505,7 @@ const ChangeProfile = ({ translation }) => {
               userId={userId}
               setShowLoading={setShowLoading}
               userInfo={userInfo}
+              translate={t}
             />
           </FormProvider>
         </div>

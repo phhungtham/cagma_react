@@ -61,6 +61,7 @@ const AddNewCard = ({ translation }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.addNewCard, payload);
     setShowLoading(false);
     if (isSuccess) {
+      //TODO: Waiting BE append data to display
       const {
         cus_str_no: streetNumber,
         cus_str_nm: streetName,
@@ -68,7 +69,7 @@ const AddNewCard = ({ translation }) => {
         cus_city_nm: city,
         state_c: province,
         adr_zipc: postalCode,
-        cashcd_iss_dt: issueDate,
+        cashcd_iss_dt_display: issueDate,
         cashcd_acno1: accountNo,
       } = data;
       const provinceDisplay = provinceOptions.find(option => option.value === province)?.label || '';

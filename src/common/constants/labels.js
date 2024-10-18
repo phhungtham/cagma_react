@@ -162,6 +162,39 @@ export const manageLimitLabels = {
   requestCancel: 'lbl_CAME900010_0022', //Your limit change request has been cancelled.
 };
 
+export const changeProfileLabels = {
+  contactInfo: 'lbl_CAME900000_0001', //Contact Information
+  name: 'lbl_CAME900000_0002', //Name
+  dob: 'lbl_CAME900000_0003', //Date of Birth
+  sin: 'lbl_CAME900000_0004', //SIN
+  contactBranch: 'lbl_CAME900000_0005', //If there are DTR changes, contact branch
+  mailAddress: 'lbl_CAME900000_0006', //E-mail address
+  send: 'lbl_CAME900000_0007', //Send
+  callNumber: 'lbl_CAME900000_0008', //Call Number
+  employment: 'lbl_CAME900000_0009', //Employment
+  occupation1: 'lbl_CAME900000_0010', //Occupation1
+  occupation2: 'lbl_CAME900000_0011', //Occupation2
+  occupation3: 'lbl_CAME900000_0012', //Occupation3
+  electronicAgree: 'lbl_CAME900000_0013', //Electronic Communication Agreement
+  addressInfo: 'lbl_CAME900000_0014', //Address Information
+  homeAddress: 'lbl_CAME900000_0015', //Home Address
+  phoneNumber: 'lbl_CAME900000_0016', //Phone Number
+  faxNumber: 'lbl_CAME900000_0017', //Fax Number
+  country: 'lbl_CAME900000_0018', //Country
+  postalCode: 'lbl_CAME900000_0019', //Postal Code
+  aptNumber: 'lbl_CAME900000_0020', //APT Number/SUITE Number
+  streetNumber: 'lbl_CAME900000_0021', //Street Number
+  streetName: 'lbl_CAME900000_0022', //Street Name
+  addressLine1: 'lbl_CAME900000_0023', //Adress line 1
+  city: 'lbl_CAME900000_0024', //City
+  maximumFile: 'lbl_CAME900000_0025', //Maximum file size is 5MB
+  upload: 'lbl_CAME900000_0026', //Upload
+  uploadFileAddress: 'lbl_CAME900000_0027', //Your address can be easily updated via online by submitting a proff of address document...
+  verificationCode: 'lbl_CAME900000_0028', //Verification code
+  verify: 'lbl_CAME900000_0029', //Verify
+  clickSaveButton: 'lbl_CAME900000_0030', //You need to click the Save button after making changes to apply them.
+};
+
 export const menuLabels = {
   eAlertManage: 'mymen_CAME900020', //mymen_CAME900020
   balance: 'mymen_CAME900050', //Balance
@@ -170,6 +203,7 @@ export const menuLabels = {
   bookAppointment: 'mymen_CAET900010', //Book an Appointment
   manageAppointment: 'mymen_CAET900020', //Manage Appointment
   personalSetting: 'mymen_CAME9000100', //Personal Setting
+  changeProfile: 'mymen_CAME900000', //Change Profile
 };
 
 export const ctaLabels = {
