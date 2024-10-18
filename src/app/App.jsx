@@ -141,6 +141,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    console.log('trigger language change');
+    console.log('currentLanguage :>> ', currentLanguage);
     getLanguageFile();
   }, [currentLanguage]);
 

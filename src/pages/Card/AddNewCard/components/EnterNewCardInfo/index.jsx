@@ -319,6 +319,13 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                           type="number"
                           maxLength={22}
                           {...field}
+                          onChange={value => {
+                            if (!Number(value)) {
+                              field.onChange('');
+                            } else {
+                              field.onChange(value);
+                            }
+                          }}
                         />
                       )}
                       control={control}
@@ -332,6 +339,13 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                           type="number"
                           maxLength={22}
                           {...field}
+                          onChange={value => {
+                            if (!Number(value)) {
+                              field.onChange('');
+                            } else {
+                              field.onChange(value);
+                            }
+                          }}
                         />
                       )}
                       control={control}
