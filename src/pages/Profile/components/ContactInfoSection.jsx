@@ -80,8 +80,8 @@ const ContactInfoSection = ({
     if (!headerResponse.resSuc) {
       return setShowAlert({
         isShow: true,
-        title: 'Sorry!',
-        content: headerResponse.resMsg || 'Internal server error',
+        title: '',
+        content: headerResponse.resMsg,
       });
     }
     const responseData = requestVerifyResponse?.data?.elData;
@@ -250,13 +250,13 @@ const ContactInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Verification code"
+              label={t(labels.verificationCode)}
               type="number"
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
               onResetTimer={cb => (verifyTimerResetRef.current = cb)}
               endAdornment={
                 <Button
-                  label="Verify"
+                  label={t(labels.verify)}
                   variant="outlined__primary"
                   className="btn__send btn__sm"
                   disable={invalidVerificationCode || disabledVerifyButton}
@@ -265,7 +265,7 @@ const ContactInfoSection = ({
               }
               maxLength={6}
               errorMessage={errors?.verificationCode?.message || ''}
-              helperText="You need to click the Save button after making changes to apply them."
+              helperText={t(labels.clickSaveButton)}
               {...field}
             />
           )}

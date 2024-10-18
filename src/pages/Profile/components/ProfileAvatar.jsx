@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { SettingIcon } from '@assets/icons';
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { ctaLabels, changeProfileLabels as labels } from '@common/constants/labels';
 import callCamera from '@utilities/gmCommon/callCamera';
 import callSelectImage from '@utilities/gmCommon/callSelectImage';
 import initProfileImg from '@utilities/gmCommon/initProfileImg';
@@ -11,7 +12,7 @@ import saveProfileImg from '@utilities/gmCommon/saveProfileImg';
 
 import ChangePhotoBottom from './ChangePhotoBottom';
 
-const ProfileAvatar = ({ userName, setShowToast }) => {
+const ProfileAvatar = ({ userName, setShowToast, translate: t }) => {
   const [avatarUrl, setAvatarUrl] = useState();
   const [showDefaultAvatar, setShowDefaultAvatar] = useState(false);
   const [showChangeProfilePhotoBottom, setShowChangeProfilePhotoBottom] = useState(false);
@@ -53,7 +54,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
       setShowDefaultAvatar(true);
       setShowToast({
         isShow: true,
-        message: 'Your profile photo has been deleted.',
+        message: t(labels.deletePhotoSuccess),
         type: 'success',
       });
     }
@@ -81,8 +82,6 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   const handleCallCameraCallback = fileInfo => {
     console.log('handleCallCameraCallback:', fileInfo);
     if (fileInfo) {
-      // const { imageInfo } = fileInfo;
-      // setAvatarUrl(imageInfo);
       saveProfileImg(handleUpdateAvatarCallback);
     }
   };
@@ -90,8 +89,6 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
   const handleCallSelectImageCallback = fileInfo => {
     console.log('handleCallSelectImageCallback:', fileInfo);
     if (fileInfo) {
-      // const { imageInfo } = fileInfo;
-      // setAvatarUrl(imageInfo);
       saveProfileImg(handleUpdateAvatarCallback);
     }
   };
@@ -134,7 +131,7 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
         {!!avatarUrl && (
           <div>
             <Button
-              label="Delete"
+              label={t(labels.delete)}
               variant="outlined__gray"
               className="btn__delete btn__sm"
               onClick={handleClickDeleteAvatar}
@@ -147,16 +144,17 @@ const ProfileAvatar = ({ userName, setShowToast }) => {
         onClose={onCloseChangePhotoBottom}
         onClickOpenCamera={handleCallPluginOpenCamera}
         onClickOpenGallery={handleCallPluginSelectImage}
+        translate={t}
       />
       <Alert
         isCloseButton={false}
         isShowAlert={showAlertDeletePhoto}
         onClose={() => setShowAlertDeletePhoto(false)}
-        title="Would you like to delete profile photo?"
+        title={t(labels.deletePhotoConfirm)}
         textAlign="center"
         firstButton={{
           onClick: handleConfirmDeletePhoto,
-          label: 'Delete',
+          label: t(ctaLabels.delete),
         }}
         secondButton={{
           onClick: () => setShowAlertDeletePhoto(false),

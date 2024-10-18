@@ -21,7 +21,7 @@ import {
   getSubJobCode,
 } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
-import { menuLabels } from '@common/constants/labels';
+import { ctaLabels, changeProfileLabels as labels, menuLabels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
@@ -99,19 +99,16 @@ const ChangeProfile = ({ translate: t }) => {
   });
 
   const methods = useForm({
-    // defaultValues: defaultValues,
     mode: 'onChange',
     resolver: yupResolver(changeProfileSchema),
   });
   const {
     handleSubmit,
-    control,
     setValue,
     reset,
     watch,
-    getValues,
     trigger,
-    formState: { isDirty: isFormDirty, isValid, errors },
+    formState: { isDirty: isFormDirty, isValid },
   } = methods;
 
   const [employment, occupation1, uploaded, addressType] = watch([
@@ -135,15 +132,30 @@ const ChangeProfile = ({ translate: t }) => {
   };
 
   const handleOpenSelectEmploymentBottom = () => {
-    setSelectBottom({ type: SELECT_TYPE.EMPLOYMENT, options: employmentOptions, isShow: true, title: 'Employment' });
+    setSelectBottom({
+      type: SELECT_TYPE.EMPLOYMENT,
+      options: employmentOptions,
+      isShow: true,
+      title: t(labels.employmentTitle),
+    });
   };
 
   const handleOpenSelectOccupation1Bottom = () => {
-    setSelectBottom({ type: SELECT_TYPE.OCCUPATION1, options: occupation1Options, isShow: true, title: 'Occupation1' });
+    setSelectBottom({
+      type: SELECT_TYPE.OCCUPATION1,
+      options: occupation1Options,
+      isShow: true,
+      title: t(labels.occupation1Title),
+    });
   };
 
   const handleOpenSelectOccupation2Bottom = () => {
-    setSelectBottom({ type: SELECT_TYPE.OCCUPATION2, options: occupation2Options, isShow: true, title: 'Occupation2' });
+    setSelectBottom({
+      type: SELECT_TYPE.OCCUPATION2,
+      options: occupation2Options,
+      isShow: true,
+      title: t(labels.occupation2),
+    });
   };
 
   const handleOpenSelectAddressTypeBottom = () => {
@@ -220,9 +232,9 @@ const ChangeProfile = ({ translate: t }) => {
     const isUpdateSuccess = Number(status) === 1;
     if (isUpdateSuccess) {
       getUserInfoRequest();
-      let message = 'Your profile information has been changed';
+      let message = t(labels.updateProfileSuccess);
       if (request.file_upd_yn === 'Y') {
-        message = 'Home address will be changed after reviewing submitted documents.';
+        message = t(labels.homeAddressReview);
       }
       return setShowToast({
         isShow: true,
@@ -278,8 +290,8 @@ const ChangeProfile = ({ translate: t }) => {
       if (!values.isViewAgreement) {
         return setShowAlert({
           isShow: true,
-          title: 'Download Electronic Communication Agreement ',
-          content: 'Please download Electronic Communication Agreement',
+          title: t(labels.downloadElectronic),
+          content: t(labels.pleaseDownloadElectronic),
         });
       }
       const isEmailVerified = checkEmailAlreadyVerified(values);
@@ -302,8 +314,8 @@ const ChangeProfile = ({ translate: t }) => {
       if (isRequiredUploadProof) {
         return setShowAlert({
           isShow: true,
-          title: 'Review the documents again',
-          content: 'Please input Upload proof of address',
+          title: t(labels.reviewDocument),
+          content: t(labels.requireUploadFile),
         });
       }
     }
@@ -478,6 +490,7 @@ const ChangeProfile = ({ translate: t }) => {
         <ProfileAvatar
           userName={userInfo?.cus_snm_nm}
           setShowToast={setShowToast}
+          translate={t}
         />
         <div className="form__wrapper">
           <FormProvider {...methods}>
@@ -511,7 +524,7 @@ const ChangeProfile = ({ translate: t }) => {
         </div>
         <div className="footer__fixed">
           <Button
-            label="Save"
+            label={t(ctaLabels.save)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmit(handleSubmitSaveForm)}
@@ -530,12 +543,12 @@ const ChangeProfile = ({ translate: t }) => {
       <Alert
         isCloseButton={false}
         isShowAlert={showSaveChangeConfirmAlert}
-        title="Would you like to save changes?"
+        title={t(labels.saveChangeConfirm)}
         textAlign="center"
         onClose={() => setShowSaveChangeConfirmAlert(false)}
         firstButton={{
           onClick: onConfirmSaveForm,
-          label: 'Save',
+          label: t(ctaLabels.save),
         }}
         secondButton={{
           onClick: handleCloseSaveChangeConfirmAlert,
@@ -553,7 +566,7 @@ const ChangeProfile = ({ translate: t }) => {
         onClose={() => setShowAlert({ isShow: false, title: '', content: '' })}
         firstButton={{
           onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
-          label: 'Confirm',
+          label: t(ctaLabels.confirm4),
         }}
       />
       <section className="toast__overlay">
@@ -568,7 +581,7 @@ const ChangeProfile = ({ translate: t }) => {
         <ViewTermBottom
           open={showViewAgreementTermBottom}
           onClose={() => setShowViewAgreementTermBottom(false)}
-          title="Electronic Communication Agreement"
+          title={t(labels.electronicAgree)}
           pdfFile={fileUrls.electronicCommunicationAgreement}
           hiddenConfirmBtn
         />

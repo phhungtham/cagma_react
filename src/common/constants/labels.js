@@ -193,6 +193,22 @@ export const changeProfileLabels = {
   verificationCode: 'lbl_CAME900000_0028', //Verification code
   verify: 'lbl_CAME900000_0029', //Verify
   clickSaveButton: 'lbl_CAME900000_0030', //You need to click the Save button after making changes to apply them.
+  employmentTitle: 'lbl_CAME900000_0031', //Employment
+  occupation1Title: 'lbl_CAME900000_0038', //Occupation1
+  reviewDocument: 'lbl_CAME900000_0186', //Review the documents again
+  wrongFormat: 'lbl_CAME900000_0189', //Please check the photo format again
+  exceedFileSize: 'lbl_CAME900000_0191', //The maximum file attachment size is 5MB. Please check the file size again
+  requireUploadFile: 'lbl_CAME900000_0193', //Please input Upload proof of address
+  downloadElectronic: 'lbl_CAME900000_0194', //Download Electronic Communication Agreement
+  pleaseDownloadElectronic: 'lbl_CAME900000_0195', //Please download Electronic Communication Agreement
+  takePhoto: 'lbl_CAME900000_0196', //Take Photo
+  uploadGallery: 'lbl_CAME900000_0197', //Upload from Gallery
+  delete: 'lbl_CAME900000_0202', //Delete
+  deletePhotoConfirm: 'lbl_CAME900000_0203', //Would you like to delete profile photo?
+  deletePhotoSuccess: 'lbl_CAME900000_0205', //Your profile photo has been deleted.
+  saveChangeConfirm: 'lbl_CAME900000_0206', //Would you like to save changes?
+  updateProfileSuccess: 'lbl_CAME900000_0208', //Your profile information has been changed
+  homeAddressReview: 'lbl_CAME900000_0209', //Home address will be changed after reviewing submitted documents.
 };
 
 export const menuLabels = {
@@ -218,4 +234,7 @@ export const ctaLabels = {
   next: 'lbl_CTA_9013', //Next
   confirm2: 'lbl_CTA_9014', //Confirm
   confirm3: 'lbl_CTA_9018', //Confirm
+  save: 'lbl_CTA_9001', //Save
+  confirm4: 'lbl_CTA_9004', //Confirm
+  delete: 'lbl_CTA_9010', //Delete
 };

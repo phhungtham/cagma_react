@@ -55,13 +55,11 @@ const AddressInfoSection = ({
       setValue('fileName', fileName);
     } else {
       let content = error;
-      let title = 'Review the documents again';
+      let title = t(labels.reviewDocument);
       if (error === FileErrorType.FORMAT) {
-        content = 'Please check the photo format again.';
+        content = t(labels.wrongFormat);
       } else if (error === FileErrorType.SIZE) {
-        content = 'The maximum file attachment size is 5MB. Please check the file size';
-      } else {
-        title = 'Sorry';
+        content = t(labels.exceedFileSize);
       }
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
@@ -376,7 +374,7 @@ const AddressInfoSection = ({
                   <div className="upload__icon">
                     <CameraIcon />
                   </div>
-                  <p className="upload__title">Upload</p>
+                  <p className="upload__title">{t(labels.upload)}</p>
                   <p className="upload__desc">*5MB Max</p>
                 </div>
               )}
@@ -402,7 +400,7 @@ const AddressInfoSection = ({
             </div>
             <InfoBox
               variant="informative"
-              label="Your address can be easily updated via online by submitting a proof of address document. If you prefer the in-person help, please visit our branches."
+              label={t(labels.uploadFileAddress)}
             />
           </div>
         </>

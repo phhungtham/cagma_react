@@ -1,10 +1,11 @@
 import { ArrowRight } from '@assets/icons';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { changeProfileLabels as labels } from '@common/constants/labels';
 import { PropTypes } from 'prop-types';
 
 import '../styles.scss';
 
-const ChangePhotoBottom = ({ open, onClose, onClickOpenCamera, onClickOpenGallery }) => {
+const ChangePhotoBottom = ({ open, onClose, onClickOpenCamera, onClickOpenGallery, translate: t }) => {
   const onClickAccessCamera = () => {
     onClickOpenCamera();
   };
@@ -27,14 +28,14 @@ const ChangePhotoBottom = ({ open, onClose, onClickOpenCamera, onClickOpenGaller
             className="dropdown__option"
             onClick={onClickAccessCamera}
           >
-            <span className="option__label">Take Photo</span>
+            <span className="option__label">{t(labels.takePhoto)}</span>
             <ArrowRight />
           </div>
           <div
             className="dropdown__option"
             onClick={onClickAccessPhotos}
           >
-            <span className="option__label">Upload from Gallery</span>
+            <span className="option__label">{t(labels.uploadGallery)}</span>
             <ArrowRight />
           </div>
         </div>
