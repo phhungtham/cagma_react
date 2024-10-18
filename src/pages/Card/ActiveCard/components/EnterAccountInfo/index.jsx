@@ -97,7 +97,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Last 6-Digits of Your Account Number"
+                    label="Last 6 Digits of Account No."
                     placeholder="Please input 6numerics"
                     type="number"
                     maxLength={6}

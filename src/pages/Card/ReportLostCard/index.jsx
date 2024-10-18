@@ -101,17 +101,31 @@ const ReportLostCard = () => {
       };
     } else {
       //TODO: Handle report lost card case enter user information
-      const { accident: cashcd_acdnt_desc, dob: cus_bth_y4mm_dt } = formValues;
+      const {
+        accident: cashcd_acdnt_desc,
+        dob: cus_bth_y4mm_dt,
+        firstName: cus_fst_nm,
+        lastName: cus_last_nm,
+        phoneNumber: cus_adr_telno,
+        postalCode: cus_adr_zipc,
+      } = formValues;
+
       payload = {
         report_type: ReportLostCardType.UNKNOWN_CARD_NO,
         cashcd_acdnt_desc,
         cus_bth_y4mm_dt,
+        cus_fst_nm,
+        cus_last_nm,
+        cus_adr_telno,
+        cus_adr_zipc,
       };
     }
-    const { error, isSuccess } = await requestApi(endpoints.reportLostNotLogged, payload);
+    const { data, error, isSuccess } = await requestApi(endpoints.reportLostNotLogged, payload);
     setShowLoading(false);
     if (isSuccess) {
-      setCurrentStep(REPORT_LOST_CARD_STEP.COMPLETED);
+      if (Number(data?.result_cd) === 1) {
+        setCurrentStep(REPORT_LOST_CARD_STEP.COMPLETED);
+      }
     } else {
       setAlert({
         isShow: true,

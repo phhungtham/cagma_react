@@ -88,7 +88,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
       </div>
       <div className="footer__fixed">
         <Button
-          label="Activate"
+          label={isLogin ? 'Activate' : 'Next'}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(onSubmit)}

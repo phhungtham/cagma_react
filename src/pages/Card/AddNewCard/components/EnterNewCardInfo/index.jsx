@@ -369,6 +369,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                   control={control}
                   name="getTransactionNotice"
                 />
+                {/* //TODO: Call APi CAME001 and set email to default value */}
                 {getTransactionNotice && (
                   <Controller
                     render={({ field }) => (

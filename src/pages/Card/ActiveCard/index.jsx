@@ -30,7 +30,7 @@ const ActiveCard = () => {
     title: '',
     content: '',
   });
-  const isLogin = useSelector(loginSelector) || true;
+  const isLogin = useSelector(loginSelector);
   const { requestApi } = useApi();
 
   const requestActiveCardLogged = async payload => {
@@ -38,7 +38,7 @@ const ActiveCard = () => {
     const { data, error, isSuccess } = await requestApi(endpoints.activeCardLogged, payload);
     setShowLoading(false);
     if (isSuccess) {
-      const { cashcd_no: cardNo, cashcd_acno1: accountNumber } = data;
+      const { cashcd_no_display: cardNo, cashcd_acno1_display: accountNumber } = data;
       setActiveCardSuccessInfo({
         cardNo,
         accountNumber,
@@ -70,7 +70,7 @@ const ActiveCard = () => {
     };
     const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
-    if (isSuccess) {
+    if (!isSuccess) {
       if (isLogin) {
         const activeCardLoggedPayload = {
           cashcd_vldt_dt,
@@ -112,7 +112,7 @@ const ActiveCard = () => {
     const { data, error, isSuccess } = await requestApi(endpoints.activeCardNotLogged, payload);
     setShowLoading(false);
     if (!isSuccess) {
-      const { cashcd_no: cardNo, cashcd_acno1: accountNumber } = data;
+      const { cashcd_no_display: cardNo, cashcd_acno1_display: accountNumber } = data;
       setActiveCardSuccessInfo({
         cardNo,
         accountNumber,

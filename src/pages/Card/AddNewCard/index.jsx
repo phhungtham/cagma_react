@@ -73,16 +73,17 @@ const AddNewCard = ({ translation }) => {
         cashcd_acno1: accountNo,
       } = data;
       const provinceDisplay = provinceOptions.find(option => option.value === province)?.label || '';
-      setAddCardSuccessInfo({
-        streetNumber,
-        streetName,
-        aptNumber,
-        city,
-        province: provinceDisplay,
-        postalCode,
-        issueDate,
-        accountNo,
-      });
+      setAddCardSuccessInfo(data);
+      // setAddCardSuccessInfo({
+      //   streetNumber,
+      //   streetName,
+      //   aptNumber,
+      //   city,
+      //   province: provinceDisplay,
+      //   postalCode,
+      //   issueDate,
+      //   accountNo,
+      // });
       setCurrentStep(ADD_NEW_CARD_STEP.COMPLETED);
     } else {
       setAlert({

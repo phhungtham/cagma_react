@@ -18,7 +18,6 @@ const ReissueCard = () => {
   const [currentStep, setCurrentStep] = useState(REISSUE_CARD_STEP.ENTER_CARD_INFORMATION);
   const [cardInfo, setCardInfo] = useState({});
   const [reissueCardSuccessInfo, setReissueCardSuccessInfo] = useState();
-  console.log('reissueCardSuccessInfo :>> ', reissueCardSuccessInfo);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -31,7 +30,7 @@ const ReissueCard = () => {
     type: 'success',
   });
   const { requestApi } = useApi();
-  const isLogin = useSelector(loginSelector) || true;
+  const isLogin = useSelector(loginSelector);
 
   const handleCloseAlert = () => {
     setAlert({
@@ -84,12 +83,15 @@ const ReissueCard = () => {
       cashcd_no: formattedCardNumber,
       dep_trx_dtl_d: '09',
     };
+    debugger;
     const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
     if (!isSuccess) {
       if (isLogin) {
         await requestGetCardInfo(formattedCardNumber);
         setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
+      } else {
+        const { cardNumber, expiryDate } = values;
       }
     } else {
       setAlert({
@@ -180,7 +182,7 @@ const ReissueCard = () => {
           />
         )}
       </div>
-      <section className="toast__overlay">
+      <section className="toast__overlay margin-bottom">
         <Toast
           isShowToast={showToast.isShow}
           type={showToast.type}
