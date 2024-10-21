@@ -6,11 +6,9 @@ import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
-import useReducers from '@hooks/useReducers';
+import useLoginInfo from '@hooks/useLoginInfo';
 import { moveBack } from '@utilities/index';
-import { appGlobalReducer } from 'app/redux/reducer';
 import { loginSelector } from 'app/redux/selector';
-import { APP_GLOBAL } from 'app/redux/type';
 
 import ActiveCardView from './components/ActiveCardView';
 import EmptyCardView from './components/EmptyCardView';
@@ -18,7 +16,7 @@ import GuestCardView from './components/GuestCardView';
 import './styles.scss';
 
 const CardMain = () => {
-  useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
+  const { isLoading } = useLoginInfo({ isSend: true });
   const isLogin = useSelector(loginSelector);
   const [card, setCard] = useState();
   const [showLoading, setShowLoading] = useState(false);

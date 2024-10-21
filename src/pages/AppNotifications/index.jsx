@@ -9,6 +9,7 @@ import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { menuLabels } from '@common/constants/labels';
+import useLoginInfo from '@hooks/useLoginInfo';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { alertMove } from '@utilities/alertMove';
@@ -16,7 +17,6 @@ import { addDateWithMonth } from '@utilities/dateTimeUtils';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { getLanguageFM, isEmpty, moveBack, moveNext } from '@utilities/index';
 import { setIsNativeClickBack, setLoginState } from 'app/redux/action';
-import { appGlobalReducer } from 'app/redux/reducer';
 import {
   appLanguage,
   appPathSelector,
@@ -27,7 +27,6 @@ import {
 } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
-import { APP_GLOBAL } from '../../app/redux/type';
 import PromotionDetailBottom from './components/PromotionDetailBottom';
 import PromotionsTab from './components/PromotionsTab';
 import TransactionsTab from './components/TransactionsTab';
@@ -66,10 +65,7 @@ import {
 import { AppNotificationFeatureName } from './redux/type';
 
 const AppNotifications = ({ translate: t }) => {
-  useReducers([
-    { key: AppNotificationFeatureName, reducer: appNotificationReducer },
-    { key: APP_GLOBAL, reducer: appGlobalReducer },
-  ]);
+  useReducers([{ key: AppNotificationFeatureName, reducer: appNotificationReducer }]);
   useSagas([{ key: AppNotificationFeatureName, saga: appNotificationSaga }]);
   const appLang = useSelector(appLanguage);
   const listTransactionCount = useSelector(listTransactionLoadMoreCnt);
@@ -82,6 +78,7 @@ const AppNotifications = ({ translate: t }) => {
   const [promotionListDisplay, setPromotionListDisplay] = useState([]);
   const isLogin = useSelector(loginSelector);
   const notificationListRef = useRef(null);
+  const { isLoading } = useLoginInfo({ isSend: true });
 
   const initRequestTransactionsNotify = {
     push_lang_c: null,
