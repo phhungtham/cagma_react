@@ -2,8 +2,9 @@
 @import 'styles/utilities/mixin';
 
 .book-appointment__content {
-  padding-top: 10px;
-  padding-bottom: 150px;
+  height: calc(100vh - 166px);
+  overflow-y: auto;
+  padding-bottom: 50px;
   .page__title {
     padding: 10px 0 16px;
   }
