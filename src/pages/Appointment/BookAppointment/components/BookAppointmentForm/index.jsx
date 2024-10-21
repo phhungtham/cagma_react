@@ -182,7 +182,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t }) => {
 
   return (
     <>
-      <div className="page__wrapper">
+      <div className="page-container__wrapper">
         {showLoading && <Spinner />}
         <Header
           title={t(menuLabels.bookAppointment)}
