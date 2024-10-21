@@ -8,6 +8,7 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import Span from '@common/components/atoms/Span';
 import Spinner from '@common/components/atoms/Spinner';
+import { isDevelopmentEnv } from '@common/constants/common';
 import useFocus from '@hooks/useFocus';
 import useHttpStatus from '@hooks/useHttpStatus';
 import useReducers from '@hooks/useReducers';
@@ -79,6 +80,9 @@ const Login = () => {
   useEffect(() => {
     if (isLoginSuccess) {
       setAuthenticated();
+      if (isDevelopmentEnv) {
+        localStorage.setItem('isLogin', true);
+      }
       moveNext('', { param: JSON.stringify({ ums_svc_c: 'CAHO002' }) }, routePaths.cards);
     }
   }, [isLoginSuccess]);
