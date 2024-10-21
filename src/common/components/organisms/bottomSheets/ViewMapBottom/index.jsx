@@ -5,6 +5,7 @@ import LocationMap from '@common/components/atoms/LocationMap';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { bookAppointmentLabels as labels } from '@common/constants/labels';
 import { callPhone } from '@utilities/index';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
 import './styles.scss';
@@ -116,4 +117,4 @@ ViewMapBottom.defaultProps = {
   onBookAppointment: () => {},
 };
 
-export default ViewMapBottom;
+export default withHTMLParseI18n(ViewMapBottom);

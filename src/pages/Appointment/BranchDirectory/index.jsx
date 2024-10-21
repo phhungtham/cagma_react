@@ -133,7 +133,6 @@ const BranchDirectory = ({ translate: t }) => {
           onClose={handleCloseViewMap}
           branchData={viewMapItem.branchData}
           onBookAppointment={handleNavigateBookAppointment}
-          translate={t}
         />
       )}
     </>
