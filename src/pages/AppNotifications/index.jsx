@@ -16,12 +16,11 @@ import { alertMove } from '@utilities/alertMove';
 import { addDateWithMonth } from '@utilities/dateTimeUtils';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { getLanguageFM, isEmpty, moveBack, moveNext } from '@utilities/index';
-import { setIsNativeClickBack, setLoginState } from 'app/redux/action';
+import { setIsNativeClickBack } from 'app/redux/action';
 import {
   appLanguage,
   appPathSelector,
   backEventSelector,
-  loginSelector,
   nativeParamsSelector,
   nativeRedirectStateSelector,
 } from 'app/redux/selector';
@@ -76,9 +75,8 @@ const AppNotifications = ({ translate: t }) => {
   const [currentPromotionDetail, setCurrentPromotionDetail] = useState({});
   const [loadMoreNotify, setLoadMoreNotify] = useState(false);
   const [promotionListDisplay, setPromotionListDisplay] = useState([]);
-  const isLogin = useSelector(loginSelector);
+  const { isLogin, isLoading: isLoadingCheckUserLogin } = useLoginInfo();
   const notificationListRef = useRef(null);
-  const { isLoading } = useLoginInfo({ isSend: true });
 
   const initRequestTransactionsNotify = {
     push_lang_c: null,
@@ -187,13 +185,13 @@ const AppNotifications = ({ translate: t }) => {
     }
   };
 
-  const refreshLoginState = () => {
-    setTimeout(() => {
-      setReduxTabIndex(undefined);
-      setBannerSeqState('');
-      setLoginState('');
-    }, 500);
-  };
+  // const refreshLoginState = () => {
+  //   setTimeout(() => {
+  //     setReduxTabIndex(undefined);
+  //     setBannerSeqState('');
+  //     setLoginState('');
+  //   }, 500);
+  // };
 
   const fetchMoreListNotify = () => {
     if (tabIndex === NotificationTabIndex.TRANSACTIONS) {
@@ -313,7 +311,6 @@ const AppNotifications = ({ translate: t }) => {
     }
     if (!showPromotionDetail && isNativeBack) {
       moveBack();
-      refreshLoginState();
     }
     return () => {
       setIsNativeClickBack(false);
@@ -353,7 +350,6 @@ const AppNotifications = ({ translate: t }) => {
           title={t(menuLabels.appNotification)}
           onClick={() => {
             moveBack();
-            refreshLoginState();
           }}
         />
       </div>

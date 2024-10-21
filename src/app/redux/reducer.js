@@ -6,7 +6,6 @@ const initState = {
   isNativeRedirect: false,
   currentLanguage: undefined,
   isNativeClickBack: false,
-  isLogin: '',
   nativeParams: EMPTY_OBJ,
   appPath: '',
 };
@@ -22,9 +21,6 @@ export const appGlobalReducer = (state = initState, action) => {
 
     case ActionType.BACK_EVENT:
       return { ...state, isNativeClickBack: payload };
-
-    case ActionType.APP_LOGIN:
-      return { ...state, isLogin: payload };
 
     case ActionType.NATIVE_PARAMS:
       return { ...state, nativeParams: payload };

@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
+import useLoginInfo from '@hooks/useLoginInfo';
 import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
-import { loginSelector } from 'app/redux/selector';
 
 import { formatCardDateRequest } from '../utils/format';
 import ActiveCardSuccess from './components/ActiveCardSuccess';
@@ -30,7 +29,8 @@ const ActiveCard = () => {
     title: '',
     content: '',
   });
-  const isLogin = useSelector(loginSelector);
+  const { isLogin } = useLoginInfo();
+
   const { requestApi } = useApi();
 
   const requestActiveCardLogged = async payload => {
@@ -70,7 +70,7 @@ const ActiveCard = () => {
     };
     const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
-    if (!isSuccess) {
+    if (isSuccess) {
       if (isLogin) {
         const activeCardLoggedPayload = {
           cashcd_vldt_dt,

@@ -12,10 +12,6 @@ export const backEventSelector = state => {
   return state[APP_GLOBAL]?.isNativeClickBack;
 };
 
-export const loginSelector = state => {
-  return state[APP_GLOBAL]?.isLogin;
-};
-
 export const nativeParamsSelector = state => {
   return state[APP_GLOBAL]?.nativeParams;
 };

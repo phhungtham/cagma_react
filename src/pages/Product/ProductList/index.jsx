@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
@@ -19,7 +18,6 @@ import useLoginInfo from '@hooks/useLoginInfo';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 import showLogin from '@utilities/navigateScreen/showLogin';
-import { loginSelector } from 'app/redux/selector';
 
 import BorrowingInstructionBottom from './components/BorrowingInstructionBottom';
 import BorrowingList from './components/BorrowingList';
@@ -43,8 +41,7 @@ const ProductList = () => {
     title: '',
     content: '',
   });
-  const { isLoading } = useLoginInfo({ isSend: true });
-  const isLogin = useSelector(loginSelector);
+  const { isLogin } = useLoginInfo();
   const bankingTitleRef = useRef(null);
   const investmentTitleRef = useRef(null);
   const borrowingTitleRef = useRef(null);

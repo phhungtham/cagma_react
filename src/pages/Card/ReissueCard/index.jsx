@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
-import { loginSelector } from 'app/redux/selector';
+import useLoginInfo from '@hooks/useLoginInfo';
 
 import { formatCardDateRequest } from '../utils/format';
 import EnterReissueAddressInfo from './components/EnterReissueAddressInfo';
@@ -30,7 +29,7 @@ const ReissueCard = () => {
     type: 'success',
   });
   const { requestApi } = useApi();
-  const isLogin = useSelector(loginSelector);
+  const { isLogin } = useLoginInfo();
 
   const handleCloseAlert = () => {
     setAlert({
@@ -82,11 +81,12 @@ const ReissueCard = () => {
       cashcd_vldt_dt,
       cashcd_no: formattedCardNumber,
       dep_trx_dtl_d: '09',
+      cusnm: '',
+      dbcd_iss_rsn_c: 'S0351',
     };
-    debugger;
     const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
-    if (!isSuccess) {
+    if (isSuccess) {
       if (isLogin) {
         await requestGetCardInfo(formattedCardNumber);
         setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
@@ -123,24 +123,23 @@ const ReissueCard = () => {
     await requestApi(endpoints.inquiryUserInformation);
     const { data, error, isSuccess } = await requestApi(endpoints.reissueCardLogged, payload);
     setShowLoading(false);
-    if (!isSuccess) {
+    if (isSuccess) {
       if (isLogin) {
         const {
           street_no: streetNumber,
           street_nm: streetName,
           apt_suite_no: aptNumber,
           cus_city_nm: city,
-          state_c: province,
+          state_c_display: province,
           adr_zipc: postalCode,
-          cashcd_iss_dt: issueDate,
+          cashcd_iss_dt_display: issueDate,
         } = data;
-        const provinceDisplay = provinceOptions.find(option => option.value === province)?.label || '';
         setReissueCardSuccessInfo({
           streetNumber,
           streetName,
           aptNumber,
           city,
-          province: provinceDisplay,
+          province,
           postalCode,
           issueDate,
         });

@@ -2,17 +2,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import isEmpty from '@utilities/isEmpty';
-import { setLoginState } from 'app/redux/action';
-import { appGlobalReducer } from 'app/redux/reducer';
 import { nativeRedirectStateSelector } from 'app/redux/selector';
-import { APP_GLOBAL } from 'app/redux/type';
 import { $h } from 'navigation/wmatrix_config';
 
-import useReducers from './useReducers';
-
 const useLoginInfo = (props = {}) => {
-  useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
-  const { isSend = false } = props;
   const isSendingRef = useRef(false);
   const isNativeRedirect = useSelector(nativeRedirectStateSelector);
 
@@ -37,7 +30,6 @@ const useLoginInfo = (props = {}) => {
         error: null,
         loginInfo: res,
       }));
-      setLoginState(true);
     };
 
     const onFailGetLoginInfo = res => {
@@ -49,7 +41,6 @@ const useLoginInfo = (props = {}) => {
         error: res,
         loginInfo: {},
       }));
-      setLoginState(false);
     };
 
     if (isSendingRef.current === false) {
@@ -75,10 +66,19 @@ const useLoginInfo = (props = {}) => {
   }, []);
 
   useEffect(() => {
-    if (isSend === true && process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production') {
       getLoginInfo();
+    } else {
+      isSendingRef.current = false;
+      setState(s => ({
+        ...s,
+        isLoading: false,
+        isLogin: false,
+        error: '',
+        loginInfo: {},
+      }));
     }
-  }, [getLoginInfo, isSend, isNativeRedirect]);
+  }, [getLoginInfo, isNativeRedirect]);
 
   return {
     loginInfo: state.loginInfo,

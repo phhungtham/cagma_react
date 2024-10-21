@@ -7,7 +7,8 @@ import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
-import { loginSelector, nativeParamsSelector } from 'app/redux/selector';
+import useLoginInfo from '@hooks/useLoginInfo';
+import { nativeParamsSelector } from 'app/redux/selector';
 
 import { ReportLostNotLoggedType } from '../constants';
 import { formatCardDateRequest } from '../utils/format';
@@ -24,7 +25,7 @@ const ReportLostCard = () => {
   const [showConfirmAlert, setShowConfirmAlert] = useState(false);
   const [reportLostCardSuccessInfo, setReportLostCardSuccessInfo] = useState();
   const nativeParams = useSelector(nativeParamsSelector);
-  const isLogin = useSelector(loginSelector);
+  const { isLogin } = useLoginInfo();
   const [accident, setAccident] = useState();
   const [formValues, setFormValues] = useState();
   const [showLoading, setShowLoading] = useState(false);
@@ -87,6 +88,7 @@ const ReportLostCard = () => {
   };
 
   const requestReportLostNotLogged = async () => {
+    debugger;
     setShowLoading(true);
     let payload = {};
     if (notLoggedFormType === ReportLostNotLoggedType.ENTER_CARD_NUMBER) {
@@ -100,7 +102,6 @@ const ReportLostCard = () => {
         cashcd_acdnt_desc,
       };
     } else {
-      //TODO: Handle report lost card case enter user information
       const {
         accident: cashcd_acdnt_desc,
         dob: cus_bth_y4mm_dt,

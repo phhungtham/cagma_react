@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
@@ -8,7 +7,6 @@ import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import { moveBack } from '@utilities/index';
-import { loginSelector } from 'app/redux/selector';
 
 import ActiveCardView from './components/ActiveCardView';
 import EmptyCardView from './components/EmptyCardView';
@@ -16,8 +14,7 @@ import GuestCardView from './components/GuestCardView';
 import './styles.scss';
 
 const CardMain = () => {
-  const { isLoading: isLoadingCheckUserLogin } = useLoginInfo({ isSend: true });
-  const isLogin = useSelector(loginSelector);
+  const { isLoading: isLoadingCheckUserLogin, isLogin } = useLoginInfo();
   const [card, setCard] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
