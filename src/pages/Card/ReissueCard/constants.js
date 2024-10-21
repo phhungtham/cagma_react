@@ -84,8 +84,4 @@ export const reissueCardSuccessFields = [
     label: 'Postal Code',
     value: 'postalCode',
   },
-  {
-    label: 'Issue Date',
-    value: 'issueDate',
-  },
 ];

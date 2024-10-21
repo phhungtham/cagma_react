@@ -4,12 +4,15 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { externalUrls } from '@common/constants/url';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
+import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { callPhone, moveHome } from '@utilities/index';
 
 const CardActiveBlockedBottom = ({ onClose }) => {
   const handleNavigateBranchInfo = () => {
-    openURLInBrowser(externalUrls.branchInfo);
+    openInternalWebview({
+      url: externalUrls.branchInfo,
+      title: '',
+    });
   };
 
   const onClickCallPhone = () => {
@@ -17,7 +20,10 @@ const CardActiveBlockedBottom = ({ onClose }) => {
   };
 
   const handleNavigateContactUs = () => {
-    openURLInBrowser(externalUrls.contactUs);
+    openInternalWebview({
+      url: externalUrls.contactUs,
+      title: '',
+    });
   };
 
   return (

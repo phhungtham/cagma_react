@@ -9,7 +9,7 @@ import { MENU_CODE } from '@common/constants/common';
 import { externalUrls } from '@common/constants/url';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import { routePaths } from '@routes/paths';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
+import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveHome, moveNext } from '@utilities/index';
 
 import { ButtonResultLabel, VerifyMembershipResultMessages } from './constants';
@@ -20,7 +20,10 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
   };
 
   const handleNavigateBranchInfo = () => {
-    openURLInBrowser(externalUrls.branchInfo);
+    openInternalWebview({
+      url: externalUrls.branchInfo,
+      title: '',
+    });
   };
 
   const handleNavigateAppointmentMain = () => {
@@ -32,7 +35,10 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
       //TODO: Navigate login
     }
     if (type === VerifyMembershipResultStatus.CORPORATE_SUCCESS) {
-      openURLInBrowser(externalUrls.bankHome);
+      openInternalWebview({
+        url: externalUrls.bankHome,
+        title: '',
+      });
     }
     if (type === VerifyMembershipResultStatus.FAILED) {
       onNavigateVerifyMembership();

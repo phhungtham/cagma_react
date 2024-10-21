@@ -6,16 +6,22 @@ import BottomSheet from '@common/components/templates/BottomSheet';
 import { MENU_CODE } from '@common/constants/common';
 import { externalUrls } from '@common/constants/url';
 import { routePaths } from '@routes/paths';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
+import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveNext } from '@utilities/index';
 
 const BorrowingInstructionBottom = ({ onClose }) => {
   const handleNavigateMoreInformation = () => {
-    openURLInBrowser(externalUrls.loan);
+    openInternalWebview({
+      url: externalUrls.loan,
+      title: '',
+    });
   };
 
   const handleNavigateBranchInfo = () => {
-    openURLInBrowser(externalUrls.branchInfo);
+    openInternalWebview({
+      url: externalUrls.branchInfo,
+      title: '',
+    });
   };
 
   const handleBookAppointment = () => {

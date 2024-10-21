@@ -13,7 +13,7 @@ import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { alertMove } from '@utilities/alertMove';
 import { addDateWithMonth } from '@utilities/dateTimeUtils';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
+import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { getLanguageFM, isEmpty, moveBack, moveNext } from '@utilities/index';
 import { setIsNativeClickBack, setLoginState } from 'app/redux/action';
 import { appGlobalReducer } from 'app/redux/reducer';
@@ -163,7 +163,10 @@ const AppNotifications = ({ translate: t }) => {
     if (!linkUrl) return;
     if (NotificationLinkType.EXTERNAL_LINK.includes(linkType)) {
       setReduxTabIndex(tabIndex);
-      openURLInBrowser(linkUrl);
+      openInternalWebview({
+        url: linkUrl,
+        title: '',
+      });
     } else if (NotificationLinkType.INTERNAL_LINK.includes(linkType)) {
       setReduxTabIndex(tabIndex);
       moveNext(linkUrl);
