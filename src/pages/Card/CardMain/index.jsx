@@ -16,7 +16,7 @@ import GuestCardView from './components/GuestCardView';
 import './styles.scss';
 
 const CardMain = () => {
-  const { isLoading } = useLoginInfo({ isSend: true });
+  const { isLoading: isLoadingCheckUserLogin } = useLoginInfo({ isSend: true });
   const isLogin = useSelector(loginSelector);
   const [card, setCard] = useState();
   const [showLoading, setShowLoading] = useState(false);
@@ -79,13 +79,13 @@ const CardMain = () => {
   return (
     <>
       <div className="card-main__wrapper page__wrapper">
-        {showLoading && <Spinner />}
+        {(showLoading || isLoadingCheckUserLogin) && <Spinner />}
         <Header
           title="Cards"
           onClick={moveBack}
         />
         <div className="card-main__content">
-          {!showLoading && (
+          {!showLoading && !isLoadingCheckUserLogin && (
             <>{isLogin ? <>{card ? <ActiveCardView card={card} /> : <EmptyCardView />}</> : <GuestCardView />}</>
           )}
         </div>
