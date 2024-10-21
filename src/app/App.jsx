@@ -23,6 +23,7 @@ import './App.scss';
 import {
   setAppPath,
   setCurrentLanguage,
+  setInitLoginState,
   setIsNativeClickBack,
   setIsNativeRedirect,
   setNativeParams,
@@ -99,6 +100,7 @@ const App = () => {
             const data = e.detail;
             const path = String(data.src);
             navigate(path);
+            setInitLoginState('');
             setAppPath(path);
             // get param from native side
             const params = JSON.parse(data.param);
