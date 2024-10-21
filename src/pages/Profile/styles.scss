@@ -1,11 +1,10 @@
 @import 'styles/utilities/variables';
 
 .change-profile__wrapper {
-  height: 100vh;
-  overflow-y: auto;
-
   .change-profile__content {
-    padding-bottom: 150px;
+    height: calc(100vh - 166px);
+    overflow-y: auto;
+    padding-bottom: 20px;
   }
 
   .profile__avatar__wrapper {
