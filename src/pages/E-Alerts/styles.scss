@@ -2,7 +2,6 @@
 
 .eAlerts-management__wrapper,
 .eAlerts-balance__wrapper {
-  height: 100vh;
   .toast__overlay {
     position: absolute;
     z-index: 9999;
@@ -52,10 +51,12 @@
 }
 
 .eAlerts-balance__content {
+  height: calc(100vh - 56px);
+  overflow-y: auto;
   padding-top: 10px;
   .balance {
     &__header {
-      padding: 0 24px;
+      padding: 0 24px;  
     }
     &__title {
       padding: 10px 0 16px;
