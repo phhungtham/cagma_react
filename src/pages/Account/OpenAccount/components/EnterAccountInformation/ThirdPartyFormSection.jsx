@@ -9,7 +9,6 @@ import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Tooltip from '@common/components/atoms/Tooltip';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import { postalCodeNotAllowRegex } from '@common/constants/regex';
-import { AppCfg } from '@configs/appConfigs';
 import useProvince from '@hooks/useProvince';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -36,11 +35,6 @@ const ThirdPartyFormSection = () => {
   };
 
   const handleOpenCalendar = () => {
-    if (AppCfg.ENV === 'development') {
-      //For dummy data because it call native calendar
-      setValue('dob', '19980523', { shouldValidate: true });
-      setValue('dob_display', formatYYYYMMDDToDisplay('19980523'), { shouldValidate: true });
-    }
     openCalendar(handleSelectDate, { selectDate: dob || undefined });
   };
 

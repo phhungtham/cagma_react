@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import BannerBook from '@assets/images/open-account-book.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { PeriodUnitCodeDisplay } from '@common/constants/product';
-import { fileUrls } from '@common/constants/url';
+import { BannerMapProductCode } from '@pages/Product/ProductList/constants';
 import { moveBack } from '@utilities/index';
+import { appLanguage } from 'app/redux/selector';
 
 import { ProductType } from '../../constants';
-import { ProductDescription } from './constants';
+import { OpenAccountTermFile, ProductDescription } from './constants';
 import './styles.scss';
 
-const TermAndConditions = ({ onSubmit, product }) => {
-  const { prdt_c: productCode, lcl_prdt_nm, dep_sjt_class: productType } = product || {};
+const TermAndConditions = ({ onSubmit, product, translate: t }) => {
+  const { prdt_c: productCode, prdt_c_display, dep_sjt_class: productType } = product || {};
+  const currentLanguage = useSelector(appLanguage);
   const [viewTermBottom, setViewTermBottom] = useState({
     open: false,
     title: '',
@@ -71,9 +73,9 @@ const TermAndConditions = ({ onSubmit, product }) => {
   };
 
   useEffect(() => {
-    if (product) {
-      debugger;
-      //TODO: Handle
+    if (productCode) {
+      const userAgreementFile = `${OpenAccountTermFile[productCode]}_agree_en.pdf`;
+      const productFeatureFile = `${OpenAccountTermFile[productCode]}_${currentLanguage || 'en'}.pdf`;
       const termConditionConfig = {
         selectAllLabel: 'I fully understand and agree to all of the below',
         options: [
@@ -81,19 +83,19 @@ const TermAndConditions = ({ onSubmit, product }) => {
             label: '[Mandatory] User Agreement',
             value: '1',
             title: 'User Agreement',
-            fileUrl: fileUrls.openAccountAgreeTerm,
+            fileUrl: userAgreementFile,
           },
           {
             label: '[Mandatory] Product Feature',
             value: '2',
             title: 'Product Feature',
-            fileUrl: fileUrls.openAccountProductFeature,
+            fileUrl: productFeatureFile,
           },
         ],
       };
       setTermConfig(termConditionConfig);
     }
-  }, [product]);
+  }, [productCode, currentLanguage]);
 
   return (
     <>
@@ -107,14 +109,10 @@ const TermAndConditions = ({ onSubmit, product }) => {
           <div className={`term-condition__banner ${ProductType[productType]}`}>
             <div className="banner__desc">
               <div className="product__type">
-                <span>{lcl_prdt_nm}</span>
+                <span>{prdt_c_display}</span>
               </div>
               <div className="product__desc">
-                <span>
-                  {ProductDescription[productCode]}
-                  {/* This product provides high interest rate even for a day saving with convenient deposit and withdrawal
-                system. */}
-                </span>
+                <span>{ProductDescription[productCode]}</span>
               </div>
             </div>
             <div className="banner__spec">
@@ -139,7 +137,7 @@ const TermAndConditions = ({ onSubmit, product }) => {
               )}
             </div>
             <div className="banner__image">
-              <img src={BannerBook} />
+              <img src={BannerMapProductCode[productCode]} />
             </div>
           </div>
           <div className="term-condition__checklist">

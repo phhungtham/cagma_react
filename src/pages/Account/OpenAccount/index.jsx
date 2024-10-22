@@ -30,7 +30,7 @@ import { customerInfo, getCustomerFailedMsg } from './redux/customer/selector';
 import { CustomerFeatureName } from './redux/customer/type';
 import './style.scss';
 
-const OpenAccount = ({ translation }) => {
+const OpenAccount = ({ translate: t }) => {
   useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
   useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
   const productInfo = useSelector(nativeParamsSelector);
@@ -170,6 +170,7 @@ const OpenAccount = ({ translation }) => {
           <TermAndConditions
             product={productInfo}
             onSubmit={onSubmitAgreeTerms}
+            translate={t}
           />
         )}
 

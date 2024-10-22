@@ -19,7 +19,7 @@ export const BannerMapProductCode = {
   [ProductCode.E_GREEN_TERM_DEPOSIT]: TfsaSaving,
   [ProductCode.E_SHORT_TERM_GIC]: RrspGic,
   [ProductCode.E_LONG_TERM_GIC]: RrspSaving,
-  [ProductCode.E_Long_Maturity]: RrspGic,
+  [ProductCode.E_LONG_MATURITY]: RrspGic,
   [ProductCode.TFSA_E_GIC]: BannerBook,
   [ProductCode.RRSP_E_GIC]: RrspGic,
   [ProductCode.CHEQUING]: Chequing,
@@ -41,7 +41,7 @@ export const DescriptionMapProductCode = {
     'This product guarantees the high fixed interest rate even for short term deposit.',
   [ProductCode.E_SHORT_TERM_GIC]: 'This product guarantees the high fixed interest rate even for short term deposit.',
   [ProductCode.E_LONG_TERM_GIC]: 'This product guarantees the high fixed interest rate even for short term deposit.',
-  [ProductCode.E_Long_Maturity]:
+  [ProductCode.E_LONG_MATURITY]:
     'This product offers compounded high interest rate for a longer investment period, all through online',
   [ProductCode.TFSA_E_GIC]: '',
   [ProductCode.RRSP_E_GIC]: 'This product guarantees the high fixed interest rate even for short term deposit.',

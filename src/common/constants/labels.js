@@ -211,6 +211,12 @@ export const changeProfileLabels = {
   homeAddressReview: 'lbl_CAME900000_0209', //Home address will be changed after reviewing submitted documents.
 };
 
+export const openAccountLabels = {
+  agreeTermsAll: 'lbl_CAPR501000_0007', //I fully understand and agree to all of the below
+  userAgreement: 'lbl_CAPR501000_0008', //[Mandatory] User Agreement
+  productFeature: 'lbl_CAPR501000_0009', //[Mandatory] Product Feature
+};
+
 export const menuLabels = {
   eAlertManage: 'mymen_CAME900020', //mymen_CAME900020
   balance: 'mymen_CAME900050', //Balance

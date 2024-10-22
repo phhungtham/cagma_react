@@ -296,8 +296,9 @@ const AppNotifications = ({ translate: t }) => {
   }, [tabIndex, listPromotionNotify]);
 
   useEffect(() => {
+    //TODO: Refactor code for handle show promotion detail bottom
     if (nativeParams !== undefined && !isEmpty(nativeParams) && promotionListDisplay && loadBannerSeq === '') {
-      const promotion = promotionListDisplay.find(e => e.banner_seq.toString() === nativeParams?.banner_seq_benefit);
+      const promotion = promotionListDisplay.find(e => e.banner_seq.toString() === nativeParams?.banner_seq_promotion);
       if (promotion && tabIndex === 2) {
         handleViewPromotionDetail(promotion);
         setBannerSeqState(promotion.banner_seq.toString());
@@ -336,6 +337,7 @@ const AppNotifications = ({ translate: t }) => {
   const handleClickTransaction = data => {
     const screenType = data?.dep_sjt_class;
     const accountNumber = data?.ums_ntc_acno;
+    //TODO: Check should we set redux tab
     setReduxTabIndex(tabIndex);
     moveToAccountDetailScreen(screenType, accountNumber);
   };

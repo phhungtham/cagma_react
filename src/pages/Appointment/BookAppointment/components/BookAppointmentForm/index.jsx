@@ -12,7 +12,6 @@ import { getPurposeAppointment, getSubPurposeAppointment } from '@common/constan
 import { hoursFullOptions, minuteHalfOptions } from '@common/constants/dateTime';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, bookAppointmentLabels as labels, menuLabels } from '@common/constants/labels';
-import { AppCfg } from '@configs/appConfigs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import PurposeAppointmentBottom from '@pages/Appointment/components/PurposeAppointmentBottom';
@@ -86,11 +85,6 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t }) => {
   };
 
   const handleOpenCalendar = () => {
-    if (AppCfg.ENV === 'development') {
-      //For dummy data because it call native calendar
-      setValue('date', '20241030', { shouldValidate: true });
-      setValue('dateDisplay', formatYYYYMMDDToDisplay('20241030'), { shouldValidate: true });
-    }
     openCalendar(handleSelectDate, { selectDate: date || undefined });
   };
 
