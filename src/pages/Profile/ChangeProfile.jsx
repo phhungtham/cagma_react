@@ -220,8 +220,9 @@ const ChangeProfile = ({ translate: t }) => {
   };
 
   const onConfirmSaveForm = () => {
+    handleSubmit(handleSubmitSaveForm)();
     setShowSaveChangeConfirmAlert(false);
-    alert('handle submit');
+    // alert('handle submit');
   };
 
   const handleRequestChangeProfile = async request => {
@@ -549,6 +550,7 @@ const ChangeProfile = ({ translate: t }) => {
         firstButton={{
           onClick: onConfirmSaveForm,
           label: t(ctaLabels.save),
+          disable: !isValid,
         }}
         secondButton={{
           onClick: handleCloseSaveChangeConfirmAlert,
