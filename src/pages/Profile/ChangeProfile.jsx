@@ -571,7 +571,7 @@ const ChangeProfile = ({ translate: t }) => {
           label: t(ctaLabels.confirm4),
         }}
       />
-      <section className="toast__overlay">
+      <section className="toast-container__overlay">
         <Toast
           isShowToast={showToast.isShow}
           type={showToast.type}

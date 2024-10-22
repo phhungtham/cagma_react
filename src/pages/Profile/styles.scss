@@ -123,11 +123,11 @@
     }
   }
 
-  .toast__overlay {
+  .toast-container__overlay {
     position: absolute;
     z-index: 9999;
     left: 50%;
-    bottom: 85px;
+    bottom: -15px;
     transform: translate(-50%, -50%);
 
     .toast {
