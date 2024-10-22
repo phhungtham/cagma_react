@@ -133,14 +133,16 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
             </Document>
           </div>
         </div>
-        <div className="view-term__footer">
-          <Button
-            label="Confirm"
-            variant="filled__primary"
-            className="btn__cta"
-            onClick={handleConfirmViewTerm}
-          />
-        </div>
+        {!hiddenConfirmBtn && (
+          <div className="view-term__footer">
+            <Button
+              label="Confirm"
+              variant="filled__primary"
+              className="btn__cta"
+              onClick={handleConfirmViewTerm}
+            />
+          </div>
+        )}
       </div>
     </BottomSheet>
   );
