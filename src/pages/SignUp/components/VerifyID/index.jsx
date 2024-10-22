@@ -33,6 +33,7 @@ const SignUpVerifyID = ({ onConfirm }) => {
     content: '',
   });
   const [transactionID, setTransactionID] = useState('');
+  const [transactionStatus, setTransactionStatus] = useState('');
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
@@ -135,6 +136,7 @@ const SignUpVerifyID = ({ onConfirm }) => {
     const data = await requestGetOneSpanStatus();
     if (data) {
       console.log(data);
+      setTransactionStatus(data);
       setShowToast({
         isShow: true,
         message: `Called CASE102 successfully, Result code ${data.resCd}`,
@@ -191,6 +193,7 @@ const SignUpVerifyID = ({ onConfirm }) => {
               name="dob_display"
             />
           </div>
+          <pre className="mt-4">CASE102_res: {JSON.stringify(transactionStatus, null, 2)}</pre>
         </div>
         <div className="footer__fixed">
           <Button
