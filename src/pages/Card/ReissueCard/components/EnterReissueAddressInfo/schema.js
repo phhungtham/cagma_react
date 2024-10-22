@@ -7,4 +7,9 @@ export const reissueCardAddressSchema = Yup.object().shape({
   city: Yup.string().required('Required field'),
   province: Yup.string().required('Required field'),
   postalCode: Yup.string().required('Required field'),
+  phoneNumber: Yup.string().when('isLogin', {
+    is: false,
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
 });

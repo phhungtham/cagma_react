@@ -1,23 +1,4 @@
 import { DepositSubjectClass } from '@common/constants/deposit';
-import { fileUrls } from '@common/constants/url';
-
-export const termConditionConfig = {
-  selectAllLabel: 'I fully understand and agree to all of the below',
-  options: [
-    {
-      label: '[Mandatory] User Agreement',
-      value: '1',
-      title: 'User Agreement',
-      fileUrl: fileUrls.openAccountAgreeTerm,
-    },
-    {
-      label: '[Mandatory] Product Feature',
-      value: '2',
-      title: 'Product Feature',
-      fileUrl: fileUrls.openAccountProductFeature,
-    },
-  ],
-};
 
 export const OPEN_ACCOUNT_STEP = {
   VIEW_TERMS: 'viewTerms',

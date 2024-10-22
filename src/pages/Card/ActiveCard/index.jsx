@@ -111,13 +111,15 @@ const ActiveCard = () => {
     setShowLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.activeCardNotLogged, payload);
     setShowLoading(false);
-    if (!isSuccess) {
-      const { cashcd_no_display: cardNo, cashcd_acno1_display: accountNumber } = data;
-      setActiveCardSuccessInfo({
-        cardNo,
-        accountNumber,
-      });
-      setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+    if (isSuccess) {
+      const { cashcd_no: cardNo, cashcd_acno1: accountNumber, result_cd } = data;
+      if (Number(result_cd) === 1) {
+        setActiveCardSuccessInfo({
+          cardNo,
+          accountNumber,
+        });
+        setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+      }
     } else {
       setAlert({
         isShow: true,
@@ -134,13 +136,15 @@ const ActiveCard = () => {
       adr_zipc: postalCode,
       cashcd_acno1: lastSixAccountNumber,
     };
-    const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep2, payload);
+    const { data, error, isSuccess } = await requestApi(endpoints.cardVerificationStep2, payload);
     setShowLoading(false);
-    if (!isSuccess) {
-      requestActiveCardNotLogged({
-        cus_email: email,
-        cell_telno: phoneNumber,
-      });
+    if (isSuccess) {
+      if (Number(data?.result_cd) === 1) {
+        requestActiveCardNotLogged({
+          cus_email: email,
+          cell_telno: phoneNumber,
+        });
+      }
     } else {
       setAlert({
         isShow: true,

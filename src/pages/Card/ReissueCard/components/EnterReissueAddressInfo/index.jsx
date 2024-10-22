@@ -11,19 +11,14 @@ import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBo
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { initSelectBottom } from '@common/constants/bottomsheet';
-import { getProvinceCode } from '@common/constants/commonCode';
 import { yupResolver } from '@hookform/resolvers/yup';
-import useCommonCode from '@hooks/useCommonCode';
-import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 
 import { reissueCardDetails, reissueCardTermsConfig } from '../../constants';
 import { reissueCardAddressSchema } from './schema';
 import './styles.scss';
 
-const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
-  const { sendRequest: requestGetCommonCode, data: commonCodeData } = useCommonCode();
-  const [provinceOptions, setProvinceOptions] = useState([]);
+const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceOptions }) => {
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [viewTermBottom, setViewTermBottom] = useState({
     open: false,
@@ -38,7 +33,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
     control,
     setValue,
     watch,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(reissueCardAddressSchema),
@@ -113,16 +108,14 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
   };
 
   useEffect(() => {
-    if (commonCodeData) {
-      const { state_c: provinces } = commonCodeData || {};
-      const convertedProvince = commonCodeDataToOptions(provinces);
-      setProvinceOptions(convertedProvince);
+    if (!isLogin && email) {
+      setValue('email', email);
     }
-  }, [commonCodeData]);
+  }, [isLogin, email]);
 
   useEffect(() => {
-    requestGetCommonCode(getProvinceCode);
-  }, []);
+    setValue('isLogin', !!isLogin);
+  }, [isLogin]);
 
   return (
     <>
@@ -247,6 +240,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin }) => {
                     <Input
                       label="Email"
                       placeholder="emailname@email.com"
+                      disabled
                       {...field}
                     />
                   )}

@@ -38,8 +38,8 @@ const EnterAccountInfo = ({ onSubmit }) => {
   const handleOpenCalendar = () => {
     if (AppCfg.ENV === 'development') {
       //For dummy data because it call native calendar
-      setValue('dob', '19980523', { shouldValidate: true });
-      setValue('dob_display', formatYYYYMMDDToDisplay('19980523'), { shouldValidate: true });
+      setValue('dob', '19700109', { shouldValidate: true });
+      setValue('dob_display', formatYYYYMMDDToDisplay('19700109'), { shouldValidate: true });
     }
     openCalendar(handleSelectDate, { selectDate: dob || undefined });
   };

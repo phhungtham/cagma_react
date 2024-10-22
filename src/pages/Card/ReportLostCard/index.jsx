@@ -88,7 +88,6 @@ const ReportLostCard = () => {
   };
 
   const requestReportLostNotLogged = async () => {
-    debugger;
     setShowLoading(true);
     let payload = {};
     if (notLoggedFormType === ReportLostNotLoggedType.ENTER_CARD_NUMBER) {

@@ -2,6 +2,7 @@ import BankingSaving from '@assets/images/banking-saving.png';
 import BorrowingCredit from '@assets/images/borrowing-credit.png';
 import BorrowingLoan from '@assets/images/borrowing-loan.png';
 import BorrowingMortgage from '@assets/images/borrowing-mortgage.png';
+import Chequing from '@assets/images/chequing.png';
 import InstallmentSavingDeposit from '@assets/images/installment-saving-deposit.png';
 import BannerBook from '@assets/images/open-account-book.png';
 import RrspGic from '@assets/images/rrsp-gic.png';
@@ -21,6 +22,7 @@ export const BannerMapProductCode = {
   [ProductCode.E_Long_Maturity]: RrspGic,
   [ProductCode.TFSA_E_GIC]: BannerBook,
   [ProductCode.RRSP_E_GIC]: RrspGic,
+  [ProductCode.CHEQUING]: Chequing,
 };
 
 export const keyBorrowing = {
@@ -43,6 +45,8 @@ export const DescriptionMapProductCode = {
     'This product offers compounded high interest rate for a longer investment period, all through online',
   [ProductCode.TFSA_E_GIC]: '',
   [ProductCode.RRSP_E_GIC]: 'This product guarantees the high fixed interest rate even for short term deposit.',
+  [ProductCode.CHEQUING]:
+    'This online product offers tax-sheltered growth and flexibility and withdraw according to your needs.',
 };
 
 export const borrowings = [

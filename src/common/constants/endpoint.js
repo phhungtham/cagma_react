@@ -38,4 +38,6 @@ export const endpoints = {
   reportLostNotLogged: '/ca/ca/CACA013.pwkjson',
   getOneSpanInfomation: '/ca/se/CASE101.pwkjson',
   getOneSpanStatus: '/ca/se/CASE102.pwkjson',
+  getCardReplacement: '/ca/ca/CACA007.pwkjson',
+  reissueCardNotLogged: '/ca/ca/CACA008.pwkjson',
 };

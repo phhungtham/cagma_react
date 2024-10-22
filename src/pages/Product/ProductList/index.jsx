@@ -102,7 +102,7 @@ const ProductList = () => {
       });
     }
     if ([ProductCode.E_SAVING, ProductCode.RRSP_E_SAVINGS, ProductCode.TFSA_E_SAVINGS].includes(productCode)) {
-      const isExistAccount = accountList.some(account => account.prdt_c === productCode);
+      const isExistAccount = accountList?.some(account => account.prdt_c === productCode);
       if (isExistAccount) {
         return setAlert({
           isShow: true,

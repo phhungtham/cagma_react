@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import BannerBook from '@assets/images/open-account-book.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -7,9 +7,10 @@ import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { PeriodUnitCodeDisplay } from '@common/constants/product';
+import { fileUrls } from '@common/constants/url';
 import { moveBack } from '@utilities/index';
 
-import { ProductType, termConditionConfig } from '../../constants';
+import { ProductType } from '../../constants';
 import { ProductDescription } from './constants';
 import './styles.scss';
 
@@ -21,9 +22,10 @@ const TermAndConditions = ({ onSubmit, product }) => {
     fileUrl: '',
     value: '',
   });
+  const [termConfig, setTermConfig] = useState();
   const [checkedOptions, setCheckedOptions] = useState([]);
 
-  const isValidForm = checkedOptions?.length === termConditionConfig.options.length;
+  const isValidForm = checkedOptions?.length === termConfig?.options.length;
 
   const onClickSubmit = () => {
     onSubmit();
@@ -38,7 +40,7 @@ const TermAndConditions = ({ onSubmit, product }) => {
   };
 
   const onClickViewTermDetail = value => {
-    const termItem = termConditionConfig.options.find(item => item.value === value);
+    const termItem = termConfig.options.find(item => item.value === value);
     const { fileUrl, title } = termItem;
     setViewTermBottom({
       open: true,
@@ -50,7 +52,7 @@ const TermAndConditions = ({ onSubmit, product }) => {
 
   const handleCheckAll = checked => {
     if (checked) {
-      setCheckedOptions(termConditionConfig.options.map(option => option.value));
+      setCheckedOptions(termConfig.options.map(option => option.value));
     } else {
       setCheckedOptions([]);
     }
@@ -67,6 +69,31 @@ const TermAndConditions = ({ onSubmit, product }) => {
   const onCloseViewTermBottom = () => {
     setViewTermBottom({ ...viewTermBottom, open: false });
   };
+
+  useEffect(() => {
+    if (product) {
+      debugger;
+      //TODO: Handle
+      const termConditionConfig = {
+        selectAllLabel: 'I fully understand and agree to all of the below',
+        options: [
+          {
+            label: '[Mandatory] User Agreement',
+            value: '1',
+            title: 'User Agreement',
+            fileUrl: fileUrls.openAccountAgreeTerm,
+          },
+          {
+            label: '[Mandatory] Product Feature',
+            value: '2',
+            title: 'Product Feature',
+            fileUrl: fileUrls.openAccountProductFeature,
+          },
+        ],
+      };
+      setTermConfig(termConditionConfig);
+    }
+  }, [product]);
 
   return (
     <>
@@ -117,7 +144,7 @@ const TermAndConditions = ({ onSubmit, product }) => {
           </div>
           <div className="term-condition__checklist">
             <TermConditionChecklist
-              config={termConditionConfig}
+              config={termConfig}
               onClickViewTerm={onClickViewTermDetail}
               onCheckOption={handleCheckOption}
               onCheckAll={handleCheckAll}

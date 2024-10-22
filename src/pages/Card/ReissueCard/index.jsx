@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
+import { getProvinceCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
+import { commonCodeDataToOptions } from '@utilities/convert';
 
 import { formatCardDateRequest } from '../utils/format';
 import EnterReissueAddressInfo from './components/EnterReissueAddressInfo';
@@ -15,7 +17,9 @@ import { REISSUE_CARD_STEP } from './constants';
 
 const ReissueCard = () => {
   const [currentStep, setCurrentStep] = useState(REISSUE_CARD_STEP.ENTER_CARD_INFORMATION);
+  const [provinceOptions, setProvinceOptions] = useState([]);
   const [cardInfo, setCardInfo] = useState({});
+  const [email, setEmail] = useState();
   const [reissueCardSuccessInfo, setReissueCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
@@ -62,8 +66,29 @@ const ReissueCard = () => {
         dailyWithdrawalLimit: `$${dailyWithdrawalLimit}`,
         dailyPOSLimit: `$${dailyPOSLimit}`,
         issueDate,
-        expireDate: expireDate,
+        expireDate,
       });
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const requestVerifyStep2NotLogged = async formValues => {
+    const { postalCode: adr_zipc, dob: cus_bth_y4mm_dt } = formValues;
+    const payload = {
+      adr_zipc,
+      cus_bth_y4mm_dt,
+    };
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.cardVerificationStep2, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      if (Number(data?.result_cd) === 1) {
+        setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
+      }
     } else {
       setAlert({
         isShow: true,
@@ -84,14 +109,19 @@ const ReissueCard = () => {
       cusnm: '',
       dbcd_iss_rsn_c: 'S0351',
     };
-    const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
+    const { data, error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
     if (isSuccess) {
-      if (isLogin) {
-        await requestGetCardInfo(formattedCardNumber);
-        setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
-      } else {
-        const { cardNumber, expiryDate } = values;
+      const { result_cd } = data || {};
+      if (Number(result_cd) === 1) {
+        if (isLogin) {
+          await requestGetCardInfo(formattedCardNumber);
+          setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
+        } else {
+          const { cus_email } = data;
+          setEmail(cus_email);
+          requestVerifyStep2NotLogged(values);
+        }
       }
     } else {
       setAlert({
@@ -101,7 +131,7 @@ const ReissueCard = () => {
     }
   };
 
-  const handleSubmitAddressInfo = async values => {
+  const requestReissueCardLogged = async values => {
     setShowLoading(true);
     const {
       streetNumber: street_no,
@@ -110,7 +140,6 @@ const ReissueCard = () => {
       city,
       province,
       postalCode: post_cd,
-      provinceOptions,
     } = values;
     const payload = {
       street_no,
@@ -120,11 +149,11 @@ const ReissueCard = () => {
       province,
       post_cd,
     };
-    await requestApi(endpoints.inquiryUserInformation);
+    await requestApi(endpoints.inquiryUserInformation); //Require by BE, do nothing
     const { data, error, isSuccess } = await requestApi(endpoints.reissueCardLogged, payload);
     setShowLoading(false);
     if (isSuccess) {
-      if (isLogin) {
+      if (Number(data?.result_cd) === 1) {
         const {
           street_no: streetNumber,
           street_nm: streetName,
@@ -153,6 +182,89 @@ const ReissueCard = () => {
     }
   };
 
+  const requestReissueCardNotLogged = async values => {
+    setShowLoading(true);
+    await requestApi(endpoints.getCardReplacement); //Require by BE, do nothing
+    const {
+      streetNumber: street_no,
+      streetName: street_nm,
+      aptNumber: apt_suite_no,
+      city,
+      province,
+      postalCode: post_cd,
+      phoneNumber: cell_telno,
+    } = values;
+    const payload = {
+      street_no,
+      street_nm,
+      apt_suite_no,
+      city,
+      province,
+      post_cd,
+      cell_telno,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.reissueCardNotLogged, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      if (Number(data?.result_cd) === 1) {
+        const {
+          street_no: streetNumber,
+          street_nm: streetName,
+          apt_suite_no: aptNumber,
+          cus_city_nm: city,
+          state_c_display: province,
+          adr_zipc: postalCode,
+          cashcd_iss_dt_display: issueDate,
+        } = data;
+        setReissueCardSuccessInfo({
+          streetNumber,
+          streetName,
+          aptNumber,
+          city,
+          province,
+          postalCode,
+          issueDate,
+        });
+        setCurrentStep(REISSUE_CARD_STEP.COMPLETED);
+      }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const handleSubmitAddressInfo = async values => {
+    if (isLogin) {
+      requestReissueCardLogged(values);
+    } else {
+      requestReissueCardNotLogged(values);
+    }
+  };
+
+  const requestGetProvinces = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
+      code: getProvinceCode,
+    });
+    setShowLoading(false);
+    if (isSuccess) {
+      const { state_c: provinces } = data || {};
+      const convertedProvince = commonCodeDataToOptions(provinces);
+      setProvinceOptions(convertedProvince);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  useEffect(() => {
+    requestGetProvinces();
+  }, []);
+
   return (
     <>
       <div className="reissue-card__wrapper page__wrapper">
@@ -171,7 +283,9 @@ const ReissueCard = () => {
           <EnterReissueAddressInfo
             onSubmit={handleSubmitAddressInfo}
             cardInfo={cardInfo}
+            email={email}
             isLogin={isLogin}
+            provinceOptions={provinceOptions}
           />
         )}
         {currentStep === REISSUE_CARD_STEP.COMPLETED && (

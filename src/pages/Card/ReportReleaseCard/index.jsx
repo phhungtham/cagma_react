@@ -25,7 +25,6 @@ const ReportReleaseCard = () => {
   const { requestApi } = useApi();
 
   const handleRequestReleaseCard = async values => {
-    debugger;
     setShowLoading(true);
     const payload = {
       glb_id: reportDetail.globalId,

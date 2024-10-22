@@ -42,8 +42,8 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
   const handleOpenCalendar = () => {
     if (isDevelopmentEnv) {
       //For dummy data because it call native calendar
-      setValue('dob', '19700109', { shouldValidate: true });
-      setValue('dob_display', formatYYYYMMDDToDisplay('19700109'), { shouldValidate: true });
+      setValue('dob', '19750227', { shouldValidate: true });
+      setValue('dob_display', formatYYYYMMDDToDisplay('19750227'), { shouldValidate: true });
     }
     openCalendar(handleSelectDate, { selectDate: dob || undefined });
   };
