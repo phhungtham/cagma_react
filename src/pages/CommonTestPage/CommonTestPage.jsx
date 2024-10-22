@@ -251,6 +251,7 @@ const CommonTestPage = () => {
         { title: 'Clear History', label: 'clear history', action: () => clearHistory(MENU_CODE.ACCOUNT) },
         { title: 'Home', label: 'home', action: () => moveHome() },
         { title: 'Move', label: 'move', action: () => moveNext(MENU_CODE.ACCOUNT) },
+        { title: 'Sign up test API page', label: 'move', action: () => moveNext(MENU_CODE.SIGN_UP) },
       ],
     },
     {
