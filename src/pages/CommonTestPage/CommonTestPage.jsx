@@ -12,18 +12,10 @@ import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBott
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
-import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
 import { CurrencyCode } from '@common/constants/currency';
 import { SelectTermDurationTypes } from '@common/constants/terms';
-import useCommonCode from '@hooks/useCommonCode';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
-import CustomerInfoBottom from '@pages/Account/OpenAccount/components/CustomerInfoBottom';
-import { getCustomerInfoRequest } from '@pages/Account/OpenAccount/redux/customer/action';
-import { customerReducer } from '@pages/Account/OpenAccount/redux/customer/reducer';
-import { customerSaga } from '@pages/Account/OpenAccount/redux/customer/saga';
-import { customerInfo } from '@pages/Account/OpenAccount/redux/customer/selector';
-import { CustomerFeatureName } from '@pages/Account/OpenAccount/redux/customer/type';
 import callCamera from '@utilities/gmCommon/callCamera';
 import callSelectImage from '@utilities/gmCommon/callSelectImage';
 import initProfileImg from '@utilities/gmCommon/initProfileImg';
@@ -54,7 +46,6 @@ const CommonTestPage = () => {
     manageLimit: false,
     decryptCVC: false,
     MyAccountsBottom: false,
-    CustomerInfoBottom: false,
     ViewTermBottom: false,
     ViewMapBottom: false,
     SelectDateBottom: false,
@@ -83,35 +74,7 @@ const CommonTestPage = () => {
   const [selectTime, setSelectTime] = useState({
     time: `${new Date().getHours() % 12} ${new Date().getHours() > 12 ? 'PM' : 'AM'}`,
   });
-  //Get customer info and phone number of home address, job data
-  useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
-  useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
-  const { sendRequest: requestGetJob, data: jobData } = useCommonCode();
-  useEffect(() => {
-    if (showBottomSheet.CustomerInfoBottom && !customer) {
-      getCustomerInfoRequest();
-    }
-  }, [showBottomSheet.CustomerInfoBottom]);
-  const customer = useSelector(customerInfo);
 
-  const homeAddress = customer?.r_CAME001_1Vo?.find(address => address.cus_adr_t === 11);
-  const cus_adr_telno = homeAddress?.cus_adr_telno || '';
-
-  useEffect(() => {
-    if (jobData) {
-      const jobType = customer.job_t;
-      const jobMapList = jobData.job_t || [];
-      customer.job_display = jobMapList.find(item => item.key === jobType)?.value || '';
-      const subJobType = customer.sub_job_t_v;
-      const subJobMapList = jobData.sub_job_t_v || [];
-      customer.sub_job_display = subJobMapList.find(item => item.key === subJobType)?.value || '';
-    }
-  }, [jobData]);
-  useEffect(() => {
-    if (customer && !jobData) {
-      requestGetJob(`${getJobCode};${getSubJobCode}`);
-    }
-  }, [customer]);
   // Login
   useReducers([{ key: FeatureLoginName, reducer: loginReducer }]);
   useSagas([{ key: FeatureLoginName, saga: loginSaga }]);
@@ -344,11 +307,6 @@ const CommonTestPage = () => {
       label: '• Test BS',
       items: [
         {
-          title: 'Customer Info',
-          label: 'Customer Info',
-          action: () => setShowBottomSheet({ ...showBottomSheet, CustomerInfoBottom: true }),
-        },
-        {
           title: 'Get Account list',
           label: 'Account List',
           action: () => setShowBottomSheet({ ...showBottomSheet, MyAccountsBottom: true }),
@@ -427,15 +385,6 @@ const CommonTestPage = () => {
           </section>
         </section>
 
-        {showBottomSheet.CustomerInfoBottom && (
-          <CustomerInfoBottom
-            customerInfo={{ ...customer, cus_adr_telno }}
-            // open={showBottomSheet.CustomerInfoBottom}
-            onClose={() => setShowBottomSheet({ ...showBottomSheet, CustomerInfoBottom: false })}
-            onClickConfirm={() => alert('Click confirm')}
-            onClickChangeProfile={() => alert('Click Change profile')}
-          />
-        )}
         <MyAccountsBottom
           open={showBottomSheet.MyAccountsBottom}
           onClose={() => setShowBottomSheet({ ...showBottomSheet, MyAccountsBottom: false })}

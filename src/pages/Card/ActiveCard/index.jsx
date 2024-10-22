@@ -38,12 +38,35 @@ const ActiveCard = () => {
     const { data, error, isSuccess } = await requestApi(endpoints.activeCardLogged, payload);
     setShowLoading(false);
     if (isSuccess) {
-      const { cashcd_no_display: cardNo, cashcd_acno1_display: accountNumber } = data;
-      setActiveCardSuccessInfo({
-        cardNo,
-        accountNumber,
+      const { cashcd_no_display: cardNo, cashcd_acno1_display: accountNumber, result_cd } = data;
+      if (Number(result_cd) === 1) {
+        setActiveCardSuccessInfo({
+          cardNo,
+          accountNumber,
+        });
+        setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+      }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
       });
-      setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+    }
+  };
+
+  const requestActiveCardNotLogged = async payload => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.activeCardNotLogged, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { cashcd_no_display: cardNo, cashcd_acno1_display: accountNumber, result_cd } = data;
+      if (Number(result_cd) === 1) {
+        setActiveCardSuccessInfo({
+          cardNo,
+          accountNumber,
+        });
+        setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
+      }
     } else {
       setAlert({
         isShow: true,
@@ -105,27 +128,6 @@ const ActiveCard = () => {
       title: '',
       content: '',
     });
-  };
-
-  const requestActiveCardNotLogged = async payload => {
-    setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.activeCardNotLogged, payload);
-    setShowLoading(false);
-    if (isSuccess) {
-      const { cashcd_no: cardNo, cashcd_acno1: accountNumber, result_cd } = data;
-      if (Number(result_cd) === 1) {
-        setActiveCardSuccessInfo({
-          cardNo,
-          accountNumber,
-        });
-        setCurrentStep(ACTIVE_CARD_STEP.COMPLETED);
-      }
-    } else {
-      setAlert({
-        isShow: true,
-        content: error,
-      });
-    }
   };
 
   const handleSubmitAccountForm = async values => {

@@ -8,9 +8,6 @@ import { MENU_CODE } from '@common/constants/common';
 import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
-import useCommonCode from '@hooks/useCommonCode';
-import useReducers from '@hooks/useReducers';
-import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
 import { apiCall } from '@shared/api';
 import { convertObjectBaseMappingFields } from '@utilities/convert';
@@ -25,17 +22,10 @@ import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
 import { accountFormMapFields, OPEN_ACCOUNT_STEP } from './constants';
-import { customerReducer } from './redux/customer/reducer';
-import { customerSaga } from './redux/customer/saga';
-import { CustomerFeatureName } from './redux/customer/type';
 import './style.scss';
 
 const OpenAccount = ({ translate: t }) => {
-  useReducers([{ key: CustomerFeatureName, reducer: customerReducer }]);
-  useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
   const productInfo = useSelector(nativeParamsSelector);
-
-  const { sendRequest: requestGetJob, data: jobData } = useCommonCode();
 
   const [currentStep, setCurrentStep] = useState(OPEN_ACCOUNT_STEP.VIEW_TERMS);
   const [showCustomerInfoBottom, setShowCustomerInfoBottom] = useState(false);
@@ -64,18 +54,43 @@ const OpenAccount = ({ translate: t }) => {
     setCurrentStep(OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION);
   };
 
-  const getCustomerInfoRequest = async () => {
-    //TODO: Test
+  const requestGetJob = async () => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.inquiryUserInformation);
+    const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
+      code: [getJobCode, getSubJobCode].join(';'),
+    });
+    setShowLoading(false);
+    if (isSuccess) {
+      return data;
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const requestGetCustomerInfo = async () => {
+    setShowLoading(true);
+    const { data: customerResponse, error, isSuccess } = await requestApi(endpoints.inquiryUserInformation);
     setShowLoading(false);
     if (isSuccess) {
       const homeAddressType = Number(addressTypeMapping.home);
-      const homeAddress = data?.r_CAME001_1Vo?.find(address => Number(address.cus_adr_t) === homeAddressType);
+      const homeAddress = customerResponse?.r_CAME001_1Vo?.find(
+        address => Number(address.cus_adr_t) === homeAddressType
+      );
       const cus_adr_telno = homeAddress?.cus_adr_telno || '';
+      const jobData = await requestGetJob();
+      const jobType = customerResponse.job_t;
+      const { job_t: jobMapList, sub_job_t: subJobMapList } = jobData || {};
+      const jobDisplay = jobMapList.find(item => item.key === jobType)?.value || '';
+      const subJobType = customerResponse.sub_job_t_v;
+      const subJobDisplay = subJobMapList.find(item => item.key === subJobType)?.value || '';
       setCustomer({
-        ...data,
+        ...customerResponse,
         cus_adr_telno,
+        jobDisplay,
+        subJobDisplay,
       });
     } else {
       setAlert({
@@ -147,26 +162,9 @@ const OpenAccount = ({ translate: t }) => {
 
   useEffect(() => {
     if (showCustomerInfoBottom && !customer) {
-      getCustomerInfoRequest();
+      requestGetCustomerInfo();
     }
   }, [showCustomerInfoBottom]);
-
-  useEffect(() => {
-    if (jobData?.job_t) {
-      const jobType = customer.job_t;
-      const jobMapList = jobData.job_t || [];
-      customer.job_display = jobMapList.find(item => item.key === jobType)?.value || '';
-      const subJobType = customer.sub_job_t_v;
-      const subJobMapList = jobData.sub_job_t || [];
-      customer.sub_job_display = subJobMapList.find(item => item.key === subJobType)?.value || '';
-    }
-  }, [jobData]);
-
-  useEffect(() => {
-    if (customer && !jobData) {
-      requestGetJob(`${getJobCode};${getSubJobCode}`);
-    }
-  }, [customer]);
 
   return (
     <>
@@ -182,7 +180,7 @@ const OpenAccount = ({ translate: t }) => {
 
         {showCustomerInfoBottom && customer && (
           <CustomerInfoBottom
-            // customerInfo={{ ...customer, cus_adr_telno }}
+            customerInfo={customer}
             onClose={() => setShowCustomerInfoBottom(false)}
             onClickConfirm={handleConfirmCustomerInfo}
             onClickChangeProfile={handleNavigateChangeProfile}

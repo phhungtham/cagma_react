@@ -38,14 +38,6 @@ export const customerInfoFields = [
   },
 ];
 
-export const openAccountInfo = {
-  productName: 'e-Saving(CAD)',
-  acNo: '700 000 123123',
-  interestRate: '7.00% APR',
-  amount: '1000.00 CAD',
-  depositFrom: '700 000 987654',
-};
-
 export const accountFormMapFields = {
   accountNo: 'acno',
   amount: 'trx_amt',
