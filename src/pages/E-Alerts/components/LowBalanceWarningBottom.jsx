@@ -10,7 +10,7 @@ const LowBalanceWarningBottom = ({ onClose, onSubmit, data, translate: t }) => {
       open
       onClose={onClose}
       title="Low balance Warning" //TODO: Missing label
-      clazz="money-leaving-account__wrapper"
+      clazz="money-leaving-account__wrapper include-footer"
       type="fit-content"
     >
       <BalanceSettingFormBottom

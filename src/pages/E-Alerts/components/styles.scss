@@ -2,6 +2,7 @@
 
 .customer-info__content,
 .balance-setting__content {
+  overflow-y: auto;
   padding-top: 16px;
   .title {
     font-size: 14px;
