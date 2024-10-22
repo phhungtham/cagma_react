@@ -1,36 +1,36 @@
 export const eAlertLabels = {
-  customerInformation: 'lbl_CAET900020_0001', //Customer Information
-  offers: 'lbl_CAET900020_0002', //Offers
-  balance: 'lbl_CAET900020_0003', //Balance
-  on: 'lbl_CAET900020_0004', //ON
-  off: 'lbl_CAET900020_0005', //OFF
-  offerNotiDisabled: 'lbl_CAET900020_0006', //Offers notifications disabled
-  offerNotiEnabled: 'lbl_CAET900020_0007', //Offers  notifications enabled
-  noAccount: 'lbl_CAET900020_0008', //There’s no account
-  noAccountDesc: 'lbl_CAET900020_0009', //Balance can only be set when there is an account.
-  customerInfoChange: 'lbl_CAET900020_0010', //Customer information changes
-  methods: 'lbl_CAET900020_0011', //Methods
-  email: 'lbl_CAET900020_0012', //E-MAIL
-  appPush: 'lbl_CAET900020_0013', //App Push
-  alertNotiDisabled: 'lbl_CAET900020_0014', //Alerts notifications disabled
-  alertNotiEnabled: 'lbl_CAET900020_0015', //Alerts  notifications enabled
-  setupAlertActivity: 'lbl_CAET900020_0016', //Set up alerts for account activity
-  account: 'lbl_CAET900020_0017', //Account
-  moneyLeaving: 'lbl_CAET900020_0018', //Money leaving your account
-  moneyInto: 'lbl_CAET900020_0019', //Money into your account
-  lowBalance: 'lbl_CAET900020_0020', //Low balance
-  moneyLeavingTitle: 'lbl_CAET900020_0021', //Money leaving your account
-  sendAlertAmountGreater: 'lbl_CAET900020_0022', //Send alert when amount is greater than
-  zeroCurrency: 'lbl_CAET900020_0023', //$0
-  oneHundredCurrency: 'lbl_CAET900020_0024', //$100
-  twoHundredCurrency: 'lbl_CAET900020_0025', //$200
-  custom: 'lbl_CAET900020_0026', //Custom
-  methodsTitle: 'lbl_CAET900020_0027', //Methods
-  emailOption: 'lbl_CAET900020_0028', //E-MAIL
-  appPushOption: 'lbl_CAET900020_0029', //App Push
-  amount: 'lbl_CAET900020_0030', //Amount
-  alertDisabled: 'lbl_CAET900020_0031', //Alerts notifications disabled
-  alertEnabled: 'lbl_CAET900020_0032', //Alerts  notifications enabled
+  customerInformation: 'lbl_CAME900020_0001', //Customer Information
+  offers: 'lbl_CAME900020_0002', //Offers
+  balance: 'lbl_CAME900020_0003', //Balance
+  on: 'lbl_CAME900020_0004', //ON
+  off: 'lbl_CAME900020_0005', //OFF
+  offerNotiDisabled: 'lbl_CAME900020_0006', //Offers notifications disabled
+  offerNotiEnabled: 'lbl_CAME900020_0007', //Offers  notifications enabled
+  noAccount: 'lbl_CAME900020_0008', //There’s no account
+  noAccountDesc: 'lbl_CAME900020_0009', //Balance can only be set when there is an account.
+  customerInfoChange: 'lbl_CAME900020_0010', //Customer information changes
+  methods: 'lbl_CAME900020_0011', //Methods
+  email: 'lbl_CAME900020_0012', //E-MAIL
+  appPush: 'lbl_CAME900020_0013', //App Push
+  alertNotiDisabled: 'lbl_CAME900020_0014', //Alerts notifications disabled
+  alertNotiEnabled: 'lbl_CAME900020_0015', //Alerts  notifications enabled
+  setupAlertActivity: 'lbl_CAME900020_0016', //Set up alerts for account activity
+  account: 'lbl_CAME900020_0017', //Account
+  moneyLeaving: 'lbl_CAME900020_0018', //Money leaving your account
+  moneyInto: 'lbl_CAME900020_0019', //Money into your account
+  lowBalance: 'lbl_CAME900020_0020', //Low balance
+  moneyLeavingTitle: 'lbl_CAME900020_0021', //Money leaving your account
+  sendAlertAmountGreater: 'lbl_CAME900020_0022', //Send alert when amount is greater than
+  zeroCurrency: 'lbl_CAME900020_0023', //$0
+  oneHundredCurrency: 'lbl_CAME900020_0024', //$100
+  twoHundredCurrency: 'lbl_CAME900020_0025', //$200
+  custom: 'lbl_CAME900020_0026', //Custom
+  methodsTitle: 'lbl_CAME900020_0027', //Methods
+  emailOption: 'lbl_CAME900020_0028', //E-MAIL
+  appPushOption: 'lbl_CAME900020_0029', //App Push
+  amount: 'lbl_CAME900020_0030', //Amount
+  alertDisabled: 'lbl_CAME900020_0031', //Alerts notifications disabled
+  alertEnabled: 'lbl_CAME900020_0032', //Alerts  notifications enabled
 };
 
 export const appNotiLabels = {
