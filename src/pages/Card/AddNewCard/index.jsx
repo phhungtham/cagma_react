@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
@@ -15,6 +15,7 @@ const AddNewCard = ({ translation }) => {
   const [currentStep, setCurrentStep] = useState(ADD_NEW_CARD_STEP.TERMS_CONDITIONS);
   const [addCardSuccessInfo, setAddCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
+  const [email, setEmail] = useState();
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -90,6 +91,25 @@ const AddNewCard = ({ translation }) => {
     }
   };
 
+  const requestGetCustomer = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.inquiryUserInformation);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { cus_email } = data;
+      setEmail(cus_email);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  useEffect(() => {
+    requestGetCustomer();
+  }, []);
+
   return (
     <>
       <div className="add-new-card__wrapper page__wrapper">
@@ -101,6 +121,7 @@ const AddNewCard = ({ translation }) => {
             onSubmit={handleSubmitAddNewCard}
             setShowLoading={setShowLoading}
             setAlert={setAlert}
+            email={email}
           />
         )}
         {currentStep === ADD_NEW_CARD_STEP.COMPLETED && <AddNewCardSuccess cardInfo={addCardSuccessInfo} />}

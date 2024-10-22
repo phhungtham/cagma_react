@@ -22,7 +22,7 @@ import { moveBack } from '@utilities/index';
 import { newCardFormSchema } from './schema';
 import './styles.scss';
 
-const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
+const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [provinceOptions, setProvinceOptions] = useState([]);
@@ -151,9 +151,15 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
   };
 
   useEffect(() => {
+    if (email) {
+      setValue('email', email);
+    }
+  }, [email]);
+
+  useEffect(() => {
     const defaultContactlessValue = applyContactless ? '250' : '';
-    setValue('contactlessPerTransaction', defaultContactlessValue);
-    setValue('totalContactless', defaultContactlessValue);
+    setValue('contactlessPerTransaction', defaultContactlessValue, { shouldValidate: true });
+    setValue('totalContactless', defaultContactlessValue, { shouldValidate: true });
   }, [applyContactless]);
 
   useEffect(() => {
@@ -369,7 +375,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert }) => {
                   control={control}
                   name="getTransactionNotice"
                 />
-                {/* //TODO: Call APi CAME001 and set email to default value */}
                 {getTransactionNotice && (
                   <Controller
                     render={({ field }) => (
