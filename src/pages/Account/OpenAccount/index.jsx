@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
+import { addressTypeMapping } from '@common/constants/address';
 import { MENU_CODE } from '@common/constants/common';
 import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
+import useApi from '@hooks/useApi';
 import useCommonCode from '@hooks/useCommonCode';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
@@ -23,10 +25,8 @@ import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
 import { accountFormMapFields, OPEN_ACCOUNT_STEP } from './constants';
-import { getCustomerInfoRequest } from './redux/customer/action';
 import { customerReducer } from './redux/customer/reducer';
 import { customerSaga } from './redux/customer/saga';
-import { customerInfo, getCustomerFailedMsg } from './redux/customer/selector';
 import { CustomerFeatureName } from './redux/customer/type';
 import './style.scss';
 
@@ -35,30 +35,28 @@ const OpenAccount = ({ translate: t }) => {
   useSagas([{ key: CustomerFeatureName, saga: customerSaga }]);
   const productInfo = useSelector(nativeParamsSelector);
 
-  const customer = useSelector(customerInfo);
-  const getCustomerFailedMessage = useSelector(getCustomerFailedMsg);
-
   const { sendRequest: requestGetJob, data: jobData } = useCommonCode();
 
   const [currentStep, setCurrentStep] = useState(OPEN_ACCOUNT_STEP.VIEW_TERMS);
   const [showCustomerInfoBottom, setShowCustomerInfoBottom] = useState(false);
-  const [isLoadingCustomer, setIsLoadingCustomer] = useState(false);
-  const [isLoadingOpenAccount, setIsLoadingOpenAccount] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [openAccountSuccessInfo, setOpenAccountSuccessInfo] = useState();
-  const [showAlert, setShowAlert] = useState({
+  const [customer, setCustomer] = useState();
+  const [alert, setAlert] = useState({
     isShow: false,
     title: '',
     content: '',
   });
+  const { requestApi } = useApi();
 
   const { prdt_c, product_ccy, ntfct_intrt, lcl_prdt_nm, dep_sjt_class } = productInfo || {};
 
-  //Get phone number of home address
-  const homeAddress = customer?.r_CAME001_1Vo?.find(address => address.cus_adr_t === 11);
-  const cus_adr_telno = homeAddress?.cus_adr_telno || '';
-
   const onSubmitAgreeTerms = () => {
     setShowCustomerInfoBottom(true);
+  };
+
+  const handleCloseAlert = () => {
+    setAlert({ isShow: false, title: '', content: '' });
   };
 
   const handleConfirmCustomerInfo = () => {
@@ -66,8 +64,29 @@ const OpenAccount = ({ translate: t }) => {
     setCurrentStep(OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION);
   };
 
+  const getCustomerInfoRequest = async () => {
+    //TODO: Test
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.inquiryUserInformation);
+    setShowLoading(false);
+    if (isSuccess) {
+      const homeAddressType = Number(addressTypeMapping.home);
+      const homeAddress = data?.r_CAME001_1Vo?.find(address => Number(address.cus_adr_t) === homeAddressType);
+      const cus_adr_telno = homeAddress?.cus_adr_telno || '';
+      setCustomer({
+        ...data,
+        cus_adr_telno,
+      });
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
   const onSubmitOpenAccountForm = async formValues => {
-    setIsLoadingOpenAccount(true);
+    setShowLoading(true);
     const productInterestRateResponse = await apiCall(endpoints.inquiryProductInterestRate, 'POST', {
       prdt_c,
       product_ccy,
@@ -100,7 +119,7 @@ const OpenAccount = ({ translate: t }) => {
     delete request.intendedUseAccountDisplay;
     delete request.dob_display;
     const openAccountResponse = await apiCall(endpoints.openAccount, 'POST', request);
-    setIsLoadingOpenAccount(false);
+    setShowLoading(false);
     const openAccountStatus = openAccountResponse?.data?.elHeader;
     if (openAccountStatus?.resSuc) {
       const { lcl_ac_no_display, dep_acno_display } = openAccountResponse?.data?.elData || {};
@@ -114,7 +133,7 @@ const OpenAccount = ({ translate: t }) => {
       });
       setCurrentStep(OPEN_ACCOUNT_STEP.COMPLETED);
     } else {
-      setShowAlert({
+      setAlert({
         isShow: true,
         title: 'Sorry!',
         content: openAccountStatus?.resMsgVo?.msgText,
@@ -128,7 +147,6 @@ const OpenAccount = ({ translate: t }) => {
 
   useEffect(() => {
     if (showCustomerInfoBottom && !customer) {
-      setIsLoadingCustomer(true);
       getCustomerInfoRequest();
     }
   }, [showCustomerInfoBottom]);
@@ -141,7 +159,6 @@ const OpenAccount = ({ translate: t }) => {
       const subJobType = customer.sub_job_t_v;
       const subJobMapList = jobData.sub_job_t || [];
       customer.sub_job_display = subJobMapList.find(item => item.key === subJobType)?.value || '';
-      setIsLoadingCustomer(false);
     }
   }, [jobData]);
 
@@ -151,21 +168,10 @@ const OpenAccount = ({ translate: t }) => {
     }
   }, [customer]);
 
-  useEffect(() => {
-    if (getCustomerFailedMessage) {
-      setIsLoadingCustomer(false);
-      setShowAlert({
-        isShow: true,
-        title: 'Sorry!',
-        content: getCustomerFailedMessage,
-      });
-    }
-  }, [getCustomerFailedMessage]);
-
   return (
     <>
       <div className="open-account__wrapper">
-        {(isLoadingCustomer || isLoadingOpenAccount) && <Spinner />}
+        {showLoading && <Spinner />}
         {currentStep === OPEN_ACCOUNT_STEP.VIEW_TERMS && (
           <TermAndConditions
             product={productInfo}
@@ -174,9 +180,9 @@ const OpenAccount = ({ translate: t }) => {
           />
         )}
 
-        {showCustomerInfoBottom && !isLoadingCustomer && (
+        {showCustomerInfoBottom && customer && (
           <CustomerInfoBottom
-            customerInfo={{ ...customer, cus_adr_telno }}
+            // customerInfo={{ ...customer, cus_adr_telno }}
             onClose={() => setShowCustomerInfoBottom(false)}
             onClickConfirm={handleConfirmCustomerInfo}
             onClickChangeProfile={handleNavigateChangeProfile}
@@ -205,15 +211,13 @@ const OpenAccount = ({ translate: t }) => {
       </div>
       <Alert
         isCloseButton={false}
-        isShowAlert={showAlert.isShow}
-        title={showAlert.title}
-        subtitle={showAlert.content}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
         textAlign="left"
-        onClose={() => {
-          setShowAlert({ isShow: false, title: '', content: '' });
-        }}
+        onClose={handleCloseAlert}
         firstButton={{
-          onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
+          onClick: handleCloseAlert,
           label: 'Confirm',
         }}
       />
