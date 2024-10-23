@@ -47,7 +47,6 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
   const [showEnterAmountBottom, setShowEnterAmountBottom] = useState(false);
   const [showSelectFrequencyBottom, setShowSelectFrequencyBottom] = useState(false);
   const [showIntendedUseAccountBottom, setShowIntendedUseAccountBottom] = useState(false);
-  const [showTerms, setShowTerms] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [showThirdPartyForm, setShowThirdPartyForm] = useState(false);
   const [showInterestRateSection, setShowInterestRateSection] = useState(false);
@@ -62,13 +61,16 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
 
   const {
     ntfct_intrt: interestRate,
-    lcl_prdt_nm: productName,
+    prdt_c_display: productName,
     dep_sjt_class: productType,
     prdt_psb_trm_unit_c: unitCode,
     prdt_c: productCode,
+    prdt_st_trm_unit_cnt: minTerms,
+    prdt_close_trm_unit_cnt: maxTerms,
   } = product || {};
 
   const isInstallmentSaving = productCode === ProductCode.E_INSTALLMENT_SAVING;
+  const showTerms = productType !== DepositSubjectClass.REGULAR_SAVING;
 
   const methods = useForm({
     defaultValues: openAccountDefaultValues,
@@ -213,13 +215,6 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
       setValue('debitCardIssuance', true, { shouldValidate: true });
     }
   }, [cardCountInfo]);
-
-  useEffect(() => {
-    if (productType) {
-      const isShowTerms = productType !== DepositSubjectClass.REGULAR_SAVING;
-      setShowTerms(isShowTerms);
-    }
-  }, [productType]);
 
   useEffect(() => {
     checkShowThirdPartyForm();
@@ -395,8 +390,8 @@ const EnterAccountInformation = ({ onSubmit, product }) => {
             }
             onChange={onChangeTerms}
             value={term}
-            max={60}
-            min={1}
+            max={maxTerms}
+            min={minTerms}
             options={termOptionsBaseProductCode[productCode] || []}
           />
         )}
