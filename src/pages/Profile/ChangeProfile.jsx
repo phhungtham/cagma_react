@@ -481,7 +481,7 @@ const ChangeProfile = ({ translate: t }) => {
   }, []);
 
   return (
-    <div className="change-profile__wrapper">
+    <div className="change-profile__wrapper h-screen">
       {(showLoading || isLoadingCommonCode || isLoadingUser) && <Spinner />}
       <Header
         title={t(menuLabels.changeProfile)}
