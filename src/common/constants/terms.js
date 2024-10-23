@@ -37,6 +37,9 @@ export const selectTermsByDateOptions = [
 ];
 
 export const SelectTermDurationTypes = {
+  DAY: 'D',
+  WEEK: 'W',
   MONTH: 'M',
-  DATE: 'D',
+  QUARTER: 'Q',
+  YEAR: 'Y',
 };

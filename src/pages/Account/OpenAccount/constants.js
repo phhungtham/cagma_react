@@ -1,4 +1,5 @@
 import { DepositSubjectClass } from '@common/constants/deposit';
+import { ProductPeriodUnitCode } from '@common/constants/product';
 
 export const OPEN_ACCOUNT_STEP = {
   VIEW_TERMS: 'viewTerms',
@@ -60,4 +61,28 @@ export const ProductType = {
   [DepositSubjectClass.REGULAR_SAVING]: 'banking',
   [DepositSubjectClass.INSTALLMENT_SAVING]: 'investment',
   [DepositSubjectClass.TERM_DEPOSIT_GIC]: 'investment',
+};
+
+export const UnitCodeWithPeriodType = {
+  [ProductPeriodUnitCode.DAY]: 'D',
+  [ProductPeriodUnitCode.WEEK]: 'W',
+  [ProductPeriodUnitCode.MONTH]: 'M',
+  [ProductPeriodUnitCode.QUARTER]: 'Q',
+  [ProductPeriodUnitCode.YEAR]: 'Y',
+};
+
+export const TermRequestUnitCode = {
+  DAY: 'D',
+  WEEK: 'W',
+  MONTH: 'M',
+  QUARTER: 'Q',
+  YEAR: 'Y',
+};
+
+export const TermUnitCodeDisplay = {
+  [TermRequestUnitCode.DAY]: 'days',
+  [TermRequestUnitCode.WEEK]: 'weeks',
+  [TermRequestUnitCode.MONTH]: 'months',
+  [TermRequestUnitCode.QUARTER]: 'quarters',
+  [TermRequestUnitCode.YEAR]: 'years',
 };

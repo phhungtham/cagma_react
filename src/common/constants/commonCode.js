@@ -9,6 +9,7 @@ export const getPurposeAppointment = 'apint_purp';
 export const getSubPurposeAppointment = 'apint_sub_purp';
 export const getAppointmentStatus = 'apint_stat';
 export const getCardAreaProvinceCode = 'ca_cashcd_use_regn_d';
+export const getMaturityOption = 'dep_due_rnw_t';
 
 export const EmploymentMap = {
   Employed: '2',

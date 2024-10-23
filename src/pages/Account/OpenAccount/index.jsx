@@ -5,12 +5,13 @@ import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { addressTypeMapping } from '@common/constants/address';
 import { MENU_CODE } from '@common/constants/common';
-import { getJobCode, getSubJobCode } from '@common/constants/commonCode';
+import { getJobCode, getMaturityOption, getProvinceCode, getSubJobCode } from '@common/constants/commonCode';
+import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
 import { apiCall } from '@shared/api';
-import { convertObjectBaseMappingFields } from '@utilities/convert';
+import { commonCodeDataToOptions, convertObjectBaseMappingFields } from '@utilities/convert';
 import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveNext } from '@utilities/index';
 import { nativeParamsSelector } from 'app/redux/selector';
@@ -21,7 +22,7 @@ import DTR from './components/DTR';
 import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
-import { accountFormMapFields, OPEN_ACCOUNT_STEP } from './constants';
+import { accountFormMapFields, OPEN_ACCOUNT_STEP, TermUnitCodeDisplay, UnitCodeWithPeriodType } from './constants';
 import './style.scss';
 
 const OpenAccount = ({ translate: t }) => {
@@ -31,6 +32,8 @@ const OpenAccount = ({ translate: t }) => {
   const [showCustomerInfoBottom, setShowCustomerInfoBottom] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [openAccountSuccessInfo, setOpenAccountSuccessInfo] = useState();
+  const [provinceOptions, setProvinceOptions] = useState();
+  const [maturityOptions, setMaturityOptions] = useState(); //Using for display Maturity Option on completed screen
   const [customer, setCustomer] = useState();
   const [alert, setAlert] = useState({
     isShow: false,
@@ -39,7 +42,14 @@ const OpenAccount = ({ translate: t }) => {
   });
   const { requestApi } = useApi();
 
-  const { prdt_c, product_ccy, ntfct_intrt, lcl_prdt_nm, dep_sjt_class } = productInfo || {};
+  const {
+    prdt_c,
+    product_ccy,
+    ntfct_intrt,
+    lcl_prdt_nm,
+    dep_sjt_class,
+    prdt_psb_trm_unit_c: termUnitCode,
+  } = productInfo || {};
 
   const onSubmitAgreeTerms = () => {
     setShowCustomerInfoBottom(true);
@@ -54,13 +64,17 @@ const OpenAccount = ({ translate: t }) => {
     setCurrentStep(OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION);
   };
 
-  const requestGetJob = async () => {
+  const requestGetCommonCode = async () => {
     setShowLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
-      code: [getJobCode, getSubJobCode].join(';'),
+      code: [getJobCode, getSubJobCode, getProvinceCode, getMaturityOption].join(';'),
     });
     setShowLoading(false);
     if (isSuccess) {
+      const { state_c: provinces, dep_due_rnw_t: maturityOptions } = data;
+      const convertedProvince = commonCodeDataToOptions(provinces);
+      setProvinceOptions(convertedProvince);
+      setMaturityOptions(maturityOptions);
       return data;
     } else {
       setAlert({
@@ -80,7 +94,7 @@ const OpenAccount = ({ translate: t }) => {
         address => Number(address.cus_adr_t) === homeAddressType
       );
       const cus_adr_telno = homeAddress?.cus_adr_telno || '';
-      const jobData = await requestGetJob();
+      const jobData = await requestGetCommonCode();
       const jobType = customerResponse.job_t;
       const { job_t: jobMapList, sub_job_t: subJobMapList } = jobData || {};
       const jobDisplay = jobMapList.find(item => item.key === jobType)?.value || '';
@@ -100,8 +114,111 @@ const OpenAccount = ({ translate: t }) => {
     }
   };
 
+  const requestOpenDepositAccount = async payload => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.openAccountDeposit, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const {
+        prdt_c_display: productName,
+        withdraw_acno_display: acNo,
+        ntfct_intrt_display,
+        trx_amt_display: amount,
+        dep_acno_display: depositFrom,
+        ctrt_trm_cnt: term,
+        trx_ccy_c: currency,
+        ctrt_trm_d: termUnitCode,
+        due_date_display: maturityDate,
+      } = data;
+      const maturityOption = (maturityOptions || []).find(option => Number(option.key) === 40)?.value;
+      setOpenAccountSuccessInfo({
+        productName,
+        acNo,
+        interestRate: `${ntfct_intrt_display}% APR`,
+        amount: `${amount} ${currency}`,
+        term: `${term} ${TermUnitCodeDisplay[termUnitCode]}`,
+        maturityDate,
+        maturityOption,
+        depositFrom,
+      });
+      setCurrentStep(OPEN_ACCOUNT_STEP.COMPLETED);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const requestPreOpenDepositAccount = async values => {
+    setShowLoading(true);
+    const {
+      accountNo: withdraw_acno,
+      amount: trx_amt,
+      intendedUseAccount: dep_ac_usag_d,
+      y4mm_intrt_d,
+      dep_intrt_k,
+      intrt_trm_c,
+      ntfct_intrt,
+      adt_intrt,
+      term: ctrt_trm_cnt,
+      thirdPartyChecked: tpd_chk,
+      thirdPartyName: tpd_nm,
+      dob: tpd_bth_y4mm_dt,
+      address: tpd_adr1,
+      city: tpd_adr2,
+      province: tpd_state_c,
+      postalCode: tpd_adr_zipc,
+      occupation: tpd_job_nm,
+      relationship: tpd_cus_relt_ctt,
+      referralCode: dep_cvsr_bnkerno,
+    } = values || {};
+    const payload = {
+      prdt_c,
+      withdraw_acno,
+      trx_amt,
+      trx_ccy_c: product_ccy,
+      dep_ac_usag_d,
+      y4mm_intrt_d,
+      dep_intrt_k,
+      intrt_trm_c,
+      ntfct_intrt,
+      adt_intrt,
+      ctrt_trm_d: UnitCodeWithPeriodType[termUnitCode],
+      ctrt_trm_cnt,
+      tpd_chk,
+      tpd_nm,
+      tpd_bth_y4mm_dt,
+      tpd_adr1,
+      tpd_adr2,
+      tpd_state_c,
+      tpd_adr_zipc,
+      tpd_job_nm,
+      tpd_cus_relt_ctt,
+      dep_cvsr_bnkerno,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.preOpenAccountDeposit, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { gibintnbk_aplct_trx_mng_no, due_date } = data;
+      requestOpenDepositAccount({
+        ...payload,
+        gibintnbk_aplct_trx_mng_no,
+        due_date,
+      });
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
   const onSubmitOpenAccountForm = async formValues => {
     setShowLoading(true);
+    if (dep_sjt_class === DepositSubjectClass.TERM_DEPOSIT_GIC) {
+      return requestPreOpenDepositAccount(formValues);
+    }
     const productInterestRateResponse = await apiCall(endpoints.inquiryProductInterestRate, 'POST', {
       prdt_c,
       product_ccy,
@@ -190,6 +307,8 @@ const OpenAccount = ({ translate: t }) => {
           <EnterAccountInformation
             onSubmit={onSubmitOpenAccountForm}
             product={productInfo}
+            setAlert={setAlert}
+            provinces={provinceOptions}
           />
         )}
         {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && (

@@ -9,8 +9,11 @@ import { SelectTermDurationTypes } from '@common/constants/terms';
 import dayjs from 'dayjs';
 
 const typeWithUnitLabel = {
+  [SelectTermDurationTypes.DAY]: 'days',
+  [SelectTermDurationTypes.WEEK]: 'weeks',
   [SelectTermDurationTypes.MONTH]: 'months',
-  [SelectTermDurationTypes.DATE]: 'days',
+  [SelectTermDurationTypes.QUARTER]: 'quarters',
+  [SelectTermDurationTypes.YEAR]: 'years',
 };
 
 const SelectTermsBottom = ({
@@ -18,11 +21,11 @@ const SelectTermsBottom = ({
   type = SelectTermDurationTypes.MONTH,
   onChange,
   value,
-  max = 60,
-  min = 1,
+  max,
+  min,
   options = [],
 }) => {
-  const [isInvalidValue, setIsInvalidValue] = useState(false);
+  const [termError, setTermError] = useState();
   const [termValue, setTermValue] = useState(value);
   const inputRef = useRef(null);
   // const options = type === SelectTermDurationTypes.MONTH ? selectTermsByMonthOptions : selectTermsByDateOptions;
@@ -52,8 +55,7 @@ const SelectTermsBottom = ({
 
   const getMaturityDate = () => {
     const currentDate = dayjs();
-    const addType = type === SelectTermDurationTypes.MONTH ? 'month' : 'day';
-    const maturityDate = currentDate.add(termValue, addType);
+    const maturityDate = currentDate.add(termValue, typeWithUnitLabel[type]);
     const formattedDate = maturityDate.format(dateFormat);
     return formattedDate;
   };
@@ -63,8 +65,15 @@ const SelectTermsBottom = ({
   }, []);
 
   useEffect(() => {
-    const isInvalid = termValue && Number(termValue) > max;
-    setIsInvalidValue(isInvalid);
+    let messageError = '';
+    if (termValue) {
+      if (max && Number(termValue) > max) {
+        messageError = `Please input an amount less than ${max} ${typeWithUnitLabel[type]}`;
+      } else if (min && Number(termValue) < min) {
+        messageError = `Please input an amount more than ${min} ${typeWithUnitLabel[type]}`;
+      }
+    }
+    setTermError(messageError);
   }, [termValue]);
 
   return (
@@ -86,17 +95,15 @@ const SelectTermsBottom = ({
             maxLength={3}
           />
           <div className={`select-terms__value ${termValue ? 'has-value' : ''}`}>
-            <span className="select-terms__number">{termValue || `${min}~${max}`}</span>
+            <span className="select-terms__number">{termValue || `${min || ''}~${max || ''}`}</span>
             <span className="select-terms__unit">{typeWithUnitLabel[type]}</span>
           </div>
-          {isInvalidValue && (
+          {!!termError && (
             <div className="select-terms__error-alert">
               <span className="error-icon mr-1">
                 <ErrorIcon />
               </span>
-              <span>
-                Please enter less than {max} {typeWithUnitLabel[type]}
-              </span>
+              <span>{termError}</span>
             </div>
           )}
           <div className="select-terms__options">
@@ -118,7 +125,7 @@ const SelectTermsBottom = ({
               variant="filled__primary"
               className="btn-submit"
               onClick={onClickConfirm}
-              disable={isInvalidValue || !termValue}
+              disable={termError || !termValue}
             />
           </div>
         </div>

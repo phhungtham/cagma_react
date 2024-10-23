@@ -1,3 +1,5 @@
+import { SelectTermDurationTypes } from './terms';
+
 export const ProductPeriodUnitCode = {
   DAY: '1',
   WEEK: '2',
@@ -12,6 +14,14 @@ export const PeriodUnitCodeDisplay = {
   [ProductPeriodUnitCode.MONTH]: 'Months',
   [ProductPeriodUnitCode.QUARTER]: 'Quarters',
   [ProductPeriodUnitCode.YEAR]: 'Years',
+};
+
+export const ProductUnitCodeWithTermType = {
+  [ProductPeriodUnitCode.DAY]: SelectTermDurationTypes.DAY,
+  [ProductPeriodUnitCode.WEEK]: SelectTermDurationTypes.WEEK,
+  [ProductPeriodUnitCode.MONTH]: SelectTermDurationTypes.MONTH,
+  [ProductPeriodUnitCode.QUARTER]: SelectTermDurationTypes.QUARTER,
+  [ProductPeriodUnitCode.YEAR]: SelectTermDurationTypes.YEAR,
 };
 
 export const ProductTab = {

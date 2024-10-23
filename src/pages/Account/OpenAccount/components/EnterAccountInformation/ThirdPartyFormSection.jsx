@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { FillTooltipIcon } from '@assets/icons';
@@ -9,21 +9,15 @@ import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Tooltip from '@common/components/atoms/Tooltip';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import { postalCodeNotAllowRegex } from '@common/constants/regex';
-import useProvince from '@hooks/useProvince';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 
 import { thirdPartyActiveOptions } from './constants';
 
-const ThirdPartyFormSection = () => {
-  const { data: provinceList, requestGetProvinceList } = useProvince();
+const ThirdPartyFormSection = ({ provinces }) => {
   const [showSelectProvinceBottom, setShowSelectProvinceBottom] = useState(false);
 
   const { watch, setValue, control } = useFormContext();
-
-  const provinceListConverted = (provinceList || []).map(item => {
-    return { value: item.key, label: item.value };
-  });
 
   const [thirdPartyChecked, dob] = watch(['thirdPartyChecked', 'dob']);
 
@@ -46,12 +40,6 @@ const ThirdPartyFormSection = () => {
     setValue('province', item.value, { shouldValidate: true });
     setShowSelectProvinceBottom(false);
   };
-
-  useEffect(() => {
-    if (thirdPartyChecked === 'Y' && !provinceList?.length) {
-      requestGetProvinceList();
-    }
-  }, [thirdPartyChecked]);
 
   return (
     <div className="third-party__section page__container">
@@ -129,7 +117,7 @@ const ThirdPartyFormSection = () => {
                 <Dropdown
                   label="Province"
                   onFocus={handleOpenSelectProvinceDropdown}
-                  options={provinceListConverted}
+                  options={provinces}
                   {...field}
                 />
               )}
@@ -177,7 +165,7 @@ const ThirdPartyFormSection = () => {
         open={showSelectProvinceBottom}
         onClose={() => setShowSelectProvinceBottom(false)}
         onSelect={handleSelectProvince}
-        options={provinceListConverted}
+        options={provinces}
         title="Province"
       />
     </div>
