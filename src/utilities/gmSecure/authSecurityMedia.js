@@ -1,7 +1,8 @@
+import { SecurityMediaType } from '@common/constants/plugin';
 import { AppCfg } from '@configs/appConfigs';
 import { $h } from 'navigation/wmatrix_config';
 
-const enterSecurityPasscode = async (successCb, errorCb) => {
+const authSecurityMedia = async (successCb, errorCb) => {
   if (AppCfg.ENV === 'development') return successCb();
   $h.exec(
     result => {
@@ -12,8 +13,12 @@ const enterSecurityPasscode = async (successCb, errorCb) => {
       }
     },
     'GMSecure',
-    'enterSecurityPasscode',
-    []
+    'authSecurityMedia',
+    [
+      {
+        mediaType: SecurityMediaType.MOTP,
+      },
+    ]
   );
 };
-export default enterSecurityPasscode;
+export default authSecurityMedia;

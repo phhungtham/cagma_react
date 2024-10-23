@@ -35,7 +35,7 @@ import {
 } from '@utilities/convert';
 import getEtransferInfo from '@utilities/gmCommon/getEtransferInfo';
 import setEtransferInfo from '@utilities/gmCommon/setEtransferInfo';
-import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
+import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 import { moveBack } from '@utilities/index';
 import { isEqual } from '@utilities/object';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -349,7 +349,7 @@ const ChangeProfile = ({ translate: t }) => {
       request.cus_adr1 = values.address1;
     }
     setShowLoading(false);
-    enterSecurityPasscode(() => handleRequestChangeProfile(request), null);
+    authSecurityMedia(() => handleRequestChangeProfile(request), null);
   };
 
   //Using sub job prefix for get list of occupation 2 based sub job list

@@ -5,7 +5,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
-import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
+import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 
 import { formatCardDateRequest } from '../utils/format';
 import ActiveCardSuccess from './components/ActiveCardSuccess';
@@ -100,7 +100,7 @@ const ActiveCard = () => {
           cashcd_no: formattedCardNumber,
           cus_name: name,
         };
-        enterSecurityPasscode(() => requestActiveCardLogged(activeCardLoggedPayload));
+        authSecurityMedia(() => requestActiveCardLogged(activeCardLoggedPayload));
       } else {
         setCurrentStep(ACTIVE_CARD_STEP.ENTER_ACCOUNT_INFORMATION);
       }

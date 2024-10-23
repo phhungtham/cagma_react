@@ -5,7 +5,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
-import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
+import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 
 import { CardAccidentType } from '../CardMain/constants';
 import ReportReleaseCardSuccess from './components/ReportReleaseCardSuccess';
@@ -59,7 +59,7 @@ const ReportReleaseCard = () => {
   };
 
   const handleSubmitForm = async values => {
-    enterSecurityPasscode(() => handleRequestReleaseCard(values));
+    authSecurityMedia(() => handleRequestReleaseCard(values));
   };
 
   const handleCloseAlert = () => {

@@ -21,8 +21,8 @@ import callSelectImage from '@utilities/gmCommon/callSelectImage';
 import initProfileImg from '@utilities/gmCommon/initProfileImg';
 import loadProfileImgInfo from '@utilities/gmCommon/loadProfileImgInfo';
 import saveProfileImg from '@utilities/gmCommon/saveProfileImg';
+import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 import createSecurityPasscode from '@utilities/gmSecure/createSecurityPasscode';
-import enterSecurityPasscode from '@utilities/gmSecure/enterSecurityPasscode';
 import hideSecureKeyboardChar from '@utilities/gmSecure/hideSecureKeyboardChar';
 import hideSecureKeyboardNumber from '@utilities/gmSecure/hideSecureKeyboardNumber';
 import showSecureKeyboardChar from '@utilities/gmSecure/showSecureKeyboardChar';
@@ -153,8 +153,8 @@ const CommonTestPage = () => {
     console.log('hide secure keyboard number data :>> ', data);
   };
 
-  const handleEnterSecurityPasscodeCallback = () => {
-    console.log('enter security passcode success');
+  const handleAuthSecurityMedia = () => {
+    console.log('auth security media success');
   };
 
   const handleCreateSecurityPasscodeCallback = () => {
@@ -266,9 +266,9 @@ const CommonTestPage = () => {
           action: () => setShowBottomSheet({ ...showBottomSheet, decryptCVC: true }),
         },
         {
-          title: 'Enter Security Passcode',
-          label: 'enterSecurityPasscode',
-          action: () => enterSecurityPasscode(handleEnterSecurityPasscodeCallback),
+          title: 'Auth Security Media',
+          label: 'authSecurityMedia',
+          action: () => authSecurityMedia(handleAuthSecurityMedia),
         },
         {
           title: 'Create Security Passcode',
