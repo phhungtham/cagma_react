@@ -77,14 +77,16 @@ const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry, tr
           </div>
           <div className="main__desc">{parserDataToHtml(data[`banner_sub_content_${currentLang}`])}</div>
         </div>
-        <div className="btn__ctas">
-          <Button
-            label={t(ctaLabels.tryItNow)}
-            className="w-full"
-            variant="filled__primary"
-            onClick={onClickTry}
-          />
-        </div>
+        {data?.link_url && (
+          <div className="btn__ctas">
+            <Button
+              label={t(ctaLabels.tryItNow)}
+              className="w-full"
+              variant="filled__primary"
+              onClick={onClickTry}
+            />
+          </div>
+        )}
       </div>
     </BottomSheet>
   );
