@@ -44,10 +44,6 @@ export const promotionLoadFailed = state => {
   return state[AppNotificationFeatureName]?.loadPromotionListFailed;
 };
 
-export const bannerSeqState = state => {
-  return state[AppNotificationFeatureName]?.loadBannerSeq;
-};
-
 export const tabIdx = state => {
   return state[AppNotificationFeatureName]?.tabIdx;
 };

@@ -8,22 +8,18 @@ import Tabs from '@common/components/atoms/Tabs';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
+import { endpoints } from '@common/constants/endpoint';
 import { menuLabels } from '@common/constants/labels';
+import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { alertMove } from '@utilities/alertMove';
 import { addDateWithMonth } from '@utilities/dateTimeUtils';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { getLanguageFM, isEmpty, moveBack, moveNext } from '@utilities/index';
+import { getLanguageFM, moveBack, moveNext } from '@utilities/index';
 import { setIsNativeClickBack } from 'app/redux/action';
-import {
-  appLanguage,
-  appPathSelector,
-  backEventSelector,
-  nativeParamsSelector,
-  nativeRedirectStateSelector,
-} from 'app/redux/selector';
+import { appLanguage, backEventSelector, nativeParamsSelector, nativeRedirectStateSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import PromotionDetailBottom from './components/PromotionDetailBottom';
@@ -42,20 +38,16 @@ import {
   getOfferNotificationList,
   getPromotionNotificationList,
   getTransactionNotificationList,
-  setBannerSeqState,
   setTabIndex as setReduxTabIndex,
 } from './redux/action';
 import { appNotificationReducer } from './redux/reducer';
 import { appNotificationSaga } from './redux/saga';
 import {
-  bannerSeqState,
   listOfferLoadMoreCnt,
   listTransactionLoadMoreCnt,
   offerList,
   offerLoadFailed,
   offerLoadState,
-  promotionList,
-  promotionLoadState,
   tabIdx,
   transactionList,
   transactionLoadFailed,
@@ -63,9 +55,11 @@ import {
 } from './redux/selector';
 import { AppNotificationFeatureName } from './redux/type';
 
+//TODO: Refactor code, not use redux
 const AppNotifications = ({ translate: t }) => {
   useReducers([{ key: AppNotificationFeatureName, reducer: appNotificationReducer }]);
   useSagas([{ key: AppNotificationFeatureName, saga: appNotificationSaga }]);
+  const [showLoading, setShowLoading] = useState(false);
   const appLang = useSelector(appLanguage);
   const listTransactionCount = useSelector(listTransactionLoadMoreCnt);
   const listOfferCount = useSelector(listOfferLoadMoreCnt);
@@ -74,8 +68,14 @@ const AppNotifications = ({ translate: t }) => {
   const [showPromotionDetail, setShowPromotionDetail] = useState(false);
   const [currentPromotionDetail, setCurrentPromotionDetail] = useState({});
   const [loadMoreNotify, setLoadMoreNotify] = useState(false);
-  const [promotionListDisplay, setPromotionListDisplay] = useState([]);
+  const [promotions, setPromotions] = useState([]);
   const { isLogin, isLoading: isLoadingCheckUserLogin } = useLoginInfo();
+  const [alert, setAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
+  const { requestApi } = useApi();
   const notificationListRef = useRef(null);
 
   const initRequestTransactionsNotify = {
@@ -98,27 +98,21 @@ const AppNotifications = ({ translate: t }) => {
   // selectors
   const listTransactionNotify = useSelector(transactionList) || [];
   const listOfferNotify = useSelector(offerList) || [];
-  const listPromotionNotify = useSelector(promotionList) || [];
   const loadTransactionState = useSelector(transactionLoadState);
   const loadOfferState = useSelector(offerLoadState);
-  const loadPromotionState = useSelector(promotionLoadState);
-  const loadBannerSeq = useSelector(bannerSeqState);
   const transactionLoadErrors = useSelector(transactionLoadFailed);
   const offerLoadErrors = useSelector(offerLoadFailed);
   const isNativeRedirect = useSelector(nativeRedirectStateSelector || false);
   const nativeParams = useSelector(nativeParamsSelector);
   const currentLang = getLanguageFM(appLang, false);
-  const appPath = useSelector(appPathSelector);
   const isNativeBack = useSelector(backEventSelector || false);
 
   const getTransactionListFirstTime = () => {
-    setTabIndex(NotificationTabIndex.TRANSACTIONS);
     getTransactionNotificationList({ ...initRequestTransactionsNotify });
     setRequestTransactionParams({ ...initRequestTransactionsNotify });
   };
 
   const getOfferListFirstTime = () => {
-    setTabIndex(NotificationTabIndex.OFFERS);
     getOfferNotificationList({ ...initRequestOffersNotify });
     setRequestOfferParams({ ...initRequestOffersNotify });
   };
@@ -180,18 +174,10 @@ const AppNotifications = ({ translate: t }) => {
       getOfferNotificationList({
         ...requestOfferParams,
       });
-    } else if (tabIndex === NotificationTabIndex.PROMOTIONS && !listPromotionNotify?.length) {
+    } else if (tabIndex === NotificationTabIndex.PROMOTIONS && !promotions?.length) {
       getPromotionNotificationList();
     }
   };
-
-  // const refreshLoginState = () => {
-  //   setTimeout(() => {
-  //     setReduxTabIndex(undefined);
-  //     setBannerSeqState('');
-  //     setLoginState('');
-  //   }, 500);
-  // };
 
   const fetchMoreListNotify = () => {
     if (tabIndex === NotificationTabIndex.TRANSACTIONS) {
@@ -212,112 +198,6 @@ const AppNotifications = ({ translate: t }) => {
     }
   };
 
-  useEffect(() => {
-    // if (appPath !== '/notification') return;
-    // setShowBenefitDetail(false);
-    if (reduxTabIndex !== undefined) {
-      switch (reduxTabIndex) {
-        case [NotificationTabIndex.TRANSACTIONS]:
-          getTransactionListFirstTime();
-          break;
-        case [NotificationTabIndex.OFFERS]:
-          getOfferListFirstTime();
-          break;
-        case [NotificationTabIndex.PROMOTIONS]:
-          setTabIndex(NotificationTabIndex.PROMOTIONS);
-          getPromotionNotificationList();
-          break;
-        default:
-          break;
-      }
-      return;
-    }
-    if (isEmpty(nativeParams)) {
-      if (!isLogin) {
-        setTabIndex(NotificationTabIndex.PROMOTIONS);
-        getPromotionNotificationList();
-      } else {
-        getTransactionListFirstTime();
-        setRequestOfferParams({ ...initRequestOffersNotify }); // reset offer request data
-      }
-    }
-    return () => {
-      cleanupAppNotification();
-    };
-  }, [isNativeRedirect, nativeParams, appPath]);
-
-  useEffect(() => {
-    // handle case receive push notify and show tab...
-    if (isEmpty(nativeParams) || nativeParams === undefined || reduxTabIndex !== undefined) return;
-    switch (nativeParams?.ums_svc_c) {
-      case NotificationRequestType.PROMOTION:
-        setTabIndex(NotificationTabIndex.PROMOTIONS);
-        getPromotionNotificationList();
-        break;
-      case NotificationRequestType.OFFER:
-        getOfferListFirstTime();
-        break;
-      case NotificationRequestType.TRANSACTION:
-      case null:
-      default:
-        getTransactionListFirstTime();
-        break;
-    }
-    return () => {
-      cleanupAppNotification();
-    };
-  }, [nativeParams]);
-
-  useEffect(() => {
-    if (notificationListRef.current) {
-      // header motion...
-      notificationListRef.current.addEventListener('scroll', handleAppNotificationTouchMove);
-    }
-    return () =>
-      notificationListRef.current &&
-      notificationListRef.current.removeEventListener('scroll', handleAppNotificationTouchMove);
-  }, [tabIndex, notificationListRef.current]);
-
-  useEffect(() => {
-    loadMoreNotify && fetchMoreListNotify();
-  }, [loadMoreNotify]);
-
-  useEffect(() => {
-    // display only "display_pos"== "8" and sort with banner_seq big to small
-    // 8: Promotion
-    if (!listPromotionNotify) return;
-    if (tabIndex === NotificationTabIndex.PROMOTIONS) {
-      const filteredPromotion = listPromotionNotify.filter(item => {
-        return item?.display_pos === '8';
-      });
-      filteredPromotion.sort((firstData, secondData) => secondData.banner_seq - firstData.banner_seq);
-      setPromotionListDisplay(filteredPromotion);
-    }
-  }, [tabIndex, listPromotionNotify]);
-
-  useEffect(() => {
-    //TODO: Refactor code for handle show promotion detail bottom
-    if (nativeParams !== undefined && !isEmpty(nativeParams) && promotionListDisplay && loadBannerSeq === '') {
-      const promotion = promotionListDisplay.find(e => e.banner_seq.toString() === nativeParams?.banner_seq_promotion);
-      if (promotion && tabIndex === 2) {
-        handleViewPromotionDetail(promotion);
-        setBannerSeqState(promotion.banner_seq.toString());
-      }
-    }
-  }, [promotionListDisplay, nativeParams]);
-
-  useEffect(() => {
-    if (showPromotionDetail && isNativeBack) {
-      setShowPromotionDetail(false);
-    }
-    if (!showPromotionDetail && isNativeBack) {
-      moveBack();
-    }
-    return () => {
-      setIsNativeClickBack(false);
-    };
-  }, [isNativeBack, showPromotionDetail]);
-
   const moveToAccountDetailScreen = (screenType, accountNumber) => {
     const accountNumberParam = JSON.stringify({
       lcl_acno: accountNumber,
@@ -337,16 +217,111 @@ const AppNotifications = ({ translate: t }) => {
   const handleClickTransaction = data => {
     const screenType = data?.dep_sjt_class;
     const accountNumber = data?.ums_ntc_acno;
-    //TODO: Check should we set redux tab
     setReduxTabIndex(tabIndex);
     moveToAccountDetailScreen(screenType, accountNumber);
   };
+
+  const requestGetPromotionList = async () => {
+    if (promotions?.length) {
+      return;
+    }
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.getPromotionNotify);
+    setShowLoading(false);
+    if (isSuccess) {
+      // display only "display_pos"== "8" and sort with banner_seq big to small
+      // 8: Promotion
+      const { list = [] } = data || {};
+      const filteredPromotion = list.filter(item => {
+        return item?.display_pos === '8';
+      });
+      filteredPromotion.sort((firstData, secondData) => secondData.banner_seq - firstData.banner_seq);
+      setPromotions(filteredPromotion);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isLoadingCheckUserLogin) {
+      return;
+    }
+    let currentTabIndex = NotificationTabIndex.TRANSACTIONS;
+    if (nativeParams?.tab) {
+      if (nativeParams.tab === '01') {
+        currentTabIndex = NotificationTabIndex.TRANSACTIONS;
+      } else if (nativeParams.tab === '02') {
+        currentTabIndex = NotificationTabIndex.OFFERS;
+      } else if (nativeParams.tab === '03') {
+        currentTabIndex = NotificationTabIndex.PROMOTIONS;
+      }
+    } else {
+      if (reduxTabIndex !== undefined) {
+        currentTabIndex = reduxTabIndex;
+      }
+    }
+    if (!isLogin) {
+      currentTabIndex = NotificationTabIndex.PROMOTIONS;
+    }
+    setTabIndex(currentTabIndex);
+    if (currentTabIndex === NotificationTabIndex.TRANSACTIONS) {
+      getTransactionListFirstTime();
+    } else if (currentTabIndex === NotificationTabIndex.OFFERS) {
+      getOfferListFirstTime();
+    } else {
+      requestGetPromotionList();
+    }
+
+    return () => {
+      cleanupAppNotification();
+    };
+  }, [isNativeRedirect, nativeParams, isLoadingCheckUserLogin]);
+
+  useEffect(() => {
+    if (notificationListRef.current) {
+      // header motion...
+      notificationListRef.current.addEventListener('scroll', handleAppNotificationTouchMove);
+    }
+    return () =>
+      notificationListRef.current &&
+      notificationListRef.current.removeEventListener('scroll', handleAppNotificationTouchMove);
+  }, [tabIndex, notificationListRef.current]);
+
+  useEffect(() => {
+    loadMoreNotify && fetchMoreListNotify();
+  }, [loadMoreNotify]);
+
+  useEffect(() => {
+    if (nativeParams?.promotion_seq && promotions) {
+      const promotion = promotions.find(item => String(item.banner_seq) === String(nativeParams.promotion_seq));
+      if (promotion && tabIndex === NotificationTabIndex.PROMOTIONS) {
+        handleViewPromotionDetail(promotion);
+      }
+    }
+  }, [promotions, nativeParams]);
+
+  useEffect(() => {
+    //Handle case click back symbol on Android
+    if (isNativeBack) {
+      if (showPromotionDetail) {
+        setShowPromotionDetail(false);
+      } else {
+        moveBack();
+      }
+    }
+    return () => {
+      setIsNativeClickBack(false);
+    };
+  }, [isNativeBack]);
 
   return (
     <div className="notification__wrapper">
       {loadTransactionState && !listTransactionNotify?.length && <Spinner />}
       {loadOfferState && !listOfferNotify?.length && <Spinner />}
-      {loadPromotionState && !listPromotionNotify?.length && <Spinner />}
+      {showLoading && <Spinner />}
       <div className="notification__header">
         <Header
           title={t(menuLabels.appNotification)}
@@ -392,7 +367,7 @@ const AppNotifications = ({ translate: t }) => {
               {tabIndex === NotificationTabIndex.PROMOTIONS && (
                 <PromotionsTab
                   ref={notificationListRef}
-                  promotionList={promotionListDisplay}
+                  promotionList={promotions}
                   onClick={handleViewPromotionDetail}
                   currentLang={currentLang}
                   translate={t}
@@ -402,7 +377,7 @@ const AppNotifications = ({ translate: t }) => {
           ) : (
             <PromotionsTab
               ref={notificationListRef}
-              promotionList={promotionListDisplay}
+              promotionList={promotions}
               onClick={handleViewPromotionDetail}
               currentLang={currentLang}
               translate={t}
@@ -426,6 +401,17 @@ const AppNotifications = ({ translate: t }) => {
         subtitle={transactionLoadErrors?.msgText || offerLoadErrors?.msgText}
         firstButton={{
           onClick: () => alertMove(transactionLoadErrors?.msgId),
+          label: 'Confirm',
+        }}
+      />
+      <Alert
+        isCloseButton={false}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
+        textAlign="left"
+        firstButton={{
+          onClick: () => setAlert({ isShow: false, title: '', content: '' }),
           label: 'Confirm',
         }}
       />

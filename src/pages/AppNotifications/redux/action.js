@@ -10,8 +10,6 @@ export const getOfferNotificationList = payload => dispatch({ type: ActionType.G
 export const getPromotionNotificationList = payload =>
   dispatch({ type: ActionType.GET_PROMOTIONS_NOTIFY_REQUEST, payload });
 
-export const setBannerSeqState = payload => dispatch({ type: ActionType.GET_BANNER_SEQ, payload: payload });
-
 export const setTabIndex = payload => dispatch({ type: ActionType.SET_TAB_INDEX, payload: payload });
 
 export const cleanupAppNotification = () => dispatch({ type: ActionType.CLEAN_UP });

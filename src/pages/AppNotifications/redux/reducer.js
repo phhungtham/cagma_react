@@ -74,9 +74,6 @@ export const appNotificationReducer = (state = initState, action) => {
     case ActionType.GET_PROMOTIONS_NOTIFY_REQUEST_FAILED:
       return { loadPromotionListFailed: payload.elHeader.resMsgVo, loadPromotionState: false };
 
-    case ActionType.GET_BANNER_SEQ:
-      return { ...state, loadBannerSeq: payload };
-
     case ActionType.SET_TAB_INDEX:
       return { ...state, tabIdx: payload };
 

@@ -83,7 +83,7 @@ const Login = () => {
       if (isDevelopmentEnv) {
         localStorage.setItem('isLogin', true);
       }
-      moveNext('', { param: JSON.stringify({ ums_svc_c: 'CAHO002' }) }, routePaths.productList);
+      moveNext('', { param: JSON.stringify({ tab: '03', promotion_seq: 4 }) }, routePaths.notification);
     }
   }, [isLoginSuccess]);
 
