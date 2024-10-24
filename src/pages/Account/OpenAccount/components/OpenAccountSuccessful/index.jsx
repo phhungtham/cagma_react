@@ -8,7 +8,7 @@ import { moveHome } from '@utilities/index';
 import { openAccountSuccessFields } from './constants';
 import './styles.scss';
 
-const OpenAccountSuccessful = ({ openAccountInfo, productName, productCode }) => {
+const OpenAccountSuccessful = ({ openAccountInfo, productCode }) => {
   const { creditChecked } = openAccountInfo || {};
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
   const onClickViewAccount = () => {};
@@ -29,7 +29,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productName, productCode }) =>
           </div>
           <div className="open-account__title">
             <div className="complete-message">You’ve successfully opened</div>
-            <div className="product-type">{productName}</div>
+            <div className="product-type">{openAccountInfo?.productName}</div>
             {!!creditChecked && <div className="note">Debit card will be sent to the stored customer address.</div>}
           </div>
         </div>

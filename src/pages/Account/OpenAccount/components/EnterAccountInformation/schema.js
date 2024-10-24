@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
 export const openAccountSchema = Yup.object().shape({
+  //TODO: Define terms required when dep_sjt_class or product code
   accountNo: Yup.string().required('Required field'), //acno
   amount: Yup.string().required('Required field'), // trx_amt
   intendedUseAccount: Yup.string().required('Required field'), //dep_ac_usag_d

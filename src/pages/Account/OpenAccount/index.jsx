@@ -5,7 +5,13 @@ import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { addressTypeMapping } from '@common/constants/address';
 import { MENU_CODE } from '@common/constants/common';
-import { getJobCode, getMaturityOption, getProvinceCode, getSubJobCode } from '@common/constants/commonCode';
+import {
+  getJobCode,
+  getMaturityOption,
+  getProvinceCode,
+  getSubJobCode,
+  getTermOptions,
+} from '@common/constants/commonCode';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
@@ -22,7 +28,8 @@ import DTR from './components/DTR';
 import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
-import { accountFormMapFields, OPEN_ACCOUNT_STEP, TermUnitCodeDisplay, UnitCodeWithPeriodType } from './constants';
+import { accountFormMapFields, OPEN_ACCOUNT_STEP, TermUnitCodeDisplay } from './constants';
+import useOpenAccount from './hooks/useOpenAccount';
 import './style.scss';
 
 const OpenAccount = ({ translate: t }) => {
@@ -35,6 +42,7 @@ const OpenAccount = ({ translate: t }) => {
   const [provinceOptions, setProvinceOptions] = useState();
   const [maturityOptions, setMaturityOptions] = useState(); //Using for display Maturity Option on completed screen
   const [customer, setCustomer] = useState();
+  const { requestOpenDepositAccount: openDepositAccount } = useOpenAccount({ product: productInfo });
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -43,10 +51,10 @@ const OpenAccount = ({ translate: t }) => {
   const { requestApi } = useApi();
 
   const {
-    prdt_c,
-    product_ccy,
+    prdt_c: productCode,
+    product_ccy: productCurrencyCode,
     ntfct_intrt,
-    lcl_prdt_nm,
+    prdt_c_display,
     dep_sjt_class,
     prdt_psb_trm_unit_c: termUnitCode,
   } = productInfo || {};
@@ -67,7 +75,9 @@ const OpenAccount = ({ translate: t }) => {
   const requestGetCommonCode = async () => {
     setShowLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
-      code: [getJobCode, getSubJobCode, getProvinceCode, getMaturityOption].join(';'),
+      code: [getJobCode, getSubJobCode, getProvinceCode, getMaturityOption, `${getTermOptions}_${productCode}`].join(
+        ';'
+      ),
     });
     setShowLoading(false);
     if (isSuccess) {
@@ -114,9 +124,9 @@ const OpenAccount = ({ translate: t }) => {
     }
   };
 
-  const requestOpenDepositAccount = async payload => {
+  const requestOpenDepositAccount = async values => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.openAccountDeposit, payload);
+    const { data, error, isSuccess } = await openDepositAccount(values);
     setShowLoading(false);
     if (isSuccess) {
       const {
@@ -150,78 +160,14 @@ const OpenAccount = ({ translate: t }) => {
     }
   };
 
-  const requestPreOpenDepositAccount = async values => {
-    setShowLoading(true);
-    const {
-      accountNo: withdraw_acno,
-      amount: trx_amt,
-      intendedUseAccount: dep_ac_usag_d,
-      y4mm_intrt_d,
-      dep_intrt_k,
-      intrt_trm_c,
-      ntfct_intrt,
-      adt_intrt,
-      term: ctrt_trm_cnt,
-      thirdPartyChecked: tpd_chk,
-      thirdPartyName: tpd_nm,
-      dob: tpd_bth_y4mm_dt,
-      address: tpd_adr1,
-      city: tpd_adr2,
-      province: tpd_state_c,
-      postalCode: tpd_adr_zipc,
-      occupation: tpd_job_nm,
-      relationship: tpd_cus_relt_ctt,
-      referralCode: dep_cvsr_bnkerno,
-    } = values || {};
-    const payload = {
-      prdt_c,
-      withdraw_acno,
-      trx_amt,
-      trx_ccy_c: product_ccy,
-      dep_ac_usag_d,
-      y4mm_intrt_d,
-      dep_intrt_k,
-      intrt_trm_c,
-      ntfct_intrt,
-      adt_intrt,
-      ctrt_trm_d: UnitCodeWithPeriodType[termUnitCode],
-      ctrt_trm_cnt,
-      tpd_chk,
-      tpd_nm,
-      tpd_bth_y4mm_dt,
-      tpd_adr1,
-      tpd_adr2,
-      tpd_state_c,
-      tpd_adr_zipc,
-      tpd_job_nm,
-      tpd_cus_relt_ctt,
-      dep_cvsr_bnkerno,
-    };
-    const { data, error, isSuccess } = await requestApi(endpoints.preOpenAccountDeposit, payload);
-    setShowLoading(false);
-    if (isSuccess) {
-      const { gibintnbk_aplct_trx_mng_no, due_date } = data;
-      requestOpenDepositAccount({
-        ...payload,
-        gibintnbk_aplct_trx_mng_no,
-        due_date,
-      });
-    } else {
-      setAlert({
-        isShow: true,
-        content: error,
-      });
-    }
-  };
-
   const onSubmitOpenAccountForm = async formValues => {
     setShowLoading(true);
     if (dep_sjt_class === DepositSubjectClass.TERM_DEPOSIT_GIC) {
-      return requestPreOpenDepositAccount(formValues);
+      return requestOpenDepositAccount(formValues);
     }
     const productInterestRateResponse = await apiCall(endpoints.inquiryProductInterestRate, 'POST', {
-      prdt_c,
-      product_ccy,
+      prdt_c: productCode,
+      product_ccy: productCurrencyCode,
     });
     const request = convertObjectBaseMappingFields(formValues, accountFormMapFields);
     const {
@@ -232,7 +178,7 @@ const OpenAccount = ({ translate: t }) => {
       adt_intrt,
       apply_intrt,
     } = productInterestRateResponse?.data?.elData || {};
-    request.prdt_c = prdt_c;
+    request.prdt_c = productCode;
     request.apl_intrt = ntfct_intrt;
     request.tpd_trx_t = 0;
     request.tpd_chk = request.tpd_chk ? 'Y' : 'N';
@@ -256,7 +202,7 @@ const OpenAccount = ({ translate: t }) => {
     if (openAccountStatus?.resSuc) {
       const { lcl_ac_no_display, dep_acno_display } = openAccountResponse?.data?.elData || {};
       setOpenAccountSuccessInfo({
-        productName: lcl_prdt_nm,
+        productName: prdt_c_display,
         creditChecked: request.credit_chk === '1',
         acNo: lcl_ac_no_display,
         interestRate: `${ntfct_intrt}% APR`,
@@ -314,15 +260,14 @@ const OpenAccount = ({ translate: t }) => {
         {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && (
           <OpenAccountSuccessful
             openAccountInfo={openAccountSuccessInfo}
-            productName={lcl_prdt_nm}
-            productCode={prdt_c}
+            productCode={productCode}
           />
         )}
         {currentStep === OPEN_ACCOUNT_STEP.DTR && (
           <DTR
             openAccountInfo={openAccountSuccessInfo}
-            productName={lcl_prdt_nm}
-            productCode={prdt_c}
+            productName={prdt_c_display}
+            productCode={productCode}
           />
         )}
       </div>

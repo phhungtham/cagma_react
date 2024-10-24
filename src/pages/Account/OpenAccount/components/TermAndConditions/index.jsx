@@ -7,12 +7,12 @@ import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { PeriodUnitCodeDisplay } from '@common/constants/product';
-import { BannerMapProductCode } from '@pages/Product/ProductList/constants';
+import { BannerMapProductCode, DescriptionMapProductCode } from '@pages/Product/ProductList/constants';
 import { moveBack } from '@utilities/index';
 import { appLanguage } from 'app/redux/selector';
 
 import { ProductType } from '../../constants';
-import { OpenAccountTermFile, ProductDescription } from './constants';
+import { OpenAccountTermFile } from './constants';
 import './styles.scss';
 
 const TermAndConditions = ({ onSubmit, product, translate: t }) => {
@@ -112,7 +112,7 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
                 <span>{prdt_c_display}</span>
               </div>
               <div className="product__desc">
-                <span>{ProductDescription[productCode]}</span>
+                <span>{DescriptionMapProductCode[productCode]}</span>
               </div>
             </div>
             <div className="banner__spec">

@@ -54,7 +54,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
   const [intendedUseAccountOptions, setIntendedUseAccountOptions] = useState();
   const [interestData, setInterestData] = useState();
   const { getFilteredBasedProductCode } = useOpenAccount({ product });
-  console.log('product :>> ', product);
 
   const { requestApi } = useApi();
   const { data: cardCountInfo, isLoading: isLoadingGetCardCount, requestGetCardCount } = useCardCount();
@@ -184,7 +183,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
       showInterestRate = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
       showReferralCode = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
     }
-    if ([ProductCode.E_POWER_TERM_DEPOSIT].includes(productCode)) {
+    if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
       showThirdParty = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
       showInterestRate = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
       showReferralCode = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
@@ -192,7 +191,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     if ([ProductCode.RRSP_E_SAVINGS].includes(productCode)) {
       showInterestRate = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
     }
-    if ([ProductCode.E_SHORT_TERM_GIC, ProductCode.RRSP_E_GIC].includes(productCode)) {
+    if ([ProductCode.RRSP_E_GIC].includes(productCode)) {
       showInterestRate = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
       showReferralCode = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
     }
@@ -202,10 +201,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     }
     setShowThirdPartyForm(showThirdParty);
     setShowInterestRateSection(showInterestRate);
-    if (showInterestRate) {
-      //TODO: Only request when term and amount change
-      requestGetInterestRate();
-    }
     setShowReferralCodeSection(showReferralCode);
   };
 
@@ -270,8 +265,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     setShowLoading(false);
     if (isSuccess) {
       setInterestData(data);
-      setValue('interestRate', data?.apply_intrt);
-      setValue('interestRateDisplay', data?.apply_intrt_display);
     } else {
       setAlert({
         isShow: true,
@@ -279,6 +272,16 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
       });
     }
   };
+
+  useEffect(() => {
+    if (showInterestRateSection) {
+      if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
+        if (term && amount) {
+          requestGetInterestRate();
+        }
+      }
+    }
+  }, [term, amount, showInterestRateSection]);
 
   useEffect(() => {
     if (showReferralCodeSection && !cardCountInfo) {
@@ -384,7 +387,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
                 {showInterestRateSection && (
                   <>
                     <div className="divider__item__solid my-2" />
-                    <InterestRateSection interestRate={interestRateDisplay} />
+                    <InterestRateSection interestRate={interestData?.apply_intrt_display} />
                   </>
                 )}
                 {showReferralCodeSection && (

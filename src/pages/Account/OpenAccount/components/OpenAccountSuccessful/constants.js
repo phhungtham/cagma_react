@@ -184,6 +184,7 @@ export const openAccountSuccessFields = {
   [ProductCode.E_POWER_TERM_DEPOSIT]: termDepositSuccessFields,
   [ProductCode.E_GREEN_TERM_DEPOSIT]: termDepositSuccessFields,
   [ProductCode.E_LONG_TERM_GIC]: termDepositSuccessFields,
+  [ProductCode.E_LONG_MATURITY]: termDepositSuccessFields,
   [ProductCode.E_SHORT_TERM_GIC]: termDepositSuccessFields,
   [ProductCode.E_INSTALLMENT_SAVING]: eInstallSuccessFields,
   [ProductCode.TFSA_E_GIC]: tfsaEGICSuccessFields,
