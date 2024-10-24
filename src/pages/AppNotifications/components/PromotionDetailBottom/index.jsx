@@ -5,10 +5,12 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Image from '@common/components/atoms/Image';
 import Label from '@common/components/atoms/Label';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { MENU_CODE } from '@common/constants/common';
 import { ctaLabels } from '@common/constants/labels';
 import { AppCfg } from '@configs/appConfigs';
 import { truncateText } from '@utilities/convert';
 import { totalNumOfDaysBetweenDates } from '@utilities/dateTimeUtils';
+import shareLink from '@utilities/gmCommon/shareLink';
 import imgSrcDetected from '@utilities/imgSrcDetected';
 import parserDataToHtml from '@utilities/parserHtml';
 
@@ -33,7 +35,8 @@ const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry, tr
   }, [data]);
 
   const handleShare = () => {
-    //TODO: Call Plugin for share
+    const link = `${AppCfg.BASE_URL_IMAGE}/link.jsp?screenid=${MENU_CODE.NOTIFICATION}&promotion_seq=${data?.banner_seq}`;
+    shareLink(link);
   };
 
   return (
