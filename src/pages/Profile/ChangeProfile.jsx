@@ -21,7 +21,7 @@ import {
   getSubJobCode,
 } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
-import { ctaLabels, changeProfileLabels as labels } from '@common/constants/labels';
+import { ctaLabels, changeProfileLabels as labels, menuLabels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
@@ -481,11 +481,10 @@ const ChangeProfile = ({ translate: t }) => {
   }, []);
 
   return (
-    <div className="change-profile__wrapper h-screen">
+    <div className="change-profile__wrapper">
       {(showLoading || isLoadingCommonCode || isLoadingUser) && <Spinner />}
       <Header
-        // title={t(menuLabels.changeProfile)}
-        title="Test Change Profile"
+        title={t(menuLabels.changeProfile)}
         onClick={onClickMoveBack}
       />
       <div className="change-profile__content">
