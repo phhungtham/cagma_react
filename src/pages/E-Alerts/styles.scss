@@ -2,7 +2,6 @@
 
 .eAlerts-management__wrapper,
 .eAlerts-balance__wrapper {
-  height: 100vh;
   .toast__overlay {
     position: absolute;
     z-index: 9999;
@@ -13,6 +12,15 @@
       width: calc(100vw - 48px);
     }
   }
+}
+.eAlerts-balance__wrapper {
+  height: 95vh;
+  .toast__overlay {
+    bottom: 0;
+  }
+}
+.eAlerts-management__wrapper {
+  height: 100vh;
 }
 
 .eAlerts-management__content {
@@ -52,8 +60,6 @@
 }
 
 .eAlerts-balance__content {
-  height: calc(100vh - 56px);
-  overflow-y: auto;
   padding-top: 10px;
   .balance {
     &__header {
