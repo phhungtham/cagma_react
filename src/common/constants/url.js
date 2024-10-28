@@ -1,7 +1,6 @@
 export const fileUrls = {
-  electronicCommunicationAgreement:
-    'https://gmcadev.shinhanglobal.com/img/511/pdf/Electronic_Communication_Agreement.pdf',
-  cardHolderAgreement: 'https://gmcadev.shinhanglobal.com/img/511/pdf/511_access_card_agreement.pdf',
+  electronicCommunicationAgreement: 'http://localhost:24680/img/511/pdf/Electronic_Communication_Agreement.pdf',
+  cardHolderAgreement: 'http://localhost:24680/img/511/pdf/511_access_card_agreement.pdf',
 };
 
 export const externalUrls = {
