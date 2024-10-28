@@ -8,6 +8,7 @@ import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/Icon
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
+import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveBack } from '@utilities/index';
@@ -15,7 +16,7 @@ import { moveBack } from '@utilities/index';
 import { termConditionConfig } from '../../constants';
 import './styles.scss';
 
-const TermsAndConditions = ({ onSubmit }) => {
+const TermsAndConditions = ({ onSubmit, translate: t }) => {
   const [viewTermBottom, setViewTermBottom] = useState({
     open: false,
     title: '',
@@ -44,7 +45,7 @@ const TermsAndConditions = ({ onSubmit }) => {
     setViewTermBottom({
       open: true,
       fileUrl,
-      title,
+      title: t(title),
       value,
     });
   };
@@ -86,18 +87,17 @@ const TermsAndConditions = ({ onSubmit }) => {
   return (
     <div className="add-new-card term-conditions__wrapper">
       <Header
-        title="Access Card Service"
+        title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
       <div className="add-new-card term-conditions__content">
         <div className="page__container">
-          <h1 className="page__title">Terms&Conditions</h1>
+          <h1 className="page__title">{t(cardLabels.termCondition)}</h1>
           <div className="term-condition__banner">
             <div className="banner__desc">
-              <div className="page__title">Consumer Classic Access Card</div>
+              <div className="page__title">{t(cardLabels.consumerClassicCard)}</div>
               <div className="card__desc">
-                <p>Enhance your life style with Shinhan Debit Card!</p>
-                <p>Available for POS/ATM transactions</p>
+                <p>{t(cardLabels.enhanceYourLife)}</p>
               </div>
             </div>
             <div className="banner__spec" />
@@ -106,19 +106,19 @@ const TermsAndConditions = ({ onSubmit }) => {
             </div>
           </div>
           <div className="term-condition__more-info">
-            <div className="more-info__desc">More information, check the link below</div>
+            <div className="more-info__desc">{t(cardLabels.moreInformation)}</div>
             <div className="more-info__links">
               <IconButton
                 size="lg"
                 type="circle"
-                label="Search Branch"
+                label={t(cardLabels.searchBranch)}
                 icon={<img src={SearchBranchIcon} />}
                 onClick={handleNavigateBranchInfo}
               />
               <IconButton
                 size="lg"
                 type="circle"
-                label="Contact Us"
+                label={t(cardLabels.contactUs)}
                 className="contact-us__icon"
                 icon={<FillChatIcon />}
                 onClick={handleNavigateContactUs}
@@ -140,7 +140,7 @@ const TermsAndConditions = ({ onSubmit }) => {
       </div>
       <div className="footer__fixed">
         <Button
-          label="Next"
+          label={t(ctaLabels.next)}
           variant="filled__primary"
           className="btn__cta"
           onClick={onClickSubmit}

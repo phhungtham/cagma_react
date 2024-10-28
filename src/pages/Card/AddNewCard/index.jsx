@@ -114,7 +114,12 @@ const AddNewCard = ({ translate: t }) => {
     <>
       <div className="add-new-card__wrapper page__wrapper">
         {showLoading && <Spinner />}
-        {currentStep === ADD_NEW_CARD_STEP.TERMS_CONDITIONS && <TermsAndConditions onSubmit={onSubmitAgreeTerms} />}
+        {currentStep === ADD_NEW_CARD_STEP.TERMS_CONDITIONS && (
+          <TermsAndConditions
+            onSubmit={onSubmitAgreeTerms}
+            translate={t}
+          />
+        )}
 
         {currentStep === ADD_NEW_CARD_STEP.ENTER_INFORMATION && (
           <EnterNewCardInfo
@@ -122,6 +127,7 @@ const AddNewCard = ({ translate: t }) => {
             setShowLoading={setShowLoading}
             setAlert={setAlert}
             email={email}
+            translate={t}
           />
         )}
         {currentStep === ADD_NEW_CARD_STEP.COMPLETED && <AddNewCardSuccess cardInfo={addCardSuccessInfo} />}

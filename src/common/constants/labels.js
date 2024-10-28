@@ -250,6 +250,25 @@ export const cardLabels = {
   dailyPosLimit: 'lbl_CACA600000_0014', //Daily POS Limit
   issueDate: 'lbl_CACA600000_0015', //Issue Date
   expireDate: 'lbl_CACA600000_0016', //Expire Date
+  termCondition: 'lbl_CACA600000_0017', //Terms&Conditions
+  consumerClassicCard: 'lbl_CACA600000_0018', //Consumer Classic Access Card
+  enhanceYourLife: 'lbl_CACA600000_0019', //Enhance your life style with Shinhan Debit Card! Available for POS/ATM transactions
+  moreInformation: 'lbl_CACA600000_0020', //More informations, check the link below
+  searchBranch: 'lbl_CACA600000_0021', //Search Branch
+  contactUs: 'lbl_CACA600000_0022', //Contact Us
+  accessCardApplication: 'lbl_CACA600000_0023', //Access Card Application
+  cardholderAgreement: 'lbl_CACA600000_0024', //Cardholder Agreement
+  getNewAccessCard2: 'lbl_CACA600000_0025', //Get your NEW Access Card
+  limitDailyCard: 'lbl_CACA600000_0026', //The Limit of the daily card
+  dailyPosAmount: 'lbl_CACA600000_0027', //Daily POS Limit Amount
+  linkedAccount: 'lbl_CACA600000_0028', //Linked Account
+  mailingAddress: 'lbl_CACA600000_0030', //Mailing Address
+  streetNumber: 'lbl_CACA600000_0031', //Street Number
+  streetName: 'lbl_CACA600000_0032', //Street Name
+  aptNumber: 'lbl_CACA600000_0033', //APT Number/SUITE Number
+  city: 'lbl_CACA600000_0034', //City
+  province: 'lbl_CACA600000_0035', //Province
+  postalCode: 'lbl_CACA600000_0036', //Postal Code
 };
 
 export const menuLabels = {
@@ -262,6 +281,7 @@ export const menuLabels = {
   personalSetting: 'mymen_CAOTLA0005', //Personal Setting
   changeProfile: 'mymen_CAME030100', //Change Profile
   cardMain: 'mymen_CAOTLA0004', //Card
+  accessCardService: 'mymen_CACA010000', //Access Card Service
 };
 
 export const ctaLabels = {

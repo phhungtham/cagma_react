@@ -14,6 +14,7 @@ import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getCardAreaProvinceCode, getProvinceCode } from '@common/constants/commonCode';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
+import { cardLabels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -22,7 +23,7 @@ import { moveBack } from '@utilities/index';
 import { newCardFormSchema } from './schema';
 import './styles.scss';
 
-const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
+const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate: t }) => {
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [provinceOptions, setProvinceOptions] = useState([]);
@@ -170,21 +171,20 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
     <>
       <div className="enter-card__wrapper">
         <Header
-          title="Access Card Service"
+          title={t(menuLabels.accessCardService)}
           onClick={moveBack}
         />
         <div className="enter-card__container">
           <div className="page__container">
-            <h1 className="page__title">Get your NEW Access Card</h1>
+            <h1 className="page__title">{t(cardLabels.getNewAccessCard2)}</h1>
             <div className="box__details my-4">
-              {/* //TODO: Pending to waiting BE return limit amount */}
               <div className="box__item">
-                <span className="box__label">The Limit of the daily card</span>
-                <span className="box__value">$00,000.00</span>
+                <span className="box__label">{t(cardLabels.limitDailyCard)}</span>
+                <span className="box__value">$1,000.00</span>
               </div>
               <div className="box__item">
-                <span className="box__label">Daily POS Limit Amount</span>
-                <span className="box__value">$00,000.00</span>
+                <span className="box__label">{t(cardLabels.dailyPosAmount)}</span>
+                <span className="box__value">$519.00</span>
               </div>
             </div>
           </div>
@@ -192,7 +192,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
           <div className="enter-card__form form__wrapper">
             <div className="form__section mt-2">
               <div className="form__section__title">
-                <span>Linked Account</span>
+                <span>{t(cardLabels.linkedAccount)}</span>
               </div>
               <Dropdown
                 label="Account"
@@ -206,12 +206,12 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
             </div>
             <div className="form__section mt-6">
               <div className="form__section__title">
-                <span>Mailing address</span>
+                <span>{t(cardLabels.mailingAddress)}</span>
               </div>
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Street Number"
+                    label={t(cardLabels.streetNumber)}
                     maxLength={100}
                     placeholder="Please input Detail text"
                     {...field}
@@ -223,7 +223,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Street Name"
+                    label={t(cardLabels.streetName)}
                     maxLength={100}
                     placeholder="Please input Detail text"
                     {...field}
@@ -236,7 +236,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
                 render={({ field }) => {
                   return (
                     <Input
-                      label="APT Number/SUITE Number"
+                      label={t(cardLabels.aptNumber)}
                       maxLength={100}
                       placeholder="Please input Detail text"
                       {...field}
@@ -249,7 +249,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="City"
+                    label={t(cardLabels.city)}
                     maxLength={50}
                     placeholder="Please input Detail text"
                     {...field}
@@ -261,7 +261,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
               <Controller
                 render={({ field }) => (
                   <Dropdown
-                    label="Province"
+                    label={t(cardLabels.province)}
                     onFocus={() => handleOpenSelectProvinceBottom('province')}
                     options={provinceOptions}
                     {...field}
@@ -273,7 +273,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Postal Code"
+                    label={t(cardLabels.postalCode)}
                     maxLength={110}
                     placeholder="Please input 6numerics"
                     {...field}
@@ -283,6 +283,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email }) => {
                 name="postalCode"
               />
             </div>
+            {/* //TODO: Add labels */}
             <div className="form__section mt-6">
               <div className="form__section__title">
                 <span>Use Area Information</span>

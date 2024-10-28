@@ -2,6 +2,8 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { ctaLabels } from '@common/constants/labels';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
 import BottomSheet from '../../../templates/BottomSheet';
@@ -9,7 +11,7 @@ import './style.scss';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
-const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hiddenConfirmBtn }) => {
+const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hiddenConfirmBtn, translate: t }) => {
   const [numPages, setNumPages] = useState(null);
   const containerRef = useRef(null);
   const pageRefs = useRef([]);
@@ -136,7 +138,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
         {!hiddenConfirmBtn && (
           <div className="view-term__footer">
             <Button
-              label="Confirm"
+              label={t(ctaLabels.confirm)}
               variant="filled__primary"
               className="btn__cta"
               onClick={handleConfirmViewTerm}
@@ -169,4 +171,4 @@ ViewTermBottom.defaultProps = {
   setHasScrolledToEnd: PropTypes.func,
 };
 
-export default ViewTermBottom;
+export default withHTMLParseI18n(ViewTermBottom);

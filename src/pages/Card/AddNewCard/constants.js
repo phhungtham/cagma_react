@@ -1,3 +1,4 @@
+import { cardLabels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
 
 export const ADD_NEW_CARD_STEP = {
@@ -7,18 +8,18 @@ export const ADD_NEW_CARD_STEP = {
 };
 
 export const termConditionConfig = {
-  selectAllLabel: 'I agree to the Application and Agreement of the Shinhan Access Card',
+  selectAllLabel: 'I agree to the Application and Agreement of the Shinhan Access Card', //TODO: missing labels, lbl_CACA600000_1022 not exists
   options: [
     {
-      label: 'Access Card Application',
+      label: cardLabels.accessCardApplication,
       value: '1',
-      title: 'Access Card Application',
+      title: cardLabels.accessCardApplication,
       fileUrl: fileUrls.cardHolderAgreement,
     },
     {
-      label: 'Cardholder Agreement',
+      label: cardLabels.cardholderAgreement,
       value: '2',
-      title: 'Cardholder Agreement',
+      title: cardLabels.cardholderAgreement,
       fileUrl: fileUrls.cardHolderAgreement,
     },
   ],
