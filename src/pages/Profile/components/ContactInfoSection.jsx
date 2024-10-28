@@ -64,12 +64,11 @@ const ContactInfoSection = ({
       setShowAlert({
         isShow: true,
         title: '',
-        content: 'Please check Your E-mail',
+        content: t(labels.checkYourEmail),
       });
       return;
     }
     setShowLoading(true);
-    //TODO: Check we should call this API before calling send email verification
     await apiCall(endpoints.inquiryUserInformation, 'POST');
     const request = {
       cus_email: email,
@@ -92,7 +91,7 @@ const ContactInfoSection = ({
       return setShowAlert({
         isShow: true,
         title: '',
-        content: 'This email is already in use',
+        content: t(labels.emailAlreadyUse),
       });
     }
 
@@ -113,7 +112,7 @@ const ContactInfoSection = ({
       clearTimeOutRef.current = setTimeout(() => {
         setError('verificationCode', {
           type: 'timeout',
-          message: 'Verification code has timed out. Resend E-mail and try again.',
+          message: 'Verification code has timed out. Resend E-mail and try again.', //TODO: Missing label
         });
         setDisabledVerifyButton(true);
       }, EMAIL_VERIFY_IN_SECONDS * 1000);
@@ -142,13 +141,13 @@ const ContactInfoSection = ({
       if (verifyEmailFailedNumber.current === EMAIL_VERIFY_RETRY_MAX) {
         setError('verificationCode', {
           type: 'wrong',
-          message: `You’ve entered the wrong code ${EMAIL_VERIFY_RETRY_MAX} times. Resend E-mail and try again.`,
+          message: `You’ve entered the wrong code ${EMAIL_VERIFY_RETRY_MAX} times. Resend E-mail and try again.`, //TODO: Missing label
         });
         setDisabledVerifyButton(true);
       } else {
         setError('verificationCode', {
           type: 'wrong',
-          message: `You’ve entered the wrong code. (${verifyEmailFailedNumber.current}/${EMAIL_VERIFY_RETRY_MAX})`,
+          message: `You’ve entered the wrong code. (${verifyEmailFailedNumber.current}/${EMAIL_VERIFY_RETRY_MAX})`, //TODO: Missing label
         });
       }
 
@@ -161,7 +160,7 @@ const ContactInfoSection = ({
       clearErrors('verificationCode');
       setShowToast({
         isShow: true,
-        message: 'Email verification is complete.',
+        message: t(labels.emailVerifyComplete),
         type: 'success',
       });
     }
@@ -229,13 +228,13 @@ const ContactInfoSection = ({
             maxLength={40}
             helperText={
               isEmailVerified && !showEmailVerifyCode
-                ? 'You need to click the Save button after making changes to apply them.'
+                ? 'You need to click the Save button after making changes to apply them.' //TODO: Missing label
                 : ''
             }
             {...field}
             endAdornment={
               <Button
-                label={alreadySendEmailVerification ? 'Resend' : t(labels.send)}
+                label={alreadySendEmailVerification ? t(labels.resend) : t(labels.send)}
                 variant="outlined__primary"
                 className="btn__send btn__sm"
                 onClick={handleRequestGetEmailVerifyCode}

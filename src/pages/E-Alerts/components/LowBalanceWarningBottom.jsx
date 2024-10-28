@@ -1,4 +1,5 @@
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { eAlertLabels } from '@common/constants/labels';
 
 import { eAlertLowBalanceWarningOptions } from '../constants';
 import BalanceSettingFormBottom from './BalanceSettingFormBottom';
@@ -9,7 +10,7 @@ const LowBalanceWarningBottom = ({ onClose, onSubmit, data, translate: t }) => {
     <BottomSheet
       open
       onClose={onClose}
-      title="Low balance Warning" //TODO: Missing label
+      title={t(eAlertLabels.lowBalanceWarning)}
       clazz="money-leaving-account__wrapper include-footer"
       type="fit-content"
     >

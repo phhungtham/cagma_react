@@ -70,15 +70,14 @@ const useLoginInfo = (props = {}) => {
       getLoginInfo();
     } else {
       isSendingRef.current = false;
-      if (localStorage.getItem('isLogin')) {
-        setState(s => ({
-          ...s,
-          isLoading: false,
-          isLogin: true,
-          error: '',
-          loginInfo: {},
-        }));
-      }
+      const alreadyLogin = localStorage.getItem('isLogin');
+      setState(s => ({
+        ...s,
+        isLoading: false,
+        isLogin: alreadyLogin,
+        error: '',
+        loginInfo: {},
+      }));
     }
   }, [getLoginInfo, isNativeRedirect]);
 

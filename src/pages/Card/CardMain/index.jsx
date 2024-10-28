@@ -4,16 +4,18 @@ import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
+import { menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import { moveBack } from '@utilities/index';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import ActiveCardView from './components/ActiveCardView';
 import EmptyCardView from './components/EmptyCardView';
 import GuestCardView from './components/GuestCardView';
 import './styles.scss';
 
-const CardMain = () => {
+const CardMain = ({ translate: t }) => {
   const { isLoading: isLoadingCheckUserLogin, isLogin } = useLoginInfo();
   const [card, setCard] = useState();
   const [showLoading, setShowLoading] = useState(false);
@@ -78,12 +80,27 @@ const CardMain = () => {
       <div className="card-main__wrapper page__wrapper">
         {(showLoading || isLoadingCheckUserLogin) && <Spinner />}
         <Header
-          title="Cards"
+          title={t(menuLabels.cardMain)}
           onClick={moveBack}
         />
         <div className="card-main__content">
           {!showLoading && !isLoadingCheckUserLogin && (
-            <>{isLogin ? <>{card ? <ActiveCardView card={card} /> : <EmptyCardView />}</> : <GuestCardView />}</>
+            <>
+              {isLogin ? (
+                <>
+                  {card ? (
+                    <ActiveCardView
+                      card={card}
+                      translate={t}
+                    />
+                  ) : (
+                    <EmptyCardView translate={t} />
+                  )}
+                </>
+              ) : (
+                <GuestCardView translate={t} />
+              )}
+            </>
           )}
         </div>
       </div>
@@ -103,4 +120,4 @@ const CardMain = () => {
   );
 };
 
-export default CardMain;
+export default withHTMLParseI18n(CardMain);

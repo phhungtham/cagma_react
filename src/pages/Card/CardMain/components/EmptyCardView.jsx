@@ -2,10 +2,11 @@ import { ArrowRight, PlusIcon } from '@assets/icons';
 import cardEmptyImg from '@assets/images/card-empty.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { MENU_CODE } from '@common/constants/common';
+import { cardLabels } from '@common/constants/labels';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 
-const EmptyCardView = () => {
+const EmptyCardView = ({ translate: t }) => {
   const handleNavigateAddNewCard = () => {
     moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
   };
@@ -23,14 +24,13 @@ const EmptyCardView = () => {
             alt="card empty"
           />
         </div>
-        <div className="empty-card__title">Access Card Service</div>
+        <div className="empty-card__title">{t(cardLabels.accessCardService)}</div>
         <div className="empty-card__desc">
-          <p>Enhance your life with</p>
-          <p>Shinhan Access Card!</p>
+          <p>{t(cardLabels.emptyCardGuide)}</p>
         </div>
         <div className="empty-card__btn">
           <Button
-            label="Get your New Card"
+            label={t(cardLabels.getNewAccessCard)}
             variant="filled__secondary-blue"
             size="lg"
             startIcon={<PlusIcon />}
@@ -38,9 +38,9 @@ const EmptyCardView = () => {
           />
         </div>
         <div className="empty-card__note">
-          <span>Already got your access card?</span>
+          <span>{t(cardLabels.alreadyGotCard)}</span>
           <Button
-            label="Activate"
+            label={t(cardLabels.activate)}
             variant="text__primary"
             size="sm"
             endIcon={<ArrowRight />}

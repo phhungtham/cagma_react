@@ -1,3 +1,4 @@
+import { ProductCode } from '@common/constants/product';
 import * as Yup from 'yup';
 
 export const openAccountSchema = Yup.object().shape({
@@ -7,6 +8,14 @@ export const openAccountSchema = Yup.object().shape({
   intendedUseAccount: Yup.string().required('Required field'), //dep_ac_usag_d
   debitCardIssuance: Yup.boolean().nullable(), //credit_chk
   thirdPartyChecked: Yup.string().oneOf(['Y', 'N']).nullable(), //tpd_chk
+  productCode: Yup.string(),
+  tfsaTerm: Yup.boolean()
+    .oneOf([true], 'You must agree')
+    .when('productCode', {
+      is: ProductCode.TFSA_E_SAVINGS,
+      then: schema => schema.required(),
+      otherwise: schema => schema.notRequired(),
+    }),
   thirdPartyName: Yup.string().when('thirdPartyChecked', {
     is: 'Y',
     then: schema => schema.required(),

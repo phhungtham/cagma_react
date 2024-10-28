@@ -55,9 +55,9 @@ const ReferralCodeSection = ({ productCode }) => {
                     />
                   )}
                   control={control}
-                  name="debitCardIssuance"
+                  name="tfsaTerm"
                 />
-                {/* TODO: Check to get content */}
+                {/* TODO: Figma not defined. Check to get content */}
                 <Tooltip
                   content="If a debit card is issued, it will be sent to the stored customer address."
                   placement="bottom_center"

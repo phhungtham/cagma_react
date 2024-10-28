@@ -27,8 +27,12 @@ import './styles.scss';
 
 const listAccount = [
   'WTLEE815',
+  'TIPTOP93',
   'MYGODFIVE5',
   'PERS114',
+  'SOLTEST01',
+  'SOLTEST02',
+  'SHINHAN24',
   'CATEST24',
   'CATEST25',
   'CATEST26',
@@ -83,7 +87,7 @@ const Login = () => {
       if (isDevelopmentEnv) {
         localStorage.setItem('isLogin', true);
       }
-      moveNext('', { param: JSON.stringify({ tab: '03', promotion_seq: 4 }) }, routePaths.notification);
+      moveNext('', { param: JSON.stringify({ tab: '03', promotion_seq: 4 }) }, routePaths.productList);
     }
   }, [isLoginSuccess]);
 

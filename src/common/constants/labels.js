@@ -31,6 +31,11 @@ export const eAlertLabels = {
   amount: 'lbl_CAME900020_0030', //Amount
   alertDisabled: 'lbl_CAME900020_0031', //Alerts notifications disabled
   alertEnabled: 'lbl_CAME900020_0032', //Alerts  notifications enabled
+  lowBalanceWarning: 'lbl_CAME900020_0033', //Low balance Warning
+  over: 'lbl_CAME900020_0034', //Over %1
+  under: 'lbl_CAME900020_0035', //Under %1
+  email2: 'lbl_CAME900020_0036', //Email
+  appPush2: 'lbl_CAME900020_0037', //App Push
 };
 
 export const appNotiLabels = {
@@ -59,6 +64,7 @@ export const appointmentManageLabels = {
   cancelConfirm: 'lbl_CAET900020_0016', //Are you sure you want to cancel Appointment ?This action cannot be undone
   doItNextTime: 'lbl_CAET900020_0017', //I’ll do it next time
   cancelSuccess: 'lbl_CAET900020_0018', //Successfully canceled
+  inPersonAppointment: 'lbl_CAET900020_0019', //In-Person Appointment
 };
 
 export const appointmentHomeLabels = {
@@ -70,6 +76,7 @@ export const appointmentHomeLabels = {
   requested: 'lbl_CAET900000_0006', //Requested
   canceled: 'lbl_CAET900000_0007', //Canceled
   confirmed: 'lbl_CAET900000_0008', //Confirmed
+  reserve: 'lbl_CAET900000_0010', //Reserve
 };
 
 export const bookAppointmentLabels = {
@@ -209,6 +216,15 @@ export const changeProfileLabels = {
   saveChangeConfirm: 'lbl_CAME900000_0206', //Would you like to save changes?
   updateProfileSuccess: 'lbl_CAME900000_0208', //Your profile information has been changed
   homeAddressReview: 'lbl_CAME900000_0209', //Home address will be changed after reviewing submitted documents.
+  resend: 'lbl_CAME900000_0212', //Resend
+  province: 'lbl_CAME900000_0213', //Province
+  address1: 'lbl_CAME900000_0214', //Address 1
+  address2: 'lbl_CAME900000_0215', //Address 2
+  address3: 'lbl_CAME900000_0216', //Address 3
+  proofOfAddress: 'lbl_CAME900000_0217', //Proof of address
+  checkYourEmail: 'lbl_CAME900000_0218', //Please check your email
+  emailAlreadyUse: 'lbl_CAME900000_0219', //This email is already in use
+  emailVerifyComplete: 'lbl_CAME900000_0220', //Email verification is complete
 };
 
 export const openAccountLabels = {
@@ -217,15 +233,35 @@ export const openAccountLabels = {
   productFeature: 'lbl_CAPR501000_0009', //[Mandatory] Product Feature
 };
 
+export const cardLabels = {
+  accessCardService: 'lbl_CACA600000_0001', //Access Card Service
+  activeAccessCard: 'lbl_CACA600000_0002', //Activate your Access Card
+  reissueAccessCard: 'lbl_CACA600000_0003', //Reissue your Access Card
+  reportLostCard: 'lbl_CACA600000_0004', //Report a Lost/Stolen Access Card
+  accessCardService2: 'lbl_CACA600000_0005', //Access Card Service
+  emptyCardGuide: 'lbl_CACA600000_0006', //Enhance your life with Shinhan Access Card!
+  getNewAccessCard: 'lbl_CACA600000_0007', //Get your New Access Card
+  alreadyGotCard: 'lbl_CACA600000_0008', //Already got your access card?
+  activate: 'lbl_CACA600000_0009', //Activate
+  reissue: 'lbl_CACA600000_0010', //Reissue
+  reportLost: 'lbl_CACA600000_0011', //Report Lost
+  typeOfCard: 'lbl_CACA600000_0012', //Type of Card
+  dailyWithdrawalLimit: 'lbl_CACA600000_0013', //Daily Withdrawal Limit
+  dailyPosLimit: 'lbl_CACA600000_0014', //Daily POS Limit
+  issueDate: 'lbl_CACA600000_0015', //Issue Date
+  expireDate: 'lbl_CACA600000_0016', //Expire Date
+};
+
 export const menuLabels = {
-  eAlertManage: 'mymen_CAME900020', //mymen_CAME900020
-  balance: 'mymen_CAME900050', //Balance
-  appNotification: 'mymen_CAHO200010', //SOL Alert
-  appointment: 'mymen_CAET900000', //Appointment
-  bookAppointment: 'mymen_CAET900010', //Book an Appointment
-  manageAppointment: 'mymen_CAET900020', //Manage Appointment
-  personalSetting: 'mymen_CAME9000100', //Personal Setting
-  changeProfile: 'mymen_CAME900000', //Change Profile
+  eAlertManage: 'mymen_CAME050000', //mymen_CAME900020
+  balance: 'lbl_CAME900020_0003', //Balance
+  appNotification: 'men_CAHO010101', //SOL Alert
+  appointment: 'mymen_CAET010000', //Appointment
+  bookAppointment: 'men_CAET010200', //Book an Appointment
+  manageAppointment: 'lbl_CAET900020_0001', //Manage Appointment
+  personalSetting: 'mymen_CAOTLA0005', //Personal Setting
+  changeProfile: 'mymen_CAME030100', //Change Profile
+  cardMain: 'mymen_CAOTLA0004', //Card
 };
 
 export const ctaLabels = {

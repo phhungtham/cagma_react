@@ -1,19 +1,20 @@
 import { MENU_CODE } from '@common/constants/common';
+import { cardLabels } from '@common/constants/labels';
 import { routePaths } from '@routes/paths';
 
 import { CardActionTypes } from '../constants';
 
 export const guestCardOptions = [
   {
-    label: 'Activate your Access Card',
+    label: cardLabels.activeAccessCard,
     value: CardActionTypes.ACTIVE,
   },
   {
-    label: 'Reissue your Access Card',
+    label: cardLabels.reissueAccessCard,
     value: CardActionTypes.REISSUE,
   },
   {
-    label: 'Report a Lost/Stolen Access Card',
+    label: cardLabels.reportLostCard,
     value: CardActionTypes.REPORT_LOST,
   },
 ];
@@ -35,23 +36,23 @@ export const CardTypeWithNavigateParams = {
 
 export const cardSummaryFields = [
   {
-    label: 'Type of Card',
+    label: 'lbl_CACA600000_0012',
     value: 'typeOfCard',
   },
   {
-    label: 'Daily Withdrawal Limit',
+    label: 'lbl_CACA600000_0013',
     value: 'dailyWithdrawalLimit',
   },
   {
-    label: 'Daily POS Limit',
+    label: 'lbl_CACA600000_0014',
     value: 'dailyPOSLimit',
   },
   {
-    label: 'Issue Date',
+    label: 'lbl_CACA600000_0015',
     value: 'issueDate',
   },
   {
-    label: 'Expire Date',
+    label: 'lbl_CACA600000_0016',
     value: 'expireDate',
   },
 ];

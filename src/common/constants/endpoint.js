@@ -4,7 +4,7 @@ export const endpoints = {
   getAccountsByProductType: '/ca/iq/CAIQ001.pwkjson',
   getAccountList: '/ca/iq/CAIQ006.pwkjson',
   getProductList: '/ca/pr/CAPR001.pwkjson',
-  openAccount: '/ca/pr/CAPR020.pwkjson',
+  openBankingAccount: '/ca/pr/CAPR020.pwkjson',
   inquiryProductInterestRate: '/ca/pr/CAPR002.pwkjson',
   preOpenAccountDeposit: '/ca/pr/CAPR021.pwkjson',
   openAccountDeposit: '/ca/pr/CAPR022.pwkjson',

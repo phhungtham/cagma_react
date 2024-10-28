@@ -11,7 +11,7 @@ import EnterNewCardInfo from './components/EnterNewCardInfo';
 import TermsAndConditions from './components/TermsAndConditions';
 import { ADD_NEW_CARD_STEP } from './constants';
 
-const AddNewCard = ({ translation }) => {
+const AddNewCard = ({ translate: t }) => {
   const [currentStep, setCurrentStep] = useState(ADD_NEW_CARD_STEP.TERMS_CONDITIONS);
   const [addCardSuccessInfo, setAddCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);

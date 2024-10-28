@@ -202,6 +202,7 @@ const ProductList = () => {
                       <div className="product__type">
                         <span>{product?.prdt_c_display}</span>
                       </div>
+                      {/* //TODO: Check css for just render 3 line => Check Figma */}
                       <div className="product__desc">
                         <span>{DescriptionMapProductCode[product.prdt_c]}</span>
                       </div>

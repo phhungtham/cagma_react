@@ -89,13 +89,16 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     formState: { errors, isValid },
   } = methods;
 
-  const [amount, intendedUseAccountDisplay, term, paymentEachSession, interestRateDisplay] = watch([
+  const [amount, intendedUseAccountDisplay, term, paymentEachSession, interestRateDisplay, tfsaTerm] = watch([
     'amount',
     'intendedUseAccountDisplay',
     'term',
     'paymentEachSession',
     'interestRateDisplay',
+    'tfsaTerm',
   ]);
+
+  console.log('tfsaTerm :>> ', tfsaTerm);
 
   const onOpenMyAccountBottom = () => {
     setShowMyAccountBottom(true);
@@ -174,24 +177,13 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     let showThirdParty = false;
     let showInterestRate = false;
     let showReferralCode = false;
-    if ([ProductCode.E_SAVING].includes(productCode)) {
+    if (productType === DepositSubjectClass.REGULAR_SAVING) {
       showThirdParty = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-      showInterestRate = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-      showReferralCode = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-    }
-    if ([ProductCode.TFSA_E_SAVINGS, ProductCode.TFSA_E_GIC].includes(productCode)) {
       showInterestRate = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
       showReferralCode = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
     }
     if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
       showThirdParty = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-      showInterestRate = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-      showReferralCode = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-    }
-    if ([ProductCode.RRSP_E_SAVINGS].includes(productCode)) {
-      showInterestRate = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-    }
-    if ([ProductCode.RRSP_E_GIC].includes(productCode)) {
       showInterestRate = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
       showReferralCode = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
     }
@@ -226,6 +218,10 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
         }
       }
       setAccounts(filteredAccounts);
+      //Request get interest rate only one time if is open banking account
+      if (productType === DepositSubjectClass.REGULAR_SAVING) {
+        requestGetInterestRate();
+      }
     } else {
       setAlert({
         isShow: true,
@@ -257,10 +253,12 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     const payload = {
       prdt_c: productCode,
       product_ccy: productCurrencyCode,
-      period_type: UnitCodeWithPeriodType[unitCode],
-      period_count: Number(term),
-      product_amount: amount,
     };
+    if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
+      payload.period_type = UnitCodeWithPeriodType[unitCode];
+      payload.period_count = Number(term);
+      payload.product_amount = amount;
+    }
     const { data, error, isSuccess } = await requestApi(endpoints.inquiryProductInterestRate, payload);
     setShowLoading(false);
     if (isSuccess) {
@@ -282,6 +280,10 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
       }
     }
   }, [term, amount, showInterestRateSection]);
+
+  useEffect(() => {
+    setValue('productCode', productCode);
+  }, [productCode]);
 
   useEffect(() => {
     if (showReferralCodeSection && !cardCountInfo) {

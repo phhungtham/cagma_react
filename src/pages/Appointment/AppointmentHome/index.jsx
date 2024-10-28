@@ -171,7 +171,7 @@ const AppointmentHome = ({ translate: t }) => {
                 <div className="card__btn__wrapper">
                   <Button
                     variant="text__primary"
-                    label="Reserve" //TODO: Missing label
+                    label={t(labels.reserve)}
                     size="sm"
                     endIcon={<ArrowRight />}
                   />
@@ -196,7 +196,7 @@ const AppointmentHome = ({ translate: t }) => {
                 <div className="card__btn__wrapper">
                   <Button
                     variant="text__primary"
-                    label="Reserve"
+                    label={t(labels.reserve)}
                     size="sm"
                     endIcon={<ArrowRight />}
                   />
@@ -205,7 +205,7 @@ const AppointmentHome = ({ translate: t }) => {
               <div className="card__img__wrapper">
                 <img
                   src={inPersonAppointmentImg}
-                  alt="zoom test"
+                  alt=""
                 />
               </div>
             </div>

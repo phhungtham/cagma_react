@@ -51,8 +51,7 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel, 
                 {date} {time}
               </div>
               <div className="appointment__method">
-                {/* //TODO: Missing label */}
-                {isUsingZoom ? t(labels.zoomAppointment) : 'In person appointment'}
+                {isUsingZoom ? t(labels.zoomAppointment) : t(labels.inPersonAppointment)}
               </div>
             </div>
           </section>

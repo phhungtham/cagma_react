@@ -43,7 +43,8 @@ export const DescriptionMapProductCode = {
   [ProductCode.E_LONG_TERM_GIC]: 'This product guarantees the high fixed interest rate even for short term deposit.',
   [ProductCode.E_LONG_MATURITY]:
     'This product offers compounded high interest rate for a longer investment period, all through online',
-  [ProductCode.TFSA_E_GIC]: '',
+  [ProductCode.TFSA_E_GIC]:
+    'TFSA e-GIC(CAD) is best for long-term Investment, which allows obtaining a high yearly compounded interest.',
   [ProductCode.RRSP_E_GIC]: 'This product guarantees the high fixed interest rate even for short term deposit.',
   [ProductCode.CHEQUING]:
     'This online product offers tax-sheltered growth and flexibility and withdraw according to your needs.',

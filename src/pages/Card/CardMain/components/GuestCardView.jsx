@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { ArrowRight } from '@assets/icons';
 import Alert from '@common/components/atoms/Alert';
 import { MENU_CODE } from '@common/constants/common';
+import { cardLabels } from '@common/constants/labels';
 import { CardActionTypes, ReportLostNotLoggedType } from '@pages/Card/constants';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 
 import { CardTypeWithNavigateParams, guestCardOptions } from '../constants';
 
-const GuestCardView = () => {
+const GuestCardView = ({ translate: t }) => {
   const [showReportLostOptionAlert, setShowReportLostOptionAlert] = useState(false);
 
   const onSelectItem = item => {
@@ -37,7 +38,7 @@ const GuestCardView = () => {
     <>
       <div className="guest-card-view__wrapper page__container">
         <div className="guest-card__header">
-          <div className="page__title">Access Card Service</div>
+          <div className="page__title">{t(cardLabels.accessCardService)}</div>
         </div>
         <div className="guest-card__options">
           {guestCardOptions.map(item => (
@@ -46,7 +47,7 @@ const GuestCardView = () => {
               key={item.value}
               onClick={() => onSelectItem(item)}
             >
-              <span className="option__label">{item.label}</span>
+              <span className="option__label">{t(item.label)}</span>
               <ArrowRight />
             </div>
           ))}

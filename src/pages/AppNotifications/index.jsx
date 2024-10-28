@@ -233,7 +233,7 @@ const AppNotifications = ({ translate: t }) => {
       // 8: Promotion
       const { list = [] } = data || {};
       const filteredPromotion = list.filter(item => {
-        return item?.display_pos === '8';
+        return ['8', '1', '6'].includes(item?.display_pos);
       });
       filteredPromotion.sort((firstData, secondData) => secondData.banner_seq - firstData.banner_seq);
       setPromotions(filteredPromotion);

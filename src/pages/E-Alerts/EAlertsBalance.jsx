@@ -273,16 +273,19 @@ const EAlertsBalance = ({ translate: t }) => {
               {t(eAlertLabels.moneyLeaving)}
               {isMoneyLeavingEnabled && (
                 <div className="item__sub">
-                  <span>Over ${formatCurrencyDisplay(setting.moneyLeavingAmount)}</span>
+                  <span>
+                    {t(eAlertLabels.over.replace('%1', `$${formatCurrencyDisplay(setting.moneyLeavingAmount)}`))}
+                  </span>
                   {setting.moneyLeavingEmailEnabled && (
                     <>
                       <span className="divider__vertical" />
-                      <span>E-mail</span>
+                      <span>{t(eAlertLabels.email2)}</span>
                     </>
                   )}
                   {setting.moneyLeavingPushEnabled && (
                     <>
                       <span className="divider__vertical" />
+                      {/* //TODO: Missing label */}
                       <span>SMS</span>
                     </>
                   )}
@@ -306,16 +309,19 @@ const EAlertsBalance = ({ translate: t }) => {
               <div>{t(eAlertLabels.moneyInto)}</div>
               {isMoneyIntoEnabled && (
                 <div className="item__sub">
-                  <span>Over ${formatCurrencyDisplay(setting.moneyIntoAmount)}</span>
+                  <span>
+                    {t(eAlertLabels.over.replace('%1', `$${formatCurrencyDisplay(setting.moneyIntoAmount)}`))}
+                  </span>
                   {setting.moneyIntoEmailEnabled && (
                     <>
                       <span className="divider__vertical" />
-                      <span>E-mail</span>
+                      <span>{t(eAlertLabels.email2)}</span>
                     </>
                   )}
                   {setting.moneyIntoPushEnabled && (
                     <>
                       <span className="divider__vertical" />
+                      {/* //TODO: Missing label */}
                       <span>SMS</span>
                     </>
                   )}
@@ -339,16 +345,17 @@ const EAlertsBalance = ({ translate: t }) => {
               <div>{t(eAlertLabels.lowBalance)}</div>
               {isLowBalanceEnabled && (
                 <div className="item__sub">
-                  <span>Under ${formatCurrencyDisplay(setting.balanceAmount)}</span>
+                  <span>{t(eAlertLabels.under.replace('%1', `$${formatCurrencyDisplay(setting.balanceAmount)}`))}</span>
                   {setting.balanceEmailEnabled && (
                     <>
                       <span className="divider__vertical" />
-                      <span>E-mail</span>
+                      <span>{t(eAlertLabels.email2)}</span>
                     </>
                   )}
                   {setting.balancePushEnabled && (
                     <>
                       <span className="divider__vertical" />
+                      {/* //TODO: Missing label */}
                       <span>SMS</span>
                     </>
                   )}

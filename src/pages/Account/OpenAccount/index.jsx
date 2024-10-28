@@ -16,9 +16,7 @@ import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
-import { apiCall } from '@shared/api';
-import { commonCodeDataToOptions, convertObjectBaseMappingFields } from '@utilities/convert';
-import { formatCurrencyDisplay } from '@utilities/currency';
+import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveNext } from '@utilities/index';
 import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -28,7 +26,7 @@ import DTR from './components/DTR';
 import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
-import { accountFormMapFields, OPEN_ACCOUNT_STEP, TermUnitCodeDisplay } from './constants';
+import { OPEN_ACCOUNT_STEP, TermUnitCodeDisplay } from './constants';
 import useOpenAccount from './hooks/useOpenAccount';
 import './style.scss';
 
@@ -42,7 +40,9 @@ const OpenAccount = ({ translate: t }) => {
   const [provinceOptions, setProvinceOptions] = useState();
   const [maturityOptions, setMaturityOptions] = useState(); //Using for display Maturity Option on completed screen
   const [customer, setCustomer] = useState();
-  const { requestOpenDepositAccount: openDepositAccount } = useOpenAccount({ product: productInfo });
+  const { requestOpenDepositAccount: openDepositAccount, openBankingAccount } = useOpenAccount({
+    product: productInfo,
+  });
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -131,10 +131,10 @@ const OpenAccount = ({ translate: t }) => {
     if (isSuccess) {
       const {
         prdt_c_display: productName,
-        withdraw_acno_display: acNo,
+        withdraw_acno_display: depositFrom,
         ntfct_intrt_display,
         trx_amt_display: amount,
-        dep_acno_display: depositFrom,
+        dep_acno_display: acNo,
         ctrt_trm_cnt: term,
         trx_ccy_c: currency,
         ctrt_trm_d: termUnitCode,
@@ -160,62 +160,35 @@ const OpenAccount = ({ translate: t }) => {
     }
   };
 
-  const onSubmitOpenAccountForm = async formValues => {
+  const requestOpenBankingAccount = async values => {
     setShowLoading(true);
-    if (dep_sjt_class === DepositSubjectClass.TERM_DEPOSIT_GIC) {
-      return requestOpenDepositAccount(formValues);
-    }
-    const productInterestRateResponse = await apiCall(endpoints.inquiryProductInterestRate, 'POST', {
-      prdt_c: productCode,
-      product_ccy: productCurrencyCode,
-    });
-    const request = convertObjectBaseMappingFields(formValues, accountFormMapFields);
-    const {
-      dep_intrt_k,
-      intrt_trm_c,
-      y4mm_intrt_d,
-      ntfct_intrt: interestRateValue,
-      adt_intrt,
-      apply_intrt,
-    } = productInterestRateResponse?.data?.elData || {};
-    request.prdt_c = productCode;
-    request.apl_intrt = ntfct_intrt;
-    request.tpd_trx_t = 0;
-    request.tpd_chk = request.tpd_chk ? 'Y' : 'N';
-    request.credit_chk = request.credit_chk ? 'Y' : 'N';
-    request.trx_amt = Number(request.trx_amt);
-    request.stmt_ccy_cvs_exrt = 1;
-    request.dep_cvsr_bnkerno = request.dep_cvsr_bnkerno || null;
-    request.refno = request.acno;
-    request.intrt_trm_c = intrt_trm_c;
-    request.dep_sjt_class = dep_sjt_class;
-    request.dep_intrt_k = dep_intrt_k;
-    request.y4mm_intrt_d = y4mm_intrt_d;
-    request.ntfct_intrt = interestRateValue;
-    request.adt_intrt = adt_intrt;
-    request.apply_intrt = apply_intrt;
-    delete request.intendedUseAccountDisplay;
-    delete request.dob_display;
-    const openAccountResponse = await apiCall(endpoints.openAccount, 'POST', request);
+    const { data, error, isSuccess } = await openBankingAccount(values);
     setShowLoading(false);
-    const openAccountStatus = openAccountResponse?.data?.elHeader;
-    if (openAccountStatus?.resSuc) {
-      const { lcl_ac_no_display, dep_acno_display } = openAccountResponse?.data?.elData || {};
+    if (isSuccess) {
+      const { lcl_ac_no_display, dep_acno_display } = data;
+      debugger;
       setOpenAccountSuccessInfo({
         productName: prdt_c_display,
-        creditChecked: request.credit_chk === '1',
+        // creditChecked: request.credit_chk === '1',
         acNo: lcl_ac_no_display,
         interestRate: `${ntfct_intrt}% APR`,
-        amount: `${formatCurrencyDisplay(request.trx_amt)} CAD`,
+        // amount: `${formatCurrencyDisplay(request.trx_amt)} CAD`,
         depositFrom: dep_acno_display,
       });
       setCurrentStep(OPEN_ACCOUNT_STEP.COMPLETED);
     } else {
       setAlert({
         isShow: true,
-        title: 'Sorry!',
-        content: openAccountStatus?.resMsgVo?.msgText,
+        content: error,
       });
+    }
+  };
+
+  const onSubmitOpenAccountForm = async formValues => {
+    if (dep_sjt_class === DepositSubjectClass.TERM_DEPOSIT_GIC) {
+      return requestOpenDepositAccount(formValues);
+    } else if (dep_sjt_class === DepositSubjectClass.REGULAR_SAVING) {
+      return requestOpenBankingAccount(formValues);
     }
   };
 

@@ -305,7 +305,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Dropdown
-              label="Province" //TODO: Missing labels
+              label={t(labels.province)}
               onFocus={onOpenProvinceBottom}
               options={provinceOptions}
               disabled={isDisableAddress}
@@ -320,7 +320,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Address 1" //TODO: Missing labels
+              label={t(labels.address1)}
               disabled={isDisableAddress}
               {...field}
             />
@@ -331,7 +331,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Address 2" //TODO: Missing labels
+              label={t(labels.address2)}
               disabled={isDisableAddress}
               {...field}
             />
@@ -342,7 +342,7 @@ const AddressInfoSection = ({
         <Controller
           render={({ field }) => (
             <Input
-              label="Address 3" //TODO: Missing labels
+              label={t(labels.address3)}
               disabled={isDisableAddress}
               {...field}
             />
@@ -357,7 +357,7 @@ const AddressInfoSection = ({
           <div className="divider__item__solid mt-4" />
           <div className="form__section pt-4">
             <div className="form__section__title">
-              <span>Proof of address</span>
+              <span>{t(labels.proofOfAddress)}</span>
             </div>
             <div
               className="address__upload"
