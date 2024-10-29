@@ -1,5 +1,5 @@
 import { DepositSubjectClass } from '@common/constants/deposit';
-import { ProductPeriodUnitCode } from '@common/constants/product';
+import { ProductCode, ProductPeriodUnitCode } from '@common/constants/product';
 
 export const OPEN_ACCOUNT_STEP = {
   VIEW_TERMS: 'viewTerms',
@@ -86,3 +86,14 @@ export const TermUnitCodeDisplay = {
   [TermRequestUnitCode.QUARTER]: 'quarters',
   [TermRequestUnitCode.YEAR]: 'years',
 };
+
+export const requiredTermProductCodes = [
+  ProductCode.E_INSTALLMENT_SAVING,
+  ProductCode.E_POWER_TERM_DEPOSIT,
+  ProductCode.E_GREEN_TERM_DEPOSIT,
+  ProductCode.E_LONG_TERM_GIC,
+  ProductCode.E_LONG_MATURITY,
+  ProductCode.E_SHORT_TERM_GIC,
+  ProductCode.TFSA_E_GIC,
+  ProductCode.RRSP_E_GIC,
+];

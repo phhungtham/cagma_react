@@ -39,11 +39,15 @@ const OpenAccount = ({ translate: t }) => {
   const [openAccountSuccessInfo, setOpenAccountSuccessInfo] = useState();
   const [provinceOptions, setProvinceOptions] = useState();
   const [maturityOptions, setMaturityOptions] = useState(); //Using for display Maturity Option on completed screen
+  const [termOptions, setTermOptions] = useState([]); //Using for display Maturity Option on completed screen
   const [customer, setCustomer] = useState();
-  const { requestOpenDepositAccount: openDepositAccount, requestOpenBankingAccount: openBankingAccount } =
-    useOpenAccount({
-      product: productInfo,
-    });
+  const {
+    requestOpenDepositAccount: openDepositAccount,
+    requestOpenBankingAccount: openBankingAccount,
+    requestOpenInstallmentSavingAccount: openInstallmentSavingAccount,
+  } = useOpenAccount({
+    product: productInfo,
+  });
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -82,7 +86,18 @@ const OpenAccount = ({ translate: t }) => {
     });
     setShowLoading(false);
     if (isSuccess) {
+      const termOptionsKey = `${getTermOptions}_${productCode}`;
       const { state_c: provinces, dep_due_rnw_t: maturityOptions } = data;
+      const termResponseOptions = data?.[termOptionsKey];
+      if (termResponseOptions) {
+        const convertedTerms = termResponseOptions.map(item => {
+          return {
+            label: item.key,
+            value: item.key.replace(/\D/g, ''),
+          };
+        });
+        setTermOptions(convertedTerms);
+      }
       const convertedProvince = commonCodeDataToOptions(provinces);
       setProvinceOptions(convertedProvince);
       setMaturityOptions(maturityOptions);
@@ -161,20 +176,65 @@ const OpenAccount = ({ translate: t }) => {
     }
   };
 
+  const requestOpenInstallmentSavingAccount = async values => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await openInstallmentSavingAccount(values);
+    setShowLoading(false);
+    if (isSuccess) {
+      debugger;
+      const {
+        prdt_c_display: productName,
+        withdraw_acno_display: depositFrom,
+        ntfct_intrt_display,
+        trx_amt_display: amount,
+        trx_ccy_c: currency,
+        dep_acno_display: acNo,
+        ctrt_trm_cnt: term,
+        ctrt_trm_d: termUnitCode,
+        due_date_display: maturityDate,
+        et_payt_dd: paymentEachSession,
+      } = data;
+      const maturityOption = (maturityOptions || []).find(option => Number(option.key) === 40)?.value;
+      setOpenAccountSuccessInfo({
+        productName,
+        acNo,
+        interestRate: `${ntfct_intrt_display}% APR`,
+        amount: `${amount} ${currency}`,
+        term: `${term} ${TermUnitCodeDisplay[termUnitCode]}`,
+        maturityDate,
+        maturityOption,
+        depositFrom,
+        paymentEachSession,
+      });
+      setCurrentStep(OPEN_ACCOUNT_STEP.COMPLETED);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  //TODO: Handle RRSF e-Saving account
   const requestOpenBankingAccount = async values => {
     setShowLoading(true);
     const { data, error, isSuccess } = await openBankingAccount(values);
     setShowLoading(false);
     if (isSuccess) {
-      const { lcl_ac_no_display, dep_acno_display } = data;
-      debugger;
+      const {
+        prdt_c_display: productName,
+        withdraw_acno_display: depositFrom,
+        ntfct_intrt_display,
+        dep_acno_display: acNo,
+        trx_amt_display: amount,
+        trx_ccy_c: currency,
+      } = data;
       setOpenAccountSuccessInfo({
-        productName: prdt_c_display,
-        // creditChecked: request.credit_chk === '1',
-        acNo: lcl_ac_no_display,
-        interestRate: `${ntfct_intrt}% APR`,
-        // amount: `${formatCurrencyDisplay(request.trx_amt)} CAD`,
-        depositFrom: dep_acno_display,
+        productName,
+        acNo,
+        interestRate: `${ntfct_intrt_display}% APR`,
+        amount: `${amount} ${currency}`,
+        depositFrom,
       });
       setCurrentStep(OPEN_ACCOUNT_STEP.COMPLETED);
     } else {
@@ -190,6 +250,8 @@ const OpenAccount = ({ translate: t }) => {
       return requestOpenDepositAccount(formValues);
     } else if (dep_sjt_class === DepositSubjectClass.REGULAR_SAVING) {
       return requestOpenBankingAccount(formValues);
+    } else if (dep_sjt_class === DepositSubjectClass.INSTALLMENT_SAVING) {
+      return requestOpenInstallmentSavingAccount(formValues);
     }
   };
 
@@ -229,6 +291,7 @@ const OpenAccount = ({ translate: t }) => {
             product={productInfo}
             setAlert={setAlert}
             provinces={provinceOptions}
+            termOptions={termOptions}
           />
         )}
         {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && (

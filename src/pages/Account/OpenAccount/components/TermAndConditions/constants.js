@@ -1,5 +1,6 @@
 import { ProductCode } from '@common/constants/product';
 
+//TODO: Using localhost from env variable
 export const OpenAccountTermFile = {
   [ProductCode.E_SAVING]: 'https://gmcadev.shinhanglobal.com/img/511/pdf/5117020025',
   [ProductCode.TFSA_E_SAVINGS]: 'https://gmcadev.shinhanglobal.com/img/511/pdf/5117020027',

@@ -23,33 +23,6 @@ export const eSavingSuccessFields = [
   },
 ];
 
-export const tfsaESavingSuccessFields = [
-  {
-    label: 'Product name',
-    value: 'productName',
-  },
-  {
-    label: 'Account no.',
-    value: 'acNo',
-  },
-  {
-    label: 'Interest rate',
-    value: 'interestRate',
-  },
-  {
-    label: 'Amount',
-    value: 'amount',
-  },
-  {
-    label: 'Maturity Date',
-    value: 'maturityDate',
-  },
-  {
-    label: 'Deposit from',
-    value: 'depositFrom',
-  },
-];
-
 export const tfsaEGICSuccessFields = [
   {
     label: 'Product name',
@@ -180,7 +153,7 @@ export const rrspEGICSuccessFields = [
 
 export const openAccountSuccessFields = {
   [ProductCode.E_SAVING]: eSavingSuccessFields,
-  [ProductCode.TFSA_E_SAVINGS]: tfsaESavingSuccessFields,
+  [ProductCode.TFSA_E_SAVINGS]: eSavingSuccessFields,
   [ProductCode.E_POWER_TERM_DEPOSIT]: termDepositSuccessFields,
   [ProductCode.E_GREEN_TERM_DEPOSIT]: termDepositSuccessFields,
   [ProductCode.E_LONG_TERM_GIC]: termDepositSuccessFields,

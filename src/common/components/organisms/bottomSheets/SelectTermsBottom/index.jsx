@@ -4,9 +4,7 @@ import { ErrorIcon } from '@assets/icons';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Chips from '@common/components/atoms/Chips';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { dateFormat } from '@common/constants/dateTime';
 import { SelectTermDurationTypes } from '@common/constants/terms';
-import dayjs from 'dayjs';
 
 const typeWithUnitLabel = {
   [SelectTermDurationTypes.DAY]: 'days',
@@ -24,11 +22,12 @@ const SelectTermsBottom = ({
   max,
   min,
   options = [],
+  inquiryMaturityDate,
 }) => {
   const [termError, setTermError] = useState();
   const [termValue, setTermValue] = useState(value);
+  const [maturityDate, setMaturityDate] = useState();
   const inputRef = useRef(null);
-  // const options = type === SelectTermDurationTypes.MONTH ? selectTermsByMonthOptions : selectTermsByDateOptions;
 
   const handleCloseBottomSheet = () => {
     onClose();
@@ -49,15 +48,34 @@ const SelectTermsBottom = ({
   };
 
   const onClickConfirm = event => {
-    onChange(termValue);
+    onChange({
+      termValue: termValue,
+      maturityDate: maturityDate?.value,
+      maturityDateDisplay: maturityDate?.valueDisplay,
+    });
     event.preventDefault();
   };
 
-  const getMaturityDate = () => {
-    const currentDate = dayjs();
-    const maturityDate = currentDate.add(termValue, typeWithUnitLabel[type]);
-    const formattedDate = maturityDate.format(dateFormat);
-    return formattedDate;
+  const getMaturityDate = async () => {
+    const result = await inquiryMaturityDate(termValue);
+    if (result) {
+      const { maturityDate, maturityDateDisplay } = result;
+      setMaturityDate({
+        value: maturityDate,
+        valueDisplay: maturityDateDisplay,
+      });
+    } else {
+      setMaturityDate('');
+    }
+    // if (inquiryMaturityDate && termValue) {
+    //   const value = await inquiryMaturityDate(termValue);
+    //   return value;
+    // }
+    // return '';
+    // const currentDate = dayjs();
+    // const maturityDate = currentDate.add(termValue, typeWithUnitLabel[type]);
+    // const formattedDate = maturityDate.format(dateFormat);
+    // return formattedDate;
   };
 
   useEffect(() => {
@@ -72,6 +90,11 @@ const SelectTermsBottom = ({
       } else if (min && Number(termValue) < min) {
         messageError = `Please input an amount more than ${min} ${typeWithUnitLabel[type]}`;
       }
+    }
+    if (messageError) {
+      setMaturityDate();
+    } else {
+      getMaturityDate();
     }
     setTermError(messageError);
   }, [termValue]);
@@ -113,10 +136,10 @@ const SelectTermsBottom = ({
               value={termValue}
             />
           </div>
-          {termValue && (
+          {maturityDate?.valueDisplay && (
             <div className="maturity-date">
               <span>Maturity date</span>
-              <span>{getMaturityDate()}</span>
+              <span>{maturityDate.valueDisplay}</span>
             </div>
           )}
           <div className="btn-submit__wrapper">

@@ -1,26 +1,23 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ScrollSelect from '@common/components/atoms/ScrollSelect';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { FrequencyType } from '@common/constants/bottomsheet';
 import { PropTypes } from 'prop-types';
 
 import '../bs_styles.scss';
-import { frequencyMonthlyOptions, frequencyTypeOptions, frequencyValueByTypeOptions } from './constants';
+import { frequencyValueByTypeOptions } from './constants';
 
-//TODO: Handle logic
-const SelectFrequencyBottom = ({ open, onClose, onChange, value = {} }) => {
+const SelectFrequencyBottom = ({ open, onClose, onChange, typeOptions = [], value = {} }) => {
   const valueRef = useRef({});
-  const selectedType = value?.type || FrequencyType.MONTHLY;
-  const selectedValue = value?.value || frequencyMonthlyOptions[0].value;
 
-  const [selectTypeOption, setSelectTypeOption] = useState(selectedValue);
+  const [selectedType, setSelectedType] = useState();
+  const [selectedValue, setSelectedValue] = useState();
 
   const handleConfirm = () => {
     const { value } = valueRef.current;
     onChange({
-      selectTypeOption,
+      selectTypeOption: selectedType,
       value,
     });
   };
@@ -36,15 +33,22 @@ const SelectFrequencyBottom = ({ open, onClose, onChange, value = {} }) => {
   };
 
   const valueOptions = useMemo(() => {
-    return frequencyValueByTypeOptions[selectTypeOption] || frequencyMonthlyOptions;
-  }, [selectTypeOption]);
+    return frequencyValueByTypeOptions[selectedType] || [];
+  }, [selectedType]);
 
-  const changeValueOptionType = useCallback(
+  const handleChangeType = useCallback(
     debounceChangeOption(value => {
-      setSelectTypeOption(value);
+      setSelectedType(value);
     }, 100),
     []
   );
+
+  useEffect(() => {
+    if (value) {
+      setSelectedType(value.type);
+      setSelectedValue(value.value);
+    }
+  }, [value]);
 
   return (
     <BottomSheet
@@ -57,10 +61,10 @@ const SelectFrequencyBottom = ({ open, onClose, onChange, value = {} }) => {
       <div>
         <div className="select_wrapper">
           <ScrollSelect
-            options={frequencyTypeOptions}
+            options={typeOptions}
             defaultValue={selectedType}
             onChangeValue={value => {
-              changeValueOptionType(value);
+              handleChangeType(value);
             }}
           />
 

@@ -8,38 +8,33 @@ import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAm
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import SelectFrequencyBottom from '@common/components/organisms/bottomSheets/SelectFrequencyBottom';
+import { frequencyTypeOptions } from '@common/components/organisms/bottomSheets/SelectFrequencyBottom/constants';
 import SelectTermsBottom from '@common/components/organisms/bottomSheets/SelectTermsBottom';
 import Header from '@common/components/organisms/Header';
 import { AccountType } from '@common/constants/account';
+import { FrequencyType } from '@common/constants/bottomsheet';
 import { getIntendedUseAccountCode } from '@common/constants/commonCode';
 import { CurrencyCode } from '@common/constants/currency';
-import { dateFormat } from '@common/constants/dateTime';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import {
-  PeriodUnitCodeDisplay,
-  ProductCode,
-  ProductPeriodUnitCode,
-  ProductUnitCodeWithTermType,
-} from '@common/constants/product';
+import { PeriodUnitCodeDisplay, ProductCode, ProductUnitCodeWithTermType } from '@common/constants/product';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import useCardCount from '@hooks/useCardCount';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack } from '@utilities/index';
-import dayjs from 'dayjs';
 
 import { UnitCodeWithPeriodType } from '../../constants';
 import useOpenAccount from '../../hooks/useOpenAccount';
-import { openAccountDefaultValues, termOptionsBaseProductCode } from './constants';
+import { openAccountDefaultValues } from './constants';
 import InterestRateSection from './InterestRateSection';
 import ReferralCodeSection from './ReferralCodeSection';
 import { openAccountSchema } from './schema';
 import './styles.scss';
 import ThirdPartyFormSection from './ThirdPartyFormSection';
 
-const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => {
+const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termOptions }) => {
   const [showLoading, setShowLoading] = useState(false);
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [showSelectTermsBottom, setShowSelectTermsBottom] = useState(false);
@@ -47,16 +42,14 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
   const [showSelectFrequencyBottom, setShowSelectFrequencyBottom] = useState(false);
   const [showIntendedUseAccountBottom, setShowIntendedUseAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
-  const [showThirdPartyForm, setShowThirdPartyForm] = useState(false);
-  const [showInterestRateSection, setShowInterestRateSection] = useState(false);
-  const [showReferralCodeSection, setShowReferralCodeSection] = useState(false);
+  const [showMoreInfo, setShowMoreInfo] = useState(false);
   const [accounts, setAccounts] = useState();
   const [intendedUseAccountOptions, setIntendedUseAccountOptions] = useState();
   const [interestData, setInterestData] = useState();
   const { getFilteredBasedProductCode } = useOpenAccount({ product });
 
   const { requestApi } = useApi();
-  const { data: cardCountInfo, isLoading: isLoadingGetCardCount, requestGetCardCount } = useCardCount();
+  const { data: cardCountInfo, isLoading: isLoadingGetCardCount, requestGetCardCount } = useCardCount(); //TODO: Refactor to call directly
 
   const {
     prdt_c_display: productName,
@@ -71,6 +64,8 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     product_min_amount_display: amountMinDisplay,
     product_max_amount_display: amountMaxDisplay,
   } = product || {};
+
+  const selectFrequencyOptions = frequencyTypeOptions.filter(item => item.value === FrequencyType.MONTHLY);
 
   const isInstallmentSaving = productCode === ProductCode.E_INSTALLMENT_SAVING;
   const showTerms = productType !== DepositSubjectClass.REGULAR_SAVING;
@@ -89,16 +84,16 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     formState: { errors, isValid },
   } = methods;
 
-  const [amount, intendedUseAccountDisplay, term, paymentEachSession, interestRateDisplay, tfsaTerm] = watch([
-    'amount',
-    'intendedUseAccountDisplay',
-    'term',
-    'paymentEachSession',
-    'interestRateDisplay',
-    'tfsaTerm',
-  ]);
-
-  console.log('tfsaTerm :>> ', tfsaTerm);
+  const [amount, intendedUseAccountDisplay, term, paymentDate, interestRateDisplay, tfsaTerm, maturityDateDisplay] =
+    watch([
+      'amount',
+      'intendedUseAccountDisplay',
+      'term',
+      'paymentDate',
+      'interestRateDisplay',
+      'tfsaTerm',
+      'maturityDateDisplay',
+    ]);
 
   const onOpenMyAccountBottom = () => {
     setShowMyAccountBottom(true);
@@ -137,14 +132,17 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     setShowEnterAmountBottom(false);
   };
 
-  const onChangeTerms = value => {
-    setValue('term', value);
+  const onChangeTerms = result => {
+    const { termValue, maturityDate, maturityDateDisplay } = result || {};
+    setValue('term', termValue);
+    setValue('maturityDate', maturityDate);
+    setValue('maturityDateDisplay', maturityDateDisplay);
     setShowSelectTermsBottom(false);
     // setShowEnterAmountBottom(true); //This logic not good when choose enter amount before select terms
   };
 
   const handleSelectFrequency = value => {
-    setValue('paymentEachSession', value);
+    setValue('paymentDate', value?.value);
     setShowSelectFrequencyBottom(false);
   };
 
@@ -152,48 +150,45 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
     onSubmit({ ...values, ...interestData });
   };
 
-  const getMaturityDate = () => {
-    //TODO: Check as-is to get maturity date
-    const currentDate = dayjs();
-    const addType = unitCode === Number(ProductPeriodUnitCode.MONTH) ? 'month' : 'day';
-    const maturityDate = currentDate.add(term, addType);
-    const formattedDate = maturityDate.format(dateFormat);
-    return formattedDate;
-  };
-
-  const isBankingAccount = account => {
-    if (account?.acno_jiacno_gbn !== '1') {
-      return false;
+  const getMaturityDate = async term => {
+    if (!term) {
+      return '';
     }
-    const acnoPrefix = account?.lcl_ac_no || '';
-    if (['700', '701', '702', '703'].includes(acnoPrefix.substring(0, 3))) {
-      return true;
+    setShowLoading(true);
+    const payload = {
+      prdt_c: productCode,
+      ctrt_trm_d: ProductUnitCodeWithTermType[unitCode],
+      ctrt_trm_cnt: term,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.inquiryProductDueDate, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { biz_dt: maturityDate, biz_dt_display: maturityDateDisplay } = data;
+      return {
+        maturityDate,
+        maturityDateDisplay,
+      };
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
     }
-
-    return false;
+    return '';
   };
 
   const checkShowThirdPartyForm = () => {
-    let showThirdParty = false;
-    let showInterestRate = false;
-    let showReferralCode = false;
+    let showMoreInfo = false;
     if (productType === DepositSubjectClass.REGULAR_SAVING) {
-      showThirdParty = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-      showInterestRate = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-      showReferralCode = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
+      showMoreInfo = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
     }
     if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
-      showThirdParty = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-      showInterestRate = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-      showReferralCode = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
+      showMoreInfo = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
     }
-    if ([ProductCode.E_INSTALLMENT_SAVING].includes(productCode)) {
-      showInterestRate = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount && !!paymentEachSession;
-      showReferralCode = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount && !!paymentEachSession;
+    if (productType === DepositSubjectClass.INSTALLMENT_SAVING) {
+      showMoreInfo = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount && !!paymentDate;
     }
-    setShowThirdPartyForm(showThirdParty);
-    setShowInterestRateSection(showInterestRate);
-    setShowReferralCodeSection(showReferralCode);
+    setShowMoreInfo(showMoreInfo);
   };
 
   const requestGetAccounts = async () => {
@@ -254,7 +249,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
       prdt_c: productCode,
       product_ccy: productCurrencyCode,
     };
-    if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
+    if ([DepositSubjectClass.TERM_DEPOSIT_GIC, DepositSubjectClass.INSTALLMENT_SAVING].includes(productType)) {
       payload.period_type = UnitCodeWithPeriodType[unitCode];
       payload.period_count = Number(term);
       payload.product_amount = amount;
@@ -272,27 +267,26 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
   };
 
   useEffect(() => {
-    if (showInterestRateSection) {
-      if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
+    if (showMoreInfo) {
+      if ([DepositSubjectClass.TERM_DEPOSIT_GIC, DepositSubjectClass.INSTALLMENT_SAVING].includes(productType)) {
         if (term && amount) {
           requestGetInterestRate();
         }
       }
     }
-  }, [term, amount, showInterestRateSection]);
+  }, [term, amount, showMoreInfo]);
 
   useEffect(() => {
     setValue('productCode', productCode);
   }, [productCode]);
 
   useEffect(() => {
-    if (showReferralCodeSection && !cardCountInfo) {
-      const enableGetCardCount = [ProductCode.E_SAVING].includes(productCode);
-      if (enableGetCardCount) {
+    if ([ProductCode.E_SAVING].includes(productCode) && showMoreInfo) {
+      if (!cardCountInfo) {
         requestGetCardCount();
       }
     }
-  }, [showReferralCodeSection]);
+  }, [showMoreInfo]);
 
   useEffect(() => {
     if (cardCountInfo && cardCountInfo.count === 0) {
@@ -302,7 +296,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
 
   useEffect(() => {
     checkShowThirdPartyForm();
-  }, [amount, intendedUseAccountDisplay, selectedAccount, term]);
+  }, [amount, intendedUseAccountDisplay, selectedAccount, term, paymentDate]);
 
   useEffect(() => {
     if (showIntendedUseAccountBottom && !intendedUseAccountOptions) {
@@ -338,7 +332,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
                       {term && (
                         <div className="enter-account__term">
                           <span>Maturity date</span>
-                          <span>{getMaturityDate()}</span>
+                          <span>{maturityDateDisplay}</span>
                         </div>
                       )}
                     </TextDropdown>
@@ -359,7 +353,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
                       label="Payment Date Each Session"
                       placeholder="Select"
                       onClick={handleOpenSelectFrequencyBottom}
-                      value={paymentEachSession?.value}
+                      value={paymentDate}
                     />
                   </section>
                 )}
@@ -386,20 +380,16 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
                     )}
                   </TextDropdown>
                 </section>
-                {showInterestRateSection && (
+                {showMoreInfo && (
                   <>
                     <div className="divider__item__solid my-2" />
                     <InterestRateSection interestRate={interestData?.apply_intrt_display} />
-                  </>
-                )}
-                {showReferralCodeSection && (
-                  <>
                     <div className="divider__item__solid" />
                     <ReferralCodeSection productCode={productCode} />
                   </>
                 )}
               </div>
-              {showThirdPartyForm && (
+              {showMoreInfo && (
                 <>
                   <div className="divider__group mt-6" />
                   <ThirdPartyFormSection provinces={provinces} />
@@ -412,7 +402,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
               label="Open"
               variant="filled__primary"
               className="btn__cta"
-              // onClick={onSubmitOpenAccount}
               onClick={handleSubmit(onSubmitOpenAccount)}
               disable={!isValid}
             />
@@ -462,7 +451,8 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
             value={term}
             max={maxTerms}
             min={minTerms}
-            options={termOptionsBaseProductCode[productCode] || []} //TODO: Get options base SD
+            options={termOptions} //TODO: Get options base SD
+            inquiryMaturityDate={getMaturityDate}
           />
         )}
 
@@ -471,7 +461,11 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces }) => 
             open={showSelectFrequencyBottom}
             onClose={() => setShowSelectFrequencyBottom(false)}
             onChange={handleSelectFrequency}
-            value={paymentEachSession}
+            value={{
+              type: FrequencyType.MONTHLY,
+              value: paymentDate,
+            }}
+            typeOptions={selectFrequencyOptions}
           />
         )}
       </div>

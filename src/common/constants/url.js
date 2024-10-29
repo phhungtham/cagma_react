@@ -1,6 +1,6 @@
 export const fileUrls = {
   electronicCommunicationAgreement: '/img/511/pdf/Electronic_Communication_Agreement.pdf',
-  cardHolderAgreement: 'http://localhost:24680/img/511/pdf/511_access_card_agreement.pdf',
+  cardHolderAgreement: 'http://localhost:24680/img/511/pdf/511_access_card_agreement.pdf', //TODO: Using localhost from env variable
 };
 
 export const externalUrls = {

@@ -111,6 +111,7 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
                     label="Postal Code"
                     placeholder="Please input 6numerics"
                     type="number"
+                    inputMode="numeric"
                     maxLength={6}
                     {...field}
                   />
