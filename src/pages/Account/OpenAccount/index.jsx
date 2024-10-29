@@ -40,9 +40,10 @@ const OpenAccount = ({ translate: t }) => {
   const [provinceOptions, setProvinceOptions] = useState();
   const [maturityOptions, setMaturityOptions] = useState(); //Using for display Maturity Option on completed screen
   const [customer, setCustomer] = useState();
-  const { requestOpenDepositAccount: openDepositAccount, openBankingAccount } = useOpenAccount({
-    product: productInfo,
-  });
+  const { requestOpenDepositAccount: openDepositAccount, requestOpenBankingAccount: openBankingAccount } =
+    useOpenAccount({
+      product: productInfo,
+    });
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',

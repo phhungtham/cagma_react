@@ -27,31 +27,31 @@ export const termConditionConfig = {
 
 export const addNewCardSuccessFields = [
   {
-    label: 'Street Number',
+    label: cardLabels.streetNumber2,
     value: 'streetNumber',
   },
   {
-    label: 'Street Name',
+    label: cardLabels.streetName2,
     value: 'streetName',
   },
   {
-    label: 'APT Number/ SUITE Number',
+    label: cardLabels.aptNumber2,
     value: 'aptNumber',
   },
   {
-    label: 'City',
+    label: cardLabels.city2,
     value: 'city',
   },
   {
-    label: 'Province',
+    label: cardLabels.province3,
     value: 'province',
   },
   {
-    label: 'Postal Code',
+    label: cardLabels.postalCode2,
     value: 'postalCode',
   },
   {
-    label: 'Issue Date',
+    label: cardLabels.issueDate2,
     value: 'issueDate',
   },
 ];

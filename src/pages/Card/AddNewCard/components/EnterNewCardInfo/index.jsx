@@ -14,7 +14,7 @@ import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getCardAreaProvinceCode, getProvinceCode } from '@common/constants/commonCode';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import { cardLabels, menuLabels } from '@common/constants/labels';
+import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -283,15 +283,14 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                 name="postalCode"
               />
             </div>
-            {/* //TODO: Add labels */}
             <div className="form__section mt-6">
               <div className="form__section__title">
-                <span>Use Area Information</span>
+                <span>{t(cardLabels.useAreaInformation)}</span>
               </div>
               <Controller
                 render={({ field }) => (
                   <Dropdown
-                    label="Province"
+                    label={t(cardLabels.province2)}
                     onFocus={() => handleOpenSelectProvinceBottom('areaProvince')}
                     options={areaProvinceOptions}
                     {...field}
@@ -308,7 +307,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                   render={({ field }) => (
                     <CheckBox
                       size="large"
-                      label="Apply for Contactless"
+                      label={t(cardLabels.applyContactless)}
                       {...field}
                       checked={field.value}
                     />
@@ -321,7 +320,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     <Controller
                       render={({ field }) => (
                         <Input
-                          label="Contactless per Transaction(CAD)"
+                          label={t(cardLabels.contactlessPerTransaction)}
                           placeholder=""
                           type="number"
                           maxLength={22}
@@ -341,7 +340,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     <Controller
                       render={({ field }) => (
                         <Input
-                          label="Total Contactless(CAD)"
+                          label={t(cardLabels.totalContactless)}
                           placeholder=""
                           type="number"
                           maxLength={22}
@@ -368,7 +367,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                   render={({ field }) => (
                     <CheckBox
                       size="large"
-                      label="Get a Transaction Notice"
+                      label={t(cardLabels.getTransactionNotice)}
                       {...field}
                       checked={field.value}
                     />
@@ -380,7 +379,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                   <Controller
                     render={({ field }) => (
                       <Input
-                        label="Email Address"
+                        label={t(cardLabels.emailAddress)}
                         maxLength={40}
                         placeholder=""
                         {...field}
@@ -396,7 +395,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
         </div>
         <div className="footer__fixed">
           <Button
-            label="Get a New Card"
+            label={t(ctaLabels.getNewCard)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmit(handleSubmitAddNewCard)}

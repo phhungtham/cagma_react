@@ -35,7 +35,10 @@ const useOpenAccount = ({ product }) => {
     if (productCode === ProductCode.RRSP_E_GIC) {
       return (accounts || []).filter(account => account.prdt_c === ProductCode.RRSP_E_SAVINGS);
     }
-    return (accounts || []).filter(account => account.prdt_c === ProductCode.E_SAVING);
+    if ([ProductCode.E_POWER_TERM_DEPOSIT, ProductCode.E_GREEN_TERM_DEPOSIT].includes(productCode)) {
+      return (accounts || []).filter(account => account.prdt_c === ProductCode.E_SAVING);
+    }
+    return accounts;
   };
 
   const requestPreOpenDepositAccount = async payload => {

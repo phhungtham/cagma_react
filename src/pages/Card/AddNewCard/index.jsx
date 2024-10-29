@@ -130,7 +130,12 @@ const AddNewCard = ({ translate: t }) => {
             translate={t}
           />
         )}
-        {currentStep === ADD_NEW_CARD_STEP.COMPLETED && <AddNewCardSuccess cardInfo={addCardSuccessInfo} />}
+        {currentStep === ADD_NEW_CARD_STEP.COMPLETED && (
+          <AddNewCardSuccess
+            cardInfo={addCardSuccessInfo}
+            translate={t}
+          />
+        )}
       </div>
       <Alert
         isCloseButton={false}

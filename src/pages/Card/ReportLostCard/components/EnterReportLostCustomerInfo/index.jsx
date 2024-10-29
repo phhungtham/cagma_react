@@ -28,8 +28,6 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
     formState: { isValid },
   } = methods;
 
-  console.log('isValid :>> ', isValid);
-
   const [dob] = watch(['dob']);
 
   const handleSelectDate = selectedDate => {

@@ -1,11 +1,12 @@
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { cardLabels, ctaLabels } from '@common/constants/labels';
 import { moveHome } from '@utilities/index';
 
 import { addNewCardSuccessFields } from '../../constants';
 import './styles.scss';
 
-const AddNewCardSuccess = ({ cardInfo }) => {
+const AddNewCardSuccess = ({ cardInfo, translate: t }) => {
   const { accountNo } = cardInfo || {};
 
   const onClickNavigateHome = () => {
@@ -23,30 +24,31 @@ const AddNewCardSuccess = ({ cardInfo }) => {
             />
           </div>
           <div className="add-new-card__title">
+            {/* //TODO: Missing label */}
             <div className="text-primary">Your card request</div>
             <div className="complete-message">has been completed</div>
-            <div className="note">Your card will be delivered to your address.</div>
+            <div className="note">{t(cardLabels.cardDelivered)}</div>
           </div>
         </div>
         <div className="add-new-card__info add-new-card__linked-to">
-          <div className="form__section__title mb-0">Linked to</div>
+          <div className="form__section__title mb-0">{t(cardLabels.linkedTo)}</div>
           <div className="divider__item__black" />
           <div className="card-item">
-            <span className="card-label">Account No.</span>
+            <span className="card-label">{t(cardLabels.accountNo)}</span>
             <span className="card-value">
               <span>{accountNo}</span>
             </span>
           </div>
         </div>
         <div className="add-new-card__info mt-4">
-          <div className="form__section__title mb-0">Mailing address</div>
+          <div className="form__section__title mb-0">{t(cardLabels.mailingAddress2)}</div>
           <div className="divider__item__black" />
           {addNewCardSuccessFields.map(({ label, value }) => (
             <div
               className="card-item"
               key={value}
             >
-              <span className="card-label">{label}</span>
+              <span className="card-label">{t(label)}</span>
               <span className="card-value">
                 <span>{cardInfo?.[value]}</span>
               </span>
@@ -57,7 +59,7 @@ const AddNewCardSuccess = ({ cardInfo }) => {
       <div className="footer__fixed">
         <Button
           variant="filled__primary"
-          label="Home"
+          label={t(ctaLabels.home)}
           className="btn__cta"
           onClick={onClickNavigateHome}
         />

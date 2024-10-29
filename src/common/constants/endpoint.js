@@ -8,6 +8,7 @@ export const endpoints = {
   inquiryProductInterestRate: '/ca/pr/CAPR002.pwkjson',
   preOpenAccountDeposit: '/ca/pr/CAPR021.pwkjson',
   openAccountDeposit: '/ca/pr/CAPR022.pwkjson',
+  inquiryProductDueDate: '/ca/pr/CAPR023.pwkjson',
   inquiryUserInformation: '/ca/me/CAME001.pwkjson',
   requestGetEmailVerifyCode: '/ca/se/CASE001.pwkjson',
   sendEmailVerifyCode: '/ca/se/CASE002.pwkjson',

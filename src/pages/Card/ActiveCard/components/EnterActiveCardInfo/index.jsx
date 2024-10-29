@@ -4,6 +4,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
+import { ctaLabels, activeCardLabels as labels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateExpiry } from '@utilities/dateTimeUtils';
 import { formatCardNumber } from '@utilities/formater';
@@ -11,7 +12,7 @@ import { moveBack } from '@utilities/index';
 
 import { activeCardFormSchema } from './schema';
 
-const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
+const EnterActiveCardInfo = ({ onSubmit, isLogin, translate: t }) => {
   const {
     handleSubmit,
     control,
@@ -23,11 +24,11 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
   return (
     <>
       <Header
-        title="Access Card Service"
+        title={t(labels.accessCardService)}
         onClick={moveBack}
       />
       <div className="active-card__container">
-        <h1 className="page__title">Activate Card</h1>
+        <h1 className="page__title">{t(labels.activateCard)}</h1>
         <div className="active-card__form mt-4">
           <div className="form__section">
             {!isLogin && (
@@ -39,7 +40,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Name"
+                  label={t(labels.name)}
                   placeholder="Please input Detail text"
                   maxLength={100}
                   {...field}
@@ -51,7 +52,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
             <Controller
               render={({ field: { value, onChange } }) => (
                 <Input
-                  label="Card Number"
+                  label={t(labels.cardNumber)}
                   placeholder="Please input 16 numerics"
                   type="tel"
                   inputMode="numeric"
@@ -69,7 +70,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
               render={({ field }) => {
                 return (
                   <Input
-                    label="Expiry Date(MMYY)"
+                    label={t(labels.expiryDate)}
                     placeholder="Enter MM/YY"
                     type="tel"
                     maxLength={5}
@@ -88,7 +89,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin }) => {
       </div>
       <div className="footer__fixed">
         <Button
-          label={isLogin ? 'Activate' : 'Next'}
+          label={isLogin ? t(ctaLabels.activate) : 'Next'}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(onSubmit)}

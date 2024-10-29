@@ -269,6 +269,35 @@ export const cardLabels = {
   city: 'lbl_CACA600000_0034', //City
   province: 'lbl_CACA600000_0035', //Province
   postalCode: 'lbl_CACA600000_0036', //Postal Code
+  useAreaInformation: 'lbl_CACA600000_1037', //Use Area Information
+  province2: 'lbl_CACA600000_0037', //Province
+  applyContactless: 'lbl_CACA600000_0038', //Apply for Contactless
+  contactlessPerTransaction: 'lbl_CACA600000_0039', //Contactless per Transaction(CAD)
+  totalContactless: 'lbl_CACA600000_0040', //Total Contactless(CAD)
+  getTransactionNotice: 'lbl_CACA600000_0041', //Get a Transaction Notice
+  emailAddress: 'lbl_CACA600000_0042', //Email Address
+  cardDelivered: 'lbl_CACA600000_0046', //Your card will be delivered to your address.
+  linkedTo: 'lbl_CACA600000_0047', //Linked to
+  accountNo: 'lbl_CACA600000_0048', //Account No.
+  mailingAddress2: 'lbl_CACA600000_0049', //Mailing address
+  streetNumber2: 'lbl_CACA600000_0050', //Street Number
+  streetName2: 'lbl_CACA600000_0051', //Street Name
+  aptNumber2: 'lbl_CACA600000_0052', //APT Number/SUITE Number
+  city2: 'lbl_CACA600000_0053', //City
+  province3: 'lbl_CACA600000_0054', //Province
+  postalCode2: 'lbl_CACA600000_0055', //Postal Code
+  issueDate2: 'lbl_CACA600000_0056', //Issue Date
+};
+
+export const activeCardLabels = {
+  activateCard: 'lbl_CACA600000_0057', //Activate card
+  name: 'lbl_CACA600000_0058', //Name
+  cardNumber: 'lbl_CACA600000_0059', //Card Number
+  expiryDate: 'lbl_CACA600000_0060', //Expiry Date
+  cardInfoIncorrect: 'lbl_CACA600000_0061', //Card information is incorrect
+  incorrectMaxTimes: 'lbl_CACA600000_0062', //If your card information is entered incorrectly 5 times, online activation will be blocked. Please try again.
+  activationAttempts: 'lbl_CACA600000_0063', //Activation attempts
+  incorrectBlocked: 'lbl_CACA600000_0065', //You have entered the card information incorrectly 5 times, and Please try again. Go to Home.
 };
 
 export const menuLabels = {
@@ -299,4 +328,7 @@ export const ctaLabels = {
   save: 'lbl_CTA_9001', //Save
   confirm4: 'lbl_CTA_9004', //Confirm
   delete: 'lbl_CTA_9010', //Delete
+  getNewCard: 'lbl_CTA_6002', //Get a New Card
+  home: 'lbl_CTA_6004', //Home
+  activate: 'lbl_CTA_6005', //Activate
 };

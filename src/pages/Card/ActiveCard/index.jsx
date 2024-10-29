@@ -3,13 +3,15 @@ import { useState } from 'react';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, activeCardLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
+import { moveHome } from '@utilities/index';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { formatCardDateRequest } from '../utils/format';
 import ActiveCardSuccess from './components/ActiveCardSuccess';
-import CardActiveBlockedBottom from './components/CardActiveBlockedBottom';
 import EnterAccountInfo from './components/EnterAccountInfo';
 import EnterActiveCardInfo from './components/EnterActiveCardInfo';
 import { ACTIVE_CARD_STEP } from './constants';
@@ -17,8 +19,8 @@ import './styles.scss';
 
 const maxEnterIncorrectNumber = 5;
 
-const ActiveCard = () => {
-  const [currentStep, setCurrentStep] = useState(ACTIVE_CARD_STEP.ENTER_CARD_INFORMATION);
+const ActiveCard = ({ translate: t }) => {
+  const [currentStep, setCurrentStep] = useState(ACTIVE_CARD_STEP.COMPLETED);
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
   const [showActiveBlockAlert, setShowActiveBlockAlert] = useState(false);
   const [incorrectInfoNumber, setIncorrectInfoNumber] = useState(0);
@@ -163,9 +165,11 @@ const ActiveCard = () => {
           <EnterActiveCardInfo
             onSubmit={handleSubmitActiveCard}
             isLogin={isLogin}
+            translate={t}
           />
         )}
         {currentStep === ACTIVE_CARD_STEP.ENTER_ACCOUNT_INFORMATION && (
+          //TODO: Add labels
           <EnterAccountInfo onSubmit={handleSubmitAccountForm} />
         )}
         {currentStep === ACTIVE_CARD_STEP.COMPLETED && (
@@ -178,24 +182,35 @@ const ActiveCard = () => {
       <Alert
         isCloseButton={false}
         isShowAlert={showIncorrectInfoAlert}
-        title="Card information is incorrect"
-        subtitle="If your card information is entered incorrectly 5 times, online activation will be blocked. Please try again."
+        title={t(labels.cardInfoIncorrect)}
+        subtitle={t(labels.incorrectMaxTimes)}
         textAlign="center"
         onClose={() => setShowIncorrectInfoAlert(false)}
         firstButton={{
           onClick: () => setShowIncorrectInfoAlert(false),
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       >
         <div className="active-attempts">
-          <div className="active-attempts__desc">Activation attempts</div>
+          <div className="active-attempts__desc">{t(labels.activationAttempts)}</div>
           <div className="active-attempts__number">
             <span className="text-error">{incorrectInfoNumber}</span>
             <span>/{maxEnterIncorrectNumber}</span>
           </div>
         </div>
       </Alert>
-      {showActiveBlockAlert && <CardActiveBlockedBottom onClose={() => setShowActiveBlockAlert(false)} />}
+      <Alert
+        isCloseButton={false}
+        isShowAlert={showActiveBlockAlert}
+        title={t(labels.cardInfoIncorrect)}
+        subtitle={t(labels.incorrectBlocked)}
+        textAlign="center"
+        onClose={() => setShowActiveBlockAlert(false)}
+        firstButton={{
+          onClick: moveHome,
+          label: t(ctaLabels.home),
+        }}
+      />
       <Alert
         isCloseButton={false}
         isShowAlert={alert.isShow}
@@ -205,11 +220,11 @@ const ActiveCard = () => {
         onClose={handleCloseAlert}
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>
   );
 };
 
-export default ActiveCard;
+export default withHTMLParseI18n(ActiveCard);
