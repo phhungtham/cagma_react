@@ -1,5 +1,5 @@
 export const fileUrls = {
-  electronicCommunicationAgreement: 'http://localhost:24680/img/511/pdf/Electronic_Communication_Agreement.pdf',
+  electronicCommunicationAgreement: '/img/511/pdf/Electronic_Communication_Agreement.pdf',
   cardHolderAgreement: 'http://localhost:24680/img/511/pdf/511_access_card_agreement.pdf',
 };
 
