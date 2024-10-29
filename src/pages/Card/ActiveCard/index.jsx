@@ -20,7 +20,7 @@ import './styles.scss';
 const maxEnterIncorrectNumber = 5;
 
 const ActiveCard = ({ translate: t }) => {
-  const [currentStep, setCurrentStep] = useState(ACTIVE_CARD_STEP.COMPLETED);
+  const [currentStep, setCurrentStep] = useState(ACTIVE_CARD_STEP.ENTER_CARD_INFORMATION);
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
   const [showActiveBlockAlert, setShowActiveBlockAlert] = useState(false);
   const [incorrectInfoNumber, setIncorrectInfoNumber] = useState(0);
