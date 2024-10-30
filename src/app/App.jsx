@@ -98,6 +98,10 @@ const App = () => {
           if (typeof e.detail === 'object') {
             const data = e.detail;
             const path = String(data.src);
+            console.log('move path :>> ', path);
+            if (path === '/') {
+              console.log('already move root!!');
+            }
             navigate(path);
             setAppPath(path);
             // get param from native side
