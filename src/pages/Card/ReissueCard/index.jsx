@@ -8,6 +8,7 @@ import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import { commonCodeDataToOptions } from '@utilities/convert';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { formatCardDateRequest } from '../utils/format';
 import EnterReissueAddressInfo from './components/EnterReissueAddressInfo';
@@ -15,7 +16,7 @@ import EnterReissueCardInfo from './components/EnterReissueCardInfo';
 import ReissueCardSuccess from './components/ReissueCardSuccess';
 import { REISSUE_CARD_STEP } from './constants';
 
-const ReissueCard = () => {
+const ReissueCard = ({ translate: t }) => {
   const [currentStep, setCurrentStep] = useState(REISSUE_CARD_STEP.ENTER_CARD_INFORMATION);
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [cardInfo, setCardInfo] = useState({});
@@ -277,6 +278,7 @@ const ReissueCard = () => {
             requestApi={requestApi}
             setAlert={setAlert}
             setShowToast={setShowToast}
+            translate={t}
           />
         )}
         {currentStep === REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION && (
@@ -286,12 +288,14 @@ const ReissueCard = () => {
             email={email}
             isLogin={isLogin}
             provinceOptions={provinceOptions}
+            translate={t}
           />
         )}
         {currentStep === REISSUE_CARD_STEP.COMPLETED && (
           <ReissueCardSuccess
             cardInfo={reissueCardSuccessInfo}
             isLogin={isLogin}
+            translate={t}
           />
         )}
       </div>
@@ -319,4 +323,4 @@ const ReissueCard = () => {
   );
 };
 
-export default ReissueCard;
+export default withHTMLParseI18n(ReissueCard);

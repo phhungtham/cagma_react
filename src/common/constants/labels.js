@@ -319,6 +319,55 @@ export const activeCardLabels = {
   homeBtn: 'lbl_CTA_6014', //Home
 };
 
+export const reissueCardLabels = {
+  reissueYourCard: 'lbl_CACA600000_0093', //Reissue your Access Card
+  currentCardNumber: 'lbl_CACA600000_01143', //Current Card Number
+  expiryDate: 'lbl_CACA600000_01144', //Expiry Date(MMYY)
+  nextBtn: 'lbl_CTA_6015', //Next
+  cardNumber: 'lbl_CACA600000_0114', //Card Number
+  primaryAccNo: 'lbl_CACA600000_0115', //Primary Account No.
+  secondaryAcNo: 'lbl_CACA600000_0116', //Secondary Account No.
+  contactlessTransaction: 'lbl_CACA600000_0117', //Contactless Transaction
+  dailyWithdrawalLimit: 'lbl_CACA600000_0118', //Daily Withdrawal Limit
+  dailyPosLimit: 'lbl_CACA600000_0119', //Daily POS Limit
+  issueDate: 'lbl_CACA600000_0120', //Issue Date
+  expiryDate2: 'lbl_CACA600000_0121', //Expiry Date(MMYY)
+  mailingAddress: 'lbl_CACA600000_0122', //Mailing address
+  streetNumber: 'lbl_CACA600000_0123', //Street Number
+  streetName: 'lbl_CACA600000_0124', //Street Name
+  aptNumber: 'lbl_CACA600000_0125', //APT Number/SUITE Number
+  city: 'lbl_CACA600000_0126', //City
+  province: 'lbl_CACA600000_0127', //Province
+  postalCode: 'lbl_CACA600000_0128', //Postal Code
+  agreeToApplication: 'lbl_CACA600000_0129', //I agree to the Application and Agreement of the Shinhan Access Card
+  accessCardApplication: 'lbl_CACA600000_0130', //[T&C] Access Card Application
+  cardholderAgreement: 'lbl_CACA600000_0131', //Cardholder Agreement
+  reissueBtn: 'lbl_CTA_6016', //Reissue
+  mailingAddress2: 'lbl_CACA600000_0133', //Mailing address
+  streetNumber2: 'lbl_CACA600000_0134', //Street Number
+  streetName2: 'lbl_CACA600000_0135', //Street Name
+  aptNumber2: 'lbl_CACA600000_0136', //APT Number/SUITE Number
+  city2: 'lbl_CACA600000_0137', //City
+  province2: 'lbl_CACA600000_0138', //Province
+  postalCode2: 'lbl_CACA600000_0139', //Postal Code
+  reissueInformation: 'lbl_CACA600000_0140', //Reissue Information
+  issueDate2: 'lbl_CACA600000_0141', //Issue Date
+  callBtn: 'lbl_CACA600000_0142', //Call
+  homeBtn: 'lbl_CTA_6017', //Home
+  dob: 'lbl_CACA600000_0096', //Date of Birth
+  postalCode3: 'lbl_CACA600000_0097', //Postal Code
+  emailAddress: 'lbl_CACA600000_0098', //Email Address
+  request: 'lbl_CACA600000_0099', //Request
+  resend: 'lbl_CACA600000_1099', //Resend
+  verify: 'lbl_CACA600000_2099', //Verify
+  verificationCode: 'lbl_CACA600000_3099', //Verification code
+  pleaseVerifyEmail: 'lbl_CACA600000_0100', //Please verify the email address registered with the bank.
+  phoneNumber: 'lbl_CACA600000_0107', //Phone Number
+  email: 'lbl_CACA600000_0108', //Email
+  yourEmailWillOnly: 'lbl_CACA600000_0109', //Your email will only be used to send confirmation notifications.
+  agreeUseEmail: 'lbl_CACA600000_0110', //I agree to the use of the email address for sending confirmation email for replacement of Access Card
+};
+
 export const menuLabels = {
   eAlertManage: 'mymen_CAME050000', //mymen_CAME900020
   balance: 'lbl_CAME900020_0003', //Balance

@@ -8,6 +8,7 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
 import { isDevelopmentEnv } from '@common/constants/common';
+import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateExpiry, formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import { formatCardNumber } from '@utilities/formater';
@@ -17,7 +18,7 @@ import { moveBack } from '@utilities/index';
 import { reissueCardFormSchema } from './schema';
 import './styles.scss';
 
-const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, setShowToast }) => {
+const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, setShowToast, translate: t }) => {
   const methods = useForm({
     mode: 'onChange',
     resolver: yupResolver(reissueCardFormSchema),
@@ -56,18 +57,18 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
   return (
     <>
       <Header
-        title="Access Card Service"
+        title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
       <div className="page__form reissue-card-info__form">
-        <h1 className="page__title">Reissue your Access Card</h1>
+        <h1 className="page__title">{t(labels.reissueYourCard)}</h1>
         <div className="mt-4">
           <div className="form__section">
             <FormProvider {...methods}>
               <Controller
                 render={({ field: { value, onChange } }) => (
                   <Input
-                    label="Current Card Number"
+                    label={t(labels.currentCardNumber)}
                     placeholder="Please input 16 numerics"
                     type="tel"
                     inputMode="numeric"
@@ -85,7 +86,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
                 render={({ field }) => {
                   return (
                     <Input
-                      label="Expiry Date(MMYY)"
+                      label={t(labels.expiryDate)}
                       placeholder="Enter MM/YY"
                       type="tel"
                       maxLength={5}
@@ -104,7 +105,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
                   <Controller
                     render={({ field: { value } }) => (
                       <InputDate
-                        label="Date of Birth"
+                        label={t(labels.dob)}
                         onFocus={handleOpenCalendar}
                         value={value}
                       />
@@ -115,7 +116,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
                   <Controller
                     render={({ field }) => (
                       <Input
-                        label="Postal Code"
+                        label={t(labels.postalCode3)}
                         placeholder="Please input 6 numerics"
                         type="number"
                         maxLength={6}
@@ -133,7 +134,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
                   />
                   <InfoBox
                     variant="informative"
-                    label="Please verify the email address registered with the bank."
+                    label={t(labels.pleaseVerifyEmail)}
                   />
                 </>
               )}
@@ -143,7 +144,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
       </div>
       <div className="footer__fixed">
         <Button
-          label="Next"
+          label={t(labels.nextBtn)}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(onSubmit)}

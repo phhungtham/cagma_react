@@ -11,6 +11,7 @@ import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBo
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { initSelectBottom } from '@common/constants/bottomsheet';
+import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { moveBack } from '@utilities/index';
 
@@ -18,7 +19,7 @@ import { reissueCardDetails, reissueCardTermsConfig } from '../../constants';
 import { reissueCardAddressSchema } from './schema';
 import './styles.scss';
 
-const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceOptions }) => {
+const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceOptions, translate: t }) => {
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [viewTermBottom, setViewTermBottom] = useState({
     open: false,
@@ -120,15 +121,16 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
   return (
     <>
       <Header
-        title="Access Card Service"
+        title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
       <div className="reissue-card-address__wrapper page__form px-0">
         <div className="page__container">
-          <h1 className="page__title">Reissue your Access Card</h1>
+          <h1 className="page__title">{t(labels.reissueYourCard)}</h1>
           {isLogin && (
             <div className="py-4 mt-3">
               <div className="form__section__title">
+                {/* TODO: Missing labels */}
                 <span>Card details</span>
               </div>
               <div className="card__details mt-3">
@@ -137,7 +139,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                     className="card__item"
                     key={label}
                   >
-                    <span className="card__label">{label}</span>
+                    <span className="card__label">{t(label)}</span>
                     <span className="card__value">{cardInfo?.[value]}</span>
                   </div>
                 ))}
@@ -148,14 +150,14 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
           <div className="form__section pt-4">
             {isLogin && (
               <div className="form__section__title">
-                <span>Mailing address</span>
+                <span>{t(labels.mailingAddress)}</span>
               </div>
             )}
 
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Street Number"
+                  label={t(labels.streetNumber)}
                   placeholder="Please input Detail text"
                   {...field}
                 />
@@ -166,7 +168,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Street Name"
+                  label={t(labels.streetName)}
                   placeholder="Please input Detail text"
                   {...field}
                 />
@@ -178,7 +180,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
               render={({ field }) => {
                 return (
                   <Input
-                    label="APT Number/SUITE Number"
+                    label={t(labels.aptNumber)}
                     placeholder="Please input Detail text"
                     {...field}
                   />
@@ -190,7 +192,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
             <Controller
               render={({ field }) => (
                 <Input
-                  label="City"
+                  label={t(labels.city)}
                   placeholder="Please input Detail text"
                   {...field}
                 />
@@ -201,7 +203,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
             <Controller
               render={({ field }) => (
                 <Dropdown
-                  label="Province"
+                  label={t(labels.province)}
                   onFocus={handleOpenSelectProvinceBottom}
                   options={provinceOptions}
                   {...field}
@@ -213,7 +215,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Postal Code"
+                  label={t(labels.postalCode)}
                   type="number"
                   placeholder="Please input 6numerics"
                   {...field}
@@ -227,7 +229,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                 <Controller
                   render={({ field }) => (
                     <Input
-                      label="Phone Number"
+                      label={t(labels.phoneNumber)}
                       placeholder="Please include the '-'."
                       {...field}
                     />
@@ -238,7 +240,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                 <Controller
                   render={({ field }) => (
                     <Input
-                      label="Email"
+                      label={t(labels.email)}
                       placeholder="emailname@email.com"
                       disabled
                       {...field}
@@ -249,7 +251,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                 />
                 <InfoBox
                   variant="informative"
-                  label="Your email will only be used to send confirmation notifications."
+                  label={t(labels.yourEmailWillOnly)}
                 />
               </>
             )}
@@ -261,7 +263,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
             <div className="agree-use-email">
               <CheckBox
                 size="large"
-                label="I agree to the use of the email address for sending confirmation email for replacement of Access Card"
+                label={labels.agreeUseEmail}
                 onChange={handleCheckAgreeEmail}
                 checked={isAgreeEmail}
               />
@@ -279,7 +281,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
       </div>
       <div className="footer__fixed">
         <Button
-          label="Reissue"
+          label={t(labels.reissueBtn)}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(handleSubmitReissue)}

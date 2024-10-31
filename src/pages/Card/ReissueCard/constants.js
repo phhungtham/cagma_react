@@ -1,3 +1,4 @@
+import { reissueCardLabels as labels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
 
 export const REISSUE_CARD_STEP = {
@@ -8,50 +9,50 @@ export const REISSUE_CARD_STEP = {
 
 export const reissueCardDetails = [
   {
-    label: 'Card Number',
+    label: labels.cardNumber,
     value: 'cardNumber',
   },
   {
-    label: 'Primary Account No.',
+    label: labels.primaryAccNo,
     value: 'primaryAcNo',
   },
   {
-    label: 'Secondary Account No.',
+    label: labels.secondaryAcNo,
     value: 'secondAcNo',
   },
   {
-    label: 'Contactless Transaction',
+    label: labels.contactlessTransaction,
     value: 'contactlessTransaction',
   },
   {
-    label: 'Daily Withdrawal Limit',
+    label: labels.dailyWithdrawalLimit,
     value: 'dailyWithdrawalLimit',
   },
   {
-    label: 'Daily POS Limit',
+    label: labels.dailyPosLimit,
     value: 'dailyPOSLimit',
   },
   {
-    label: 'Issue Date',
+    label: labels.issueDate,
     value: 'issueDate',
   },
   {
-    label: 'Expiry Date(MMYY)',
+    label: labels.expiryDate2,
     value: 'expireDate',
   },
 ];
 
 export const reissueCardTermsConfig = {
-  selectAllLabel: 'I agree to the Application and Agreement of the Shinhan Access Card',
+  selectAllLabel: labels.agreeToApplication,
   options: [
     {
-      label: '[T&C] Access Card Application',
+      label: labels.accessCardApplication,
       value: '1',
       title: 'Access Card Application',
       fileUrl: fileUrls.cardHolderAgreement,
     },
     {
-      label: 'Cardholder Agreement',
+      label: labels.cardholderAgreement,
       value: '2',
       title: 'Cardholder Agreement',
       fileUrl: fileUrls.cardHolderAgreement,
@@ -61,27 +62,27 @@ export const reissueCardTermsConfig = {
 
 export const reissueCardSuccessFields = [
   {
-    label: 'Street Number',
+    label: labels.streetNumber2,
     value: 'streetNumber',
   },
   {
-    label: 'Street Name',
+    label: labels.streetName2,
     value: 'streetName',
   },
   {
-    label: 'APT Number/ SUITE Number',
+    label: labels.aptNumber2,
     value: 'aptNumber',
   },
   {
-    label: 'City',
+    label: labels.city2,
     value: 'city',
   },
   {
-    label: 'Province',
+    label: labels.province2,
     value: 'province',
   },
   {
-    label: 'Postal Code',
+    label: labels.postalCode2,
     value: 'postalCode',
   },
 ];

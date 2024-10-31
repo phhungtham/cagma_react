@@ -8,6 +8,7 @@ import useApi from '@hooks/useApi';
 import { Button } from '../ButtonGroup/Button/Button';
 import Input from '../Input/Input';
 
+//TODO: Add labels
 const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast }) => {
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
