@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ArrowRight } from '@assets/icons';
 import Alert from '@common/components/atoms/Alert';
 import { MENU_CODE } from '@common/constants/common';
-import { cardLabels } from '@common/constants/labels';
+import { cardLabels, ctaLabels } from '@common/constants/labels';
 import { CardActionTypes, ReportLostNotLoggedType } from '@pages/Card/constants';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
@@ -57,16 +57,16 @@ const GuestCardView = ({ translate: t }) => {
         isCloseButton={false}
         isShowAlert={showReportLostOptionAlert}
         onClose={() => setShowReportLostOptionAlert(false)}
-        title="Do you know your Access Card Number?"
-        subtitle="Let us help you lock your Access Card securely. If you know your card number, reporting it lost will be easier. Would you like to enter your card number now?"
+        title={t(cardLabels.doYouKnowCardNumber)}
+        subtitle={t(cardLabels.letUsHelpYou)}
         textAlign="center"
         firstButton={{
           onClick: () => handleNavigateReportLost(ReportLostNotLoggedType.ENTER_CARD_NUMBER),
-          label: 'Enter Card Number',
+          label: t(ctaLabels.enterCardNumber),
         }}
         secondButton={{
           onClick: () => handleNavigateReportLost(ReportLostNotLoggedType.ENTER_CUSTOMER_INFO),
-          label: 'Skip',
+          label: t(cardLabels.skip),
         }}
       />
     </>

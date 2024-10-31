@@ -6,6 +6,7 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
+import { activeCardLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -13,7 +14,7 @@ import { moveBack } from '@utilities/index';
 
 import { activeCardEnterAccountSchema } from './schema';
 
-const EnterAccountInfo = ({ onSubmit }) => {
+const EnterAccountInfo = ({ onSubmit, translate: t }) => {
   const {
     handleSubmit,
     control,
@@ -45,18 +46,18 @@ const EnterAccountInfo = ({ onSubmit }) => {
   return (
     <>
       <Header
-        title="Access Card Service"
+        title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
       <div className="page__form px-0">
         <div className="page__container">
-          <h1 className="page__title">Activate Card</h1>
+          <h1 className="page__title">{t(labels.activateCard)}</h1>
           <div className="mt-4">
             <div className="form__section">
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Phone Number"
+                    label={t(labels.phoneNumber)}
                     placeholder="eg. 647-123-4567"
                     {...field}
                   />
@@ -67,7 +68,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
               <Controller
                 render={({ field: { value } }) => (
                   <InputDate
-                    label="Date of Birth"
+                    label={t(labels.dob)}
                     onFocus={handleOpenCalendar}
                     value={value}
                   />
@@ -78,7 +79,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Postal Code"
+                    label={t(labels.postalCode)}
                     placeholder="Please input 6numerics"
                     type="number"
                     maxLength={6}
@@ -91,7 +92,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Last 6 Digits of Account No."
+                    label={t(labels.lastSixDigits)}
                     placeholder="Please input 6numerics"
                     type="number"
                     maxLength={6}
@@ -104,7 +105,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Email"
+                    label={t(labels.email)}
                     placeholder="emailname@email.com"
                     {...field}
                   />
@@ -114,7 +115,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
               />
               <InfoBox
                 variant="informative"
-                label="Your email will only be used to send confirmation notifications."
+                label={t(labels.yourEmailWillOnly)}
               />
             </div>
           </div>
@@ -123,7 +124,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
         <div className="page__container mt-7">
           <CheckBox
             size="large"
-            label="By checking this box, I consent to the Bank's use of your email address for sending confirmation email for activate of Access Card."
+            label={t(labels.byCheckingThisBox)}
             onChange={handleCheckTerms}
             checked={isAgree}
           />
@@ -131,7 +132,7 @@ const EnterAccountInfo = ({ onSubmit }) => {
       </div>
       <div className="footer__fixed">
         <Button
-          label="Activate"
+          label={t(labels.activateBtn)}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(onSubmit)}

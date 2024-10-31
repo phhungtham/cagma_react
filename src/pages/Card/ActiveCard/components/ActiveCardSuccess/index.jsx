@@ -6,6 +6,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import InfoBox from '@common/components/atoms/InfoBox';
 import { MENU_CODE } from '@common/constants/common';
+import { activeCardLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
@@ -14,7 +15,7 @@ import { moveHome, moveNext } from '@utilities/index';
 import { activeCardSuccessFields } from '../../constants';
 import './styles.scss';
 
-const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
+const ActiveCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
   const handleNavigateCardMain = () => {
     moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
   };
@@ -55,6 +56,7 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
             />
           </div>
           <div className="active-card__title">
+            {/* //TODO: Missing labels */}
             <div className="text-primary">Access Card</div>
             <div className="complete-message">has been activated</div>
             {isLogin && <div className="note">Please register your PIN at a Shinhan Bank ATM</div>}
@@ -66,7 +68,7 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
               className="card-item"
               key={value}
             >
-              <span className="card-label">{label}</span>
+              <span className="card-label">{t(label)}</span>
               <span className="card-value">
                 <span>{cardInfo?.[value]}</span>
               </span>
@@ -76,7 +78,7 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
         <div className="mt-6">
           <InfoBox
             variant="informative"
-            label="For more information, Please contact center."
+            label={t(labels.forMoreInfo)}
           />
         </div>
         <div className="active-success__ctas">
@@ -84,7 +86,7 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
             <IconButton
               size="lg"
               type="circle"
-              label="Find ATM"
+              label={t(labels.findATM)}
               className="active-success__icon"
               icon={<img src={FindATMIcon} />}
               onClick={handleNavigateFindATM}
@@ -94,7 +96,7 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
             <IconButton
               size="lg"
               type="circle"
-              label="Branch Info"
+              label={t(labels.branchInfo)}
               icon={<img src={BranchInfoIcon} />}
               onClick={handleNavigateBranchInfo}
             />
@@ -103,7 +105,7 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
             <IconButton
               size="lg"
               type="circle"
-              label="Contact us"
+              label={t(labels.contactUs)}
               className="chat__icon"
               icon={<FillChatIcon />}
               onClick={handleNavigateContactUs}
@@ -114,13 +116,13 @@ const ActiveCardSuccess = ({ cardInfo, isLogin }) => {
       <div className="footer__fixed">
         <Button
           variant="filled__secondary-blue"
-          label="View Cards"
+          label={t(labels.viewCardBtn)}
           className="btn__cta"
           onClick={handleNavigateCardMain}
         />
         <Button
           variant="filled__primary"
-          label="Home"
+          label={t(labels.homeBtn)}
           className="btn__cta"
           onClick={handleNavigateHome}
         />

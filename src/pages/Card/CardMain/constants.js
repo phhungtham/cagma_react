@@ -36,23 +36,23 @@ export const CardTypeWithNavigateParams = {
 
 export const cardSummaryFields = [
   {
-    label: 'lbl_CACA600000_0012',
+    label: cardLabels.typeOfCard,
     value: 'typeOfCard',
   },
   {
-    label: 'lbl_CACA600000_0013',
+    label: cardLabels.dailyWithdrawalLimit,
     value: 'dailyWithdrawalLimit',
   },
   {
-    label: 'lbl_CACA600000_0014',
+    label: cardLabels.dailyPosLimit,
     value: 'dailyPOSLimit',
   },
   {
-    label: 'lbl_CACA600000_0015',
+    label: cardLabels.issueDate,
     value: 'issueDate',
   },
   {
-    label: 'lbl_CACA600000_0016',
+    label: cardLabels.expireDate,
     value: 'expireDate',
   },
 ];

@@ -1,3 +1,5 @@
+import { activeCardLabels } from '@common/constants/labels';
+
 export const ACTIVE_CARD_STEP = {
   ENTER_CARD_INFORMATION: 'enterInformation',
   ENTER_ACCOUNT_INFORMATION: 'enterAccountInformation',
@@ -6,11 +8,11 @@ export const ACTIVE_CARD_STEP = {
 
 export const activeCardSuccessFields = [
   {
-    label: 'Card no.',
+    label: activeCardLabels.cardNo,
     value: 'cardNo',
   },
   {
-    label: 'Account',
+    label: activeCardLabels.account,
     value: 'accountNumber',
   },
 ];

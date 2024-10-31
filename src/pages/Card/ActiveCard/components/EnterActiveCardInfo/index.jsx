@@ -4,7 +4,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
-import { ctaLabels, activeCardLabels as labels } from '@common/constants/labels';
+import { ctaLabels, activeCardLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateExpiry } from '@utilities/dateTimeUtils';
 import { formatCardNumber } from '@utilities/formater';
@@ -24,7 +24,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin, translate: t }) => {
   return (
     <>
       <Header
-        title={t(labels.accessCardService)}
+        title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
       <div className="active-card__container">

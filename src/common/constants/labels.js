@@ -287,6 +287,9 @@ export const cardLabels = {
   province3: 'lbl_CACA600000_0054', //Province
   postalCode2: 'lbl_CACA600000_0055', //Postal Code
   issueDate2: 'lbl_CACA600000_0056', //Issue Date
+  doYouKnowCardNumber: 'lbl_CACA600000_0156', //Do you know your Access Card Number?
+  letUsHelpYou: 'lbl_CACA600000_0157', //Let us help you lock your Access Card securely. If you know...
+  skip: 'lbl_CACA600000_0158', //Skip
 };
 
 export const activeCardLabels = {
@@ -298,6 +301,22 @@ export const activeCardLabels = {
   incorrectMaxTimes: 'lbl_CACA600000_0062', //If your card information is entered incorrectly 5 times, online activation will be blocked. Please try again.
   activationAttempts: 'lbl_CACA600000_0063', //Activation attempts
   incorrectBlocked: 'lbl_CACA600000_0065', //You have entered the card information incorrectly 5 times, and Please try again. Go to Home.
+  phoneNumber: 'lbl_CACA600000_0077', //Phone Number
+  dob: 'lbl_CACA600000_0078', //Date of Birth
+  postalCode: 'lbl_CACA600000_0079', //Postal Code
+  lastSixDigits: 'lbl_CACA600000_0080', //Last 6 Digits of Account No.
+  email: 'lbl_CACA600000_0081', //Email
+  yourEmailWillOnly: 'lbl_CACA600000_0082', //Your email will only be used to send confirmation notifications.
+  byCheckingThisBox: 'lbl_CACA600000_0083', //By checking this box, I consent to the Bank's use of your email address for...
+  activateBtn: 'lbl_CTA_6011', //By checking this box, I consent to the Bank's use of your email address for...
+  cardNo: 'lbl_CACA600000_0087', //Card no.
+  account: 'lbl_CACA600000_0088', //Account
+  forMoreInfo: 'lbl_CACA600000_0089', //For more information, Please contact center.
+  findATM: 'lbl_CACA600000_0090', //Find ATM
+  branchInfo: 'lbl_CACA600000_0091', //Branch Info
+  contactUs: 'lbl_CACA600000_0092', //Contact Us
+  viewCardBtn: 'lbl_CTA_6013', //View Card
+  homeBtn: 'lbl_CTA_6014', //Home
 };
 
 export const menuLabels = {
@@ -331,4 +350,5 @@ export const ctaLabels = {
   getNewCard: 'lbl_CTA_6002', //Get a New Card
   home: 'lbl_CTA_6004', //Home
   activate: 'lbl_CTA_6005', //Activate
+  enterCardNumber: 'lbl_CTA_6025', //Enter Card Number
 };

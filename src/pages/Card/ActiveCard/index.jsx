@@ -169,13 +169,16 @@ const ActiveCard = ({ translate: t }) => {
           />
         )}
         {currentStep === ACTIVE_CARD_STEP.ENTER_ACCOUNT_INFORMATION && (
-          //TODO: Add labels
-          <EnterAccountInfo onSubmit={handleSubmitAccountForm} />
+          <EnterAccountInfo
+            onSubmit={handleSubmitAccountForm}
+            translate={t}
+          />
         )}
         {currentStep === ACTIVE_CARD_STEP.COMPLETED && (
           <ActiveCardSuccess
             cardInfo={activeCardSuccessInfo}
             isLogin={isLogin}
+            translate={t}
           />
         )}
       </div>
