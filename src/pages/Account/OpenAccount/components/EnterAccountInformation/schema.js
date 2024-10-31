@@ -23,6 +23,13 @@ export const openAccountSchema = Yup.object().shape({
       then: schema => schema.required(),
       otherwise: schema => schema.notRequired(),
     }),
+  rrspTerm: Yup.boolean()
+    .oneOf([true], 'You must agree')
+    .when('productCode', {
+      is: ProductCode.RRSP_E_SAVINGS,
+      then: schema => schema.required(),
+      otherwise: schema => schema.notRequired(),
+    }),
   paymentDate: Yup.string().when('productCode', {
     is: ProductCode.E_INSTALLMENT_SAVING,
     then: schema => schema.required(),

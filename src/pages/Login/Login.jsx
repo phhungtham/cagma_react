@@ -36,6 +36,7 @@ const listAccount = [
   'ANNASE0',
   'GMLRUD3174',
   'SHINHAN24',
+  'HANNADIK1',
   'CATEST24',
   'CATEST25',
   'CATEST26',

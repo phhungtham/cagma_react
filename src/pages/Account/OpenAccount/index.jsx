@@ -26,14 +26,15 @@ import DTR from './components/DTR';
 import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
-import { OPEN_ACCOUNT_STEP, TermUnitCodeDisplay } from './constants';
+import { ignoreCheckDTRProductCodes, OPEN_ACCOUNT_STEP, TermUnitCodeDisplay } from './constants';
 import useOpenAccount from './hooks/useOpenAccount';
 import './style.scss';
 
 const OpenAccount = ({ translate: t }) => {
   const productInfo = useSelector(nativeParamsSelector);
 
-  const [currentStep, setCurrentStep] = useState(OPEN_ACCOUNT_STEP.VIEW_TERMS);
+  const [currentStep, setCurrentStep] = useState();
+  const [isCheckedFirstTime, setIsCheckedFirstTime] = useState(false);
   const [showCustomerInfoBottom, setShowCustomerInfoBottom] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [openAccountSuccessInfo, setOpenAccountSuccessInfo] = useState();
@@ -151,6 +152,7 @@ const OpenAccount = ({ translate: t }) => {
         ntfct_intrt_display,
         trx_amt_display: amount,
         dep_acno_display: acNo,
+        dep_acno: openedAccountNumber,
         ctrt_trm_cnt: term,
         trx_ccy_c: currency,
         ctrt_trm_d: termUnitCode,
@@ -160,6 +162,7 @@ const OpenAccount = ({ translate: t }) => {
       setOpenAccountSuccessInfo({
         productName,
         acNo,
+        openedAccountNumber,
         interestRate: `${ntfct_intrt_display}% APR`,
         amount: `${amount} ${currency}`,
         term: `${term} ${TermUnitCodeDisplay[termUnitCode]}`,
@@ -181,7 +184,6 @@ const OpenAccount = ({ translate: t }) => {
     const { data, error, isSuccess } = await openInstallmentSavingAccount(values);
     setShowLoading(false);
     if (isSuccess) {
-      debugger;
       const {
         prdt_c_display: productName,
         withdraw_acno_display: depositFrom,
@@ -215,7 +217,6 @@ const OpenAccount = ({ translate: t }) => {
     }
   };
 
-  //TODO: Handle RRSF e-Saving account
   const requestOpenBankingAccount = async values => {
     setShowLoading(true);
     const { data, error, isSuccess } = await openBankingAccount(values);
@@ -230,6 +231,7 @@ const OpenAccount = ({ translate: t }) => {
         trx_ccy_c: currency,
       } = data;
       setOpenAccountSuccessInfo({
+        creditChecked: values.debitCardIssuance,
         productName,
         acNo,
         interestRate: `${ntfct_intrt_display}% APR`,
@@ -259,16 +261,56 @@ const OpenAccount = ({ translate: t }) => {
     moveNext(MENU_CODE.CHANGE_PROFILE, {}, routePaths.changeProfile);
   };
 
+  const checkUserRegisterDTR = async () => {
+    if (isCheckedFirstTime) {
+      return;
+    }
+    setIsCheckedFirstTime(true);
+    if (ignoreCheckDTRProductCodes.includes(productCode)) {
+      return setCurrentStep(OPEN_ACCOUNT_STEP.VIEW_TERMS);
+    }
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.getDTRInformation);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { dtr_yn } = data;
+      if (dtr_yn === 'Y') {
+        setCurrentStep(OPEN_ACCOUNT_STEP.VIEW_TERMS);
+      } else {
+        setCurrentStep(OPEN_ACCOUNT_STEP.DTR);
+      }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
   useEffect(() => {
     if (showCustomerInfoBottom && !customer) {
       requestGetCustomerInfo();
     }
   }, [showCustomerInfoBottom]);
 
+  useEffect(() => {
+    if (productCode) {
+      checkUserRegisterDTR();
+    }
+  }, [productCode]);
+
   return (
     <>
       <div className="open-account__wrapper">
         {showLoading && <Spinner />}
+        {currentStep === OPEN_ACCOUNT_STEP.DTR && (
+          <DTR
+            openAccountInfo={openAccountSuccessInfo}
+            productName={prdt_c_display}
+            productCode={productCode}
+            setAlert={setAlert}
+          />
+        )}
         {currentStep === OPEN_ACCOUNT_STEP.VIEW_TERMS && (
           <TermAndConditions
             product={productInfo}
@@ -298,13 +340,7 @@ const OpenAccount = ({ translate: t }) => {
           <OpenAccountSuccessful
             openAccountInfo={openAccountSuccessInfo}
             productCode={productCode}
-          />
-        )}
-        {currentStep === OPEN_ACCOUNT_STEP.DTR && (
-          <DTR
-            openAccountInfo={openAccountSuccessInfo}
-            productName={prdt_c_display}
-            productCode={productCode}
+            dep_sjt_class={dep_sjt_class}
           />
         )}
       </div>

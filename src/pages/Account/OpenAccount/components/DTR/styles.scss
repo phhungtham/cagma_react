@@ -8,6 +8,11 @@
     font-weight: 500;
     color: $color-gray-600;
   }
+  .country-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .guide-tax-bottom__wrapper {
@@ -15,5 +20,13 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    list-style-position: outside;
+    list-style-type: disc;
+    padding-left: 20px;
+    .guide-tax__item {
+      &::marker {
+        color: $color-gray-600;
+      }
+    }
   }
 }

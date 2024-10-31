@@ -26,6 +26,7 @@ export { default as FillTooltipIcon } from './FillTooltipIcon';
 export { default as HamburgerIcon } from './HamburgerIcon';
 export { default as HeaderBackIcon } from './HeaderBack';
 export { default as InfoIcon } from './Info';
+export { default as LineDeleteIcon } from './LineDeleteIcon';
 export { default as LoadingInfiniteIcon } from './LoadingInfinite';
 export { default as PlusIcon } from './PlusIcon';
 export { default as QuestionIcon } from './Question';

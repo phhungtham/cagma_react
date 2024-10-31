@@ -7,11 +7,12 @@ import Tooltip from '@common/components/atoms/Tooltip';
 import { ProductCode } from '@common/constants/product';
 
 const ReferralCodeSection = ({ productCode }) => {
-  const isShowCheckboxList = [ProductCode.E_SAVING, ProductCode.TFSA_E_SAVINGS, ProductCode.TFSA_E_GIC].includes(
+  const isShowCheckboxList = [ProductCode.E_SAVING, ProductCode.TFSA_E_SAVINGS, ProductCode.RRSP_E_SAVINGS].includes(
     productCode
   );
   const isShowDebitCardCheckbox = productCode === ProductCode.E_SAVING;
-  const isShowTFSACheckbox = [ProductCode.TFSA_E_GIC, ProductCode.TFSA_E_SAVINGS].includes(productCode);
+  const isShowTFSACheckbox = productCode === ProductCode.TFSA_E_SAVINGS;
+  const isShowRRSPCheckbox = productCode === ProductCode.RRSP_E_SAVINGS;
   const { control } = useFormContext();
 
   return (
@@ -56,6 +57,34 @@ const ReferralCodeSection = ({ productCode }) => {
                   )}
                   control={control}
                   name="tfsaTerm"
+                />
+                {/* TODO: Figma not defined. Check to get content */}
+                <Tooltip
+                  content="If a debit card is issued, it will be sent to the stored customer address."
+                  placement="bottom_center"
+                >
+                  <div className="item__tooltip">
+                    <FillTooltipIcon />
+                  </div>
+                </Tooltip>
+              </div>
+              <div className="divider__item__solid mb-2" />
+            </>
+          )}
+          {isShowRRSPCheckbox && (
+            <>
+              <div className="option-item">
+                <Controller
+                  render={({ field }) => (
+                    <CheckBox
+                      size="large"
+                      label="I have checked my RRSP contribution room"
+                      {...field}
+                      checked={field.value}
+                    />
+                  )}
+                  control={control}
+                  name="rrspTerm"
                 />
                 {/* TODO: Figma not defined. Check to get content */}
                 <Tooltip

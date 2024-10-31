@@ -97,3 +97,10 @@ export const requiredTermProductCodes = [
   ProductCode.TFSA_E_GIC,
   ProductCode.RRSP_E_GIC,
 ];
+
+export const ignoreCheckDTRProductCodes = [
+  ProductCode.TFSA_E_GIC,
+  ProductCode.RRSP_E_GIC,
+  ProductCode.TFSA_E_SAVINGS,
+  ProductCode.RRSP_E_SAVINGS,
+];

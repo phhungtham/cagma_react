@@ -46,4 +46,5 @@ export const endpoints = {
   getOneSpanStatus: '/ca/se/CASE102.pwkjson',
   getCardReplacement: '/ca/ca/CACA007.pwkjson',
   reissueCardNotLogged: '/ca/ca/CACA008.pwkjson',
+  getDTRInformation: '/ca/me/CAME013.pwkjson',
 };

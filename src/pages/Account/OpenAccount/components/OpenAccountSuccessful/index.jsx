@@ -2,16 +2,32 @@ import completeImg from '@assets/images/complete.png';
 import PaymentIcon from '@assets/images/icon-fill-payment-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
+import { MENU_CODE } from '@common/constants/common';
+import { DepositSubjectClass } from '@common/constants/deposit';
 import { ProductCode } from '@common/constants/product';
-import { moveHome } from '@utilities/index';
+import { moveHome, moveNext } from '@utilities/index';
 
 import { openAccountSuccessFields } from './constants';
 import './styles.scss';
 
-const OpenAccountSuccessful = ({ openAccountInfo, productCode }) => {
-  const { creditChecked } = openAccountInfo || {};
+const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) => {
+  const { creditChecked, openedAccountNumber } = openAccountInfo || {};
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
-  const onClickViewAccount = () => {};
+
+  const onClickViewAccount = () => {
+    const accountNumberParam = JSON.stringify({
+      lcl_acno: openedAccountNumber,
+    });
+    let menuCode = '';
+    if (dep_sjt_class === DepositSubjectClass.REGULAR_SAVING) {
+      menuCode = MENU_CODE.ACCOUNT_ACTIVITY_BANKING;
+    } else if ([DepositSubjectClass.INSTALLMENT_SAVING, DepositSubjectClass.TERM_DEPOSIT_GIC].includes(dep_sjt_class)) {
+      menuCode = MENU_CODE.ACCOUNT_ACTIVITY_INVESTMENT;
+    }
+    if (menuCode) {
+      moveNext(menuCode, { param: accountNumberParam });
+    }
+  };
 
   const onClickNavigateHome = () => {
     moveHome();
@@ -54,9 +70,9 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode }) => {
               <IconButton
                 size="lg"
                 type="circle"
-                label="RRSP Contribution Receipt"
+                label="You can Check RRSP Contribution Receipt on the Account activity page"
                 icon={<img src={PaymentIcon} />}
-                onClick={() => {}}
+                onClick={() => {}} //TODO: Handle navigate to account activity
               />
             </div>
           </>
