@@ -26,14 +26,6 @@ export function* getOfferNotifyList() {
   });
 }
 
-export function* getPromotionNotifyList() {
-  yield takeLatest(ActionType.GET_PROMOTIONS_NOTIFY_REQUEST, workerSaga, endpoints.getPromotionNotify, Method.POST, {
-    dataPath: '',
-    defaultResponse: EMPTY_OBJ,
-    isExtendSession: false,
-  });
-}
-
 export function* appNotificationSaga() {
-  yield all([getTransactionNotifyList(), getOfferNotifyList(), getPromotionNotifyList()]);
+  yield all([getTransactionNotifyList(), getOfferNotifyList()]);
 }

@@ -36,7 +36,6 @@ import {
 import {
   cleanupAppNotification,
   getOfferNotificationList,
-  getPromotionNotificationList,
   getTransactionNotificationList,
   setTabIndex as setReduxTabIndex,
 } from './redux/action';
@@ -175,7 +174,7 @@ const AppNotifications = ({ translate: t }) => {
         ...requestOfferParams,
       });
     } else if (tabIndex === NotificationTabIndex.PROMOTIONS && !promotions?.length) {
-      getPromotionNotificationList();
+      requestGetPromotionList();
     }
   };
 
@@ -229,9 +228,10 @@ const AppNotifications = ({ translate: t }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.getPromotionNotify);
     setShowLoading(false);
     if (isSuccess) {
-      // display only "display_pos"== "8" and sort with banner_seq big to small
+      // display only "display_pos"== "8", "1", "6" and sort with banner_seq big to small
       // 8: Promotion
       const { list = [] } = data || {};
+      debugger;
       const filteredPromotion = list.filter(item => {
         return ['8', '1', '6'].includes(item?.display_pos);
       });
