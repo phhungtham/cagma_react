@@ -58,9 +58,8 @@ const ReferralCodeSection = ({ productCode }) => {
                   control={control}
                   name="tfsaTerm"
                 />
-                {/* TODO: Figma not defined. Check to get content */}
                 <Tooltip
-                  content="If a debit card is issued, it will be sent to the stored customer address."
+                  content="CRA sets TFSA contribution limit each year. CRA imposes penalty of 1% per month for any contribution made over your limit."
                   placement="bottom_center"
                 >
                   <div className="item__tooltip">
@@ -78,7 +77,7 @@ const ReferralCodeSection = ({ productCode }) => {
                   render={({ field }) => (
                     <CheckBox
                       size="large"
-                      label="I have checked my RRSP contribution room"
+                      label="RRSP contribution limit is 18% of earned income you reported on your tax return in the previous year up to the maximum annual contribution amount set by CRA. However, contribution room can be carried forward for any past unused contributions from previous years."
                       {...field}
                       checked={field.value}
                     />
