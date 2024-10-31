@@ -143,16 +143,19 @@ const EAlertsBalance = ({ translate: t }) => {
 
     if (Number(result_cd) === 1) {
       let message = '';
+      let type = '';
       if (pushEnabled || emailEnabled) {
         message = t(eAlertLabels.alertEnabled);
+        type = 'success';
       } else {
         message = t(eAlertLabels.alertDisabled);
+        type = 'info';
       }
       await requestGetEAlertSetting();
       setShowToast({
         isShow: true,
         message: message,
-        type: 'success',
+        type: type,
       });
     }
   };
