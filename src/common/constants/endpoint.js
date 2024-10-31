@@ -9,6 +9,7 @@ export const endpoints = {
   preOpenAccountBanking: '/ca/pr/CAPR019.pwkjson',
   openAccountBanking: '/ca/pr/CAPR020.pwkjson',
   inquiryProductInterestRate: '/ca/pr/CAPR002.pwkjson',
+  getCardCount: '/ca/pr/CAPR006.pwkjson',
   preOpenAccountDeposit: '/ca/pr/CAPR021.pwkjson',
   openAccountDeposit: '/ca/pr/CAPR022.pwkjson',
   inquiryProductDueDate: '/ca/pr/CAPR023.pwkjson',

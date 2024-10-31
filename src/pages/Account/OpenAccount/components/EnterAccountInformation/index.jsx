@@ -20,7 +20,6 @@ import { endpoints } from '@common/constants/endpoint';
 import { PeriodUnitCodeDisplay, ProductCode, ProductUnitCodeWithTermType } from '@common/constants/product';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
-import useCardCount from '@hooks/useCardCount';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack } from '@utilities/index';
@@ -49,7 +48,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   const { getFilteredBasedProductCode } = useOpenAccount({ product });
 
   const { requestApi } = useApi();
-  const { data: cardCountInfo, isLoading: isLoadingGetCardCount, requestGetCardCount } = useCardCount(); //TODO: Refactor to call directly
 
   const {
     prdt_c_display: productName,
@@ -266,6 +264,23 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     }
   };
 
+  const requestGetCardCount = async () => {
+    setShowLoading(true);
+    //TODO: Update using other endpoint. CACA009
+    const { data, error, isSuccess } = await requestApi(endpoints.getCardCount);
+    setShowLoading(false);
+    if (isSuccess) {
+      if (data && data.count === 0) {
+        setValue('debitCardIssuance', true, { shouldValidate: true });
+      }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
   useEffect(() => {
     if (showMoreInfo) {
       if ([DepositSubjectClass.TERM_DEPOSIT_GIC, DepositSubjectClass.INSTALLMENT_SAVING].includes(productType)) {
@@ -282,17 +297,9 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
 
   useEffect(() => {
     if ([ProductCode.E_SAVING].includes(productCode) && showMoreInfo) {
-      if (!cardCountInfo) {
-        requestGetCardCount();
-      }
+      requestGetCardCount();
     }
   }, [showMoreInfo]);
-
-  useEffect(() => {
-    if (cardCountInfo && cardCountInfo.count === 0) {
-      setValue('debitCardIssuance', true, { shouldValidate: true });
-    }
-  }, [cardCountInfo]);
 
   useEffect(() => {
     checkShowThirdPartyForm();
@@ -308,6 +315,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     requestGetAccounts();
   }, []);
 
+  //TODO: Handle layout for Chequing account
   return (
     <>
       <Header
@@ -315,7 +323,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
         onClick={moveBack}
       />
       <div className="enter-account-information__wrapper">
-        {(isLoadingGetCardCount || showLoading) && <Spinner />}
+        {showLoading && <Spinner />}
         <div className="enter-account-information__content">
           <FormProvider {...methods}>
             <div className="enter-account__form">
