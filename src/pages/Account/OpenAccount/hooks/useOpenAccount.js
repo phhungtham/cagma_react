@@ -18,31 +18,29 @@ const useOpenAccount = ({ product }) => {
   const { requestApi } = useApi();
 
   const getFilteredBasedProductCode = accounts => {
+    const filteredAccounts = (accounts || []).filter(
+      account => account.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING && Number(account.acno_jiacno_gbn) === 1
+    );
     if (productCode === ProductCode.TFSA_E_SAVINGS) {
-      return (accounts || []).filter(account => account.prdt_c !== ProductCode.RRSP_E_SAVINGS);
+      return filteredAccounts.filter(account => account.prdt_c !== ProductCode.RRSP_E_SAVINGS);
     }
     if (productCode === ProductCode.RRSP_E_SAVINGS) {
-      return (accounts || []).filter(account => account.prdt_c !== ProductCode.TFSA_E_SAVINGS);
-    }
-    if (
-      [ProductCode.E_SHORT_TERM_GIC, ProductCode.E_LONG_TERM_GIC, ProductCode.E_LONG_MATURITY].includes(productCode)
-    ) {
-      return (accounts || []).filter(account => account.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING);
+      return filteredAccounts.filter(account => account.prdt_c !== ProductCode.TFSA_E_SAVINGS);
     }
     if (productCode === ProductCode.TFSA_E_GIC) {
-      return (accounts || []).filter(account => account.prdt_c === ProductCode.TFSA_E_SAVINGS);
+      return filteredAccounts.filter(account => account.prdt_c === ProductCode.TFSA_E_SAVINGS);
     }
     if (productCode === ProductCode.RRSP_E_GIC) {
-      return (accounts || []).filter(account => account.prdt_c === ProductCode.RRSP_E_SAVINGS);
+      return filteredAccounts.filter(account => account.prdt_c === ProductCode.RRSP_E_SAVINGS);
     }
     if (
       [ProductCode.E_POWER_TERM_DEPOSIT, ProductCode.E_GREEN_TERM_DEPOSIT, ProductCode.E_INSTALLMENT_SAVING].includes(
         productCode
       )
     ) {
-      return (accounts || []).filter(account => account.prdt_c === ProductCode.E_SAVING);
+      return filteredAccounts.filter(account => account.prdt_c === ProductCode.E_SAVING);
     }
-    return accounts;
+    return filteredAccounts;
   };
 
   const requestPreOpenDepositAccount = async payload => {
