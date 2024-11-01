@@ -26,7 +26,7 @@ import { SignUpStep, VerifyMembershipResultStatus } from './constants';
 export const SignUpContext = createContext();
 
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState();
+  const [currentStep, setCurrentStep] = useState(SignUpStep.VERIFY_USER_INFO);
   const [userEmail, setUserEmail] = useState();
   const [deviceId, setDeviceId] = useState();
   const nativeParams = useSelector(nativeParamsSelector);
