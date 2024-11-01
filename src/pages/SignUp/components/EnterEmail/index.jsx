@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { ArrowRight } from '@assets/icons';
@@ -6,17 +6,20 @@ import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
-import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import { SignUpContext } from '@pages/SignUp';
+import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import { moveBack } from '@utilities/index';
 
 import { EnterEmailSchema } from './schema';
 
-const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail, email: userEmail }) => {
+const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
+  const { deviceId } = useContext(SignUpContext);
+  console.log('deviceId :>> ', deviceId);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -24,15 +27,9 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail, email: userEmail }
     content: '',
   });
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
-  const [showToast, setShowToast] = useState({
-    isShow: false,
-    message: '',
-    type: 'success',
-  });
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
   const [showUnableVerifyEmailAlert, setShowUnableVerifyEmailAlert] = useState(false);
-  const [timer, setTimer] = useState();
   const methods = useForm({
     mode: 'onChange',
     resolver: yupResolver(EnterEmailSchema),
@@ -41,7 +38,6 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail, email: userEmail }
   const {
     control,
     watch,
-    handleSubmit,
     setValue,
     clearErrors,
     setError,
@@ -144,6 +140,24 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail, email: userEmail }
     }
   };
 
+  const requestPreRegisterCustomerInfo = async () => {
+    setShowLoading(true);
+    const payload = {
+      cus_email: email,
+      uuid_v: deviceId,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfo, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      onConfirm();
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
   const handleSendEmailVerifyCode = async () => {
     setShowLoading(true);
     const request = {
@@ -177,30 +191,24 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail, email: userEmail }
       setShowEmailVerifyCode(false);
       setValue('isEmailVerified', true, { shouldValidate: true });
       clearErrors('verificationCode');
-      setShowToast({
-        isShow: true,
-        message: 'Email verification is complete.',
-        type: 'success',
-      });
+      requestPreRegisterCustomerInfo();
     }
   };
 
+  const getEkycInfoCallback = result => {
+    console.log('getEkycInfoCallback result :>> ', result);
+    setValue('email', result?.email);
+  };
+
   useEffect(() => {
+    //TODO: Just for test
+    getEkycInfo(getEkycInfoCallback);
     return () => {
       if (clearTimeOutRef.current) {
         clearTimeout(clearTimeOutRef.current);
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (userEmail) {
-      const [localPart, domain] = userEmail.split('@');
-      const maskedLocalPart = localPart[0] + '*'.repeat(localPart.length - 1);
-      const formattedEmail = `${maskedLocalPart}@${domain}`;
-      setValue('email', formattedEmail);
-    }
-  }, [userEmail]);
 
   return (
     <>
@@ -228,7 +236,6 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail, email: userEmail }
                     />
                   }
                   maxLength={64}
-                  disabled={!!userEmail}
                   {...field}
                 />
               )}
@@ -244,15 +251,6 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail, email: userEmail }
                     placeholder="6 digits"
                     remainingTime={EMAIL_VERIFY_IN_SECONDS}
                     onResetTimer={cb => (verifyTimerResetRef.current = cb)}
-                    endAdornment={
-                      <Button
-                        label="Verify"
-                        variant="outlined__primary"
-                        className="btn__send btn__sm"
-                        disable={invalidVerificationCode || disabledVerifyButton}
-                        onClick={handleSendEmailVerifyCode}
-                      />
-                    }
                     maxLength={6}
                     errorMessage={errors?.verificationCode?.message || ''}
                     {...field}
@@ -263,25 +261,23 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail, email: userEmail }
               />
             )}
           </div>
-          {!!userEmail && (
-            <div className="flex-center mt-4">
-              <Button
-                variant="text__gray"
-                label="Unable to verify this email?"
-                size="sm"
-                endIcon={<ArrowRight />}
-                onClick={handleShowUnableVerifyEmailAlert}
-              />
-            </div>
-          )}
+          <div className="flex-center mt-4">
+            <Button
+              variant="text__gray"
+              label="Unable to verify this email?"
+              size="sm"
+              endIcon={<ArrowRight />}
+              onClick={handleShowUnableVerifyEmailAlert}
+            />
+          </div>
         </div>
         <div className="footer__fixed">
           <Button
             label="Next"
             variant="filled__primary"
             className="btn__cta"
-            onClick={handleSubmit(handleSubmitForm)}
-            disable={!isValid}
+            onClick={handleSendEmailVerifyCode}
+            disable={invalidVerificationCode || disabledVerifyButton}
           />
         </div>
       </div>
@@ -303,14 +299,6 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail, email: userEmail }
           }}
         />
       )}
-      <section className="toast__overlay margin-bottom">
-        <Toast
-          isShowToast={showToast.isShow}
-          type={showToast.type}
-          onClose={() => setShowToast({ ...showToast, isShow: false })}
-          message={showToast.message}
-        />
-      </section>
       <Alert
         isCloseButton={false}
         isShowAlert={alert.isShow}

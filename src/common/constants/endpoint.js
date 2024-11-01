@@ -16,6 +16,8 @@ export const endpoints = {
   inquiryUserInformation: '/ca/me/CAME001.pwkjson',
   requestGetEmailVerifyCode: '/ca/se/CASE001.pwkjson',
   sendEmailVerifyCode: '/ca/se/CASE002.pwkjson',
+  registerVerifiedEmail: '/ca/se/CASE105.pwkjson',
+  preRegisterCustomerInfo: '/ca/se/CASE106.pwkjson',
   changeUserInfoPreTransaction: '/ca/me/CAME002.pwkjson',
   changeUserInfoTransaction: '/ca/me/CAME003.pwkjson',
   inquiryETransferCustomerInfo: '/ca/tr/CATR028.pwkjson',
@@ -48,4 +50,5 @@ export const endpoints = {
   getCardReplacement: '/ca/ca/CACA007.pwkjson',
   reissueCardNotLogged: '/ca/ca/CACA008.pwkjson',
   getDTRInformation: '/ca/me/CAME013.pwkjson',
+  customerInfoVerify: '/ca/me/CAME008.pwkjson',
 };

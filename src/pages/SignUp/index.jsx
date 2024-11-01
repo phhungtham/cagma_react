@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { BiometricAuthType } from '@common/constants/common';
+import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
+import { nativeParamsSelector } from 'app/redux/selector';
 
 import AgreeTermsConditions from './components/AgreeTermsConditions';
 import SignUpCreateID from './components/CreateID';
@@ -20,8 +23,13 @@ import VerifyMembershipResult from './components/VerifyMembershipResult';
 import VerifyUserInfo from './components/VerifyUserInfo';
 import { SignUpStep, VerifyMembershipResultStatus } from './constants';
 
+export const SignUpContext = createContext();
+
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState(SignUpStep.VERIFY_ID);
+  const [currentStep, setCurrentStep] = useState();
+  const [userEmail, setUserEmail] = useState();
+  const [deviceId, setDeviceId] = useState();
+  const nativeParams = useSelector(nativeParamsSelector);
 
   const handleConfirmVerifyID = values => {
     setCurrentStep(SignUpStep.VERIFY_USER_INFO);
@@ -88,11 +96,39 @@ const SignUp = () => {
     setCurrentStep(SignUpStep.OPEN_ACCOUNT_INSTRUCTION);
   };
 
+  const getEkycInfoCallback = result => {
+    const { isEkycProcessing, email, deviceId } = result || {};
+    setDeviceId(deviceId);
+    // setUserEmail(email);
+    const isFromLogin = nativeParams?.isFromLogin;
+    if (!isEkycProcessing) {
+      if (isFromLogin) {
+        setCurrentStep(SignUpStep.ENTER_EMAIL);
+      } else {
+        //Sign Up New Account
+        setCurrentStep(SignUpStep.VERIFY_USER_INFO);
+      }
+    } else {
+      //TODO: Call CASE109
+    }
+  };
+
+  useEffect(() => {
+    if (nativeParams) {
+      getEkycInfo(getEkycInfoCallback);
+    }
+  }, [nativeParams]);
+
   return (
-    <>
+    <SignUpContext.Provider value={{ deviceId }}>
       <div className="sign-up__wrapper page__wrapper">
         {currentStep === SignUpStep.VERIFY_ID && <SignUpVerifyID onConfirm={handleConfirmVerifyID} />}
-        {currentStep === SignUpStep.VERIFY_USER_INFO && <VerifyUserInfo onConfirm={handleConfirmVerifyUserInfo} />}
+        {currentStep === SignUpStep.VERIFY_USER_INFO && (
+          <VerifyUserInfo
+            onConfirm={handleConfirmVerifyUserInfo}
+            navigateToVerifyEmail={() => setCurrentStep(SignUpStep.ENTER_EMAIL)}
+          />
+        )}
         {currentStep === SignUpStep.VERIFY_MEMBERSHIP_RESULT && (
           <VerifyMembershipResult
             type={VerifyMembershipResultStatus.FAILED}
@@ -145,7 +181,7 @@ const SignUp = () => {
           />
         )}
       </div>
-    </>
+    </SignUpContext.Provider>
   );
 };
 

@@ -70,7 +70,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast }) 
         clearTimeout(clearTimeOutRef.current);
       }
       clearErrors('verificationCode');
-      setValue('isEmailVerified', false);
+      setValue('isEmailVerified', false, { shouldValidate: true });
       setDisabledVerifyButton(false);
 
       if (verifyTimerResetRef.current) verifyTimerResetRef.current();

@@ -7,31 +7,36 @@ import Dropdown from '@common/components/atoms/Dropdown';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
+import Spinner from '@common/components/atoms/Spinner';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import Header from '@common/components/organisms/Header';
 import { initSelectBottom } from '@common/constants/bottomsheet';
-import { isDevelopmentEnv } from '@common/constants/common';
 import { getProvinceCode } from '@common/constants/commonCode';
+import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
-import useCommonCode from '@hooks/useCommonCode';
+import useApi from '@hooks/useApi';
+import { CustomerInfoVerifyType } from '@pages/SignUp/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
+import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { moveBack } from '@utilities/index';
 
 import VerifyIdInfoBottom from '../VerifyIdInfoBottom';
+import { CustomerInfoVerifyErrorCode } from './constants';
 import { verifyUserInfoFormSchema } from './schema';
 
-const VerifyUserInfo = ({ onConfirm }) => {
-  const { sendRequest: requestGetCommonCode, data: commonCodeData } = useCommonCode();
-  const [showAlert, setShowAlert] = useState({
+const VerifyUserInfo = ({ onConfirm, navigateToVerifyEmail }) => {
+  const [alert, setAlert] = useState({
     isShow: false,
     title: '',
-    subTitle: '',
+    content: '',
   });
+  const [showLoading, setShowLoading] = useState(false);
   const [showVerifyIdBottom, setShowVerifyIdBottom] = useState(false);
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [showSelectProvinceBottom, setShowSelectProvinceBottom] = useState(initSelectBottom);
+  const { requestApi } = useApi();
   const {
     control,
     setValue,
@@ -53,20 +58,14 @@ const VerifyUserInfo = ({ onConfirm }) => {
   };
 
   const handleOpenCalendar = () => {
-    if (isDevelopmentEnv) {
-      //For dummy data because it call native calendar
-      setValue('dob', '19980523', { shouldValidate: true });
-      setValue('dob_display', formatYYYYMMDDToDisplay('19980523'), { shouldValidate: true });
-    }
     openCalendar(handleSelectDate, { selectDate: dob || undefined });
   };
 
   const handleCloseAlert = () => {
-    setShowAlert({
-      ...showAlert,
+    setAlert({
+      ...alert,
       isShow: false,
     });
-    onConfirm();
   };
 
   const handleOpenSelectProvinceBottom = () => {
@@ -92,29 +91,60 @@ const VerifyUserInfo = ({ onConfirm }) => {
     console.log('values :>> ', values);
     //TODO: Handle submit
     setShowVerifyIdBottom(false);
-    onConfirm(values);
   };
 
-  const handleSubmitForm = values => {
-    //TODO: Check date valid or not
-    //TODO: Just for test Publishing
-    setShowVerifyIdBottom(true);
+  const handleSubmitForm = async values => {
+    setShowLoading(true);
+    const { dob: cus_bth_y4mm_dt, firstName: fst_nm, lastName: lst_nm, province, house_adr_state_c } = values;
+    const payload = {
+      cus_bth_y4mm_dt,
+      fst_nm,
+      lst_nm,
+      province,
+      house_adr_state_c,
+      trx_type: CustomerInfoVerifyType.EKYC,
+    };
+    const { data, error, isSuccess, errorCode } = await requestApi(endpoints.customerInfoVerify, payload);
+    setShowLoading(false);
+    if (errorCode !== CustomerInfoVerifyErrorCode.NEW) {
+      setEkycInfo({
+        isEkycProcessing: false,
+        email: 'testekycemail@gmail.com',
+        userId: '',
+        lastName: lst_nm,
+        firstName: fst_nm,
+        packageId: '',
+      });
+      navigateToVerifyEmail();
+    }
+    // setShowVerifyIdBottom(true);
   };
 
-  useEffect(() => {
-    if (commonCodeData) {
-      const { state_c: provinces } = commonCodeData || {};
+  const requestGetProvinces = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
+      code: getProvinceCode,
+    });
+    setShowLoading(false);
+    if (isSuccess) {
+      const { state_c: provinces } = data || {};
       const convertedProvince = commonCodeDataToOptions(provinces);
       setProvinceOptions(convertedProvince);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
     }
-  }, [commonCodeData]);
+  };
 
   useEffect(() => {
-    requestGetCommonCode(getProvinceCode);
+    requestGetProvinces();
   }, []);
 
   return (
     <>
+      {showLoading && <Spinner />}
       <div>
         <Header
           title="Sign up"
@@ -132,6 +162,7 @@ const VerifyUserInfo = ({ onConfirm }) => {
             />
           </div>
           <div className="form__section mt-4">
+            {/* //TODO: Call Character Security Keyboard */}
             <Controller
               render={({ field }) => (
                 <Input
@@ -196,9 +227,9 @@ const VerifyUserInfo = ({ onConfirm }) => {
       )}
       <Alert
         isCloseButton={false}
-        isShowAlert={showAlert.isShow}
-        title={showAlert.title}
-        subtitle={showAlert.subTitle}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
         onClose={handleCloseAlert}
         textAlign="left"
         firstButton={{

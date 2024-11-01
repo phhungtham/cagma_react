@@ -22,3 +22,9 @@ export const VerifyMembershipResultStatus = {
   CORPORATE_SUCCESS: 'corporateSuccess',
   FAILED: 'failed',
 };
+
+export const CustomerInfoVerifyType = {
+  FIND_ID: 0,
+  FIND_PW: 1,
+  EKYC: 2,
+};
