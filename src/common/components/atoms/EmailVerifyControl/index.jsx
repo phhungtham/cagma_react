@@ -173,6 +173,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast }) 
               type="number"
               placeholder="6 digits"
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
+              onResetTimer={cb => (verifyTimerResetRef.current = cb)}
               endAdornment={
                 <Button
                   label="Verify"
