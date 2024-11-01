@@ -16,7 +16,7 @@ const getEkycInfo = cb => {
   }
   return $h.exec(
     result => {
-      const cbData = result?.data ? JSON.parse(result.data) : {};
+      const cbData = result?.data || {};
       cb(cbData);
     },
     'GMCommon',
