@@ -31,10 +31,10 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
   };
 
   const handleConfirm = () => {
-    if (type === VerifyMembershipResultStatus.INDIVIDUAL_SUCCESS) {
+    if (type === VerifyMembershipResultStatus.ALREADY_INDIVIDUAL) {
       //TODO: Navigate login
     }
-    if (type === VerifyMembershipResultStatus.CORPORATE_SUCCESS) {
+    if (type === VerifyMembershipResultStatus.ALREADY_CORPORATE) {
       openInternalWebview({
         url: externalUrls.bankHome,
         title: '',
@@ -77,7 +77,7 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
           <IconButton
             size="lg"
             type="circle"
-            label="Reserve Consultation"
+            label="Book an Appointment"
             icon={<img src={ReserveIcon} />}
             onClick={handleNavigateAppointmentMain}
           />

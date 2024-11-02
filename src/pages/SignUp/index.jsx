@@ -26,13 +26,13 @@ import SignUpVerifyID from './components/VerifyID';
 import VerifyIdentityTerms from './components/VerifyIdentityTerms';
 import VerifyMembershipResult from './components/VerifyMembershipResult';
 import VerifyUserInfo from './components/VerifyUserInfo';
-import { SignUpStep, VerifyMembershipResultStatus } from './constants';
+import { SignUpStep } from './constants';
 
 export const SignUpContext = createContext();
 
 const SignUp = () => {
   const [currentStep, setCurrentStep] = useState();
-  const [userEmail, setUserEmail] = useState();
+  const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
@@ -47,13 +47,13 @@ const SignUp = () => {
     setCurrentStep(SignUpStep.VERIFY_USER_INFO);
   };
 
-  const handleConfirmVerifyUserInfo = values => {
+  const handleNavigateToVerifyMemberResult = verifyStatus => {
+    setVerifyUserInfoStatus(verifyStatus);
     setCurrentStep(SignUpStep.VERIFY_MEMBERSHIP_RESULT);
   };
 
   const handleNavigateVerifyMembership = () => {
-    //TODO: For test
-    setCurrentStep(SignUpStep.ENTER_EMAIL);
+    setCurrentStep(SignUpStep.VERIFY_USER_INFO);
   };
 
   const handleConfirmEmail = values => {
@@ -171,13 +171,13 @@ const SignUp = () => {
         {currentStep === SignUpStep.VERIFY_ID && <SignUpVerifyID onConfirm={handleConfirmVerifyID} />}
         {currentStep === SignUpStep.VERIFY_USER_INFO && (
           <VerifyUserInfo
-            onConfirm={handleConfirmVerifyUserInfo}
+            navigateToVerifyResult={handleNavigateToVerifyMemberResult}
             navigateToVerifyEmail={() => setCurrentStep(SignUpStep.ENTER_EMAIL)}
           />
         )}
         {currentStep === SignUpStep.VERIFY_MEMBERSHIP_RESULT && (
           <VerifyMembershipResult
-            type={VerifyMembershipResultStatus.FAILED}
+            type={verifyUserInfoStatus}
             onNavigateVerifyMembership={handleNavigateVerifyMembership}
           />
         )}

@@ -1,11 +1,11 @@
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 
 export const VerifyMembershipResultMessages = {
-  [VerifyMembershipResultStatus.INDIVIDUAL_SUCCESS]: {
+  [VerifyMembershipResultStatus.ALREADY_INDIVIDUAL]: {
     title: '<p>You are already a</p><p>Shinhan customer!</p>',
     description: 'You can continue managing your banking by logging in',
   },
-  [VerifyMembershipResultStatus.CORPORATE_SUCCESS]: {
+  [VerifyMembershipResultStatus.ALREADY_CORPORATE]: {
     title: '<p>You are already a</p><p>Shinhan business customer!</p>',
     description: 'You can continue managing your business banking through SBank',
   },
@@ -16,7 +16,7 @@ export const VerifyMembershipResultMessages = {
 };
 
 export const ButtonResultLabel = {
-  [VerifyMembershipResultStatus.INDIVIDUAL_SUCCESS]: 'Login',
-  [VerifyMembershipResultStatus.CORPORATE_SUCCESS]: 'Open SBank',
+  [VerifyMembershipResultStatus.ALREADY_INDIVIDUAL]: 'Login',
+  [VerifyMembershipResultStatus.ALREADY_CORPORATE]: 'Open SBank',
   [VerifyMembershipResultStatus.FAILED]: 'Start Over',
 };

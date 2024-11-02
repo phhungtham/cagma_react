@@ -18,8 +18,8 @@ export const SignUpStep = {
 };
 
 export const VerifyMembershipResultStatus = {
-  INDIVIDUAL_SUCCESS: 'individualSuccess',
-  CORPORATE_SUCCESS: 'corporateSuccess',
+  ALREADY_INDIVIDUAL: 'alreadyIndividual',
+  ALREADY_CORPORATE: 'alreadyCorporate',
   FAILED: 'failed',
 };
 

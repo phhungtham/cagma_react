@@ -15,7 +15,7 @@ import { getProvinceCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
-import { CustomerInfoVerifyType } from '@pages/SignUp/constants';
+import { CustomerInfoVerifyType, VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -26,7 +26,7 @@ import VerifyIdInfoBottom from '../VerifyIdInfoBottom';
 import { CustomerInfoVerifyErrorCode } from './constants';
 import { verifyUserInfoFormSchema } from './schema';
 
-const VerifyUserInfo = ({ onConfirm, navigateToVerifyEmail }) => {
+const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -104,9 +104,11 @@ const VerifyUserInfo = ({ onConfirm, navigateToVerifyEmail }) => {
       house_adr_state_c,
       trx_type: CustomerInfoVerifyType.EKYC,
     };
-    const { data, error, isSuccess, errorCode } = await requestApi(endpoints.customerInfoVerify, payload);
+    const { errorCode } = await requestApi(endpoints.customerInfoVerify, payload);
+    //TODO: Handle case already shinhan customer
+    const error = CustomerInfoVerifyErrorCode.ERROR;
     setShowLoading(false);
-    if (errorCode === CustomerInfoVerifyErrorCode.NEW) {
+    if (error === CustomerInfoVerifyErrorCode.NEW) {
       setEkycInfo({
         isEkycProcessing: false,
         email: '',
@@ -116,8 +118,11 @@ const VerifyUserInfo = ({ onConfirm, navigateToVerifyEmail }) => {
         packageId: '',
       });
       navigateToVerifyEmail();
+    } else if (error === CustomerInfoVerifyErrorCode.CORPORATE_CUSTOMER) {
+      navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_CORPORATE);
+    } else if (error === CustomerInfoVerifyErrorCode.ERROR) {
+      navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
     }
-    // setShowVerifyIdBottom(true);
   };
 
   const requestGetProvinces = async () => {
@@ -162,7 +167,6 @@ const VerifyUserInfo = ({ onConfirm, navigateToVerifyEmail }) => {
             />
           </div>
           <div className="form__section mt-4">
-            {/* //TODO: Call Character Security Keyboard */}
             <Controller
               render={({ field }) => (
                 <Input
