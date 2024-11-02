@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { BiometricAuthType } from '@common/constants/common';
-import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { nativeParamsSelector } from 'app/redux/selector';
 
@@ -27,7 +26,7 @@ import { SignUpStep, VerifyMembershipResultStatus } from './constants';
 export const SignUpContext = createContext();
 
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState();
+  const [currentStep, setCurrentStep] = useState(SignUpStep.VERIFY_USER_INFO);
   const [userEmail, setUserEmail] = useState();
   const [deviceId, setDeviceId] = useState();
   const nativeParams = useSelector(nativeParamsSelector);
@@ -117,7 +116,7 @@ const SignUp = () => {
 
   useEffect(() => {
     // if (nativeParams) {
-    getEkycInfo(getEkycInfoCallback);
+    // getEkycInfo(getEkycInfoCallback);
     // }
   }, [nativeParams]);
 
