@@ -17,7 +17,7 @@ const EKYCInProgress = ({ onConfirm }) => {
   const { deviceId } = useContext(SignUpContext);
   const [ekycPluginInfo, setEkycPluginInfo] = useState({});
   const [showLoading, setShowLoading] = useState(false);
-  const [showRetryBtn, setShowRetryBtn] = useState(true);
+  const [showRetryBtn, setShowRetryBtn] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -48,6 +48,7 @@ const EKYCInProgress = ({ onConfirm }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.regenerateEkycLink, payload);
     setShowLoading(false);
     if (isSuccess) {
+      setShowRetryBtn(false);
       const link = data?.signingUrl || '';
       openURLInBrowser(link);
     } else {
@@ -58,11 +59,7 @@ const EKYCInProgress = ({ onConfirm }) => {
     }
   };
 
-  const handleCheckResult = async () => {
-    setShowLoading(true);
-    if (showRetryBtn) {
-      return requestRegenerateEkycLink();
-    }
+  const requestRegisterCustomerInfoStep3 = async () => {
     const { email, firstName, lastName, packageId } = ekycPluginInfo;
     const payload = {
       cus_email: email,
@@ -76,7 +73,12 @@ const EKYCInProgress = ({ onConfirm }) => {
     if (isSuccess) {
       const { confm_proc_s: processingStatus } = data || {};
       if (processingStatus === '30') {
-        showRetryBtn(true);
+        setShowRetryBtn(true);
+        setShowToast({
+          isShow: true,
+          message: 'Identity verification is incomplete. Please check again.',
+          type: 'info',
+        });
       }
       // setEkycInfo({
       //   ...ekycPluginInfo,
@@ -92,6 +94,16 @@ const EKYCInProgress = ({ onConfirm }) => {
         content: error,
       });
     }
+  };
+
+  const handleCheckResult = async () => {
+    setShowLoading(true);
+    if (showRetryBtn) {
+      return requestRegenerateEkycLink();
+    } else {
+      return requestRegisterCustomerInfoStep3();
+    }
+
     // const success = false;
     // const message = success ? '' : 'Identity verification is incomplete. Please check again.';
     // setShowToast({
