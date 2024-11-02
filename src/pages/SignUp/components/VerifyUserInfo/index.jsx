@@ -108,7 +108,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
     //TODO: Handle case already shinhan customer
     const error = CustomerInfoVerifyErrorCode.ERROR;
     setShowLoading(false);
-    if (error === CustomerInfoVerifyErrorCode.NEW) {
+    if (errorCode === CustomerInfoVerifyErrorCode.NEW) {
       setEkycInfo({
         isEkycProcessing: false,
         email: '',
@@ -118,9 +118,9 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
         packageId: '',
       });
       navigateToVerifyEmail();
-    } else if (error === CustomerInfoVerifyErrorCode.CORPORATE_CUSTOMER) {
+    } else if (errorCode === CustomerInfoVerifyErrorCode.CORPORATE_CUSTOMER) {
       navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_CORPORATE);
-    } else if (error === CustomerInfoVerifyErrorCode.ERROR) {
+    } else if (errorCode === CustomerInfoVerifyErrorCode.ERROR) {
       navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
     }
   };
