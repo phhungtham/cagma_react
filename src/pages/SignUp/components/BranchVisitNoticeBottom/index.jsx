@@ -46,7 +46,7 @@ const BranchVisitNoticeBottom = ({ onClose, open }) => {
           <IconButton
             size="lg"
             type="circle"
-            label="Reserve Consultation"
+            label="Book an Appointment"
             icon={<img src={ReserveIcon} />}
             onClick={handleNavigateAppointmentMain}
           />

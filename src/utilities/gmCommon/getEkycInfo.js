@@ -5,7 +5,7 @@ const getEkycInfo = cb => {
   if (AppCfg.ENV === 'development') {
     const testData = {
       isEkycProcessing: false,
-      email: 'test@gmail.com',
+      email: 'email@gmail.com',
       userId: 'catest01',
       lastName: 'last',
       firstName: 'first',

@@ -106,7 +106,7 @@ const VerifyUserInfo = ({ onConfirm, navigateToVerifyEmail }) => {
     };
     const { data, error, isSuccess, errorCode } = await requestApi(endpoints.customerInfoVerify, payload);
     setShowLoading(false);
-    if (errorCode !== CustomerInfoVerifyErrorCode.NEW) {
+    if (errorCode === CustomerInfoVerifyErrorCode.NEW) {
       setEkycInfo({
         isEkycProcessing: false,
         email: '',

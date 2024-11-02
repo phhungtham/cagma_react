@@ -147,12 +147,12 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
       cus_email: email,
       uuid_v: deviceId,
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfo, payload);
+    const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep1, payload);
     setShowLoading(false);
-    if (!isSuccess) {
+    if (isSuccess) {
       setEkycInfo({
         ...ekycPluginInfo,
-        email: email, //TODO: Using data.cus_email
+        email: data.cus_email,
         isEkycProcessing: true,
       });
       onConfirm();

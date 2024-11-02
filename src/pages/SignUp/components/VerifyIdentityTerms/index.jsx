@@ -1,13 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import identityBanner from '@assets/images/verify-identity-banner.png';
+import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import CheckBox from '@common/components/atoms/Checkbox';
 import Input from '@common/components/atoms/Input/Input';
+import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
+import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
+import useApi from '@hooks/useApi';
+import { SignUpContext } from '@pages/SignUp';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
+import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { moveBack } from '@utilities/index';
 
 import BranchVisitNoticeBottom from '../BranchVisitNoticeBottom';
@@ -16,38 +22,84 @@ import { VerifyIdentityTermsSchema } from './schema';
 import './styles.scss';
 
 const VerifyIdentityTerms = ({ onConfirm }) => {
+  const { deviceId } = useContext(SignUpContext);
+  const [showLoading, setShowLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
   const [showBranchVisitBottom, setShowBranchVisitBottom] = useState(false);
+  const [ekycPluginInfo, setEkycPluginInfo] = useState({});
+  const { requestApi } = useApi();
 
   const {
     control,
     watch,
     setValue,
-    clearErrors,
-    setError,
-    formState: { errors, isValid },
+    handleSubmit,
+    formState: { isValid },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(VerifyIdentityTermsSchema),
   });
 
-  const [type] = watch(['type']);
+  const [type, agreeTerms] = watch(['type', 'agreeTerms']);
+  console.log('agreeTerms :>> ', agreeTerms);
 
   const onChangeType = value => {
     setValue('type', value, { shouldValidate: true });
   };
 
-  const handleSubmitForm = () => {
-    // if (selectedType === VerifyIdentityType.UNAVAILABLE) {
-    //   setShowBranchVisitBottom(true);
-    // } else {
-    //   onConfirm();
-    // }
+  const requestPreRegisterCustomerStep2 = async values => {
+    const { firstName, lastName } = values;
+    setShowLoading(true);
+    const payload = {
+      cus_email: ekycPluginInfo.email,
+      uuid_v: deviceId,
+      cus_fst_nm: firstName,
+      cus_last_nm: lastName,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep2, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      debugger;
+      setEkycInfo({
+        ...ekycPluginInfo,
+        firstName,
+        lastName,
+        isEkycProcessing: true,
+        packageId: data.ekyc_aplct_stp_c,
+      });
+      onConfirm(data.signingUrl);
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const handleSubmitForm = values => {
+    if (type === VerifyIdentityType.UNAVAILABLE) {
+      setShowBranchVisitBottom(true);
+    } else {
+      requestPreRegisterCustomerStep2(values);
+    }
   };
 
   const getEkycInfoCallback = result => {
     const { firstName, lastName } = result;
     setValue('firstName', firstName, { shouldValidate: true });
     setValue('lastName', lastName, { shouldValidate: true });
+    setEkycPluginInfo(result);
+  };
+
+  const handleCloseAlert = () => {
+    setAlert({
+      ...alert,
+      isShow: false,
+    });
   };
 
   useEffect(() => {
@@ -56,6 +108,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
 
   return (
     <>
+      {showLoading && <Spinner />}
       <div className="verify-identity-terms__wrapper">
         <Header
           title="Sign up"
@@ -165,7 +218,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
             label="Proceed with ID Verification"
             variant="filled__primary"
             className="btn__cta"
-            onClick={handleSubmitForm}
+            onClick={handleSubmit(handleSubmitForm)}
             disable={!isValid}
           />
         </div>
@@ -176,6 +229,18 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
           onClose={() => setShowBranchVisitBottom(false)}
         />
       )}
+      <Alert
+        isCloseButton={false}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
+        onClose={handleCloseAlert}
+        textAlign="left"
+        firstButton={{
+          onClick: handleCloseAlert,
+          label: 'Confirm',
+        }}
+      />
     </>
   );
 };

@@ -14,11 +14,9 @@ export const VerifyIdentityTermsSchema = Yup.object().shape({
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
-  agreeTerms: Yup.boolean()
-    .oneOf([true], 'You must agree terms')
-    .when('type', {
-      is: VerifyIdentityType.AVAILABLE,
-      then: schema => schema.required(),
-      otherwise: schema => schema.notRequired(),
-    }),
+  agreeTerms: Yup.boolean().when('type', {
+    is: VerifyIdentityType.AVAILABLE,
+    then: schema => schema.required().oneOf([true], 'You must agree terms'),
+    otherwise: schema => schema.notRequired(),
+  }),
 });
