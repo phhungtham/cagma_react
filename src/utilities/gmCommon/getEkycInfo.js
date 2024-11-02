@@ -4,7 +4,7 @@ import { $h } from 'navigation/wmatrix_config';
 const getEkycInfo = cb => {
   if (AppCfg.ENV === 'development') {
     const testData = {
-      isEkycProcessing: false,
+      isEkycProcessing: true,
       email: 'email@gmail.com',
       userId: 'catest01',
       lastName: 'last name',

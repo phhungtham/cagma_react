@@ -1,7 +1,11 @@
 import { createContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import Alert from '@common/components/atoms/Alert';
+import Spinner from '@common/components/atoms/Spinner';
 import { BiometricAuthType } from '@common/constants/common';
+import { endpoints } from '@common/constants/endpoint';
+import useApi from '@hooks/useApi';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { nativeParamsSelector } from 'app/redux/selector';
@@ -30,6 +34,13 @@ const SignUp = () => {
   const [currentStep, setCurrentStep] = useState();
   const [userEmail, setUserEmail] = useState();
   const [deviceId, setDeviceId] = useState();
+  const [showLoading, setShowLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
+  const { requestApi } = useApi();
   const nativeParams = useSelector(nativeParamsSelector);
 
   const handleConfirmVerifyID = values => {
@@ -98,6 +109,34 @@ const SignUp = () => {
     setCurrentStep(SignUpStep.OPEN_ACCOUNT_INSTRUCTION);
   };
 
+  const handleCloseAlert = () => {
+    setAlert({
+      ...alert,
+      isShow: false,
+    });
+  };
+
+  const requestCheckEkycStatus = async ({ deviceId, email }) => {
+    setShowLoading(true);
+    const payload = {
+      cus_email: email,
+      uuid_v: deviceId,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.checkEkycStatus, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { ekyc_aplct_stp_c: applyCode } = data;
+      if (Number(applyCode) === 1) {
+        setCurrentStep(SignUpStep.VERIFY_IDENTITY_TERMS);
+      }
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
   const getEkycInfoCallback = result => {
     const { isEkycProcessing, email, deviceId } = result || {};
     setDeviceId(deviceId);
@@ -111,8 +150,7 @@ const SignUp = () => {
         setCurrentStep(SignUpStep.VERIFY_USER_INFO);
       }
     } else {
-      setCurrentStep(SignUpStep.VERIFY_USER_INFO);
-      //TODO: Call CASE109
+      requestCheckEkycStatus({ deviceId, email });
     }
   };
 
@@ -128,6 +166,7 @@ const SignUp = () => {
 
   return (
     <SignUpContext.Provider value={{ deviceId }}>
+      {showLoading && <Spinner />}
       <div className="sign-up__wrapper page__wrapper">
         {currentStep === SignUpStep.VERIFY_ID && <SignUpVerifyID onConfirm={handleConfirmVerifyID} />}
         {currentStep === SignUpStep.VERIFY_USER_INFO && (
@@ -188,6 +227,18 @@ const SignUp = () => {
           />
         )}
       </div>
+      <Alert
+        isCloseButton={false}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
+        onClose={handleCloseAlert}
+        textAlign="left"
+        firstButton={{
+          onClick: handleCloseAlert,
+          label: 'Confirm',
+        }}
+      />
     </SignUpContext.Provider>
   );
 };
