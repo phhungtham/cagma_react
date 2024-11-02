@@ -1,44 +1,162 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import reviewingImg from '@assets/images/reviewing.png';
+import loading from '@assets/lottie/ekyc-loading.json';
+import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
+import { endpoints } from '@common/constants/endpoint';
+import useApi from '@hooks/useApi';
+import { SignUpContext } from '@pages/SignUp';
+import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
+import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { moveHome } from '@utilities/index';
+import Lottie from 'lottie-react';
 
 const EKYCInProgress = ({ onConfirm }) => {
+  const { deviceId } = useContext(SignUpContext);
+  const [ekycPluginInfo, setEkycPluginInfo] = useState({});
+  const [showLoading, setShowLoading] = useState(false);
+  const [showRetryBtn, setShowRetryBtn] = useState(true);
+  const [alert, setAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
     type: 'success',
   });
+  const { requestApi } = useApi();
 
   const handleNavigateHome = () => {
     moveHome();
   };
 
-  const handleCheckResult = () => {
-    const success = false;
-    const message = success ? '' : 'Identity verification is incomplete. Please check again.';
-    setShowToast({
-      isShow: true,
-      message: message,
-      type: success ? 'success' : 'info',
-    });
-
-    //For test
-    setTimeout(() => {
-      onConfirm();
-    }, 2000);
+  const requestRegenerateEkycLink = async () => {
+    setShowLoading(true);
+    const { email, firstName, lastName, packageId } = ekycPluginInfo;
+    const payload = {
+      cus_email: email,
+      uuid_v: deviceId,
+      cus_fst_nm: firstName,
+      cus_last_nm: lastName,
+      e_sgn_trx_id: packageId,
+      // e_sgn_trx_id: 'gb8VlErDk47oUJRURSFO7XwXspQ=',
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.regenerateEkycLink, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const link = data?.signingUrl || '';
+      openURLInBrowser(link);
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
   };
+
+  const handleCheckResult = async () => {
+    setShowLoading(true);
+    if (showRetryBtn) {
+      return requestRegenerateEkycLink();
+    }
+    const { email, firstName, lastName, packageId } = ekycPluginInfo;
+    const payload = {
+      cus_email: email,
+      uuid_v: deviceId,
+      cus_fst_nm: firstName,
+      cus_last_nm: lastName,
+      e_sgn_trx_id: 'gb8VlErDk47oUJRURSFO7XwXspQ=',
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep3, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { confm_proc_s: processingStatus } = data || {};
+      if (processingStatus === '30') {
+        showRetryBtn(true);
+      }
+      // setEkycInfo({
+      //   ...ekycPluginInfo,
+      //   firstName,
+      //   lastName,
+      //   isEkycProcessing: true,
+      //   packageId: data.e_sgn_trx_id,
+      // });
+      // onConfirm(data.signingUrl);
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+    // const success = false;
+    // const message = success ? '' : 'Identity verification is incomplete. Please check again.';
+    // setShowToast({
+    //   isShow: true,
+    //   message: message,
+    //   type: success ? 'success' : 'info',
+    // });
+
+    // //For test
+    // setTimeout(() => {
+    //   onConfirm();
+    // }, 2000);
+  };
+
+  const handleCloseAlert = () => {
+    setAlert({
+      ...alert,
+      isShow: false,
+    });
+  };
+
+  const checkEkycStatus = async email => {
+    setShowLoading(true);
+    const payload = {
+      cus_email: email,
+      uuid_v: deviceId,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.checkEkycStatus, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      // debugger;
+      // setEkycInfo({
+      //   ...ekycPluginInfo,
+      //   firstName,
+      //   lastName,
+      //   isEkycProcessing: true,
+      //   packageId: data.e_sgn_trx_id,
+      // });
+      // onConfirm(data.signingUrl);
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const getEkycInfoCallback = result => {
+    setEkycPluginInfo(result);
+    checkEkycStatus(result?.email);
+  };
+
+  useEffect(() => {
+    getEkycInfo(getEkycInfoCallback);
+  }, []);
 
   return (
     <>
+      {showLoading && <Spinner />}
       <div className="page-success">
         <div className="success__header">
           <div className="success__img">
-            <img
-              src={reviewingImg}
-              alt="Complete"
+            <Lottie
+              animationData={loading} //TODO: Change size and color of loading
+              loop
             />
           </div>
           <div className="success__title">
@@ -57,7 +175,7 @@ const EKYCInProgress = ({ onConfirm }) => {
         />
         <Button
           variant="filled__primary"
-          label="Done"
+          label={showRetryBtn ? 'Retry' : 'Done'}
           className="btn__cta"
           onClick={handleCheckResult}
         />
@@ -70,6 +188,18 @@ const EKYCInProgress = ({ onConfirm }) => {
           message={showToast.message}
         />
       </section>
+      <Alert
+        isCloseButton={false}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
+        onClose={handleCloseAlert}
+        textAlign="left"
+        firstButton={{
+          onClick: handleCloseAlert,
+          label: 'Confirm',
+        }}
+      />
     </>
   );
 };

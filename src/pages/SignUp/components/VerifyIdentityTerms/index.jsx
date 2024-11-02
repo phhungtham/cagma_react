@@ -63,13 +63,12 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep2, payload);
     setShowLoading(false);
     if (isSuccess) {
-      debugger;
       setEkycInfo({
         ...ekycPluginInfo,
         firstName,
         lastName,
         isEkycProcessing: true,
-        packageId: data.ekyc_aplct_stp_c,
+        packageId: data.e_sgn_trx_id,
       });
       onConfirm(data.signingUrl);
     } else {

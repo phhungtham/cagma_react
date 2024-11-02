@@ -19,6 +19,7 @@ export const endpoints = {
   registerVerifiedEmail: '/ca/se/CASE105.pwkjson',
   preRegisterCustomerInfoStep1: '/ca/se/CASE106.pwkjson',
   preRegisterCustomerInfoStep2: '/ca/se/CASE107.pwkjson',
+  preRegisterCustomerInfoStep3: '/ca/se/CASE115.pwkjson',
   changeUserInfoPreTransaction: '/ca/me/CAME002.pwkjson',
   changeUserInfoTransaction: '/ca/me/CAME003.pwkjson',
   inquiryETransferCustomerInfo: '/ca/tr/CATR028.pwkjson',
@@ -52,4 +53,6 @@ export const endpoints = {
   reissueCardNotLogged: '/ca/ca/CACA008.pwkjson',
   getDTRInformation: '/ca/me/CAME013.pwkjson',
   customerInfoVerify: '/ca/me/CAME008.pwkjson',
+  checkEkycStatus: '/ca/se/CASE109.pwkjson',
+  regenerateEkycLink: '/ca/se/CASE116.pwkjson',
 };
