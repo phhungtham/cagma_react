@@ -109,7 +109,7 @@ const VerifyUserInfo = ({ onConfirm, navigateToVerifyEmail }) => {
     if (errorCode !== CustomerInfoVerifyErrorCode.NEW) {
       setEkycInfo({
         isEkycProcessing: false,
-        email: 'testekycemail@gmail.com',
+        email: '',
         userId: '',
         lastName: lst_nm,
         firstName: fst_nm,

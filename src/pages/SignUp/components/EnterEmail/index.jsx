@@ -13,13 +13,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
+import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { moveBack } from '@utilities/index';
 
 import { EnterEmailSchema } from './schema';
 
 const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
   const { deviceId } = useContext(SignUpContext);
-  console.log('deviceId :>> ', deviceId);
+  const [ekycPluginInfo, setEkycPluginInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -148,7 +149,12 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
     };
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfo, payload);
     setShowLoading(false);
-    if (isSuccess) {
+    if (!isSuccess) {
+      setEkycInfo({
+        ...ekycPluginInfo,
+        email: email, //TODO: Using data.cus_email
+        isEkycProcessing: true,
+      });
       onConfirm();
     } else {
       return setAlert({
@@ -196,13 +202,14 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
   };
 
   const getEkycInfoCallback = result => {
-    console.log('getEkycInfoCallback result :>> ', result);
-    setValue('email', result?.email);
+    setEkycPluginInfo(result);
   };
 
   useEffect(() => {
-    //TODO: Just for test
     getEkycInfo(getEkycInfoCallback);
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (clearTimeOutRef.current) {
         clearTimeout(clearTimeOutRef.current);
