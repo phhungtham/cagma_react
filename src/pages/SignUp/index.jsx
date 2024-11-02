@@ -111,6 +111,7 @@ const SignUp = () => {
         setCurrentStep(SignUpStep.VERIFY_USER_INFO);
       }
     } else {
+      setCurrentStep(SignUpStep.VERIFY_USER_INFO);
       //TODO: Call CASE109
     }
   };
