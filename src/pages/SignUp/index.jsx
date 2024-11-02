@@ -116,9 +116,9 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    if (nativeParams) {
-      getEkycInfo(getEkycInfoCallback);
-    }
+    // if (nativeParams) {
+    getEkycInfo(getEkycInfoCallback);
+    // }
   }, [nativeParams]);
 
   return (
