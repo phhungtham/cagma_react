@@ -55,4 +55,5 @@ export const endpoints = {
   customerInfoVerify: '/ca/me/CAME008.pwkjson',
   checkEkycStatus: '/ca/se/CASE109.pwkjson',
   regenerateEkycLink: '/ca/se/CASE116.pwkjson',
+  getExistingCustomerInfo: '/ca/se/CASE111.pwkjson',
 };

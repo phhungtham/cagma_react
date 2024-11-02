@@ -80,15 +80,9 @@ const EKYCInProgress = ({ onConfirm }) => {
           message: 'Identity verification is incomplete. Please check again.',
           type: 'info',
         });
+        onConfirm();
+        //TODO: Just for test
       }
-      // setEkycInfo({
-      //   ...ekycPluginInfo,
-      //   firstName,
-      //   lastName,
-      //   isEkycProcessing: true,
-      //   packageId: data.e_sgn_trx_id,
-      // });
-      // onConfirm(data.signingUrl);
     } else {
       return setAlert({
         isShow: true,

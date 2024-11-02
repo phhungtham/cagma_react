@@ -7,8 +7,8 @@ const getEkycInfo = cb => {
       isEkycProcessing: false,
       email: 'email@gmail.com',
       userId: 'catest01',
-      lastName: 'last',
-      firstName: 'first',
+      lastName: 'last name',
+      firstName: 'first name',
       packageId: 'asdfqwert',
       deviceId: 'deviceId',
     };
