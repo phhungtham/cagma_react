@@ -66,7 +66,8 @@ const EKYCInProgress = ({ onConfirm }) => {
       uuid_v: deviceId,
       cus_fst_nm: firstName,
       cus_last_nm: lastName,
-      e_sgn_trx_id: 'gb8VlErDk47oUJRURSFO7XwXspQ=',
+      e_sgn_trx_id: packageId,
+      // e_sgn_trx_id: 'gb8VlErDk47oUJRURSFO7XwXspQ=',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep3, payload);
     setShowLoading(false);
