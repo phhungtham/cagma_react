@@ -20,6 +20,7 @@ export const endpoints = {
   preRegisterCustomerInfoStep1: '/ca/se/CASE106.pwkjson',
   preRegisterCustomerInfoStep2: '/ca/se/CASE107.pwkjson',
   preRegisterCustomerInfoStep3: '/ca/se/CASE115.pwkjson',
+  preRegisterCustomerInfoStep4: '/ca/se/CASE114.pwkjson',
   changeUserInfoPreTransaction: '/ca/me/CAME002.pwkjson',
   changeUserInfoTransaction: '/ca/me/CAME003.pwkjson',
   inquiryETransferCustomerInfo: '/ca/tr/CATR028.pwkjson',
@@ -56,4 +57,6 @@ export const endpoints = {
   checkEkycStatus: '/ca/se/CASE109.pwkjson',
   regenerateEkycLink: '/ca/se/CASE116.pwkjson',
   getExistingCustomerInfo: '/ca/se/CASE111.pwkjson',
+  verifyIdDuplicate: '/ca/se/CASE108.pwkjson',
+  registerElectricFinancial: '/ca/se/CASE110.pwkjson',
 };

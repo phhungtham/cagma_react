@@ -42,13 +42,6 @@ export const profileFormMapFields = {
   city: 'cus_adr2',
 };
 
-export const employmentValuesDisableOccupation = [
-  '6', //"Retired"
-  '7', //"Student"
-  '8', //"House-wife"
-  '10', //"Unemployed"
-];
-
 export const ProfileChangeType = {
   CONTACT_ADDRESS: '2',
   ADDRESS: '4',

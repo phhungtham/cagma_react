@@ -104,9 +104,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
       house_adr_state_c,
       trx_type: CustomerInfoVerifyType.EKYC,
     };
-    const { errorCode } = await requestApi(endpoints.customerInfoVerify, payload);
-    //TODO: Handle case already shinhan customer
-    const error = CustomerInfoVerifyErrorCode.ERROR;
+    const { errorCode, data, isSuccess } = await requestApi(endpoints.customerInfoVerify, payload);
     setShowLoading(false);
     if (errorCode === CustomerInfoVerifyErrorCode.NEW) {
       setEkycInfo({
@@ -117,11 +115,17 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
         firstName: fst_nm,
         packageId: '',
       });
-      navigateToVerifyEmail();
+      return navigateToVerifyEmail();
     } else if (errorCode === CustomerInfoVerifyErrorCode.CORPORATE_CUSTOMER) {
-      navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_CORPORATE);
+      return navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_CORPORATE);
     } else if (errorCode === CustomerInfoVerifyErrorCode.ERROR) {
-      navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
+      return navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
+    }
+    if (isSuccess) {
+      const { result_cd, intbnk_reg_yn } = data;
+      if (Number(result_cd) === 1 && intbnk_reg_yn === 'Y') {
+        return navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_INDIVIDUAL);
+      }
     }
   };
 

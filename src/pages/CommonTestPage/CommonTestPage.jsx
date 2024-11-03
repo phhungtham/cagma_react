@@ -25,7 +25,7 @@ import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 import createSecurityPasscode from '@utilities/gmSecure/createSecurityPasscode';
 import hideSecureKeyboardChar from '@utilities/gmSecure/hideSecureKeyboardChar';
 import hideSecureKeyboardNumber from '@utilities/gmSecure/hideSecureKeyboardNumber';
-import showSecureKeyboardChar from '@utilities/gmSecure/showSecureKeyboardChar';
+import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import showSecureKeyboardNumber from '@utilities/gmSecure/showSecureKeyboardNumber';
 import { callPhone, clearHistory, decryptCVC, getLoginInfo, moveBack, moveHome, moveNext } from '@utilities/index';
 import { setAuthenticated } from 'shared/features/auth/action';
@@ -276,9 +276,9 @@ const CommonTestPage = () => {
           action: () => createSecurityPasscode(handleCreateSecurityPasscodeCallback),
         },
         {
-          title: 'Show Secure Keyboard Char',
-          label: 'showSecureKeyboardChar',
-          action: () => showSecureKeyboardChar({ maxLength: 30 }),
+          title: 'Show Certification Keyboard Char',
+          label: 'showCertificationChar',
+          action: () => showCertificationChar(),
         },
         {
           title: 'Hide Secure Keyboard Char',

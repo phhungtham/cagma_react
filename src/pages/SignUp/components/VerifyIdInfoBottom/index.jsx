@@ -4,7 +4,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { isDevelopmentEnv } from '@common/constants/common';
-import showSecureKeyboardChar from '@utilities/gmSecure/showSecureKeyboardChar';
+import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 
 const VerifyIdInfoBottom = ({ open, onClose, onSubmit }) => {
   const {
@@ -25,7 +25,7 @@ const VerifyIdInfoBottom = ({ open, onClose, onSubmit }) => {
     if (isDevelopmentEnv) {
       setValue('id', 'test id');
     }
-    showSecureKeyboardChar(handleChangeID);
+    showCertificationChar(handleChangeID);
   };
 
   const handleSubmitForm = values => {

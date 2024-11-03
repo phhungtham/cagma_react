@@ -4,12 +4,13 @@ import successImg from '@assets/images/complete.png';
 import reviewingImg from '@assets/images/reviewing.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
+import { moveHome } from '@utilities/index';
 
 const EKYCResult = ({ isSuccess, onNavigate }) => {
   useEffect(() => {
     setTimeout(() => {
       onNavigate();
-    }, 2000);
+    }, 3000);
   }, []);
 
   return (
@@ -46,8 +47,7 @@ const EKYCResult = ({ isSuccess, onNavigate }) => {
             variant="filled__primary"
             label="Home"
             className="btn__cta"
-            // onClick={moveHome}
-            onClick={onNavigate}
+            onClick={moveHome}
           />
         </div>
       )}

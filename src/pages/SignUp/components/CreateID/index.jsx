@@ -1,17 +1,28 @@
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
+import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
-import { isDevelopmentEnv } from '@common/constants/common';
+import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
-import showSecureKeyboardChar from '@utilities/gmSecure/showSecureKeyboardChar';
+import useApi from '@hooks/useApi';
+import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
 
 import { createIdFormSchema } from './schema';
 
 const SignUpCreateID = ({ onConfirm }) => {
+  const [showLoading, setShowLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
+  const { requestApi } = useApi();
   const {
     control,
     setValue,
@@ -23,25 +34,49 @@ const SignUpCreateID = ({ onConfirm }) => {
     resolver: yupResolver(createIdFormSchema),
   });
 
-  const handleChangeID = value => {
-    console.log('value :>> ', value);
+  const handleChangeID = result => {
+    setValue('id', result?.uniqueValue?.toLowerCase() || '', { shouldValidate: true });
   };
 
   const handleOpenSecurityKeyboard = () => {
-    if (isDevelopmentEnv) {
-      setValue('id', 'test id');
-    }
-    showSecureKeyboardChar(handleChangeID);
+    showCertificationChar(handleChangeID, { maxLength: 20 });
   };
 
-  const handleSubmitForm = values => {
-    //TODO: For test
-    onConfirm(values);
+  const handleCloseAlert = () => {
+    setAlert({
+      ...alert,
+      isShow: false,
+    });
+  };
+
+  const handleSubmitForm = async values => {
+    setShowLoading(true);
+    const payload = {
+      user_id: values.id,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.verifyIdDuplicate, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      if (Number(data.cnt) === 0) {
+        onConfirm(values.id);
+      } else {
+        return setAlert({
+          isShow: true,
+          content: 'ID you entered is already in use.',
+        });
+      }
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
   };
 
   return (
     <>
       <div>
+        {showLoading && <Spinner />}
         <Header
           title="Sign up"
           onClick={moveBack}
@@ -60,6 +95,7 @@ const SignUpCreateID = ({ onConfirm }) => {
                 <Input
                   label="ID"
                   onFocus={handleOpenSecurityKeyboard}
+                  maxLength={20} //TODO: Clarify format and validate
                   {...field}
                 />
               )}
@@ -78,6 +114,18 @@ const SignUpCreateID = ({ onConfirm }) => {
           />
         </div>
       </div>
+      <Alert
+        isCloseButton={false}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
+        onClose={handleCloseAlert}
+        textAlign="left"
+        firstButton={{
+          onClick: handleCloseAlert,
+          label: 'Confirm',
+        }}
+      />
     </>
   );
 };

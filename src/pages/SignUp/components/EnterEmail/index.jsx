@@ -63,10 +63,6 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
     setShowUnableVerifyEmailAlert(false);
   };
 
-  const handleSubmitForm = values => {
-    onConfirm(values);
-  };
-
   const handleNavigateUpdateEmail = () => {
     onNavigateUpdateEmail();
   };
@@ -98,7 +94,6 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
     if (!isSuccess) {
       return setAlert({
         isShow: true,
-        title: 'Sorry!',
         content: error,
       });
     }

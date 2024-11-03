@@ -19,6 +19,8 @@ const AgreeTermsConditions = ({ onConfirm }) => {
     value: '',
   });
 
+  const isValidForm = checkedOptions?.length === signUpTermConditionConfig.options.length;
+
   const onClickViewTermDetail = value => {
     const termItem = signUpTermConditionConfig.options.find(item => item.value === value);
     const { fileUrl, title } = termItem;
@@ -97,6 +99,7 @@ const AgreeTermsConditions = ({ onConfirm }) => {
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmitForm}
+            disable={!isValidForm}
           />
         </div>
       </div>

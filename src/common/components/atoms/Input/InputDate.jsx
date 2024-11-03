@@ -26,6 +26,9 @@ const InputDate = forwardRef((props, ref) => {
   const composeRef = useComposeRefs(ref);
 
   const handleFocusStatus = (focusMode = 'focus') => {
+    if (disabled) {
+      return;
+    }
     if (value && focusMode === 'blur') {
       setCustomClass('input__completed');
       return;
@@ -77,7 +80,7 @@ const InputDate = forwardRef((props, ref) => {
           value={value}
           {...otherProps}
         />
-        <div className="input__icon">
+        <div className={`input__icon input__calendar__icon ${disabled ? 'disabled' : ''}`}>
           <CalendarIcon />
         </div>
       </section>

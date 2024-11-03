@@ -239,4 +239,9 @@ $input-on-background: background-color(dark-sky-blue);
       color: $color-error;
     }
   }
+  .input__calendar__icon {
+    &.disabled {
+      color: $color-gray-400;
+    }
+  }
 }

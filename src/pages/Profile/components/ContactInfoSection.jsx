@@ -6,13 +6,13 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Dropdown from '@common/components/atoms/Dropdown';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
+import { employmentValuesDisableOccupation } from '@common/constants/account';
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { changeProfileLabels as labels } from '@common/constants/labels';
 import { notAllowNumberRegex } from '@common/constants/regex';
 import { apiCall } from '@shared/api';
 
-import { employmentValuesDisableOccupation } from '../constants';
 import { changeProfileSchema } from '../schema';
 
 const ContactInfoSection = ({

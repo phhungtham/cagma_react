@@ -9,6 +9,7 @@ import Toast from '@common/components/atoms/Toast';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
+import { employmentValuesDisableOccupation } from '@common/constants/account';
 import { addressTypeMapping } from '@common/constants/address';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import {
@@ -30,8 +31,8 @@ import useSagas from '@hooks/useSagas';
 import { apiCall } from '@shared/api';
 import {
   buildObjectMapFromResponse,
+  buildRequestPayloadBaseMappingFields,
   commonCodeDataToOptions,
-  convertObjectBaseMappingFields,
 } from '@utilities/convert';
 import getEtransferInfo from '@utilities/gmCommon/getEtransferInfo';
 import setEtransferInfo from '@utilities/gmCommon/setEtransferInfo';
@@ -44,7 +45,6 @@ import AddressInfoSection from './components/AddressInfoSection';
 import ContactInfoSection from './components/ContactInfoSection';
 import ProfileAvatar from './components/ProfileAvatar';
 import {
-  employmentValuesDisableOccupation,
   fieldsToCheckAddress,
   fieldsToCheckContactInfo,
   ProfileChangeType,
@@ -324,7 +324,7 @@ const ChangeProfile = ({ translate: t }) => {
       values.address1 = values.addressLine1;
     }
     setShowLoading(true);
-    const request = convertObjectBaseMappingFields(values, profileFormMapFields, true /* ignoreRemainingFields*/);
+    const request = buildRequestPayloadBaseMappingFields(values, profileFormMapFields);
     const isRegisterETransfer = await checkAlreadyRegisterETransfer();
     request.etr_reg_yn = isRegisterETransfer ? 'Y' : 'N';
     // request.etr_reg_yn = 'N';

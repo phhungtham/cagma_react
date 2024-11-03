@@ -3,30 +3,11 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
-import { isDevelopmentEnv } from '@common/constants/common';
-import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
-import openCalendar from '@utilities/gmCommon/openCalendar';
 
-const IDInfoSection = () => {
+import { CommonCodeFieldName, SignUpSelectType } from '../constants';
+
+const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
   const { control, watch, setValue } = useFormContext();
-
-  const [dob] = watch(['dob']);
-
-  const handleSelectDate = selectedDate => {
-    if (selectedDate) {
-      setValue('dob', selectedDate, { shouldValidate: true });
-      setValue('dob_display', formatYYYYMMDDToDisplay(selectedDate), { shouldValidate: true });
-    }
-  };
-
-  const handleOpenCalendar = () => {
-    if (isDevelopmentEnv) {
-      //For dummy data because it call native calendar
-      setValue('dob', '19980523', { shouldValidate: true });
-      setValue('dob_display', formatYYYYMMDDToDisplay('19980523'), { shouldValidate: true });
-    }
-    openCalendar(handleSelectDate, { selectDate: dob || undefined });
-  };
 
   return (
     <div className="form__section">
@@ -35,6 +16,8 @@ const IDInfoSection = () => {
         render={({ field }) => (
           <Dropdown
             label="Title"
+            onFocus={() => onOpenSelectBottom(SignUpSelectType.TITLE)}
+            options={commonCode[CommonCodeFieldName.TITLE]}
             {...field}
           />
         )}
@@ -45,6 +28,7 @@ const IDInfoSection = () => {
         render={({ field }) => (
           <Input
             label="First Name"
+            disabled
             {...field}
           />
         )}
@@ -65,6 +49,7 @@ const IDInfoSection = () => {
         render={({ field }) => (
           <Input
             label="Last Name"
+            disabled
             {...field}
           />
         )}
@@ -75,7 +60,7 @@ const IDInfoSection = () => {
         render={({ field: { value } }) => (
           <InputDate
             label="Date of Birth"
-            onFocus={handleOpenCalendar}
+            disabled
             value={value}
           />
         )}

@@ -17,7 +17,7 @@ import useApi from '@hooks/useApi';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
-import showSecureKeyboardChar from '@utilities/gmSecure/showSecureKeyboardChar';
+import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
 import { t } from 'i18next';
 
@@ -60,7 +60,7 @@ const SignUpVerifyID = ({ onConfirm }) => {
     if (isDevelopmentEnv) {
       setValue('id', 'test id');
     }
-    showSecureKeyboardChar(handleChangeID);
+    showCertificationChar(handleChangeID);
   };
 
   const handleSelectDate = selectedDate => {

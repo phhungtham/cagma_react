@@ -4,8 +4,12 @@ import CheckBox from '@common/components/atoms/Checkbox';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 
-const AdditionalInfoSection = () => {
+import { CommonCodeFieldName, SignUpSelectType } from '../constants';
+
+const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
   const { control, watch, setValue } = useFormContext();
+
+  const [notSin] = watch(['notSin']);
 
   return (
     <div className="form__section">
@@ -14,7 +18,9 @@ const AdditionalInfoSection = () => {
         render={({ field }) => (
           <Dropdown
             label="Nationality"
-            {...field}
+            onFocus={() => onOpenSelectBottom(SignUpSelectType.NATIONALITY)}
+            options={commonCode[CommonCodeFieldName.COUNTRY]}
+            {...field} //TODO: Disabled if there is has value from onespan
           />
         )}
         control={control}
@@ -35,7 +41,8 @@ const AdditionalInfoSection = () => {
           <Input
             label="SIN Number"
             helperText="Your SIN will be used only for account opening."
-            {...field}
+            disabled={!!notSin}
+            {...field} //TODO: open customer keyboard plugin
           />
         )}
         control={control}
@@ -51,7 +58,7 @@ const AdditionalInfoSection = () => {
           />
         )}
         control={control}
-        name="alreadySin"
+        name="notSin"
       />
     </div>
   );

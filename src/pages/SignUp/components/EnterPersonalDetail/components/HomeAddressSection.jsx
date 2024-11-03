@@ -3,7 +3,9 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 
-const HomeAddressSection = () => {
+import { CommonCodeFieldName, SignUpSelectType } from '../constants';
+
+const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
   const { control, watch, setValue } = useFormContext();
 
   return (
@@ -13,6 +15,8 @@ const HomeAddressSection = () => {
         render={({ field }) => (
           <Dropdown
             label="Country"
+            onFocus={() => onOpenSelectBottom(SignUpSelectType.COUNTRY)}
+            options={commonCode[CommonCodeFieldName.COUNTRY]}
             {...field}
           />
         )}
@@ -33,6 +37,8 @@ const HomeAddressSection = () => {
         render={({ field }) => (
           <Input
             label="APT#/SUITE#"
+            type="number"
+            inputMode="numeric"
             {...field}
           />
         )}
@@ -43,6 +49,8 @@ const HomeAddressSection = () => {
         render={({ field }) => (
           <Input
             label="Street#"
+            type="number"
+            inputMode="numeric"
             {...field}
           />
         )}
@@ -83,6 +91,8 @@ const HomeAddressSection = () => {
         render={({ field }) => (
           <Dropdown
             label="Province"
+            onFocus={() => onOpenSelectBottom(SignUpSelectType.PROVINCE)}
+            options={commonCode[CommonCodeFieldName.PROVINCE]}
             {...field}
           />
         )}

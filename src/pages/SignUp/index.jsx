@@ -34,6 +34,7 @@ const SignUp = () => {
   const [currentStep, setCurrentStep] = useState();
   const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
+  const [userId, setUserId] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -81,7 +82,8 @@ const SignUp = () => {
     setCurrentStep(SignUpStep.CREATE_ID);
   };
 
-  const handleCreateID = () => {
+  const handleCreateID = id => {
+    setUserId(id);
     setCurrentStep(SignUpStep.CREATE_PASSWORD);
   };
 
@@ -165,7 +167,7 @@ const SignUp = () => {
   }, []);
 
   return (
-    <SignUpContext.Provider value={{ deviceId }}>
+    <SignUpContext.Provider value={{ deviceId, userId }}>
       {showLoading && <Spinner />}
       <div className="sign-up__wrapper page__wrapper">
         {currentStep === SignUpStep.VERIFY_ID && <SignUpVerifyID onConfirm={handleConfirmVerifyID} />}
@@ -192,7 +194,7 @@ const SignUp = () => {
         )}
         {currentStep === SignUpStep.EKYC_IN_PROGRESS && <EKYCInProgress onConfirm={handleConfirmEKYC} />}
         {currentStep === SignUpStep.ENTER_PERSONAL_DETAIL && (
-          <EnterPersonalDetail onSubmit={handleSubmitPersonalDetail} />
+          <EnterPersonalDetail onConfirm={handleSubmitPersonalDetail} />
         )}
         {currentStep === SignUpStep.EKYC_RESULT && (
           <EKYCResult

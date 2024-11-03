@@ -67,12 +67,13 @@ const EKYCInProgress = ({ onConfirm }) => {
       cus_fst_nm: firstName,
       cus_last_nm: lastName,
       e_sgn_trx_id: packageId,
-      // e_sgn_trx_id: 'gb8VlErDk47oUJRURSFO7XwXspQ=',
+      // e_sgn_trx_id: 'dSnooW1bbYqt4puzYtJRfd3bsM4=',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep3, payload);
     setShowLoading(false);
     if (isSuccess) {
       const { confm_proc_s: processingStatus } = data || {};
+      //TODO: Handle other case
       if (processingStatus === '30') {
         setShowRetryBtn(true);
         setShowToast({
@@ -80,8 +81,10 @@ const EKYCInProgress = ({ onConfirm }) => {
           message: 'Identity verification is incomplete. Please check again.',
           type: 'info',
         });
-        onConfirm();
         //TODO: Just for test
+        // onConfirm();
+      } else if (processingStatus === '10') {
+        onConfirm();
       }
     } else {
       return setAlert({

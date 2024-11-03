@@ -12,6 +12,8 @@ const ContactInfoSection = () => {
         render={({ field }) => (
           <Input
             label="Cell Number"
+            type="number"
+            inputMode="numeric"
             {...field}
           />
         )}
@@ -22,6 +24,7 @@ const ContactInfoSection = () => {
         render={({ field }) => (
           <Input
             label="E-mail Address"
+            disabled
             {...field}
           />
         )}

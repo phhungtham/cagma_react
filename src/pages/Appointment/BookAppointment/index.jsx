@@ -5,7 +5,7 @@ import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
 import { apiCall } from '@shared/api';
-import { convertObjectBaseMappingFields } from '@utilities/convert';
+import { buildRequestPayloadBaseMappingFields } from '@utilities/convert';
 import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -33,11 +33,7 @@ const BookAppointment = ({ translate: t }) => {
 
   const handleBookAppointment = async formValues => {
     setShowLoading(true);
-    const request = convertObjectBaseMappingFields(
-      formValues,
-      bookAppointmentFormMapFields,
-      true /* ignoreRemainingFields*/
-    );
+    const request = buildRequestPayloadBaseMappingFields(formValues, bookAppointmentFormMapFields);
     request.apint_guest_chk = formValues.customerStatusType === CustomerStatusType.EXISTING ? 'N' : 'Y';
     request.apint_visit_chk = type === BookAppointmentType.IN_PERSON ? 'Y' : 'N';
     request.apint_brno = branchNo;

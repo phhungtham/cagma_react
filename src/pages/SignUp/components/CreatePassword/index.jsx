@@ -1,42 +1,65 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { FillEyeOffIcon, FillEyeOnIcon } from '@assets/icons';
+import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
+import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
-import { isDevelopmentEnv } from '@common/constants/common';
+import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
-import showSecureKeyboardChar from '@utilities/gmSecure/showSecureKeyboardChar';
+import useApi from '@hooks/useApi';
+import { SignUpContext } from '@pages/SignUp';
+import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
+import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
+import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
 
 import { createIdFormSchema } from './schema';
 import './styles.scss';
 
 const SignUpCreatePassword = ({ onConfirm }) => {
+  const { deviceId, userId } = useContext(SignUpContext);
+  const [ekycPluginInfo, setEkycPluginInfo] = useState({});
+  const [showLoading, setShowLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    isShow: false,
+    title: '',
+    content: '',
+  });
+  const [currentFieldName, setCurrentFieldName] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { requestApi } = useApi();
   const {
     control,
     setValue,
     watch,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(createIdFormSchema),
   });
 
-  const handleChangeID = value => {
-    console.log('value :>> ', value);
+  const handleCloseAlert = () => {
+    setAlert({
+      ...alert,
+      isShow: false,
+    });
+  };
+
+  const handleChangePassword = result => {
+    const { uniqueValue: value, e2e } = result;
+    setValue(currentFieldName, value, { shouldValidate: true });
+    setValue('e2e', e2e, { shouldValidate: true });
   };
 
   const handleOpenSecurityKeyboard = fieldName => {
-    if (isDevelopmentEnv) {
-      setValue(fieldName, 'password');
-    }
-    showSecureKeyboardChar(handleChangeID);
+    setCurrentFieldName(fieldName);
+    showCertificationChar(handleChangePassword);
   };
 
   const toggleShowPassword = () => {
@@ -47,14 +70,43 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const handleSubmitForm = values => {
-    //TODO: For test
-    onConfirm(values);
+  const handleSubmitForm = async values => {
+    setShowLoading(true);
+    const payload = {
+      uuid_v: deviceId,
+      cus_email: ekycPluginInfo.email,
+      user_id: userId,
+      userscno: `${values.password}${values.e2e}`, //TODO: Check e2e return from plugin
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.registerElectricFinancial, payload);
+    setShowLoading(false);
+    if (!isSuccess) {
+      //TODO: Check response
+      setEkycInfo({
+        ...ekycPluginInfo,
+        userId,
+      });
+      onConfirm();
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
   };
+
+  const getEkycInfoCallback = result => {
+    setEkycPluginInfo(result);
+  };
+
+  useEffect(() => {
+    getEkycInfo(getEkycInfoCallback);
+  }, []);
 
   return (
     <>
       <div>
+        {showLoading && <Spinner />}
         <Header
           title="Sign up"
           onClick={moveBack}
@@ -120,6 +172,18 @@ const SignUpCreatePassword = ({ onConfirm }) => {
           />
         </div>
       </div>
+      <Alert
+        isCloseButton={false}
+        isShowAlert={alert.isShow}
+        title={alert.title}
+        subtitle={alert.content}
+        onClose={handleCloseAlert}
+        textAlign="left"
+        firstButton={{
+          onClick: handleCloseAlert,
+          label: 'Confirm',
+        }}
+      />
     </>
   );
 };

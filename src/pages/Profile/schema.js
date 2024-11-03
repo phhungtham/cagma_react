@@ -1,6 +1,5 @@
+import { employmentValuesDisableOccupation } from '@common/constants/account';
 import * as Yup from 'yup';
-
-import { employmentValuesDisableOccupation } from './constants';
 
 export const changeProfileSchema = Yup.object().shape({
   email: Yup.string().required('Required field').email('Please check your e-mail address'),
