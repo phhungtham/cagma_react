@@ -266,11 +266,10 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
 
   const requestGetCardCount = async () => {
     setShowLoading(true);
-    //TODO: Update using other endpoint. CACA009
-    const { data, error, isSuccess } = await requestApi(endpoints.getCardCount);
+    const { data, error, isSuccess } = await requestApi(endpoints.getCardList);
     setShowLoading(false);
     if (isSuccess) {
-      if (data && data.count === 0) {
+      if (data && !data.grid_cnt_01) {
         setValue('debitCardIssuance', true, { shouldValidate: true });
       }
     } else {

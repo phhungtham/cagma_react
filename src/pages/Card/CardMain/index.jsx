@@ -31,7 +31,7 @@ const CardMain = ({ translate: t }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.getCardList);
     setShowLoading(false);
     if (isSuccess) {
-      const { acdnt_cnt: accidentType, r_GIBD2100_1Vo: cardList } = data || {};
+      const { r_GIBD2100_1Vo: cardList } = data || {};
       if (cardList?.length) {
         const {
           dbcd_k_display: typeOfCard,
@@ -41,6 +41,7 @@ const CardMain = ({ translate: t }) => {
           cashcd_vldt_dt_display: expireDate,
           day_cashcd_use_lmt_amt_display: dailyWithdrawalLimit,
           day_pos_use_lmt_amt_display: dailyPOSLimit,
+          acdnt_cnt: accidentType,
         } = cardList[0];
         setCard({
           type: Number(accidentType),
