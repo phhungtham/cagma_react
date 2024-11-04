@@ -4,6 +4,7 @@ import Tooltip from '@common/components/atoms/Tooltip';
 import SelectDateBottom from '@common/components/organisms/bottomSheets/SelectDateBottom';
 import SelectTimeBottom from '@common/components/organisms/bottomSheets/SelectTimeBottom';
 import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBottom';
+import { selectType } from '@common/constants/dateTime';
 
 import './styles.scss';
 
@@ -95,13 +96,14 @@ const DemoComponent = () => {
           minYear="1980"
           onClose={() => setSelectDate(prev => ({ ...prev, open: false }))}
           onDateChange={date => {
+            debugger;
             setSelectDate({
               date,
               open: false,
             });
           }}
           defaultDate={selectDate.date}
-          type="MM/YYYY"
+          type={selectType.year}
         />
 
         <SelectTimeBottom

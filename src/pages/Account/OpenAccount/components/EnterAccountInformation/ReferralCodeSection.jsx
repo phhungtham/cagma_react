@@ -77,7 +77,7 @@ const ReferralCodeSection = ({ productCode }) => {
                   render={({ field }) => (
                     <CheckBox
                       size="large"
-                      label="RRSP contribution limit is 18% of earned income you reported on your tax return in the previous year up to the maximum annual contribution amount set by CRA. However, contribution room can be carried forward for any past unused contributions from previous years."
+                      label="I have checked my RRSP contribution room"
                       {...field}
                       checked={field.value}
                     />
@@ -85,9 +85,8 @@ const ReferralCodeSection = ({ productCode }) => {
                   control={control}
                   name="rrspTerm"
                 />
-                {/* TODO: Figma not defined. Check to get content */}
                 <Tooltip
-                  content="If a debit card is issued, it will be sent to the stored customer address."
+                  content="RRSP contribution limit is 18% of earned income you reported on your tax return in the previous year up to the maximum annual contribution amount set by CRA. However, contribution room can be carried forward for any past unused contributions from previous years."
                   placement="bottom_center"
                 >
                   <div className="item__tooltip">

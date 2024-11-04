@@ -7,6 +7,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import EnterAmountBottom from '@common/components/organisms/bottomSheets/EnterAmountBottom';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
+import SelectDateBottom from '@common/components/organisms/bottomSheets/SelectDateBottom';
 import SelectFrequencyBottom from '@common/components/organisms/bottomSheets/SelectFrequencyBottom';
 import { frequencyTypeOptions } from '@common/components/organisms/bottomSheets/SelectFrequencyBottom/constants';
 import SelectTermsBottom from '@common/components/organisms/bottomSheets/SelectTermsBottom';
@@ -15,6 +16,7 @@ import { AccountType } from '@common/constants/account';
 import { FrequencyType } from '@common/constants/bottomsheet';
 import { getIntendedUseAccountCode } from '@common/constants/commonCode';
 import { CurrencyCode } from '@common/constants/currency';
+import { selectType } from '@common/constants/dateTime';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { PeriodUnitCodeDisplay, ProductCode, ProductUnitCodeWithTermType } from '@common/constants/product';
@@ -23,6 +25,7 @@ import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatCurrencyDisplay } from '@utilities/currency';
 import { moveBack } from '@utilities/index';
+import dayjs from 'dayjs';
 
 import { UnitCodeWithPeriodType } from '../../constants';
 import useOpenAccount from '../../hooks/useOpenAccount';
@@ -39,6 +42,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   const [showSelectTermsBottom, setShowSelectTermsBottom] = useState(false);
   const [showEnterAmountBottom, setShowEnterAmountBottom] = useState(false);
   const [showSelectFrequencyBottom, setShowSelectFrequencyBottom] = useState(false);
+  const [showTaxYearBottom, setShowTaxYearBottom] = useState(false);
   const [showIntendedUseAccountBottom, setShowIntendedUseAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [showMoreInfo, setShowMoreInfo] = useState(false);
@@ -66,6 +70,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   const selectFrequencyOptions = frequencyTypeOptions.filter(item => item.value === FrequencyType.MONTHLY);
 
   const isInstallmentSaving = productCode === ProductCode.E_INSTALLMENT_SAVING;
+  const isRRSPESaving = productCode === ProductCode.RRSP_E_SAVINGS;
   const showTerms = productType !== DepositSubjectClass.REGULAR_SAVING;
 
   const methods = useForm({
@@ -82,16 +87,16 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     formState: { errors, isValid },
   } = methods;
 
-  const [amount, intendedUseAccountDisplay, term, paymentDate, interestRateDisplay, tfsaTerm, maturityDateDisplay] =
-    watch([
-      'amount',
-      'intendedUseAccountDisplay',
-      'term',
-      'paymentDate',
-      'interestRateDisplay',
-      'tfsaTerm',
-      'maturityDateDisplay',
-    ]);
+  console.log('errors :>> ', errors);
+
+  const [amount, intendedUseAccountDisplay, term, paymentDate, maturityDateDisplay, taxYear] = watch([
+    'amount',
+    'intendedUseAccountDisplay',
+    'term',
+    'paymentDate',
+    'maturityDateDisplay',
+    'taxYear',
+  ]);
 
   const onOpenMyAccountBottom = () => {
     setShowMyAccountBottom(true);
@@ -109,8 +114,12 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     setShowSelectFrequencyBottom(true);
   };
 
-  const onOpenIntendedUseAccountBottom = () => {
+  const handleOpenIntendedUseAccountBottom = () => {
     setShowIntendedUseAccountBottom(true);
+  };
+
+  const handleOpenTaxYearBottom = () => {
+    setShowTaxYearBottom(true);
   };
 
   const handleSelectAccount = account => {
@@ -140,8 +149,13 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   };
 
   const handleSelectFrequency = value => {
-    setValue('paymentDate', value?.value);
+    setValue('paymentDate', value?.value, { shouldValidate: true });
     setShowSelectFrequencyBottom(false);
+  };
+
+  const handleChangeTaxYear = year => {
+    setValue('taxYear', year, { shouldValidate: true });
+    setShowTaxYearBottom(false);
   };
 
   const onSubmitOpenAccount = values => {
@@ -179,11 +193,12 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     let showMoreInfo = false;
     if (productType === DepositSubjectClass.REGULAR_SAVING) {
       showMoreInfo = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-    }
-    if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
+      if (productCode === ProductCode.RRSP_E_SAVINGS && showMoreInfo) {
+        showMoreInfo = !!taxYear;
+      }
+    } else if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
       showMoreInfo = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-    }
-    if (productType === DepositSubjectClass.INSTALLMENT_SAVING) {
+    } else if (productType === DepositSubjectClass.INSTALLMENT_SAVING) {
       showMoreInfo = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount && !!paymentDate;
     }
     setShowMoreInfo(showMoreInfo);
@@ -208,6 +223,8 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
         const defaultAccount = filteredAccounts.find(account => String(account.base_ac_t) === '1');
         if (defaultAccount) {
           handleSelectAccount(defaultAccount);
+        } else {
+          handleSelectAccount(filteredAccounts[0]);
         }
       }
       setAccounts(filteredAccounts);
@@ -302,7 +319,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
 
   useEffect(() => {
     checkShowThirdPartyForm();
-  }, [amount, intendedUseAccountDisplay, selectedAccount, term, paymentDate]);
+  }, [amount, intendedUseAccountDisplay, selectedAccount, term, paymentDate, taxYear]);
 
   useEffect(() => {
     if (showIntendedUseAccountBottom && !intendedUseAccountOptions) {
@@ -369,10 +386,20 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                     label="Intended use of account"
                     placeholder="Select"
                     align="vertical"
-                    onClick={onOpenIntendedUseAccountBottom}
+                    onClick={handleOpenIntendedUseAccountBottom}
                     value={intendedUseAccountDisplay}
                   />
                 </section>
+                {isRRSPESaving && (
+                  <section>
+                    <TextDropdown
+                      label="Taxation Year"
+                      placeholder="Select"
+                      onClick={handleOpenTaxYearBottom}
+                      value={taxYear} //TODO: Handle logic only select year in 60 days start of year
+                    />
+                  </section>
+                )}
                 <section>
                   <TextDropdown
                     label="From"
@@ -473,6 +500,19 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
               value: paymentDate,
             }}
             typeOptions={selectFrequencyOptions}
+          />
+        )}
+
+        {showTaxYearBottom && (
+          <SelectDateBottom
+            open={showTaxYearBottom}
+            maxYear={dayjs().year()}
+            minYear={dayjs().subtract(1, 'year').year()}
+            onClose={() => setShowTaxYearBottom(false)}
+            onDateChange={handleChangeTaxYear}
+            defaultDate={taxYear}
+            type={selectType.year}
+            title="Select Year"
           />
         )}
       </div>

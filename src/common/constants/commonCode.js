@@ -12,6 +12,7 @@ export const getCardAreaProvinceCode = 'ca_cashcd_use_regn_d';
 export const getMaturityOption = 'dep_due_rnw_t';
 export const getTermOptions = 'intrt_trm_c';
 export const getCustomerTitleName = 'cus_ttl_nm';
+export const tinUnregisterReason = 'tin_un_regis_rsn_c';
 
 export const EmploymentMap = {
   Employed: '2',

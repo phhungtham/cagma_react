@@ -5,6 +5,7 @@ import { moveBack } from '@utilities/index';
 
 import './styles.scss';
 
+//TODO: Handle logic
 const SignUpCreatePasscode = ({ onConfirm }) => {
   const handleSubmitForm = () => {
     onConfirm();

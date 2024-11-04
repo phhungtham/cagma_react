@@ -206,6 +206,7 @@ const useOpenAccount = ({ product }) => {
       relationship: tpd_cus_relt_ctt,
       referralCode: dep_cvsr_bnkerno,
       debitCardIssuance: credit_chk,
+      taxYear: tax_calc_stnd_dt,
       apply_intrt,
     } = values || {};
     const payload = {
@@ -236,6 +237,7 @@ const useOpenAccount = ({ product }) => {
       dep_sjt_class,
       dep_ac_usag_d,
       apply_intrt,
+      tax_calc_stnd_dt,
     };
     const { data, error, isSuccess } = await requestPreOpenBankingAccount(payload);
     if (isSuccess) {

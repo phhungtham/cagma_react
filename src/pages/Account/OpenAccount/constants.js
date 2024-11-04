@@ -1,5 +1,10 @@
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { ProductCode, ProductPeriodUnitCode } from '@common/constants/product';
+import {
+  selectTermsByDateOptions,
+  selectTermsByLongDateOptions,
+  selectTermsByMonthOptions,
+} from '@common/constants/terms';
 
 export const OPEN_ACCOUNT_STEP = {
   VIEW_TERMS: 'viewTerms',
@@ -104,3 +109,13 @@ export const ignoreCheckDTRProductCodes = [
   ProductCode.TFSA_E_SAVINGS,
   ProductCode.RRSP_E_SAVINGS,
 ];
+
+export const TermOptionsWithProductCode = {
+  [ProductCode.E_POWER_TERM_DEPOSIT]: selectTermsByMonthOptions,
+  [ProductCode.E_GREEN_TERM_DEPOSIT]: selectTermsByDateOptions,
+  [ProductCode.E_LONG_TERM_GIC]: selectTermsByMonthOptions,
+  [ProductCode.E_LONG_MATURITY]: selectTermsByMonthOptions,
+  [ProductCode.E_SHORT_TERM_GIC]: selectTermsByDateOptions,
+  [ProductCode.TFSA_E_GIC]: selectTermsByLongDateOptions,
+  [ProductCode.RRSP_E_GIC]: selectTermsByLongDateOptions,
+};

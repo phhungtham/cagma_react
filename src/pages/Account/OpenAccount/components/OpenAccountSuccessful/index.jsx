@@ -12,6 +12,7 @@ import './styles.scss';
 
 const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) => {
   const { creditChecked, openedAccountNumber } = openAccountInfo || {};
+
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
 
   const onClickViewAccount = () => {
@@ -27,6 +28,10 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) 
     if (menuCode) {
       moveNext(menuCode, { param: accountNumberParam });
     }
+  };
+
+  const handleNavigateAccountActivity = () => {
+    moveNext(MENU_CODE.ACCOUNT_ACTIVITY_BANKING);
   };
 
   const onClickNavigateHome = () => {
@@ -66,13 +71,13 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) 
         {showRRSPButton && (
           <>
             <div className="divider__item__solid" />
-            <div className="flex-center mt-8">
+            <div className="flex-center rrsp-button mt-8">
               <IconButton
                 size="lg"
                 type="circle"
                 label="You can Check RRSP Contribution Receipt on the Account activity page"
                 icon={<img src={PaymentIcon} />}
-                onClick={() => {}} //TODO: Handle navigate to account activity
+                onClick={handleNavigateAccountActivity}
               />
             </div>
           </>

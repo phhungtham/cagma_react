@@ -26,7 +26,12 @@ import DTR from './components/DTR';
 import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
-import { ignoreCheckDTRProductCodes, OPEN_ACCOUNT_STEP, TermUnitCodeDisplay } from './constants';
+import {
+  ignoreCheckDTRProductCodes,
+  OPEN_ACCOUNT_STEP,
+  TermOptionsWithProductCode,
+  TermUnitCodeDisplay,
+} from './constants';
 import useOpenAccount from './hooks/useOpenAccount';
 import './style.scss';
 
@@ -34,7 +39,7 @@ const OpenAccount = ({ translate: t }) => {
   const productInfo = useSelector(nativeParamsSelector);
 
   const [currentStep, setCurrentStep] = useState();
-  const [isCheckedFirstTime, setIsCheckedFirstTime] = useState(false);
+  const [DTRInfo, setDTRInfo] = useState();
   const [showCustomerInfoBottom, setShowCustomerInfoBottom] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [openAccountSuccessInfo, setOpenAccountSuccessInfo] = useState();
@@ -65,6 +70,10 @@ const OpenAccount = ({ translate: t }) => {
     prdt_psb_trm_unit_c: termUnitCode,
   } = productInfo || {};
 
+  const handleNavigateViewTerm = () => {
+    setCurrentStep(OPEN_ACCOUNT_STEP.VIEW_TERMS);
+  };
+
   const onSubmitAgreeTerms = () => {
     setShowCustomerInfoBottom(true);
   };
@@ -78,6 +87,21 @@ const OpenAccount = ({ translate: t }) => {
     setCurrentStep(OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION);
   };
 
+  const defineTermOptions = termResponseOptions => {
+    let options = [];
+    if (termResponseOptions) {
+      options = termResponseOptions.map(item => {
+        return {
+          label: item.key,
+          value: item.key.replace(/\D/g, ''),
+        };
+      });
+    } else {
+      options = TermOptionsWithProductCode[productCode];
+    }
+    setTermOptions(options);
+  };
+
   const requestGetCommonCode = async () => {
     setShowLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
@@ -88,20 +112,16 @@ const OpenAccount = ({ translate: t }) => {
     setShowLoading(false);
     if (isSuccess) {
       const termOptionsKey = `${getTermOptions}_${productCode}`;
-      const { state_c: provinces, dep_due_rnw_t: maturityOptions } = data;
-      const termResponseOptions = data?.[termOptionsKey];
-      if (termResponseOptions) {
-        const convertedTerms = termResponseOptions.map(item => {
-          return {
-            label: item.key,
-            value: item.key.replace(/\D/g, ''),
-          };
-        });
-        setTermOptions(convertedTerms);
-      }
+      const {
+        [getProvinceCode]: provinces,
+        [getMaturityOption]: maturityOptions,
+        [termOptionsKey]: termResponseOptions,
+      } = data;
+
       const convertedProvince = commonCodeDataToOptions(provinces);
       setProvinceOptions(convertedProvince);
       setMaturityOptions(maturityOptions);
+      defineTermOptions(termResponseOptions);
       return data;
     } else {
       setAlert({
@@ -191,6 +211,7 @@ const OpenAccount = ({ translate: t }) => {
         trx_amt_display: amount,
         trx_ccy_c: currency,
         dep_acno_display: acNo,
+        dep_acno: openedAccountNumber,
         ctrt_trm_cnt: term,
         ctrt_trm_d: termUnitCode,
         due_date_display: maturityDate,
@@ -200,6 +221,7 @@ const OpenAccount = ({ translate: t }) => {
       setOpenAccountSuccessInfo({
         productName,
         acNo,
+        openedAccountNumber,
         interestRate: `${ntfct_intrt_display}% APR`,
         amount: `${amount} ${currency}`,
         term: `${term} ${TermUnitCodeDisplay[termUnitCode]}`,
@@ -227,6 +249,7 @@ const OpenAccount = ({ translate: t }) => {
         withdraw_acno_display: depositFrom,
         ntfct_intrt_display,
         dep_acno_display: acNo,
+        dep_acno: openedAccountNumber,
         trx_amt_display: amount,
         trx_ccy_c: currency,
       } = data;
@@ -234,6 +257,7 @@ const OpenAccount = ({ translate: t }) => {
         creditChecked: values.debitCardIssuance,
         productName,
         acNo,
+        openedAccountNumber,
         interestRate: `${ntfct_intrt_display}% APR`,
         amount: `${amount} ${currency}`,
         depositFrom,
@@ -262,10 +286,6 @@ const OpenAccount = ({ translate: t }) => {
   };
 
   const checkUserRegisterDTR = async () => {
-    if (isCheckedFirstTime) {
-      return;
-    }
-    setIsCheckedFirstTime(true);
     if (ignoreCheckDTRProductCodes.includes(productCode)) {
       return setCurrentStep(OPEN_ACCOUNT_STEP.VIEW_TERMS);
     }
@@ -274,6 +294,7 @@ const OpenAccount = ({ translate: t }) => {
     setShowLoading(false);
     if (isSuccess) {
       const { dtr_yn } = data;
+      setDTRInfo(data);
       if (dtr_yn === 'Y') {
         setCurrentStep(OPEN_ACCOUNT_STEP.VIEW_TERMS);
       } else {
@@ -309,6 +330,8 @@ const OpenAccount = ({ translate: t }) => {
             productName={prdt_c_display}
             productCode={productCode}
             setAlert={setAlert}
+            DTRInfo={DTRInfo}
+            onConfirm={handleNavigateViewTerm}
           />
         )}
         {currentStep === OPEN_ACCOUNT_STEP.VIEW_TERMS && (
