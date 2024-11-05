@@ -48,7 +48,7 @@ export const ProductCode = {
   E_LONG_MATURITY: '5117030041',
   TFSA_E_GIC: '5117030042',
   RRSP_E_GIC: '5117030043',
-  CHEQUING: '5117000008',
+  CHEQUING: '5117020029',
 };
 
 export const RequiredAccountBaseProductCode = {

@@ -70,6 +70,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
 
   const selectFrequencyOptions = frequencyTypeOptions.filter(item => item.value === FrequencyType.MONTHLY);
 
+  const isChequing = productCode === ProductCode.CHEQUING;
   const isInstallmentSaving = productCode === ProductCode.E_INSTALLMENT_SAVING;
   const isRRSPESaving = productCode === ProductCode.RRSP_E_SAVINGS;
   const showTerms = productType !== DepositSubjectClass.REGULAR_SAVING;
@@ -287,6 +288,9 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     const { data, error, isSuccess } = await requestApi(endpoints.getCardList);
     setShowLoading(false);
     if (isSuccess) {
+      if (productCode === ProductCode.CHEQUING) {
+        requestGetInterestRate(); //Get interest rate for chequing account after get card count
+      }
       if (data && !data.grid_cnt_01) {
         setValue('debitCardIssuance', true, { shouldValidate: true });
       }
@@ -313,13 +317,17 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   }, [productCode]);
 
   useEffect(() => {
-    if ([ProductCode.E_SAVING].includes(productCode) && showMoreInfo) {
+    if ([ProductCode.E_SAVING, ProductCode.CHEQUING].includes(productCode) && showMoreInfo) {
       requestGetCardCount();
     }
   }, [showMoreInfo]);
 
   useEffect(() => {
-    checkShowThirdPartyForm();
+    if (productCode === ProductCode.CHEQUING) {
+      setShowMoreInfo(true);
+    } else {
+      checkShowThirdPartyForm();
+    }
   }, [amount, intendedUseAccountDisplay, selectedAccount, term, paymentDate, taxYear]);
 
   useEffect(() => {
@@ -329,7 +337,9 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   }, [showIntendedUseAccountBottom]);
 
   useEffect(() => {
-    requestGetAccounts();
+    if (productCode !== ProductCode.CHEQUING) {
+      requestGetAccounts();
+    }
   }, []);
 
   //TODO: Handle layout for Chequing account
@@ -346,6 +356,16 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             <div className="enter-account__form">
               <div className="page__container">
                 <h1 className="page__title">{productName || lcl_prdt_nm}</h1>
+                {isChequing && (
+                  <section>
+                    <TextDropdown
+                      label="Number of Transactions"
+                      placeholder="Select"
+                      value="Unlimited"
+                      disabled
+                    />
+                  </section>
+                )}
                 {showTerms && (
                   <section>
                     <TextDropdown
@@ -363,15 +383,17 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                     </TextDropdown>
                   </section>
                 )}
+                {!isChequing && (
+                  <section>
+                    <TextDropdown
+                      label={isInstallmentSaving ? 'Monthly Installment  Amount' : 'Amount'}
+                      placeholder={`${amountMinDisplay} ~ ${amountMaxDisplay} ${productCurrencyCode}`}
+                      onClick={onOpenEnterAmountBottom}
+                      value={amount ? `${formatCurrencyDisplay(amount)} ${productCurrencyCode}` : undefined}
+                    />
+                  </section>
+                )}
 
-                <section>
-                  <TextDropdown
-                    label={isInstallmentSaving ? 'Monthly Installment  Amount' : 'Amount'}
-                    placeholder={`${amountMinDisplay} ~ ${amountMaxDisplay} ${productCurrencyCode}`}
-                    onClick={onOpenEnterAmountBottom}
-                    value={amount ? `${formatCurrencyDisplay(amount)} ${productCurrencyCode}` : undefined}
-                  />
-                </section>
                 {isInstallmentSaving && (
                   <section>
                     <TextDropdown
@@ -382,15 +404,18 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                     />
                   </section>
                 )}
-                <section>
-                  <TextDropdown
-                    label="Intended use of account"
-                    placeholder="Select"
-                    align="vertical"
-                    onClick={handleOpenIntendedUseAccountBottom}
-                    value={intendedUseAccountDisplay}
-                  />
-                </section>
+                {!isChequing && (
+                  <section>
+                    <TextDropdown
+                      label="Intended use of account"
+                      placeholder="Select"
+                      align="vertical"
+                      onClick={handleOpenIntendedUseAccountBottom}
+                      value={intendedUseAccountDisplay}
+                    />
+                  </section>
+                )}
+
                 {isRRSPESaving && (
                   <section>
                     <TextDropdown
@@ -401,20 +426,23 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                     />
                   </section>
                 )}
-                <section>
-                  <TextDropdown
-                    label="From"
-                    placeholder="My Account"
-                    onClick={onOpenMyAccountBottom}
-                    value={selectedAccount?.dep_ac_alnm_nm}
-                  >
-                    {selectedAccount ? (
-                      <div className="enter-account__account-number">{selectedAccount?.lcl_ac_no_display}</div>
-                    ) : (
-                      <></>
-                    )}
-                  </TextDropdown>
-                </section>
+                {!isChequing && (
+                  <section>
+                    <TextDropdown
+                      label="From"
+                      placeholder="My Account"
+                      onClick={onOpenMyAccountBottom}
+                      value={selectedAccount?.dep_ac_alnm_nm}
+                    >
+                      {selectedAccount ? (
+                        <div className="enter-account__account-number">{selectedAccount?.lcl_ac_no_display}</div>
+                      ) : (
+                        <></>
+                      )}
+                    </TextDropdown>
+                  </section>
+                )}
+
                 {showMoreInfo && (
                   <>
                     <div className="divider__item__solid my-2" />

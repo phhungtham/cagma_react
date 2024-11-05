@@ -4,9 +4,27 @@ import * as Yup from 'yup';
 import { requiredTermProductCodes } from '../../constants';
 
 export const openAccountSchema = Yup.object().shape({
-  accountNo: Yup.string().required('Required field'), //acno
-  amount: Yup.string().required('Required field'), // trx_amt
-  intendedUseAccount: Yup.string().required('Required field'), //dep_ac_usag_d
+  accountNo: Yup.string()
+    .required('Required field')
+    .when('productCode', {
+      is: ProductCode.CHEQUING,
+      then: schema => schema.notRequired(),
+      otherwise: schema => schema.required(),
+    }), //acno
+  amount: Yup.string()
+    .required('Required field')
+    .when('productCode', {
+      is: ProductCode.CHEQUING,
+      then: schema => schema.notRequired(),
+      otherwise: schema => schema.required(),
+    }), // trx_amt
+  intendedUseAccount: Yup.string()
+    .required('Required field')
+    .when('productCode', {
+      is: ProductCode.CHEQUING,
+      then: schema => schema.notRequired(),
+      otherwise: schema => schema.required(),
+    }), //dep_ac_usag_d
   debitCardIssuance: Yup.boolean().nullable(), //credit_chk
   thirdPartyChecked: Yup.string().oneOf(['Y', 'N']).nullable(), //tpd_chk
   productCode: Yup.string(),

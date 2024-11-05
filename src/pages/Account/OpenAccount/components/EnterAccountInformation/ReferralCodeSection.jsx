@@ -7,10 +7,13 @@ import Tooltip from '@common/components/atoms/Tooltip';
 import { ProductCode } from '@common/constants/product';
 
 const ReferralCodeSection = ({ productCode }) => {
-  const isShowCheckboxList = [ProductCode.E_SAVING, ProductCode.TFSA_E_SAVINGS, ProductCode.RRSP_E_SAVINGS].includes(
-    productCode
-  );
-  const isShowDebitCardCheckbox = productCode === ProductCode.E_SAVING;
+  const isShowCheckboxList = [
+    ProductCode.E_SAVING,
+    ProductCode.TFSA_E_SAVINGS,
+    ProductCode.RRSP_E_SAVINGS,
+    ProductCode.CHEQUING,
+  ].includes(productCode);
+  const isShowDebitCardCheckbox = [ProductCode.E_SAVING, ProductCode.CHEQUING].includes(productCode);
   const isShowTFSACheckbox = productCode === ProductCode.TFSA_E_SAVINGS;
   const isShowRRSPCheckbox = productCode === ProductCode.RRSP_E_SAVINGS;
   const { control } = useFormContext();

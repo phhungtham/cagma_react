@@ -146,6 +146,7 @@ const AppointmentHome = ({ translate: t }) => {
   }, [appointmentData]);
 
   useEffect(() => {
+    //TODO: Ignore call API if not logged
     sendRequestGetAppointments({ inq_cnt: maxAppointmentDisplay });
   }, []);
 

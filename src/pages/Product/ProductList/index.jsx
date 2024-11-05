@@ -89,19 +89,34 @@ const ProductList = () => {
       accountList = await getAccountsByProductType();
     }
     let isExistESavingAccount = false;
+    let isExistChequingAccount = false;
     const productCode = product.prdt_c;
     if (accountList?.length) {
       //Must to has e-Saving account before create other account
       isExistESavingAccount = accountList.some(account => account.prdt_c === ProductCode.E_SAVING);
     }
-    if (!isExistESavingAccount && productCode !== ProductCode.E_SAVING) {
-      return setAlert({
-        isShow: true,
-        title: 'There is no e-saving account.',
-        content: 'Please open an e-saving account first.',
-      });
+    if (productCode === ProductCode.E_SAVING) {
+      if (!isExistChequingAccount) {
+        return setAlert({
+          isShow: true,
+          title: 'There is no Chequing account.',
+          content: 'Please open an Chequing account first.',
+        });
+      }
+    } else {
+      if (productCode !== ProductCode.CHEQUING && !isExistESavingAccount) {
+        return setAlert({
+          isShow: true,
+          title: 'There is no e-saving account.',
+          content: 'Please open an e-saving account first.',
+        });
+      }
     }
-    if ([ProductCode.E_SAVING, ProductCode.RRSP_E_SAVINGS, ProductCode.TFSA_E_SAVINGS].includes(productCode)) {
+    if (
+      [ProductCode.E_SAVING, ProductCode.RRSP_E_SAVINGS, ProductCode.TFSA_E_SAVINGS, ProductCode.CHEQUING].includes(
+        productCode
+      )
+    ) {
       const isExistAccount = accountList?.some(account => account.prdt_c === productCode);
       if (isExistAccount) {
         return setAlert({
@@ -200,7 +215,7 @@ const ProductList = () => {
                   <div className="product-card__main">
                     <div className="product-card__desc">
                       <div className="product__type">
-                        <span>{product?.prdt_c_display}</span>
+                        <span>{product?.prdt_c_display || product?.lcl_prdt_nm}</span>
                       </div>
                       {/* //TODO: Check css for just render 3 line => Check Figma */}
                       <div className="product__desc">
