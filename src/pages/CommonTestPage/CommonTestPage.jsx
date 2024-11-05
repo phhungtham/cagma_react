@@ -28,6 +28,7 @@ import hideSecureKeyboardNumber from '@utilities/gmSecure/hideSecureKeyboardNumb
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import showSecureKeyboardNumber from '@utilities/gmSecure/showSecureKeyboardNumber';
 import { callPhone, clearHistory, decryptCVC, getLoginInfo, moveBack, moveHome, moveNext } from '@utilities/index';
+import homeAndLogin from '@utilities/navigateScreen/homeAndLogin';
 import { setAuthenticated } from 'shared/features/auth/action';
 
 import { submitLoginRequest } from '../Login/redux/action';
@@ -215,6 +216,7 @@ const CommonTestPage = () => {
         { title: 'Home', label: 'home', action: () => moveHome() },
         { title: 'Move', label: 'move', action: () => moveNext(MENU_CODE.ACCOUNT) },
         { title: 'Sign up test API page', label: 'move', action: () => moveNext(MENU_CODE.SIGN_UP) },
+        { title: 'Home and Login', label: 'homeAndLogin', action: () => homeAndLogin() },
       ],
     },
     {
