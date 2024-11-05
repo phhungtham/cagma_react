@@ -24,6 +24,7 @@ import {
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, changeProfileLabels as labels, menuLabels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
+import { AppCfg } from '@configs/appConfigs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCommonCode from '@hooks/useCommonCode';
 import useReducers from '@hooks/useReducers';
@@ -584,7 +585,7 @@ const ChangeProfile = ({ translate: t }) => {
           open={showViewAgreementTermBottom}
           onClose={() => setShowViewAgreementTermBottom(false)}
           title={t(labels.electronicAgree)}
-          pdfFile={fileUrls.electronicCommunicationAgreement}
+          pdfFile={`${AppCfg.API_ENDPOINT_PORT}${fileUrls.electronicCommunicationAgreement}`}
           hiddenConfirmBtn
         />
       )}

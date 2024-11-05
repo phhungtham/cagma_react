@@ -7,6 +7,7 @@ import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { PeriodUnitCodeDisplay } from '@common/constants/product';
+import { AppCfg } from '@configs/appConfigs';
 import { BannerMapProductCode, DescriptionMapProductCode } from '@pages/Product/ProductList/constants';
 import { moveBack } from '@utilities/index';
 import { appLanguage } from 'app/redux/selector';
@@ -74,8 +75,9 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
 
   useEffect(() => {
     if (productCode) {
-      const userAgreementFile = `${OpenAccountTermFile[productCode]}_agree_en.pdf`;
-      const productFeatureFile = `${OpenAccountTermFile[productCode]}_${currentLanguage || 'en'}.pdf`;
+      const urlPrefix = `${AppCfg.API_ENDPOINT_PORT}${OpenAccountTermFile[productCode]}`;
+      const userAgreementFile = `${urlPrefix}_agree_en.pdf`;
+      const productFeatureFile = `${urlPrefix}_${currentLanguage || 'en'}.pdf`;
       const termConditionConfig = {
         selectAllLabel: 'I fully understand and agree to all of the below',
         options: [
