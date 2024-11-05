@@ -126,6 +126,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
     const { isUSResident, personalTin, country1, tin1, reason1, showCountry2, country2, tin2, reason2, sin } = values;
     const payload = {
       ...DTRInfo,
+      tin_aplct_yn: DTRInfo.dtr_yn === 'Y' ? 1 : 0,
       scscrt_no: sin,
       crs_us_pn_yn: isUSResident,
       psn_tin_no: personalTin || '',
@@ -133,7 +134,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
       tax_paid_nat_c: country1,
       etc_nat_tin_no: tin1,
       tin_un_regis_rsn_c: reason1,
-      // ca_tax_tgt_yn: isOtherCountryResident, //TODO: Waiting confirming
+      ca_tax_tgt_yn: sin ? 'Y' : 'N',
       tax_paid_nat_c2: country2,
       etc_nat_tin_no2: tin2 || '',
       tin_un_regis_rsn_c2: reason2,

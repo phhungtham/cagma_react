@@ -54,6 +54,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   const { requestApi } = useApi();
 
   const {
+    lcl_prdt_nm,
     prdt_c_display: productName,
     dep_sjt_class: productType,
     prdt_psb_trm_unit_c: unitCode,
@@ -344,7 +345,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
           <FormProvider {...methods}>
             <div className="enter-account__form">
               <div className="page__container">
-                <h1 className="page__title">{productName}</h1>
+                <h1 className="page__title">{productName || lcl_prdt_nm}</h1>
                 {showTerms && (
                   <section>
                     <TextDropdown

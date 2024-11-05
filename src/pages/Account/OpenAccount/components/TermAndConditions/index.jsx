@@ -17,7 +17,7 @@ import { OpenAccountTermFile } from './constants';
 import './styles.scss';
 
 const TermAndConditions = ({ onSubmit, product, translate: t }) => {
-  const { prdt_c: productCode, prdt_c_display, dep_sjt_class: productType } = product || {};
+  const { prdt_c: productCode, prdt_c_display, lcl_prdt_nm, dep_sjt_class: productType } = product || {};
   const currentLanguage = useSelector(appLanguage);
   const [viewTermBottom, setViewTermBottom] = useState({
     open: false,
@@ -111,7 +111,7 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
           <div className={`term-condition__banner ${ProductType[productType]}`}>
             <div className="banner__desc">
               <div className="product__type">
-                <span>{prdt_c_display}</span>
+                <span>{prdt_c_display || lcl_prdt_nm}</span>
               </div>
               <div className="product__desc">
                 <span>{DescriptionMapProductCode[productCode]}</span>

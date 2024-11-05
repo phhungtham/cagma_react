@@ -3,11 +3,13 @@ import * as Yup from 'yup';
 export const dtrFormSchema = Yup.object().shape({
   sin: Yup.string().min(9).required('Required field'),
   isUSResident: Yup.string().oneOf(['Y', 'N'], 'Value must be Yes or No').required('Required field'),
-  personalTin: Yup.string().when('isUSResident', {
-    is: 'Y',
-    then: schema => schema.required(),
-    otherwise: schema => schema.notRequired(),
-  }),
+  personalTin: Yup.string()
+    .min(9)
+    .when('isUSResident', {
+      is: 'Y',
+      then: schema => schema.required(),
+      otherwise: schema => schema.notRequired(),
+    }),
   isOtherCountryResident: Yup.string().oneOf(['Y', 'N'], 'Value must be Yes or No').required('Required field'),
   country1: Yup.string().when('isOtherCountryResident', {
     is: 'Y',
