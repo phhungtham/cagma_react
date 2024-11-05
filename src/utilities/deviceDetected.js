@@ -6,4 +6,12 @@ const deviceDetected = () => {
   }
 };
 
+export const isIphone = () => {
+  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export default deviceDetected;

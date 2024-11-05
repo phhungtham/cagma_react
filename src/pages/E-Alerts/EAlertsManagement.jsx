@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { ArrowRight } from '@assets/icons';
 import Alert from '@common/components/atoms/Alert';
@@ -11,7 +12,10 @@ import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, eAlertLabels as labels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
+import { isIphone } from '@utilities/deviceDetected';
+import getPushToken from '@utilities/gmCommon/getPushToken';
 import { moveBack, moveNext } from '@utilities/index';
+import { appLanguage } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import CustomerInfoChangeBottom from './components/CustomerInfoChangeBottom';
@@ -20,8 +24,10 @@ import './styles.scss';
 
 const EAlertsManagement = ({ translate: t }) => {
   const { requestApi } = useApi();
+  const currentLanguage = useSelector(appLanguage);
   const [showCustomerInfoChangeBottom, setShowCustomerInfoChangeBottom] = useState(false);
   const [showLoading, setShowLoading] = useState();
+  const [tokenPlugin, setTokenPlugin] = useState('');
   const [setting, setSetting] = useState({
     offerEnabled: false,
     customerEmailEnabled: false,
@@ -92,8 +98,15 @@ const EAlertsManagement = ({ translate: t }) => {
     }
   };
 
-  const requestUpdateSetting = async payload => {
+  const requestUpdateSetting = async value => {
     setShowLoading(true);
+    const isIphoneDevice = isIphone();
+    const payload = {
+      ...value,
+      push_lang_c: (currentLanguage || 'en').toUpperCase(),
+      push_tmn_no: tokenPlugin,
+      tmn_d: isIphoneDevice ? 'I' : 'A',
+    };
     const { isSuccess, error, data } = await requestApi(endpoints.updateEAlertSetting, payload);
     setShowLoading(false);
     if (!isSuccess) {
@@ -159,7 +172,12 @@ const EAlertsManagement = ({ translate: t }) => {
     }
   };
 
+  const getTokenCallback = token => {
+    setTokenPlugin(token);
+  };
+
   useEffect(() => {
+    getPushToken(getTokenCallback);
     requestGetEAlertSetting();
   }, []);
 

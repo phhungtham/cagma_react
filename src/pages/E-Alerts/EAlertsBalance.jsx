@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { ArrowRight } from '@assets/icons';
 import ChequingIcon from '@assets/images/icon-fill-chequing.png';
@@ -15,7 +16,10 @@ import { endpoints } from '@common/constants/endpoint';
 import { eAlertLabels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { formatCurrencyDisplay } from '@utilities/currency';
+import { isIphone } from '@utilities/deviceDetected';
+import getPushToken from '@utilities/gmCommon/getPushToken';
 import { moveBack } from '@utilities/index';
+import { appLanguage } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import LowBalanceWarningBottom from './components/LowBalanceWarningBottom';
@@ -26,6 +30,7 @@ import './styles.scss';
 
 const EAlertsBalance = ({ translate: t }) => {
   const { requestApi } = useApi();
+  const currentLanguage = useSelector(appLanguage);
   const [showMyAccountsBottom, setShowMyAccountBottoms] = useState(false);
   const [showMoneyLeavingAccountBottom, setShowMoneyLeavingAccountBottom] = useState(false);
   const [showMoneyIntoAccountBottom, setShowMoneyIntoAccountBottom] = useState(false);
@@ -33,6 +38,7 @@ const EAlertsBalance = ({ translate: t }) => {
   const [showLoading, setShowLoading] = useState();
   const [accounts, setAccounts] = useState();
   const [selectedAccount, setSelectedAccount] = useState();
+  const [tokenPlugin, setTokenPlugin] = useState('');
   const [setting, setSetting] = useState({
     moneyLeavingEmailEnabled: false,
     moneyLeavingPushEnabled: false,
@@ -121,15 +127,19 @@ const EAlertsBalance = ({ translate: t }) => {
     setShowLoading(false);
   };
 
-  const requestUpdateSetting = async (values, type, fieldsMap) => {
+  const requestUpdateSetting = async (values, type) => {
     setShowLoading(true);
     const { emailEnabled, pushEnabled, amount } = values;
+    const isIphoneDevice = isIphone();
     const payload = {
       select_d: type,
       push_yn: pushEnabled ? '01' : '00',
       email_yn: emailEnabled ? '01' : '00',
       ums_ntc_amt: Number(amount),
       ums_ntc_acno: selectedAccount?.lcl_ac_no,
+      push_lang_c: (currentLanguage || 'en').toUpperCase(),
+      push_tmn_no: tokenPlugin,
+      tmn_d: isIphoneDevice ? 'I' : 'A',
     };
     const { isSuccess, error, data } = await requestApi(endpoints.updateEAlertSetting, payload);
     setShowLoading(false);
@@ -162,29 +172,17 @@ const EAlertsBalance = ({ translate: t }) => {
 
   const handleSubmitLowBalance = async values => {
     setShowLowBalanceWarningBottom(false);
-    await requestUpdateSetting(values, EAlertType.BALANCE, {
-      email: 'bal_email_yn',
-      push: 'bal_push_yn',
-      amount: 'bal_ums_ntc_amt',
-    });
+    await requestUpdateSetting(values, EAlertType.BALANCE);
   };
 
   const handleSubmitMoneyInto = async values => {
     setShowMoneyIntoAccountBottom(false);
-    await requestUpdateSetting(values, EAlertType.DEPOSIT, {
-      email: 'dep_email_yn',
-      push: 'dep_push_yn',
-      amount: 'dep_ums_ntc_amt',
-    });
+    await requestUpdateSetting(values, EAlertType.DEPOSIT);
   };
 
   const handleSubmitMoneyLeaving = async values => {
     setShowMoneyLeavingAccountBottom(false);
-    await requestUpdateSetting(values, EAlertType.WITHDRAWAL, {
-      email: 'withd_email_yn',
-      push: 'withd_push_yn',
-      amount: 'withd_ums_ntc_amt',
-    });
+    await requestUpdateSetting(values, EAlertType.WITHDRAWAL);
   };
 
   const RenderAccountIcon = () => {
@@ -241,7 +239,12 @@ const EAlertsBalance = ({ translate: t }) => {
     }
   }, [selectedAccount]);
 
+  const getTokenCallback = token => {
+    setTokenPlugin(token);
+  };
+
   useEffect(() => {
+    getPushToken(getTokenCallback);
     requestGetEAlertSetting();
   }, []);
   return (
