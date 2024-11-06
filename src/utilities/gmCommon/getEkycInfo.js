@@ -10,7 +10,7 @@ const getEkycInfo = cb => {
       lastName: 'last name',
       firstName: 'first name',
       packageId: 'asdfqwert',
-      deviceId: 'deviceId',
+      deviceId: 'deviceId2',
     };
     return cb(testData);
   }

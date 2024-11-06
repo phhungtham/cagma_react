@@ -4,7 +4,7 @@ import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 import { employmentValuesDisableOccupation } from '@common/constants/account';
 
-import { CommonCodeFieldName, SignUpSelectType } from '../constants';
+import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const EmploymentInfoSection = ({ onOpenSelectBottom, commonCode, occupation2Options }) => {
   const { control, watch, setValue } = useFormContext();

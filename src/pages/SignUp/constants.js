@@ -9,7 +9,7 @@ export const SignUpStep = {
   EKYC_RESULT: 'ekycResult',
   CREATE_ID: 'createId',
   CREATE_PASSWORD: 'createPassword',
-  AGREE_TERMS_CONDITIONS: 'agreeTermsConditions',
+  MOTP_AGREE_TERMS: 'agreeTermsConditions',
   CREATE_PASSCODE: 'createPasscode',
   SIGN_UP_COMPLETE: 'signUpComplete',
   SET_UP_BIOMETRIC_AUTH: 'setUpBiometricAuth',

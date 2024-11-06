@@ -5,7 +5,7 @@ export const signUpSuccessFields = [
   },
   {
     label: 'ID',
-    value: 'id',
+    value: 'userId',
   },
   {
     label: 'Password',

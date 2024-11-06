@@ -57,12 +57,16 @@ const SignUp = () => {
     setCurrentStep(SignUpStep.VERIFY_USER_INFO);
   };
 
-  const handleConfirmEmail = values => {
+  const handleNavigateEkycVerify = () => {
     setCurrentStep(SignUpStep.VERIFY_IDENTITY_TERMS);
   };
 
-  const handleNavigateUpdateEmail = () => {
-    setCurrentStep(SignUpStep.VERIFY_USER_INFO);
+  const handleNavigateMOTPAgreeTerms = () => {
+    setCurrentStep(SignUpStep.MOTP_AGREE_TERMS);
+  };
+
+  const handleConfirmEmail = values => {
+    setCurrentStep(SignUpStep.VERIFY_IDENTITY_TERMS);
   };
 
   const handleNavigateEKYCProgress = ekycVerifyExternalLink => {
@@ -88,14 +92,14 @@ const SignUp = () => {
   };
 
   const handleCreatePassword = () => {
-    setCurrentStep(SignUpStep.AGREE_TERMS_CONDITIONS);
+    setCurrentStep(SignUpStep.MOTP_AGREE_TERMS);
   };
 
   const handleConfirmTermsConditions = () => {
     setCurrentStep(SignUpStep.CREATE_PASSCODE);
   };
 
-  const handleCreatePasscode = () => {
+  const handleCreatePasscodeSuccess = () => {
     setCurrentStep(SignUpStep.SIGN_UP_COMPLETE);
   };
 
@@ -147,6 +151,7 @@ const SignUp = () => {
     if (!isEkycProcessing) {
       if (isFromLogin) {
         setCurrentStep(SignUpStep.ENTER_EMAIL);
+        // setCurrentStep(SignUpStep.ENTER_PERSONAL_DETAIL); //TODO: Just for test
       } else {
         //Sign Up New Account
         setCurrentStep(SignUpStep.VERIFY_USER_INFO);
@@ -186,7 +191,8 @@ const SignUp = () => {
         {currentStep === SignUpStep.ENTER_EMAIL && (
           <SignUpEnterEmail
             onConfirm={handleConfirmEmail}
-            onNavigateUpdateEmail={handleNavigateUpdateEmail}
+            onNavigateEkycVerify={handleNavigateEkycVerify}
+            onNavigateMOTPAgreeTerms={handleNavigateMOTPAgreeTerms}
           />
         )}
         {currentStep === SignUpStep.VERIFY_IDENTITY_TERMS && (
@@ -204,10 +210,10 @@ const SignUp = () => {
         )}
         {currentStep === SignUpStep.CREATE_ID && <SignUpCreateID onConfirm={handleCreateID} />}
         {currentStep === SignUpStep.CREATE_PASSWORD && <SignUpCreatePassword onConfirm={handleCreatePassword} />}
-        {currentStep === SignUpStep.AGREE_TERMS_CONDITIONS && (
+        {currentStep === SignUpStep.MOTP_AGREE_TERMS && (
           <AgreeTermsConditions onConfirm={handleConfirmTermsConditions} />
         )}
-        {currentStep === SignUpStep.CREATE_PASSCODE && <SignUpCreatePasscode onConfirm={handleCreatePasscode} />}
+        {currentStep === SignUpStep.CREATE_PASSCODE && <SignUpCreatePasscode onConfirm={handleCreatePasscodeSuccess} />}
         {currentStep === SignUpStep.SIGN_UP_COMPLETE && <SignUpSuccess onConfirm={handleNavigateSetupBiometricAuth} />}
         {currentStep === SignUpStep.SET_UP_BIOMETRIC_AUTH && (
           <SetUpBiometricAuth

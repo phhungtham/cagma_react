@@ -22,7 +22,6 @@ import openCalendar from '@utilities/gmCommon/openCalendar';
 import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { moveBack } from '@utilities/index';
 
-import VerifyIdInfoBottom from '../VerifyIdInfoBottom';
 import { CustomerInfoVerifyErrorCode } from './constants';
 import { verifyUserInfoFormSchema } from './schema';
 
@@ -33,7 +32,6 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
     content: '',
   });
   const [showLoading, setShowLoading] = useState(false);
-  const [showVerifyIdBottom, setShowVerifyIdBottom] = useState(false);
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [showSelectProvinceBottom, setShowSelectProvinceBottom] = useState(initSelectBottom);
   const { requestApi } = useApi();
@@ -87,12 +85,6 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
     handleCloseSelectProvinceBottom();
   };
 
-  const handleSubmitVerifyIdInfo = values => {
-    console.log('values :>> ', values);
-    //TODO: Handle submit
-    setShowVerifyIdBottom(false);
-  };
-
   const handleSubmitForm = async values => {
     setShowLoading(true);
     const { dob: cus_bth_y4mm_dt, firstName: fst_nm, lastName: lst_nm, province, house_adr_state_c } = values;
@@ -106,15 +98,15 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
     };
     const { errorCode, data, isSuccess } = await requestApi(endpoints.customerInfoVerify, payload);
     setShowLoading(false);
+    setEkycInfo({
+      isEkycProcessing: false,
+      email: '',
+      userId: '',
+      lastName: lst_nm,
+      firstName: fst_nm,
+      packageId: '',
+    });
     if (errorCode === CustomerInfoVerifyErrorCode.NEW) {
-      setEkycInfo({
-        isEkycProcessing: false,
-        email: '',
-        userId: '',
-        lastName: lst_nm,
-        firstName: fst_nm,
-        packageId: '',
-      });
       return navigateToVerifyEmail();
     } else if (errorCode === CustomerInfoVerifyErrorCode.CORPORATE_CUSTOMER) {
       return navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_CORPORATE);
@@ -122,9 +114,13 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
       return navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
     }
     if (isSuccess) {
-      const { result_cd, intbnk_reg_yn } = data;
-      if (Number(result_cd) === 1 && intbnk_reg_yn === 'Y') {
-        return navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_INDIVIDUAL);
+      const { result_cd, intbnk_reg_yn: isRegisterInternetBanking } = data;
+      if (Number(result_cd) === 1) {
+        if (isRegisterInternetBanking === 'Y') {
+          return navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_INDIVIDUAL);
+        } else {
+          return navigateToVerifyEmail();
+        }
       }
     }
   };
@@ -226,13 +222,6 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
           />
         </div>
       </div>
-      {showVerifyIdBottom && (
-        <VerifyIdInfoBottom
-          open={showVerifyIdBottom}
-          onClose={() => setShowVerifyIdBottom(false)}
-          onSubmit={handleSubmitVerifyIdInfo}
-        />
-      )}
       <Alert
         isCloseButton={false}
         isShowAlert={alert.isShow}

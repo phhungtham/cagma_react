@@ -1,16 +1,27 @@
+import { useEffect, useState } from 'react';
+
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
+import { moveHome } from '@utilities/index';
 
 import { signUpSuccessFields } from './constants';
 
-const test = {
-  email: '12345@mail.com',
-  id: 'FullIDName',
-  password: 'Registered',
-  secretPasscode: 'Registered',
-};
+const SignUpSuccess = () => {
+  const [ekycPluginInfo, setEkycPluginInfo] = useState();
 
-const SignUpSuccess = ({ signUpInfo = test, onConfirm }) => {
+  const getEkycInfoCallback = result => {
+    setEkycPluginInfo({
+      ...result,
+      password: 'Registered',
+      secretPasscode: 'Registered',
+    });
+  };
+
+  useEffect(() => {
+    getEkycInfo(getEkycInfoCallback);
+  }, []);
+
   return (
     <>
       <div className="page-success">
@@ -35,7 +46,7 @@ const SignUpSuccess = ({ signUpInfo = test, onConfirm }) => {
             >
               <span className="success-info__label">{label}</span>
               <span className="success-info__value">
-                <span>{signUpInfo?.[value]}</span>
+                <span>{ekycPluginInfo?.[value]}</span>
               </span>
             </div>
           ))}
@@ -46,7 +57,7 @@ const SignUpSuccess = ({ signUpInfo = test, onConfirm }) => {
           variant="filled__primary"
           label="Done"
           className="btn__cta"
-          onClick={onConfirm}
+          onClick={moveHome}
         />
       </div>
     </>

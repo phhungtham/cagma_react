@@ -4,7 +4,7 @@ import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 
-import { CommonCodeFieldName, SignUpSelectType } from '../constants';
+import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
   const { control, watch, setValue } = useFormContext();

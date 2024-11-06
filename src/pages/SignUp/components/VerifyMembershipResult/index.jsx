@@ -36,7 +36,7 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
     }
     if (type === VerifyMembershipResultStatus.ALREADY_CORPORATE) {
       openInternalWebview({
-        url: externalUrls.bankHome,
+        url: externalUrls.sbank,
         title: '',
       });
     }

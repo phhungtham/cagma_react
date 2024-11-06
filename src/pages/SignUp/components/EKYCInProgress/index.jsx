@@ -82,7 +82,7 @@ const EKYCInProgress = ({ onConfirm }) => {
           type: 'info',
         });
         //TODO: Just for test
-        // onConfirm();
+        onConfirm();
       } else if (processingStatus === '10') {
         onConfirm();
       }

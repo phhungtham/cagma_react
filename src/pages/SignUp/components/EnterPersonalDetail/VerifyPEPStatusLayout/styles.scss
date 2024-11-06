@@ -1,0 +1,27 @@
+@import 'styles/utilities/variables';
+
+.verify-pep-status__wrapper {
+  .pep-banner {
+    height: 220px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    img {
+      height: 100%;
+    }
+  }
+  .pep-instructions {
+    color: $color-gray-700;
+    font-size: 15px;
+    line-height: 20px;
+    list-style-position: outside;
+    list-style-type: disc;
+    padding-left: 24px;
+    .pep-item {
+      &::marker {
+        color: $color-gray-600;
+      }
+    }
+  }
+}

@@ -13,6 +13,10 @@ export const getMaturityOption = 'dep_due_rnw_t';
 export const getTermOptions = 'intrt_trm_c';
 export const getCustomerTitleName = 'cus_ttl_nm';
 export const tinUnregisterReason = 'tin_un_regis_rsn_c';
+export const getResidentialStatus = 'casol_rsdc_dtl_c';
+export const getPEPRelationship = 'pep_relt_d';
+export const getPEPPosition = 'pep_stat_c';
+export const getPEPSourceOfFund = 'fund_soce_d_c';
 
 export const EmploymentMap = {
   Employed: '2',

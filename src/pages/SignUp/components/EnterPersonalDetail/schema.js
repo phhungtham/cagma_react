@@ -55,3 +55,42 @@ export const SignUpPersonalDetailSchema = Yup.object().shape({
     otherwise: schema => schema.notRequired(),
   }),
 });
+
+export const VerifyPEPStatusSchema = Yup.object().shape({
+  pepDetermination: Yup.string().required(),
+  pepRelationship: Yup.string().when('pepDetermination', {
+    is: 'Y',
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  pepFirstName: Yup.string().when(['pepDetermination', 'pepRelationship'], {
+    is: (pepDetermination, pepRelationship) => pepDetermination === 'Y' && pepRelationship === '01',
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  pepLastName: Yup.string().when(['pepDetermination', 'pepRelationship'], {
+    is: (pepDetermination, pepRelationship) => pepDetermination === 'Y' && pepRelationship === '01',
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  pepPosition: Yup.string().when('pepDetermination', {
+    is: 'Y',
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  pepOrganizationName: Yup.string().when('pepDetermination', {
+    is: 'Y',
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  pepCountry: Yup.string().when('pepDetermination', {
+    is: 'Y',
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  pepSource: Yup.string().when('pepDetermination', {
+    is: 'Y',
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+});

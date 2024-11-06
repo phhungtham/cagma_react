@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import { ArrowRight } from '@assets/icons';
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
@@ -18,7 +17,7 @@ import { moveBack } from '@utilities/index';
 
 import { EnterEmailSchema } from './schema';
 
-const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
+const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) => {
   const { deviceId } = useContext(SignUpContext);
   const [ekycPluginInfo, setEkycPluginInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
@@ -54,18 +53,6 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
   const [verificationCode, email] = watch(['verificationCode', 'email']);
 
   const invalidVerificationCode = verificationCode?.length !== 6;
-
-  const handleShowUnableVerifyEmailAlert = () => {
-    setShowUnableVerifyEmailAlert(true);
-  };
-
-  const handleCloseUnableVerifyEmailAlert = () => {
-    setShowUnableVerifyEmailAlert(false);
-  };
-
-  const handleNavigateUpdateEmail = () => {
-    onNavigateUpdateEmail();
-  };
 
   const handleCloseAlert = () => {
     setAlert({
@@ -136,21 +123,26 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
     }
   };
 
-  const requestPreRegisterCustomerInfo = async () => {
+  const requestUpdateEmail = async () => {
     setShowLoading(true);
     const payload = {
       cus_email: email,
       uuid_v: deviceId,
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep1, payload);
+    const { data, error, isSuccess } = await requestApi(endpoints.updateEmail, payload);
     setShowLoading(false);
     if (isSuccess) {
+      const { screen_kd, cus_email } = data;
       setEkycInfo({
         ...ekycPluginInfo,
-        email: data.cus_email,
+        email: cus_email,
         isEkycProcessing: true,
       });
-      onConfirm();
+      if (Number(screen_kd) === 1) {
+        onNavigateMOTPAgreeTerms();
+      } else if (Number(screen_kd) === 2) {
+        onNavigateEkycVerify();
+      }
     } else {
       return setAlert({
         isShow: true,
@@ -192,7 +184,7 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
       setShowEmailVerifyCode(false);
       setValue('isEmailVerified', true, { shouldValidate: true });
       clearErrors('verificationCode');
-      requestPreRegisterCustomerInfo();
+      requestUpdateEmail();
     }
   };
 
@@ -263,15 +255,6 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
               />
             )}
           </div>
-          <div className="flex-center mt-4">
-            <Button
-              variant="text__gray"
-              label="Unable to verify this email?"
-              size="sm"
-              endIcon={<ArrowRight />}
-              onClick={handleShowUnableVerifyEmailAlert}
-            />
-          </div>
         </div>
         <div className="footer__fixed">
           <Button
@@ -283,24 +266,6 @@ const SignUpEnterEmail = ({ onConfirm, onNavigateUpdateEmail }) => {
           />
         </div>
       </div>
-      {showUnableVerifyEmailAlert && (
-        <Alert
-          isCloseButton={false}
-          isShowAlert={showUnableVerifyEmailAlert}
-          title="Unable to verify this email?"
-          subtitle="For security reasons, please verify the email registered with Shinhan Bank Canada. If you're unsure, you can update your email after verifying your ID information."
-          onClose={handleCloseUnableVerifyEmailAlert}
-          textAlign="left"
-          firstButton={{
-            onClick: handleNavigateUpdateEmail,
-            label: 'Update Email',
-          }}
-          secondButton={{
-            onClick: handleCloseUnableVerifyEmailAlert,
-            label: 'Cancel',
-          }}
-        />
-      )}
       <Alert
         isCloseButton={false}
         isShowAlert={alert.isShow}

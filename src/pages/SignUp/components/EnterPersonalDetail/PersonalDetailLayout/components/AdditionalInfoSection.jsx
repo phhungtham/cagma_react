@@ -4,7 +4,7 @@ import CheckBox from '@common/components/atoms/Checkbox';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 
-import { CommonCodeFieldName, SignUpSelectType } from '../constants';
+import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
   const { control, watch, setValue } = useFormContext();
@@ -30,6 +30,8 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <Dropdown
             label="Residential Status"
+            onFocus={() => onOpenSelectBottom(SignUpSelectType.RESIDENTIAL_STATUS)}
+            options={commonCode[CommonCodeFieldName.RESIDENTIAL_STATUS]}
             {...field}
           />
         )}

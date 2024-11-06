@@ -99,6 +99,15 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
         onClose();
       }
     }
+
+    //Load file failed
+    if (!bottomRef.current) {
+      if (onConfirm) {
+        onConfirm();
+      } else {
+        onClose();
+      }
+    }
   };
 
   return (

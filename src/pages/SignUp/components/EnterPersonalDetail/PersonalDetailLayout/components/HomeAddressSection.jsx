@@ -3,7 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 
-import { CommonCodeFieldName, SignUpSelectType } from '../constants';
+import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
   const { control, watch, setValue } = useFormContext();

@@ -1,14 +1,22 @@
 import passcodeBanner from '@assets/images/security-passcode-banner.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Header from '@common/components/organisms/Header';
+import createSecurityPasscode from '@utilities/gmSecure/createSecurityPasscode';
 import { moveBack } from '@utilities/index';
 
 import './styles.scss';
 
-//TODO: Handle logic
 const SignUpCreatePasscode = ({ onConfirm }) => {
-  const handleSubmitForm = () => {
+  const handleCreatePasscodeFail = () => {
+    //TODO: Handle case failed
+  };
+
+  const handleCreatePasscodeSuccess = () => {
     onConfirm();
+  };
+
+  const handleSubmitForm = () => {
+    createSecurityPasscode(handleCreatePasscodeSuccess, handleCreatePasscodeFail);
   };
 
   return (
