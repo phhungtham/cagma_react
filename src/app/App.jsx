@@ -36,6 +36,7 @@ const App = () => {
   useReducers([{ key: APP_GLOBAL, reducer: appGlobalReducer }]);
   const navigate = useNavigate();
   const currentLanguage = useSelector(appLanguage);
+
   const { i18n } = useTranslation();
   const { requestApi } = useApi();
 
