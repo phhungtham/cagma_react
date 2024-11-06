@@ -163,7 +163,7 @@ const App = () => {
     polyfill();
     // for development
     if (process.env.NODE_ENV === 'development') {
-      setCurrentLanguage('ko');
+      setCurrentLanguage('en');
       // setAppPath(window.location.pathname);
     }
   }, []);
