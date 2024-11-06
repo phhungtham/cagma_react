@@ -8,6 +8,7 @@ import { TooltipProvider } from '@common/components/atoms/Tooltip/TooltipContext
 import ErrorBoundary from '@common/components/ErrorBoundary';
 import Fallback from '@common/components/Fallback';
 import { AppCfg } from '@configs/appConfigs';
+import useApi from '@hooks/useApi';
 import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
 import publicRoutes from '@routes/service/public-routes';
@@ -36,6 +37,7 @@ const App = () => {
   const navigate = useNavigate();
   const currentLanguage = useSelector(appLanguage);
   const { i18n } = useTranslation();
+  const { requestApi } = useApi();
 
   const scriptLoad = async isMobileDevice => {
     if (AppCfg.ENV === 'development') return;
@@ -56,7 +58,20 @@ const App = () => {
 
   const getLanguageFile = async () => {
     if (!currentLanguage || currentLanguage === 'undefined') return;
-    const url = `../../../../websquare/langpack/511_${currentLanguage}.js`;
+
+    if (process.env.NODE_ENV === 'development') {
+      const { data } = await requestApi('/gm/co/GMCO005.pwkjson', { appLanguage: currentLanguage });
+      if (data?.languageList) {
+        const langpack = data.languageList.reduce((acc, cur) => {
+          acc[cur.key?.trim()] = cur.value;
+          return acc;
+        }, {});
+        localStorageService.setLang(langpack, languageStorageKeys(currentLanguage));
+        reloadLanguageResource(currentLanguage);
+      }
+      return;
+    }
+    let url = `../../../../websquare/langpack/511_${currentLanguage}.js`;
     await fetch(url)
       .then(response => response.text())
       .then(data => {
@@ -148,6 +163,7 @@ const App = () => {
     polyfill();
     // for development
     if (process.env.NODE_ENV === 'development') {
+      setCurrentLanguage('ko');
       // setAppPath(window.location.pathname);
     }
   }, []);

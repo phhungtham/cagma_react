@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
+import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Span from '@common/components/atoms/Span';
 import Spinner from '@common/components/atoms/Spinner';
 import { isDevelopmentEnv } from '@common/constants/common';
@@ -15,6 +16,8 @@ import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
+import { setCurrentLanguage } from 'app/redux/action';
+import { appLanguage } from 'app/redux/selector';
 import { setAuthenticated } from 'shared/features/auth/action';
 import { Http } from 'shared/features/http';
 
@@ -50,12 +53,23 @@ const listAccount = [
   'CATEST34',
 ];
 
+const languages = [
+  {
+    label: 'English',
+    value: 'en',
+  },
+  {
+    label: 'Korean',
+    value: 'ko',
+  },
+];
 const Login = () => {
   useReducers([{ key: FeatureLoginName, reducer: loginReducer }]);
   useSagas([{ key: FeatureLoginName, saga: loginSaga }]);
   useFocus('userName');
 
   const { status } = useHttpStatus(ActionType.LOGIN_REQUEST);
+  const currentLanguage = useSelector(appLanguage);
   const navigate = useNavigate();
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
@@ -176,6 +190,11 @@ const Login = () => {
               label={'Login'}
             />
           </form>
+          <BoxRadio
+            options={languages}
+            value={currentLanguage}
+            onChange={value => setCurrentLanguage(value)}
+          />
         </div>
       </div>
     </div>
