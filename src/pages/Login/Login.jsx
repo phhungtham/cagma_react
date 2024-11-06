@@ -105,7 +105,7 @@ const Login = () => {
       if (isDevelopmentEnv) {
         localStorage.setItem('isLogin', true);
       }
-      moveNext('', { param: JSON.stringify({ isFromLogin: true }) }, routePaths.eAlertsManagement);
+      moveNext('', { param: JSON.stringify({ isFromLogin: true }) }, routePaths.signUp);
     }
   }, [isLoginSuccess]);
 
@@ -190,11 +190,13 @@ const Login = () => {
               label={'Login'}
             />
           </form>
-          <BoxRadio
-            options={languages}
-            value={currentLanguage}
-            onChange={value => setCurrentLanguage(value)}
-          />
+          <div className="mt-6">
+            <BoxRadio
+              options={languages}
+              value={currentLanguage}
+              onChange={value => setCurrentLanguage(value)}
+            />
+          </div>
         </div>
       </div>
     </div>

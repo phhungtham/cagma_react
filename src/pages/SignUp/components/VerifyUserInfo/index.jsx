@@ -96,7 +96,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
       house_adr_state_c,
       trx_type: CustomerInfoVerifyType.EKYC,
     };
-    const { errorCode, data, isSuccess } = await requestApi(endpoints.customerInfoVerify, payload);
+    const { errorCode, data, isSuccess, error } = await requestApi(endpoints.customerInfoVerify, payload);
     setShowLoading(false);
     setEkycInfo({
       isEkycProcessing: false,
@@ -106,13 +106,6 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
       firstName: fst_nm,
       packageId: '',
     });
-    if (errorCode === CustomerInfoVerifyErrorCode.NEW) {
-      return navigateToVerifyEmail();
-    } else if (errorCode === CustomerInfoVerifyErrorCode.CORPORATE_CUSTOMER) {
-      return navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_CORPORATE);
-    } else if (errorCode === CustomerInfoVerifyErrorCode.ERROR) {
-      return navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
-    }
     if (isSuccess) {
       const { result_cd, intbnk_reg_yn: isRegisterInternetBanking } = data;
       if (Number(result_cd) === 1) {
@@ -122,6 +115,19 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
           return navigateToVerifyEmail();
         }
       }
+    }
+    if (errorCode === CustomerInfoVerifyErrorCode.NEW) {
+      return navigateToVerifyEmail();
+    } else if (errorCode === CustomerInfoVerifyErrorCode.CORPORATE_CUSTOMER) {
+      return navigateToVerifyResult(VerifyMembershipResultStatus.ALREADY_CORPORATE);
+    } else if (errorCode === CustomerInfoVerifyErrorCode.ERROR) {
+      return navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
+    } else {
+      setAlert({
+        isShow: true,
+        title: '',
+        content: error,
+      });
     }
   };
 

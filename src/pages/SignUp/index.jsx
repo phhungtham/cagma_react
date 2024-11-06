@@ -31,7 +31,7 @@ import { SignUpStep } from './constants';
 export const SignUpContext = createContext();
 
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState();
+  const [currentStep, setCurrentStep] = useState(); //TODO: Just for test
   const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
   const [userId, setUserId] = useState();
@@ -151,7 +151,6 @@ const SignUp = () => {
     if (!isEkycProcessing) {
       if (isFromLogin) {
         setCurrentStep(SignUpStep.ENTER_EMAIL);
-        // setCurrentStep(SignUpStep.ENTER_PERSONAL_DETAIL); //TODO: Just for test
       } else {
         //Sign Up New Account
         setCurrentStep(SignUpStep.VERIFY_USER_INFO);
@@ -160,12 +159,6 @@ const SignUp = () => {
       requestCheckEkycStatus({ deviceId, email });
     }
   };
-
-  // useEffect(() => {
-  //   if (nativeParams) {
-  //     getEkycInfo(getEkycInfoCallback);
-  //   }
-  // }, [nativeParams]);
 
   useEffect(() => {
     getEkycInfo(getEkycInfoCallback);
@@ -198,7 +191,12 @@ const SignUp = () => {
         {currentStep === SignUpStep.VERIFY_IDENTITY_TERMS && (
           <VerifyIdentityTerms onConfirm={handleNavigateEKYCProgress} />
         )}
-        {currentStep === SignUpStep.EKYC_IN_PROGRESS && <EKYCInProgress onConfirm={handleConfirmEKYC} />}
+        {currentStep === SignUpStep.EKYC_IN_PROGRESS && (
+          <EKYCInProgress
+            onConfirm={handleConfirmEKYC}
+            navigateToVerifyResult={handleNavigateToVerifyMemberResult}
+          />
+        )}
         {currentStep === SignUpStep.ENTER_PERSONAL_DETAIL && (
           <EnterPersonalDetail onConfirm={handleSubmitPersonalDetail} />
         )}

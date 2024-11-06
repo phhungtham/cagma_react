@@ -1,19 +1,21 @@
 import { useContext, useEffect, useState } from 'react';
 
-import loading from '@assets/lottie/ekyc-loading.json';
+import VerifyId from '@assets/images/icon-fill-idpw-24.png';
+import LoadingImg from '@assets/images/signup-spinner.png';
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
+import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { moveHome } from '@utilities/index';
-import Lottie from 'lottie-react';
 
-const EKYCInProgress = ({ onConfirm }) => {
+const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
   const { deviceId } = useContext(SignUpContext);
   const [ekycPluginInfo, setEkycPluginInfo] = useState({});
   const [showLoading, setShowLoading] = useState(false);
@@ -60,31 +62,31 @@ const EKYCInProgress = ({ onConfirm }) => {
   };
 
   const requestRegisterCustomerInfoStep3 = async () => {
+    setShowLoading(true);
     const { email, firstName, lastName, packageId } = ekycPluginInfo;
     const payload = {
       cus_email: email,
-      uuid_v: deviceId,
+      uuid_v: deviceId || 'deviceId',
       cus_fst_nm: firstName,
       cus_last_nm: lastName,
-      e_sgn_trx_id: packageId,
-      // e_sgn_trx_id: 'dSnooW1bbYqt4puzYtJRfd3bsM4=',
+      // e_sgn_trx_id: packageId,
+      e_sgn_trx_id: 'dSnooW1bbYqt4puzYtJRfd3bsM4=',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep3, payload);
     setShowLoading(false);
     if (isSuccess) {
       const { confm_proc_s: processingStatus } = data || {};
-      //TODO: Handle other case
-      if (processingStatus === '30') {
+      if (['20', '30', '40'].includes(processingStatus)) {
         setShowRetryBtn(true);
         setShowToast({
           isShow: true,
-          message: 'Identity verification is incomplete. Please check again.',
-          type: 'info',
+          message: 'Unable to retrieve the verification result. Please check again.',
+          type: 'error',
         });
-        //TODO: Just for test
-        onConfirm();
       } else if (processingStatus === '10') {
         onConfirm();
+      } else if (['50', '60'].includes(processingStatus)) {
+        return navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
       }
     } else {
       return setAlert({
@@ -94,28 +96,6 @@ const EKYCInProgress = ({ onConfirm }) => {
     }
   };
 
-  const handleCheckResult = async () => {
-    setShowLoading(true);
-    if (showRetryBtn) {
-      return requestRegenerateEkycLink();
-    } else {
-      return requestRegisterCustomerInfoStep3();
-    }
-
-    // const success = false;
-    // const message = success ? '' : 'Identity verification is incomplete. Please check again.';
-    // setShowToast({
-    //   isShow: true,
-    //   message: message,
-    //   type: success ? 'success' : 'info',
-    // });
-
-    // //For test
-    // setTimeout(() => {
-    //   onConfirm();
-    // }, 2000);
-  };
-
   const handleCloseAlert = () => {
     setAlert({
       ...alert,
@@ -123,35 +103,8 @@ const EKYCInProgress = ({ onConfirm }) => {
     });
   };
 
-  const checkEkycStatus = async email => {
-    setShowLoading(true);
-    const payload = {
-      cus_email: email,
-      uuid_v: deviceId,
-    };
-    const { data, error, isSuccess } = await requestApi(endpoints.checkEkycStatus, payload);
-    setShowLoading(false);
-    if (isSuccess) {
-      // debugger;
-      // setEkycInfo({
-      //   ...ekycPluginInfo,
-      //   firstName,
-      //   lastName,
-      //   isEkycProcessing: true,
-      //   packageId: data.e_sgn_trx_id,
-      // });
-      // onConfirm(data.signingUrl);
-    } else {
-      return setAlert({
-        isShow: true,
-        content: error,
-      });
-    }
-  };
-
   const getEkycInfoCallback = result => {
     setEkycPluginInfo(result);
-    checkEkycStatus(result?.email);
   };
 
   useEffect(() => {
@@ -164,16 +117,31 @@ const EKYCInProgress = ({ onConfirm }) => {
       <div className="page-success">
         <div className="success__header">
           <div className="success__img">
-            <Lottie
-              animationData={loading} //TODO: Change size and color of loading
-              loop
-            />
+            <div className="spinning">
+              <img
+                src={LoadingImg}
+                alt="Loading"
+              />
+            </div>
           </div>
           <div className="success__title">
             <span>Identity verification is on progress</span>
           </div>
-          <div className="note">Please verify yourself</div>
+          <div className="note">
+            Please complete verification on the external link, then return to the app to continue.
+          </div>
         </div>
+        {showRetryBtn && (
+          <div className="flex-center">
+            <IconButton
+              size="lg"
+              type="circle"
+              label="Retry ID Verification"
+              icon={<img src={VerifyId} />}
+              onClick={requestRegenerateEkycLink}
+            />
+          </div>
+        )}
       </div>
 
       <div className="footer__fixed">
@@ -185,12 +153,12 @@ const EKYCInProgress = ({ onConfirm }) => {
         />
         <Button
           variant="filled__primary"
-          label={showRetryBtn ? 'Retry' : 'Done'}
+          label="Continue"
           className="btn__cta"
-          onClick={handleCheckResult}
+          onClick={requestRegisterCustomerInfoStep3}
         />
       </div>
-      <section className="toast__overlay margin-bottom">
+      <section className="toast__overlay margin-min">
         <Toast
           isShowToast={showToast.isShow}
           type={showToast.type}

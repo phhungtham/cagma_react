@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { CheckIcon, CloseIcon, InfoIcon } from 'assets/icons';
+import { CheckIcon, CloseIcon, InfoIcon, ToastErrorIcon } from 'assets/icons';
 import { PropTypes } from 'prop-types';
 
 const defaultClass = 'toast';
 const typeWithIcons = {
   info: InfoIcon,
   success: CheckIcon,
-  error: CheckIcon,
+  error: ToastErrorIcon,
   warning: CheckIcon,
 };
 

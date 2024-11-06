@@ -99,6 +99,18 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
         control={control}
         name="province"
       />
+      <Controller
+        render={({ field }) => (
+          <Input
+            label="House Phone Number"
+            type="number"
+            inputMode="numeric"
+            {...field}
+          />
+        )}
+        control={control}
+        name="housePhoneNo"
+      />
     </div>
   );
 };

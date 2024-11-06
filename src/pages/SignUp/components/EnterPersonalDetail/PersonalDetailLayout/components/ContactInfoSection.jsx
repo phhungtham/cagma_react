@@ -12,8 +12,6 @@ const ContactInfoSection = () => {
         render={({ field }) => (
           <Input
             label="Cell Number"
-            type="number"
-            inputMode="numeric"
             {...field}
           />
         )}

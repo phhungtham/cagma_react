@@ -29,11 +29,13 @@ import {
   SignUpSelectType,
 } from '../constants';
 import { SignUpPersonalDetailSchema } from '../schema';
+import SelectBranchBottom from './bottoms/SelectBranchBottom';
 import AdditionalInfoSection from './components/AdditionalInfoSection';
 import ContactInfoSection from './components/ContactInfoSection';
 import EmploymentInfoSection from './components/EmploymentInfoSection';
 import HomeAddressSection from './components/HomeAddressSection';
 import IDInfoSection from './components/IDInfoSection';
+import ManagementBranch from './components/ManagementBranch';
 
 const PersonalDetailLayout = ({ customer, onSubmit }) => {
   const [showLoading, setShowLoading] = useState(false);
@@ -44,6 +46,8 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
     title: '',
     content: '',
   });
+  const [showBranchBottom, setShowBranchBottom] = useState(false);
+  const [branches, setBranches] = useState();
   const [commonCode, setCommonCode] = useState({
     [CommonCodeFieldName.TITLE]: [],
     [CommonCodeFieldName.EMPLOYMENT]: [],
@@ -71,6 +75,8 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
     reset,
     formState: { isValid, errors },
   } = methods;
+
+  console.log('errors :>> ', errors);
 
   const [showAdditionalInfo, employmentStatus, occupation1, notSin] = watch([
     'showAdditionalInfo',
@@ -180,6 +186,7 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
         [CommonCodeFieldName.EMPLOYMENT_STATUS]: convertedEmploymentStatus,
         [CommonCodeFieldName.RESIDENTIAL_STATUS]: convertedResidentialStatus,
       });
+      requestGetBranches();
     } else {
       return setAlert({
         isShow: true,
@@ -206,6 +213,39 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
     }
 
     return subJobPrefix;
+  };
+
+  const handleOpenBranchBottom = () => {
+    setShowBranchBottom(true);
+  };
+
+  const handleSelectBranch = branch => {
+    setValue('branchNo', branch.brno, { shouldValidate: true });
+    setValue('branchDisplay', branch.lcl_br_nm, { shouldValidate: true });
+    handleCloseBranchBottom();
+  };
+
+  const handleCloseBranchBottom = () => {
+    setShowBranchBottom(false);
+  };
+
+  const requestGetBranches = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.getBranchDirectory);
+    setShowLoading(false);
+    if (isSuccess) {
+      const branchList = data.r_CACO006_1Vo || [];
+      if (customer?.branchNo) {
+        const branchName = branchList.find(item => item.brno === customer.branchNo)?.lcl_br_nm || '';
+        setValue('branchDisplay', branchName, { shouldValidate: true });
+      }
+      setBranches(branchList);
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
   };
 
   useEffect(() => {
@@ -262,6 +302,7 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
                   onOpenSelectBottom={handleOpenSelectBottom}
                   commonCode={commonCode}
                 />
+                <ManagementBranch openOpenBranchBottom={handleOpenBranchBottom} />
               </>
             )}
           </FormProvider>
@@ -284,6 +325,16 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
         showArrow={false}
         title={selectBottom.title}
       />
+      {showBranchBottom && branches && (
+        <SelectBranchBottom
+          open={showBranchBottom}
+          onClose={handleCloseBranchBottom}
+          onSelect={handleSelectBranch}
+          branches={branches}
+          title="Select branch"
+        />
+      )}
+
       <Alert
         isCloseButton={false}
         isShowAlert={alert.isShow}

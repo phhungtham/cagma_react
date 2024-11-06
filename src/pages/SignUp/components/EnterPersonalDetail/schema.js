@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export const SignUpPersonalDetailSchema = Yup.object().shape({
   title: Yup.string().required('Required field'),
   firstName: Yup.string(),
-  middleName: Yup.string(),
+  middleName: Yup.string().nullable(),
   lastName: Yup.string(),
   dob: Yup.string(),
   dob_display: Yup.string(),
@@ -17,6 +17,7 @@ export const SignUpPersonalDetailSchema = Yup.object().shape({
   streetName: Yup.string().required('Required field'),
   city: Yup.string().required('Required field'),
   province: Yup.string().required('Required field'),
+  housePhoneNo: Yup.string().required('Required field'),
   showAdditionalInfo: Yup.boolean().required(),
   employmentStatus: Yup.string().when('showAdditionalInfo', {
     is: true,
@@ -54,6 +55,12 @@ export const SignUpPersonalDetailSchema = Yup.object().shape({
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
+  branchNo: Yup.string().when('showAdditionalInfo', {
+    is: true,
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  branchDisplay: Yup.string(),
 });
 
 export const VerifyPEPStatusSchema = Yup.object().shape({
@@ -64,12 +71,12 @@ export const VerifyPEPStatusSchema = Yup.object().shape({
     otherwise: schema => schema.notRequired(),
   }),
   pepFirstName: Yup.string().when(['pepDetermination', 'pepRelationship'], {
-    is: (pepDetermination, pepRelationship) => pepDetermination === 'Y' && pepRelationship === '01',
+    is: (pepDetermination, pepRelationship) => pepDetermination === 'Y' && pepRelationship !== '01',
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
   pepLastName: Yup.string().when(['pepDetermination', 'pepRelationship'], {
-    is: (pepDetermination, pepRelationship) => pepDetermination === 'Y' && pepRelationship === '01',
+    is: (pepDetermination, pepRelationship) => pepDetermination === 'Y' && pepRelationship !== '01',
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),

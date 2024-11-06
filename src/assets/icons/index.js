@@ -34,6 +34,7 @@ export { default as RefreshIcon } from './RefreshIcon';
 export { default as SettingIcon } from './SettingIcon';
 export { default as ShareIcon } from './Share';
 export { default as ShareLineIcon } from './ShareLineIcon';
+export { default as ToastErrorIcon } from './ToastErrorIcon';
 export { default as ViewDetailIcon } from './ViewDetailIcon';
 export { default as WarningIcon } from './Warning';
 

@@ -173,7 +173,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                   control={control}
                   name="pepRelationship"
                 />
-                {isSelfRelationSelected && (
+                {!isSelfRelationSelected && (
                   <>
                     <Controller
                       render={({ field }) => (

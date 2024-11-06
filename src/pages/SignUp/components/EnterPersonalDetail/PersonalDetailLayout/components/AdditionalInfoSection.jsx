@@ -20,7 +20,8 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
             label="Nationality"
             onFocus={() => onOpenSelectBottom(SignUpSelectType.NATIONALITY)}
             options={commonCode[CommonCodeFieldName.COUNTRY]}
-            {...field} //TODO: Disabled if there is has value from onespan
+            disabled
+            {...field}
           />
         )}
         control={control}
