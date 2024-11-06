@@ -134,6 +134,8 @@ const SignUp = () => {
       const { ekyc_aplct_stp_c: applyCode } = data;
       if (Number(applyCode) === 1) {
         setCurrentStep(SignUpStep.VERIFY_IDENTITY_TERMS);
+      } else if (Number(applyCode) === 2) {
+        setCurrentStep(SignUpStep.EKYC_IN_PROGRESS);
       }
     } else {
       return setAlert({

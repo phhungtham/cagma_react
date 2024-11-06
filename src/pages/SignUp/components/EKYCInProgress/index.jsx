@@ -45,12 +45,10 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
       cus_fst_nm: firstName,
       cus_last_nm: lastName,
       e_sgn_trx_id: packageId,
-      // e_sgn_trx_id: 'gb8VlErDk47oUJRURSFO7XwXspQ=',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.regenerateEkycLink, payload);
     setShowLoading(false);
     if (isSuccess) {
-      setShowRetryBtn(false);
       const link = data?.signingUrl || '';
       openURLInBrowser(link);
     } else {

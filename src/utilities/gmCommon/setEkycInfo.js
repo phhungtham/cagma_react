@@ -12,7 +12,9 @@ import { $h } from 'navigation/wmatrix_config';
  * packageId: string
  */
 const setEkycInfo = data => {
-  if (AppCfg.ENV === 'development') return;
+  if (AppCfg.ENV === 'development') {
+    return localStorage.setItem('ekyc', JSON.stringify(data));
+  }
   return $h.exec(() => {}, 'GMCommon', 'setEkycInfo', [data]);
 };
 export default setEkycInfo;
