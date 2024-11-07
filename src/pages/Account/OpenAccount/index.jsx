@@ -261,6 +261,7 @@ const OpenAccount = ({ translate: t }) => {
         interestRate: `${ntfct_intrt_display}% APR`,
         amount: `${amount} ${currency}`,
         depositFrom,
+        numberTransactions: 'Unlimited',
       });
       setCurrentStep(OPEN_ACCOUNT_STEP.COMPLETED);
     } else {

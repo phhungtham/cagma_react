@@ -1,5 +1,28 @@
 import { ProductCode } from '@common/constants/product';
 
+export const chequingSuccessFields = [
+  {
+    label: 'Product name',
+    value: 'productName',
+  },
+  {
+    label: 'Account no.',
+    value: 'acNo',
+  },
+  {
+    label: 'Interest rate',
+    value: 'interestRate',
+  },
+  {
+    label: 'Transaction limit',
+    value: 'limit',
+  },
+  {
+    label: 'Number of Transactions',
+    value: 'numberTransactions',
+  },
+];
+
 export const eSavingSuccessFields = [
   {
     label: 'Product name',
@@ -94,6 +117,7 @@ export const eInstallSuccessFields = [
 ];
 
 export const openAccountSuccessFields = {
+  [ProductCode.CHEQUING]: chequingSuccessFields,
   [ProductCode.E_SAVING]: eSavingSuccessFields,
   [ProductCode.TFSA_E_SAVINGS]: eSavingSuccessFields,
   [ProductCode.E_POWER_TERM_DEPOSIT]: termDepositSuccessFields,

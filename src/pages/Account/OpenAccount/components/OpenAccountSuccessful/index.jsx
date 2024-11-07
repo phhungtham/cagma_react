@@ -5,6 +5,7 @@ import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/Icon
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { ProductCode } from '@common/constants/product';
+import { routePaths } from '@routes/paths';
 import { moveHome, moveNext } from '@utilities/index';
 
 import { openAccountSuccessFields } from './constants';
@@ -14,6 +15,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) 
   const { creditChecked, openedAccountNumber } = openAccountInfo || {};
 
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
+  const isChequingCreditChecked = productCode === ProductCode.CHEQUING && creditChecked;
 
   const onClickViewAccount = () => {
     const accountNumberParam = JSON.stringify({
@@ -34,8 +36,12 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) 
     moveNext(MENU_CODE.ACCOUNT_ACTIVITY_BANKING);
   };
 
-  const onClickNavigateHome = () => {
-    moveHome();
+  const handleClickConfirm = () => {
+    if (isChequingCreditChecked) {
+      moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
+    } else {
+      moveHome();
+    }
   };
 
   return (
@@ -51,7 +57,13 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) 
           <div className="open-account__title">
             <div className="complete-message">You’ve successfully opened</div>
             <div className="product-type">{openAccountInfo?.productName}</div>
-            {!!creditChecked && <div className="note">Debit card will be sent to the stored customer address.</div>}
+            {!!creditChecked && (
+              <div className="note">
+                {isChequingCreditChecked
+                  ? 'Issue your card from the Get new card'
+                  : 'Debit card will be sent to the stored customer address.'}
+              </div>
+            )}
           </div>
         </div>
         <div className="divider__item__black" />
@@ -92,9 +104,9 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) 
         />
         <Button
           variant="filled__primary"
-          label="Home"
+          label={isChequingCreditChecked ? 'Get new card' : 'Home'}
           className="btn__cta"
-          onClick={onClickNavigateHome}
+          onClick={handleClickConfirm}
         />
       </div>
     </>

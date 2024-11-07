@@ -12,7 +12,6 @@ import useApi from '@hooks/useApi';
 import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
 import publicRoutes from '@routes/service/public-routes';
-import extendSession from '@utilities/gmCommon/extendSession';
 import { languageStorageKeys } from '@utilities/transform';
 import { reloadLanguageResource } from 'i18n/reloadLanguageResource';
 import { $h, wmatrix } from 'navigation/wmatrix_config';
@@ -127,7 +126,6 @@ const App = () => {
             // get param from native side
             const params = JSON.parse(data.param);
             setNativeParams(params);
-            extendSession();
           }
         } catch (error) {}
         setIsNativeRedirect();
@@ -168,7 +166,7 @@ const App = () => {
     polyfill();
     // for development
     if (process.env.NODE_ENV === 'development') {
-      setCurrentLanguage('ko');
+      setCurrentLanguage('en');
       // setAppPath(window.location.pathname);
     }
   }, []);
