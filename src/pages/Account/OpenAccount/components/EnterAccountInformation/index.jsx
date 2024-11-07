@@ -194,9 +194,13 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   const checkShowThirdPartyForm = () => {
     let showMoreInfo = false;
     if (productType === DepositSubjectClass.REGULAR_SAVING) {
-      showMoreInfo = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
-      if (productCode === ProductCode.RRSP_E_SAVINGS && showMoreInfo) {
-        showMoreInfo = !!taxYear;
+      if (productCode === ProductCode.CHEQUING) {
+        showMoreInfo = !!intendedUseAccountDisplay;
+      } else {
+        showMoreInfo = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
+        if (productCode === ProductCode.RRSP_E_SAVINGS && showMoreInfo) {
+          showMoreInfo = !!taxYear;
+        }
       }
     } else if (productType === DepositSubjectClass.TERM_DEPOSIT_GIC) {
       showMoreInfo = !!term && !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
@@ -288,11 +292,11 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     const { data, error, isSuccess } = await requestApi(endpoints.getCardList);
     setShowLoading(false);
     if (isSuccess) {
+      if (data && !data.card_cnt) {
+        setValue('debitCardIssuance', true, { shouldValidate: true });
+      }
       if (productCode === ProductCode.CHEQUING) {
         requestGetInterestRate(); //Get interest rate for chequing account after get card count
-      }
-      if (data && !data.grid_cnt_01) {
-        setValue('debitCardIssuance', true, { shouldValidate: true });
       }
     } else {
       setAlert({
@@ -323,11 +327,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   }, [showMoreInfo]);
 
   useEffect(() => {
-    if (productCode === ProductCode.CHEQUING) {
-      setShowMoreInfo(true);
-    } else {
-      checkShowThirdPartyForm();
-    }
+    checkShowThirdPartyForm();
   }, [amount, intendedUseAccountDisplay, selectedAccount, term, paymentDate, taxYear]);
 
   useEffect(() => {
@@ -404,17 +404,15 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                     />
                   </section>
                 )}
-                {!isChequing && (
-                  <section>
-                    <TextDropdown
-                      label="Intended use of account"
-                      placeholder="Select"
-                      align="vertical"
-                      onClick={handleOpenIntendedUseAccountBottom}
-                      value={intendedUseAccountDisplay}
-                    />
-                  </section>
-                )}
+                <section>
+                  <TextDropdown
+                    label="Intended use of account"
+                    placeholder="Select"
+                    align="vertical"
+                    onClick={handleOpenIntendedUseAccountBottom}
+                    value={intendedUseAccountDisplay}
+                  />
+                </section>
 
                 {isRRSPESaving && (
                   <section>
