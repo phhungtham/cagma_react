@@ -6,6 +6,7 @@ import ScrollAnchorTabWrapper from '@common/components/templates/ScrollAnchorTab
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, productLabels as labels } from '@common/constants/labels';
 import {
   PeriodUnitCodeDisplay,
   ProductCode,
@@ -18,10 +19,11 @@ import useLoginInfo from '@hooks/useLoginInfo';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 import showLogin from '@utilities/navigateScreen/showLogin';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import BorrowingInstructionBottom from './components/BorrowingInstructionBottom';
 import BorrowingList from './components/BorrowingList';
-import { BannerMapProductCode, DescriptionMapProductCode } from './constants';
+import { BannerMapProductCode, ProductListDescriptions } from './constants';
 import './styles.scss';
 
 const options = {
@@ -29,7 +31,7 @@ const options = {
   classAnchor: '.anchor__tab__wrapper',
 };
 
-const ProductList = () => {
+const ProductList = ({ translate: t }) => {
   const [showBorrowingInstructionBottom, setShowBorrowingInstructionBottom] = useState(false);
   const [accounts, setAccounts] = useState();
   const [showLoading, setShowLoading] = useState(false);
@@ -48,13 +50,13 @@ const ProductList = () => {
 
   const sections = useMemo(
     () => [
-      { ref: bankingTitleRef, tab: ProductTab.BANKING, label: ProductTabDisplay[ProductTab.BANKING] },
+      { ref: bankingTitleRef, tab: ProductTab.BANKING, label: t(ProductTabDisplay[ProductTab.BANKING]) },
       {
         ref: investmentTitleRef,
         tab: ProductTab.INVESTMENT,
-        label: ProductTabDisplay[ProductTab.INVESTMENT],
+        label: t(ProductTabDisplay[ProductTab.INVESTMENT]),
       },
-      { ref: borrowingTitleRef, tab: ProductTab.BORROWING, label: ProductTabDisplay[ProductTab.BORROWING] },
+      { ref: borrowingTitleRef, tab: ProductTab.BORROWING, label: t(ProductTabDisplay[ProductTab.BORROWING]) },
     ],
     []
   );
@@ -99,16 +101,16 @@ const ProductList = () => {
       if (!isExistChequingAccount) {
         return setAlert({
           isShow: true,
-          title: 'There is no Chequing account.',
-          content: 'Please open an Chequing account first.',
+          title: t(labels.noChequingAccount),
+          content: t(labels.pleaseOpenChequingAccount),
         });
       }
     } else {
       if (productCode !== ProductCode.CHEQUING && !isExistESavingAccount) {
         return setAlert({
           isShow: true,
-          title: 'There is no e-saving account.',
-          content: 'Please open an e-saving account first.',
+          title: t(labels.noESavingAccount),
+          content: t(labels.pleaseOpenSavingAccount),
         });
       }
     }
@@ -121,8 +123,8 @@ const ProductList = () => {
       if (isExistAccount) {
         return setAlert({
           isShow: true,
-          title: 'You’ve opened this account already.',
-          content: `Only one ${product.prdt_c_display} account can be held per customer.`,
+          title: t(labels.openAccountAlready),
+          content: t(labels.onlyOneProductAccount.replace('%1', product.prdt_c_display)),
         });
       }
     }
@@ -131,10 +133,19 @@ const ProductList = () => {
       const requiredAccountProductCode = RequiredAccountBaseProductCode[productCode];
       const isRequiredAccountExist = accountList.some(account => account.prdt_c === requiredAccountProductCode);
       if (!isRequiredAccountExist) {
+        let titleKey = '';
+        let contentKey = '';
+        if (productCode === ProductCode.TFSA_E_GIC) {
+          titleKey = labels.noTfsaESaving;
+          contentKey = labels.doNotOwnTfsaESaving;
+        } else if (productCode === ProductCode.RRSP_E_GIC) {
+          titleKey = labels.noRrspESaving;
+          contentKey = labels.doNotOwnRrspESaving;
+        }
         return setAlert({
           isShow: true,
-          title: `There is no ${product.prdt_c_display} account`,
-          content: `You currently do not own a ${product.prdt_c_display} account`,
+          title: t(titleKey),
+          content: t(contentKey),
         });
       }
     }
@@ -219,12 +230,12 @@ const ProductList = () => {
                       </div>
                       {/* //TODO: Check css for just render 3 line => Check Figma */}
                       <div className="product__desc">
-                        <span>{DescriptionMapProductCode[product.prdt_c]}</span>
+                        <span>{t(ProductListDescriptions[product.prdt_c])}</span>
                       </div>
                     </div>
                     <div className="product-card__spec">
                       <div className="product__item">
-                        <div className="item__label">Rate</div>
+                        <div className="item__label">{t(labels.rate)}</div>
                         <div className="item__value">
                           <span className="item__unit">up to</span>
                           <span className="item__quantity">{product?.ntfct_intrt}</span>
@@ -233,7 +244,7 @@ const ProductList = () => {
                       </div>
                       {product?.dep_sjt_class !== DepositSubjectClass.REGULAR_SAVING && (
                         <div className="product__item">
-                          <div className="item__label">Term</div>
+                          <div className="item__label">{t(labels.terms)}</div>
                           <div className="item__value">
                             <span className="item__quantity">
                               {product?.prdt_st_trm_unit_cnt}~{product?.prdt_close_trm_unit_cnt}
@@ -264,7 +275,7 @@ const ProductList = () => {
       <div className="product-list__wrapper">
         {(showLoadingGetProducts || showLoading) && <Spinner />}
         <div className="header__wrapper">
-          <span className="page__title">Product</span>
+          <span className="page__title">{t(labels.productCenter)}</span>
         </div>
         {!showLoadingGetProducts && (
           <ScrollAnchorTabWrapper
@@ -273,16 +284,22 @@ const ProductList = () => {
             options={options}
           >
             <div className="product-list__main">
-              {renderProductSection(bankingTitleRef, bankingProducts, 'banking', ProductTabDisplay[ProductTab.BANKING])}
+              {renderProductSection(
+                bankingTitleRef,
+                bankingProducts,
+                'banking',
+                t(ProductTabDisplay[ProductTab.BANKING])
+              )}
               {renderProductSection(
                 investmentTitleRef,
                 investmentProducts,
                 'investment',
-                ProductTabDisplay[ProductTab.INVESTMENT]
+                t(ProductTabDisplay[ProductTab.INVESTMENT])
               )}
               <BorrowingList
                 borrowingTitleRef={borrowingTitleRef}
                 onClick={handleClickBorrowingItem}
+                translate={t}
               />
             </div>
           </ScrollAnchorTabWrapper>
@@ -301,11 +318,11 @@ const ProductList = () => {
         onClose={handleCloseServerAlert}
         firstButton={{
           onClick: handleCloseServerAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>
   );
 };
 
-export default ProductList;
+export default withHTMLParseI18n(ProductList);

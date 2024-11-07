@@ -8,7 +8,7 @@ import TermConditionChecklist from '@common/components/organisms/TermConditionCh
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { PeriodUnitCodeDisplay } from '@common/constants/product';
 import { AppCfg } from '@configs/appConfigs';
-import { BannerMapProductCode, DescriptionMapProductCode } from '@pages/Product/ProductList/constants';
+import { BannerMapProductCode, ProductListDescriptions } from '@pages/Product/ProductList/constants';
 import { moveBack } from '@utilities/index';
 import { appLanguage } from 'app/redux/selector';
 
@@ -114,7 +114,7 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
                 <span>{prdt_c_display || lcl_prdt_nm}</span>
               </div>
               <div className="product__desc">
-                <span>{DescriptionMapProductCode[productCode]}</span>
+                <span>{ProductListDescriptions[productCode]}</span>
               </div>
             </div>
             <div className="banner__spec">

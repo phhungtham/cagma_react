@@ -105,7 +105,7 @@ const Login = () => {
       if (isDevelopmentEnv) {
         localStorage.setItem('isLogin', true);
       }
-      moveNext('', { param: JSON.stringify({ isFromLogin: true }) }, routePaths.signUp);
+      moveNext('', { param: JSON.stringify({ isFromLogin: true }) }, routePaths.productList);
     }
   }, [isLoginSuccess]);
 

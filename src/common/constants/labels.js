@@ -317,6 +317,7 @@ export const activeCardLabels = {
   contactUs: 'lbl_CACA600000_0092', //Contact Us
   viewCardBtn: 'lbl_CTA_6013', //View Card
   homeBtn: 'lbl_CTA_6014', //Home
+  pleaseRegisterYouPin: 'lbl_CACA600000_0067', //Please register your PIN at a Shinhan Bank ATM
 };
 
 export const reissueCardLabels = {
@@ -366,6 +367,50 @@ export const reissueCardLabels = {
   email: 'lbl_CACA600000_0108', //Email
   yourEmailWillOnly: 'lbl_CACA600000_0109', //Your email will only be used to send confirmation notifications.
   agreeUseEmail: 'lbl_CACA600000_0110', //I agree to the use of the email address for sending confirmation email for replacement of Access Card
+};
+
+export const productLabels = {
+  productCenter: 'men_title_CAPR010000', //Product center
+  banking: 'lbl_CAPR500000_0001', //Banking
+  investment: 'lbl_CAPR500000_0002', //Investment
+  borrowing: 'lbl_CAPR500000_0003', //Borrowing
+  eSavingDesc: 'lbl_CAPR500000_0007', //e-saving description
+  chequingDesc: 'lbl_CAPR502000_0013', //chequing description
+  ePowerTermDesc: 'lbl_CAPR500000_0020', //e-power term deposit description
+  eGreenTermDesc: 'lbl_CAPR500000_0026', //e-green term deposit description
+  eLongTermMonthlyDesc: 'lbl_CAPR500000_0032', //e-long term monthly description
+  eLongTermMaturityDesc: 'lbl_CAPR500000_0038', //e-long term maturity description
+  eShortTermDesc: 'lbl_CAPR500000_0044', //e-short term description
+  eInstallmentDesc: 'lbl_CAPR500000_0050', //e-installment description
+  tfsaESavingDesc: 'lbl_CAPR500000_0056', //TFSA e-saving description
+  tfsaEGicDesc: 'lbl_CAPR500000_0062', //TFSA e-gic description
+  rrspESavingDesc: 'lbl_CAPR500000_0068', //RRSP e-saving description
+  rrspEGicDesc: 'lbl_CAPR500000_0074', //RRSP e-gic description
+  mortgage: 'lbl_CAPR501100_0001', //Mortgage
+  personalLoan: 'lbl_CAPR501200_0001', //Personal Loan
+  mortgageDesc: 'lbl_CAPR501200_0001', //Mortgage description
+  lineOfCredit: 'lbl_CAPR501300_0001', //Line of Credit
+  personalLoanDesc: 'lbl_CAPR501200_0002', //Personal Loan description
+  lineOfCreditDesc: 'lbl_CAPR501300_0002', //Line of Credit description
+  mortgageContent1: 'lbl_CAPR501100_0003', //Mortgage content 1
+  mortgageContent2: 'lbl_CAPR501100_0004', //Mortgage content 2
+  mortgageContent3: 'lbl_CAPR501100_0005', //Mortgage content 3
+  personalLoanContent1: 'lbl_CAPR501200_0003', //Personal Loan content 1
+  personalLoanContent2: 'lbl_CAPR501200_0004', //Personal Loan content 2
+  lineCreditContent1: 'lbl_CAPR501300_0003', //Line Credit content 1
+  lineCreditContent2: 'lbl_CAPR501300_0004', //Line Credit content 2
+  rate: 'lbl_CAPR500000_0008', //Rate
+  terms: 'lbl_CAPR500000_0010', //Terms
+  noChequingAccount: 'lbl_CAPR500000_0093', //There is no Chequing account.
+  pleaseOpenChequingAccount: 'lbl_CAPR500000_0094', //Please open an Chequing account first.
+  noESavingAccount: 'lbl_CAPR500000_0091', //There is no e-saving account.
+  pleaseOpenSavingAccount: 'lbl_CAPR500000_0094', //Please open an e-saving account first.
+  openAccountAlready: 'lbl_CAPR500000_0089', //You’ve opened this account already.
+  onlyOneProductAccount: 'lbl_CAPR500000_0090', //Only one [product name] account can be held per customer.
+  noTfsaESaving: 'lbl_CAPR500000_0095', //There is no TFSA e-savings account.
+  doNotOwnTfsaESaving: 'lbl_CAPR500000_0096', //You currently do not own a TFSA e-savings account
+  noRrspESaving: 'lbl_CAPR500000_0097', //There is no RRSP e-savings account.
+  doNotOwnRrspESaving: 'lbl_CAPR500000_0098', //You currently do not own a RRSP e-savings account
 };
 
 export const menuLabels = {

@@ -1,12 +1,14 @@
+import { productLabels } from '@common/constants/labels';
+
 import { borrowings } from '../constants';
 
-const BorrowingList = ({ borrowingTitleRef, onClick }) => {
+const BorrowingList = ({ borrowingTitleRef, onClick, translate: t }) => {
   return (
     <div
       className="product-type-section"
       ref={borrowingTitleRef}
     >
-      <div className="product-list__title">Borrowing</div>
+      <div className="product-list__title">{t(productLabels.borrowing)}</div>
       <div className="product-type-list">
         {borrowings.map((product, index) => (
           <div
@@ -17,14 +19,16 @@ const BorrowingList = ({ borrowingTitleRef, onClick }) => {
             <div className="product-card__main">
               <div className="product-card__desc">
                 <div className="product__type">
-                  <span>{product.name}</span>
+                  <span>{t(product.name)}</span>
                 </div>
                 <div className="product__desc">
-                  <span>{product.desc}</span>
+                  <span>{t(product.desc)}</span>
                 </div>
               </div>
               <div className="product-borrowing__sub">
-                <span>{product.content}</span>
+                <div>{t(product.content1)}</div>
+                <div>{t(product.content2)}</div>
+                <div>{t(product.content3)}</div>
               </div>
             </div>
             <div className="product-card__image">

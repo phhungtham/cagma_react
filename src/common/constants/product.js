@@ -1,3 +1,4 @@
+import { productLabels } from './labels';
 import { SelectTermDurationTypes } from './terms';
 
 export const ProductPeriodUnitCode = {
@@ -31,9 +32,9 @@ export const ProductTab = {
 };
 
 export const ProductTabDisplay = {
-  [ProductTab.BANKING]: 'Banking',
-  [ProductTab.INVESTMENT]: 'Investment',
-  [ProductTab.BORROWING]: 'Borrowing',
+  [ProductTab.BANKING]: productLabels.banking,
+  [ProductTab.INVESTMENT]: productLabels.investment,
+  [ProductTab.BORROWING]: productLabels.borrowing,
 };
 
 export const ProductCode = {

@@ -61,6 +61,10 @@ const App = () => {
     if (!currentLanguage || currentLanguage === 'undefined') return;
 
     if (process.env.NODE_ENV === 'development') {
+      if (localStorage.getItem('ca_en')) {
+        reloadLanguageResource(currentLanguage);
+        return;
+      }
       const { data } = await requestApi('/gm/co/GMCO005.pwkjson', { appLanguage: currentLanguage });
       if (data?.languageList) {
         const langpack = data.languageList.reduce((acc, cur) => {
@@ -164,7 +168,7 @@ const App = () => {
     polyfill();
     // for development
     if (process.env.NODE_ENV === 'development') {
-      // setCurrentLanguage('en');
+      setCurrentLanguage('ko');
       // setAppPath(window.location.pathname);
     }
   }, []);
