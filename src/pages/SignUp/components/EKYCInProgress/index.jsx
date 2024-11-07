@@ -67,13 +67,16 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
       uuid_v: deviceId || 'deviceId',
       cus_fst_nm: firstName,
       cus_last_nm: lastName,
-      // e_sgn_trx_id: packageId,
-      e_sgn_trx_id: 'dSnooW1bbYqt4puzYtJRfd3bsM4=',
+      e_sgn_trx_id: packageId,
+      // e_sgn_trx_id: 'dSnooW1bbYqt4puzYtJRfd3bsM4=',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep3, payload);
     setShowLoading(false);
     if (isSuccess) {
-      const { confm_proc_s: processingStatus } = data || {};
+      const { confm_proc_s: processingStatus, rslt_d: resultStatus, cusno } = data || {};
+      if (Number(resultStatus) !== 1) {
+        return;
+      }
       if (['20', '30', '40'].includes(processingStatus)) {
         setShowRetryBtn(true);
         setShowToast({
@@ -82,7 +85,8 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
           type: 'error',
         });
       } else if (processingStatus === '10') {
-        onConfirm();
+        const isFetchCustomerData = !!cusno;
+        onConfirm(isFetchCustomerData);
       } else if (['50', '60'].includes(processingStatus)) {
         return navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
       }

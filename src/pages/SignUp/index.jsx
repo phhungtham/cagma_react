@@ -8,6 +8,7 @@ import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
+import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { nativeParamsSelector } from 'app/redux/selector';
 
 import AgreeTermsConditions from './components/AgreeTermsConditions';
@@ -31,9 +32,11 @@ import { SignUpStep } from './constants';
 export const SignUpContext = createContext();
 
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState(); //TODO: Just for test
+  const [currentStep, setCurrentStep] = useState();
   const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
+  const [ekycCached, setEkycCached] = useState();
+  const [existingCustomer, setExistingCustomer] = useState();
   const [userId, setUserId] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
@@ -74,7 +77,29 @@ const SignUp = () => {
     setCurrentStep(SignUpStep.EKYC_IN_PROGRESS);
   };
 
-  const handleConfirmEKYC = () => {
+  const requestGetExistingCustomerInfo = async () => {
+    setShowLoading(true);
+    const { email: cus_email } = ekycCached || {};
+    const payload = {
+      cus_email: cus_email,
+      uuid_v: deviceId,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.getExistingCustomerInfo, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      setExistingCustomer(data);
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  const handleConfirmEKYC = async isFetchCustomerData => {
+    if (isFetchCustomerData) {
+      await requestGetExistingCustomerInfo();
+    }
     setCurrentStep(SignUpStep.ENTER_PERSONAL_DETAIL);
   };
 
@@ -145,8 +170,14 @@ const SignUp = () => {
     }
   };
 
+  const setEkycToNativeCache = info => {
+    setEkycInfo(info);
+    setEkycCached(info);
+  };
+
   const getEkycInfoCallback = result => {
     const { isEkycProcessing, email, deviceId } = result || {};
+    setEkycToNativeCache(result);
     setDeviceId(deviceId);
     // setUserEmail(email);
     const isFromLogin = nativeParams?.isFromLogin;
@@ -167,7 +198,7 @@ const SignUp = () => {
   }, []);
 
   return (
-    <SignUpContext.Provider value={{ deviceId, userId }}>
+    <SignUpContext.Provider value={{ deviceId, userId, existingCustomer, ekycCached, setEkycToNativeCache }}>
       {showLoading && <Spinner />}
       <div className="sign-up__wrapper page__wrapper">
         {currentStep === SignUpStep.VERIFY_ID && <SignUpVerifyID onConfirm={handleConfirmVerifyID} />}
@@ -202,12 +233,7 @@ const SignUp = () => {
         {currentStep === SignUpStep.ENTER_PERSONAL_DETAIL && (
           <EnterPersonalDetail onConfirm={handleSubmitPersonalDetail} />
         )}
-        {currentStep === SignUpStep.EKYC_RESULT && (
-          <EKYCResult
-            isSuccess={false}
-            onNavigate={handleNavigateCreateId}
-          />
-        )}
+        {currentStep === SignUpStep.EKYC_RESULT && <EKYCResult onNavigate={handleNavigateCreateId} />}
         {currentStep === SignUpStep.CREATE_ID && <SignUpCreateID onConfirm={handleCreateID} />}
         {currentStep === SignUpStep.CREATE_PASSWORD && <SignUpCreatePassword onConfirm={handleCreatePassword} />}
         {currentStep === SignUpStep.MOTP_AGREE_TERMS && (

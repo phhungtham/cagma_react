@@ -6,7 +6,7 @@ import Input from '@common/components/atoms/Input/Input';
 import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
-  const { control, watch, setValue } = useFormContext();
+  const { control } = useFormContext();
 
   return (
     <div className="form__section">

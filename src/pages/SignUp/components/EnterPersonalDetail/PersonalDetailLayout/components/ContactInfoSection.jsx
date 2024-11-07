@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Input from '@common/components/atoms/Input/Input';
+import { SignUpContext } from '@pages/SignUp';
 
 const ContactInfoSection = () => {
+  const { existingCustomer } = useContext(SignUpContext);
   const { control, watch, setValue } = useFormContext();
 
   return (
@@ -22,7 +25,7 @@ const ContactInfoSection = () => {
         render={({ field }) => (
           <Input
             label="E-mail Address"
-            disabled
+            disabled={!!existingCustomer}
             {...field}
           />
         )}

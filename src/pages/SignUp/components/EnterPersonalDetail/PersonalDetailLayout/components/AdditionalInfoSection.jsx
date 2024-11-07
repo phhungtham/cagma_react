@@ -1,12 +1,15 @@
+import { useContext } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import CheckBox from '@common/components/atoms/Checkbox';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
+import { SignUpContext } from '@pages/SignUp';
 
 import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
+  const { existingCustomer } = useContext(SignUpContext);
   const { control, watch, setValue } = useFormContext();
 
   const [notSin] = watch(['notSin']);
@@ -20,7 +23,7 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
             label="Nationality"
             onFocus={() => onOpenSelectBottom(SignUpSelectType.NATIONALITY)}
             options={commonCode[CommonCodeFieldName.COUNTRY]}
-            disabled
+            disabled={!!existingCustomer}
             {...field}
           />
         )}

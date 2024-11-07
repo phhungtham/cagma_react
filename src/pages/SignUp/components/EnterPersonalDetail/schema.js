@@ -2,13 +2,13 @@ import * as Yup from 'yup';
 
 export const SignUpPersonalDetailSchema = Yup.object().shape({
   title: Yup.string().required('Required field'),
-  firstName: Yup.string(),
+  firstName: Yup.string().required('Required field'),
   middleName: Yup.string().nullable(),
-  lastName: Yup.string(),
-  dob: Yup.string(),
+  lastName: Yup.string().required('Required field'),
+  dob: Yup.string().required('Required field'),
   dob_display: Yup.string(),
   cellNumber: Yup.string().required('Required field'),
-  emailAddress: Yup.string(),
+  emailAddress: Yup.string().email().required('Required field'),
   country: Yup.string().required('Required field'),
   postalCode: Yup.string().required('Required field'),
   aptNumber: Yup.string().required('Required field'),

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
@@ -6,12 +6,10 @@ import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
-import { buildObjectMapFromResponse } from '@utilities/convert';
-import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
-import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
+import { buildRequestPayloadBaseMappingFields } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 
-import { dummyData, signUpPersonalMapFields } from './constants';
+import { signUpPepMapFields, signUpPersonalMapFields } from './constants';
 import PersonalDetailLayout from './PersonalDetailLayout';
 import VerifyPEPStatusLayout from './VerifyPEPStatusLayout';
 
@@ -20,8 +18,8 @@ const CurrentSteps = {
   VERIFY_PEP: 'verifyPEP',
 };
 
-const EnterPersonalDetail = ({ onConfirm }) => {
-  const { deviceId } = useContext(SignUpContext);
+const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
+  const { existingCustomer, ekycCached, deviceId } = useContext(SignUpContext);
   const [ekycPluginInfo, setEkycPluginInfo] = useState();
   const [currentStep, setCurrentStep] = useState(CurrentSteps.PERSONAL_DETAIL);
   const [showLoading, setShowLoading] = useState(false);
@@ -35,70 +33,29 @@ const EnterPersonalDetail = ({ onConfirm }) => {
 
   const { requestApi } = useApi();
 
-  const requestPreRegisterCustomerInfoStep4 = async values => {
-    debugger;
-    //TODO: Map CASE114
-    //   setShowLoading(true);
-    //   const mappingObject = buildRequestPayloadBaseMappingFields(values, signUpPersonalMapFields);
-    //   const payload = {
-    //     ...mappingObject,
-    //     uuid_v: deviceId,
-    //     cus_natnlt_nat_c: values.nationality,
-    //     rsdc_yn: values.residentialStatus,
-    //     lcl_cus_rlnm_no2: values.sin,
-    //     lcl_cus_rlnm_no2_yn: values.notSin ? 'N' : 'Y',
-    //     //TODO: Those field not exist on UI. Just for test
-    //     cus_rsdc_nat_c: '11',
-    //     house_telno: '',
-    //     house_telno_nat_c: '',
-    //     high_rsk_cus_class_c: '',
-    //     fund_soce_d_c: '',
-    //     pep_relt_d: '',
-    //     pep_stat_c: '',
-    //     pep_fst_nm: '',
-    //     pep_last_nm: '',
-    //     pep_act_nat_c: '',
-    //     pep_act_org_nm: '',
-    //     new_brno: '',
-    //     pep_hio_yn: 'N',
-    //   };
-    //   const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep4, payload);
-    //   setShowLoading(false);
-    //   if (!isSuccess) {
-    //     onConfirm();
-    //   } else {
-    //     return setAlert({
-    //       isShow: true,
-    //       content: error,
-    //     });
-    //   }
-  };
-
-  const requestGetExistingCustomerInfo = async ekycInfo => {
+  const requestPreRegisterCustomerInfoStep4 = async pepValues => {
     setShowLoading(true);
-    const { email: cus_email } = ekycInfo || {};
+    const pepPayload = buildRequestPayloadBaseMappingFields(pepValues, signUpPepMapFields);
+    const personalPayload = buildRequestPayloadBaseMappingFields(personalDetail, signUpPersonalMapFields);
     const payload = {
-      cus_email,
+      ...personalPayload,
+      ...pepPayload,
       uuid_v: deviceId,
+      lcl_cus_rlnm_no2_yn: personalDetail.notSin ? 'Y' : 'N',
+      rsdc_yn: personalDetail.residentialStatus === '04' ? '0' : '1',
+      high_rsk_cus_class_c: pepValues.pepDetermination === 'Y' ? 'HR09' : '',
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.getExistingCustomerInfo, payload);
+
+    const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep4, payload);
     setShowLoading(false);
-    //TODO: Just for test
-    if (!isSuccess) {
-      const customer = buildObjectMapFromResponse(dummyData, signUpPersonalMapFields);
-      customer.dob_display = formatYYYYMMDDToDisplay(customer.dob);
-      setOriginCustomer(customer);
+    if (isSuccess) {
+      onConfirm();
     } else {
       return setAlert({
         isShow: true,
         content: error,
       });
     }
-  };
-
-  const getEkycInfoCallback = result => {
-    setEkycPluginInfo(result);
-    requestGetExistingCustomerInfo(result);
   };
 
   const handleSubmitPersonalDetail = values => {
@@ -117,10 +74,6 @@ const EnterPersonalDetail = ({ onConfirm }) => {
     });
   };
 
-  useEffect(() => {
-    getEkycInfo(getEkycInfoCallback);
-  }, []);
-
   return (
     <>
       <div>
@@ -129,12 +82,7 @@ const EnterPersonalDetail = ({ onConfirm }) => {
           title="Sign up"
           onClick={moveBack}
         />
-        {currentStep === CurrentSteps.PERSONAL_DETAIL && (
-          <PersonalDetailLayout
-            onSubmit={handleSubmitPersonalDetail}
-            customer={originCustomer}
-          />
-        )}
+        {currentStep === CurrentSteps.PERSONAL_DETAIL && <PersonalDetailLayout onSubmit={handleSubmitPersonalDetail} />}
         {currentStep === CurrentSteps.VERIFY_PEP && <VerifyPEPStatusLayout onSubmit={handleSubmitPEP} />}
       </div>
       <Alert

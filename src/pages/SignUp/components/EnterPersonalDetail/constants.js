@@ -9,7 +9,7 @@ export const SignUpSelectType = {
   RESIDENTIAL_STATUS: 'Residential Status',
   PEP_RELATIONSHIP: 'Relationship',
   PEP_POSITION: 'Position',
-  PEP_COUNTRY: 'Country',
+  PEP_COUNTRY: 'PEP/HIO Country',
   PEP_SOURCE: 'Source of Fund',
 };
 
@@ -83,32 +83,43 @@ export const signUpPersonalMapFields = {
   residentialStatus: 'rsdc_dtl_c',
 };
 
-export const dummyData = {
-  cus_ttl_nm: 'MX',
-  cus_fst_nm: 'CUS-FST-NM4100002250',
-  cus_middle_nm: null,
-  cus_last_nm: 'CUS-LAST-NM4100002250',
-  cus_bth_y4mm_dt: '19700109',
-  cus_cell_no: 'CUS-CELL-NO4100002250',
-  cus_rsdc_nat_c: 'CA',
-  house_zipc: null,
-  house_adr_strt_nm: null,
-  house_adr_colny_nm: null,
-  house_adr1: null,
-  house_adr_houseno_in_ctt: null,
-  house_adr_city_nm: null,
-  house_adr_state_c: null,
-  emplm_s_c: '2',
-  job_t: '4',
-  sub_job_t_v: 'E0407',
-  job_nm: 'PHARMACISTS2',
-  cus_email: 'jangwon2630@shinhan.com',
-  cus_natnlt_nat_c: 'CA',
-  lcl_cus_rlnm_no2: 'L2158-78887-00109',
-  house_telno: null,
-  new_brno: '8048',
-  rsdc_dtl_c: '01',
+export const signUpPepMapFields = {
+  pepDetermination: 'pep_hio_yn',
+  pepRelationship: 'pep_relt_d',
+  pepFirstName: 'pep_fst_nm',
+  pepLastName: 'pep_last_nm',
+  pepPosition: 'pep_stat_c',
+  pepOrganizationName: 'pep_act_org_nm',
+  pepCountry: 'pep_act_nat_c',
+  pepSource: 'fund_soce_d_c',
 };
+
+// export const dummyData = {
+//   cus_ttl_nm: 'MX',
+//   cus_fst_nm: 'CUS-FST-NM4100002250',
+//   cus_middle_nm: null,
+//   cus_last_nm: 'CUS-LAST-NM4100002250',
+//   cus_bth_y4mm_dt: '19700109',
+//   cus_cell_no: 'CUS-CELL-NO4100002250',
+//   cus_rsdc_nat_c: 'CA',
+//   house_zipc: null,
+//   house_adr_strt_nm: null,
+//   house_adr_colny_nm: null,
+//   house_adr1: null,
+//   house_adr_houseno_in_ctt: null,
+//   house_adr_city_nm: null,
+//   house_adr_state_c: null,
+//   emplm_s_c: '2',
+//   job_t: '4',
+//   sub_job_t_v: 'E0407',
+//   job_nm: 'PHARMACISTS2',
+//   cus_email: 'jangwon2630@shinhan.com',
+//   cus_natnlt_nat_c: 'CA',
+//   lcl_cus_rlnm_no2: 'L2158-78887-00109',
+//   house_telno: null,
+//   new_brno: '8048',
+//   rsdc_dtl_c: '01',
+// };
 
 export const pepDeterminationOptions = [
   {

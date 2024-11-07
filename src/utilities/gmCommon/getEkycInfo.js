@@ -17,7 +17,6 @@ const getEkycInfo = cb => {
       const parseData = JSON.parse(rawData);
       return cb({
         ...parseData,
-        deviceId: 'deviceId4',
       });
     }
     return cb({ deviceId: 'deviceId4' });

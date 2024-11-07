@@ -52,7 +52,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
 
   const [pepDetermination, pepRelationship] = watch(['pepDetermination', 'pepRelationship']);
 
-  const isSelfRelationSelected = pepRelationship === '01'; //SELF
+  const isRelationshipOtherSelf = pepRelationship && pepRelationship !== '01'; //SELF
 
   const handleOpenSelectBottom = type => {
     let options = commonCode[SelectTypeMapCommonCodeField[type]];
@@ -173,7 +173,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                   control={control}
                   name="pepRelationship"
                 />
-                {!isSelfRelationSelected && (
+                {isRelationshipOtherSelf && (
                   <>
                     <Controller
                       render={({ field }) => (

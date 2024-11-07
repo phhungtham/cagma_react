@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import Alert from '@common/components/atoms/Alert';
@@ -20,11 +20,14 @@ import {
 import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
-import { commonCodeDataToOptions } from '@utilities/convert';
+import { SignUpContext } from '@pages/SignUp';
+import { buildObjectMapFromResponse, commonCodeDataToOptions } from '@utilities/convert';
+import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 
 import {
   CommonCodeFieldName,
   SelectTypeMapCommonCodeField,
+  signUpPersonalMapFields,
   SignUpSelectBottomMapFields,
   SignUpSelectType,
 } from '../constants';
@@ -37,7 +40,8 @@ import HomeAddressSection from './components/HomeAddressSection';
 import IDInfoSection from './components/IDInfoSection';
 import ManagementBranch from './components/ManagementBranch';
 
-const PersonalDetailLayout = ({ customer, onSubmit }) => {
+const PersonalDetailLayout = ({ onSubmit }) => {
+  const { existingCustomer } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [occupation2Options, setOccupation2Options] = useState([]);
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
@@ -50,13 +54,14 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
   const [branches, setBranches] = useState();
   const [commonCode, setCommonCode] = useState({
     [CommonCodeFieldName.TITLE]: [],
-    [CommonCodeFieldName.EMPLOYMENT]: [],
     [CommonCodeFieldName.JOB]: [],
     [CommonCodeFieldName.SUB_JOB]: [],
     [CommonCodeFieldName.COUNTRY]: [],
     [CommonCodeFieldName.PROVINCE]: [],
     [CommonCodeFieldName.EMPLOYMENT_STATUS]: [],
   });
+
+  console.log('commonCode :>> ', commonCode);
   const { requestApi } = useApi();
 
   const methods = useForm({
@@ -176,7 +181,6 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
       const convertedProvinces = commonCodeDataToOptions(provinces);
       const convertedEmploymentStatus = commonCodeDataToOptions(employmentStatus);
       const convertedResidentialStatus = commonCodeDataToOptions(residentialStatus);
-      //Set default value
       setCommonCode({
         [CommonCodeFieldName.TITLE]: convertedCustomerTitleNames,
         [CommonCodeFieldName.JOB]: convertedJobs,
@@ -235,8 +239,8 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
     setShowLoading(false);
     if (isSuccess) {
       const branchList = data.r_CACO006_1Vo || [];
-      if (customer?.branchNo) {
-        const branchName = branchList.find(item => item.brno === customer.branchNo)?.lcl_br_nm || '';
+      if (existingCustomer?.branchNo) {
+        const branchName = branchList.find(item => item.brno === existingCustomer.branchNo)?.lcl_br_nm || '';
         setValue('branchDisplay', branchName, { shouldValidate: true });
       }
       setBranches(branchList);
@@ -264,16 +268,21 @@ const PersonalDetailLayout = ({ customer, onSubmit }) => {
   }, [notSin]);
 
   useEffect(() => {
-    if (customer) {
+    if (existingCustomer) {
+      const customer = buildObjectMapFromResponse(existingCustomer, signUpPersonalMapFields);
+      customer.dob_display = customer.dob ? formatYYYYMMDDToDisplay(customer.dob) : '';
       reset({
-        ...customer,
+        ...existingCustomer,
         showAdditionalInfo: false,
-        title: customer.title || 'MR',
+        title: existingCustomer.title || 'MR',
       });
       trigger();
-      requestGetCommonCode();
     }
-  }, [customer]);
+  }, [existingCustomer]);
+
+  useEffect(() => {
+    requestGetCommonCode();
+  }, []);
 
   return (
     <>
