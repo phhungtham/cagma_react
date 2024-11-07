@@ -6,7 +6,6 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
-import { isDevelopmentEnv } from '@common/constants/common';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -38,11 +37,6 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
   };
 
   const handleOpenCalendar = () => {
-    if (isDevelopmentEnv) {
-      //For dummy data because it call native calendar
-      setValue('dob', '19750227', { shouldValidate: true });
-      setValue('dob_display', formatYYYYMMDDToDisplay('19750227'), { shouldValidate: true });
-    }
     openCalendar(handleSelectDate, { selectDate: dob || undefined });
   };
 

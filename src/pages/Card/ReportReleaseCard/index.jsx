@@ -76,15 +76,15 @@ const ReportReleaseCard = () => {
     const { data, error, isSuccess } = await requestApi(endpoints.getReportCardDetail);
     setShowLoading(false);
     if (isSuccess) {
-      const { r_GIBD2111_1Vo: reportDetails } = data || {};
-      if (reportDetails?.length) {
+      const { card_cnt: cardCount } = data || {};
+      if (cardCount > 0) {
         const {
           cashcd_acdnt_c: cardAccountCode,
           regis_trx_dt: date,
           cashcd_acdnt_c_display: accountCode,
           cashcd_acdnt_desc: detail,
           glb_id: globalId,
-        } = reportDetails[0];
+        } = data;
         setReportDetail({
           date: formatYYYYMMDDToDisplay(date),
           accountCode,
