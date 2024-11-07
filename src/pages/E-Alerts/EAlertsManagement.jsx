@@ -13,6 +13,7 @@ import { ctaLabels, eAlertLabels as labels, menuLabels } from '@common/constants
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
 import { isIphone } from '@utilities/deviceDetected';
+import getPushToken from '@utilities/gmCommon/getPushToken';
 import { moveBack, moveNext } from '@utilities/index';
 import { appLanguage } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -75,6 +76,7 @@ const EAlertsManagement = ({ translate: t }) => {
     const { isSuccess, error, data } = await requestApi(endpoints.getEAlertSetting, {});
     setShowLoading(false);
     if (isSuccess) {
+      getPushToken(getTokenCallback);
       const {
         offers_push_yn: offerEnabled,
         cus_info_email_yn: customerEmailEnabled,
@@ -176,7 +178,6 @@ const EAlertsManagement = ({ translate: t }) => {
   };
 
   useEffect(() => {
-    // getPushToken(getTokenCallback);
     requestGetEAlertSetting();
   }, []);
 

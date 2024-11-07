@@ -100,6 +100,7 @@ const EAlertsBalance = ({ translate: t }) => {
     setShowLoading(true);
     const { isSuccess, error, data } = await requestApi(endpoints.getEAlertSetting, {});
     if (isSuccess) {
+      getPushToken(getTokenCallback);
       const { grid_01: accountList } = data || {};
       const newAccounts = (accountList || []).map(item => {
         return {
@@ -244,7 +245,6 @@ const EAlertsBalance = ({ translate: t }) => {
   };
 
   useEffect(() => {
-    getPushToken(getTokenCallback);
     requestGetEAlertSetting();
   }, []);
   return (
