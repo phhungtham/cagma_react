@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
-import { BiometricAuthType } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
@@ -19,25 +18,23 @@ import EKYCInProgress from './components/EKYCInProgress';
 import EKYCResult from './components/EKYCResult';
 import SignUpEnterEmail from './components/EnterEmail';
 import EnterPersonalDetail from './components/EnterPersonalDetail';
-import OpenAccountInstruction from './components/OpenAccountInstruction';
-import SetUpAlerts from './components/SetUpAlerts';
-import SetUpBiometricAuth from './components/SetUpBiometricAuth';
 import SignUpSuccess from './components/SignUpSuccess';
-import SignUpVerifyID from './components/VerifyID';
+import ThankVisitAgain from './components/ThankVisitAgain';
 import VerifyIdentityTerms from './components/VerifyIdentityTerms';
 import VerifyMembershipResult from './components/VerifyMembershipResult';
 import VerifyUserInfo from './components/VerifyUserInfo';
-import { SignUpStep } from './constants';
+import { SignUpStep, SignUpStepStatus } from './constants';
 
 export const SignUpContext = createContext();
 
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState();
+  const [currentStep, setCurrentStep] = useState(SignUpStep.CREATE_ID);
   const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
   const [ekycCached, setEkycCached] = useState();
   const [existingCustomer, setExistingCustomer] = useState();
   const [userId, setUserId] = useState();
+  const [ekycResultSuccess, setEkycResultSuccess] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -104,11 +101,16 @@ const SignUp = () => {
   };
 
   const handleSubmitPersonalDetail = () => {
+    setEkycResultSuccess(true);
     setCurrentStep(SignUpStep.EKYC_RESULT);
   };
 
   const handleNavigateCreateId = () => {
     setCurrentStep(SignUpStep.CREATE_ID);
+  };
+
+  const handleNavigateCreatePasscode = () => {
+    setCurrentStep(SignUpStep.MOTP_AGREE_TERMS);
   };
 
   const handleCreateID = id => {
@@ -140,6 +142,15 @@ const SignUp = () => {
     setCurrentStep(SignUpStep.OPEN_ACCOUNT_INSTRUCTION);
   };
 
+  const handleNavigateEkycResult = ({ isSuccess }) => {
+    setEkycResultSuccess(isSuccess);
+    setCurrentStep(SignUpStep.EKYC_RESULT);
+  };
+
+  const handleNavigateWelcome = () => {
+    setCurrentStep(SignUpStep.VERIFY_USER_INFO);
+  };
+
   const handleCloseAlert = () => {
     setAlert({
       ...alert,
@@ -157,10 +168,16 @@ const SignUp = () => {
     setShowLoading(false);
     if (isSuccess) {
       const { ekyc_aplct_stp_c: applyCode } = data;
-      if (Number(applyCode) === 1) {
+      if (Number(applyCode) === SignUpStepStatus.REGISTERED_EMAIL) {
         setCurrentStep(SignUpStep.VERIFY_IDENTITY_TERMS);
-      } else if (Number(applyCode) === 2 || Number(applyCode) === 3) {
+      } else if ([SignUpStepStatus.EKYC_IN_PROGRESS, SignUpStepStatus.EKYC_DONE].includes(Number(applyCode))) {
         setCurrentStep(SignUpStep.EKYC_IN_PROGRESS);
+      } else if (
+        [SignUpStepStatus.INFO_APPROVED, SignUpStepStatus.INFO_REVIEWING, SignUpStepStatus.INFO_REJECTED].includes(
+          Number(applyCode)
+        )
+      ) {
+        setCurrentStep(SignUpStep.THANK_VISIT_AGAIN);
       }
     } else {
       return setAlert({
@@ -201,7 +218,6 @@ const SignUp = () => {
     <SignUpContext.Provider value={{ deviceId, userId, existingCustomer, ekycCached, setEkycToNativeCache }}>
       {showLoading && <Spinner />}
       <div className="sign-up__wrapper page__wrapper">
-        {currentStep === SignUpStep.VERIFY_ID && <SignUpVerifyID onConfirm={handleConfirmVerifyID} />}
         {currentStep === SignUpStep.VERIFY_USER_INFO && (
           <VerifyUserInfo
             navigateToVerifyResult={handleNavigateToVerifyMemberResult}
@@ -233,7 +249,21 @@ const SignUp = () => {
         {currentStep === SignUpStep.ENTER_PERSONAL_DETAIL && (
           <EnterPersonalDetail onConfirm={handleSubmitPersonalDetail} />
         )}
-        {currentStep === SignUpStep.EKYC_RESULT && <EKYCResult onNavigate={handleNavigateCreateId} />}
+        {currentStep === SignUpStep.EKYC_RESULT && (
+          <EKYCResult
+            onNavigate={handleNavigateCreateId}
+            isSuccess={ekycResultSuccess}
+            handleNavigateWelcome={handleNavigateWelcome}
+          />
+        )}
+        {currentStep === SignUpStep.THANK_VISIT_AGAIN && (
+          <ThankVisitAgain
+            onConfirm={handleConfirmVerifyID}
+            onNavigateEkycResult={handleNavigateEkycResult}
+            onNavigateCreateId={handleNavigateCreateId}
+            onNavigateCreatePasscode={handleNavigateCreatePasscode}
+          />
+        )}
         {currentStep === SignUpStep.CREATE_ID && <SignUpCreateID onConfirm={handleCreateID} />}
         {currentStep === SignUpStep.CREATE_PASSWORD && <SignUpCreatePassword onConfirm={handleCreatePassword} />}
         {currentStep === SignUpStep.MOTP_AGREE_TERMS && (
@@ -241,7 +271,8 @@ const SignUp = () => {
         )}
         {currentStep === SignUpStep.CREATE_PASSCODE && <SignUpCreatePasscode onConfirm={handleCreatePasscodeSuccess} />}
         {currentStep === SignUpStep.SIGN_UP_COMPLETE && <SignUpSuccess onConfirm={handleNavigateSetupBiometricAuth} />}
-        {currentStep === SignUpStep.SET_UP_BIOMETRIC_AUTH && (
+        {/* //TODO: These step below handle by Native */}
+        {/* {currentStep === SignUpStep.SET_UP_BIOMETRIC_AUTH && (
           <SetUpBiometricAuth
             type={BiometricAuthType.TOUCH_ID}
             onSkipSetUp={handleNavigateSetUpAlerts}
@@ -259,7 +290,7 @@ const SignUp = () => {
             onSkipSetUp={() => {}}
             onOpenAccount={() => {}}
           />
-        )}
+        )} */}
       </div>
       <Alert
         isCloseButton={false}

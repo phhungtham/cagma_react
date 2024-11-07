@@ -17,6 +17,7 @@ export const getResidentialStatus = 'casol_rsdc_dtl_c';
 export const getPEPRelationship = 'pep_relt_d';
 export const getPEPPosition = 'pep_stat_c';
 export const getPEPSourceOfFund = 'fund_soce_d_c';
+export const getIdTypes = 'lcl_cus_rlnm_no';
 
 export const EmploymentMap = {
   Employed: '2',

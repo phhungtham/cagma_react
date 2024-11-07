@@ -1,31 +1,35 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import Dropdown from '@common/components/atoms/Dropdown';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
-import { isDevelopmentEnv } from '@common/constants/common';
+import { getIdTypes } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import { SignUpContext } from '@pages/SignUp';
+import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
 import { t } from 'i18next';
 
 import { verifyIdFormSchema } from './schema';
 
-const SignUpVerifyID = ({ onConfirm }) => {
+const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, onNavigateCreatePasscode }) => {
+  const { existingCustomer, ekycCached, deviceId } = useContext(SignUpContext);
   const { requestApi } = useApi();
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
+  const [idTypes, setIdTypes] = useState([]);
   const [showLoading, setShowLoading] = useState();
   const [alert, setAlert] = useState({
     isShow: false,
@@ -57,9 +61,6 @@ const SignUpVerifyID = ({ onConfirm }) => {
   };
 
   const handleOpenSecurityKeyboard = () => {
-    if (isDevelopmentEnv) {
-      setValue('id', 'test id');
-    }
     showCertificationChar(handleChangeID);
   };
 
@@ -79,66 +80,42 @@ const SignUpVerifyID = ({ onConfirm }) => {
     onConfirm();
   };
 
-  const handleSubmitForm = values => {
-    //TODO: For test
-    setShowIncorrectInfoAlert(true);
-  };
-
-  const requestGetOneSpanInfomation = async () => {
-    const payload = {};
+  const handleSubmitForm = async values => {
+    const { email: cus_email, dob: cus_bth_y4mm_dt, id: lcl_cus_rlnm_no, idType: lcl_cus_rlnm_no_t } = values;
     setShowLoading(true);
-    const { isSuccess, error, data } = await requestApi(endpoints.getOneSpanInfomation, payload);
+    const payload = {
+      uuid_v: deviceId,
+      cus_email,
+      cus_bth_y4mm_dt,
+      lcl_cus_rlnm_no,
+      lcl_cus_rlnm_no_t,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.checkSignUpApprovalStatus, payload);
     setShowLoading(false);
-    if (!isSuccess) {
+    if (isSuccess) {
+      const { rslt_d, inter_cus_yn } = data;
+      //TODO: Handle navigate
+      if (Number(rslt_d) === 9) {
+        return onNavigateEkycResult({ isSuccess: false });
+      }
+      if (Number(rslt_d) === 8) {
+        return onNavigateEkycResult({ isSuccess: true });
+      }
+      if (inter_cus_yn === 'N') {
+        return onNavigateCreateId();
+      }
+      if (inter_cus_yn === 'Y') {
+        return onNavigateCreatePasscode();
+      }
+    } else {
       return setAlert({
         isShow: true,
         content: error,
       });
     }
-    return data;
   };
 
-  const requestGetOneSpanStatus = async () => {
-    const payload = { e_sgn_trx_id: transactionID };
-    setShowLoading(true);
-    const { isSuccess, error, data } = await requestApi(endpoints.getOneSpanStatus, payload);
-    setShowLoading(false);
-    if (!isSuccess) {
-      return setAlert({
-        isShow: true,
-        content: error,
-      });
-    }
-    return data;
-  };
-
-  const handleOnClickOpenOneSpan = async () => {
-    const data = await requestGetOneSpanInfomation();
-    if (data) {
-      const urlLink = data.signingUrl;
-      setTransactionID(data.packageId);
-      console.log(data.packageId);
-      openURLInBrowser(urlLink);
-      setShowToast({
-        isShow: true,
-        message: 'Called CASE101 successfully',
-        type: 'success',
-      });
-    }
-  };
-
-  const handleOnClickCheckOneSpanStatus = async () => {
-    const data = await requestGetOneSpanStatus();
-    if (data) {
-      console.log(data);
-      setTransactionStatus(data);
-      setShowToast({
-        isShow: true,
-        message: `Called CASE102 successfully, Result code ${data.resCd}`,
-        type: 'success',
-      });
-    }
-  };
+  const handleOpenIdTypeSelectBottom = () => {};
 
   const handleCloseAlert = () => {
     setAlert({
@@ -147,6 +124,29 @@ const SignUpVerifyID = ({ onConfirm }) => {
       content: '',
     });
   };
+
+  const requestGetIdTypes = async () => {
+    setShowLoading(true);
+    const payload = {
+      code: getIdTypes,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { [getIdTypes]: idTypeList } = data;
+      const convertedIdTypeList = commonCodeDataToOptions(idTypeList);
+      setIdTypes(convertedIdTypeList);
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
+  useEffect(() => {
+    requestGetIdTypes();
+  }, []);
 
   return (
     <>
@@ -157,7 +157,7 @@ const SignUpVerifyID = ({ onConfirm }) => {
           onClick={moveBack}
         />
         <div className="page__form">
-          <div className="page__title">Thank you for visit again</div>
+          <div className="page__title">ID Type</div>
           <div className="mt-4">
             <InfoBox
               variant="informative"
@@ -165,6 +165,18 @@ const SignUpVerifyID = ({ onConfirm }) => {
             />
           </div>
           <div className="form__section mt-4">
+            <Controller
+              render={({ field }) => (
+                <Dropdown
+                  label="ID Type"
+                  onFocus={handleOpenIdTypeSelectBottom}
+                  options={idTypes}
+                  {...field}
+                />
+              )}
+              control={control}
+              name="idType"
+            />
             <Controller
               render={({ field }) => (
                 <Input
@@ -187,22 +199,19 @@ const SignUpVerifyID = ({ onConfirm }) => {
               control={control}
               name="dob_display"
             />
+            <Controller
+              render={({ field }) => (
+                <Input
+                  label="E-mail"
+                  {...field}
+                />
+              )}
+              control={control}
+              name="email"
+            />
           </div>
-          <pre className="mt-4">CASE102_res: {JSON.stringify(transactionStatus, null, 2)}</pre>
         </div>
         <div className="footer__fixed">
-          <Button
-            label="Open Onespan"
-            variant="filled__primary"
-            className="btn__cta"
-            onClick={handleOnClickOpenOneSpan}
-          />
-          <Button
-            label="Check status"
-            variant="filled__primary"
-            className="btn__cta"
-            onClick={handleOnClickCheckOneSpanStatus}
-          />
           <Button
             label="Next"
             variant="filled__primary"
@@ -250,4 +259,4 @@ const SignUpVerifyID = ({ onConfirm }) => {
   );
 };
 
-export default SignUpVerifyID;
+export default ThankVisitAgain;

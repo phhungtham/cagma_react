@@ -1,5 +1,5 @@
 export const SignUpStep = {
-  VERIFY_ID: 'verifyId',
+  THANK_VISIT_AGAIN: 'thankVisitAgain',
   VERIFY_USER_INFO: 'verifyUserInfo',
   VERIFY_MEMBERSHIP_RESULT: 'verifyMembershipResult',
   ENTER_EMAIL: 'enterEmail',
@@ -27,4 +27,13 @@ export const CustomerInfoVerifyType = {
   FIND_ID: 0,
   FIND_PW: 1,
   EKYC: 2,
+};
+
+export const SignUpStepStatus = {
+  REGISTERED_EMAIL: 1,
+  EKYC_IN_PROGRESS: 2,
+  EKYC_DONE: 3,
+  INFO_APPROVED: 4,
+  INFO_REVIEWING: 8,
+  INFO_REJECTED: 9,
 };

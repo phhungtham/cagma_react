@@ -59,4 +59,5 @@ export const endpoints = {
   getExistingCustomerInfo: '/ca/se/CASE111.pwkjson',
   verifyIdDuplicate: '/ca/se/CASE108.pwkjson',
   registerElectricFinancial: '/ca/se/CASE110.pwkjson',
+  checkSignUpApprovalStatus: '/ca/se/CASE103.pwkjson',
 };

@@ -1,3 +1,4 @@
+import errorImg from '@assets/images/failure.png';
 import SearchBranchIcon from '@assets/images/icon-fill-atm-24.png';
 import ReserveIcon from '@assets/images/icon-fill-calendar-24.png';
 import reviewingImg from '@assets/images/sign-up-review-details.png';
@@ -12,7 +13,7 @@ import { moveHome, moveNext } from '@utilities/index';
 
 import './styles.scss';
 
-const EKYCResult = () => {
+const EKYCResult = ({ isSuccess, onNavigateWelcome }) => {
   const handleNavigateBranchInfo = () => {
     openInternalWebview({
       url: externalUrls.branchInfo,
@@ -28,16 +29,20 @@ const EKYCResult = () => {
     <>
       <div className="page-success sign-up-personal-detail-review">
         <div className="success__header">
-          <div className="review__img">
+          <div className={isSuccess ? 'review__img' : 'success__img'}>
             <img
-              src={reviewingImg}
+              src={isSuccess ? reviewingImg : errorImg}
               alt="Complete"
             />
           </div>
           <div className="success__title">
-            <span>Your details are being reviewed</span>
+            <span>{isSuccess ? 'Your details are being reviewed' : 'We’re sorry'}</span>
           </div>
-          <div className="note">Please allow 1 business day for us to review your information</div>
+          <div className="note">
+            {isSuccess
+              ? 'Please allow 1 business day for us to review your information'
+              : 'You cannot proceed with online registration'}
+          </div>
           <div className="mt-6">
             <InfoBox
               variant="informative"
@@ -64,11 +69,19 @@ const EKYCResult = () => {
       </div>
       <div className="footer__fixed">
         <Button
-          variant="filled__primary"
+          variant={isSuccess ? 'filled__primary' : 'filled__secondary-blue'}
           label="Home"
           className="btn__cta"
           onClick={moveHome}
         />
+        {!isSuccess && (
+          <Button
+            variant="filled__primary"
+            label="Start Over"
+            className="btn__cta"
+            onClick={onNavigateWelcome}
+          />
+        )}
       </div>
     </>
   );

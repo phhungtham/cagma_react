@@ -8,6 +8,7 @@ import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
+import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
@@ -35,7 +36,7 @@ const SignUpCreateID = ({ onConfirm }) => {
   });
 
   const handleChangeID = result => {
-    setValue('id', result?.uniqueValue?.toLowerCase() || '', { shouldValidate: true });
+    setValue('id', result?.uniqueValue?.replace(/\s/g, '').toLowerCase() || '', { shouldValidate: true });
   };
 
   const handleOpenSecurityKeyboard = () => {
@@ -91,12 +92,15 @@ const SignUpCreateID = ({ onConfirm }) => {
           </div>
           <div className="form__section mt-4">
             <Controller
-              render={({ field }) => (
+              render={({ field: { value, onChange } }) => (
                 <Input
                   label="ID"
-                  onFocus={handleOpenSecurityKeyboard}
-                  maxLength={20} //TODO: Clarify format and validate
-                  {...field}
+                  regex={notAllowNumberAlphabetRegex}
+                  maxLength={20}
+                  value={value}
+                  onChange={inputValue => {
+                    onChange(inputValue.replace(/\s/g, '').toLowerCase());
+                  }}
                 />
               )}
               control={control}
