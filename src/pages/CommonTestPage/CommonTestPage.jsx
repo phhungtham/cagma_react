@@ -162,6 +162,10 @@ const CommonTestPage = () => {
     console.log('create security passcode success');
   };
 
+  const handleShowCertificationCharCallback = result => {
+    console.log('Show Certification Char Callback data:>>', result);
+  };
+
   const handleBackToHome = () => {
     moveBack();
   };
@@ -280,7 +284,7 @@ const CommonTestPage = () => {
         {
           title: 'Show Certification Keyboard Char',
           label: 'showCertificationChar',
-          action: () => showCertificationChar(),
+          action: () => showCertificationChar(handleShowCertificationCharCallback),
         },
         {
           title: 'Hide Secure Keyboard Char',
