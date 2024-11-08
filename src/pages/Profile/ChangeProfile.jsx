@@ -555,8 +555,7 @@ const ChangeProfile = ({ translate: t }) => {
         }}
         secondButton={{
           onClick: handleCloseSaveChangeConfirmAlert,
-          // eslint-disable-next-line quotes
-          label: "I'll do it next time",
+          label: t(labels.doItNextTime),
         }}
       />
 

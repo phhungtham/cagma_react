@@ -6,7 +6,7 @@ import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Tabs from '@common/components/atoms/Tabs';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { bookAppointmentLabels as labels } from '@common/constants/labels';
+import { ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { preferredLanguages } from '@pages/Appointment/constants';
 
@@ -178,7 +178,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
       <div className="bottom__footer btn__ctas">
         <Button
           variant="filled__primary"
-          label="Next"
+          label={t(ctaLabels.next)}
           className="w-full"
           disable={!isValid}
           onClick={handleSubmit(handleSubmitForm)}

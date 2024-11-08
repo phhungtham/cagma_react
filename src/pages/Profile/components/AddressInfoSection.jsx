@@ -383,7 +383,7 @@ const AddressInfoSection = ({
                 type="file"
                 ref={fileInputRef}
                 onChange={handleUpload}
-                // accept={allowedFileTypes.join(', ')} //TODO: Just for unit test
+                accept={allowedFileTypes.join(', ')}
                 className="upload__input__file"
               />
               {file && (

@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import { FillEyeOffIcon, FillEyeOnIcon } from '@assets/icons';
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
@@ -49,8 +48,9 @@ const SignUpCreatePassword = ({ onConfirm }) => {
   };
 
   const handleChangePassword = result => {
-    const { uniqueValue: value, e2e } = result;
+    const { uniqueValue: value, e2e, length } = result;
     setValue(currentFieldName, value, { shouldValidate: true });
+    setValue(`${currentFieldName}Display`, '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
     setValue('e2e', e2e, { shouldValidate: true });
   };
 
@@ -59,25 +59,18 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     showCertificationChar(handleChangePassword);
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
   const handleSubmitForm = async values => {
     setShowLoading(true);
     const payload = {
       uuid_v: deviceId,
       cus_email: ekycCached.email,
       user_id: userId,
-      userscno: values.e2e, //TODO: Check e2e return from plugin
+      userscno: values.e2e,
     };
     const { data, error, isSuccess } = await requestApi(endpoints.registerElectricFinancial, payload);
     setShowLoading(false);
     if (isSuccess) {
+      debugger;
       //TODO: Check response
       setEkycToNativeCache({
         ...ekycCached,
@@ -113,41 +106,27 @@ const SignUpCreatePassword = ({ onConfirm }) => {
               render={({ field }) => (
                 <Input
                   label="Password"
-                  type={showPassword ? 'text' : 'password'}
+                  type="password"
                   onFocus={() => handleOpenSecurityKeyboard('password')}
-                  endAdornment={
-                    <div
-                      className="input__icon password__icon"
-                      onClick={toggleShowPassword}
-                    >
-                      {showPassword ? <FillEyeOnIcon /> : <FillEyeOffIcon />}
-                    </div>
-                  }
+                  readOnly
                   {...field}
                 />
               )}
               control={control}
-              name="password"
+              name="passwordDisplay"
             />
             <Controller
               render={({ field }) => (
                 <Input
                   label="Confirm Password"
-                  type={showConfirmPassword ? 'text' : 'password'}
+                  type="password"
                   onFocus={() => handleOpenSecurityKeyboard('confirmPassword')}
-                  endAdornment={
-                    <div
-                      className="input__icon password__icon"
-                      onClick={toggleShowConfirmPassword}
-                    >
-                      {showConfirmPassword ? <FillEyeOnIcon /> : <FillEyeOffIcon />}
-                    </div>
-                  }
+                  readOnly
                   {...field}
                 />
               )}
               control={control}
-              name="confirmPassword"
+              name="confirmPasswordDisplay"
             />
           </div>
         </div>

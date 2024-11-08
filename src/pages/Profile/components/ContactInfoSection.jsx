@@ -226,11 +226,7 @@ const ContactInfoSection = ({
             label={t(labels.mailAddress)}
             type="text"
             maxLength={40}
-            helperText={
-              isEmailVerified && !showEmailVerifyCode
-                ? 'You need to click the Save button after making changes to apply them.' //TODO: Missing label
-                : ''
-            }
+            helperText={isEmailVerified && !showEmailVerifyCode ? t(labels.youNeedToClick) : ''}
             {...field}
             endAdornment={
               <Button

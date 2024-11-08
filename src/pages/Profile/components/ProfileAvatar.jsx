@@ -158,8 +158,7 @@ const ProfileAvatar = ({ userName, setShowToast, translate: t }) => {
         }}
         secondButton={{
           onClick: () => setShowAlertDeletePhoto(false),
-          // eslint-disable-next-line quotes
-          label: "I'll do it next time",
+          label: t(labels.doItNextTime),
         }}
       />
     </>

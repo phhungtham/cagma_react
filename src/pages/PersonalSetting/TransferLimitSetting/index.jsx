@@ -60,7 +60,7 @@ const TransferLimitSetting = ({ translate: t }) => {
       setConfirmAlert({
         isShow: true,
         title: t(labels.areYouSure),
-        content: transferLimitMessages[settingType]?.confirmMessage,
+        content: t(transferLimitMessages[settingType]?.confirmMessage),
       });
     }
   };
@@ -140,7 +140,7 @@ const TransferLimitSetting = ({ translate: t }) => {
     setConfirmAlert({
       isShow: true,
       title: t(labels.areYouSure),
-      content: transferLimitMessages[TransferLimitType.CANCEL].confirmMessage,
+      content: t(transferLimitMessages[TransferLimitType.CANCEL].confirmMessage),
     });
   };
 

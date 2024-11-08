@@ -28,7 +28,7 @@ import { SignUpStep, SignUpStepStatus } from './constants';
 export const SignUpContext = createContext();
 
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState(SignUpStep.THANK_VISIT_AGAIN);
+  const [currentStep, setCurrentStep] = useState();
   const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
   const [ekycCached, setEkycCached] = useState();

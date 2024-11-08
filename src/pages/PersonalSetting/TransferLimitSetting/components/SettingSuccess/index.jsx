@@ -23,7 +23,7 @@ const TransferLimitSettingSuccess = ({ type, translate: t }) => {
           </div>
           <div className="success__title">
             <div className="complete-message">
-              <div dangerouslySetInnerHTML={{ __html: transferLimitMessages[type]?.successMessage }} />
+              <div dangerouslySetInnerHTML={{ __html: t(transferLimitMessages[type]?.successMessage) }} />
             </div>
           </div>
         </div>

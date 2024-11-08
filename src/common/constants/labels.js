@@ -225,6 +225,8 @@ export const changeProfileLabels = {
   checkYourEmail: 'lbl_CAME900000_0218', //Please check your email
   emailAlreadyUse: 'lbl_CAME900000_0219', //This email is already in use
   emailVerifyComplete: 'lbl_CAME900000_0220', //Email verification is complete
+  doItNextTime: 'lbl_CAME900000_0204', //I'll do it next time
+  youNeedToClick: 'lbl_CAME900000_0030', //You need to click the Save button...
 };
 
 export const openAccountLabels = {
@@ -402,6 +404,8 @@ export const reportLostCardLabels = {
   viewCards: 'lbl_CTA_6023', //View Cards
   home: 'lbl_CTA_6024', //Home
 };
+
+export const releaseCardLabels = {};
 
 export const productLabels = {
   productCenter: 'men_title_CAPR010000', //Product center

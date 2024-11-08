@@ -60,7 +60,9 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
   const [dob] = watch(['dob']);
 
   const handleChangeID = result => {
-    setValue('id', result?.uniqueValue?.toLowerCase() || '', { shouldValidate: true });
+    const { e2e, length } = result || {};
+    setValue('ide2e', e2e, { shouldValidate: true });
+    setValue('id', '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
   };
 
   const handleOpenSecurityKeyboard = () => {
@@ -193,6 +195,8 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
                 <Input
                   label="ID Information"
                   onFocus={handleOpenSecurityKeyboard}
+                  type="password"
+                  readOnly
                   {...field}
                 />
               )}
