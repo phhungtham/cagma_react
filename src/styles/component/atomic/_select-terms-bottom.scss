@@ -3,9 +3,12 @@
     padding-top: 24px;
     .select-terms {
       &__input-hidden {
-        opacity: 0;
+        background: transparent;
+        border: none;
         position: absolute;
-        left: -9999px;
+        color: transparent;
+        outline: none;
+        caret-color: transparent;
       }
       &__value {
         display: flex;
