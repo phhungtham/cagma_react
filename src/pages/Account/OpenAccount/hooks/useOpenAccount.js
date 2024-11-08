@@ -218,7 +218,7 @@ const useOpenAccount = ({ product }) => {
       apl_intrt: ntfct_intrt,
       ntfct_intrt: interestRateValue,
       adt_intrt,
-      tpd_chk: tpd_chk ? 'Y' : 'N',
+      tpd_chk,
       tpd_trx_t: 0,
       tpd_nm,
       tpd_bth_y4mm_dt,
