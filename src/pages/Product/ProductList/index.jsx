@@ -96,6 +96,7 @@ const ProductList = ({ translate: t }) => {
     if (accountList?.length) {
       //Must to has e-Saving account before create other account
       isExistESavingAccount = accountList.some(account => account.prdt_c === ProductCode.E_SAVING);
+      isExistChequingAccount = accountList.some(account => account.prdt_c === ProductCode.CHEQUING);
     }
     if (productCode === ProductCode.E_SAVING) {
       if (!isExistChequingAccount) {
