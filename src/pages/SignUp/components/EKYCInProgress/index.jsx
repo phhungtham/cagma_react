@@ -73,10 +73,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep3, payload);
     setShowLoading(false);
     if (isSuccess) {
-      const { confm_proc_s: processingStatus, rslt_d: resultStatus, cusno } = data || {};
-      if (Number(resultStatus) !== 1) {
-        return;
-      }
+      const { confm_proc_s: processingStatus, cusno } = data || {};
       if (['20', '30', '40'].includes(processingStatus)) {
         setShowRetryBtn(true);
         setShowToast({

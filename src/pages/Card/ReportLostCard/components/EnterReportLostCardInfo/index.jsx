@@ -5,6 +5,7 @@ import EmailVerifyControl from '@common/components/atoms/EmailVerifyControl';
 import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
+import { reportLostCardLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateExpiry } from '@utilities/dateTimeUtils';
 import { formatCardNumber } from '@utilities/formater';
@@ -12,7 +13,7 @@ import { moveBack } from '@utilities/index';
 
 import { reportLostCardInfoSchema } from './schema';
 
-const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowToast }) => {
+const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowToast, translate: t }) => {
   const methods = useForm({
     mode: 'onChange',
     resolver: yupResolver(reportLostCardInfoSchema),
@@ -27,18 +28,18 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
   return (
     <>
       <Header
-        title="Access Card Service"
+        title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
       <div className="page__form">
-        <h1 className="page__title">Report a Lost Access Card</h1>
+        <h1 className="page__title">{t(labels.reportLostAccessCard)}</h1>
         <div className="report-lost-card-info__form mt-4">
           <div className="form__section">
             <FormProvider {...methods}>
               <Controller
                 render={({ field: { value, onChange } }) => (
                   <Input
-                    label="Current Card Number"
+                    label={t(labels.currentCardNumber)}
                     placeholder="Please input 16 numerics"
                     type="tel"
                     inputMode="numeric"
@@ -57,7 +58,7 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
                 render={({ field }) => {
                   return (
                     <Input
-                      label="Expiry Date(MMYY)"
+                      label={t(labels.expiryDate)}
                       placeholder="Enter MM/YY"
                       type="tel"
                       maxLength={5}
@@ -78,12 +79,12 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
               />
               <InfoBox
                 variant="informative"
-                label="Please verify the email address registered with the bank."
+                label={t(labels.pleaseVerifyEmail)}
               />
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Detail of Accident"
+                    label={t(labels.detailOfAccident)}
                     placeholder="Please input Detail text"
                     {...field}
                   />
@@ -97,7 +98,7 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
       </div>
       <div className="footer__fixed">
         <Button
-          label="Next"
+          label={t(labels.next)}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(onSubmit)}

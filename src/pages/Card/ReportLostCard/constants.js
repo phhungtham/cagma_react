@@ -1,3 +1,5 @@
+import { reportLostCardLabels as labels } from '@common/constants/labels';
+
 export const REPORT_LOST_CARD_STEP = {
   ENTER_INFORMATION: 'enterInformation',
   COMPLETED: 'completed',
@@ -5,19 +7,19 @@ export const REPORT_LOST_CARD_STEP = {
 
 export const reportLostCardSuccessFields = [
   {
-    label: 'Card Number',
+    label: labels.cardNumber,
     value: 'cardNumber',
   },
   {
-    label: 'Account no.',
+    label: labels.accountNo,
     value: 'accountNo',
   },
   {
-    label: 'Issue Date',
+    label: labels.issueDate,
     value: 'issueDate',
   },
   {
-    label: 'Status',
+    label: labels.status,
     value: 'status',
   },
 ];

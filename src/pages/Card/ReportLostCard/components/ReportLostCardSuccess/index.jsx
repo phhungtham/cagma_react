@@ -5,6 +5,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import InfoBox from '@common/components/atoms/InfoBox';
 import { MENU_CODE } from '@common/constants/common';
+import { reportLostCardLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
@@ -13,7 +14,7 @@ import { moveHome, moveNext } from '@utilities/index';
 import { reportLostCardSuccessFields } from '../../constants';
 import './styles.scss';
 
-const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
+const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
   const handleNavigateCardMain = () => {
     moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
   };
@@ -57,7 +58,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
                   className="card-item"
                   key={value}
                 >
-                  <span className="card-label">{label}</span>
+                  <span className="card-label">{t(label)}</span>
                   <span className="card-value">
                     <span>{cardInfo?.[value]}</span>
                   </span>
@@ -67,7 +68,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
             <div className="mt-6">
               <InfoBox
                 variant="informative"
-                label="After the accident report, cannot use the card. To release the card, you may need to visit the branch nearby or use the manage accident report page."
+                label={t(labels.afterRegisterAccident)}
               />
             </div>
             <div className="active-success__ctas">
@@ -75,7 +76,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
                 <IconButton
                   size="lg"
                   type="circle"
-                  label="Search Branch"
+                  label={t(labels.searchBranch)}
                   icon={<img src={BranchInfoIcon} />}
                   onClick={handleNavigateBranchInfo}
                 />
@@ -84,7 +85,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
                 <IconButton
                   size="lg"
                   type="circle"
-                  label="Reserve Consultation"
+                  label={t(labels.reserveConsultation)}
                   className="call__icon"
                   icon={<img src={ReserveIcon} />}
                   onClick={handleNavigateAppointment}
@@ -98,7 +99,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
         {isLogin && (
           <Button
             variant="filled__secondary-blue"
-            label="View Cards"
+            label={t(labels.viewCards)}
             className="btn__cta"
             onClick={handleNavigateCardMain}
           />
@@ -106,7 +107,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin }) => {
 
         <Button
           variant="filled__primary"
-          label="Home"
+          label={t(labels.home)}
           className="btn__cta"
           onClick={handleNavigateHome}
         />

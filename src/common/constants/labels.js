@@ -374,6 +374,35 @@ export const reissueCardLabels = {
   agreeUseEmail: 'lbl_CACA600000_0110', //I agree to the use of the email address for sending confirmation email for replacement of Access Card
 };
 
+export const reportLostCardLabels = {
+  reportLostAccessCard: 'lbl_CACA600000_0143', //Report a Lost Access Card
+  detailOfAccident: 'lbl_CACA600000_0144', //Detail of Accident
+  report: 'lbl_CTA_6021', //Report
+  areYouSure: 'lbl_CACA600000_0145', //Are you sure you want to report the card as lost?
+  afterRegisterAccident: 'lbl_CACA600000_0146', //After register the accident report, You will be...
+  confirm: 'lbl_CTA_6022', //Confirm
+  cancel: 'lbl_CACA600000_0147', //Cancel
+  customerInformation: 'lbl_CACA600000_0160', //Customer Informaiton
+  firstName: 'lbl_CACA600000_0161', //First Name
+  lastName: 'lbl_CACA600000_0162', //Last Name
+  dob: 'lbl_CACA600000_0163', //Date of Birth
+  phoneNumber: 'lbl_CACA600000_0164', //Phone Number
+  postalCode: 'lbl_CACA600000_0165', //Postal Code
+  pleaseVerifyEmail: 'lbl_CACA600000_0167', //Please verify the email address registered with the bank.
+  next: 'lbl_CTA_6026', //Next
+  currentCardNumber: 'lbl_CACA600000_0174', //Current Card Number
+  expiryDate: 'lbl_CACA600000_0175', //Expiry Date(MMYY)
+  cardNumber: 'lbl_CACA600000_0149', //Card Number
+  accountNo: 'lbl_CACA600000_0150', //Account no.
+  issueDate: 'lbl_CACA600000_0151', //Issue Date
+  status: 'lbl_CACA600000_0152', //Status
+  afterTheAccident: 'lbl_CACA600000_0153', //After the accident report, cannot use the card. ...
+  searchBranch: 'lbl_CACA600000_0154', //Search Branch
+  reserveConsultation: 'lbl_CACA600000_0155', //Reserve Consultation
+  viewCards: 'lbl_CTA_6023', //View Cards
+  home: 'lbl_CTA_6024', //Home
+};
+
 export const productLabels = {
   productCenter: 'men_title_CAPR010000', //Product center
   banking: 'lbl_CAPR500000_0001', //Banking

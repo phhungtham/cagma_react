@@ -231,7 +231,6 @@ const AppNotifications = ({ translate: t }) => {
       // display only "display_pos"== "8", "1", "6" and sort with banner_seq big to small
       // 8: Promotion
       const { list = [] } = data || {};
-      debugger;
       const filteredPromotion = list.filter(item => {
         return ['8', '1', '6'].includes(item?.display_pos);
       });

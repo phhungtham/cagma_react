@@ -94,9 +94,30 @@ const SignUp = () => {
     }
   };
 
+  const requestGetEkycDetail = async () => {
+    setShowLoading(true);
+    const { email: cus_email } = ekycCached || {};
+    const payload = {
+      cus_email: cus_email,
+      uuid_v: deviceId,
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.getEkycDetail, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      setExistingCustomer(data);
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
   const handleConfirmEKYC = async isFetchCustomerData => {
     if (isFetchCustomerData) {
       await requestGetExistingCustomerInfo();
+    } else {
+      await requestGetEkycDetail();
     }
     setCurrentStep(SignUpStep.ENTER_PERSONAL_DETAIL);
   };
@@ -274,7 +295,7 @@ const SignUp = () => {
           <AgreeTermsConditions onConfirm={handleConfirmTermsConditions} />
         )}
         {currentStep === SignUpStep.CREATE_PASSCODE && <SignUpCreatePasscode onConfirm={handleCreatePasscodeSuccess} />}
-        {currentStep === SignUpStep.SIGN_UP_COMPLETE && <SignUpSuccess onConfirm={handleNavigateSetupBiometricAuth} />}
+        {currentStep === SignUpStep.SIGN_UP_COMPLETE && <SignUpSuccess />}
         {/* //TODO: These step below handle by Native */}
         {/* {currentStep === SignUpStep.SET_UP_BIOMETRIC_AUTH && (
           <SetUpBiometricAuth

@@ -1,26 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
+import { SignUpContext } from '@pages/SignUp';
 import { moveHome } from '@utilities/index';
 
 import { signUpSuccessFields } from './constants';
 
 const SignUpSuccess = () => {
-  const [ekycPluginInfo, setEkycPluginInfo] = useState();
+  const { ekycCached } = useContext(SignUpContext);
+  const [signUpSuccessInfo, setSignUpSuccessInfo] = useState();
 
-  const getEkycInfoCallback = result => {
-    setEkycPluginInfo({
-      ...result,
+  useEffect(() => {
+    setSignUpSuccessInfo({
+      ...ekycCached,
       password: 'Registered',
       secretPasscode: 'Registered',
     });
-  };
-
-  useEffect(() => {
-    getEkycInfo(getEkycInfoCallback);
-  }, []);
+  }, [ekycCached]);
 
   return (
     <>
@@ -46,7 +43,7 @@ const SignUpSuccess = () => {
             >
               <span className="success-info__label">{label}</span>
               <span className="success-info__value">
-                <span>{ekycPluginInfo?.[value]}</span>
+                <span>{signUpSuccessInfo?.[value]}</span>
               </span>
             </div>
           ))}

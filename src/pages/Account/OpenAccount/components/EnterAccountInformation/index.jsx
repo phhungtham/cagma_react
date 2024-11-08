@@ -219,7 +219,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
       let newAccounts = (accountList || []).map(item => {
         return {
           ...item,
-          name: item.dep_ac_alnm_nm,
+          name: item.dep_prdt_nm,
           number: item.lcl_ac_no_display,
           balance: item.def_ac_blc_display,
         };
@@ -342,7 +342,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     }
   }, []);
 
-  //TODO: Handle layout for Chequing account
   return (
     <>
       <Header
@@ -430,7 +429,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                       label="From"
                       placeholder="My Account"
                       onClick={onOpenMyAccountBottom}
-                      value={selectedAccount?.dep_ac_alnm_nm}
+                      value={selectedAccount?.dep_prdt_nm}
                     >
                       {selectedAccount ? (
                         <div className="enter-account__account-number">{selectedAccount?.lcl_ac_no_display}</div>
@@ -492,7 +491,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
         {showEnterAmountBottom && (
           <EnterAmountBottom
             onClose={() => setShowEnterAmountBottom(false)}
-            title={selectedAccount?.dep_ac_alnm_nm}
+            title={selectedAccount?.dep_prdt_nm}
             subTitle={selectedAccount?.lcl_ac_no_display}
             note={`Available Balance $${selectedAccount?.def_ac_blc_display || '0.00'}`}
             currency={CurrencyCode.CAD}
@@ -512,7 +511,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             value={term}
             max={maxTerms}
             min={minTerms}
-            options={termOptions} //TODO: Get options base SD
+            options={termOptions}
             inquiryMaturityDate={getMaturityDate}
           />
         )}

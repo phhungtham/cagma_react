@@ -6,6 +6,7 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
+import { reportLostCardLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -13,7 +14,7 @@ import { moveBack } from '@utilities/index';
 
 import { reportLostCardCustomerInfoSchema } from './schema';
 
-const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setShowToast }) => {
+const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setShowToast, translate: t }) => {
   const methods = useForm({
     mode: 'onChange',
     resolver: yupResolver(reportLostCardCustomerInfoSchema),
@@ -43,20 +44,20 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
   return (
     <>
       <Header
-        title="Access Card Service"
+        title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
       <div className="page__form">
-        <h1 className="page__title">Report a Lost Access Card</h1>
+        <h1 className="page__title">{t(labels.reportLostAccessCard)}</h1>
         <div className="report-lost-card-info__form py-4 mt-4">
           <div className="form__section">
             <FormProvider {...methods}>
-              <div className="form__section__title mb-0">Customer Information</div>
+              <div className="form__section__title mb-0">{t(labels.customerInformation)}</div>
               <>
                 <Controller
                   render={({ field }) => (
                     <Input
-                      label="First Name"
+                      label={t(labels.firstName)}
                       placeholder="Please input Detail text"
                       {...field}
                     />
@@ -67,7 +68,7 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
                 <Controller
                   render={({ field }) => (
                     <Input
-                      label="Last Name"
+                      label={t(labels.lastName)}
                       placeholder="Please input Detail text"
                       {...field}
                     />
@@ -78,7 +79,7 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
                 <Controller
                   render={({ field: { value } }) => (
                     <InputDate
-                      label="Date of Birth"
+                      label={t(labels.dob)}
                       onFocus={handleOpenCalendar}
                       value={value}
                     />
@@ -91,7 +92,7 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Phone Number"
+                    label={t(labels.phoneNumber)}
                     placeholder="Please include the '-'."
                     {...field}
                   />
@@ -102,7 +103,7 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Postal Code"
+                    label={t(labels.postalCode)}
                     placeholder="Please input 6numerics"
                     type="number"
                     inputMode="numeric"
@@ -121,12 +122,12 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
               />
               <InfoBox
                 variant="informative"
-                label="Please verify the email address registered with the bank."
+                label={t(labels.pleaseVerifyEmail)}
               />
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Detail of Accident"
+                    label={t(labels.detailOfAccident)}
                     placeholder="Please input Detail text"
                     {...field}
                   />
@@ -140,7 +141,7 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
       </div>
       <div className="footer__fixed">
         <Button
-          label="Next"
+          label={t(labels.next)}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(onSubmit)}

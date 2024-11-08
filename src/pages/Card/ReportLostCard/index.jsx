@@ -6,9 +6,11 @@ import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, reportLostCardLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import { nativeParamsSelector } from 'app/redux/selector';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { ReportLostNotLoggedType } from '../constants';
 import { formatCardDateRequest } from '../utils/format';
@@ -19,8 +21,7 @@ import ReportLostCardSuccess from './components/ReportLostCardSuccess';
 import { REPORT_LOST_CARD_STEP, ReportLostCardType } from './constants';
 import './styles.scss';
 
-//TODO: Handle add labels
-const ReportLostCard = () => {
+const ReportLostCard = ({ translate: t }) => {
   const [currentStep, setCurrentStep] = useState(REPORT_LOST_CARD_STEP.ENTER_INFORMATION);
   const [notLoggedFormType, setNotLoggedFormType] = useState(ReportLostNotLoggedType.ENTER_CUSTOMER_INFO);
   const [showConfirmAlert, setShowConfirmAlert] = useState(false);
@@ -158,7 +159,10 @@ const ReportLostCard = () => {
         {currentStep === REPORT_LOST_CARD_STEP.ENTER_INFORMATION && (
           <>
             {isLogin ? (
-              <EnterReportLostReason onSubmit={handleSubmitForm} />
+              <EnterReportLostReason
+                onSubmit={handleSubmitForm}
+                translate={t}
+              />
             ) : (
               <>
                 {notLoggedFormType === ReportLostNotLoggedType.ENTER_CARD_NUMBER ? (
@@ -167,6 +171,7 @@ const ReportLostCard = () => {
                     setAlert={setAlert}
                     setShowLoading={setShowLoading}
                     setShowToast={setShowToast}
+                    translate={t}
                   />
                 ) : (
                   <EnterReportLostCustomerInfo
@@ -174,6 +179,7 @@ const ReportLostCard = () => {
                     setAlert={setAlert}
                     setShowLoading={setShowLoading}
                     setShowToast={setShowToast}
+                    translate={t}
                   />
                 )}
               </>
@@ -184,6 +190,7 @@ const ReportLostCard = () => {
           <ReportLostCardSuccess
             cardInfo={reportLostCardSuccessInfo}
             isLogin={isLogin}
+            translate={t}
           />
         )}
       </div>
@@ -192,24 +199,19 @@ const ReportLostCard = () => {
         isShowAlert={showConfirmAlert}
         onClose={() => setShowConfirmAlert(false)}
         textAlign="center"
-        title="Are you sure you want to report the card as lost?"
+        title={t(labels.areYouSure)}
         subtitle={
           <>
-            <p>
-              After register the accident report, You will be limited to use your card. You will be able to use after
-              you release the accident report. You can release the accident report only if you register by internet
-              banking.
-            </p>
-            <p>Do you want to register the accident report?</p>
+            <p>{t(labels.afterRegisterAccident)}</p>
           </>
         }
         firstButton={{
           onClick: handleConfirmReport,
-          label: 'Confirm',
+          label: t(labels.confirm),
         }}
         secondButton={{
           onClick: () => setShowConfirmAlert(false),
-          label: 'Cancel',
+          label: t(labels.cancel),
         }}
       >
         <div className="report-lost-card__img">
@@ -236,11 +238,11 @@ const ReportLostCard = () => {
         onClose={handleCloseAlert}
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>
   );
 };
 
-export default ReportLostCard;
+export default withHTMLParseI18n(ReportLostCard);
