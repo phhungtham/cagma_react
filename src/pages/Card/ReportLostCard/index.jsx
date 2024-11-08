@@ -19,6 +19,7 @@ import ReportLostCardSuccess from './components/ReportLostCardSuccess';
 import { REPORT_LOST_CARD_STEP, ReportLostCardType } from './constants';
 import './styles.scss';
 
+//TODO: Handle add labels
 const ReportLostCard = () => {
   const [currentStep, setCurrentStep] = useState(REPORT_LOST_CARD_STEP.ENTER_INFORMATION);
   const [notLoggedFormType, setNotLoggedFormType] = useState(ReportLostNotLoggedType.ENTER_CUSTOMER_INFO);

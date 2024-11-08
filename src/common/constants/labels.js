@@ -290,6 +290,11 @@ export const cardLabels = {
   doYouKnowCardNumber: 'lbl_CACA600000_0156', //Do you know your Access Card Number?
   letUsHelpYou: 'lbl_CACA600000_0157', //Let us help you lock your Access Card securely. If you know...
   skip: 'lbl_CACA600000_0158', //Skip
+  emailAddress2: 'lbl_CACA600000_0098', //Email Address
+  request: 'lbl_CACA600000_0099', //Request
+  resend: 'lbl_CACA600000_1099', //Resend
+  verify: 'lbl_CACA600000_2099', //Verify
+  verificationCode: 'lbl_CACA600000_3099', //Verification Code
 };
 
 export const activeCardLabels = {
@@ -322,8 +327,8 @@ export const activeCardLabels = {
 
 export const reissueCardLabels = {
   reissueYourCard: 'lbl_CACA600000_0093', //Reissue your Access Card
-  currentCardNumber: 'lbl_CACA600000_01143', //Current Card Number
-  expiryDate: 'lbl_CACA600000_01144', //Expiry Date(MMYY)
+  currentCardNumber: 'lbl_CACA600000_0094', //Current Card Number
+  expiryDate: 'lbl_CACA600000_0095', //Expiry Date(MMYY)
   nextBtn: 'lbl_CTA_6015', //Next
   cardNumber: 'lbl_CACA600000_0114', //Card Number
   primaryAccNo: 'lbl_CACA600000_0115', //Primary Account No.
@@ -416,14 +421,14 @@ export const productLabels = {
 export const menuLabels = {
   eAlertManage: 'mymen_CAME050000', //mymen_CAME900020
   balance: 'lbl_CAME900020_0003', //Balance
-  appNotification: 'men_CAHO010101', //SOL Alert
+  appNotification: 'men_title_CAHO010101', //SOL Alert
   appointment: 'mymen_CAET010000', //Appointment
   bookAppointment: 'men_CAET010200', //Book an Appointment
   manageAppointment: 'lbl_CAET900020_0001', //Manage Appointment
   personalSetting: 'mymen_CAOTLA0005', //Personal Setting
   changeProfile: 'mymen_CAME030100', //Change Profile
   cardMain: 'mymen_CAOTLA0004', //Card
-  accessCardService: 'mymen_CACA010000', //Access Card Service
+  accessCardService: 'men_title_CACA010100', //Access Card Service
 };
 
 export const ctaLabels = {

@@ -3,13 +3,15 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
+import { cardLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { Button } from '../ButtonGroup/Button/Button';
 import Input from '../Input/Input';
 
 //TODO: Add labels
-const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast }) => {
+const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, translate: t }) => {
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
@@ -147,12 +149,12 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast }) 
       <Controller
         render={({ field }) => (
           <Input
-            label="Email Address"
+            label={t(cardLabels.emailAddress2)}
             placeholder="emailname@email.com"
             type="text"
             endAdornment={
               <Button
-                label={alreadySendEmailVerification ? 'Resend' : 'Request'}
+                label={alreadySendEmailVerification ? t(cardLabels.resend) : t(cardLabels.request)}
                 variant="outlined__primary"
                 className="btn__send btn__sm"
                 onClick={handleRequestGetEmailVerifyCode}
@@ -169,14 +171,14 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast }) 
         <Controller
           render={({ field }) => (
             <Input
-              label="Verification code"
+              label={t(cardLabels.verificationCode)}
               type="number"
               placeholder="6 digits"
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
               onResetTimer={cb => (verifyTimerResetRef.current = cb)}
               endAdornment={
                 <Button
-                  label="Verify"
+                  label={t(cardLabels.verify)}
                   variant="outlined__primary"
                   className="btn__send btn__sm"
                   disable={invalidVerificationCode || disabledVerifyButton}
@@ -196,4 +198,4 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast }) 
   );
 };
 
-export default EmailVerifyControl;
+export default withHTMLParseI18n(EmailVerifyControl);
