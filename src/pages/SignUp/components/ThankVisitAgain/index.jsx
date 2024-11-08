@@ -9,7 +9,9 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
+import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import Header from '@common/components/organisms/Header';
+import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getIdTypes } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
@@ -26,9 +28,10 @@ import { t } from 'i18next';
 import { verifyIdFormSchema } from './schema';
 
 const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, onNavigateCreatePasscode }) => {
-  const { existingCustomer, ekycCached, deviceId } = useContext(SignUpContext);
+  const { existingCustomer, ekycCached, deviceId, ekycStepStatus } = useContext(SignUpContext);
   const { requestApi } = useApi();
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
+  const [showIdTypesBottom, setShowIdTypesBottom] = useState(initSelectBottom);
   const [idTypes, setIdTypes] = useState([]);
   const [showLoading, setShowLoading] = useState();
   const [alert, setAlert] = useState({
@@ -56,8 +59,8 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
 
   const [dob] = watch(['dob']);
 
-  const handleChangeID = value => {
-    console.log('value :>> ', value);
+  const handleChangeID = result => {
+    setValue('id', result?.uniqueValue?.toLowerCase() || '', { shouldValidate: true });
   };
 
   const handleOpenSecurityKeyboard = () => {
@@ -115,7 +118,15 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
     }
   };
 
-  const handleOpenIdTypeSelectBottom = () => {};
+  const handleOpenIdTypeSelectBottom = () => {
+    setShowIdTypesBottom(true);
+  };
+
+  const handleChangeIdType = item => {
+    const value = item.value;
+    setValue('idType', value, { shouldValidate: true });
+    setShowIdTypesBottom(false);
+  };
 
   const handleCloseAlert = () => {
     setAlert({
@@ -221,6 +232,14 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
           />
         </div>
       </div>
+      <SelectBottom
+        open={showIdTypesBottom}
+        onClose={() => setShowIdTypesBottom(false)}
+        onSelect={handleChangeIdType}
+        options={idTypes}
+        showArrow={false}
+        title="ID Type"
+      />
       {showIncorrectInfoAlert && (
         <Alert
           isCloseButton={false}

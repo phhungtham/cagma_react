@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { FillEyeOffIcon, FillEyeOnIcon } from '@assets/icons';
@@ -12,8 +12,6 @@ import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
-import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
-import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
 
@@ -21,8 +19,7 @@ import { createIdFormSchema } from './schema';
 import './styles.scss';
 
 const SignUpCreatePassword = ({ onConfirm }) => {
-  const { deviceId, userId } = useContext(SignUpContext);
-  const [ekycPluginInfo, setEkycPluginInfo] = useState({});
+  const { deviceId, userId, setEkycToNativeCache, ekycCached } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -74,16 +71,16 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     setShowLoading(true);
     const payload = {
       uuid_v: deviceId,
-      cus_email: ekycPluginInfo.email,
+      cus_email: ekycCached.email,
       user_id: userId,
-      userscno: `${values.password}${values.e2e}`, //TODO: Check e2e return from plugin
+      userscno: values.e2e, //TODO: Check e2e return from plugin
     };
     const { data, error, isSuccess } = await requestApi(endpoints.registerElectricFinancial, payload);
     setShowLoading(false);
-    if (!isSuccess) {
+    if (isSuccess) {
       //TODO: Check response
-      setEkycInfo({
-        ...ekycPluginInfo,
+      setEkycToNativeCache({
+        ...ekycCached,
         userId,
       });
       onConfirm();
@@ -94,14 +91,6 @@ const SignUpCreatePassword = ({ onConfirm }) => {
       });
     }
   };
-
-  const getEkycInfoCallback = result => {
-    setEkycPluginInfo(result);
-  };
-
-  useEffect(() => {
-    getEkycInfo(getEkycInfoCallback);
-  }, []);
 
   return (
     <>

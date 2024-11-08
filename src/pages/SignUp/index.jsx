@@ -28,10 +28,11 @@ import { SignUpStep, SignUpStepStatus } from './constants';
 export const SignUpContext = createContext();
 
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState();
+  const [currentStep, setCurrentStep] = useState(SignUpStep.THANK_VISIT_AGAIN);
   const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
   const [ekycCached, setEkycCached] = useState();
+  const [ekycStepStatus, setEkycStepStatus] = useState();
   const [existingCustomer, setExistingCustomer] = useState();
   const [userId, setUserId] = useState();
   const [ekycResultSuccess, setEkycResultSuccess] = useState(false);
@@ -167,6 +168,7 @@ const SignUp = () => {
     const { data, error, isSuccess } = await requestApi(endpoints.checkEkycStatus, payload);
     setShowLoading(false);
     if (isSuccess) {
+      setEkycStepStatus(data);
       const { ekyc_aplct_stp_c: applyCode } = data;
       if (Number(applyCode) === SignUpStepStatus.REGISTERED_EMAIL) {
         setCurrentStep(SignUpStep.VERIFY_IDENTITY_TERMS);
@@ -215,7 +217,9 @@ const SignUp = () => {
   }, []);
 
   return (
-    <SignUpContext.Provider value={{ deviceId, userId, existingCustomer, ekycCached, setEkycToNativeCache }}>
+    <SignUpContext.Provider
+      value={{ deviceId, userId, existingCustomer, ekycCached, setEkycToNativeCache, ekycStepStatus }}
+    >
       {showLoading && <Spinner />}
       <div className="sign-up__wrapper page__wrapper">
         {currentStep === SignUpStep.VERIFY_USER_INFO && (
