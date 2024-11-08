@@ -422,8 +422,8 @@ export const menuLabels = {
   eAlertManage: 'mymen_CAME050000', //mymen_CAME900020
   balance: 'lbl_CAME900020_0003', //Balance
   appNotification: 'men_title_CAHO010101', //SOL Alert
-  appointment: 'mymen_CAET010000', //Appointment
-  bookAppointment: 'men_CAET010200', //Book an Appointment
+  appointment: 'men_title_CAET010000', //Appointment
+  bookAppointment: 'men_title_CAET010200', //Book an Appointment
   manageAppointment: 'lbl_CAET900020_0001', //Manage Appointment
   personalSetting: 'mymen_CAOTLA0005', //Personal Setting
   changeProfile: 'mymen_CAME030100', //Change Profile
