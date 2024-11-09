@@ -69,7 +69,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     setShowLoading(true);
     const payload = {
       uuid_v: deviceId,
-      cus_email: ekycCached.email,
+      cus_email: ekycCached?.email,
       user_id: userId,
       userscno: values.e2e,
     };
