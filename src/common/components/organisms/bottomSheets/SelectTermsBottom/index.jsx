@@ -116,6 +116,7 @@ const SelectTermsBottom = ({
             type="number"
             onBlur={onBlurInput}
             maxLength={3}
+            inputMode="numeric" // numeric keypad on iOS
           />
           <div className={`select-terms__value ${termValue ? 'has-value' : ''}`}>
             <span className="select-terms__number">{termValue || `${min || ''}~${max || ''}`}</span>
