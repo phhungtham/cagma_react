@@ -5,6 +5,7 @@ import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
 import useApi from '@hooks/useApi';
+import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { nativeParamsSelector } from 'app/redux/selector';
@@ -27,7 +28,7 @@ import { SignUpStep, SignUpStepStatus } from './constants';
 export const SignUpContext = createContext();
 
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState(SignUpStep.MOTP_AGREE_TERMS);
+  const [currentStep, setCurrentStep] = useState();
   const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
   const [ekycCached, setEkycCached] = useState();
@@ -233,7 +234,7 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    // getEkycInfo(getEkycInfoCallback);
+    getEkycInfo(getEkycInfoCallback);
   }, []);
 
   return (
