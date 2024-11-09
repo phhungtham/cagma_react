@@ -86,7 +86,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
   };
 
   const handleSubmitForm = async values => {
-    const { email: cus_email, dob: cus_bth_y4mm_dt, id: lcl_cus_rlnm_no, idType: lcl_cus_rlnm_no_t } = values;
+    const { email: cus_email, dob: cus_bth_y4mm_dt, ide2e: lcl_cus_rlnm_no, idType: lcl_cus_rlnm_no_t } = values;
     setShowLoading(true);
     const payload = {
       uuid_v: deviceId,

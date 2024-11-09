@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import Alert from '@common/components/atoms/Alert';
@@ -15,17 +15,18 @@ import { getProvinceCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import { SignUpContext } from '@pages/SignUp';
 import { CustomerInfoVerifyType, VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
-import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { moveBack } from '@utilities/index';
 
 import { CustomerInfoVerifyErrorCode } from './constants';
 import { verifyUserInfoFormSchema } from './schema';
 
 const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
+  const { ekycCached, setEkycToNativeCache } = useContext(SignUpContext);
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -98,7 +99,8 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
     };
     const { errorCode, data, isSuccess, error } = await requestApi(endpoints.customerInfoVerify, payload);
     setShowLoading(false);
-    setEkycInfo({
+    setEkycToNativeCache({
+      ...ekycCached,
       isEkycProcessing: false,
       email: '',
       userId: '',

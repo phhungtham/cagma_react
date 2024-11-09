@@ -12,8 +12,6 @@ import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
-import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
-import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { moveBack } from '@utilities/index';
 
 import BranchVisitNoticeBottom from '../BranchVisitNoticeBottom';
@@ -22,7 +20,7 @@ import { VerifyIdentityTermsSchema } from './schema';
 import './styles.scss';
 
 const VerifyIdentityTerms = ({ onConfirm }) => {
-  const { deviceId } = useContext(SignUpContext);
+  const { deviceId, ekycCached, setEkycToNativeCache } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -30,7 +28,6 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
     content: '',
   });
   const [showBranchVisitBottom, setShowBranchVisitBottom] = useState(false);
-  const [ekycPluginInfo, setEkycPluginInfo] = useState({});
   const { requestApi } = useApi();
 
   const {
@@ -55,7 +52,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
     const { firstName, lastName } = values;
     setShowLoading(true);
     const payload = {
-      cus_email: ekycPluginInfo.email,
+      cus_email: ekycCached.email,
       uuid_v: deviceId,
       cus_fst_nm: firstName,
       cus_last_nm: lastName,
@@ -63,8 +60,8 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep2, payload);
     setShowLoading(false);
     if (isSuccess) {
-      setEkycInfo({
-        ...ekycPluginInfo,
+      setEkycToNativeCache({
+        ...ekycCached,
         firstName,
         lastName,
         isEkycProcessing: true,
@@ -87,13 +84,6 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
     }
   };
 
-  const getEkycInfoCallback = result => {
-    const { firstName, lastName } = result;
-    setValue('firstName', firstName, { shouldValidate: true });
-    setValue('lastName', lastName, { shouldValidate: true });
-    setEkycPluginInfo(result);
-  };
-
   const handleCloseAlert = () => {
     setAlert({
       ...alert,
@@ -102,8 +92,12 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
   };
 
   useEffect(() => {
-    getEkycInfo(getEkycInfoCallback);
-  }, []);
+    if (ekycCached) {
+      const { firstName, lastName } = ekycCached;
+      setValue('firstName', firstName, { shouldValidate: true });
+      setValue('lastName', lastName, { shouldValidate: true });
+    }
+  }, [ekycCached]);
 
   return (
     <>

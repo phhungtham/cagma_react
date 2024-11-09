@@ -11,15 +11,12 @@ import { endpoints } from '@common/constants/endpoint';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
-import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
-import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { moveBack } from '@utilities/index';
 
 import { EnterEmailSchema } from './schema';
 
 const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) => {
-  const { deviceId } = useContext(SignUpContext);
-  const [ekycPluginInfo, setEkycPluginInfo] = useState();
+  const { deviceId, ekycCached, setEkycToNativeCache } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -133,8 +130,8 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
     setShowLoading(false);
     if (isSuccess) {
       const { screen_kd, cus_email } = data;
-      setEkycInfo({
-        ...ekycPluginInfo,
+      setEkycToNativeCache({
+        ...ekycCached,
         email: cus_email,
         isEkycProcessing: true,
       });
@@ -187,14 +184,6 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       requestUpdateEmail();
     }
   };
-
-  const getEkycInfoCallback = result => {
-    setEkycPluginInfo(result);
-  };
-
-  useEffect(() => {
-    getEkycInfo(getEkycInfoCallback);
-  }, []);
 
   useEffect(() => {
     return () => {
