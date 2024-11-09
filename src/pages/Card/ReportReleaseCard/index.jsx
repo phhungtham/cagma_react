@@ -3,16 +3,18 @@ import { useEffect, useState } from 'react';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { CardAccidentType } from '../CardMain/constants';
 import ReportReleaseCardSuccess from './components/ReportReleaseCardSuccess';
 import ReportReleaseDetail from './components/ReportReleaseDetail';
 import { REPORT_RELEASE_CARD_STEP } from './constants';
 
-const ReportReleaseCard = () => {
+const ReportReleaseCard = ({ translate: t }) => {
   const [currentStep, setCurrentStep] = useState(REPORT_RELEASE_CARD_STEP.ENTER_INFORMATION);
   const [reportDetail, setReportDetail] = useState();
   const [reportReleaseCardSuccessInfo, setReportReleaseCardSuccessInfo] = useState();
@@ -113,10 +115,14 @@ const ReportReleaseCard = () => {
           <ReportReleaseDetail
             reportDetail={reportDetail}
             onSubmit={handleSubmitForm}
+            translate={t}
           />
         )}
         {currentStep === REPORT_RELEASE_CARD_STEP.COMPLETED && (
-          <ReportReleaseCardSuccess cardInfo={reportReleaseCardSuccessInfo} />
+          <ReportReleaseCardSuccess
+            cardInfo={reportReleaseCardSuccessInfo}
+            translate={t}
+          />
         )}
       </div>
       <Alert
@@ -128,11 +134,11 @@ const ReportReleaseCard = () => {
         onClose={handleCloseAlert}
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>
   );
 };
 
-export default ReportReleaseCard;
+export default withHTMLParseI18n(ReportReleaseCard);

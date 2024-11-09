@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
+import { releaseCardLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { moveBack } from '@utilities/index';
 
@@ -10,7 +11,7 @@ import { accidentReportDetailFields } from '../../constants';
 import { reportReleaseCardFormSchema } from './schema';
 import './styles.scss';
 
-const ReportReleaseDetail = ({ onSubmit, reportDetail }) => {
+const ReportReleaseDetail = ({ onSubmit, reportDetail, translate: t }) => {
   const {
     handleSubmit,
     control,
@@ -24,14 +25,14 @@ const ReportReleaseDetail = ({ onSubmit, reportDetail }) => {
   return (
     <>
       <Header
-        title="Cards"
+        title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
       <div className="report-release-card-detail__wrapper page__form">
-        <h1 className="page__title">Release a Lost Access Card</h1>
+        <h1 className="page__title">{t(labels.releaseLostCard)}</h1>
         <div className="py-4 mt-3">
           <div className="form__section__title">
-            <span>Accident Report Detail</span>
+            <span>{t(labels.accidentReportDetail)}</span>
           </div>
           <div className="card__details mt-3">
             {accidentReportDetailFields.map(({ label, value }) => (
@@ -39,7 +40,7 @@ const ReportReleaseDetail = ({ onSubmit, reportDetail }) => {
                 className="card__item"
                 key={label}
               >
-                <span className="card__label">{label}</span>
+                <span className="card__label">{t(label)}</span>
                 <span className="card__value">{reportDetail?.[value]}</span>
               </div>
             ))}
@@ -49,7 +50,7 @@ const ReportReleaseDetail = ({ onSubmit, reportDetail }) => {
           <Controller
             render={({ field }) => (
               <Input
-                label="Accident Release Detail"
+                label={t(labels.accidentReleaseDetail)}
                 placeholder="Please input Detail text"
                 {...field}
               />
@@ -61,7 +62,7 @@ const ReportReleaseDetail = ({ onSubmit, reportDetail }) => {
       </div>
       <div className="footer__fixed">
         <Button
-          label="Release"
+          label={t(labels.release)}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(onSubmit)}

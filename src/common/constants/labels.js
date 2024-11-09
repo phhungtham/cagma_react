@@ -405,7 +405,23 @@ export const reportLostCardLabels = {
   home: 'lbl_CTA_6024', //Home
 };
 
-export const releaseCardLabels = {};
+export const releaseCardLabels = {
+  releaseLostCard: 'lbl_CACA600000_0180', //Release a Lost Access Card
+  accidentReportDetail: 'lbl_CACA600000_0181', //Accident Report Detail
+  reportedDateAccident: 'lbl_CACA600000_0182', //Reported Date of Accident
+  accountCode: 'lbl_CACA600000_0183', //Account Code
+  detailAccident: 'lbl_CACA600000_0184', //Detail Of Accident
+  accidentReleaseDetail: 'lbl_CACA600000_0185', //Accident Release Detail
+  release: 'lbl_CTA_6029', //Release
+  releaseTheAccident: 'lbl_CACA600000_0186', //Release the accident report
+  hasBeenComplete: 'lbl_CACA600000_0586', //has been completed
+  cardNumber: 'lbl_CACA600000_0187', //Card Number
+  accountNo: 'lbl_CACA600000_0188', //Account no.
+  issueDate: 'lbl_CACA600000_0189', //Issue Date
+  status: 'lbl_CACA600000_0190', //Status
+  viewCards: 'lbl_CTA_6030', //View Cards
+  home: 'lbl_CTA_6031', //Home
+};
 
 export const productLabels = {
   productCenter: 'men_title_CAPR010000', //Product center
@@ -462,6 +478,7 @@ export const menuLabels = {
   changeProfile: 'mymen_CAME030100', //Change Profile
   cardMain: 'mymen_CAOTLA0004', //Card
   accessCardService: 'men_title_CACA010100', //Access Card Service
+  openAccount: 'men_title_CAPR010100', //Open Account
 };
 
 export const ctaLabels = {

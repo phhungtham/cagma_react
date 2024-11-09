@@ -1,3 +1,5 @@
+import { releaseCardLabels as labels } from '@common/constants/labels';
+
 export const REPORT_RELEASE_CARD_STEP = {
   ENTER_INFORMATION: 'enterInformation',
   COMPLETED: 'completed',
@@ -5,34 +7,34 @@ export const REPORT_RELEASE_CARD_STEP = {
 
 export const reportReleaseCardSuccessFields = [
   {
-    label: 'Card Number',
+    label: labels.cardNumber,
     value: 'cardNumber',
   },
   {
-    label: 'Account no.',
+    label: labels.accountNo,
     value: 'accountNo',
   },
   {
-    label: 'Issue Date',
+    label: labels.issueDate,
     value: 'issueDate',
   },
   {
-    label: 'Status',
+    label: labels.status,
     value: 'status',
   },
 ];
 
 export const accidentReportDetailFields = [
   {
-    label: 'Reported Date of Accident',
+    label: labels.reportedDateAccident,
     value: 'date',
   },
   {
-    label: 'Account Code',
+    label: labels.accountCode,
     value: 'accountCode',
   },
   {
-    label: 'Detail Of Accident',
+    label: labels.detailAccident,
     value: 'detail',
   },
 ];
