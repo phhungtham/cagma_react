@@ -56,7 +56,7 @@ const ActiveCardView = ({ card, translate: t }) => {
               onClick={handleNavigateReissueCard}
             />
             <Button
-              label={isReportedLostCard ? 'Release Lost' : t(cardLabels.reportLost)} //TODO: Missing label
+              label={isReportedLostCard ? t(cardLabels.releaseLost) : t(cardLabels.reportLost)}
               size="xl"
               variant="filled__secondary-blue"
               onClick={isReportedLostCard ? handleNavigateReleaseLostCard : handleNavigateReportLostCard}

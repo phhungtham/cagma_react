@@ -170,6 +170,8 @@ export const manageLimitLabels = {
   increaseRequestSubmit: 'lbl_CAME900010_0020', //Your limit increase request has been submitted.
   decreaseProcess: 'lbl_CAME900010_0021', //Your limit decrease has been processed.
   requestCancel: 'lbl_CAME900010_0022', //Your limit change request has been cancelled.
+  dailyTransferLimit: 'lbl_CAME900010_0023', //Daily Transfer Limits is %1
+  cancelTheLimits: 'lbl_CAME900010_0024', //Cancel the limits
 };
 
 export const changeProfileLabels = {
@@ -230,6 +232,8 @@ export const changeProfileLabels = {
   emailVerifyComplete: 'lbl_CAME900000_0220', //Email verification is complete
   doItNextTime: 'lbl_CAME900000_0204', //I'll do it next time
   youNeedToClick: 'lbl_CAME900000_0030', //You need to click the Save button...
+  changeProfileImage: 'lbl_CAME900000_0223', //Change profile image
+  maxFileSize: 'lbl_CAME900000_0224', //*5MB Max
 };
 
 export const openAccountLabels = {
@@ -308,6 +312,7 @@ export const cardLabels = {
   thisCardHasBeen: 'lbl_CACA600000_0585', //This card has been reported as lost or stolen
   yourCardRequest: 'lbl_CACA600000_0045', //Your card request
   hasBeenCompleted: 'lbl_CACA600000_0945', //has been completed
+  releaseLost: 'lbl_CACA600000_0191', //Release Lost
 };
 
 export const activeCardLabels = {

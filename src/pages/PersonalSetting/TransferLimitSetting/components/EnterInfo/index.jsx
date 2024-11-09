@@ -57,7 +57,7 @@ const TransferLimitSettingForm = ({ onSubmit, detail, onCancelLimit, translate: 
                   <span>{detail?.[value]}</span>
                   {value === 'statusDisplay' && isShowBtnCancel && (
                     <Button
-                      label="Cancel the limits"
+                      label={t(labels.cancelTheLimits)}
                       variant="outlined__primary"
                       size="sm"
                       className="mt-4"
@@ -91,7 +91,7 @@ const TransferLimitSettingForm = ({ onSubmit, detail, onCancelLimit, translate: 
         <EnterAmountBottom
           onClose={() => setShowEnterAmountBottom(false)}
           title={t(labels.newDailyLimit)}
-          note={`Daily Transfer Limits is ${detail?.limitDisplay}`}
+          note={t(labels.dailyTransferLimit.replace('%1', detail?.limitDisplay))}
           currency={detail?.currencyCode || CurrencyCode.CAD}
           amount={newLimit}
           max={dailyTransferLimitMax}

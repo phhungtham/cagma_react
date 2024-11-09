@@ -5,18 +5,9 @@ import KeypadDeleteIcon from '@assets/icons/KeypadDeleteIcon';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { CurrencyAmountDefaultBaseCode, CurrencyCode, CurrencyPrefixBaseCode } from '@common/constants/currency';
+import { ctaLabels } from '@common/constants/labels';
 import { convertToNumber, formatCurrencyDisplay, stringNumberToCurrency } from '@utilities/currency';
-
-// const currencyOptions = [
-//   {
-//     label: 'CAD',
-//     value: 'CAD',
-//   },
-//   {
-//     label: 'USD',
-//     value: 'USD',
-//   },
-// ];
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 const numberButtons = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'delete'];
 
@@ -33,13 +24,12 @@ const EnterAmountBottom = ({
   note,
   currencyOptions = [],
   currency = CurrencyCode.CAD,
-  alert_msg,
-  handleOnClickNextButton,
   amount = '',
   onChangeAmount,
   min,
   max,
-  btnText = 'Confirm',
+  btnText,
+  translate: t,
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(currency);
   const [currentAmount, setCurrentAmount] = useState(amount);
@@ -189,7 +179,7 @@ const EnterAmountBottom = ({
           )}
           <div className="btn-submit__wrapper">
             <Button
-              label={btnText}
+              label={btnText ? btnText : t(ctaLabels.confirm)}
               variant="filled__primary"
               className="btn-submit"
               onClick={onClickConfirm}
@@ -213,4 +203,4 @@ const EnterAmountBottom = ({
   );
 };
 
-export default EnterAmountBottom;
+export default withHTMLParseI18n(EnterAmountBottom);

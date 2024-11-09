@@ -19,7 +19,7 @@ const ChangePhotoBottom = ({ open, onClose, onClickOpenCamera, onClickOpenGaller
       <BottomSheet
         open={open}
         onClose={onClose}
-        title="Change profile image"
+        title={t(labels.changeProfileImage)}
         clazz="bottom__dropdown__wrapper"
         type="fit-content"
       >

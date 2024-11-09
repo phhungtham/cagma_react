@@ -375,7 +375,7 @@ const AddressInfoSection = ({
                     <CameraIcon />
                   </div>
                   <p className="upload__title">{t(labels.upload)}</p>
-                  <p className="upload__desc">*5MB Max</p>
+                  <p className="upload__desc">{t(labels.maxFileSize)}</p>
                 </div>
               )}
 
