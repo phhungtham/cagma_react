@@ -46,6 +46,8 @@ const SignUpCreatePassword = ({ onConfirm }) => {
 
   const handleChangePassword = result => {
     const { uniqueValue: value, e2e, length } = result;
+    console.log('handle change password result :>> ', result);
+    console.log('handle change password e2e value :>> ', e2e);
     setValue('password', value, { shouldValidate: true });
     setValue('passwordDisplay', '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
     setValue('e2e', e2e, { shouldValidate: true });
