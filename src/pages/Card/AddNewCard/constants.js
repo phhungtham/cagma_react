@@ -9,7 +9,7 @@ export const ADD_NEW_CARD_STEP = {
 };
 
 export const termConditionConfig = {
-  selectAllLabel: 'I agree to the Application and Agreement of the Shinhan Access Card', //TODO: missing labels, lbl_CACA600000_1022 not exists
+  selectAllLabel: cardLabels.agreeTerms,
   options: [
     {
       label: cardLabels.accessCardApplication,

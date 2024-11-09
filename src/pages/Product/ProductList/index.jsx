@@ -250,7 +250,7 @@ const ProductList = ({ translate: t }) => {
                             <span className="item__quantity">
                               {product?.prdt_st_trm_unit_cnt}~{product?.prdt_close_trm_unit_cnt}
                             </span>
-                            <span className="item__unit">{PeriodUnitCodeDisplay[product?.prdt_psb_trm_unit_c]}</span>
+                            <span className="item__unit">{t(PeriodUnitCodeDisplay[product?.prdt_psb_trm_unit_c])}</span>
                           </div>
                         </div>
                       )}

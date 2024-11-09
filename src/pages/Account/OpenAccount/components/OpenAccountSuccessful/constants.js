@@ -1,3 +1,4 @@
+import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode } from '@common/constants/product';
 
 export const chequingSuccessFields = [
@@ -25,23 +26,23 @@ export const chequingSuccessFields = [
 
 export const eSavingSuccessFields = [
   {
-    label: 'Product name',
+    label: labels.productName,
     value: 'productName',
   },
   {
-    label: 'Account no.',
+    label: labels.accountNo,
     value: 'acNo',
   },
   {
-    label: 'Interest rate',
+    label: labels.interestRate3,
     value: 'interestRate',
   },
   {
-    label: 'Amount',
+    label: labels.amount2,
     value: 'amount',
   },
   {
-    label: 'Deposit from',
+    label: labels.depositFrom,
     value: 'depositFrom',
   },
 ];

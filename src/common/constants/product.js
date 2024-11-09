@@ -1,4 +1,4 @@
-import { productLabels } from './labels';
+import { openAccountLabels as labels, productLabels } from './labels';
 import { SelectTermDurationTypes } from './terms';
 
 export const ProductPeriodUnitCode = {
@@ -10,11 +10,11 @@ export const ProductPeriodUnitCode = {
 };
 
 export const PeriodUnitCodeDisplay = {
-  [ProductPeriodUnitCode.DAY]: 'Days',
-  [ProductPeriodUnitCode.WEEK]: 'Weeks',
-  [ProductPeriodUnitCode.MONTH]: 'Months',
-  [ProductPeriodUnitCode.QUARTER]: 'Quarters',
-  [ProductPeriodUnitCode.YEAR]: 'Years',
+  [ProductPeriodUnitCode.DAY]: labels.days,
+  [ProductPeriodUnitCode.WEEK]: labels.weeks,
+  [ProductPeriodUnitCode.MONTH]: labels.months,
+  [ProductPeriodUnitCode.QUARTER]: labels.quarters,
+  [ProductPeriodUnitCode.YEAR]: labels.years,
 };
 
 export const ProductUnitCodeWithTermType = {

@@ -8,13 +8,14 @@ import InputDate from '@common/components/atoms/Input/InputDate';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Tooltip from '@common/components/atoms/Tooltip';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
+import { openAccountLabels as labels } from '@common/constants/labels';
 import { postalCodeNotAllowRegex } from '@common/constants/regex';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 
 import { thirdPartyActiveOptions } from './constants';
 
-const ThirdPartyFormSection = ({ provinces }) => {
+const ThirdPartyFormSection = ({ provinces, translate: t }) => {
   const [showSelectProvinceBottom, setShowSelectProvinceBottom] = useState(false);
 
   const { watch, setValue, control } = useFormContext();
@@ -44,9 +45,9 @@ const ThirdPartyFormSection = ({ provinces }) => {
   return (
     <div className="third-party__section page__container">
       <div className="option-item">
-        <div className="form__section__title mb-0">Third Party Determination</div>
+        <div className="form__section__title mb-0">{t(labels.thirdPartyDetermination)}</div>
         <Tooltip
-          content="If this account be used by or on behalf of third party, please complete information"
+          content={t(labels.ifThisAccount)}
           placement="bottom_center"
         >
           <div className="item__tooltip">
@@ -70,7 +71,7 @@ const ThirdPartyFormSection = ({ provinces }) => {
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Name of the Third Party"
+                  label={t(labels.nameThirdParty)}
                   maxLength={100}
                   {...field}
                 />
@@ -81,7 +82,7 @@ const ThirdPartyFormSection = ({ provinces }) => {
             <Controller
               render={({ field: { value } }) => (
                 <InputDate
-                  label="Date of Birth"
+                  label={t(labels.dob2)}
                   onFocus={handleOpenCalendar}
                   value={value}
                 />
@@ -93,7 +94,7 @@ const ThirdPartyFormSection = ({ provinces }) => {
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Address"
+                  label={t(labels.address)}
                   maxLength={200}
                   {...field}
                 />
@@ -104,7 +105,7 @@ const ThirdPartyFormSection = ({ provinces }) => {
             <Controller
               render={({ field }) => (
                 <Input
-                  label="City"
+                  label={t(labels.city)}
                   maxLength={200}
                   {...field}
                 />
@@ -115,7 +116,7 @@ const ThirdPartyFormSection = ({ provinces }) => {
             <Controller
               render={({ field }) => (
                 <Dropdown
-                  label="Province"
+                  label={t(labels.province)}
                   onFocus={handleOpenSelectProvinceDropdown}
                   options={provinces}
                   {...field}
@@ -127,7 +128,7 @@ const ThirdPartyFormSection = ({ provinces }) => {
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Postal Code"
+                  label={t(labels.postalCode)}
                   maxLength={10}
                   regex={postalCodeNotAllowRegex}
                   {...field}
@@ -139,7 +140,7 @@ const ThirdPartyFormSection = ({ provinces }) => {
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Occupation/Nature of Business"
+                  label={t(labels.occupationNature)}
                   maxLength={100}
                   {...field}
                 />
@@ -150,7 +151,7 @@ const ThirdPartyFormSection = ({ provinces }) => {
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Relationship to Applicant(S)"
+                  label={t(labels.relationship)}
                   maxLength={100}
                   {...field}
                 />

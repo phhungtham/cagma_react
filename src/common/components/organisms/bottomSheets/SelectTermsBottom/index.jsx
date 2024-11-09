@@ -5,6 +5,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Chips from '@common/components/atoms/Chips';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { SelectTermDurationTypes } from '@common/constants/terms';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 const typeWithUnitLabel = {
   [SelectTermDurationTypes.DAY]: 'days',
@@ -24,6 +25,7 @@ const SelectTermsBottom = ({
   options = [],
   inquiryMaturityDate,
   disabled,
+  translate: t,
 }) => {
   const [termError, setTermError] = useState();
   const [termValue, setTermValue] = useState(value);
@@ -160,4 +162,4 @@ const SelectTermsBottom = ({
   );
 };
 
-export default SelectTermsBottom;
+export default withHTMLParseI18n(SelectTermsBottom);

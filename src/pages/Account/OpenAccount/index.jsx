@@ -349,6 +349,7 @@ const OpenAccount = ({ translate: t }) => {
             onClose={() => setShowCustomerInfoBottom(false)}
             onClickConfirm={handleConfirmCustomerInfo}
             onClickChangeProfile={handleNavigateChangeProfile}
+            translate={t}
           />
         )}
         {currentStep === OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION && (
@@ -358,6 +359,7 @@ const OpenAccount = ({ translate: t }) => {
             setAlert={setAlert}
             provinces={provinceOptions}
             termOptions={termOptions}
+            translate={t}
           />
         )}
         {currentStep === OPEN_ACCOUNT_STEP.COMPLETED && (
@@ -365,6 +367,7 @@ const OpenAccount = ({ translate: t }) => {
             openAccountInfo={openAccountSuccessInfo}
             productCode={productCode}
             dep_sjt_class={dep_sjt_class}
+            translate={t}
           />
         )}
       </div>

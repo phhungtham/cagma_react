@@ -1,21 +1,22 @@
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { openAccountLabels as labels } from '@common/constants/labels';
 
 import { customerInfoFields } from '../../constants';
 import './styles.scss';
 
-const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChangeProfile }) => {
+const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChangeProfile, translate: t }) => {
   return (
     <BottomSheet
       open
       onClose={onClose}
-      title="Customer Info"
+      title={t(labels.customerInfo)}
       clazz="customer-info-bottom__wrapper"
       type="fit-content"
     >
       <div className="customer-info-bottom__content">
         <section className="instruction-info">
-          <span>By clicking Next below, you agree that the information displayed above is true and correct.</span>
+          <span>{t(labels.byClickingNewAccount)}</span>
         </section>
         <div className="divider__item__black mt-4" />
         <div className="customer-info__detail">
@@ -24,7 +25,7 @@ const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChan
               className="customer-item"
               key={fieldName}
             >
-              <span className="customer-label">{label}</span>
+              <span className="customer-label">{t(label)}</span>
               <span className="customer-value">
                 {fieldName === 'job' ? (
                   <>
@@ -43,12 +44,12 @@ const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChan
         <div className="customer__cta">
           <Button
             variant="filled__secondary-blue"
-            label="Update Profile"
+            label={t(labels.updateProfile)}
             onClick={onClickChangeProfile}
           />
           <Button
             variant="filled__primary"
-            label="Next"
+            label={t(labels.newAccount)}
             onClick={onClickConfirm}
           />
         </div>

@@ -19,6 +19,7 @@ import { CurrencyCode } from '@common/constants/currency';
 import { selectType } from '@common/constants/dateTime';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, openAccountLabels as labels, menuLabels } from '@common/constants/labels';
 import { PeriodUnitCodeDisplay, ProductCode, ProductUnitCodeWithTermType } from '@common/constants/product';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
@@ -36,7 +37,8 @@ import { openAccountSchema } from './schema';
 import './styles.scss';
 import ThirdPartyFormSection from './ThirdPartyFormSection';
 
-const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termOptions }) => {
+//TODO: Add label, start from select terms
+const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termOptions, translate: t }) => {
   const [showLoading, setShowLoading] = useState(false);
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
   const [showSelectTermsBottom, setShowSelectTermsBottom] = useState(false);
@@ -345,7 +347,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   return (
     <>
       <Header
-        title="Open Account"
+        title={t(menuLabels.openAccount)}
         onClick={moveBack}
       />
       <div className="enter-account-information__wrapper">
@@ -368,10 +370,10 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 {showTerms && (
                   <section>
                     <TextDropdown
-                      label="Terms"
+                      label={t(labels.terms)}
                       placeholder="Select"
                       onClick={onOpenSelectTermsBottom}
-                      value={term ? `${term} ${PeriodUnitCodeDisplay[unitCode]}` : ''}
+                      value={term ? `${term} ${t(PeriodUnitCodeDisplay[unitCode])}` : ''}
                     >
                       {term && (
                         <div className="enter-account__term">
@@ -385,7 +387,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 {!isChequing && (
                   <section>
                     <TextDropdown
-                      label={isInstallmentSaving ? 'Monthly Installment  Amount' : 'Amount'}
+                      label={isInstallmentSaving ? 'Monthly Installment  Amount' : t(labels.amount)}
                       placeholder={`${amountMinDisplay} ~ ${amountMaxDisplay} ${productCurrencyCode}`}
                       onClick={onOpenEnterAmountBottom}
                       value={amount ? `${formatCurrencyDisplay(amount)} ${productCurrencyCode}` : undefined}
@@ -405,7 +407,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 )}
                 <section>
                   <TextDropdown
-                    label="Intended use of account"
+                    label={t(labels.intendedUseAccount)}
                     placeholder="Select"
                     align="vertical"
                     onClick={handleOpenIntendedUseAccountBottom}
@@ -426,7 +428,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 {!isChequing && (
                   <section>
                     <TextDropdown
-                      label="From"
+                      label={t(labels.from)}
                       placeholder="My Account"
                       onClick={onOpenMyAccountBottom}
                       value={selectedAccount?.dep_prdt_nm}
@@ -443,23 +445,32 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 {showMoreInfo && (
                   <>
                     <div className="divider__item__solid my-2" />
-                    <InterestRateSection interestRate={interestData?.apply_intrt_display} />
+                    <InterestRateSection
+                      interestRate={interestData?.apply_intrt_display}
+                      translate={t}
+                    />
                     <div className="divider__item__solid" />
-                    <ReferralCodeSection productCode={productCode} />
+                    <ReferralCodeSection
+                      productCode={productCode}
+                      translate={t}
+                    />
                   </>
                 )}
               </div>
               {showMoreInfo && (
                 <>
                   <div className="divider__group mt-6" />
-                  <ThirdPartyFormSection provinces={provinces} />
+                  <ThirdPartyFormSection
+                    provinces={provinces}
+                    translate={t}
+                  />
                 </>
               )}
             </div>
           </FormProvider>
           <div className="footer__fixed">
             <Button
-              label="Open"
+              label="Open" //TODO: Missing label
               variant="filled__primary"
               className="btn__cta"
               onClick={handleSubmit(onSubmitOpenAccount)}
@@ -484,7 +495,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             onSelect={onSelectIntendedUseAccount}
             options={intendedUseAccountOptions}
             showArrow={false}
-            title={'Intended use of account'}
+            title={t(labels.intendedUseAccount)}
           />
         )}
 
@@ -493,13 +504,13 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             onClose={() => setShowEnterAmountBottom(false)}
             title={selectedAccount?.dep_prdt_nm}
             subTitle={selectedAccount?.lcl_ac_no_display}
-            note={`Available Balance $${selectedAccount?.def_ac_blc_display || '0.00'}`}
+            note={`Available Balance $${selectedAccount?.def_ac_blc_display || '0.00'}`} //TODO: Missing label
             currency={CurrencyCode.CAD}
             amount={amount}
             min={enterAmountMin}
             max={enterAmountMax}
             onChangeAmount={onChangeAmount}
-            btnText="Next"
+            btnText={t(ctaLabels.next)}
           />
         )}
 
@@ -539,7 +550,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             onDateChange={handleChangeTaxYear}
             defaultDate={taxYear}
             type={selectType.year}
-            title="Select Year"
+            title="Select Year" //TODO: Missing label
           />
         )}
       </div>

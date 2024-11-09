@@ -4,9 +4,10 @@ import { FillTooltipIcon } from '@assets/icons';
 import CheckBox from '@common/components/atoms/Checkbox';
 import Input from '@common/components/atoms/Input/Input';
 import Tooltip from '@common/components/atoms/Tooltip';
+import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode } from '@common/constants/product';
 
-const ReferralCodeSection = ({ productCode }) => {
+const ReferralCodeSection = ({ productCode, translate: t }) => {
   const isShowCheckboxList = [
     ProductCode.E_SAVING,
     ProductCode.TFSA_E_SAVINGS,
@@ -28,7 +29,7 @@ const ReferralCodeSection = ({ productCode }) => {
                 render={({ field }) => (
                   <CheckBox
                     size="large"
-                    label="Debit Card Issuance"
+                    label={t(labels.debitCardIssuance)}
                     {...field}
                     checked={field.value}
                   />
@@ -106,7 +107,7 @@ const ReferralCodeSection = ({ productCode }) => {
         <Controller
           render={({ field }) => (
             <Input
-              label="Referral Code (Optional)"
+              label={t(labels.referralCode)}
               maxLength={8}
               {...field}
             />

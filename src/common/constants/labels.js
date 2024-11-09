@@ -244,6 +244,58 @@ export const openAccountLabels = {
   eSavingDesc: 'lbl_CAPR501000_0002', //This product provides high interest rate even for a day saving with convenient deposit and withdrawal system.
   interestRate: 'lbl_CAPR501000_0003', //Interest Rate
   terms: 'lbl_CAPR501000_0005', //Terms
+  customerInfo: 'lbl_CAPR501000_0011', //Customer Info
+  byClickingNewAccount: 'lbl_CAPR501000_0012', //By clicking New Account below, you agree that the information displayed above is true and correct.
+  name: 'lbl_CAPR501000_0013', //Name
+  dob: 'lbl_CAPR501000_0014', //Date of Birth
+  sin: 'lbl_CAPR501000_0015', //SIN
+  emailAddress: 'lbl_CAPR501000_0016', //E-Mail Address
+  phoneNumber: 'lbl_CAPR501000_0017', //Phone number
+  cellNumber: 'lbl_CAPR501000_0018', //Cell number
+  occupation: 'lbl_CAPR501000_0019', //Occupation
+  updateProfile: 'lbl_CTA_5002', //Update Profile
+  newAccount: 'lbl_CTA_5003', //New Account
+  amount: 'lbl_CAPR501000_0020', //Amount
+  intendedUseAccount: 'lbl_CAPR501000_0021', //Intended use of account
+  from: 'lbl_CAPR501000_0022', //From
+  interestRate2: 'lbl_CAPR501000_0023', //Interest rate
+  apr: 'lbl_CAPR501000_0024', //APR (Annual Percentage Rate)
+  debitCardIssuance: 'lbl_CAPR501000_0025', //Debit Card Issuance
+  referralCode: 'lbl_CAPR501000_0026', //Referral Code (Optional)
+  thirdPartyDetermination: 'lbl_CAPR501000_0027', //Third Party Determination
+  ifThisAccount: 'lbl_CAPR501000_0028', //If this account be used by or on behalf of third party, please complete information about the third party.
+  nameThirdParty: 'lbl_CAPR501000_0029', //Name of the Third Party
+  dob2: 'lbl_CAPR501000_0030', //Date of Birth
+  address: 'lbl_CAPR501000_0031', //Address
+  city: 'lbl_CAPR501000_0032', //City
+  province: 'lbl_CAPR501000_0033', //Province
+  postalCode: 'lbl_CAPR501000_0034', //Postal Code
+  occupationNature: 'lbl_CAPR501000_0035', //Occupation/Nature of Business
+  relationship: 'lbl_CAPR501000_0036', //Relationship to Applicant(S)
+  youHaveSuccessfully: 'lbl_CAPR501000_0037', //You’ve successfully opened %1
+  debitCardWillBe: 'lbl_CAPR501000_0038', //Debit card will be sent to the...
+  productName: 'lbl_CAPR501000_0039', //Product name
+  accountNo: 'lbl_CAPR501000_0040', //Account no.
+  interestRate3: 'lbl_CAPR501000_0041', //Interest rate
+  amount2: 'lbl_CAPR501000_0042', //Amount
+  depositFrom: 'lbl_CAPR501000_0043', //Deposit from
+  upTo: 'lbl_CAPR510000_0080', //up to
+  days: 'lbl_CAPR510000_0081', //Days
+  weeks: 'lbl_CAPR510000_0082', //Weeks
+  months: 'lbl_CAPR510000_0083', //Months
+  years: 'lbl_CAPR510000_0084', //Years
+  quarters: 'lbl_CAPR510000_0085', //Quarters
+  ePowerTermDesc: 'lbl_CAPR502000_0002', //e-power term deposit description
+  tfsaESavingDesc: 'lbl_CAPR507000_0002', //tfsa e-saving description
+  rrspESavingDesc: 'lbl_CAPR509000_0002', //rrsp e-saving description
+  eInstallmentDesc: 'lbl_CAPR506000_0002', //e-installment description
+  eGreenTermDesc: 'lbl_CAPR503000_0002', //e-green terms description
+  eShortTermDesc: 'lbl_CAPR505000_0002', //e-short terms deposit description
+  eLongTermMonthlyDesc: 'lbl_CAPR504000_0002', //e-long term monthly deposit description
+  eLongTermMaturityDesc: 'lbl_CAPR510000_0041', //e-long term maturity deposit description
+  tfsaEGicDesc: 'lbl_CAPR508000_0002', //tfsa e-GIC description
+  rrspEGicDesc: 'lbl_CAPR510000_0002', //rrsp e-GIC description
+  chequingDesc: 'lbl_CAPR521000_0002', //chequing description
 };
 
 export const cardLabels = {
@@ -313,6 +365,7 @@ export const cardLabels = {
   yourCardRequest: 'lbl_CACA600000_0045', //Your card request
   hasBeenCompleted: 'lbl_CACA600000_0945', //has been completed
   releaseLost: 'lbl_CACA600000_0191', //Release Lost
+  agreeTerms: 'lbl_CACA600000_1022', //I agree to the Application and Agreement of the Shinhan Access Card
 };
 
 export const activeCardLabels = {

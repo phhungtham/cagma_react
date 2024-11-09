@@ -4,6 +4,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
+import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode } from '@common/constants/product';
 import { routePaths } from '@routes/paths';
 import { moveHome, moveNext } from '@utilities/index';
@@ -11,7 +12,7 @@ import { moveHome, moveNext } from '@utilities/index';
 import { openAccountSuccessFields } from './constants';
 import './styles.scss';
 
-const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) => {
+const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, translate: t }) => {
   const { creditChecked, openedAccountNumber } = openAccountInfo || {};
 
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
@@ -55,13 +56,12 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) 
             />
           </div>
           <div className="open-account__title">
-            <div className="complete-message">You’ve successfully opened</div>
+            {/* //TODO: Check case %1 in english and 1음 in korean. Can't replace */}
+            <div className="complete-message">{t(labels.youHaveSuccessfully.replace('%1', ''))}</div>
             <div className="product-type">{openAccountInfo?.productName}</div>
             {!!creditChecked && (
               <div className="note">
-                {isChequingCreditChecked
-                  ? 'Issue your card from the Get new card'
-                  : 'Debit card will be sent to the stored customer address.'}
+                {isChequingCreditChecked ? 'Issue your card from the Get new card' : t(labels.debitCardWillBe)}
               </div>
             )}
           </div>
@@ -73,7 +73,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class }) 
               className="account-item"
               key={value}
             >
-              <span className="account-label">{label}</span>
+              <span className="account-label">{t(label)}</span>
               <span className="account-value">
                 <span>{openAccountInfo?.[value]}</span>
               </span>
