@@ -11,7 +11,6 @@ import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import Header from '@common/components/organisms/Header';
-import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getIdTypes } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
@@ -31,7 +30,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
   const { existingCustomer, ekycCached, deviceId, ekycStepStatus } = useContext(SignUpContext);
   const { requestApi } = useApi();
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
-  const [showIdTypesBottom, setShowIdTypesBottom] = useState(initSelectBottom);
+  const [showIdTypesBottom, setShowIdTypesBottom] = useState();
   const [idTypes, setIdTypes] = useState([]);
   const [showLoading, setShowLoading] = useState();
   const [alert, setAlert] = useState({
