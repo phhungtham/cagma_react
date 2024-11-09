@@ -27,7 +27,7 @@ import { SignUpStep, SignUpStepStatus } from './constants';
 export const SignUpContext = createContext();
 
 const SignUp = () => {
-  const [currentStep, setCurrentStep] = useState(SignUpStep.CREATE_ID);
+  const [currentStep, setCurrentStep] = useState(SignUpStep.MOTP_AGREE_TERMS);
   const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
   const [ekycCached, setEkycCached] = useState();
