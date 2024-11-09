@@ -146,6 +146,9 @@ export const bookAppointmentLabels = {
   appointmentTime: 'lbl_CAET900010_0064', //Appointment Time
   confirmNumber: 'lbl_CAET900010_0065', //Confirmation number
   zoomSendEmail: 'lbl_CAET900010_0066', //Zoom link will be sent via email.
+  phone: 'lbl_CAET900010_0067', //Phone
+  fax: 'lbl_CAET900010_0068', //Fax
+  address2: 'lbl_CAET900010_0069', //Address
 };
 
 export const manageLimitLabels = {
@@ -233,6 +236,10 @@ export const openAccountLabels = {
   agreeTermsAll: 'lbl_CAPR501000_0007', //I fully understand and agree to all of the below
   userAgreement: 'lbl_CAPR501000_0008', //[Mandatory] User Agreement
   productFeature: 'lbl_CAPR501000_0009', //[Mandatory] Product Feature
+  termsConditions: 'lbl_CAPR501000_0010', //Terms&Conditions
+  eSavingDesc: 'lbl_CAPR501000_0002', //This product provides high interest rate even for a day saving with convenient deposit and withdrawal system.
+  interestRate: 'lbl_CAPR501000_0003', //Interest Rate
+  terms: 'lbl_CAPR501000_0005', //Terms
 };
 
 export const cardLabels = {
@@ -297,6 +304,10 @@ export const cardLabels = {
   resend: 'lbl_CACA600000_1099', //Resend
   verify: 'lbl_CACA600000_2099', //Verify
   verificationCode: 'lbl_CACA600000_3099', //Verification Code
+  cardSummary: 'lbl_CACA600000_0511', //Card Summary
+  thisCardHasBeen: 'lbl_CACA600000_0585', //This card has been reported as lost or stolen
+  yourCardRequest: 'lbl_CACA600000_0045', //Your card request
+  hasBeenCompleted: 'lbl_CACA600000_0945', //has been completed
 };
 
 export const activeCardLabels = {
@@ -325,6 +336,8 @@ export const activeCardLabels = {
   viewCardBtn: 'lbl_CTA_6013', //View Card
   homeBtn: 'lbl_CTA_6014', //Home
   pleaseRegisterYouPin: 'lbl_CACA600000_0067', //Please register your PIN at a Shinhan Bank ATM
+  accessCard: 'lbl_CACA600000_0066', //Access Card
+  hasBeenActivated: 'lbl_CACA600000_0566', //has been activated
 };
 
 export const reissueCardLabels = {
@@ -374,6 +387,9 @@ export const reissueCardLabels = {
   email: 'lbl_CACA600000_0108', //Email
   yourEmailWillOnly: 'lbl_CACA600000_0109', //Your email will only be used to send confirmation notifications.
   agreeUseEmail: 'lbl_CACA600000_0110', //I agree to the use of the email address for sending confirmation email for replacement of Access Card
+  cardDetails: 'lbl_CACA600000_5114', //Card details
+  yourCardReissue: 'lbl_CACA600000_0132', //Your card reissue request
+  hasBeenCompleted: 'lbl_CACA600000_5132', //has been completed
 };
 
 export const reportLostCardLabels = {
@@ -403,6 +419,9 @@ export const reportLostCardLabels = {
   reserveConsultation: 'lbl_CACA600000_0155', //Reserve Consultation
   viewCards: 'lbl_CTA_6023', //View Cards
   home: 'lbl_CTA_6024', //Home
+  registerTheAccident: 'lbl_CACA600000_0148', //Register the accident report
+  hasBeenCompleted: 'lbl_CACA600000_0548', //has been completed
+  isNowComplete: 'lbl_CACA600000_0573', //is now complete
 };
 
 export const releaseCardLabels = {
@@ -429,7 +448,7 @@ export const productLabels = {
   investment: 'lbl_CAPR500000_0002', //Investment
   borrowing: 'lbl_CAPR500000_0003', //Borrowing
   eSavingDesc: 'lbl_CAPR500000_0007', //e-saving description
-  chequingDesc: 'lbl_CAPR502000_0013', //chequing description
+  chequingDesc: 'lbl_CAPR500000_0013', //chequing description
   ePowerTermDesc: 'lbl_CAPR500000_0020', //e-power term deposit description
   eGreenTermDesc: 'lbl_CAPR500000_0026', //e-green term deposit description
   eLongTermMonthlyDesc: 'lbl_CAPR500000_0032', //e-long term monthly description
@@ -500,4 +519,9 @@ export const ctaLabels = {
   home: 'lbl_CTA_6004', //Home
   activate: 'lbl_CTA_6005', //Activate
   enterCardNumber: 'lbl_CTA_6025', //Enter Card Number
+};
+
+export const commonLabels = {
+  selectDate: 'lbl_com_4607', //Select Date
+  selectTime: 'lbl_com_4608', //Select Time
 };

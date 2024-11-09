@@ -45,8 +45,8 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
             />
           </div>
           <div className="report-lost-card__title">
-            <div className="text-primary">Register the accident report</div>
-            <div className="complete-message">{isLogin ? 'has been completed' : 'is now complete'}</div>
+            <div className="text-primary">{t(labels.registerTheAccident)}</div>
+            <div className="complete-message">{isLogin ? t(labels.hasBeenCompleted) : t(labels.isNowComplete)}</div>
           </div>
         </div>
         {isLogin && (

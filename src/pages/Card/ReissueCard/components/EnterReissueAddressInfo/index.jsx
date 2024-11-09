@@ -130,8 +130,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
           {isLogin && (
             <div className="py-4 mt-3">
               <div className="form__section__title">
-                {/* TODO: Missing labels */}
-                <span>Card details</span>
+                <span>{t(labels.cardDetails)}</span>
               </div>
               <div className="card__details mt-3">
                 {reissueCardDetails.map(({ label, value }) => (

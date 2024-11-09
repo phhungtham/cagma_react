@@ -56,9 +56,8 @@ const ActiveCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
             />
           </div>
           <div className="active-card__title">
-            {/* //TODO: Missing labels */}
-            <div className="text-primary">Access Card</div>
-            <div className="complete-message">has been activated</div>
+            <div className="text-primary">{t(labels.accessCard)}</div>
+            <div className="complete-message">{t(labels.hasBeenActivated)}</div>
             {isLogin && <div className="note">{t(labels.pleaseRegisterYouPin)}</div>}
           </div>
         </div>

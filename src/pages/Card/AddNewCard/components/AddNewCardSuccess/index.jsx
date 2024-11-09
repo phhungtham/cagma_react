@@ -24,9 +24,8 @@ const AddNewCardSuccess = ({ cardInfo, translate: t }) => {
             />
           </div>
           <div className="add-new-card__title">
-            {/* //TODO: Missing label */}
-            <div className="text-primary">Your card request</div>
-            <div className="complete-message">has been completed</div>
+            <div className="text-primary">{t(cardLabels.yourCardRequest)}</div>
+            <div className="complete-message">{t(cardLabels.hasBeenCompleted)}</div>
             <div className="note">{t(cardLabels.cardDelivered)}</div>
           </div>
         </div>

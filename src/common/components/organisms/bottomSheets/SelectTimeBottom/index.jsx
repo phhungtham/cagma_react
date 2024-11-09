@@ -4,7 +4,9 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ScrollSelect from '@common/components/atoms/ScrollSelect';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { hoursShortOptions, timeTypes } from '@common/constants/dateTime';
+import { commonLabels, ctaLabels } from '@common/constants/labels';
 import { appendZeroToTime } from '@utilities/dateTimeUtils';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
 import '../bs_styles.scss';
@@ -12,11 +14,11 @@ import '../bs_styles.scss';
 const SelectTimeBottom = ({
   open,
   onClose,
-  title,
   onTimeChange,
   defaultTime,
   hourOptions = hoursShortOptions,
   minuteOptions = timeTypes,
+  translate: t,
 }) => {
   const valueRef = useRef({});
 
@@ -32,7 +34,7 @@ const SelectTimeBottom = ({
     <BottomSheet
       open={open}
       onClose={onClose}
-      title={title}
+      title={t(commonLabels.selectTime)}
       clazz="bottom__dropdown__wrapper"
       type="fit-content"
     >
@@ -57,7 +59,7 @@ const SelectTimeBottom = ({
 
         <div className="btn_container">
           <Button
-            label="Confirm"
+            label={t(ctaLabels.confirm)}
             variant="filled__primary"
             className="w-full"
             onClick={handleConfirmSelectedTime}
@@ -71,7 +73,6 @@ const SelectTimeBottom = ({
 SelectTimeBottom.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  title: PropTypes.string,
   onTimeChange: PropTypes.func,
   defaultTime: PropTypes.string,
   hourOptions: PropTypes.array,
@@ -81,10 +82,9 @@ SelectTimeBottom.propTypes = {
 SelectTimeBottom.defaultProps = {
   open: false,
   onClose: () => {},
-  title: 'Select Time',
   onTimeChange: () => {},
   hourOptions: [],
   minuteOptions: [],
 };
 
-export default SelectTimeBottom;
+export default withHTMLParseI18n(SelectTimeBottom);

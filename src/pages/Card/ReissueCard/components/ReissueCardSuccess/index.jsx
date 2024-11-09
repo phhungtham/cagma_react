@@ -28,8 +28,8 @@ const ReissueCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
             />
           </div>
           <div className="reissue-card__title">
-            <div className="text-primary">Your card reissue request</div>
-            <div className="complete-message">{isLogin ? 'has been completed' : 'is complete'}</div>
+            <div className="text-primary">{t(labels.yourCardReissue)}</div>
+            <div className="complete-message">{t(labels.hasBeenCompleted)}</div>
           </div>
         </div>
         <div className="reissue-card__info">

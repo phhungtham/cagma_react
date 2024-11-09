@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -145,7 +146,7 @@ const AddNewCard = ({ translate: t }) => {
         textAlign="left"
         firstButton={{
           onClick: () => setAlert({ isShow: false, title: '', content: '' }),
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

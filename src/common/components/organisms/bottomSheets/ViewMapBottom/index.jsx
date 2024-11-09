@@ -12,15 +12,15 @@ import './styles.scss';
 
 const viewMapBranchFields = [
   {
-    label: 'Phone',
+    label: labels.phone,
     value: 'br_telno',
   },
   {
-    label: 'Fax',
+    label: labels.fax,
     value: 'br_fax_no',
   },
   {
-    label: 'Address',
+    label: labels.address2,
     value: 'br_adr',
   },
 ];
@@ -76,7 +76,7 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment, translate
             {!!branchData &&
               viewMapBranchFields.map(({ label, value }, index) => (
                 <Fragment key={`${value}-${index}`}>
-                  <span className="info_label">{label}</span>
+                  <span className="info_label">{t(label)}</span>
                   <span className="info_content">{branchData[value]}</span>
                 </Fragment>
               ))}

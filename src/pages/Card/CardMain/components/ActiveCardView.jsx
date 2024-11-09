@@ -45,9 +45,7 @@ const ActiveCardView = ({ card, translate: t }) => {
               />
             )}
           </div>
-          {isReportedLostCard && (
-            <div className="report-lost-note pb-2">This card has been reported as lost or stolen</div> //TODO: Missing label
-          )}
+          {isReportedLostCard && <div className="report-lost-note pb-2">{t(cardLabels.thisCardHasBeen)}</div>}
           <div className="card__number">{card?.cardNumber}</div>
           <div className="card__desc">{card?.cardAccountNumber}</div>
           <div className="card__ctas">
@@ -68,8 +66,7 @@ const ActiveCardView = ({ card, translate: t }) => {
       </div>
       <div className="divider__group" />
       <div className="card__summary page__container">
-        {/* //TODO: Missing label */}
-        <div className="summary__title">Card Summary</div>
+        <div className="summary__title">{t(cardLabels.cardSummary)}</div>
         <div className="summary__wrapper">
           {cardSummaryFields.map(({ label, value }) => (
             <div className="summary__item">
