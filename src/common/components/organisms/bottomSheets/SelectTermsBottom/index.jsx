@@ -23,6 +23,7 @@ const SelectTermsBottom = ({
   min,
   options = [],
   inquiryMaturityDate,
+  disabled,
 }) => {
   const [termError, setTermError] = useState();
   const [termValue, setTermValue] = useState(value);
@@ -117,6 +118,7 @@ const SelectTermsBottom = ({
             onBlur={onBlurInput}
             maxLength={3}
             inputMode="numeric" // numeric keypad on iOS
+            disabled={disabled}
           />
           <div className={`select-terms__value ${termValue ? 'has-value' : ''}`}>
             <span className="select-terms__number">{termValue || `${min || ''}~${max || ''}`}</span>

@@ -511,6 +511,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             value={term}
             max={maxTerms}
             min={minTerms}
+            disabled={isInstallmentSaving}
             options={termOptions}
             inquiryMaturityDate={getMaturityDate}
           />
