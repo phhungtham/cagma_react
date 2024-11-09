@@ -25,9 +25,6 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     title: '',
     content: '',
   });
-  const [currentFieldName, setCurrentFieldName] = useState();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { requestApi } = useApi();
   const {
     control,
@@ -49,14 +46,23 @@ const SignUpCreatePassword = ({ onConfirm }) => {
 
   const handleChangePassword = result => {
     const { uniqueValue: value, e2e, length } = result;
-    setValue(currentFieldName, value, { shouldValidate: true });
-    setValue(`${currentFieldName}Display`, '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
+    setValue('password', value, { shouldValidate: true });
+    setValue('passwordDisplay', '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
     setValue('e2e', e2e, { shouldValidate: true });
   };
 
-  const handleOpenSecurityKeyboard = fieldName => {
-    setCurrentFieldName(fieldName);
+  const handleChangeConfirmPassword = result => {
+    const { uniqueValue: value, length } = result;
+    setValue('confirmPassword', value, { shouldValidate: true });
+    setValue('confirmPasswordDisplay', '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
+  };
+
+  const handleOpenSecurityKeyboardPassword = () => {
     showCertificationChar(handleChangePassword);
+  };
+
+  const handleOpenSecurityKeyboardConfirmPassword = () => {
+    showCertificationChar(handleChangeConfirmPassword);
   };
 
   const handleSubmitForm = async values => {
@@ -107,7 +113,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
                 <Input
                   label="Password"
                   type="password"
-                  onFocus={() => handleOpenSecurityKeyboard('password')}
+                  onFocus={handleOpenSecurityKeyboardPassword}
                   readOnly
                   {...field}
                 />
@@ -120,7 +126,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
                 <Input
                   label="Confirm Password"
                   type="password"
-                  onFocus={() => handleOpenSecurityKeyboard('confirmPassword')}
+                  onFocus={handleOpenSecurityKeyboardConfirmPassword}
                   readOnly
                   {...field}
                 />
