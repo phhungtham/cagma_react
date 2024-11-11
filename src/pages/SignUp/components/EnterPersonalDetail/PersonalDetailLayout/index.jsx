@@ -272,9 +272,9 @@ const PersonalDetailLayout = ({ onSubmit }) => {
       const customer = buildObjectMapFromResponse(existingCustomer, signUpPersonalMapFields);
       customer.dob_display = customer.dob ? formatYYYYMMDDToDisplay(customer.dob) : '';
       reset({
-        ...existingCustomer,
+        ...customer,
         showAdditionalInfo: false,
-        title: existingCustomer.title || 'MR',
+        title: customer.title || 'MR',
       });
       trigger();
     }

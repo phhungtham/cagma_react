@@ -91,7 +91,7 @@ const TransferLimitSettingForm = ({ onSubmit, detail, onCancelLimit, translate: 
         <EnterAmountBottom
           onClose={() => setShowEnterAmountBottom(false)}
           title={t(labels.newDailyLimit)}
-          note={t(labels.dailyTransferLimit.replace('%1', detail?.limitDisplay))}
+          note={t(labels.dailyTransferLimit).replace('%1', detail?.limitDisplay)}
           currency={detail?.currencyCode || CurrencyCode.CAD}
           amount={newLimit}
           max={dailyTransferLimitMax}

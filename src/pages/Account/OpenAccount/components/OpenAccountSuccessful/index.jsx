@@ -57,7 +57,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
           </div>
           <div className="open-account__title">
             {/* //TODO: Check case %1 in english and 1음 in korean. Can't replace */}
-            <div className="complete-message">{t(labels.youHaveSuccessfully.replace('%1', ''))}</div>
+            <div className="complete-message">{t(labels.youHaveSuccessfully).replace('%1', '')}</div>
             <div className="product-type">{openAccountInfo?.productName}</div>
             {!!creditChecked && (
               <div className="note">

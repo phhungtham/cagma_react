@@ -218,6 +218,7 @@ export const changeProfileLabels = {
   delete: 'lbl_CAME900000_0202', //Delete
   deletePhotoConfirm: 'lbl_CAME900000_0203', //Would you like to delete profile photo?
   deletePhotoSuccess: 'lbl_CAME900000_0205', //Your profile photo has been deleted.
+  updatePhotoSuccess: 'lbl_CAME900000_0229', //Your profile photo has been updated.
   saveChangeConfirm: 'lbl_CAME900000_0206', //Would you like to save changes?
   updateProfileSuccess: 'lbl_CAME900000_0208', //Your profile information has been changed
   homeAddressReview: 'lbl_CAME900000_0209', //Home address will be changed after reviewing submitted documents.
@@ -296,6 +297,7 @@ export const openAccountLabels = {
   tfsaEGicDesc: 'lbl_CAPR508000_0002', //tfsa e-GIC description
   rrspEGicDesc: 'lbl_CAPR510000_0002', //rrsp e-GIC description
   chequingDesc: 'lbl_CAPR521000_0002', //chequing description
+  selectTerms: 'lbl_CAPR502000_0060', //Select Terms
 };
 
 export const cardLabels = {
@@ -544,6 +546,32 @@ export const productLabels = {
   doNotOwnRrspESaving: 'lbl_CAPR500000_0098', //You currently do not own a RRSP e-savings account
 };
 
+export const signUpWelcomeLabels = {
+  welcome: 'lbl_CAET920000_0007', //Welcome to Shinhan SOL!
+  pleaseWriteYourName: 'lbl_CAET920000_0008', //Please write your name as it is found on your government-issued identification. Note: The Quebec region is not supported.
+  firstName: 'lbl_CAET920000_0009', //First name
+  lastName: 'lbl_CAET920000_0010', //Last name
+  dob: 'lbl_CAET920000_0011', //Date of birth
+  province: 'lbl_CAET920000_0012', //Province
+  next: 'lbl_CTA_9203', //Next
+};
+
+export const signUpVerifyUserLabels = {
+  youAreAlreadyCustomer: 'lbl_CAET920000_0016', //You are already a Shinhan customer!
+  managingLogging: 'lbl_CAET920000_0017', //You can continue managing your banking by logging in
+  forMoreInformation: 'lbl_CAET920000_0018', //For more information, please visit a branch or contact a service center
+  searchBranch: 'lbl_CTA_3113', //Search Branch
+  reservation: 'lbl_CTA_3114', //Reservation
+  home: 'lbl_CTA_9205', //Home
+  login: 'lbl_CTA_9206', //Login
+  youAreAlreadyBusiness: 'lbl_CAET920000_0019', //You are already a Shinhan business customer!
+  managingBusiness: 'lbl_CAET920000_0020', //You can continue managing your business banking through SBank
+  openSBank: 'lbl_CTA_9207', //Open SBank
+  weSorry: 'lbl_CAET920000_0022', //We’re sorry
+  youCannotProceed: 'lbl_CAET920000_0023', //You cannot proceed with online registration
+  startOver: 'lbl_CTA_9208', //Start Over
+};
+
 export const menuLabels = {
   eAlertManage: 'mymen_CAME050000', //mymen_CAME900020
   balance: 'lbl_CAME900020_0003', //Balance
@@ -556,6 +584,7 @@ export const menuLabels = {
   cardMain: 'mymen_CAOTLA0004', //Card
   accessCardService: 'men_title_CACA010100', //Access Card Service
   openAccount: 'men_title_CAPR010100', //Open Account
+  signUp: 'men_title_CAME060000', //Sign Up
 };
 
 export const ctaLabels = {
@@ -582,4 +611,7 @@ export const ctaLabels = {
 export const commonLabels = {
   selectDate: 'lbl_com_4607', //Select Date
   selectTime: 'lbl_com_4608', //Select Time
+  verifyEmailWrongNumber: 'lbl_com_4117', //You’ve entered the wrong code. (%/5)
+  verifyEmailWrongMax: 'lbl_com_4118', //You’ve entered the wrong code %1 times. Resend E-mail and try again.
+  verifyEmailTimeout: 'lbl_com_4119', //Verification code has timed out. Resend E-mail and try again.
 };

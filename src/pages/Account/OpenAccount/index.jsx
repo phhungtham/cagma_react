@@ -14,6 +14,7 @@ import {
 } from '@common/constants/commonCode';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -380,7 +381,7 @@ const OpenAccount = ({ translate: t }) => {
         onClose={handleCloseAlert}
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

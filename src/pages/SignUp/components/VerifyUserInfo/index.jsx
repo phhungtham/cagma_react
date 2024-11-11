@@ -13,6 +13,7 @@ import Header from '@common/components/organisms/Header';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getProvinceCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, signUpWelcomeLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
@@ -26,7 +27,7 @@ import { CustomerInfoVerifyErrorCode } from './constants';
 import { verifyUserInfoFormSchema } from './schema';
 
 const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
-  const { ekycCached, setEkycToNativeCache } = useContext(SignUpContext);
+  const { ekycCached, setEkycToNativeCache, translate: t } = useContext(SignUpContext);
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -72,7 +73,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
       type: '',
       options: provinceOptions,
       isShow: true,
-      title: 'Province',
+      title: t(labels.province),
     });
   };
 
@@ -160,25 +161,24 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
       {showLoading && <Spinner />}
       <div>
         <Header
-          title="Sign up"
+          title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
         <div className="page__form">
           <div className="page__title">
-            <p>Welcome to</p>
-            <p>Shinhan SOL!</p>
+            <p>{t(labels.welcome)}</p>
           </div>
           <div className="mt-4">
             <InfoBox
               variant="informative"
-              label="Please write your name as it is found on your government-issued identification. Note: The Quebec region is not supported."
+              label={t(labels.pleaseWriteYourName)}
             />
           </div>
           <div className="form__section mt-4">
             <Controller
               render={({ field }) => (
                 <Input
-                  label="First Name"
+                  label={t(labels.firstName)}
                   {...field}
                 />
               )}
@@ -188,7 +188,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Last Name"
+                  label={t(labels.lastName)}
                   {...field}
                 />
               )}
@@ -198,7 +198,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
             <Controller
               render={({ field: { value } }) => (
                 <InputDate
-                  label="Date of birth"
+                  label={t(labels.dob)}
                   onFocus={handleOpenCalendar}
                   value={value}
                 />
@@ -209,7 +209,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
             <Controller
               render={({ field }) => (
                 <Dropdown
-                  label="Province"
+                  label={t(labels.province)}
                   onFocus={handleOpenSelectProvinceBottom}
                   options={provinceOptions}
                   {...field}
@@ -222,7 +222,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
         </div>
         <div className="footer__fixed">
           <Button
-            label="Next"
+            label={t(labels.next)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmit(handleSubmitForm)}
@@ -239,7 +239,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
       <SelectBottom

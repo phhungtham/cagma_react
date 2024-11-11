@@ -9,6 +9,7 @@ import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { nativeParamsSelector } from 'app/redux/selector';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AgreeTermsConditions from './components/AgreeTermsConditions';
 import SignUpCreateID from './components/CreateID';
@@ -27,7 +28,7 @@ import { SignUpStep, SignUpStepStatus } from './constants';
 
 export const SignUpContext = createContext();
 
-const SignUp = () => {
+const SignUp = ({ translate }) => {
   const [currentStep, setCurrentStep] = useState();
   const [verifyUserInfoStatus, setVerifyUserInfoStatus] = useState();
   const [deviceId, setDeviceId] = useState();
@@ -239,7 +240,7 @@ const SignUp = () => {
 
   return (
     <SignUpContext.Provider
-      value={{ deviceId, userId, existingCustomer, ekycCached, setEkycToNativeCache, ekycStepStatus }}
+      value={{ deviceId, userId, existingCustomer, ekycCached, setEkycToNativeCache, ekycStepStatus, translate }}
     >
       {showLoading && <Spinner />}
       <div className="sign-up__wrapper page__wrapper">
@@ -313,4 +314,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default withHTMLParseI18n(SignUp);

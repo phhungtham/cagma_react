@@ -72,7 +72,7 @@ const ProfileAvatar = ({ userName, setShowToast, translate: t }) => {
     if (isUpdateSuccess) {
       setShowToast({
         isShow: true,
-        message: 'Your profile photo has been updated.',
+        message: t(labels.updatePhotoSuccess),
         type: 'success',
       });
       loadProfileImgInfo(handleProfileImg);

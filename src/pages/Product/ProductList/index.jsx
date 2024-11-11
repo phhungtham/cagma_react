@@ -125,7 +125,7 @@ const ProductList = ({ translate: t }) => {
         return setAlert({
           isShow: true,
           title: t(labels.openAccountAlready),
-          content: t(labels.onlyOneProductAccount.replace('%1', product.prdt_c_display)),
+          content: t(labels.onlyOneProductAccount).replace('%1', product.prdt_c_display),
         });
       }
     }

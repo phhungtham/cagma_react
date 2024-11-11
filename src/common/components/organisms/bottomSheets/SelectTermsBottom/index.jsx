@@ -4,15 +4,16 @@ import { ErrorIcon } from '@assets/icons';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Chips from '@common/components/atoms/Chips';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { ctaLabels, openAccountLabels as labels } from '@common/constants/labels';
 import { SelectTermDurationTypes } from '@common/constants/terms';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 const typeWithUnitLabel = {
-  [SelectTermDurationTypes.DAY]: 'days',
-  [SelectTermDurationTypes.WEEK]: 'weeks',
-  [SelectTermDurationTypes.MONTH]: 'months',
-  [SelectTermDurationTypes.QUARTER]: 'quarters',
-  [SelectTermDurationTypes.YEAR]: 'years',
+  [SelectTermDurationTypes.DAY]: labels.days,
+  [SelectTermDurationTypes.WEEK]: labels.weeks,
+  [SelectTermDurationTypes.MONTH]: labels.months,
+  [SelectTermDurationTypes.QUARTER]: labels.quarters,
+  [SelectTermDurationTypes.YEAR]: labels.years,
 };
 
 const SelectTermsBottom = ({
@@ -107,7 +108,7 @@ const SelectTermsBottom = ({
       <BottomSheet
         open
         onClose={handleCloseBottomSheet}
-        title="Select Terms"
+        title={t(labels.selectTerms)}
         type="fit-content"
         clazz="select-terms__bottomsheet"
       >
@@ -124,7 +125,7 @@ const SelectTermsBottom = ({
           />
           <div className={`select-terms__value ${termValue ? 'has-value' : ''}`}>
             <span className="select-terms__number">{termValue || `${min || ''}~${max || ''}`}</span>
-            <span className="select-terms__unit">{typeWithUnitLabel[type]}</span>
+            <span className="select-terms__unit">{t(typeWithUnitLabel[type])}</span>
           </div>
           {!!termError && (
             <div className="select-terms__error-alert">
@@ -149,7 +150,7 @@ const SelectTermsBottom = ({
           )}
           <div className="btn-submit__wrapper">
             <Button
-              label="Next"
+              label={t(ctaLabels.next)}
               variant="filled__primary"
               className="btn-submit"
               onClick={onClickConfirm}

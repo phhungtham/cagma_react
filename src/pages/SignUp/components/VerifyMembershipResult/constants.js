@@ -1,22 +1,23 @@
+import { signUpVerifyUserLabels as labels } from '@common/constants/labels';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 
 export const VerifyMembershipResultMessages = {
   [VerifyMembershipResultStatus.ALREADY_INDIVIDUAL]: {
-    title: '<p>You are already a</p><p>Shinhan customer!</p>',
-    description: 'You can continue managing your banking by logging in',
+    title: labels.youAreAlreadyCustomer,
+    description: labels.managingLogging,
   },
   [VerifyMembershipResultStatus.ALREADY_CORPORATE]: {
-    title: '<p>You are already a</p><p>Shinhan business customer!</p>',
-    description: 'You can continue managing your business banking through SBank',
+    title: labels.youAreAlreadyBusiness,
+    description: labels.managingBusiness,
   },
   [VerifyMembershipResultStatus.FAILED]: {
-    title: 'We’re sorry',
-    description: 'You cannot proceed with online registration',
+    title: labels.weSorry,
+    description: labels.youCannotProceed,
   },
 };
 
 export const ButtonResultLabel = {
-  [VerifyMembershipResultStatus.ALREADY_INDIVIDUAL]: 'Login',
-  [VerifyMembershipResultStatus.ALREADY_CORPORATE]: 'Open SBank',
-  [VerifyMembershipResultStatus.FAILED]: 'Start Over',
+  [VerifyMembershipResultStatus.ALREADY_INDIVIDUAL]: labels.login,
+  [VerifyMembershipResultStatus.ALREADY_CORPORATE]: labels.openSBank,
+  [VerifyMembershipResultStatus.FAILED]: labels.startOver,
 };

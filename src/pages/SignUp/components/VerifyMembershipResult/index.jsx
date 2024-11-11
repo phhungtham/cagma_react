@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 import successImg from '@assets/images/complete.png';
 import errorImg from '@assets/images/failure.png';
 import SearchBranchIcon from '@assets/images/icon-fill-atm-24.png';
@@ -6,7 +8,9 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import InfoBox from '@common/components/atoms/InfoBox';
 import { MENU_CODE } from '@common/constants/common';
+import { signUpVerifyUserLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
+import { SignUpContext } from '@pages/SignUp';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
@@ -15,6 +19,7 @@ import { moveHome, moveNext } from '@utilities/index';
 import { ButtonResultLabel, VerifyMembershipResultMessages } from './constants';
 
 const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
+  const { translate: t } = useContext(SignUpContext);
   const handleNavigateHome = () => {
     moveHome();
   };
@@ -56,13 +61,13 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
             />
           </div>
           <div className="success__title">
-            <div dangerouslySetInnerHTML={{ __html: VerifyMembershipResultMessages[type]?.title }} />
+            <div>{t(VerifyMembershipResultMessages[type]?.title)}</div>
           </div>
-          <div className="note">{VerifyMembershipResultMessages[type]?.description}</div>
+          <div className="note">{t(VerifyMembershipResultMessages[type]?.description)}</div>
           <div className="mt-4">
             <InfoBox
               variant="informative"
-              label="For more information, please visit a branch or contact a service center"
+              label={t(labels.forMoreInformation)}
             />
           </div>
         </div>
@@ -70,14 +75,14 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
           <IconButton
             size="lg"
             type="circle"
-            label="Search Branch"
+            label={t(labels.searchBranch)}
             icon={<img src={SearchBranchIcon} />}
             onClick={handleNavigateBranchInfo}
           />
           <IconButton
             size="lg"
             type="circle"
-            label="Book an Appointment"
+            label={t(labels.reservation)}
             icon={<img src={ReserveIcon} />}
             onClick={handleNavigateAppointmentMain}
           />
@@ -87,13 +92,13 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
       <div className="footer__fixed">
         <Button
           variant="filled__secondary-blue"
-          label="Home"
+          label={t(labels.home)}
           className="btn__cta"
           onClick={handleNavigateHome}
         />
         <Button
           variant="filled__primary"
-          label={ButtonResultLabel[type]}
+          label={t(ButtonResultLabel[type])}
           className="btn__cta"
           onClick={handleConfirm}
         />

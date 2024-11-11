@@ -280,7 +280,7 @@ const EAlertsBalance = ({ translate: t }) => {
               {isMoneyLeavingEnabled && (
                 <div className="item__sub">
                   <span>
-                    {t(eAlertLabels.over.replace('%1', `$${formatCurrencyDisplay(setting.moneyLeavingAmount)}`))}
+                    {t(eAlertLabels.over).replace('%1', `$${formatCurrencyDisplay(setting.moneyLeavingAmount)}`)}
                   </span>
                   {setting.moneyLeavingEmailEnabled && (
                     <>
@@ -316,7 +316,7 @@ const EAlertsBalance = ({ translate: t }) => {
               {isMoneyIntoEnabled && (
                 <div className="item__sub">
                   <span>
-                    {t(eAlertLabels.over.replace('%1', `$${formatCurrencyDisplay(setting.moneyIntoAmount)}`))}
+                    {t(eAlertLabels.over).replace('%1', `$${formatCurrencyDisplay(setting.moneyIntoAmount)}`)}
                   </span>
                   {setting.moneyIntoEmailEnabled && (
                     <>
@@ -351,7 +351,7 @@ const EAlertsBalance = ({ translate: t }) => {
               <div>{t(eAlertLabels.lowBalance)}</div>
               {isLowBalanceEnabled && (
                 <div className="item__sub">
-                  <span>{t(eAlertLabels.under.replace('%1', `$${formatCurrencyDisplay(setting.balanceAmount)}`))}</span>
+                  <span>{t(eAlertLabels.under).replace('%1', `$${formatCurrencyDisplay(setting.balanceAmount)}`)}</span>
                   {setting.balanceEmailEnabled && (
                     <>
                       <span className="divider__vertical" />
