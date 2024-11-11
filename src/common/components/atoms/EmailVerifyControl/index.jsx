@@ -3,14 +3,13 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
-import { cardLabels } from '@common/constants/labels';
+import { cardLabels, changeProfileLabels, commonLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { Button } from '../ButtonGroup/Button/Button';
 import Input from '../Input/Input';
 
-//TODO: Add labels
 const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, translate: t }) => {
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
@@ -32,14 +31,13 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
   const invalidVerificationCode = verificationCode?.length !== 6;
 
   const handleRequestGetEmailVerifyCode = async () => {
-    //TODO: Handle reset timer when resend email
     const emailSchema = schema.pick(['email']);
     const isEmailValid = emailSchema.isValidSync({ email: email });
     if (!isEmailValid || !email) {
       setAlert({
         isShow: true,
         title: '',
-        content: 'Please check Your E-mail',
+        content: t(changeProfileLabels.checkYourEmail),
       });
       return;
     }
@@ -63,7 +61,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
       return setAlert({
         isShow: true,
         title: '',
-        content: 'This email is already in use',
+        content: t(changeProfileLabels.emailAlreadyUse),
       });
     }
 
@@ -83,7 +81,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
       clearTimeOutRef.current = setTimeout(() => {
         setError('verificationCode', {
           type: 'timeout',
-          message: 'Verification code has timed out. Resend E-mail and try again.',
+          message: t(commonLabels.verifyEmailTimeout),
         });
         setDisabledVerifyButton(true);
       }, EMAIL_VERIFY_IN_SECONDS * 1000);
@@ -108,16 +106,16 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
     setShowLoading(false);
     if (isVerifyFailed) {
       verifyEmailFailedNumber.current += 1;
-      if (verifyEmailFailedNumber.current === EMAIL_VERIFY_RETRY_MAX) {
+      if (verifyEmailFailedNumber.current >= EMAIL_VERIFY_RETRY_MAX) {
         setError('verificationCode', {
           type: 'wrong',
-          message: `You’ve entered the wrong code ${EMAIL_VERIFY_RETRY_MAX} times. Resend E-mail and try again.`,
+          message: t(commonLabels.verifyEmailWrongMax).replace('%1', EMAIL_VERIFY_RETRY_MAX),
         });
         setDisabledVerifyButton(true);
       } else {
         setError('verificationCode', {
           type: 'wrong',
-          message: `You’ve entered the wrong code. (${verifyEmailFailedNumber.current}/${EMAIL_VERIFY_RETRY_MAX})`,
+          message: t(commonLabels.verifyEmailWrongNumber).replace('%', verifyEmailFailedNumber.current),
         });
       }
 
@@ -130,7 +128,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
       clearErrors('verificationCode');
       setShowToast({
         isShow: true,
-        message: 'Email verification is complete.',
+        message: t(changeProfileLabels.emailVerifyComplete),
         type: 'success',
       });
     }

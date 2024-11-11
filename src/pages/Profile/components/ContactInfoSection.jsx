@@ -9,7 +9,7 @@ import Input from '@common/components/atoms/Input/Input';
 import { employmentValuesDisableOccupation } from '@common/constants/account';
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
-import { changeProfileLabels as labels } from '@common/constants/labels';
+import { commonLabels, changeProfileLabels as labels } from '@common/constants/labels';
 import { notAllowNumberRegex } from '@common/constants/regex';
 import { apiCall } from '@shared/api';
 
@@ -47,7 +47,6 @@ const ContactInfoSection = ({
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
-  //TODO: Handle use ref for call reset timer of child component
 
   const verifyCodeSessionNumberRef = useRef(null);
   const clearTimeOutRef = useRef();
@@ -112,7 +111,7 @@ const ContactInfoSection = ({
       clearTimeOutRef.current = setTimeout(() => {
         setError('verificationCode', {
           type: 'timeout',
-          message: 'Verification code has timed out. Resend E-mail and try again.', //TODO: Missing label
+          message: t(commonLabels.verifyEmailTimeout),
         });
         setDisabledVerifyButton(true);
       }, EMAIL_VERIFY_IN_SECONDS * 1000);
@@ -138,16 +137,16 @@ const ContactInfoSection = ({
     setShowLoading(false);
     if (isVerifyFailed) {
       verifyEmailFailedNumber.current += 1;
-      if (verifyEmailFailedNumber.current === EMAIL_VERIFY_RETRY_MAX) {
+      if (verifyEmailFailedNumber.current >= EMAIL_VERIFY_RETRY_MAX) {
         setError('verificationCode', {
           type: 'wrong',
-          message: `You’ve entered the wrong code ${EMAIL_VERIFY_RETRY_MAX} times. Resend E-mail and try again.`, //TODO: Missing label
+          message: t(commonLabels.verifyEmailWrongMax).replace('%1', EMAIL_VERIFY_RETRY_MAX),
         });
         setDisabledVerifyButton(true);
       } else {
         setError('verificationCode', {
           type: 'wrong',
-          message: `You’ve entered the wrong code. (${verifyEmailFailedNumber.current}/${EMAIL_VERIFY_RETRY_MAX})`, //TODO: Missing label
+          message: t(commonLabels.verifyEmailWrongNumber).replace('%', verifyEmailFailedNumber.current),
         });
       }
 
