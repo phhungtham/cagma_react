@@ -8,6 +8,14 @@ import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
+import {
+  cardLabels,
+  changeProfileLabels,
+  commonLabels,
+  ctaLabels,
+  signUpEnterEmailLabels as labels,
+  menuLabels,
+} from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
@@ -16,7 +24,7 @@ import { moveBack } from '@utilities/index';
 import { EnterEmailSchema } from './schema';
 
 const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) => {
-  const { deviceId, ekycCached, setEkycToNativeCache } = useContext(SignUpContext);
+  const { deviceId, ekycCached, setEkycToNativeCache, translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -65,7 +73,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       setAlert({
         isShow: true,
         title: '',
-        content: 'Please check Your E-mail',
+        content: t(changeProfileLabels.checkYourEmail),
       });
       return;
     }
@@ -88,7 +96,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       return setAlert({
         isShow: true,
         title: '',
-        content: 'This email is already in use',
+        content: t(changeProfileLabels.emailAlreadyUse),
       });
     }
 
@@ -108,7 +116,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       clearTimeOutRef.current = setTimeout(() => {
         setError('verificationCode', {
           type: 'timeout',
-          message: 'Verification code has timed out. Resend E-mail and try again.',
+          message: t(commonLabels.verifyEmailTimeout),
         });
         setDisabledVerifyButton(true);
       }, EMAIL_VERIFY_IN_SECONDS * 1000);
@@ -164,13 +172,13 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       if (verifyEmailFailedNumber.current === EMAIL_VERIFY_RETRY_MAX) {
         setError('verificationCode', {
           type: 'wrong',
-          message: `You’ve entered the wrong code ${EMAIL_VERIFY_RETRY_MAX} times. Resend E-mail and try again.`,
+          message: t(commonLabels.verifyEmailWrongMax).replace('%1', EMAIL_VERIFY_RETRY_MAX),
         });
         setDisabledVerifyButton(true);
       } else {
         setError('verificationCode', {
           type: 'wrong',
-          message: `You’ve entered the wrong code. (${verifyEmailFailedNumber.current}/${EMAIL_VERIFY_RETRY_MAX})`,
+          message: t(commonLabels.verifyEmailWrongNumber).replace('%', verifyEmailFailedNumber.current),
         });
       }
 
@@ -198,21 +206,21 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       <div>
         {showLoading && <Spinner />}
         <Header
-          title="Sign up"
+          title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
         <div className="page__form">
-          <div className="page__title">Enter your e-mail</div>
+          <div className="page__title">{t(labels.enterYourEmail)}</div>
           <div className="form__section mt-4">
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Email Address"
+                  label={t(labels.email)}
                   placeholder="emailname@email.com"
                   type="text"
                   endAdornment={
                     <Button
-                      label={alreadySendEmailVerification ? 'Resend' : 'Request'}
+                      label={alreadySendEmailVerification ? t(cardLabels.resend) : t(cardLabels.request)}
                       variant="outlined__primary"
                       className="btn__send btn__sm"
                       onClick={handleRequestGetEmailVerifyCode}
@@ -229,7 +237,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
               <Controller
                 render={({ field }) => (
                   <Input
-                    label="Verification code"
+                    label={t(labels.verificationCode)}
                     type="number"
                     placeholder="6 digits"
                     remainingTime={EMAIL_VERIFY_IN_SECONDS}
@@ -247,7 +255,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
         </div>
         <div className="footer__fixed">
           <Button
-            label="Next"
+            label={t(labels.next)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSendEmailVerifyCode}
@@ -264,7 +272,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

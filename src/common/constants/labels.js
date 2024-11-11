@@ -572,6 +572,14 @@ export const signUpVerifyUserLabels = {
   startOver: 'lbl_CTA_9208', //Start Over
 };
 
+export const signUpEnterEmailLabels = {
+  enterYourEmail: 'lbl_CAET920000_0025', //Enter your e-mail
+  email: 'lbl_CAET920000_0026', //Email
+  next: 'lbl_CTA_9209', //Next
+  verificationCode: 'lbl_CAET920000_0027', //Verification code
+  a: 'lbl_CAET920000_0025', //
+};
+
 export const menuLabels = {
   eAlertManage: 'mymen_CAME050000', //mymen_CAME900020
   balance: 'lbl_CAME900020_0003', //Balance
