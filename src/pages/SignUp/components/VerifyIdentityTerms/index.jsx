@@ -9,6 +9,12 @@ import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
+import {
+  ctaLabels,
+  signUpVerifyIdentityLabels as labels,
+  menuLabels,
+  signUpWelcomeLabels,
+} from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
@@ -20,7 +26,7 @@ import { VerifyIdentityTermsSchema } from './schema';
 import './styles.scss';
 
 const VerifyIdentityTerms = ({ onConfirm }) => {
-  const { deviceId, ekycCached, setEkycToNativeCache } = useContext(SignUpContext);
+  const { deviceId, ekycCached, setEkycToNativeCache, translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -104,12 +110,12 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
       {showLoading && <Spinner />}
       <div className="verify-identity-terms__wrapper">
         <Header
-          title="Sign up"
+          title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
         <div className="page__form px-0">
           <div className="page__container">
-            <div className="page__title">Verify your identity</div>
+            <div className="page__title">{t(labels.verifyYourIdentity)}</div>
             <div className="verify-identity-banner">
               <img
                 src={identityBanner}
@@ -118,11 +124,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
             </div>
             <div className="mt-4 pb-6">
               <ul className="verify-identity-instructions">
-                <li className="instruction-item">
-                  To protect your personal information and ensure a secure authentication process, you will be
-                  redirected to 000. Please follow the link below to complete the identity verification process.
-                </li>
-                <li className="instruction-item mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
+                <li className="instruction-item">{t(labels.toProtectYourPersonal)}</li>
               </ul>
             </div>
           </div>
@@ -140,14 +142,14 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                   value={VerifyIdentityType.AVAILABLE}
                   checked={type === VerifyIdentityType.AVAILABLE}
                 />
-                <label className="circle-radio__label">I have a valid Driver’s License or Passport</label>
+                <label className="circle-radio__label">{t(labels.iHaveAValidDriver)}</label>
               </div>
               {type === VerifyIdentityType.AVAILABLE && (
                 <div className="form__section">
                   <Controller
                     render={({ field }) => (
                       <Input
-                        label="First name"
+                        label={t(signUpWelcomeLabels.firstName)}
                         type="text"
                         // maxLength={64}
                         {...field}
@@ -159,7 +161,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                   <Controller
                     render={({ field }) => (
                       <Input
-                        label="Last name"
+                        label={t(signUpWelcomeLabels.lastName)}
                         type="text"
                         // maxLength={64}
                         {...field}
@@ -181,7 +183,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                   value={VerifyIdentityType.UNAVAILABLE}
                   checked={type === VerifyIdentityType.UNAVAILABLE}
                 />
-                <label className="circle-radio__label">I don't have or want to submit an ID</label>
+                <label className="circle-radio__label">{t(labels.iDontHave)}</label>
               </div>
             </div>
 
@@ -193,7 +195,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                     render={({ field }) => (
                       <CheckBox
                         size="large"
-                        label="I agree to provide information to third parties"
+                        label={t(labels.iAgreeToProvide)}
                         checked={field.value}
                         {...field}
                       />
@@ -208,7 +210,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
         </div>
         <div className="footer__fixed">
           <Button
-            label="Proceed with ID Verification"
+            label={t(labels.proceedWithId)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmit(handleSubmitForm)}
@@ -231,7 +233,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

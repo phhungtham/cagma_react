@@ -577,7 +577,15 @@ export const signUpEnterEmailLabels = {
   email: 'lbl_CAET920000_0026', //Email
   next: 'lbl_CTA_9209', //Next
   verificationCode: 'lbl_CAET920000_0027', //Verification code
-  a: 'lbl_CAET920000_0025', //
+};
+
+export const signUpVerifyIdentityLabels = {
+  verifyYourIdentity: 'lbl_CAET920000_0033', //Verify your identity
+  toProtectYourPersonal: 'lbl_CAET920000_0034', //To protect your personal information and ensure a...
+  iHaveAValidDriver: 'lbl_CAET920000_0035', //I have a valid Driver’s License or Passport
+  iDontHave: 'lbl_CAET920000_0036', //I don't have or want to submit an ID
+  iAgreeToProvide: 'lbl_CAET920000_0037', //I agree to provide information to third parties
+  proceedWithId: 'lbl_CTA_9211', //Proceed with ID Verification
 };
 
 export const menuLabels = {
