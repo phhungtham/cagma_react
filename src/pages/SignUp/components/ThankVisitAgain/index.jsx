@@ -169,7 +169,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
           onClick={moveBack}
         />
         <div className="page__form">
-          <div className="page__title">ID Type</div>
+          <div className="page__title">Thank you for visiting again</div>
           <div className="mt-4">
             <InfoBox
               variant="informative"
