@@ -148,6 +148,9 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
       const { [getIdTypes]: idTypeList } = data;
       const convertedIdTypeList = commonCodeDataToOptions(idTypeList);
       setIdTypes(convertedIdTypeList);
+      const socialInsuranceNumber = 53;
+      const defaultIdType = convertedIdTypeList.find(item => Number(item.value) === socialInsuranceNumber);
+      handleChangeIdType(defaultIdType);
     } else {
       return setAlert({
         isShow: true,
