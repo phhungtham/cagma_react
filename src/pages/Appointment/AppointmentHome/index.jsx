@@ -12,6 +12,7 @@ import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { appointmentHomeLabels as labels, menuLabels } from '@common/constants/labels';
 import useGetAppointments from '@hooks/useGetAppointments';
+import useLoginInfo from '@hooks/useLoginInfo';
 import { routePaths } from '@routes/paths';
 import { apiCall } from '@shared/api';
 import { moveBack, moveNext } from '@utilities/index';
@@ -25,6 +26,7 @@ import './styles.scss';
 const maxAppointmentDisplay = 3;
 
 const AppointmentHome = ({ translate: t }) => {
+  const { isLogin } = useLoginInfo();
   const {
     data: appointmentData,
     isLoading: isLoadingAppointments,
@@ -129,7 +131,7 @@ const AppointmentHome = ({ translate: t }) => {
     if (getAppointmentsError) {
       setShowAlert({
         isShow: true,
-        title: 'Sorry!',
+        title: '',
         content: getAppointmentsError,
       });
     }
@@ -146,9 +148,10 @@ const AppointmentHome = ({ translate: t }) => {
   }, [appointmentData]);
 
   useEffect(() => {
-    //TODO: Ignore call API if not logged
-    sendRequestGetAppointments({ inq_cnt: maxAppointmentDisplay });
-  }, []);
+    if (isLogin) {
+      sendRequestGetAppointments({ inq_cnt: maxAppointmentDisplay });
+    }
+  }, [isLogin]);
 
   return (
     <>
