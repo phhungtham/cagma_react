@@ -44,7 +44,6 @@ const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
       uuid_v: deviceId,
       lcl_cus_rlnm_no2_yn: personalDetail.notSin ? 'Y' : 'N',
       rsdc_yn: personalDetail.residentialStatus === '04' ? '0' : '1',
-      high_rsk_cus_class_c: pepValues.pepDetermination === 'Y' ? 'HR09' : '',
     };
 
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep4, payload);
