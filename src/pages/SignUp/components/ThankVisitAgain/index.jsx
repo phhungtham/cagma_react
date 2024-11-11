@@ -13,7 +13,12 @@ import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom
 import Header from '@common/components/organisms/Header';
 import { getIdTypes } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
-import { ctaLabels } from '@common/constants/labels';
+import {
+  ctaLabels,
+  signUpThankVisitLabels as labels,
+  menuLabels,
+  signUpEnterPersonalLabels,
+} from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
@@ -22,12 +27,11 @@ import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
-import { t } from 'i18next';
 
 import { verifyIdFormSchema } from './schema';
 
 const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, onNavigateCreatePasscode }) => {
-  const { existingCustomer, ekycCached, deviceId, ekycStepStatus } = useContext(SignUpContext);
+  const { existingCustomer, ekycCached, deviceId, ekycStepStatus, translate: t } = useContext(SignUpContext);
   const { requestApi } = useApi();
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
   const [showIdTypesBottom, setShowIdTypesBottom] = useState();
@@ -168,22 +172,22 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
       {showLoading && <Spinner />}
       <div>
         <Header
-          title="Sign up"
+          title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
         <div className="page__form">
-          <div className="page__title">Thank you for visiting again</div>
+          <div className="page__title">{t(labels.thankYouVisiting)}</div>
           <div className="mt-4">
             <InfoBox
               variant="informative"
-              label="Please write the information you provided us during signup."
+              label={t(labels.pleaseWriteTheInfo)}
             />
           </div>
           <div className="form__section mt-4">
             <Controller
               render={({ field }) => (
                 <Dropdown
-                  label="ID Type"
+                  label={t(labels.idType)}
                   onFocus={handleOpenIdTypeSelectBottom}
                   options={idTypes}
                   {...field}
@@ -195,7 +199,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
             <Controller
               render={({ field }) => (
                 <Input
-                  label="ID Information"
+                  label={t(labels.idInfo)}
                   onFocus={handleOpenSecurityKeyboard}
                   type="password"
                   readOnly
@@ -208,7 +212,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
             <Controller
               render={({ field: { value } }) => (
                 <InputDate
-                  label="Date of birth"
+                  label={t(labels.dob)}
                   onFocus={handleOpenCalendar}
                   value={value}
                 />
@@ -219,7 +223,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
             <Controller
               render={({ field }) => (
                 <Input
-                  label="E-mail"
+                  label={t(labels.email)}
                   {...field}
                 />
               )}
@@ -230,7 +234,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
         </div>
         <div className="footer__fixed">
           <Button
-            label="Next"
+            label={t(signUpEnterPersonalLabels.next)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmit(handleSubmitForm)}
@@ -250,13 +254,13 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
         <Alert
           isCloseButton={false}
           isShowAlert={showIncorrectInfoAlert}
-          title="Information does not match our record"
-          subtitle="The information you entered does not match what you provided during signup. Please try again."
+          title={t(labels.infoDoesNotMatch)}
+          subtitle={t(labels.theInfoYouEntered)}
           onClose={handleCloseIncorrectAlert}
           textAlign="left"
           firstButton={{
             onClick: handleCloseIncorrectAlert,
-            label: 'Confirm',
+            label: t(ctaLabels.confirm),
           }}
         />
       )}

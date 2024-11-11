@@ -1,12 +1,14 @@
+import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
+
 export const SignUpSelectType = {
-  TITLE: 'Title',
-  COUNTRY: 'Country',
-  PROVINCE: 'Province',
-  EMPLOYMENT_STATUS: 'Employment',
-  JOB: 'Occupation1',
-  SUB_JOB: 'Occupation2',
-  NATIONALITY: 'Nationality',
-  RESIDENTIAL_STATUS: 'Residential Status',
+  TITLE: labels.title,
+  COUNTRY: labels.country,
+  PROVINCE: labels.province,
+  EMPLOYMENT_STATUS: labels.employmentStatus,
+  JOB: labels.occupation1,
+  SUB_JOB: labels.occupation2,
+  NATIONALITY: labels.nationality,
+  RESIDENTIAL_STATUS: labels.residentialStatus,
   PEP_RELATIONSHIP: 'Relationship',
   PEP_POSITION: 'Position',
   PEP_COUNTRY: 'PEP/HIO Country',

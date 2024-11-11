@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import Alert from '@common/components/atoms/Alert';
@@ -8,15 +8,18 @@ import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, signUpCreateIdLabels as labels, menuLabels } from '@common/constants/labels';
 import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import { SignUpContext } from '@pages/SignUp';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
 
 import { createIdFormSchema } from './schema';
 
 const SignUpCreateID = ({ onConfirm }) => {
+  const { translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -79,22 +82,22 @@ const SignUpCreateID = ({ onConfirm }) => {
       <div>
         {showLoading && <Spinner />}
         <Header
-          title="Sign up"
+          title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
         <div className="page__form">
-          <div className="page__title">Create your ID</div>
+          <div className="page__title">{t(labels.createYourId)}</div>
           <div className="mt-4">
             <InfoBox
               variant="informative"
-              label="Enter ID with 6-20 characters, include at least one letter, and contain no spaces."
+              label={t(labels.enterIdWith)}
             />
           </div>
           <div className="form__section mt-4">
             <Controller
               render={({ field: { value, onChange } }) => (
                 <Input
-                  label="ID"
+                  label={t(labels.id)}
                   regex={notAllowNumberAlphabetRegex}
                   maxLength={20}
                   value={value}
@@ -110,7 +113,7 @@ const SignUpCreateID = ({ onConfirm }) => {
         </div>
         <div className="footer__fixed">
           <Button
-            label="Next"
+            label={t(labels.next)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmit(handleSubmitForm)}
@@ -127,7 +130,7 @@ const SignUpCreateID = ({ onConfirm }) => {
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

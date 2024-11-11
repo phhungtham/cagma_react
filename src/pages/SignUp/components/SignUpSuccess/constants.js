@@ -1,18 +1,20 @@
+import { signUpCompleteLabels as labels } from '@common/constants/labels';
+
 export const signUpSuccessFields = [
   {
-    label: 'Email',
+    label: labels.email,
     value: 'email',
   },
   {
-    label: 'ID',
+    label: labels.id,
     value: 'userId',
   },
   {
-    label: 'Password',
+    label: labels.password,
     value: 'password',
   },
   {
-    label: 'Secret Passcode',
+    label: labels.secretPasscode,
     value: 'secretPasscode',
   },
 ];

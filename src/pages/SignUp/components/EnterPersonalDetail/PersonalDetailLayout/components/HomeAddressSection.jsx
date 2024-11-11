@@ -1,20 +1,24 @@
+import { useContext } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
+import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
+import { SignUpContext } from '@pages/SignUp';
 
 import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
+  const { translate: t } = useContext(SignUpContext);
   const { control } = useFormContext();
 
   return (
     <div className="form__section">
-      <div className="form__section__title">Home (Residential) Address</div>
+      <div className="form__section__title">{t(labels.homeAddress)}</div>
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Country"
+            label={t(labels.country)}
             onFocus={() => onOpenSelectBottom(SignUpSelectType.COUNTRY)}
             options={commonCode[CommonCodeFieldName.COUNTRY]}
             {...field}
@@ -26,7 +30,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label="Postal Code"
+            label={t(labels.postalCode)}
             {...field}
           />
         )}
@@ -36,7 +40,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label="APT#/SUITE#"
+            label={t(labels.aptNumber)}
             type="number"
             inputMode="numeric"
             {...field}
@@ -48,7 +52,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label="Street#"
+            label={t(labels.streetNumber)}
             type="number"
             inputMode="numeric"
             {...field}
@@ -60,7 +64,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label="Street Name"
+            label={t(labels.streetName)}
             {...field}
           />
         )}
@@ -70,7 +74,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label="Address"
+            label={t(labels.address)} //TODO: Implement logic. Check SD
             {...field}
           />
         )}
@@ -80,7 +84,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label="City"
+            label={t(labels.city)}
             {...field}
           />
         )}
@@ -90,7 +94,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Province"
+            label={t(labels.province)}
             onFocus={() => onOpenSelectBottom(SignUpSelectType.PROVINCE)}
             options={commonCode[CommonCodeFieldName.PROVINCE]}
             {...field}
@@ -102,7 +106,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label="House Phone Number"
+            label="House Phone Number" //TODO: Missing label
             type="number"
             inputMode="numeric"
             {...field}

@@ -1,12 +1,18 @@
+import { useContext } from 'react';
+
 import passcodeBanner from '@assets/images/security-passcode-banner.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Header from '@common/components/organisms/Header';
+import { signUpCreateMOTPLabels as labels, menuLabels } from '@common/constants/labels';
+import { SignUpContext } from '@pages/SignUp';
 import createSecurityPasscode from '@utilities/gmSecure/createSecurityPasscode';
 import { moveBack } from '@utilities/index';
 
 import './styles.scss';
 
 const SignUpCreatePasscode = ({ onConfirm }) => {
+  const { translate: t } = useContext(SignUpContext);
+
   const handleCreatePasscodeFail = () => {
     //TODO: Handle case failed
   };
@@ -23,12 +29,12 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
     <>
       <div className="create-passcode__wrapper">
         <Header
-          title="Sign up"
+          title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
         <div className="page__form px-0">
           <div className="page__container">
-            <div className="page__title">Create Security Passcode for your safe SOL experience</div>
+            <div className="page__title">{t(labels.createSecurityPasscode)}</div>
             <div className="passcode-banner">
               <img
                 src={passcodeBanner}
@@ -37,22 +43,18 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
             </div>
             <div className="mt-4 pb-6">
               <ul className="passcode-instructions">
-                <li className="instruction-item">Security Passcode is a 6 digit number for using app safely. </li>
-                <li className="instruction-item mt-2">
-                  This number will be used for verifying your identity or make transactions, so be careful not to expose
-                  it to others.
-                </li>
+                <li className="instruction-item">{t(labels.descriptions)}</li>
               </ul>
-              <div>
+              {/* <div>
                 <div className="mt-2 passcode-subs">Cannot include more than 3 consecutive numbers.</div>
                 <div className="mt-2 passcode-subs">Cannot include more than 3 repeated numbers.</div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
         <div className="footer__fixed">
           <Button
-            label="Next"
+            label={t(labels.next)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmitForm}

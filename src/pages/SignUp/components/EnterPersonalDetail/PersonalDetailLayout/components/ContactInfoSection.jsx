@@ -2,19 +2,20 @@ import { useContext } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Input from '@common/components/atoms/Input/Input';
+import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
 import { SignUpContext } from '@pages/SignUp';
 
 const ContactInfoSection = () => {
-  const { existingCustomer } = useContext(SignUpContext);
+  const { existingCustomer, translate: t } = useContext(SignUpContext);
   const { control, watch, setValue } = useFormContext();
 
   return (
     <div className="form__section">
-      <div className="form__section__title">Contact Information</div>
+      <div className="form__section__title">{t(labels.contactInfo)}</div>
       <Controller
         render={({ field }) => (
           <Input
-            label="Cell Number"
+            label={t(labels.cellNumber)}
             {...field}
           />
         )}
@@ -24,7 +25,7 @@ const ContactInfoSection = () => {
       <Controller
         render={({ field }) => (
           <Input
-            label="E-mail Address"
+            label={t(labels.emailAddress)}
             disabled={!!existingCustomer}
             {...field}
           />

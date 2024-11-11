@@ -586,6 +586,112 @@ export const signUpVerifyIdentityLabels = {
   iDontHave: 'lbl_CAET920000_0036', //I don't have or want to submit an ID
   iAgreeToProvide: 'lbl_CAET920000_0037', //I agree to provide information to third parties
   proceedWithId: 'lbl_CTA_9211', //Proceed with ID Verification
+  identityVerificationProgress: 'lbl_CAET920000_0038', //Identity verification is on progress
+  pleaseCompleteVerification: 'lbl_CAET920000_0039', //Please complete verification on the external link, then return to the app to continue.
+  identityVerificationIncomplete: 'lbl_CAET920000_0040', //Identity verification is incomplete. Please check again.
+  home: 'lbl_CTA_9205', //Home
+  continue: 'lbl_CTA_9212', //Continue
+  branchVisitNotice: 'lbl_CAET920000_0041', //Branch Visit Notice
+  ifYouAreNotAvailable: 'lbl_CAET920000_0042', //If you are not available to enter your ID information, please contact your branch.
+  searchBranch: 'lbl_CTA_3113', //Search Branch
+  reservationConsultation: 'lbl_CTA_3114', //Reservation Consultation
+  unableToRetrieve: 'lbl_CAET920000_0207', //Unable to retrieve the verification result. Please check again.
+  retryIdVerification: 'lbl_CAET920000_0206', //Retry ID Verification
+};
+
+export const signUpEkycResultLabels = {
+  home: 'lbl_CTA_9215', //Home
+  yourDetailReview: 'lbl_CAET920000_0076', //Your details are being reviewed
+  pleaseAllowFewDays: 'lbl_CAET920000_0077', //Please allow a few business days for us to review your information
+  forMoreInfo: 'lbl_CAET920000_0078', //For more information, please visit a branch or contact a service center
+};
+
+export const signUpEnterPersonalLabels = {
+  enterYourPersonal: 'lbl_CAET920000_0043', //Enter your personal details
+  idInformation: 'lbl_CAET920000_0044', //ID Information
+  title: 'lbl_CAET920000_0045', //Title
+  firstName: 'lbl_CAET920000_0046', //First Name
+  middleName: 'lbl_CAET920000_0047', //Middle name (Optional)
+  lastName: 'lbl_CAET920000_0048', //Last Name
+  dob: 'lbl_CAET920000_0049', //Date of Birth
+  contactInfo: 'lbl_CAET920000_0050', //Contact Information
+  cellNumber: 'lbl_CAET920000_0052', //Cell Number
+  emailAddress: 'lbl_CAET920000_0053', //E-mail Address
+  homeAddress: 'lbl_CAET920000_0054', //Home (Residential) Address
+  country: 'lbl_CAET920000_0055', //Country
+  postalCode: 'lbl_CAET920000_0056', //Postal Code
+  aptNumber: 'lbl_CAET920000_0057', //APT#/SUITE#
+  streetNumber: 'lbl_CAET920000_0058', //Street#
+  streetName: 'lbl_CAET920000_0059', //Street Name
+  address: 'lbl_CAET920000_0060', //Address
+  city: 'lbl_CAET920000_0061', //City
+  province: 'lbl_CAET920000_0062', //Province
+  next: 'lbl_CTA_9214', //Next
+  employmentInfo: 'lbl_CAET920000_0063', //Employment Information
+  employmentStatus: 'lbl_CAET920000_0064', //Employment Status
+  occupation1: 'lbl_CAET920000_0065', //Occupation1
+  occupation2: 'lbl_CAET920000_0066', //Occupation2
+  occupation3: 'lbl_CAET920000_0067', //Occupation3
+  additionalInfo: 'lbl_CAET920000_0068', //Additional Information
+  nationality: 'lbl_CAET920000_0069', //Nationality
+  residentialStatus: 'lbl_CAET920000_0070', //Residential Status
+  sinNumber: 'lbl_CAET920000_0071', //SIN Number
+  yourSinWillBe: 'lbl_CAET920000_0072', //Your SIN will be used only for account opening.
+  iDontHaveSin: 'lbl_CAET920000_0073', //I don’t have the SIN Number
+};
+
+export const signUpThankVisitLabels = {
+  thankYouVisiting: 'lbl_CAET920000_0001', //Thank you for visiting again
+  pleaseWriteTheInfo: 'lbl_CAET920000_0002', //Please write the information you provided us during signup.
+  idType: 'lbl_CAET920000_0229', //ID Type
+  idInfo: 'lbl_CAET920000_0003', //ID Information
+  dob: 'lbl_CAET920000_0004', //Date of birth
+  email: 'lbl_CAET920000_0230', //e-mail
+  infoDoesNotMatch: 'lbl_CAET920000_0005', //Information does not match our record
+  theInfoYouEntered: 'lbl_CAET920000_0006', //The information you entered does not match what you provided during signup. Please try again.
+};
+
+export const signUpCreateIdLabels = {
+  createYourId: 'lbl_CAET920000_0079', //Create your ID
+  enterIdWith: 'lbl_CAET920000_0080', //Enter ID with 6-20 characters, include at least one letter.
+  id: 'lbl_CAET920000_0081', //ID
+  next: 'lbl_CTA_9216', //Next
+};
+
+export const signUpCreatePasswordLabels = {
+  createYourLoginPass: 'lbl_CAET920000_0082', //Create your login password
+  enterAPassWith: 'lbl_CAET920000_0083', //Enter a password with 8-12 characters, including uppercase, lowercase, and numbers.
+  password: 'lbl_CAET920000_0084', //Password
+  confirmPassword: 'lbl_CAET920000_0085', //Confirm password
+  next: 'lbl_CTA_9217', //Next
+};
+
+export const signUpMOTPAgreeTermsLabels = {
+  agreeToTerms: 'lbl_CAET920000_0086', //Agree to Terms and Conditions
+  termDescription: 'lbl_CAET920000_0087', //term description...
+  collectAndUse: 'lbl_CAET920000_0088', //Collect and Use Personal Information
+  generalTerms: 'lbl_CAET920000_0089', //General Terms and Conditions
+  electronicDelivery: 'lbl_CAET920000_0090', //Electronic Delivery of Documents
+  automatedProcessing: 'lbl_CAET920000_0091', //Automated Processing and Decision Making
+  privacyCode: 'lbl_CAET920000_0092', //Privacy Code
+  identityVerification: 'lbl_CAET920000_0093', //Identity Verification
+  next: 'lbl_CTA_9218', //Next
+};
+
+export const signUpCreateMOTPLabels = {
+  createSecurityPasscode: 'lbl_CAET920000_0094', //Create Security Passcode for your safe SOL experience
+  descriptions: 'lbl_CAET920000_0095', //description...
+  next: 'lbl_CTA_9219', //Next
+};
+
+export const signUpCompleteLabels = {
+  welcomeTo: 'lbl_CAET920000_0100', //Welcome to
+  shinhanBankCanada: 'lbl_CAET920000_0231', //Shinhan Bank Canada
+  email: 'lbl_CAET920000_0101', //Email
+  id: 'lbl_CAET920000_0102', //ID
+  password: 'lbl_CAET920000_0103', //Password
+  secretPasscode: 'lbl_CAET920000_0104', //Secret Passcode
+  done: 'lbl_CTA_9220', //Done
 };
 
 export const menuLabels = {

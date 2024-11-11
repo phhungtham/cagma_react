@@ -8,6 +8,7 @@ import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, signUpCreatePasswordLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
@@ -18,7 +19,7 @@ import { createIdFormSchema } from './schema';
 import './styles.scss';
 
 const SignUpCreatePassword = ({ onConfirm }) => {
-  const { deviceId, userId, setEkycToNativeCache, ekycCached } = useContext(SignUpContext);
+  const { deviceId, userId, setEkycToNativeCache, ekycCached, translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -98,22 +99,22 @@ const SignUpCreatePassword = ({ onConfirm }) => {
       <div>
         {showLoading && <Spinner />}
         <Header
-          title="Sign up"
+          title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
         <div className="create-password__wrapper page__form">
-          <div className="page__title">Create your login password</div>
+          <div className="page__title">{t(labels.createYourLoginPass)}</div>
           <div className="mt-4">
             <InfoBox
               variant="informative"
-              label="Enter a password with 8-12 characters, including uppercase, lowercase, and numbers."
+              label={t(labels.enterAPassWith)}
             />
           </div>
           <div className="form__section mt-4">
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Password"
+                  label={t(labels.password)}
                   type="password"
                   onFocus={handleOpenSecurityKeyboardPassword}
                   readOnly
@@ -126,7 +127,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
             <Controller
               render={({ field }) => (
                 <Input
-                  label="Confirm Password"
+                  label={t(labels.confirmPassword)}
                   type="password"
                   onFocus={handleOpenSecurityKeyboardConfirmPassword}
                   readOnly
@@ -140,7 +141,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
         </div>
         <div className="footer__fixed">
           <Button
-            label="Next"
+            label={t(labels.next)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmit(handleSubmitForm)}
@@ -157,7 +158,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

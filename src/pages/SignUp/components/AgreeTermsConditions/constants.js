@@ -1,42 +1,43 @@
+import { signUpMOTPAgreeTermsLabels as labels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
 import { AppCfg } from '@configs/appConfigs';
 
 export const signUpTermConditionConfig = {
   options: [
     {
-      label: 'Collect and Use Personal Information',
+      label: labels.collectAndUse,
       value: '1',
-      title: 'Collect and Use Personal Information',
+      title: labels.collectAndUse,
       fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
     },
     {
-      label: 'General Terms and Conditions',
+      label: labels.generalTerms,
       value: '2',
-      title: 'General Terms and Conditions',
+      title: labels.generalTerms,
       fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
     },
     {
-      label: 'Electronic Delivery of Documents',
+      label: labels.electronicDelivery,
       value: '3',
-      title: 'Electronic Delivery of Documents',
+      title: labels.electronicDelivery,
       fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
     },
     {
-      label: 'Automated Processing and Decision Making',
+      label: labels.automatedProcessing,
       value: '4',
-      title: 'Automated Processing and Decision Making',
+      title: labels.automatedProcessing,
       fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
     },
     {
-      label: 'Privacy Code',
+      label: labels.privacyCode,
       value: '5',
-      title: 'Privacy Code',
+      title: labels.privacyCode,
       fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
     },
     {
-      label: 'Identity Verification',
+      label: labels.identityVerification,
       value: '6',
-      title: 'Identity Verification',
+      title: labels.identityVerification,
       fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
     },
   ],

@@ -4,23 +4,24 @@ import { Controller, useFormContext } from 'react-hook-form';
 import CheckBox from '@common/components/atoms/Checkbox';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
+import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
 import { SignUpContext } from '@pages/SignUp';
 
 import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
-  const { existingCustomer } = useContext(SignUpContext);
+  const { existingCustomer, translate: t } = useContext(SignUpContext);
   const { control, watch, setValue } = useFormContext();
 
   const [notSin] = watch(['notSin']);
 
   return (
     <div className="form__section">
-      <div className="form__section__title">Additional Information</div>
+      <div className="form__section__title">{t(labels.additionalInfo)}</div>
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Nationality"
+            label={t(labels.nationality)}
             onFocus={() => onOpenSelectBottom(SignUpSelectType.NATIONALITY)}
             options={commonCode[CommonCodeFieldName.COUNTRY]}
             disabled={!!existingCustomer}
@@ -33,7 +34,7 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Residential Status"
+            label={t(labels.residentialStatus)}
             onFocus={() => onOpenSelectBottom(SignUpSelectType.RESIDENTIAL_STATUS)}
             options={commonCode[CommonCodeFieldName.RESIDENTIAL_STATUS]}
             {...field}
@@ -45,8 +46,8 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label="SIN Number"
-            helperText="Your SIN will be used only for account opening."
+            label={t(labels.sinNumber)}
+            helperText={t(labels.yourSinWillBe)}
             disabled={!!notSin}
             {...field} //TODO: open customer keyboard plugin
           />
@@ -58,7 +59,7 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <CheckBox
             size="large"
-            label="I don’t have the SIN Number"
+            label={t(labels.iDontHaveSin)}
             {...field}
             checked={field.value}
           />

@@ -1,23 +1,27 @@
+import { useContext } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 import { employmentValuesDisableOccupation } from '@common/constants/account';
+import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
+import { SignUpContext } from '@pages/SignUp';
 
 import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const EmploymentInfoSection = ({ onOpenSelectBottom, commonCode, occupation2Options }) => {
+  const { translate: t } = useContext(SignUpContext);
   const { control, watch, setValue } = useFormContext();
   const [employmentStatus] = watch(['employmentStatus']);
   const isDisabledOccupation = employmentValuesDisableOccupation.includes(employmentStatus);
 
   return (
     <div className="form__section">
-      <div className="form__section__title">Employment Information</div>
+      <div className="form__section__title">{t(labels.employmentInfo)}</div>
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Employment Status"
+            label={t(labels.employmentStatus)}
             onFocus={() => onOpenSelectBottom(SignUpSelectType.EMPLOYMENT_STATUS)}
             options={commonCode[CommonCodeFieldName.EMPLOYMENT_STATUS]}
             {...field}
@@ -29,7 +33,7 @@ const EmploymentInfoSection = ({ onOpenSelectBottom, commonCode, occupation2Opti
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Occupation1"
+            label={t(labels.occupation1)}
             disabled={isDisabledOccupation}
             onFocus={() => onOpenSelectBottom(SignUpSelectType.JOB)}
             options={commonCode[CommonCodeFieldName.JOB]}
@@ -42,7 +46,7 @@ const EmploymentInfoSection = ({ onOpenSelectBottom, commonCode, occupation2Opti
       <Controller
         render={({ field }) => (
           <Dropdown
-            label="Occupation2"
+            label={t(labels.occupation2)}
             disabled={isDisabledOccupation}
             onFocus={() => onOpenSelectBottom(SignUpSelectType.SUB_JOB)}
             options={occupation2Options}
@@ -55,7 +59,7 @@ const EmploymentInfoSection = ({ onOpenSelectBottom, commonCode, occupation2Opti
       <Controller
         render={({ field }) => (
           <Input
-            label="Occupation3"
+            label={t(labels.occupation3)}
             {...field}
           />
         )}

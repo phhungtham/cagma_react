@@ -18,6 +18,7 @@ import {
   getSubJobCode,
 } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, signUpEnterPersonalLabels as labels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
@@ -41,7 +42,7 @@ import IDInfoSection from './components/IDInfoSection';
 import ManagementBranch from './components/ManagementBranch';
 
 const PersonalDetailLayout = ({ onSubmit }) => {
-  const { existingCustomer } = useContext(SignUpContext);
+  const { existingCustomer, translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [occupation2Options, setOccupation2Options] = useState([]);
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
@@ -61,7 +62,6 @@ const PersonalDetailLayout = ({ onSubmit }) => {
     [CommonCodeFieldName.EMPLOYMENT_STATUS]: [],
   });
 
-  console.log('commonCode :>> ', commonCode);
   const { requestApi } = useApi();
 
   const methods = useForm({
@@ -81,8 +81,6 @@ const PersonalDetailLayout = ({ onSubmit }) => {
     formState: { isValid, errors },
   } = methods;
 
-  console.log('errors :>> ', errors);
-
   const [showAdditionalInfo, employmentStatus, occupation1, notSin] = watch([
     'showAdditionalInfo',
     'employmentStatus',
@@ -99,7 +97,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
       type,
       options,
       isShow: true,
-      title: type,
+      title: t(type),
     });
   };
 
@@ -288,7 +286,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
     <>
       {showLoading && <Spinner />}
       <div className="page__form">
-        <div className="page__title">Enter your personal details</div>
+        <div className="page__title">{t(labels.enterYourPersonal)}</div>
         <div className="pt-8 d-flex flex-column gap-10">
           <FormProvider {...methods}>
             <IDInfoSection
@@ -319,7 +317,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
       </div>
       <div className="footer__fixed">
         <Button
-          label="Next"
+          label={t(labels.next)}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(handleSubmitForm)}
@@ -353,7 +351,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

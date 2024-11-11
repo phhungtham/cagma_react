@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 import errorImg from '@assets/images/failure.png';
 import SearchBranchIcon from '@assets/images/icon-fill-atm-24.png';
 import ReserveIcon from '@assets/images/icon-fill-calendar-24.png';
@@ -6,7 +8,9 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import InfoBox from '@common/components/atoms/InfoBox';
 import { MENU_CODE } from '@common/constants/common';
+import { signUpEkycResultLabels as labels, signUpVerifyUserLabels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
+import { SignUpContext } from '@pages/SignUp';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveHome, moveNext } from '@utilities/index';
@@ -14,6 +18,7 @@ import { moveHome, moveNext } from '@utilities/index';
 import './styles.scss';
 
 const EKYCResult = ({ isSuccess, onNavigateWelcome }) => {
+  const { translate: t } = useContext(SignUpContext);
   const handleNavigateBranchInfo = () => {
     openInternalWebview({
       url: externalUrls.branchInfo,
@@ -36,17 +41,15 @@ const EKYCResult = ({ isSuccess, onNavigateWelcome }) => {
             />
           </div>
           <div className="success__title">
-            <span>{isSuccess ? 'Your details are being reviewed' : 'We’re sorry'}</span>
+            <span>{isSuccess ? t(labels.yourDetailReview) : t(signUpVerifyUserLabels.weSorry)}</span>
           </div>
           <div className="note">
-            {isSuccess
-              ? 'Please allow 1 business day for us to review your information'
-              : 'You cannot proceed with online registration'}
+            {isSuccess ? t(labels.pleaseAllowFewDays) : t(signUpVerifyUserLabels.youCannotProceed)}
           </div>
           <div className="mt-6">
             <InfoBox
               variant="informative"
-              label="For more information, please visit a branch or contact a service center"
+              label={t(labels.forMoreInfo)}
             />
           </div>
         </div>
@@ -54,14 +57,14 @@ const EKYCResult = ({ isSuccess, onNavigateWelcome }) => {
           <IconButton
             size="lg"
             type="circle"
-            label="Search Branch"
+            label={t(signUpVerifyUserLabels.searchBranch)}
             icon={<img src={SearchBranchIcon} />}
             onClick={handleNavigateBranchInfo}
           />
           <IconButton
             size="lg"
             type="circle"
-            label="Book an Appointment"
+            label={t(signUpVerifyUserLabels.reservation)}
             icon={<img src={ReserveIcon} />}
             onClick={handleNavigateAppointmentMain}
           />
@@ -70,14 +73,14 @@ const EKYCResult = ({ isSuccess, onNavigateWelcome }) => {
       <div className="footer__fixed">
         <Button
           variant={isSuccess ? 'filled__primary' : 'filled__secondary-blue'}
-          label="Home"
+          label={t(labels.home)}
           className="btn__cta"
           onClick={moveHome}
         />
         {!isSuccess && (
           <Button
             variant="filled__primary"
-            label="Start Over"
+            label={t(signUpVerifyUserLabels.startOver)}
             className="btn__cta"
             onClick={onNavigateWelcome}
           />

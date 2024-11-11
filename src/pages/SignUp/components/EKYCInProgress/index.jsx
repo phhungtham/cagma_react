@@ -8,6 +8,7 @@ import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/Icon
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, signUpVerifyIdentityLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
@@ -16,7 +17,7 @@ import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { moveHome } from '@utilities/index';
 
 const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
-  const { deviceId } = useContext(SignUpContext);
+  const { deviceId, translate: t } = useContext(SignUpContext);
   const [ekycPluginInfo, setEkycPluginInfo] = useState({});
   const [showLoading, setShowLoading] = useState(false);
   const [showRetryBtn, setShowRetryBtn] = useState(false);
@@ -78,7 +79,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
         setShowRetryBtn(true);
         setShowToast({
           isShow: true,
-          message: 'Unable to retrieve the verification result. Please check again.',
+          message: t(labels.unableToRetrieve),
           type: 'error',
         });
       } else if (processingStatus === '10') {
@@ -124,18 +125,16 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
             </div>
           </div>
           <div className="success__title">
-            <span>Identity verification is on progress</span>
+            <span>{t(labels.identityVerificationProgress)}</span>
           </div>
-          <div className="note">
-            Please complete verification on the external link, then return to the app to continue.
-          </div>
+          <div className="note">{t(labels.pleaseCompleteVerification)}</div>
         </div>
         {showRetryBtn && (
           <div className="flex-center">
             <IconButton
               size="lg"
               type="circle"
-              label="Retry ID Verification"
+              label={t(labels.retryIdVerification)}
               icon={<img src={VerifyId} />}
               onClick={requestRegenerateEkycLink}
             />
@@ -146,13 +145,13 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
       <div className="footer__fixed">
         <Button
           variant="filled__secondary-blue"
-          label="Home"
+          label={t(labels.home)}
           className="btn__cta"
           onClick={handleNavigateHome}
         />
         <Button
           variant="filled__primary"
-          label="Continue"
+          label={t(labels.continue)}
           className="btn__cta"
           onClick={requestRegisterCustomerInfoStep3}
         />
@@ -174,7 +173,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

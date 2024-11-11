@@ -1,16 +1,19 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import termsConditionsBanner from '@assets/images/terms-condition.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
+import { signUpMOTPAgreeTermsLabels as labels, menuLabels } from '@common/constants/labels';
+import { SignUpContext } from '@pages/SignUp';
 import { moveBack } from '@utilities/index';
 
 import { signUpTermConditionConfig } from './constants';
 import './styles.scss';
 
 const AgreeTermsConditions = ({ onConfirm }) => {
+  const { translate: t } = useContext(SignUpContext);
   const [checkedOptions, setCheckedOptions] = useState([]);
   const [viewTermBottom, setViewTermBottom] = useState({
     open: false,
@@ -27,7 +30,7 @@ const AgreeTermsConditions = ({ onConfirm }) => {
     setViewTermBottom({
       open: true,
       fileUrl,
-      title,
+      title: t(title),
       value,
     });
   };
@@ -60,12 +63,12 @@ const AgreeTermsConditions = ({ onConfirm }) => {
     <>
       <div className="agree-terms-conditions__wrapper">
         <Header
-          title="Sign up"
+          title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
         <div className="page__form px-0">
           <div className="page__container">
-            <div className="page__title">Agree to Terms and Conditions</div>
+            <div className="page__title">{t(labels.agreeToTerms)}</div>
             <div className="terms-banner">
               <img
                 src={termsConditionsBanner}
@@ -74,13 +77,12 @@ const AgreeTermsConditions = ({ onConfirm }) => {
             </div>
             <div className="mt-4 pb-6">
               <ul className="terms-instructions">
-                <li className="instruction-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                <li className="instruction-item mt-2">Ut et massa mi.</li>
+                <li className="instruction-item">{t(labels.termDescription)}</li>
               </ul>
-              <div className="mt-2 terms-subs">
+              {/* <div className="mt-2 terms-subs">
                 Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices
                 mauris.
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="divider__group" />
@@ -95,7 +97,7 @@ const AgreeTermsConditions = ({ onConfirm }) => {
         </div>
         <div className="footer__fixed">
           <Button
-            label="Next"
+            label={t(labels.next)}
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmitForm}

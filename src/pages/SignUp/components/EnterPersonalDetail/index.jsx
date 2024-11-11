@@ -4,6 +4,7 @@ import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
 import { buildRequestPayloadBaseMappingFields } from '@utilities/convert';
@@ -19,7 +20,7 @@ const CurrentSteps = {
 };
 
 const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
-  const { existingCustomer, ekycCached, deviceId } = useContext(SignUpContext);
+  const { existingCustomer, ekycCached, deviceId, translate: t } = useContext(SignUpContext);
   const [ekycPluginInfo, setEkycPluginInfo] = useState();
   const [currentStep, setCurrentStep] = useState(CurrentSteps.PERSONAL_DETAIL);
   const [showLoading, setShowLoading] = useState(false);
@@ -79,7 +80,7 @@ const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
       <div>
         {showLoading && <Spinner />}
         <Header
-          title="Sign up"
+          title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
         {currentStep === CurrentSteps.PERSONAL_DETAIL && <PersonalDetailLayout onSubmit={handleSubmitPersonalDetail} />}
@@ -94,7 +95,7 @@ const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

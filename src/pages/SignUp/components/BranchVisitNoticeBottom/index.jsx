@@ -1,10 +1,14 @@
+import { useContext } from 'react';
+
 import SearchBranchIcon from '@assets/images/icon-fill-atm-24.png';
 import ReserveIcon from '@assets/images/icon-fill-calendar-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { MENU_CODE } from '@common/constants/common';
+import { signUpVerifyIdentityLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
+import { SignUpContext } from '@pages/SignUp';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveHome, moveNext } from '@utilities/index';
@@ -12,6 +16,7 @@ import { moveHome, moveNext } from '@utilities/index';
 import './styles.scss';
 
 const BranchVisitNoticeBottom = ({ onClose, open }) => {
+  const { translate: t } = useContext(SignUpContext);
   const handleNavigateBranchInfo = () => {
     openInternalWebview({
       url: externalUrls.branchInfo,
@@ -27,26 +32,24 @@ const BranchVisitNoticeBottom = ({ onClose, open }) => {
     <BottomSheet
       open={open}
       onClose={onClose}
-      title="Branch Visit Notice"
+      title={t(labels.branchVisitNotice)}
       type="fit-content"
     >
       <div className="branch-visit-notice__content">
-        <div className="instruction">
-          If you are not available to enter your ID information, please contact your branch.
-        </div>
+        <div className="instruction">{t(labels.ifYouAreNotAvailable)}</div>
         <div className="divider__item__solid" />
         <div className="flex-center gap-14 pt-8 pb-4">
           <IconButton
             size="lg"
             type="circle"
-            label="Search Branch"
+            label={t(labels.searchBranch)}
             icon={<img src={SearchBranchIcon} />}
             onClick={handleNavigateBranchInfo}
           />
           <IconButton
             size="lg"
             type="circle"
-            label="Book an Appointment"
+            label={t(labels.reservationConsultation)}
             icon={<img src={ReserveIcon} />}
             onClick={handleNavigateAppointmentMain}
           />
@@ -54,7 +57,7 @@ const BranchVisitNoticeBottom = ({ onClose, open }) => {
         <div className="btn__ctas">
           <Button
             variant="filled__primary"
-            label="Home"
+            label={t(labels.home)}
             className="flex-7"
             onClick={moveHome}
           />
