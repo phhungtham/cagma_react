@@ -19,7 +19,7 @@ import { CurrencyCode } from '@common/constants/currency';
 import { selectType } from '@common/constants/dateTime';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import { ctaLabels, openAccountLabels as labels, menuLabels } from '@common/constants/labels';
+import { commonLabels, ctaLabels, openAccountLabels as labels, menuLabels } from '@common/constants/labels';
 import { PeriodUnitCodeDisplay, ProductCode, ProductUnitCodeWithTermType } from '@common/constants/product';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
@@ -37,7 +37,6 @@ import { openAccountSchema } from './schema';
 import './styles.scss';
 import ThirdPartyFormSection from './ThirdPartyFormSection';
 
-//TODO: Add label, start from select terms
 const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termOptions, translate: t }) => {
   const [showLoading, setShowLoading] = useState(false);
   const [showMyAccountsBottom, setShowMyAccountBottom] = useState(false);
@@ -90,8 +89,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     watch,
     formState: { errors, isValid },
   } = methods;
-
-  console.log('errors :>> ', errors);
 
   const [amount, intendedUseAccountDisplay, term, paymentDate, maturityDateDisplay, taxYear] = watch([
     'amount',
@@ -360,7 +357,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 {isChequing && (
                   <section>
                     <TextDropdown
-                      label="Number of Transactions"
+                      label={t(labels.numberOfTransactions)}
                       placeholder="Select"
                       value="Unlimited"
                       disabled
@@ -377,7 +374,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                     >
                       {term && (
                         <div className="enter-account__term">
-                          <span>Maturity date</span>
+                          <span>{t(labels.maturityDate)}</span>
                           <span>{maturityDateDisplay}</span>
                         </div>
                       )}
@@ -387,7 +384,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 {!isChequing && (
                   <section>
                     <TextDropdown
-                      label={isInstallmentSaving ? 'Monthly Installment  Amount' : t(labels.amount)}
+                      label={isInstallmentSaving ? t(labels.monthlyInstallmentAmount) : t(labels.amount)}
                       placeholder={`${amountMinDisplay} ~ ${amountMaxDisplay} ${productCurrencyCode}`}
                       onClick={onOpenEnterAmountBottom}
                       value={amount ? `${formatCurrencyDisplay(amount)} ${productCurrencyCode}` : undefined}
@@ -398,7 +395,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 {isInstallmentSaving && (
                   <section>
                     <TextDropdown
-                      label="Payment Date Each Session"
+                      label={t(labels.paymentDateEachSession)}
                       placeholder="Select"
                       onClick={handleOpenSelectFrequencyBottom}
                       value={paymentDate}
@@ -550,7 +547,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             onDateChange={handleChangeTaxYear}
             defaultDate={taxYear}
             type={selectType.year}
-            title="Select Year" //TODO: Missing label
+            title={t(commonLabels.selectDate)}
           />
         )}
       </div>

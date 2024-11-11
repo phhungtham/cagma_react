@@ -144,7 +144,7 @@ const SelectTermsBottom = ({
           </div>
           {maturityDate?.valueDisplay && (
             <div className="maturity-date">
-              <span>Maturity date</span>
+              <span>{t(labels.maturityDate)}</span>
               <span>{maturityDate.valueDisplay}</span>
             </div>
           )}

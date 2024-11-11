@@ -1,9 +1,11 @@
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { commonLabels } from '@common/constants/labels';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
 import './styles.scss';
 
-const MyAccountsBottom = ({ accounts = [], open, onClose, onSelect }) => {
+const MyAccountsBottom = ({ accounts = [], open, onClose, onSelect, translate: t }) => {
   const onSelectAccount = item => {
     onSelect(item);
   };
@@ -13,7 +15,7 @@ const MyAccountsBottom = ({ accounts = [], open, onClose, onSelect }) => {
       <BottomSheet
         open={open}
         onClose={onClose}
-        title="My accounts"
+        title={t(commonLabels.myAccounts)}
         clazz="my-accounts-bottom__wrapper"
         type="max-scroll"
       >
@@ -51,4 +53,4 @@ MyAccountsBottom.defaultProps = {
   onSelect: () => {},
 };
 
-export default MyAccountsBottom;
+export default withHTMLParseI18n(MyAccountsBottom);

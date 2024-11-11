@@ -38,7 +38,7 @@ const ReferralCodeSection = ({ productCode, translate: t }) => {
                 name="debitCardIssuance"
               />
               <Tooltip
-                content="If a debit card is issued, it will be sent to the stored customer address."
+                content={t(labels.ifADebitCardIssued)}
                 placement="bottom_center"
               >
                 <div className="item__tooltip">
@@ -54,7 +54,7 @@ const ReferralCodeSection = ({ productCode, translate: t }) => {
                   render={({ field }) => (
                     <CheckBox
                       size="large"
-                      label="I have checked my TFSA contribution room"
+                      label={t(labels.iHaveCheckedTFSA)}
                       {...field}
                       checked={field.value}
                     />

@@ -3,12 +3,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ScrollSelect from '@common/components/atoms/ScrollSelect';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { commonLabels, ctaLabels } from '@common/constants/labels';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
 import '../bs_styles.scss';
 import { frequencyValueByTypeOptions } from './constants';
 
-const SelectFrequencyBottom = ({ open, onClose, onChange, typeOptions = [], value = {} }) => {
+const SelectFrequencyBottom = ({ open, onClose, onChange, typeOptions = [], value = {}, translate: t }) => {
   const valueRef = useRef({});
 
   const [selectedType, setSelectedType] = useState();
@@ -54,7 +56,7 @@ const SelectFrequencyBottom = ({ open, onClose, onChange, typeOptions = [], valu
     <BottomSheet
       open={open}
       onClose={onClose}
-      title="Select Frequency"
+      title={t(commonLabels.selectFrequency)}
       clazz="bottom__dropdown__wrapper"
       type="fit-content"
     >
@@ -79,7 +81,7 @@ const SelectFrequencyBottom = ({ open, onClose, onChange, typeOptions = [], valu
 
         <div className="btn_container">
           <Button
-            label="Confirm"
+            label={t(ctaLabels.confirm)}
             variant="filled__primary"
             className="w-full"
             onClick={handleConfirm}
@@ -104,4 +106,4 @@ SelectFrequencyBottom.defaultProps = {
   value: {},
 };
 
-export default SelectFrequencyBottom;
+export default withHTMLParseI18n(SelectFrequencyBottom);

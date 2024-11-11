@@ -298,6 +298,12 @@ export const openAccountLabels = {
   rrspEGicDesc: 'lbl_CAPR510000_0002', //rrsp e-GIC description
   chequingDesc: 'lbl_CAPR521000_0002', //chequing description
   selectTerms: 'lbl_CAPR502000_0060', //Select Terms
+  maturityDate: 'lbl_CAPR502000_0066', //Maturity date
+  paymentDateEachSession: 'lbl_CAPR506000_0031', //Payment Date Each Session
+  monthlyInstallmentAmount: 'lbl_CAPR506000_0020', //Monthly Installment  Amount
+  ifADebitCardIssued: 'lbl_CAPR521000_0017', //If a debit card is issued, it will be sent to the stored customer address.
+  iHaveCheckedTFSA: 'lbl_CAPR507000_0025', //I have checked my TFSA contribution room
+  numberOfTransactions: 'lbl_CAPR521000_0010', //Number of Transactions
 };
 
 export const cardLabels = {
@@ -736,4 +742,6 @@ export const commonLabels = {
   verifyEmailWrongNumber: 'lbl_com_4117', //You’ve entered the wrong code. (%/5)
   verifyEmailWrongMax: 'lbl_com_4118', //You’ve entered the wrong code %1 times. Resend E-mail and try again.
   verifyEmailTimeout: 'lbl_com_4119', //Verification code has timed out. Resend E-mail and try again.
+  myAccounts: 'lbl_com_4013', //My accounts
+  selectFrequency: 'lbl_com_4109', //Select Frequency
 };

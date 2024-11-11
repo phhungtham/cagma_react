@@ -4,11 +4,23 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ScrollSelect from '@common/components/atoms/ScrollSelect';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { months, selectType } from '@common/constants/dateTime';
+import { ctaLabels } from '@common/constants/labels';
+import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
 import '../bs_styles.scss';
 
-const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange, type, defaultDate }) => {
+const SelectDateBottom = ({
+  open,
+  onClose,
+  title,
+  maxYear,
+  minYear,
+  onDateChange,
+  type,
+  defaultDate,
+  translate: t,
+}) => {
   const selectedMonth = Number(defaultDate?.split('.')?.[0] || '');
   const selectedYear = Number(type === selectType.year ? defaultDate : defaultDate?.split('.')?.[1]);
 
@@ -61,7 +73,7 @@ const SelectDateBottom = ({ open, onClose, title, maxYear, minYear, onDateChange
 
         <div className="btn_container">
           <Button
-            label="Confirm"
+            label={t(ctaLabels.confirm)}
             variant="filled__primary"
             className="w-full"
             onClick={handleConfirmSelectedDate}
@@ -93,4 +105,4 @@ SelectDateBottom.defaultProps = {
   type: selectType.monthYear,
 };
 
-export default SelectDateBottom;
+export default withHTMLParseI18n(SelectDateBottom);
