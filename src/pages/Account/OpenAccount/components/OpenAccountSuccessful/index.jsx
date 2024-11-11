@@ -29,7 +29,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
       menuCode = MENU_CODE.ACCOUNT_ACTIVITY_INVESTMENT;
     }
     if (menuCode) {
-      moveNext(menuCode, { lcl_acno: openedAccountNumber });
+      moveNext(menuCode, { param: accountNumberParam });
     }
   };
 
