@@ -296,26 +296,6 @@ const SignUp = () => {
         )}
         {currentStep === SignUpStep.CREATE_PASSCODE && <SignUpCreatePasscode onConfirm={handleCreatePasscodeSuccess} />}
         {currentStep === SignUpStep.SIGN_UP_COMPLETE && <SignUpSuccess />}
-        {/* //TODO: These step below handle by Native */}
-        {/* {currentStep === SignUpStep.SET_UP_BIOMETRIC_AUTH && (
-          <SetUpBiometricAuth
-            type={BiometricAuthType.TOUCH_ID}
-            onSkipSetUp={handleNavigateSetUpAlerts}
-          />
-        )}
-        {currentStep === SignUpStep.SET_UP_ALERTS && (
-          <SetUpAlerts
-            onSkipSetUp={handleNavigateOpenAccountInstruction}
-            onConfirmSetUp={handleNavigateOpenAccountInstruction}
-          />
-        )}
-        {currentStep === SignUpStep.OPEN_ACCOUNT_INSTRUCTION && (
-          <OpenAccountInstruction
-            useCanadaID
-            onSkipSetUp={() => {}}
-            onOpenAccount={() => {}}
-          />
-        )} */}
       </div>
       <Alert
         isCloseButton={false}
