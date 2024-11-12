@@ -321,6 +321,7 @@ export const openAccountLabels = {
   transactionLimit: 'lbl_CAPR521000_0031', //Transaction Limit
   numberOfTransactions2: 'lbl_CAPR521000_0032', //Number of Transactions
   issueYourCard: 'lbl_CAPR521000_0033', //Issue your card from the Get new card
+  youCanCheckRRSP: 'lbl_CAPR509000_0233', //You can Check RRSP Contribution Receipt on the Account activity page
 };
 
 export const openAccountDTRLabels = {
@@ -350,6 +351,10 @@ export const openAccountDTRLabels = {
   selectAReason: 'lbl_CAPR520000_0035', //Select a reason
   selectCountry: 'lbl_CAPR520000_0024', //Select country
   country2: 'lbl_CAPR520000_0016', //Country 2
+  done: 'lbl_CTA_5025', //Done
+  addCountry: 'lbl_CAPR520000_0214', //Add Country
+  youHaveSuccessfully: 'lbl_CAPR520000_0234', //You’ve successfully registered
+  dtr: 'lbl_CAPR520000_0235', //DTR
 };
 
 export const cardLabels = {

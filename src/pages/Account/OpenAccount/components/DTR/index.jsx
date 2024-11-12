@@ -159,7 +159,10 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
   return (
     <>
       {showRegisterDTRSuccess ? (
-        <RegisterDTRSuccess onConfirm={onConfirm} />
+        <RegisterDTRSuccess
+          onConfirm={onConfirm}
+          translate={t}
+        />
       ) : (
         <>
           <Header
@@ -386,7 +389,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
             {showAddCountryButton && (
               <div className="mt-6 flex-center">
                 <Button
-                  label="Add Country" //TODO: Missing label
+                  label={t(labels.addCountry)}
                   variant="filled__secondary-gray"
                   size="md"
                   startIcon={<PlusIcon />}

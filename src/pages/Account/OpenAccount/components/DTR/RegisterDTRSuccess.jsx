@@ -1,7 +1,8 @@
 import successImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import { openAccountDTRLabels as labels } from '@common/constants/labels';
 
-const RegisterDTRSuccess = ({ onConfirm }) => {
+const RegisterDTRSuccess = ({ onConfirm, translate: t }) => {
   return (
     <>
       <div className="page-success">
@@ -12,10 +13,9 @@ const RegisterDTRSuccess = ({ onConfirm }) => {
               alt="Complete"
             />
           </div>
-          {/* //TODO: Missing label */}
           <div className="success__title">
             <span>
-              You’ve successfully registered <span className="text-primary">DTR</span>
+              {t(labels.youHaveSuccessfully)} <span className="text-primary">{t(labels.dtr)}</span>
             </span>
           </div>
         </div>
@@ -23,7 +23,7 @@ const RegisterDTRSuccess = ({ onConfirm }) => {
       <div className="footer__fixed">
         <Button
           variant="filled__primary"
-          label="Done" //TODO: Missing label
+          label={t(labels.done)}
           className="btn__cta"
           onClick={onConfirm}
         />

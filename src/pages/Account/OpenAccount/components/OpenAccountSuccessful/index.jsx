@@ -87,7 +87,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
               <IconButton
                 size="lg"
                 type="circle"
-                label="You can Check RRSP Contribution Receipt on the Account activity page"
+                label={t(labels.youCanCheckRRSP)}
                 icon={<img src={PaymentIcon} />}
                 onClick={handleNavigateAccountActivity}
               />
