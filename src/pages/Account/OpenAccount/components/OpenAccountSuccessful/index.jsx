@@ -104,7 +104,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
         />
         <Button
           variant="filled__primary"
-          label={isChequingCreditChecked ? 'Get new card' : t(labels.home)} //TODO: Missing label
+          label={isChequingCreditChecked ? t(labels.getNewCard) : t(labels.home)}
           className="btn__cta"
           onClick={handleClickConfirm}
         />

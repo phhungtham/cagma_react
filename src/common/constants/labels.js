@@ -36,6 +36,8 @@ export const eAlertLabels = {
   under: 'lbl_CAME900020_0035', //Under %1
   email2: 'lbl_CAME900020_0036', //Email
   appPush2: 'lbl_CAME900020_0037', //App Push
+  sendAlertWhenLess: 'lbl_CAME900020_0126', //Send alert when available balance is less than
+  fiveHundredCurrency: 'lbl_CAME900020_0127', //$500
 };
 
 export const appNotiLabels = {
@@ -322,6 +324,7 @@ export const openAccountLabels = {
   numberOfTransactions2: 'lbl_CAPR521000_0032', //Number of Transactions
   issueYourCard: 'lbl_CAPR521000_0033', //Issue your card from the Get new card
   youCanCheckRRSP: 'lbl_CAPR509000_0233', //You can Check RRSP Contribution Receipt on the Account activity page
+  getNewCard: 'lbl_CTA_5026', //Get new card
 };
 
 export const openAccountDTRLabels = {

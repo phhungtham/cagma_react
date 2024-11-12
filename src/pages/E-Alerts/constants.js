@@ -44,9 +44,8 @@ export const eAlertLowBalanceWarningOptions = [
     label: eAlertLabels.twoHundredCurrency,
     value: 200,
   },
-  //TODO: Missing label for $500
   {
-    label: '$500',
+    label: eAlertLabels.fiveHundredCurrency,
     value: 500,
   },
   {

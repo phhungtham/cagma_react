@@ -291,7 +291,6 @@ const EAlertsBalance = ({ translate: t }) => {
                   {setting.moneyLeavingPushEnabled && (
                     <>
                       <span className="divider__vertical" />
-                      {/* //TODO: Missing label */}
                       <span>SMS</span>
                     </>
                   )}
@@ -327,7 +326,6 @@ const EAlertsBalance = ({ translate: t }) => {
                   {setting.moneyIntoPushEnabled && (
                     <>
                       <span className="divider__vertical" />
-                      {/* //TODO: Missing label */}
                       <span>SMS</span>
                     </>
                   )}
@@ -361,7 +359,6 @@ const EAlertsBalance = ({ translate: t }) => {
                   {setting.balancePushEnabled && (
                     <>
                       <span className="divider__vertical" />
-                      {/* //TODO: Missing label */}
                       <span>SMS</span>
                     </>
                   )}

@@ -15,7 +15,7 @@ const LowBalanceWarningBottom = ({ onClose, onSubmit, data, translate: t }) => {
       type="fit-content"
     >
       <BalanceSettingFormBottom
-        description="Send alert when available balance is less than" //TODO: Missing label
+        description={t(eAlertLabels.sendAlertWhenLess)}
         onSubmit={onSubmit}
         balanceOptions={eAlertLowBalanceWarningOptions}
         data={data}
