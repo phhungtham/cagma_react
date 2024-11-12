@@ -2,6 +2,7 @@ import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
 
 export const SignUpSelectType = {
   TITLE: labels.title,
+  NATION: 'Nation',
   COUNTRY: labels.country,
   PROVINCE: labels.province,
   EMPLOYMENT_STATUS: labels.employmentStatus,
@@ -31,6 +32,7 @@ export const CommonCodeFieldName = {
 
 export const SelectTypeMapCommonCodeField = {
   [SignUpSelectType.TITLE]: CommonCodeFieldName.TITLE,
+  [SignUpSelectType.NATION]: CommonCodeFieldName.COUNTRY,
   [SignUpSelectType.COUNTRY]: CommonCodeFieldName.COUNTRY,
   [SignUpSelectType.PROVINCE]: CommonCodeFieldName.PROVINCE,
   [SignUpSelectType.EMPLOYMENT_STATUS]: CommonCodeFieldName.EMPLOYMENT_STATUS,
@@ -45,6 +47,7 @@ export const SelectTypeMapCommonCodeField = {
 
 export const SignUpSelectBottomMapFields = {
   [SignUpSelectType.TITLE]: 'title',
+  [SignUpSelectType.NATION]: 'nation',
   [SignUpSelectType.COUNTRY]: 'country',
   [SignUpSelectType.PROVINCE]: 'province',
   [SignUpSelectType.EMPLOYMENT_STATUS]: 'employmentStatus',
@@ -60,6 +63,7 @@ export const SignUpSelectBottomMapFields = {
 
 export const signUpPersonalMapFields = {
   title: 'cus_ttl_nm',
+  nation: 'bth_nat_c',
   firstName: 'cus_fst_nm',
   lastName: 'cus_last_nm',
   middleName: 'cus_middle_nm',
