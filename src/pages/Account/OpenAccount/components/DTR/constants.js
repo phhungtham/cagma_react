@@ -1,10 +1,12 @@
+import { openAccountLabels } from '@common/constants/labels';
+
 export const USResidentOptions = [
   {
-    label: 'Yes',
+    label: openAccountLabels.yes,
     value: 'Y',
   },
   {
-    label: 'No',
+    label: openAccountLabels.no,
     value: 'N',
   },
 ];

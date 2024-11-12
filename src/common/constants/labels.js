@@ -312,6 +312,44 @@ export const openAccountLabels = {
   tfsaTooltip: 'lbl_CAPR507000_0127', //CRA sets TFSA contribution limit each year. CRA imposes penalty of 1% per month for...
   iHaveCheckedRRSP: 'lbl_CAPR509000_0226', //I have checked my RRSP contribution room
   rrspTooltip: 'lbl_CAPR509000_0227', //RRSP contribution limit is 18% of earned income you reported ...
+  paymentDateEachSession2: 'lbl_CAPR506000_0040', //Payment Date Each Session
+  terms2: 'lbl_CAPR506000_0038', //Terms
+  maturityDate2: 'lbl_CAPR506000_0039', //Maturity Date
+  viewAccount: 'lbl_CTA_5005', //View Account
+  home: 'lbl_CTA_5006', //Home
+  maturityOption: 'lbl_CAPR502000_0045', //Maturity Option
+  transactionLimit: 'lbl_CAPR521000_0031', //Transaction Limit
+  numberOfTransactions2: 'lbl_CAPR521000_0032', //Number of Transactions
+  issueYourCard: 'lbl_CAPR521000_0033', //Issue your card from the Get new card
+};
+
+export const openAccountDTRLabels = {
+  answerQuestion: 'lbl_CAPR520000_0001', //Answer Questions about Tax
+  theCanadaRevenue: 'lbl_CAPR520000_0002', //The Canada Revenue Agency requires us to collect information about your tax residency when opening an account
+  pleaseEnterTheCorrect: 'lbl_CAPR520000_0003', //Please enter the correct information when inputting DTR information
+  viewGuidelines: 'lbl_CAPR520000_0004', //View guidelines >
+  sinNumberTitle: 'lbl_CAPR520000_0005', //SIN Number
+  sinNumber: 'lbl_CAPR520000_0006', //SIN Number
+  yourSinWillBe: 'lbl_CAPR520000_0007', //Your SIN will be used only for account opening.
+  taxQuestions: 'lbl_CAPR520000_0008', //Tax Questions
+  areYouTaxResidentUS: 'lbl_CAPR520000_0009', //Are you a tax resident or citizen the U.S.?
+  guidelinesForTaxQuestions: 'lbl_CAPR520000_0038', //Guidelines for Tax Questions
+  amIResidentUS: 'lbl_CAPR520000_0039', //Am I a tax resident of the US?
+  ifYouAreUS: 'lbl_CAPR520000_0040', //If you are a U.S. Passport holder, U.S. Permanent Residence...
+  amIResidentOtherUS: 'lbl_CAPR520000_0041', //Am I a tax resident of a country other than Canada or the U.S.?
+  rulesForTax: 'lbl_CAPR520000_0042', //Rules for tax residency can be complex and vary by country...
+  whatIsTin: 'lbl_CAPR520000_0043', //What’s a TIN (Tax Identification Number)?
+  tinExplain: 'lbl_CAPR520000_0044', //A TIN is a unique combination of letters and numbers...
+  tinTaxIdentification: 'lbl_CAPR520000_0010', //TIN(Tax Identification Number)
+  areYouResidentOtherUS: 'lbl_CAPR520000_0011', //Are you a tax resident of a country other than Canada or the U.S.?
+  next: 'lbl_CTA_5015', //Next
+  countryYouHold: 'lbl_CAPR520000_0012', //Country you hold tax residency in
+  tinTaxIdentification2: 'lbl_CAPR520000_0013', //TIN(Tax Identification Number)
+  iDontHaveTin: 'lbl_CAPR520000_0014', //I don’t have the TIN for this country
+  reason: 'lbl_CAPR520000_0015', //Reason
+  selectAReason: 'lbl_CAPR520000_0035', //Select a reason
+  selectCountry: 'lbl_CAPR520000_0024', //Select country
+  country2: 'lbl_CAPR520000_0016', //Country 2
 };
 
 export const cardLabels = {

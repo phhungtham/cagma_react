@@ -473,7 +473,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
           </FormProvider>
           <div className="footer__fixed">
             <Button
-              label="Open" //TODO: Missing label
+              label={t(labels.open)}
               variant="filled__primary"
               className="btn__cta"
               onClick={handleSubmit(onSubmitOpenAccount)}

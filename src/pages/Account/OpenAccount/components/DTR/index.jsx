@@ -13,6 +13,7 @@ import Header from '@common/components/organisms/Header';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getCountryCode, tinUnregisterReason } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
+import { openAccountDTRLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -24,7 +25,7 @@ import RegisterDTRSuccess from './RegisterDTRSuccess';
 import { dtrFormSchema } from './schema';
 import './styles.scss';
 
-const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
+const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
   const [showLoading, setShowLoading] = useState(false);
   const [showRegisterDTRSuccess, setShowRegisterDTRSuccess] = useState(false);
   const [showGuideTaxBottom, setShowGuideTaxBottom] = useState(false);
@@ -68,7 +69,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
       type: SELECT_TYPE.COUNTRY,
       options: countryOptions,
       isShow: true,
-      title: 'Select country',
+      title: t(labels.selectCountry),
     });
   };
 
@@ -78,7 +79,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
       type: SELECT_TYPE.COUNTRY,
       options: unregisterReasons,
       isShow: true,
-      title: 'Select reason',
+      title: t(labels.selectAReason),
     });
   };
 
@@ -123,10 +124,10 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
 
   const handleSubmitForm = async values => {
     setShowLoading(true);
-    const { isUSResident, personalTin, country1, tin1, reason1, showCountry2, country2, tin2, reason2, sin } = values;
+    const { isUSResident, personalTin, country1, tin1, reason1, country2, tin2, reason2, sin } = values;
     const payload = {
       ...DTRInfo,
-      tin_aplct_yn: DTRInfo.dtr_yn === 'Y' ? 1 : 0,
+      tin_aplct_yn: DTRInfo?.dtr_yn === 'Y' ? 1 : 0,
       scscrt_no: sin,
       crs_us_pn_yn: isUSResident,
       psn_tin_no: personalTin || '',
@@ -162,23 +163,20 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
       ) : (
         <>
           <Header
-            title="Open Account"
+            title={t(menuLabels.openAccount)}
             onClick={moveBack}
           />
           <div className="page__form px-0 answer-tax__wrapper">
             {showLoading && <Spinner />}
             <div className="page__container pb-4">
-              <h1 className="page__title">Answer Questions about Tax</h1>
+              <h1 className="page__title">{t(labels.answerQuestion)}</h1>
               <div className="mt-4 answer-tax__desc">
-                <div>
-                  The Canada Revenue Agency requires us to collect information about your tax residency when opening an
-                  account.
-                </div>
-                <div className="mt-4">Please enter the correct information when inputting DTR information.</div>
+                <div>{t(labels.theCanadaRevenue)}</div>
+                <div className="mt-4">{t(labels.pleaseEnterTheCorrect)}</div>
               </div>
               <div className="mt-3">
                 <Button
-                  label="View guidelines"
+                  label={t(labels.viewGuidelines)}
                   variant="text__primary"
                   size="sm"
                   endIcon={<ArrowRight />}
@@ -190,16 +188,16 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
             <div className="page__container pt-5 pb-6">
               <div className="form__section">
                 <div className="form__section__title">
-                  <span>SIN Number</span>
+                  <span>{t(labels.sinNumberTitle)}</span>
                 </div>
                 <Controller
                   render={({ field }) => (
                     <Input
-                      label="SIN Number"
+                      label={t(labels.sinNumber)}
                       type="number"
                       inputMode="numeric"
                       placeholder="(Social Insurance Number)"
-                      helperText="Your SIN will be used only for account opening."
+                      helperText={t(labels.yourSinWillBe)}
                       {...field}
                     />
                   )}
@@ -211,9 +209,9 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
             <div className="divider__group" />
             <div className="page__container pt-5 pb-6">
               <div className="form__section__title">
-                <span>Tax Questions</span>
+                <span>{t(labels.taxQuestions)}</span>
               </div>
-              <div className="tax-question mt-3">Are you a tax resident or citizen the U.S.?</div>
+              <div className="tax-question mt-3">{t(labels.areYouTaxResidentUS)}</div>
               <div className="mt-4">
                 <div className="form__section">
                   <Controller
@@ -230,7 +228,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                     <Controller
                       render={({ field }) => (
                         <Input
-                          label="TIN(Tax Identification Number)"
+                          label={t(labels.tinTaxIdentification)}
                           {...field}
                         />
                       )}
@@ -242,7 +240,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
               </div>
               <div className="divider__item__solid mt-6" />
               <div className="pt-5">
-                <div className="tax-question">Are you a tax resident of a country other than Canada or the U.S.? </div>
+                <div className="tax-question">{t(labels.areYouResidentOtherUS)}</div>
                 <div className="mt-4">
                   <div className="form__section">
                     <Controller
@@ -260,7 +258,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                         <Controller
                           render={({ field }) => (
                             <Dropdown
-                              label="Country you hold tax residency in"
+                              label={t(labels.countryYouHold)}
                               onFocus={() => handleOpenSelectCountryBottom('country1')}
                               options={countryOptions}
                               {...field}
@@ -272,7 +270,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                         <Controller
                           render={({ field }) => (
                             <Input
-                              label="TIN(Tax Identification Number)"
+                              label={t(labels.tinTaxIdentification2)}
                               disabled={notHaveTin1}
                               {...field}
                             />
@@ -285,7 +283,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                             render={({ field }) => (
                               <CheckBox
                                 size="large"
-                                label="I don’t have the TIN for this country"
+                                label={t(labels.iDontHaveTin)}
                                 {...field}
                                 checked={field.value}
                               />
@@ -298,7 +296,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                           <Controller
                             render={({ field }) => (
                               <Dropdown
-                                label="Reason"
+                                label={t(labels.reason)}
                                 onFocus={() => handleOpenSelectReasonBottom('reason1')}
                                 options={unregisterReasons}
                                 {...field}
@@ -319,7 +317,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                 <div className="divider__group" />
                 <div className="page__container py-6">
                   <div className="form__section__title country-title">
-                    <span>Country2</span>
+                    <span>{t(labels.country2)}</span>
                     <span
                       className="flex-center"
                       onClick={handleDeleteCountry}
@@ -332,7 +330,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                       <Controller
                         render={({ field }) => (
                           <Dropdown
-                            label="Country you hold tax residency in"
+                            label={t(labels.countryYouHold)}
                             onFocus={() => handleOpenSelectCountryBottom('country2')}
                             options={countryOptions}
                             {...field}
@@ -344,7 +342,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                       <Controller
                         render={({ field }) => (
                           <Input
-                            label="TIN(Tax Identification Number)"
+                            label={t(labels.tinTaxIdentification2)}
                             disabled={notHaveTin2}
                             {...field}
                           />
@@ -357,7 +355,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                           render={({ field }) => (
                             <CheckBox
                               size="large"
-                              label="I don’t have the TIN for this country"
+                              label={t(labels.iDontHaveTin)}
                               {...field}
                               checked={field.value}
                             />
@@ -370,7 +368,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
                         <Controller
                           render={({ field }) => (
                             <Dropdown
-                              label="Reason"
+                              label={t(labels.reason)}
                               onFocus={() => handleOpenSelectReasonBottom('reason2')}
                               options={unregisterReasons}
                               {...field}
@@ -388,7 +386,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
             {showAddCountryButton && (
               <div className="mt-6 flex-center">
                 <Button
-                  label="Add Country"
+                  label="Add Country" //TODO: Missing label
                   variant="filled__secondary-gray"
                   size="md"
                   startIcon={<PlusIcon />}
@@ -398,7 +396,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
             )}
             <div className="footer__fixed">
               <Button
-                label="Next"
+                label={t(labels.next)}
                 variant="filled__primary"
                 className="btn__cta"
                 disable={!isValid}
@@ -412,6 +410,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm }) => {
       <GuideTaxBottom
         open={showGuideTaxBottom}
         onClose={() => setShowGuideTaxBottom(false)}
+        translate={t}
       />
       <SelectBottom
         open={selectBottom.isShow}

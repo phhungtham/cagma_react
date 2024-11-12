@@ -334,6 +334,7 @@ const OpenAccount = ({ translate: t }) => {
             setAlert={setAlert}
             DTRInfo={DTRInfo}
             onConfirm={handleNavigateViewTerm}
+            translate={t}
           />
         )}
         {currentStep === OPEN_ACCOUNT_STEP.VIEW_TERMS && (

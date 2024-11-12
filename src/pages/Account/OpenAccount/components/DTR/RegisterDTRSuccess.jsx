@@ -12,6 +12,7 @@ const RegisterDTRSuccess = ({ onConfirm }) => {
               alt="Complete"
             />
           </div>
+          {/* //TODO: Missing label */}
           <div className="success__title">
             <span>
               You’ve successfully registered <span className="text-primary">DTR</span>
@@ -22,7 +23,7 @@ const RegisterDTRSuccess = ({ onConfirm }) => {
       <div className="footer__fixed">
         <Button
           variant="filled__primary"
-          label="Done"
+          label="Done" //TODO: Missing label
           className="btn__cta"
           onClick={onConfirm}
         />

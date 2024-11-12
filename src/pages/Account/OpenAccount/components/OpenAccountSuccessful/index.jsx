@@ -61,7 +61,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
             <div className="product-type">{openAccountInfo?.productName}</div>
             {!!creditChecked && (
               <div className="note">
-                {isChequingCreditChecked ? 'Issue your card from the Get new card' : t(labels.debitCardWillBe)}
+                {isChequingCreditChecked ? t(labels.issueYourCard) : t(labels.debitCardWillBe)}
               </div>
             )}
           </div>
@@ -98,13 +98,13 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
       <div className="footer__fixed">
         <Button
           variant="filled__secondary-blue"
-          label="View Account"
+          label={t(labels.viewAccount)}
           className="btn__cta"
           onClick={onClickViewAccount}
         />
         <Button
           variant="filled__primary"
-          label={isChequingCreditChecked ? 'Get new card' : 'Home'}
+          label={isChequingCreditChecked ? 'Get new card' : t(labels.home)} //TODO: Missing label
           className="btn__cta"
           onClick={handleClickConfirm}
         />

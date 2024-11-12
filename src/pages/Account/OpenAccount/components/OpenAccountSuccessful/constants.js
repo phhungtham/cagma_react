@@ -3,23 +3,23 @@ import { ProductCode } from '@common/constants/product';
 
 export const chequingSuccessFields = [
   {
-    label: 'Product name',
+    label: labels.productName,
     value: 'productName',
   },
   {
-    label: 'Account no.',
+    label: labels.accountNo,
     value: 'acNo',
   },
   {
-    label: 'Interest rate',
+    label: labels.interestRate3,
     value: 'interestRate',
   },
   {
-    label: 'Transaction limit',
+    label: labels.transactionLimit,
     value: 'limit',
   },
   {
-    label: 'Number of Transactions',
+    label: labels.numberOfTransactions2,
     value: 'numberTransactions',
   },
 ];
@@ -49,70 +49,70 @@ export const eSavingSuccessFields = [
 
 export const termDepositSuccessFields = [
   {
-    label: 'Product name',
+    label: labels.productName,
     value: 'productName',
   },
   {
-    label: 'Account no.',
+    label: labels.accountNo,
     value: 'acNo',
   },
   {
-    label: 'Interest rate',
+    label: labels.interestRate3,
     value: 'interestRate',
   },
   {
-    label: 'Amount',
+    label: labels.amount2,
     value: 'amount',
   },
   {
-    label: 'Terms',
+    label: labels.terms2,
     value: 'term',
   },
   {
-    label: 'Maturity Date',
+    label: labels.maturityDate2,
     value: 'maturityDate',
   },
   {
-    label: 'Maturity Option',
+    label: labels.maturityOption,
     value: 'maturityOption',
   },
   {
-    label: 'Deposit from',
+    label: labels.depositFrom,
     value: 'depositFrom',
   },
 ];
 
 export const eInstallSuccessFields = [
   {
-    label: 'Product name',
+    label: labels.productName,
     value: 'productName',
   },
   {
-    label: 'Account no.',
+    label: labels.accountNo,
     value: 'acNo',
   },
   {
-    label: 'Interest rate',
+    label: labels.interestRate3,
     value: 'interestRate',
   },
   {
-    label: 'Amount',
+    label: labels.amount2,
     value: 'amount',
   },
   {
-    label: 'Terms',
+    label: labels.terms2,
     value: 'term',
   },
   {
-    label: 'Maturity Date',
+    label: labels.maturityDate2,
     value: 'maturityDate',
   },
   {
-    label: 'Payment Date Each Session',
+    label: labels.paymentDateEachSession2,
     value: 'paymentEachSession',
   },
   {
-    label: 'Deposit from',
+    label: labels.depositFrom,
     value: 'depositFrom',
   },
 ];
