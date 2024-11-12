@@ -1,4 +1,5 @@
 import { CurrencyCode } from '@common/constants/currency';
+import { openAccountLabels } from '@common/constants/labels';
 import { ProductCode } from '@common/constants/product';
 
 export const openAccountDefaultValues = {
@@ -101,11 +102,11 @@ export const termOptionsBaseProductCode = {
 
 export const thirdPartyActiveOptions = [
   {
-    label: 'Yes',
+    label: openAccountLabels.yes,
     value: 'Y',
   },
   {
-    label: 'No',
+    label: openAccountLabels.no,
     value: 'N',
   },
 ];

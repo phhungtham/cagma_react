@@ -63,7 +63,7 @@ const ReferralCodeSection = ({ productCode, translate: t }) => {
                   name="tfsaTerm"
                 />
                 <Tooltip
-                  content="CRA sets TFSA contribution limit each year. CRA imposes penalty of 1% per month for any contribution made over your limit."
+                  content={t(labels.tfsaTooltip)}
                   placement="bottom_center"
                 >
                   <div className="item__tooltip">
@@ -81,7 +81,7 @@ const ReferralCodeSection = ({ productCode, translate: t }) => {
                   render={({ field }) => (
                     <CheckBox
                       size="large"
-                      label="I have checked my RRSP contribution room"
+                      label={t(labels.iHaveCheckedRRSP)}
                       {...field}
                       checked={field.value}
                     />
@@ -90,7 +90,7 @@ const ReferralCodeSection = ({ productCode, translate: t }) => {
                   name="rrspTerm"
                 />
                 <Tooltip
-                  content="RRSP contribution limit is 18% of earned income you reported on your tax return in the previous year up to the maximum annual contribution amount set by CRA. However, contribution room can be carried forward for any past unused contributions from previous years."
+                  content={t(labels.rrspTooltip)}
                   placement="bottom_center"
                 >
                   <div className="item__tooltip">

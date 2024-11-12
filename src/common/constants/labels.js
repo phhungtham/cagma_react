@@ -304,6 +304,14 @@ export const openAccountLabels = {
   ifADebitCardIssued: 'lbl_CAPR521000_0017', //If a debit card is issued, it will be sent to the stored customer address.
   iHaveCheckedTFSA: 'lbl_CAPR507000_0025', //I have checked my TFSA contribution room
   numberOfTransactions: 'lbl_CAPR521000_0010', //Number of Transactions
+  yes: 'lbl_CAPR501000_0127', //Yes
+  no: 'lbl_CAPR501000_0128', //No
+  open: 'lbl_CTA_5004', //Open
+  availableBalance: 'lbl_CAPR501000_0222', //Available balance %1
+  taxationYear: 'lbl_CAPR509000_0225', //Taxation Year
+  tfsaTooltip: 'lbl_CAPR507000_0127', //CRA sets TFSA contribution limit each year. CRA imposes penalty of 1% per month for...
+  iHaveCheckedRRSP: 'lbl_CAPR509000_0226', //I have checked my RRSP contribution room
+  rrspTooltip: 'lbl_CAPR509000_0227', //RRSP contribution limit is 18% of earned income you reported ...
 };
 
 export const cardLabels = {

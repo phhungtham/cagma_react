@@ -19,7 +19,13 @@ import { CurrencyCode } from '@common/constants/currency';
 import { selectType } from '@common/constants/dateTime';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import { commonLabels, ctaLabels, openAccountLabels as labels, menuLabels } from '@common/constants/labels';
+import {
+  commonLabels,
+  ctaLabels,
+  openAccountLabels as labels,
+  menuLabels,
+  openAccountLabels,
+} from '@common/constants/labels';
 import { PeriodUnitCodeDisplay, ProductCode, ProductUnitCodeWithTermType } from '@common/constants/product';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
@@ -415,7 +421,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 {isRRSPESaving && (
                   <section>
                     <TextDropdown
-                      label="Taxation Year"
+                      label={t(labels.taxationYear)}
                       placeholder="Select"
                       onClick={handleOpenTaxYearBottom}
                       value={taxYear} //TODO: Handle logic only select year in 60 days start of year
@@ -501,7 +507,10 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             onClose={() => setShowEnterAmountBottom(false)}
             title={selectedAccount?.dep_prdt_nm}
             subTitle={selectedAccount?.lcl_ac_no_display}
-            note={`Available Balance $${selectedAccount?.def_ac_blc_display || '0.00'}`} //TODO: Missing label
+            note={t(openAccountLabels.availableBalance).replace(
+              '%1',
+              `$${selectedAccount?.def_ac_blc_display || '0.00'}`
+            )}
             currency={CurrencyCode.CAD}
             amount={amount}
             min={enterAmountMin}

@@ -1,5 +1,5 @@
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { commonLabels } from '@common/constants/labels';
+import { commonLabels, openAccountLabels } from '@common/constants/labels';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
@@ -30,7 +30,9 @@ const MyAccountsBottom = ({ accounts = [], open, onClose, onSelect, translate: t
                 <div className="my-accounts__item__main">
                   <div className="my-accounts__name">{account.name}</div>
                   <div className="my-accounts__number">{account.number}</div>
-                  <div className="my-accounts__balance">Available Balance ${account.balance}</div>
+                  <div className="my-accounts__balance">
+                    {t(openAccountLabels.availableBalance).replace('%1', `$${account.balance}`)}
+                  </div>
                 </div>
               </div>
             ))}
