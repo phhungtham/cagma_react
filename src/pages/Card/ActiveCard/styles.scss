@@ -1,6 +1,11 @@
 @import 'styles/utilities/variables';
 @import 'styles/utilities/_mixin.scss';
 
+.active-card__wrapper {
+  height: 95vh;
+  overflow: auto;
+}
+
 .active-card__container {
   padding: 20px 24px 150px;
 }
