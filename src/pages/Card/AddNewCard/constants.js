@@ -1,6 +1,5 @@
 import { cardLabels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
-import { AppCfg } from '@configs/appConfigs';
 
 export const ADD_NEW_CARD_STEP = {
   TERMS_CONDITIONS: 'termsConditions',
@@ -15,13 +14,13 @@ export const termConditionConfig = {
       label: cardLabels.accessCardApplication,
       value: '1',
       title: cardLabels.accessCardApplication,
-      fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
+      fileUrl: fileUrls.cardHolderAgreement,
     },
     {
       label: cardLabels.cardholderAgreement,
       value: '2',
       title: cardLabels.cardholderAgreement,
-      fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
+      fileUrl: fileUrls.cardHolderAgreement,
     },
   ],
 };

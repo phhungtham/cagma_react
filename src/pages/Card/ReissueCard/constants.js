@@ -1,6 +1,5 @@
 import { reissueCardLabels as labels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
-import { AppCfg } from '@configs/appConfigs';
 
 export const REISSUE_CARD_STEP = {
   ENTER_CARD_INFORMATION: 'enterInformation',
@@ -50,13 +49,13 @@ export const reissueCardTermsConfig = {
       label: labels.accessCardApplication,
       value: '1',
       title: 'Access Card Application',
-      fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
+      fileUrl: fileUrls.cardHolderAgreement,
     },
     {
       label: labels.cardholderAgreement,
       value: '2',
       title: 'Cardholder Agreement',
-      fileUrl: `${AppCfg.API_ENDPOINT_PORT}${fileUrls.cardHolderAgreement}`,
+      fileUrl: fileUrls.cardHolderAgreement,
     },
   ],
 };

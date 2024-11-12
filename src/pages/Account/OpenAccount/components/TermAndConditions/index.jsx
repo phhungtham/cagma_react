@@ -8,7 +8,6 @@ import TermConditionChecklist from '@common/components/organisms/TermConditionCh
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { ctaLabels, openAccountLabels as labels, menuLabels } from '@common/constants/labels';
 import { PeriodUnitCodeDisplay } from '@common/constants/product';
-import { AppCfg } from '@configs/appConfigs';
 import { BannerMapProductCode } from '@pages/Product/ProductList/constants';
 import { moveBack } from '@utilities/index';
 import { appLanguage } from 'app/redux/selector';
@@ -76,7 +75,7 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
 
   useEffect(() => {
     if (productCode) {
-      const urlPrefix = `${AppCfg.API_ENDPOINT_PORT}${OpenAccountTermFile[productCode]}`;
+      const urlPrefix = OpenAccountTermFile[productCode];
       const userAgreementFile = `${urlPrefix}_agree_en.pdf`;
       const productFeatureFile = `${urlPrefix}_${currentLanguage || 'en'}.pdf`;
       const termConditionConfig = {
