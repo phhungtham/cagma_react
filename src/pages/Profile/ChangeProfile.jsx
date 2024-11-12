@@ -467,7 +467,7 @@ const ChangeProfile = ({ translate: t }) => {
       setShowLoading(false);
       setShowAlert({
         isShow: true,
-        title: 'Sorry!',
+        title: '',
         content: getUserFailedMsg.msgText,
       });
     }
