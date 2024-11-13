@@ -1,6 +1,8 @@
 @import 'styles/utilities/variables';
 
 .answer-tax__wrapper {
+  height: calc(100vh - 166px);
+  overflow: auto;
   .answer-tax__desc,
   .tax-question {
     font-size: 15px;
