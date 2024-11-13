@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
@@ -10,7 +9,8 @@ import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Span from '@common/components/atoms/Span';
 import Spinner from '@common/components/atoms/Spinner';
 import { isDevelopmentEnv } from '@common/constants/common';
-import useFocus from '@hooks/useFocus';
+import { endpoints } from '@common/constants/endpoint';
+import useApi from '@hooks/useApi';
 import useHttpStatus from '@hooks/useHttpStatus';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
@@ -66,11 +66,10 @@ const languages = [
 const Login = () => {
   useReducers([{ key: FeatureLoginName, reducer: loginReducer }]);
   useSagas([{ key: FeatureLoginName, saga: loginSaga }]);
-  useFocus('userName');
+  const { requestApi } = useApi();
 
   const { status } = useHttpStatus(ActionType.LOGIN_REQUEST);
   const currentLanguage = useSelector(appLanguage);
-  const navigate = useNavigate();
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
       userName: 'WTLEE815',
@@ -109,9 +108,11 @@ const Login = () => {
     }
   }, [isLoginSuccess]);
 
-  const onSubmitLogin = data => {
-    // username : DOOLY94
-    // username : qwer1234
+  const handleLogout = async () => {
+    await requestApi(endpoints.logout);
+  };
+
+  const handleSubmitLogin = data => {
     const userInfo = {
       uicc_id: 'x6BcpPoe9rVti6Jy2i/6iNwIe83Qjv4vVixo8MgZ1ds=',
       login_type: '1',
@@ -141,7 +142,7 @@ const Login = () => {
           </div>
         </div>
         <div className="login-form">
-          <form onSubmit={handleSubmit(onSubmitLogin)}>
+          <form>
             <div className="input__group">
               <Controller
                 render={({ field }) => (
@@ -184,11 +185,22 @@ const Login = () => {
                 ))}
               </select>
             </div>
-            <Button
-              variant="filled__primary"
-              type="submit"
-              label={'Login'}
-            />
+            <div className="mt-4 flex-center gap-2">
+              <Button
+                variant="filled__secondary-blue"
+                type="submit"
+                label="Logout"
+                className="w-full"
+                onClick={handleLogout}
+              />
+              <Button
+                variant="filled__primary"
+                type="button"
+                label="Login"
+                className="w-full"
+                onClick={handleSubmit(handleSubmitLogin)}
+              />
+            </div>
           </form>
           <div className="mt-6">
             <BoxRadio

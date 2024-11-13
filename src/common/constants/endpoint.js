@@ -61,4 +61,5 @@ export const endpoints = {
   registerElectricFinancial: '/ca/se/CASE110.pwkjson',
   checkSignUpApprovalStatus: '/ca/se/CASE103.pwkjson',
   getEkycDetail: '/ca/se/CASE117.pwkjson',
+  logout: '/gm/lo/GMLO004.pwkjson',
 };

@@ -42,7 +42,7 @@ const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
       ...personalPayload,
       ...pepPayload,
       uuid_v: deviceId,
-      lcl_cus_rlnm_no2_yn: personalDetail.notSin ? 'Y' : 'N',
+      lcl_cus_rlnm_no2_yn: personalDetail.notSin ? 'N' : 'Y',
       rsdc_yn: personalDetail.residentialStatus === '04' ? '0' : '1',
     };
 

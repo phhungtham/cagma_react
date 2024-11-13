@@ -226,7 +226,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
           ...item,
           name: item.dep_prdt_nm,
           number: item.lcl_ac_no_display,
-          balance: item.def_ac_blc_display,
+          balance: item.pabl_blc_display,
         };
       });
       const filteredAccounts = getFilteredBasedProductCode(newAccounts);
@@ -509,7 +509,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             subTitle={selectedAccount?.lcl_ac_no_display}
             note={t(openAccountLabels.availableBalance).replace(
               '%1',
-              `$${selectedAccount?.def_ac_blc_display || '0.00'}`
+              `$${selectedAccount?.pabl_blc_display || '0.00'}`
             )}
             currency={CurrencyCode.CAD}
             amount={amount}
