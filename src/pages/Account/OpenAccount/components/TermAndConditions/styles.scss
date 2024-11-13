@@ -1,11 +1,13 @@
 @import 'styles/utilities/variables';
 
 .open-account.term-conditions__wrapper {
+  height: calc(100vh - 166px);
+  overflow: auto;
   position: relative;
 }
 
 .open-account.term-conditions__content {
-  padding: 20px 24px 150px;
+  padding: 20px 24px 50px;
 
   .term-condition__title {
     font-size: 28px;
