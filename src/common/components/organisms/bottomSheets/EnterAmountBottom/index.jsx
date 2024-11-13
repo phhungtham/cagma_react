@@ -67,7 +67,7 @@ const EnterAmountBottom = ({
       (value === '.' && (currentAmount.includes('.') || currentAmount === '')) ||
       (currentAmount === '0' && value === '0') ||
       //TODO: Prevent input when exceed maxlength
-      (!currentAmount.includes('.') && currentAmount.replace(/,/g, '').length > 4 && value !== '.') ||
+      (!currentAmount.includes('.') && currentAmount.replace(/,/g, '').length > 12 && value !== '.') ||
       (currentAmount.includes('.') && currentAmount.slice(currentAmount.lastIndexOf('.') + 1).length > 1) //Exceed two digit after decimal
     ) {
       return;

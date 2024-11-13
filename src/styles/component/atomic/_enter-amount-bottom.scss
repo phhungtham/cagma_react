@@ -70,6 +70,7 @@
     .amount-value__wrapper {
       height: 41px;
       color: $color-gray-400;
+      overflow: auto;
       &.has-value {
         color: $color-blue-500;
       }
