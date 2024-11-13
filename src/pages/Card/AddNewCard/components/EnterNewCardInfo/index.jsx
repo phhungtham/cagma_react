@@ -132,7 +132,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
           ...item,
           name: item.dep_ac_alnm_nm,
           number: item.lcl_ac_no_display,
-          balance: item.def_ac_blc_display,
+          balance: item.pabl_blc_display,
         };
       });
       const filteredAccounts = newAccounts.filter(
