@@ -11,11 +11,11 @@ const Header = ({ clazz, title, onClick = () => moveBack() }, ref) => {
       ref={ref}
       className={`header__wrapper ${clazz}`}
     >
-      <div
-        className="header__back"
-        onClick={onClick}
-      >
-        <HeaderBackIcon />
+      <div className="header__back">
+        <span onClick={onClick}>
+          <HeaderBackIcon />
+        </span>
+
         <div className="header__title">
           <Span text={title} />
         </div>
