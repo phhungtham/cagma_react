@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels } from '@common/constants/labels';
+import useLoginInfo from '@hooks/useLoginInfo';
 import { apiCall } from '@shared/api';
 import { buildRequestPayloadBaseMappingFields } from '@utilities/convert';
 import { nativeParamsSelector } from 'app/redux/selector';
@@ -21,6 +23,7 @@ const BookAppointmentStep = {
 
 const BookAppointment = ({ translate: t }) => {
   const nativeParams = useSelector(nativeParamsSelector);
+  const { isLogin } = useLoginInfo();
   const [showLoading, setShowLoading] = useState(false);
   const [showAlert, setShowAlert] = useState({
     isShow: false,
@@ -34,7 +37,8 @@ const BookAppointment = ({ translate: t }) => {
   const handleBookAppointment = async formValues => {
     setShowLoading(true);
     const request = buildRequestPayloadBaseMappingFields(formValues, bookAppointmentFormMapFields);
-    request.apint_guest_chk = formValues.customerStatusType === CustomerStatusType.EXISTING ? 'N' : 'Y';
+    const guestCustomerStatus = formValues.customerStatusType === CustomerStatusType.EXISTING ? 'N' : 'Y';
+    request.apint_guest_chk = isLogin ? guestCustomerStatus : 'Y'; //Alway is new customer if user not logged
     request.apint_visit_chk = type === BookAppointmentType.IN_PERSON ? 'Y' : 'N';
     request.apint_brno = branchNo;
     const bookAppointmentResponse = await apiCall(endpoints.bookAppointment, 'POST', request);
@@ -65,7 +69,7 @@ const BookAppointment = ({ translate: t }) => {
     if (responseErrorMessage) {
       setShowAlert({
         isShow: true,
-        title: 'Sorry!',
+        title: '',
         content: bookAppointmentResponse.data.elHeader.resMsgVo.msgText,
       });
     }
@@ -79,6 +83,7 @@ const BookAppointment = ({ translate: t }) => {
           type={type}
           onSubmit={handleBookAppointment}
           translate={t}
+          isLogin={isLogin}
         />
       )}
       {currentStep === BookAppointmentStep.COMPLETED && (
@@ -96,7 +101,7 @@ const BookAppointment = ({ translate: t }) => {
         onClose={() => setShowAlert({ isShow: false, title: '', content: '' })}
         firstButton={{
           onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

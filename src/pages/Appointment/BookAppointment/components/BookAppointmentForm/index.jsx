@@ -31,7 +31,7 @@ import CustomerStatusBottom from '../CustomerStatusBottom';
 import { bookAppointmentSchema } from './schema';
 import './styles.scss';
 
-const BookAppointmentForm = ({ type, onSubmit, translate: t }) => {
+const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin }) => {
   const [showCustomerTypeBottom, setShowCustomerTypeBottom] = useState(false);
   const [showPurposeAppointmentBottom, setShowPurposeAppointmentBottom] = useState(false);
   const [showSelectTimeBottom, setShowSelectTimeBottom] = useState(false);
@@ -155,10 +155,10 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t }) => {
   };
 
   useEffect(() => {
-    if (showCustomerStatusBottom && !customer) {
+    if (showCustomerStatusBottom && isLogin && !customer) {
       requestGetCustomer();
     }
-  }, [showCustomerStatusBottom]);
+  }, [showCustomerStatusBottom, isLogin]);
 
   useEffect(() => {
     if (customerType && purposeList) {
@@ -321,6 +321,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t }) => {
         onConfirm={handleChangeCustomerStatus}
         customer={customer}
         translate={t}
+        isLogin={isLogin}
       />
     </>
   );

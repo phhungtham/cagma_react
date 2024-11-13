@@ -27,12 +27,12 @@ const initValues = {
   comment: '',
 };
 
-const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t }) => {
-  const [tabIndex, setTabIndex] = useState(StatusTab.EXISTING);
+const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t, isLogin }) => {
+  const [tabIndex, setTabIndex] = useState(StatusTab.NEW);
   const [initFirstTime, setInitFirstTime] = useState(true);
   const [newCustomerFormData, setNewCustomerFormData] = useState(initValues);
   const [existingCustomerFormData, setExistingCustomerFormData] = useState();
-  const isUsingExistCustomer = tabIndex === StatusTab.EXISTING;
+  const { cus_snm_nm: name, cus_cell_no: phoneNumber, cus_email: email } = customer || {};
 
   const {
     handleSubmit,
@@ -68,9 +68,8 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
   };
 
   useEffect(() => {
-    if (customer && tabIndex === StatusTab.EXISTING) {
+    if (customer && open && tabIndex === StatusTab.EXISTING) {
       if (initFirstTime) {
-        const { cus_snm_nm: name, cus_cell_no: phoneNumber, cus_email: email } = customer;
         reset({
           name,
           phoneNumber,
@@ -81,7 +80,13 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
         setInitFirstTime(false);
       }
     }
-  }, [customer, open]);
+  }, [customer, open, tabIndex]);
+
+  useEffect(() => {
+    if (isLogin) {
+      setTabIndex(StatusTab.EXISTING);
+    }
+  }, [isLogin]);
 
   return (
     <BottomSheet
@@ -111,7 +116,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   <Input
                     label={t(labels.name2)}
                     type="text"
-                    disabled={isUsingExistCustomer}
+                    disabled={!!name}
                     maxLength={300}
                     {...field}
                   />
@@ -124,7 +129,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   <Input
                     label={t(labels.phoneNumber)}
                     type="text"
-                    disabled={isUsingExistCustomer}
+                    disabled={!!phoneNumber}
                     maxLength={50}
                     {...field}
                   />
@@ -137,7 +142,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   <Input
                     label={t(labels.email2)}
                     type="text"
-                    disabled={isUsingExistCustomer}
+                    disabled={!!email}
                     maxLength={50}
                     {...field}
                   />
