@@ -87,14 +87,7 @@ const AddressInfoSection = ({
   };
 
   const handleClick = () => {
-    if (file) {
-      const link = document.createElement('a');
-      link.download = fileName || 'Address';
-      link.href = file;
-      link.click();
-    } else {
-      fileInputRef.current.click();
-    }
+    fileInputRef.current.click();
   };
 
   const handleRemoveUpload = e => {
