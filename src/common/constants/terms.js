@@ -17,6 +17,25 @@ export const selectTermsByMonthOptions = [
   },
 ];
 
+export const selectGreenTermsOptions = [
+  {
+    label: '1m',
+    value: 1,
+  },
+  {
+    label: '3m',
+    value: 3,
+  },
+  {
+    label: '6m',
+    value: 6,
+  },
+  {
+    label: '12m',
+    value: 12,
+  },
+];
+
 export const selectTermsByDateOptions = [
   {
     label: '30d',

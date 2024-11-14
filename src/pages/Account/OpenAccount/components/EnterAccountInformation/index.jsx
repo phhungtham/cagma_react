@@ -353,7 +353,11 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
         title={t(menuLabels.openAccount)}
         onClick={moveBack}
       />
-      <div className="enter-account-information__wrapper">
+      <div
+        className={`enter-account-information__wrapper ${
+          productCode === ProductCode.E_INSTALLMENT_SAVING ? 'installment-saving' : ''
+        }`}
+      >
         {showLoading && <Spinner />}
         <div className="enter-account-information__content">
           <FormProvider {...methods}>

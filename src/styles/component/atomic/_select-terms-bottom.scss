@@ -29,6 +29,7 @@
         overflow: auto;
         .chips__wrapper {
           gap: 9px;
+          justify-content: center;
         }
       }
       &__error-alert {

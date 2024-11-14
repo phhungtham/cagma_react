@@ -2,6 +2,11 @@
 .enter-account-information__wrapper {
   height: calc(100vh - 166px);
   overflow: auto;
+  &.installment-saving {
+    .chips__wrapper {
+      justify-content: flex-start !important;
+    }
+  }
 }
 .enter-account-information__content {
   padding-top: 10px;

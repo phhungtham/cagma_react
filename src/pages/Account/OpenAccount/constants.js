@@ -2,16 +2,18 @@ import { DepositSubjectClass } from '@common/constants/deposit';
 import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode, ProductPeriodUnitCode } from '@common/constants/product';
 import {
+  selectGreenTermsOptions,
   selectTermsByDateOptions,
   selectTermsByLongDateOptions,
   selectTermsByMonthOptions,
 } from '@common/constants/terms';
 
 export const OPEN_ACCOUNT_STEP = {
+  CDD: 'cdd',
+  DTR: 'dtr',
   VIEW_TERMS: 'viewTerms',
   ENTER_ACCOUNT_INFORMATION: 'enterAccountInformation',
   COMPLETED: 'completed',
-  DTR: 'dtr',
 };
 
 export const customerInfoFields = [
@@ -113,7 +115,7 @@ export const ignoreCheckDTRProductCodes = [
 
 export const TermOptionsWithProductCode = {
   [ProductCode.E_POWER_TERM_DEPOSIT]: selectTermsByMonthOptions,
-  [ProductCode.E_GREEN_TERM_DEPOSIT]: selectTermsByDateOptions,
+  [ProductCode.E_GREEN_TERM_DEPOSIT]: selectGreenTermsOptions,
   [ProductCode.E_LONG_TERM_GIC]: selectTermsByMonthOptions,
   [ProductCode.E_LONG_MATURITY]: selectTermsByMonthOptions,
   [ProductCode.E_SHORT_TERM_GIC]: selectTermsByDateOptions,
