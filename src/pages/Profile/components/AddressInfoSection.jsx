@@ -31,12 +31,13 @@ const AddressInfoSection = ({
 }) => {
   const [file, setFile] = useState();
   const { control, watch, setValue, trigger } = useFormContext();
-  const [country, addressType, aptNumber, streetNumber, streetName] = watch([
+  const [country, addressType, aptNumber, streetNumber, streetName, fileName] = watch([
     'country',
     'addressType',
     'aptNumber',
     'streetNumber',
     'streetName',
+    'fileName',
   ]);
   const isCanadaCountrySelected = country === 'CA';
   const isShowProofAddress = addressType === addressTypeMapping.home;
@@ -86,7 +87,14 @@ const AddressInfoSection = ({
   };
 
   const handleClick = () => {
-    fileInputRef.current.click();
+    if (file) {
+      const link = document.createElement('a');
+      link.download = fileName || 'Address';
+      link.href = file;
+      link.click();
+    } else {
+      fileInputRef.current.click();
+    }
   };
 
   const handleRemoveUpload = e => {
