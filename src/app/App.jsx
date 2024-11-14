@@ -117,11 +117,14 @@ const App = () => {
           if (typeof e.detail === 'object') {
             const data = e.detail;
             const path = String(data.src);
-            console.log('move path :>> ', path);
-            if (path === '/') {
-              console.log('already move root!!');
+            const previousPath = localStorage.getItem('currentPath');
+            if (previousPath === path) {
+              navigate(path, { replace: true });
+              navigate(0); //Full page reload after navigating
+            } else {
+              navigate(path);
             }
-            navigate(path);
+            localStorage.setItem('currentPath', path);
             setAppPath(path);
             // get param from native side
             const params = JSON.parse(data.param);
