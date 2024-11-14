@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -61,6 +62,7 @@ import { changeProfileSchema } from './schema';
 import './styles.scss';
 
 const ChangeProfile = ({ translate: t }) => {
+  const navigate = useNavigate();
   useReducers([{ key: UserInfoFeatureName, reducer: userInfoReducer }]);
   useSagas([{ key: UserInfoFeatureName, saga: userInfoSaga }]);
   const userInfo = useSelector(userInfoSelector);
@@ -123,12 +125,12 @@ const ChangeProfile = ({ translate: t }) => {
       setShowSaveChangeConfirmAlert(true);
       return;
     }
-    moveBack();
   };
 
   const handleCloseSaveChangeConfirmAlert = () => {
     setShowSaveChangeConfirmAlert(false);
     moveBack();
+    navigate('/');
   };
 
   const handleOpenSelectEmploymentBottom = () => {
@@ -485,7 +487,7 @@ const ChangeProfile = ({ translate: t }) => {
       {(showLoading || isLoadingCommonCode || isLoadingUser) && <Spinner />}
       <Header
         title={t(menuLabels.changeProfile)}
-        disabledMoveBack
+        disabledMoveBack={isFormDirty}
         onClickBack={onClickMoveBack}
       />
       <div className="change-profile__content">
