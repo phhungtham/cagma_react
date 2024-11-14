@@ -485,7 +485,8 @@ const ChangeProfile = ({ translate: t }) => {
       {(showLoading || isLoadingCommonCode || isLoadingUser) && <Spinner />}
       <Header
         title={t(menuLabels.changeProfile)}
-        onClick={onClickMoveBack}
+        disabledMoveBack
+        onClickBack={onClickMoveBack}
       />
       <div className="change-profile__content">
         <ProfileAvatar
