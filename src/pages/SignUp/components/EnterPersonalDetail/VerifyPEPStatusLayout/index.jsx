@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import banner from '@assets/images/verify-pep-status.png';
@@ -12,8 +12,10 @@ import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getCountryCode, getPEPPosition, getPEPRelationship, getPEPSourceOfFund } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels, signUpEnterPersonalLabels as labels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import { SignUpContext } from '@pages/SignUp';
 import { commonCodeDataToOptions } from '@utilities/convert';
 
 import {
@@ -27,6 +29,7 @@ import { VerifyPEPStatusSchema } from '../schema';
 import './styles.scss';
 
 const VerifyPEPStatusLayout = ({ onSubmit }) => {
+  const { translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [alert, setAlert] = useState({
@@ -125,7 +128,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
       {showLoading && <Spinner />}
       <div className="page__form px-0 verify-pep-status__wrapper">
         <div className="page__container">
-          <div className="page__title">Verify Your PEP/HIO Status</div>
+          <div className="page__title">{t(labels.pepStatusConfirmation)}</div>
           <div className="pep-banner">
             <img
               src={banner}
@@ -134,20 +137,13 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
           </div>
           <div className="mt-4 pb-6">
             <ul className="pep-instructions">
-              <li className="pep-item">
-                Please verify your status as a Politically Exposed Person (PEP) or Head of an International Organization
-                (HIO) as part of our required compliance checks.
-              </li>
-              <li className="pep-item mt-2">
-                The PEP/HIO determination helps the bank follow Canadian regulatory guidelines, ensuring that high-risk
-                accounts are monitored appropriately for AML compliance.
-              </li>
+              <li className="pep-item">{t(labels.pepDescriptions)}</li>
             </ul>
           </div>
         </div>
         <div className="divider__group" />
         <div className="page__container pt-7">
-          <div className="form__section__title">PEP/HIO Determination</div>
+          <div className="form__section__title">{t(labels.pepDetermination)}</div>
           <div className="form__section mt-4">
             <Controller
               render={({ field }) => (
@@ -164,7 +160,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                 <Controller
                   render={({ field }) => (
                     <Dropdown
-                      label="Relationship with PEP/HIO"
+                      label={t(labels.relationshipWithPep)}
                       onFocus={() => handleOpenSelectBottom(SignUpSelectType.PEP_RELATIONSHIP)}
                       options={commonCode[CommonCodeFieldName.RELATIONSHIP]}
                       {...field}
@@ -178,7 +174,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                     <Controller
                       render={({ field }) => (
                         <Input
-                          label="First Name of the PEP/HIO"
+                          label={t(labels.firstNamePep)}
                           {...field}
                         />
                       )}
@@ -188,7 +184,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                     <Controller
                       render={({ field }) => (
                         <Input
-                          label="Last Name of the PEP/HIO"
+                          label={t(labels.lastNamePep)}
                           {...field}
                         />
                       )}
@@ -200,7 +196,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                 <Controller
                   render={({ field }) => (
                     <Dropdown
-                      label="Position/Title of the PEP/HIO"
+                      label={t(labels.positionOfPep)}
                       onFocus={() => handleOpenSelectBottom(SignUpSelectType.PEP_POSITION)}
                       options={commonCode[CommonCodeFieldName.POSITION]}
                       {...field}
@@ -212,7 +208,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                 <Controller
                   render={({ field }) => (
                     <Input
-                      label="Name of the Organization"
+                      label={t(labels.nameOfOrganization)}
                       {...field}
                     />
                   )}
@@ -222,7 +218,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                 <Controller
                   render={({ field }) => (
                     <Dropdown
-                      label="Country that PEP/HIO held position"
+                      label={t(labels.countryPep)}
                       onFocus={() => handleOpenSelectBottom(SignUpSelectType.PEP_COUNTRY)}
                       options={commonCode[CommonCodeFieldName.PEP_COUNTRY]}
                       {...field}
@@ -234,7 +230,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                 <Controller
                   render={({ field }) => (
                     <Dropdown
-                      label="Source of Fund"
+                      label={t(labels.sourceOfFunds)}
                       onFocus={() => handleOpenSelectBottom(SignUpSelectType.PEP_SOURCE)}
                       options={commonCode[CommonCodeFieldName.PEP_SOURCE]}
                       {...field}
@@ -250,7 +246,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
       </div>
       <div className="footer__fixed">
         <Button
-          label="Next"
+          label={t(labels.pepNext)}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(onSubmit)}
@@ -274,7 +270,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

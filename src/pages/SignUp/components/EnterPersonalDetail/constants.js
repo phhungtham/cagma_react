@@ -1,4 +1,4 @@
-import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
+import { signUpEnterPersonalLabels as labels, signUpEnterPersonalLabels } from '@common/constants/labels';
 
 export const SignUpSelectType = {
   TITLE: labels.title,
@@ -9,10 +9,10 @@ export const SignUpSelectType = {
   SUB_JOB: labels.occupation2,
   NATIONALITY: labels.nationality,
   RESIDENTIAL_STATUS: labels.residentialStatus,
-  PEP_RELATIONSHIP: 'Relationship',
-  PEP_POSITION: 'Position',
-  PEP_COUNTRY: 'PEP/HIO Country',
-  PEP_SOURCE: 'Source of Fund',
+  PEP_RELATIONSHIP: labels.relationshipWithPep,
+  PEP_POSITION: labels.positionOfPep,
+  PEP_COUNTRY: labels.countryPep,
+  PEP_SOURCE: labels.sourceOfFunds,
 };
 
 export const CommonCodeFieldName = {
@@ -98,11 +98,11 @@ export const signUpPepMapFields = {
 
 export const pepDeterminationOptions = [
   {
-    label: 'Yes',
+    label: signUpEnterPersonalLabels.yes,
     value: 'Y',
   },
   {
-    label: 'No',
+    label: signUpEnterPersonalLabels.no,
     value: 'N',
   },
 ];

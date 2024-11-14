@@ -1,6 +1,7 @@
 export const getIntendedUseAccountCode = 'dep_ac_usag_d';
-export const getProvinceCode = 'state_c';
-export const getProvinceCanadaCode = 'state_ca';
+export const getProvinceCode = 'state_c'; //For Open Account
+export const getProvinceCanadaCode = 'state_ca'; //For Change Profile
+export const getCanadaProvinceCode = 'ca_state_c'; //For Ekyc and Card
 export const getJobCode = 'job_t';
 export const getSubJobCode = 'sub_job_t';
 export const getEmploymentCode = 'emplm_s_c';

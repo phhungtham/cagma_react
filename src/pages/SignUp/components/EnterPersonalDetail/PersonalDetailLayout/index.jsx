@@ -338,7 +338,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
           onClose={handleCloseBranchBottom}
           onSelect={handleSelectBranch}
           branches={branches}
-          title="Select branch"
+          title={t(labels.selectBranch)}
         />
       )}
 

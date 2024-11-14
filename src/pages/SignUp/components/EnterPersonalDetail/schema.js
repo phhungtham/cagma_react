@@ -7,7 +7,6 @@ export const SignUpPersonalDetailSchema = Yup.object().shape({
   lastName: Yup.string().required('Required field'),
   dob: Yup.string().required('Required field'),
   dob_display: Yup.string(),
-  nation: Yup.string().required('Required field'),
   cellNumber: Yup.string().required('Required field'),
   emailAddress: Yup.string().email().required('Required field'),
   country: Yup.string().required('Required field'),

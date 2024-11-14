@@ -698,6 +698,23 @@ export const signUpEnterPersonalLabels = {
   sinNumber: 'lbl_CAET920000_0071', //SIN Number
   yourSinWillBe: 'lbl_CAET920000_0072', //Your SIN will be used only for account opening.
   iDontHaveSin: 'lbl_CAET920000_0073', //I don’t have the SIN Number
+  housePhoneNumber: 'lbl_CAET920000_0211', //House Phone Number
+  managementBranch: 'lbl_CAET920000_0212', //Management branch
+  branch: 'lbl_CAET920000_0213', //Branch
+  selectBranch: 'lbl_CAET920000_0214', //Select Branch
+  pepStatusConfirmation: 'lbl_CAET920000_0215', //PEP/HIO Status Confirmation
+  pepDescriptions: 'lbl_CAET920000_0216', //Are you, or anyone associated with you...
+  pepDetermination: 'lbl_CAET920000_0217', //PEP/HIO Determination
+  yes: 'lbl_CAET920000_0218', //Yes
+  no: 'lbl_CAET920000_0219', //No
+  pepNext: 'lbl_CTA_9214', //Next
+  relationshipWithPep: 'lbl_CAET920000_0220', //Relationship with PEP/HIO
+  positionOfPep: 'lbl_CAET920000_0221', //Position/Title of the PEP/HIO
+  nameOfOrganization: 'lbl_CAET920000_0222', //Name of the Organization
+  countryPep: 'lbl_CAET920000_0223', //Country that PEP/HIO held position
+  sourceOfFunds: 'lbl_CAET920000_0224', //Source of Funds
+  firstNamePep: 'lbl_CAET920000_0225', //First Name of the PEP/HIO
+  lastNamePep: 'lbl_CAET920000_0226', //Last Name of the PEP/HIO
 };
 
 export const signUpThankVisitLabels = {

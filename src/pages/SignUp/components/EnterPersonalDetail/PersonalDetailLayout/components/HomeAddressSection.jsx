@@ -106,7 +106,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label="House Phone Number" //TODO: Missing label
+            label={t(labels.housePhoneNumber)}
             type="number"
             inputMode="numeric"
             {...field}
