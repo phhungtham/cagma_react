@@ -11,8 +11,8 @@ const Header = ({ clazz, title, onClickBack, disabledMoveBack }, ref) => {
 
   const handleMoveBack = () => {
     if (!disabledMoveBack) {
-      moveBack();
       navigate('/');
+      moveBack();
     } else {
       onClickBack();
     }
