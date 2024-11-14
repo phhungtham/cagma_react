@@ -1,3 +1,4 @@
+import { employmentValuesDisableOccupation } from '@common/constants/account';
 import * as Yup from 'yup';
 
 export const SignUpPersonalDetailSchema = Yup.object().shape({
@@ -24,18 +25,21 @@ export const SignUpPersonalDetailSchema = Yup.object().shape({
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
-  occupation1: Yup.string().when('showAdditionalInfo', {
-    is: true,
+  occupation1: Yup.string().when(['showAdditionalInfo', 'employmentStatus'], {
+    is: (showAdditionalInfo, employmentStatus) =>
+      showAdditionalInfo && !employmentValuesDisableOccupation.includes(employmentStatus),
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
-  occupation2: Yup.string().when('showAdditionalInfo', {
-    is: true,
+  occupation2: Yup.string().when(['showAdditionalInfo', 'employmentStatus'], {
+    is: (showAdditionalInfo, employmentStatus) =>
+      showAdditionalInfo && !employmentValuesDisableOccupation.includes(employmentStatus),
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
   occupation3: Yup.string().when('showAdditionalInfo', {
-    is: true,
+    is: (showAdditionalInfo, employmentStatus) =>
+      showAdditionalInfo && !employmentValuesDisableOccupation.includes(employmentStatus),
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
