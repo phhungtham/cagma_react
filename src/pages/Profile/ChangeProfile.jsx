@@ -19,14 +19,14 @@ import {
   getCountryCode,
   getEmploymentCode,
   getJobCode,
-  getProvinceCode,
+  getProvinceCanadaCode,
   getSubJobCode,
 } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, changeProfileLabels as labels, menuLabels } from '@common/constants/labels';
 import { fileUrls } from '@common/constants/url';
 import { yupResolver } from '@hookform/resolvers/yup';
-import useCommonCode from '@hooks/useCommonCode';
+import useApi from '@hooks/useApi';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { apiCall } from '@shared/api';
@@ -69,8 +69,6 @@ const ChangeProfile = ({ translate: t }) => {
   const getUserFailedMsg = useSelector(getUserInfoFailedMsg);
   const isLoadingUser = useSelector(userInfoLoadState);
 
-  const { sendRequest: requestGetCommonCode, data: commonCodeData, isLoading: isLoadingCommonCode } = useCommonCode();
-
   const [showLoading, setShowLoading] = useState(false);
 
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
@@ -87,6 +85,7 @@ const ChangeProfile = ({ translate: t }) => {
   const [showViewAgreementTermBottom, setShowViewAgreementTermBottom] = useState(false);
   const [defaultUserInfo, setDefaultUserInfo] = useState({});
   const [userId, setUserId] = useState('');
+  const { requestApi } = useApi();
 
   const [showAlert, setShowAlert] = useState({
     isShow: false,
@@ -378,6 +377,51 @@ const ChangeProfile = ({ translate: t }) => {
     setIsETransferRegistered(isRegistered);
   };
 
+  const requestGetCommonCode = async () => {
+    setShowLoading(true);
+    const codes = [
+      getEmploymentCode,
+      getJobCode,
+      getSubJobCode,
+      getAddressTypeCode,
+      getCountryCode,
+      getProvinceCanadaCode,
+    ].join(';');
+    const { data } = await requestApi(endpoints.getCommonCode, { code: codes });
+    setShowLoading(false);
+    if (data) {
+      const {
+        emplm_s_c: employments,
+        job_t: jobs,
+        sub_job_t: subJobs,
+        cus_adr_t: address,
+        nat_c: countries,
+        state_ca: provinces,
+      } = data;
+      const convertedEmployments = commonCodeDataToOptions(employments);
+      const convertedJobs = commonCodeDataToOptions(jobs);
+      const convertedSubJobs = commonCodeDataToOptions(subJobs);
+      const convertedCountries = commonCodeDataToOptions(countries);
+      const convertedProvince = commonCodeDataToOptions(provinces);
+      const filteredAddressTypesForDisplay = (address || []).filter(item =>
+        [
+          addressTypeMapping.home,
+          addressTypeMapping.work,
+          addressTypeMapping.actualWork,
+          addressTypeMapping.alternativeMailing,
+        ].includes(item?.key)
+      );
+      const convertedAddressTypes = commonCodeDataToOptions(filteredAddressTypesForDisplay);
+      setEmploymentOptions(convertedEmployments);
+      setOccupation1Options(convertedJobs);
+      setSubJobs(convertedSubJobs);
+      setAddressTypeOptions(convertedAddressTypes);
+      setCountryOptions(convertedCountries);
+      setProvinceOptions(convertedProvince);
+      getUserInfoRequest();
+    }
+  };
+
   useEffect(() => {
     if (userInfo) {
       const user = buildObjectMapFromResponse(userInfo, profileFormMapFields);
@@ -423,40 +467,6 @@ const ChangeProfile = ({ translate: t }) => {
   }, [userInfo]);
 
   useEffect(() => {
-    if (commonCodeData) {
-      const {
-        emplm_s_c: employments,
-        job_t: jobs,
-        sub_job_t: subJobs,
-        cus_adr_t: address,
-        nat_c: countries,
-        state_c: provinces,
-      } = commonCodeData || {};
-      const convertedEmployments = commonCodeDataToOptions(employments);
-      const convertedJobs = commonCodeDataToOptions(jobs);
-      const convertedSubJobs = commonCodeDataToOptions(subJobs);
-      const convertedCountries = commonCodeDataToOptions(countries);
-      const convertedProvince = commonCodeDataToOptions(provinces);
-      const filteredAddressTypesForDisplay = (address || []).filter(item =>
-        [
-          addressTypeMapping.home,
-          addressTypeMapping.work,
-          addressTypeMapping.actualWork,
-          addressTypeMapping.alternativeMailing,
-        ].includes(item?.key)
-      );
-      const convertedAddressTypes = commonCodeDataToOptions(filteredAddressTypesForDisplay);
-      setEmploymentOptions(convertedEmployments);
-      setOccupation1Options(convertedJobs);
-      setSubJobs(convertedSubJobs);
-      setAddressTypeOptions(convertedAddressTypes);
-      setCountryOptions(convertedCountries);
-      setProvinceOptions(convertedProvince);
-      getUserInfoRequest();
-    }
-  }, [commonCodeData]);
-
-  useEffect(() => {
     if (occupation1 && employment && subJobs?.length) {
       const subJobPrefix = getSubJobPrefix();
       const filteredOccupation2List = subJobs?.filter(item => item.value?.includes(subJobPrefix)) || [];
@@ -476,15 +486,13 @@ const ChangeProfile = ({ translate: t }) => {
   }, [getUserFailedMsg]);
 
   useEffect(() => {
-    requestGetCommonCode(
-      [getEmploymentCode, getJobCode, getSubJobCode, getAddressTypeCode, getCountryCode, getProvinceCode].join(';')
-    );
     getEtransferInfo(getETransferRegisteredCallback);
+    requestGetCommonCode();
   }, []);
 
   return (
     <div className="change-profile__wrapper">
-      {(showLoading || isLoadingCommonCode || isLoadingUser) && <Spinner />}
+      {(showLoading || isLoadingUser) && <Spinner />}
       <Header
         title={t(menuLabels.changeProfile)}
         disabledMoveBack={isFormDirty}
