@@ -87,18 +87,6 @@ const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
         control={control}
         name="dob_display"
       />
-      <Controller
-        render={({ field }) => (
-          <Dropdown
-            label="Nation" //TODO: Missing label
-            onFocus={() => onOpenSelectBottom(SignUpSelectType.NATION)}
-            options={commonCode[CommonCodeFieldName.COUNTRY]}
-            {...field}
-          />
-        )}
-        control={control}
-        name="nation"
-      />
     </div>
   );
 };
