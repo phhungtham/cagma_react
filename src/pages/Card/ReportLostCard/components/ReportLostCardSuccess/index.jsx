@@ -7,20 +7,23 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import { MENU_CODE } from '@common/constants/common';
 import { reportLostCardLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
+import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { moveHome, moveNext } from '@utilities/index';
+import { moveNext } from '@utilities/index';
 
 import { reportLostCardSuccessFields } from '../../constants';
 import './styles.scss';
 
 const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
+  const { moveHomeNative } = useMove();
+
   const handleNavigateCardMain = () => {
     moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
   };
 
   const handleNavigateHome = () => {
-    moveHome();
+    moveHomeNative();
   };
 
   const handleNavigateBranchInfo = () => {

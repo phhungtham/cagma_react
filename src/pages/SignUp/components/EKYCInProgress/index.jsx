@@ -10,14 +10,15 @@ import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, signUpVerifyIdentityLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
-import { moveHome } from '@utilities/index';
 
 const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
   const { deviceId, translate: t, ekycStepStatus } = useContext(SignUpContext);
+  const { moveHomeNative } = useMove();
   const [ekycPluginInfo, setEkycPluginInfo] = useState({});
   const [showLoading, setShowLoading] = useState(false);
   const [showRetryBtn, setShowRetryBtn] = useState(false);
@@ -34,7 +35,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
   const { requestApi } = useApi();
 
   const handleNavigateHome = () => {
-    moveHome();
+    moveHomeNative();
   };
 
   const requestRegenerateEkycLink = async () => {

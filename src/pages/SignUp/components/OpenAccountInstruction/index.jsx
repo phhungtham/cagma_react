@@ -1,16 +1,18 @@
 import bankBookImg from '@assets/images/bank-book.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import InfoBox from '@common/components/atoms/InfoBox';
-import { moveHome } from '@utilities/index';
+import useMove from '@hooks/useMove';
 
 import './styles.scss';
 
 const OpenAccountInstruction = ({ useCanadaID, onSkipSetUp, onOpenAccount }) => {
+  const { moveHomeNative } = useMove();
+
   const handleConfirm = () => {
     if (useCanadaID) {
       onOpenAccount();
     } else {
-      moveHome();
+      moveHomeNative();
     }
   };
 

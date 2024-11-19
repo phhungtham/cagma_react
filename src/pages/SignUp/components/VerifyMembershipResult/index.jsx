@@ -10,18 +10,21 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import { MENU_CODE } from '@common/constants/common';
 import { signUpVerifyUserLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
+import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { moveHome, moveNext } from '@utilities/index';
+import { moveNext } from '@utilities/index';
 
 import { ButtonResultLabel, VerifyMembershipResultMessages } from './constants';
 
 const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
+  const { moveHomeNative } = useMove();
+
   const { translate: t } = useContext(SignUpContext);
   const handleNavigateHome = () => {
-    moveHome();
+    moveHomeNative();
   };
 
   const handleNavigateBranchInfo = () => {

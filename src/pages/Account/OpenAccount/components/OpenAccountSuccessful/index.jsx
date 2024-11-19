@@ -6,8 +6,9 @@ import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode } from '@common/constants/product';
+import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
-import { moveHome, moveNext } from '@utilities/index';
+import { moveNext } from '@utilities/index';
 
 import { openAccountSuccessFields } from './constants';
 import './styles.scss';
@@ -17,6 +18,8 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
 
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
   const isChequingCreditChecked = productCode === ProductCode.CHEQUING && creditChecked;
+
+  const { moveScreenNative, moveHomeNative } = useMove();
 
   const onClickViewAccount = () => {
     const accountNumberParam = JSON.stringify({
@@ -29,19 +32,19 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
       menuCode = MENU_CODE.ACCOUNT_ACTIVITY_INVESTMENT;
     }
     if (menuCode) {
-      moveNext(menuCode, { param: accountNumberParam });
+      moveScreenNative(menuCode, { param: accountNumberParam });
     }
   };
 
   const handleNavigateAccountActivity = () => {
-    moveNext(MENU_CODE.ACCOUNT_ACTIVITY_BANKING);
+    moveScreenNative(MENU_CODE.ACCOUNT_ACTIVITY_BANKING);
   };
 
   const handleClickConfirm = () => {
     if (isChequingCreditChecked) {
       moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
     } else {
-      moveHome();
+      moveHomeNative();
     }
   };
 

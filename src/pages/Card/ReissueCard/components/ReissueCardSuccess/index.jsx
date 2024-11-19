@@ -3,14 +3,17 @@ import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import { reissueCardLabels as labels } from '@common/constants/labels';
-import { callPhone, moveHome } from '@utilities/index';
+import useMove from '@hooks/useMove';
+import { callPhone } from '@utilities/index';
 
 import { reissueCardSuccessFields } from '../../constants';
 import './styles.scss';
 
 const ReissueCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
+  const { moveHomeNative } = useMove();
+
   const onClickNavigateHome = () => {
-    moveHome();
+    moveHomeNative();
   };
 
   const onClickCallPhone = () => {

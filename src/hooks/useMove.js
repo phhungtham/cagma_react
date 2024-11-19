@@ -1,22 +1,28 @@
 import { useNavigate } from 'react-router-dom';
 
-//TODO: Test after UAT Phase 1
+import { moveBack, moveHome, moveNext } from '@utilities/index';
+
 //For refresh navigate history
 //Check case move next to native screen or websquare screen and back to React screen.
 const useMove = () => {
   const navigate = useNavigate();
 
-  const moveNext = ({ menuCode, params, reactPath }) => {
-    moveNext(menuCode, params ? { param: JSON.stringify(params) } : {}, reactPath);
+  const moveScreenNative = (menuCode, params, reactPath) => {
+    moveNext(menuCode, params, reactPath);
     navigate('/');
   };
 
-  const moveHome = () => {
+  const moveHomeNative = () => {
     moveHome();
     navigate('/');
   };
 
-  return { moveNext, moveHome };
+  const moveBackNative = () => {
+    moveBack();
+    navigate('/');
+  };
+
+  return { moveScreenNative, moveHomeNative, moveBackNative };
 };
 
 export default useMove;

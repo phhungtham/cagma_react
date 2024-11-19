@@ -12,12 +12,13 @@ import { endpoints } from '@common/constants/endpoint';
 import { menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
+import useMove from '@hooks/useMove';
 import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import { alertMove } from '@utilities/alertMove';
 import { addDateWithMonth } from '@utilities/dateTimeUtils';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { getLanguageFM, moveBack, moveNext } from '@utilities/index';
+import { getLanguageFM } from '@utilities/index';
 import { setIsNativeClickBack } from 'app/redux/action';
 import { appLanguage, backEventSelector, nativeParamsSelector, nativeRedirectStateSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -69,6 +70,7 @@ const AppNotifications = ({ translate: t }) => {
   const [loadMoreNotify, setLoadMoreNotify] = useState(false);
   const [promotions, setPromotions] = useState([]);
   const { isLogin, isLoading: isLoadingCheckUserLogin } = useLoginInfo();
+  const { moveScreenNative, moveBackNative } = useMove();
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -157,7 +159,7 @@ const AppNotifications = ({ translate: t }) => {
       });
     } else if (NotificationLinkType.INTERNAL_LINK.includes(linkType)) {
       setReduxTabIndex(tabIndex);
-      moveNext(linkUrl);
+      moveScreenNative(linkUrl);
     } else {
       return;
     }
@@ -208,7 +210,7 @@ const AppNotifications = ({ translate: t }) => {
       menuCode = MENU_CODE.ACCOUNT_ACTIVITY_INVESTMENT;
     }
     if (menuCode) {
-      moveNext(menuCode, { param: accountNumberParam });
+      moveScreenNative(menuCode, { param: accountNumberParam });
     }
     return;
   };
@@ -308,7 +310,7 @@ const AppNotifications = ({ translate: t }) => {
       if (showPromotionDetail) {
         setShowPromotionDetail(false);
       } else {
-        moveBack();
+        moveBackNative();
       }
     }
     return () => {
@@ -322,12 +324,7 @@ const AppNotifications = ({ translate: t }) => {
       {loadOfferState && !listOfferNotify?.length && <Spinner />}
       {showLoading && <Spinner />}
       <div className="notification__header">
-        <Header
-          title={t(menuLabels.appNotification)}
-          onClick={() => {
-            moveBack();
-          }}
-        />
+        <Header title={t(menuLabels.appNotification)} />
       </div>
       <div className="notification__content">
         <Tabs

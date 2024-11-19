@@ -2,19 +2,22 @@ import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { MENU_CODE } from '@common/constants/common';
 import { ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
+import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
-import { moveHome, moveNext } from '@utilities/index';
+import { moveNext } from '@utilities/index';
 
 import { bookAppointmentSuccessFields } from '../../constants';
 import './styles.scss';
 
 const BookAppointmentSuccessful = ({ appointmentInfo, translate: t }) => {
+  const { moveHomeNative } = useMove();
+
   const onClickNavigateAppointmentManagement = () => {
     moveNext(MENU_CODE.APPOINTMENT_MANAGEMENT, {}, routePaths.appointmentManagement);
   };
 
   const onClickNavigateHome = () => {
-    moveHome();
+    moveHomeNative();
   };
 
   return (

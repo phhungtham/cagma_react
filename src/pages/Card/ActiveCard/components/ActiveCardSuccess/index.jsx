@@ -8,40 +8,43 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import { MENU_CODE } from '@common/constants/common';
 import { activeCardLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
+import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { moveHome, moveNext } from '@utilities/index';
+import { moveNext } from '@utilities/index';
 
 import { activeCardSuccessFields } from '../../constants';
 import './styles.scss';
 
 const ActiveCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
+  const { moveHomeNative } = useMove();
+
   const handleNavigateCardMain = () => {
     moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
   };
 
   const handleNavigateHome = () => {
-    moveHome();
+    moveHomeNative();
   };
 
   const handleNavigateFindATM = () => {
     openInternalWebview({
       url: externalUrls.findATM,
-      title: 'Find ATM',
+      title: t(labels.findATM),
     });
   };
 
   const handleNavigateBranchInfo = () => {
     openInternalWebview({
       url: externalUrls.branchInfo,
-      title: 'Branch Info',
+      title: t(labels.branchInfo),
     });
   };
 
   const handleNavigateContactUs = () => {
     openInternalWebview({
       url: externalUrls.contactUs,
-      title: 'Contact Us',
+      title: t(labels.contactUs),
     });
   };
 

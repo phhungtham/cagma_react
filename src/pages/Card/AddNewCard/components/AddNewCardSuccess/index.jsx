@@ -1,16 +1,18 @@
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { cardLabels, ctaLabels } from '@common/constants/labels';
-import { moveHome } from '@utilities/index';
+import useMove from '@hooks/useMove';
 
 import { addNewCardSuccessFields } from '../../constants';
 import './styles.scss';
 
 const AddNewCardSuccess = ({ cardInfo, translate: t }) => {
+  const { moveHomeNative } = useMove();
+
   const { accountNo } = cardInfo || {};
 
   const onClickNavigateHome = () => {
-    moveHome();
+    moveHomeNative();
   };
 
   return (
