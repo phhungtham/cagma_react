@@ -91,29 +91,17 @@ const ProductList = ({ translate: t }) => {
       accountList = await getAccountsByProductType();
     }
     let isExistESavingAccount = false;
-    let isExistChequingAccount = false;
     const productCode = product.prdt_c;
     if (accountList?.length) {
       //Must to has e-Saving account before create other account
       isExistESavingAccount = accountList.some(account => account.prdt_c === ProductCode.E_SAVING);
-      isExistChequingAccount = accountList.some(account => account.prdt_c === ProductCode.CHEQUING);
     }
-    if (productCode === ProductCode.E_SAVING) {
-      if (!isExistChequingAccount) {
-        return setAlert({
-          isShow: true,
-          title: t(labels.noChequingAccount),
-          content: t(labels.pleaseOpenChequingAccount),
-        });
-      }
-    } else {
-      if (productCode !== ProductCode.CHEQUING && !isExistESavingAccount) {
-        return setAlert({
-          isShow: true,
-          title: t(labels.noESavingAccount),
-          content: t(labels.pleaseOpenSavingAccount),
-        });
-      }
+    if (productCode !== ProductCode.CHEQUING && !isExistESavingAccount) {
+      return setAlert({
+        isShow: true,
+        title: t(labels.noESavingAccount),
+        content: t(labels.pleaseOpenSavingAccount),
+      });
     }
     if (
       [ProductCode.E_SAVING, ProductCode.RRSP_E_SAVINGS, ProductCode.TFSA_E_SAVINGS, ProductCode.CHEQUING].includes(
