@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Alert from '@common/components/atoms/Alert';
@@ -12,7 +11,7 @@ import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBo
 import Header from '@common/components/organisms/Header';
 import { employmentValuesDisableOccupation } from '@common/constants/account';
 import { addressTypeMapping } from '@common/constants/address';
-import { initSelectBottom } from '@common/constants/bottomsheet';
+import { initAlert, initSelectBottom } from '@common/constants/bottomsheet';
 import {
   EmploymentMap,
   getAddressTypeCode,
@@ -27,8 +26,6 @@ import { ctaLabels, changeProfileLabels as labels, menuLabels } from '@common/co
 import { fileUrls } from '@common/constants/url';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
-import useReducers from '@hooks/useReducers';
-import useSagas from '@hooks/useSagas';
 import { apiCall } from '@shared/api';
 import {
   buildObjectMapFromResponse,
@@ -38,7 +35,7 @@ import {
 import getEtransferInfo from '@utilities/gmCommon/getEtransferInfo';
 import setEtransferInfo from '@utilities/gmCommon/setEtransferInfo';
 import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
-import { moveBack } from '@utilities/index';
+import { moveBack, moveHome } from '@utilities/index';
 import { isEqual } from '@utilities/object';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -53,24 +50,13 @@ import {
   SELECT_TYPE,
   selectBottomTypeMapField,
 } from './constants';
-import { getUserInfoRequest } from './redux/userInfo/action';
-import { userInfoReducer } from './redux/userInfo/reducer';
-import { userInfoSaga } from './redux/userInfo/saga';
-import { getUserInfoFailedMsg, userInfoLoadState, userInfoSelector } from './redux/userInfo/selector';
-import { UserInfoFeatureName } from './redux/userInfo/type';
 import { changeProfileSchema } from './schema';
 import './styles.scss';
 
 const ChangeProfile = ({ translate: t }) => {
   const navigate = useNavigate();
-  useReducers([{ key: UserInfoFeatureName, reducer: userInfoReducer }]);
-  useSagas([{ key: UserInfoFeatureName, saga: userInfoSaga }]);
-  const userInfo = useSelector(userInfoSelector);
-  const getUserFailedMsg = useSelector(getUserInfoFailedMsg);
-  const isLoadingUser = useSelector(userInfoLoadState);
-
   const [showLoading, setShowLoading] = useState(false);
-
+  const [userInfo, setUserInfo] = useState();
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [employmentOptions, setEmploymentOptions] = useState([]);
   const [occupation1Options, setOccupation1Options] = useState([]);
@@ -87,11 +73,7 @@ const ChangeProfile = ({ translate: t }) => {
   const [userId, setUserId] = useState('');
   const { requestApi } = useApi();
 
-  const [showAlert, setShowAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [showAlert, setShowAlert] = useState(initAlert);
 
   const [showToast, setShowToast] = useState({
     isShow: false,
@@ -124,6 +106,13 @@ const ChangeProfile = ({ translate: t }) => {
       setShowSaveChangeConfirmAlert(true);
       return;
     }
+  };
+
+  const handleCloseAlert = () => {
+    if (showAlert.requiredLogin) {
+      moveHome('initHome');
+    }
+    setShowAlert(initAlert);
   };
 
   const handleCloseSaveChangeConfirmAlert = () => {
@@ -228,12 +217,12 @@ const ChangeProfile = ({ translate: t }) => {
 
   const handleRequestChangeProfile = async request => {
     setShowLoading(true);
-    const changeProfileResponse = await apiCall(endpoints.changeUserInfoTransaction, 'POST', request);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.changeUserInfoTransaction, request);
     setShowLoading(false);
-    const status = changeProfileResponse?.data?.elData?.result_cd;
+    const status = data.result_cd;
     const isUpdateSuccess = Number(status) === 1;
     if (isUpdateSuccess) {
-      getUserInfoRequest();
+      requestGetUserInfo();
       let message = t(labels.updateProfileSuccess);
       if (request.file_upd_yn === 'Y') {
         message = t(labels.homeAddressReview);
@@ -244,12 +233,12 @@ const ChangeProfile = ({ translate: t }) => {
         type: 'success',
       });
     }
-    const responseErrorMessage = changeProfileResponse?.data?.elHeader?.resMsg;
-    if (responseErrorMessage) {
+    if (error) {
       setShowAlert({
         isShow: true,
         title: '',
-        content: changeProfileResponse.data.elHeader.resMsg,
+        content: error,
+        requiredLogin,
       });
     }
   };
@@ -301,7 +290,7 @@ const ChangeProfile = ({ translate: t }) => {
         return setShowAlert({
           isShow: true,
           title: '',
-          content: 'Please verify your email',
+          content: 'Please verify your email', //TODO: Missing label
         });
       }
     }
@@ -373,6 +362,27 @@ const ChangeProfile = ({ translate: t }) => {
     return subJobPrefix;
   };
 
+  const requestGetUserInfo = async () => {
+    setShowLoading(true);
+    setShowLoading(true);
+    const {
+      data: customerResponse,
+      error,
+      isSuccess,
+      requiredLogin,
+    } = await requestApi(endpoints.inquiryUserInformation);
+    setShowLoading(false);
+    if (isSuccess) {
+      setUserInfo(customerResponse);
+    } else {
+      setShowAlert({
+        isShow: true,
+        content: error,
+        requiredLogin,
+      });
+    }
+  };
+
   const getETransferRegisteredCallback = ({ isRegistered }) => {
     setIsETransferRegistered(isRegistered);
   };
@@ -418,7 +428,7 @@ const ChangeProfile = ({ translate: t }) => {
       setAddressTypeOptions(convertedAddressTypes);
       setCountryOptions(convertedCountries);
       setProvinceOptions(convertedProvince);
-      getUserInfoRequest();
+      requestGetUserInfo();
     }
   };
 
@@ -475,24 +485,13 @@ const ChangeProfile = ({ translate: t }) => {
   }, [occupation1, employment, subJobs]);
 
   useEffect(() => {
-    if (getUserFailedMsg?.msgText) {
-      setShowLoading(false);
-      setShowAlert({
-        isShow: true,
-        title: '',
-        content: getUserFailedMsg.msgText,
-      });
-    }
-  }, [getUserFailedMsg]);
-
-  useEffect(() => {
     getEtransferInfo(getETransferRegisteredCallback);
     requestGetCommonCode();
   }, []);
 
   return (
     <div className="change-profile__wrapper">
-      {(showLoading || isLoadingUser) && <Spinner />}
+      {showLoading && <Spinner />}
       <Header
         title={t(menuLabels.changeProfile)}
         disabledMoveBack={isFormDirty}
@@ -575,9 +574,9 @@ const ChangeProfile = ({ translate: t }) => {
         title={showAlert.title}
         subtitle={showAlert.content}
         textAlign="left"
-        onClose={() => setShowAlert({ isShow: false, title: '', content: '' })}
+        onClose={handleCloseAlert}
         firstButton={{
-          onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
+          onClick: handleCloseAlert,
           label: t(ctaLabels.confirm4),
         }}
       />

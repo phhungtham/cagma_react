@@ -5,6 +5,13 @@ export const initSelectBottom = {
   title: '',
 };
 
+export const initAlert = {
+  isShow: false,
+  title: '',
+  content: '',
+  requiredLogin: false,
+};
+
 export const FrequencyType = {
   ONCE: 'once',
   WEEKLY: 'weekly',

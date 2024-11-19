@@ -11,7 +11,7 @@ import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constan
 import { endpoints } from '@common/constants/endpoint';
 import { commonLabels, changeProfileLabels as labels } from '@common/constants/labels';
 import { notAllowNumberRegex } from '@common/constants/regex';
-import { apiCall } from '@shared/api';
+import useApi from '@hooks/useApi';
 
 import { changeProfileSchema } from '../schema';
 
@@ -36,6 +36,8 @@ const ContactInfoSection = ({
     clearErrors,
     formState: { errors },
   } = useFormContext();
+
+  const { requestApi } = useApi();
 
   const [employment, verificationCode, email, isEmailVerified] = watch([
     'employment',
@@ -68,22 +70,21 @@ const ContactInfoSection = ({
       return;
     }
     setShowLoading(true);
-    await apiCall(endpoints.inquiryUserInformation, 'POST');
+    await requestApi(endpoints.inquiryUserInformation);
     const request = {
       cus_email: email,
     };
-    const requestVerifyResponse = await apiCall(endpoints.requestGetEmailVerifyCode, 'POST', request);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.requestGetEmailVerifyCode, request);
     setShowLoading(false);
-    const headerResponse = requestVerifyResponse?.data?.elHeader || {};
-    if (!headerResponse.resSuc) {
+    if (!isSuccess) {
       return setShowAlert({
         isShow: true,
         title: '',
-        content: headerResponse.resMsg,
+        content: error,
+        requiredLogin,
       });
     }
-    const responseData = requestVerifyResponse?.data?.elData;
-    const resultCode = responseData?.cnt;
+    const resultCode = data?.cnt;
     const isDuplicatedEmail = resultCode === 9;
     const isEmailAvailable = resultCode === 0;
     if (isDuplicatedEmail) {
@@ -104,7 +105,7 @@ const ContactInfoSection = ({
 
       if (verifyTimerResetRef.current) verifyTimerResetRef.current();
 
-      const { seqno, new_cus_email } = responseData || {};
+      const { seqno, new_cus_email } = data || {};
       setValue('verifiedEmail', new_cus_email);
       verifyCodeSessionNumberRef.current = seqno;
 
@@ -129,9 +130,8 @@ const ContactInfoSection = ({
       cert_no: verificationCode,
       seqno: verifyCodeSessionNumberRef.current,
     };
-    const verifyResponse = await apiCall(endpoints.sendEmailVerifyCode, 'POST', request);
-    const responseData = verifyResponse?.data?.elData;
-    const resultCode = String(responseData?.result_cd || '');
+    const { data, error, isSuccess } = await requestApi(endpoints.sendEmailVerifyCode, request);
+    const resultCode = String(data?.result_cd || '');
     const isVerifyFailed = resultCode === '9';
     const isVerifySuccess = resultCode === '1';
     setShowLoading(false);

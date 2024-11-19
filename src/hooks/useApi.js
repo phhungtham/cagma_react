@@ -1,3 +1,4 @@
+import { RequiredLoginCode, SessionExpiredCode } from '@common/constants/error';
 import { apiCall } from '@shared/api';
 
 const useApi = () => {
@@ -7,14 +8,16 @@ const useApi = () => {
     let error = '';
     let errorCode = '';
     let data = {};
+    let requiredLogin = false;
     if (isSuccess) {
       data = response?.data?.elData || {};
     } else {
       error = response?.data?.elHeader?.resMsg || '';
       errorCode = response?.data?.elHeader?.resCode;
+      requiredLogin = errorCode === RequiredLoginCode || errorCode === SessionExpiredCode;
     }
 
-    return { isSuccess, error, data, errorCode };
+    return { isSuccess, error, data, errorCode, requiredLogin };
   };
 
   return { requestApi };
