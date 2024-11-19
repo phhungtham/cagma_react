@@ -61,10 +61,20 @@ const ProductList = ({ translate: t }) => {
     []
   );
 
-  const bankingProducts = products.filter(item => item.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING);
-  const investmentProducts = products.filter(item =>
-    [DepositSubjectClass.INSTALLMENT_SAVING, DepositSubjectClass.TERM_DEPOSIT_GIC].includes(item.dep_sjt_class)
-  );
+  //Move TFSA E-Saving and RRSP E-Saving to Investment
+  const bankingProducts = products.filter(item => {
+    const isRegularSaving = item.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING;
+    const isNotTfsaAndRrspESaving = ![ProductCode.TFSA_E_SAVINGS, ProductCode.RRSP_E_SAVINGS].includes(item.prdt_c);
+    return isRegularSaving && isNotTfsaAndRrspESaving;
+  });
+
+  const investmentProducts = products.filter(item => {
+    const isInvestment = [DepositSubjectClass.INSTALLMENT_SAVING, DepositSubjectClass.TERM_DEPOSIT_GIC].includes(
+      item.dep_sjt_class
+    );
+    const isTfsaOrRrspESaving = [ProductCode.TFSA_E_SAVINGS, ProductCode.RRSP_E_SAVINGS].includes(item.prdt_c);
+    return isInvestment || isTfsaOrRrspESaving;
+  });
 
   const getAccountsByProductType = async () => {
     setShowLoading(true);
