@@ -137,6 +137,24 @@ const Input = forwardRef((props, ref) => {
     };
   }, []);
 
+  useEffect(() => {
+    // when opening the keyboard on mobile
+    const handleViewportChange = () => {
+      const activeInput = document.activeElement;
+      if (activeInput === composeRef.current) {
+        activeInput.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    };
+    const viewPort = window?.visualViewport ? window.visualViewport : window;
+    viewPort.addEventListener('resize', handleViewportChange);
+    return () => {
+      viewPort.removeEventListener('resize', handleViewportChange);
+    };
+  }, []);
+
   return (
     <div className={`text__field ${clazz}`}>
       {isMemo && (
