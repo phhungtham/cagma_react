@@ -16,7 +16,7 @@ import {
   getTransferExpectedRelationshipCode,
 } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
-import { menuLabels } from '@common/constants/labels';
+import { ctaLabels, openAccountCDDLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -26,7 +26,6 @@ import { accountReceiveLargeTransferOptions, cddRelationshipOther, CDDSelectType
 import { cddFormSchema } from './schema';
 import './styles.scss';
 
-//TODO: Add labels
 const CDD = ({ setAlert, onConfirm, translate: t }) => {
   const [showLoading, setShowLoading] = useState(false);
   const [currentSelectFieldName, setCurrentSelectFieldName] = useState(false);
@@ -57,7 +56,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
       type: CDDSelectType.COUNTRY,
       options: countryOptions,
       isShow: true,
-      title: 'Select country',
+      title: t(labels.selectCountry),
     });
   };
 
@@ -67,7 +66,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
       type: CDDSelectType.RELATIONSHIP,
       options: relationshipOptions,
       isShow: true,
-      title: 'Select relationship',
+      title: t(labels.selectRelationship),
     });
   };
 
@@ -77,7 +76,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
       type: CDDSelectType.AMOUNT,
       options: amountOptions,
       isShow: true,
-      title: 'Select Amount(per month)',
+      title: t(labels.selectAmountPerMonth),
     });
   };
 
@@ -168,13 +167,11 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
       <div className="page__form px-0 answer-cdd__wrapper">
         {showLoading && <Spinner />}
         <div className="page__container">
-          <h1 className="page__title">Answer Questions about CDD</h1>
+          <h1 className="page__title">{t(labels.answerQuestionCDD)}</h1>
           <div className="mt-8">
-            <div className="form__section__title">CDD Questions</div>
+            <div className="form__section__title">{t(labels.cddQuestions)}</div>
             <ul className="mt-4 answer-cdd__questions">
-              <li className="mt-4 answer-cdd__desc">
-                Will this account be used to send or receive a large volume of international wire transfer?
-              </li>
+              <li className="mt-4 answer-cdd__desc">{t(labels.willThisAccount)}</li>
             </ul>
             <div className="mt-4">
               <Controller
@@ -196,7 +193,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
             <div className="page__container pt-5 pb-6">
               <div className="form__section">
                 <div className="form__section__title">
-                  <span>Frequency</span>
+                  <span>{t(labels.frequency)}</span>
                 </div>
                 <Controller
                   render={({ field }) => (
@@ -211,13 +208,13 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
               </div>
               <div className="divider__item__solid mt-6" />
               <div className="form__section__title pt-5">
-                <span>Country</span>
+                <span>{t(labels.country)}</span>
               </div>
               <div className="mt-4">
                 <Controller
                   render={({ field }) => (
                     <Dropdown
-                      label="Select Country"
+                      label={t(labels.selectCountry)}
                       onFocus={handleOpenSelectCountryBottom}
                       options={countryOptions}
                       {...field}
@@ -229,13 +226,13 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
               </div>
               <div className="divider__item__solid mt-6" />
               <div className="form__section__title pt-5">
-                <span>Relationship</span>
+                <span>{t(labels.relationship)}</span>
               </div>
               <div className="mt-4 form__section">
                 <Controller
                   render={({ field }) => (
                     <Dropdown
-                      label="Select Relationship"
+                      label={t(labels.selectRelationship)}
                       onFocus={handleOpenSelectRelationshipBottom}
                       options={relationshipOptions}
                       {...field}
@@ -248,7 +245,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
                   <Controller
                     render={({ field }) => (
                       <Input
-                        label="Please enter relationship"
+                        label={t(labels.pleaseEnterRelationship)}
                         maxLength={100}
                         {...field}
                       />
@@ -260,13 +257,13 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
               </div>
               <div className="divider__item__solid mt-6" />
               <div className="form__section__title pt-5">
-                <span>Amount(per month)</span>
+                <span>{t(labels.amountPerMonth)}</span>
               </div>
               <div className="mt-4 form-section">
                 <Controller
                   render={({ field }) => (
                     <Dropdown
-                      label="Select Amount(per month)"
+                      label={t(labels.selectAmountPerMonth)}
                       onFocus={handleOpenSelectAmountBottom}
                       options={amountOptions}
                       {...field}
@@ -282,7 +279,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
 
         <div className="footer__fixed">
           <Button
-            label="Next"
+            label={t(ctaLabels.next)}
             variant="filled__primary"
             className="btn__cta"
             disable={!isValid}

@@ -164,7 +164,7 @@ const ChangeProfile = ({ translate: t }) => {
       type: SELECT_TYPE.ADDRESS_TYPE,
       options: addressTypeOptions,
       isShow: true,
-      title: 'Address Type', //TODO: Missing label
+      title: t(labels.addressType),
     });
   };
 

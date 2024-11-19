@@ -237,6 +237,7 @@ export const changeProfileLabels = {
   youNeedToClick: 'lbl_CAME900000_0030', //You need to click the Save button...
   changeProfileImage: 'lbl_CAME900000_0223', //Change profile image
   maxFileSize: 'lbl_CAME900000_0224', //*5MB Max
+  addressType: 'lbl_CAME900000_0915', //Address Type
 };
 
 export const openAccountLabels = {
@@ -360,7 +361,21 @@ export const openAccountDTRLabels = {
   dtr: 'lbl_CAPR520000_0235', //DTR
 };
 
-export const openAccountCDDLabels = {};
+export const openAccountCDDLabels = {
+  answerQuestionCDD: 'lbl_CAPR520000_0335', //Answer Qustions about CDD
+  cddQuestions: 'lbl_CAPR520000_0336', //CDD questions
+  willThisAccount: 'lbl_CAPR520000_0337', //Will this account be used to send or receive a large volume of international wire transfer?
+  yes: 'lbl_CAPR520000_0338', //Yes
+  no: 'lbl_CAPR520000_0339', //No
+  frequency: 'lbl_CAPR520000_0340', //Frequency
+  country: 'lbl_CAPR520000_0344', //Country
+  selectCountry: 'lbl_CAPR520000_0351', //Select country
+  relationship: 'lbl_CAPR520000_0346', //Relationship
+  selectRelationship: 'lbl_CAPR520000_0352', //Select relationship
+  amountPerMonth: 'lbl_CAPR520000_0348', //Amount(per month)
+  selectAmountPerMonth: 'lbl_CAPR520000_0358', //Select Amount(per month)
+  pleaseEnterRelationship: 'lbl_CAPR520000_0350', //Please enter relationship
+};
 
 export const cardLabels = {
   accessCardService: 'lbl_CACA600000_0001', //Access Card Service

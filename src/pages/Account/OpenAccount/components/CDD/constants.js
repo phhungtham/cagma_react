@@ -1,12 +1,12 @@
-import { openAccountLabels } from '@common/constants/labels';
+import { openAccountCDDLabels } from '@common/constants/labels';
 
 export const accountReceiveLargeTransferOptions = [
   {
-    label: openAccountLabels.yes,
+    label: openAccountCDDLabels.yes,
     value: '1',
   },
   {
-    label: openAccountLabels.no,
+    label: openAccountCDDLabels.no,
     value: '0',
   },
 ];
