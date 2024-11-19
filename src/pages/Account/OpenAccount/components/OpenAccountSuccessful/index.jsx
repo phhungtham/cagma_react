@@ -8,6 +8,7 @@ import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode } from '@common/constants/product';
 import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
+import syncAccountInfo from '@utilities/gmCommon/syncAccountInfo';
 import { moveNext } from '@utilities/index';
 
 import { openAccountSuccessFields } from './constants';
@@ -44,6 +45,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
     if (isChequingCreditChecked) {
       moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
     } else {
+      syncAccountInfo();
       moveHomeNative();
     }
   };
