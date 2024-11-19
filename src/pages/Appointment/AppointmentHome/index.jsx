@@ -10,7 +10,7 @@ import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
-import { appointmentHomeLabels as labels, menuLabels } from '@common/constants/labels';
+import { ctaLabels, appointmentHomeLabels as labels, menuLabels } from '@common/constants/labels';
 import useGetAppointments from '@hooks/useGetAppointments';
 import useLoginInfo from '@hooks/useLoginInfo';
 import { routePaths } from '@routes/paths';
@@ -256,7 +256,7 @@ const AppointmentHome = ({ translate: t }) => {
         textAlign="left"
         firstButton={{
           onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
       <section className="toast__overlay">
