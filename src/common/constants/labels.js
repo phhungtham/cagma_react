@@ -611,10 +611,8 @@ export const productLabels = {
   lineCreditContent2: 'lbl_CAPR501300_0004', //Line Credit content 2
   rate: 'lbl_CAPR500000_0008', //Rate
   terms: 'lbl_CAPR500000_0010', //Terms
-  noChequingAccount: 'lbl_CAPR500000_0093', //There is no Chequing account.
-  pleaseOpenChequingAccount: 'lbl_CAPR500000_0094', //Please open an Chequing account first.
   noESavingAccount: 'lbl_CAPR500000_0091', //There is no e-saving account.
-  pleaseOpenSavingAccount: 'lbl_CAPR500000_0094', //Please open an e-saving account first.
+  pleaseOpenSavingAccount: 'lbl_CAPR500000_0092', //Please open an e-saving account first.
   openAccountAlready: 'lbl_CAPR500000_0089', //You’ve opened this account already.
   onlyOneProductAccount: 'lbl_CAPR500000_0090', //Only one [product name] account can be held per customer.
   noTfsaESaving: 'lbl_CAPR500000_0095', //There is no TFSA e-savings account.

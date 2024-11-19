@@ -96,7 +96,8 @@ const ProductList = ({ translate: t }) => {
       //Must to has e-Saving account before create other account
       isExistESavingAccount = accountList.some(account => account.prdt_c === ProductCode.E_SAVING);
     }
-    if (productCode !== ProductCode.CHEQUING && !isExistESavingAccount) {
+    const isProductOtherChequingAndESaving = ![ProductCode.CHEQUING, ProductCode.E_SAVING].includes(productCode);
+    if (isProductOtherChequingAndESaving && !isExistESavingAccount) {
       return setAlert({
         isShow: true,
         title: t(labels.noESavingAccount),
