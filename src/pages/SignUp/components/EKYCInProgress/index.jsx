@@ -17,7 +17,7 @@ import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { moveHome } from '@utilities/index';
 
 const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
-  const { deviceId, translate: t } = useContext(SignUpContext);
+  const { deviceId, translate: t, ekycStepStatus } = useContext(SignUpContext);
   const [ekycPluginInfo, setEkycPluginInfo] = useState({});
   const [showLoading, setShowLoading] = useState(false);
   const [showRetryBtn, setShowRetryBtn] = useState(false);
@@ -61,15 +61,20 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
   };
 
   const requestRegisterCustomerInfoStep3 = async () => {
+    const { ekyc_aplct_stp_c, cusno } = ekycStepStatus || {};
+    //Ignore call API, navigate directly to Enter Personal Detail Screen
+    if (Number(ekyc_aplct_stp_c) === 3) {
+      const isFetchCustomerData = !!cusno;
+      return onConfirm(isFetchCustomerData);
+    }
     setShowLoading(true);
     const { email, firstName, lastName, packageId } = ekycPluginInfo;
     const payload = {
       cus_email: email,
-      uuid_v: deviceId || 'deviceId',
+      uuid_v: deviceId,
       cus_fst_nm: firstName,
       cus_last_nm: lastName,
       e_sgn_trx_id: packageId,
-      // e_sgn_trx_id: 'dSnooW1bbYqt4puzYtJRfd3bsM4=',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep3, payload);
     setShowLoading(false);
