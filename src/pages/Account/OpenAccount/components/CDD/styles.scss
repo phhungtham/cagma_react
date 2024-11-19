@@ -1,0 +1,20 @@
+@import 'styles/utilities/variables';
+
+.answer-cdd__wrapper {
+  height: calc(100vh - 166px);
+  overflow: auto;
+  .answer-cdd__questions {
+    list-style-position: outside;
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  .answer-cdd__desc {
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 500;
+    color: $color-gray-600;
+    &::marker {
+      color: $color-gray-600;
+    }
+  }
+}

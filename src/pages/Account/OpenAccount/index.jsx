@@ -15,6 +15,7 @@ import {
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
+import { ProductCode } from '@common/constants/product';
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -22,6 +23,7 @@ import { moveNext } from '@utilities/index';
 import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
+import CDD from './components/CDD';
 import CustomerInfoBottom from './components/CustomerInfoBottom';
 import DTR from './components/DTR';
 import EnterAccountInformation from './components/EnterAccountInformation';
@@ -70,6 +72,10 @@ const OpenAccount = ({ translate: t }) => {
     dep_sjt_class,
     prdt_psb_trm_unit_c: termUnitCode,
   } = productInfo || {};
+
+  const handleConfirmCDD = () => {
+    checkUserRegisterDTR();
+  };
 
   const handleNavigateViewTerm = () => {
     setCurrentStep(OPEN_ACCOUNT_STEP.VIEW_TERMS);
@@ -287,6 +293,25 @@ const OpenAccount = ({ translate: t }) => {
     moveNext(MENU_CODE.CHANGE_PROFILE, {}, routePaths.changeProfile);
   };
 
+  const checkUserRegisterCDD = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess } = await requestApi(endpoints.checkRegisterCDD);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { result_cd } = data;
+      if (Number(result_cd) === 9) {
+        return setCurrentStep(OPEN_ACCOUNT_STEP.CDD);
+      } else {
+        checkUserRegisterDTR();
+      }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
+  };
+
   const checkUserRegisterDTR = async () => {
     if (ignoreCheckDTRProductCodes.includes(productCode)) {
       return setCurrentStep(OPEN_ACCOUNT_STEP.VIEW_TERMS);
@@ -318,7 +343,11 @@ const OpenAccount = ({ translate: t }) => {
 
   useEffect(() => {
     if (productCode) {
-      checkUserRegisterDTR();
+      if ([ProductCode.CHEQUING, ProductCode.E_SAVING].includes(productCode)) {
+        checkUserRegisterCDD();
+      } else {
+        checkUserRegisterDTR();
+      }
     }
   }, [productCode]);
 
@@ -326,6 +355,13 @@ const OpenAccount = ({ translate: t }) => {
     <>
       <div className="open-account__wrapper">
         {showLoading && <Spinner />}
+        {currentStep === OPEN_ACCOUNT_STEP.CDD && (
+          <CDD
+            setAlert={setAlert}
+            onConfirm={handleConfirmCDD}
+            translate={t}
+          />
+        )}
         {currentStep === OPEN_ACCOUNT_STEP.DTR && (
           <DTR
             openAccountInfo={openAccountSuccessInfo}

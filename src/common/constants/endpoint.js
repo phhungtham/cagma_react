@@ -53,6 +53,8 @@ export const endpoints = {
   reissueCardNotLogged: '/ca/ca/CACA008.pwkjson',
   getDTRInformation: '/ca/me/CAME013.pwkjson',
   registerDTR: '/ca/me/CAME014.pwkjson',
+  checkRegisterCDD: '/ca/me/CAME016.pwkjson',
+  registerCDD: '/ca/me/CAME015.pwkjson',
   customerInfoVerify: '/ca/me/CAME008.pwkjson',
   checkEkycStatus: '/ca/se/CASE109.pwkjson',
   regenerateEkycLink: '/ca/se/CASE116.pwkjson',

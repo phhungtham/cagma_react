@@ -20,6 +20,9 @@ export const getPEPRelationship = 'pep_relt_d';
 export const getPEPPosition = 'pep_stat_c';
 export const getPEPSourceOfFund = 'fund_soce_d_c';
 export const getIdTypes = 'casol_lcl_cus_rlnm_no_t';
+export const getExpectedTransferCycleCode = 'trsf_expt_prd_c';
+export const getTransferExpectedRelationshipCode = 'trsf_expt_relt_c';
+export const getExpectedTransferAmountCode = 'trsf_expt_amt_c';
 
 export const EmploymentMap = {
   Employed: '2',

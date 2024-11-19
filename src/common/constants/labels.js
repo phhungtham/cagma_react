@@ -360,6 +360,8 @@ export const openAccountDTRLabels = {
   dtr: 'lbl_CAPR520000_0235', //DTR
 };
 
+export const openAccountCDDLabels = {};
+
 export const cardLabels = {
   accessCardService: 'lbl_CACA600000_0001', //Access Card Service
   activeAccessCard: 'lbl_CACA600000_0002', //Activate your Access Card
