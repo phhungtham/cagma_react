@@ -164,7 +164,7 @@ const ChangeProfile = ({ translate: t }) => {
       type: SELECT_TYPE.ADDRESS_TYPE,
       options: addressTypeOptions,
       isShow: true,
-      title: 'Address Type',
+      title: 'Address Type', //TODO: Missing label
     });
   };
 
@@ -173,7 +173,7 @@ const ChangeProfile = ({ translate: t }) => {
       type: SELECT_TYPE.COUNTRY,
       options: countryOptions,
       isShow: true,
-      title: 'Country',
+      title: t(labels.country),
     });
   };
 
@@ -182,7 +182,7 @@ const ChangeProfile = ({ translate: t }) => {
       type: SELECT_TYPE.PROVINCE,
       options: provinceOptions,
       isShow: true,
-      title: 'Province',
+      title: t(labels.province),
     });
   };
 
@@ -193,23 +193,23 @@ const ChangeProfile = ({ translate: t }) => {
   const onChangeSelectBottom = async item => {
     const fieldName = selectBottomTypeMapField[selectBottom.type];
     const value = item.value;
-    setValue(fieldName, value);
+    setValue(fieldName, value, { shouldDirty: true });
     if (fieldName === 'employment') {
-      setValue('occupation1', null);
-      setValue('occupation2', null);
+      setValue('occupation1', null, { shouldDirty: true });
+      setValue('occupation2', null, { shouldDirty: true });
       if (employmentValuesDisableOccupation.includes(value)) {
         const occupation3Name = (employmentOptions || []).find(item => item.value === value)?.label;
-        setValue('occupation3', occupation3Name);
+        setValue('occupation3', occupation3Name, { shouldDirty: true });
       } else {
-        setValue('occupation3', '');
+        setValue('occupation3', '', { shouldDirty: true });
       }
     }
     if (fieldName === 'occupation1') {
-      setValue('occupation2', null);
-      setValue('occupation3', '');
+      setValue('occupation2', null, { shouldDirty: true });
+      setValue('occupation3', '', { shouldDirty: true });
     }
     if (fieldName === 'occupation2') {
-      setValue('occupation3', item.label);
+      setValue('occupation3', item.label, { shouldDirty: true });
     }
     await trigger();
     onCloseSelectBottom();
@@ -248,7 +248,7 @@ const ChangeProfile = ({ translate: t }) => {
     if (responseErrorMessage) {
       setShowAlert({
         isShow: true,
-        title: 'Sorry!',
+        title: '',
         content: changeProfileResponse.data.elHeader.resMsg,
       });
     }
