@@ -13,7 +13,6 @@ import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
-import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
 
 import { createIdFormSchema } from './schema';
@@ -29,22 +28,12 @@ const SignUpCreateID = ({ onConfirm }) => {
   const { requestApi } = useApi();
   const {
     control,
-    setValue,
-    watch,
     handleSubmit,
     formState: { isValid },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(createIdFormSchema),
   });
-
-  const handleChangeID = result => {
-    setValue('id', result?.uniqueValue?.replace(/\s/g, '').toLowerCase() || '', { shouldValidate: true });
-  };
-
-  const handleOpenSecurityKeyboard = () => {
-    showCertificationChar(handleChangeID, { maxLength: 20 });
-  };
 
   const handleCloseAlert = () => {
     setAlert({
