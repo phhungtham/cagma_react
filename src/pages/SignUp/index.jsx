@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
@@ -295,7 +296,7 @@ const SignUp = ({ translate }) => {
         textAlign="left"
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: translate(ctaLabels.confirm),
         }}
       />
     </SignUpContext.Provider>
