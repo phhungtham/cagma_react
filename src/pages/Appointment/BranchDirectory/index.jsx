@@ -92,7 +92,6 @@ const BranchDirectory = ({ translate: t }) => {
                   <Accordion
                     title={branch.lcl_br_nm}
                     caption={branch.br_adr}
-                    isExpand={index === 0}
                   >
                     <div className="accordion__table__bottom">
                       <div className="table__info">
