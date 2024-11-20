@@ -26,8 +26,10 @@ const SelectTimeBottom = ({
   const selectedMinute = Number(defaultTime?.split(' ')?.[1] || minuteOptions[0]);
 
   const handleConfirmSelectedTime = () => {
-    const formattedHour = appendZeroToTime(valueRef.current.hour);
-    onTimeChange(`${formattedHour} ${valueRef.current.minute}`);
+    if (valueRef.current.hour !== undefined && valueRef.current.minute !== undefined) {
+      const formattedHour = appendZeroToTime(valueRef.current.hour);
+      onTimeChange(`${formattedHour} ${valueRef.current.minute}`);
+    }
   };
 
   return (
