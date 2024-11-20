@@ -151,6 +151,8 @@ export const bookAppointmentLabels = {
   phone: 'lbl_CAET900010_0067', //Phone
   fax: 'lbl_CAET900010_0068', //Fax
   address2: 'lbl_CAET900010_0069', //Address
+  pleaseSelectAgain: 'lbl_CAET900010_0222', //Please select again
+  thisIsNotABusinessDay: 'lbl_CAET900010_0223', //This is not a business day for consultation.
 };
 
 export const manageLimitLabels = {

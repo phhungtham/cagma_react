@@ -20,6 +20,7 @@ import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatHHMMToDisplay, formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import { moveBack } from '@utilities/index';
+import dayjs from 'dayjs';
 
 import {
   bookAppointmentFormDefaultValues,
@@ -31,7 +32,8 @@ import CustomerStatusBottom from '../CustomerStatusBottom';
 import { bookAppointmentSchema } from './schema';
 import './styles.scss';
 
-const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin }) => {
+//TODO: Hidden Time BS content if not date selected.
+const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAlert }) => {
   const [showCustomerTypeBottom, setShowCustomerTypeBottom] = useState(false);
   const [showPurposeAppointmentBottom, setShowPurposeAppointmentBottom] = useState(false);
   const [showSelectTimeBottom, setShowSelectTimeBottom] = useState(false);
@@ -42,6 +44,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin }) => {
   const [subPurposeList, setSubPurposeList] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
   const [customer, setCustomer] = useState();
+  const [dayOfWeekSelected, setDayOfWeekSelected] = useState();
   const { requestApi } = useApi();
 
   const {
@@ -85,7 +88,8 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin }) => {
   };
 
   const handleOpenCalendar = () => {
-    openCalendar(handleSelectDate, { selectDate: date || undefined });
+    const minDate = dayjs().add('1', 'day').format('YYYYMMDD');
+    openCalendar(handleSelectDate, { selectDate: date || undefined, startDate: minDate });
   };
 
   const handleOpenSelectTimeBottom = () => {
@@ -141,6 +145,28 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin }) => {
     setCustomer(data || {});
   };
 
+  const requestCheckIsBusinessDay = async date => {
+    setShowLoading(true);
+    const payload = {
+      date,
+      pattern: 'yyyyMMdd',
+    };
+    const { data, isSuccess } = await requestApi(endpoints.checkBusinessDay, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { isOpDate } = data;
+      if (isOpDate === 'false') {
+        setShowAlert({
+          isShow: true,
+          title: t(labels.pleaseSelectAgain),
+          content: t(labels.thisIsNotABusinessDay),
+        });
+        setValue('date', '', { shouldValidate: true });
+        setValue('dateDisplay', '', { shouldValidate: true });
+      }
+    }
+  };
+
   const requestGetCommonCode = async () => {
     setShowLoading(true);
     const { data } = await requestApi(endpoints.getCommonCode, {
@@ -169,6 +195,12 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin }) => {
       setPurposeTabs([]);
     }
   }, [customerType]);
+
+  useEffect(() => {
+    if (date) {
+      requestCheckIsBusinessDay();
+    }
+  }, [date]);
 
   useEffect(() => {
     requestGetCommonCode();

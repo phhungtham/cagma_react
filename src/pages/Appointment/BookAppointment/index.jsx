@@ -84,6 +84,7 @@ const BookAppointment = ({ translate: t }) => {
           onSubmit={handleBookAppointment}
           translate={t}
           isLogin={isLogin}
+          setShowAlert={setShowAlert}
         />
       )}
       {currentStep === BookAppointmentStep.COMPLETED && (
