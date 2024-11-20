@@ -7,8 +7,9 @@ import Spinner from '@common/components/atoms/Spinner';
 import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBottom';
 import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
+import { endpoints } from '@common/constants/endpoint';
 import { bookAppointmentLabels as labels, menuLabels } from '@common/constants/labels';
-import useGetBranchDirectory from '@hooks/useGetBranchDirectory';
+import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
 import { callPhone, moveBack, moveNext } from '@utilities/index';
 import { nativeParamsSelector } from 'app/redux/selector';
@@ -20,18 +21,16 @@ import './styles.scss';
 const BranchDirectory = ({ translate: t }) => {
   const nativeParams = useSelector(nativeParamsSelector);
 
-  const {
-    data: branchList,
-    isLoading: isLoadingGetBranch,
-    sendRequest: sendRequestGetBranch,
-  } = useGetBranchDirectory();
+  const [branches, setBranches] = useState();
 
-  branchList?.sort((branchPre, branchNex) => (branchPre.lcl_br_nm > branchNex.lcl_br_nm ? 1 : -1));
+  const [showLoading, setShowLoading] = useState(false);
 
   const [viewMapItem, setViewMapItem] = useState({
     open: false,
     branchData: undefined,
   });
+
+  const { requestApi } = useApi();
 
   const onClickCallPhone = phoneNumber => {
     callPhone(phoneNumber);
@@ -60,22 +59,32 @@ const BranchDirectory = ({ translate: t }) => {
     );
   };
 
+  const requestGetBranches = async () => {
+    setShowLoading(true);
+    const { data, isSuccess } = await requestApi(endpoints.getBranchDirectory);
+    setShowLoading(false);
+    if (isSuccess) {
+      const branchList = data.r_CACO006_1Vo || [];
+      setBranches(branchList);
+    }
+  };
+
   useEffect(() => {
-    sendRequestGetBranch();
+    requestGetBranches();
   }, []);
 
   return (
     <>
       <div className="branch-directory__wrapper">
-        {isLoadingGetBranch && <Spinner />}
+        {showLoading && <Spinner />}
         <Header
           title={t(menuLabels.bookAppointment)}
           onClick={moveBack}
         />
         <div className="branch-directory__content">
           <div className="branch-directory__list">
-            {branchList?.length > 0 &&
-              branchList.map((branch, index) => (
+            {branches?.length > 0 &&
+              branches.map((branch, index) => (
                 <div
                   className="branch-directory__item"
                   key={branch.brno}
