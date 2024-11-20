@@ -326,6 +326,10 @@ export const openAccountLabels = {
   issueYourCard: 'lbl_CAPR521000_0033', //Issue your card from the Get new card
   youCanCheckRRSP: 'lbl_CAPR509000_0233', //You can Check RRSP Contribution Receipt on the Account activity page
   getNewCard: 'lbl_CTA_5026', //Get new card
+  branchVisitNotice: 'lbl_CAPR521000_0117', //Branch Visit Notice
+  sinNumberRequired: 'lbl_CAPR521000_0118', //SIN Number is required, but there is no SIN in your information. Please contact your branch.
+  searchBranch: 'lbl_CAPR521000_0119', //Search Branch
+  bookAnAppointment: 'lbl_CAPR521000_0120', //Book an Appointment
 };
 
 export const openAccountDTRLabels = {

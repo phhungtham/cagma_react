@@ -23,6 +23,7 @@ import { moveNext } from '@utilities/index';
 import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
+import OPBranchVisitNoticeBottom from './components/BranchVisitNoticeBottom';
 import CDD from './components/CDD';
 import CustomerInfoBottom from './components/CustomerInfoBottom';
 import DTR from './components/DTR';
@@ -44,6 +45,7 @@ const OpenAccount = ({ translate: t }) => {
   const [currentStep, setCurrentStep] = useState();
   const [DTRInfo, setDTRInfo] = useState();
   const [showCustomerInfoBottom, setShowCustomerInfoBottom] = useState(false);
+  const [showBranchVisitNoticeBottom, setShowBranchVisitNoticeBottom] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [openAccountSuccessInfo, setOpenAccountSuccessInfo] = useState();
   const [provinceOptions, setProvinceOptions] = useState();
@@ -64,14 +66,7 @@ const OpenAccount = ({ translate: t }) => {
   });
   const { requestApi } = useApi();
 
-  const {
-    prdt_c: productCode,
-    product_ccy: productCurrencyCode,
-    ntfct_intrt,
-    prdt_c_display,
-    dep_sjt_class,
-    prdt_psb_trm_unit_c: termUnitCode,
-  } = productInfo || {};
+  const { prdt_c: productCode, prdt_c_display, dep_sjt_class } = productInfo || {};
 
   const handleConfirmCDD = () => {
     checkUserRegisterDTR();
@@ -81,8 +76,22 @@ const OpenAccount = ({ translate: t }) => {
     setCurrentStep(OPEN_ACCOUNT_STEP.VIEW_TERMS);
   };
 
-  const onSubmitAgreeTerms = () => {
-    setShowCustomerInfoBottom(true);
+  const onSubmitAgreeTerms = async () => {
+    let existingCustomer = customer;
+    if (!existingCustomer) {
+      existingCustomer = await requestGetCustomerInfo();
+      if (existingCustomer) {
+        setCustomer(existingCustomer);
+      }
+    }
+    if (existingCustomer) {
+      const existSinNumber = !!existingCustomer.lcl_cus_rlnm_no;
+      if (existSinNumber) {
+        setShowCustomerInfoBottom(true);
+      } else {
+        setShowBranchVisitNoticeBottom(true);
+      }
+    }
   };
 
   const handleCloseAlert = () => {
@@ -154,12 +163,13 @@ const OpenAccount = ({ translate: t }) => {
       const jobDisplay = jobMapList.find(item => item.key === jobType)?.value || '';
       const subJobType = customerResponse.sub_job_t_v;
       const subJobDisplay = subJobMapList.find(item => item.key === subJobType)?.value || '';
-      setCustomer({
+      const result = {
         ...customerResponse,
         cus_adr_telno,
         jobDisplay,
         subJobDisplay,
-      });
+      };
+      return result;
     } else {
       setAlert({
         isShow: true,
@@ -336,12 +346,6 @@ const OpenAccount = ({ translate: t }) => {
   };
 
   useEffect(() => {
-    if (showCustomerInfoBottom && !customer) {
-      requestGetCustomerInfo();
-    }
-  }, [showCustomerInfoBottom]);
-
-  useEffect(() => {
     if (productCode) {
       if ([ProductCode.CHEQUING, ProductCode.E_SAVING].includes(productCode)) {
         checkUserRegisterCDD();
@@ -387,6 +391,13 @@ const OpenAccount = ({ translate: t }) => {
             onClose={() => setShowCustomerInfoBottom(false)}
             onClickConfirm={handleConfirmCustomerInfo}
             onClickChangeProfile={handleNavigateChangeProfile}
+            translate={t}
+          />
+        )}
+        {showBranchVisitNoticeBottom && (
+          <OPBranchVisitNoticeBottom
+            onClose={() => setShowBranchVisitNoticeBottom(false)}
+            open={showBranchVisitNoticeBottom}
             translate={t}
           />
         )}

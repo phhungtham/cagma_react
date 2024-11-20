@@ -1,23 +1,19 @@
-import { useContext } from 'react';
-
 import SearchBranchIcon from '@assets/images/icon-fill-atm-24.png';
 import ReserveIcon from '@assets/images/icon-fill-calendar-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { MENU_CODE } from '@common/constants/common';
-import { signUpVerifyIdentityLabels as labels } from '@common/constants/labels';
+import { openAccountLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import useMove from '@hooks/useMove';
-import { SignUpContext } from '@pages/SignUp';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveNext } from '@utilities/index';
 
 import './styles.scss';
 
-const BranchVisitNoticeBottom = ({ onClose, open }) => {
-  const { translate: t } = useContext(SignUpContext);
+const OPBranchVisitNoticeBottom = ({ onClose, open, translate: t }) => {
   const { moveHomeNative } = useMove();
 
   const handleNavigateBranchInfo = () => {
@@ -38,8 +34,8 @@ const BranchVisitNoticeBottom = ({ onClose, open }) => {
       title={t(labels.branchVisitNotice)}
       type="fit-content"
     >
-      <div className="branch-visit-notice__content">
-        <div className="instruction">{t(labels.ifYouAreNotAvailable)}</div>
+      <div className="op-branch-visit-notice__content">
+        <div className="instruction">{t(labels.sinNumberRequired)}</div>
         <div className="divider__item__solid" />
         <div className="flex-center gap-14 pt-8 pb-4">
           <IconButton
@@ -52,7 +48,7 @@ const BranchVisitNoticeBottom = ({ onClose, open }) => {
           <IconButton
             size="lg"
             type="circle"
-            label={t(labels.reservationConsultation)}
+            label={t(labels.bookAnAppointment)}
             icon={<img src={ReserveIcon} />}
             onClick={handleNavigateAppointmentMain}
           />
@@ -70,4 +66,4 @@ const BranchVisitNoticeBottom = ({ onClose, open }) => {
   );
 };
 
-export default BranchVisitNoticeBottom;
+export default OPBranchVisitNoticeBottom;

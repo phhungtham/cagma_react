@@ -58,6 +58,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     setValue('confirmPasswordDisplay', '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
   };
 
+  //TODO: Handle maxlength and minlength
   const handleOpenSecurityKeyboardPassword = () => {
     showCertificationChar(handleChangePassword);
   };
@@ -77,12 +78,14 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.registerElectricFinancial, payload);
     setShowLoading(false);
     if (isSuccess) {
-      //TODO: Check response
-      setEkycToNativeCache({
-        ...ekycCached,
-        userId,
-      });
-      onConfirm();
+      const { rslt_d } = data;
+      if (Number(rslt_d) === 1) {
+        setEkycToNativeCache({
+          ...ekycCached,
+          userId,
+        });
+        onConfirm();
+      }
     } else {
       return setAlert({
         isShow: true,
