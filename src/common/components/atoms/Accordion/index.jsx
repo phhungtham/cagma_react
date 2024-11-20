@@ -34,7 +34,10 @@ const Accordion = ({
       onClick={onClick}
     >
       <div className="accordion__item">
-        <div className="accordion__item__content">
+        <div
+          className="accordion__item__content"
+          onClick={handleToggleExpand}
+        >
           <div className="accordion__item__main">
             {label && <div className="accordion__label">{label}</div>}
             <div className="accordion__title">{title}</div>
@@ -42,10 +45,7 @@ const Accordion = ({
             {time && <div className="accordion__time">{time}</div>}
           </div>
           <div className="accordion__arrow">
-            <div
-              className={`accordion__icon ${isOpen ? 'open' : 'close'}`}
-              onClick={handleToggleExpand}
-            >
+            <div className={`accordion__icon ${isOpen ? 'open' : 'close'}`}>
               <ArrowIcon direction={'down'} />
             </div>
           </div>
