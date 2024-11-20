@@ -153,18 +153,6 @@ const SignUp = ({ translate }) => {
     setCurrentStep(SignUpStep.SIGN_UP_COMPLETE);
   };
 
-  const handleNavigateSetupBiometricAuth = () => {
-    setCurrentStep(SignUpStep.SET_UP_BIOMETRIC_AUTH);
-  };
-
-  const handleNavigateSetUpAlerts = () => {
-    setCurrentStep(SignUpStep.SET_UP_ALERTS);
-  };
-
-  const handleNavigateOpenAccountInstruction = () => {
-    setCurrentStep(SignUpStep.OPEN_ACCOUNT_INSTRUCTION);
-  };
-
   const handleNavigateEkycResult = ({ isSuccess }) => {
     setEkycResultSuccess(isSuccess);
     setCurrentStep(SignUpStep.EKYC_RESULT);
@@ -217,7 +205,6 @@ const SignUp = ({ translate }) => {
   };
 
   const getEkycInfoCallback = result => {
-    console.log('getEkycInfoCallback :>> ', result);
     const { isEkycProcessing, email, deviceId } = result || {};
     setEkycToNativeCache(result);
     setDeviceId(deviceId);
@@ -280,7 +267,7 @@ const SignUp = ({ translate }) => {
           <EKYCResult
             onNavigate={handleNavigateCreateId}
             isSuccess={ekycResultSuccess}
-            handleNavigateWelcome={handleNavigateWelcome}
+            onNavigateWelcome={handleNavigateWelcome}
           />
         )}
         {currentStep === SignUpStep.THANK_VISIT_AGAIN && (

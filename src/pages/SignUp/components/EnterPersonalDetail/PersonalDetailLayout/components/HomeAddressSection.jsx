@@ -10,7 +10,14 @@ import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
   const { translate: t } = useContext(SignUpContext);
-  const { control } = useFormContext();
+  const { control, watch, setValue } = useFormContext();
+
+  const [aptNumber, streetNumber, streetName] = watch(['aptNumber', 'streetNumber', 'streetName']);
+
+  const handleFieldAddressOnBlur = () => {
+    const updatedAddress = [aptNumber, streetNumber, streetName].filter(Boolean).join(' ');
+    setValue('address', updatedAddress);
+  };
 
   return (
     <div className="form__section">
@@ -44,6 +51,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
             type="number"
             inputMode="numeric"
             {...field}
+            onBlur={handleFieldAddressOnBlur}
           />
         )}
         control={control}
@@ -56,6 +64,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
             type="number"
             inputMode="numeric"
             {...field}
+            onBlur={handleFieldAddressOnBlur}
           />
         )}
         control={control}
@@ -66,6 +75,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.streetName)}
             {...field}
+            onBlur={handleFieldAddressOnBlur}
           />
         )}
         control={control}
@@ -74,7 +84,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
       <Controller
         render={({ field }) => (
           <Input
-            label={t(labels.address)} //TODO: Implement logic. Check SD
+            label={t(labels.address)}
             {...field}
           />
         )}

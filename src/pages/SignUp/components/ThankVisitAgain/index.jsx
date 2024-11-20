@@ -22,6 +22,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
+import { SignUpStepStatus } from '@pages/SignUp/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -31,7 +32,7 @@ import { moveBack } from '@utilities/index';
 import { verifyIdFormSchema } from './schema';
 
 const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, onNavigateCreatePasscode }) => {
-  const { existingCustomer, ekycCached, deviceId, ekycStepStatus, translate: t } = useContext(SignUpContext);
+  const { deviceId, ekycStepStatus, translate: t } = useContext(SignUpContext);
   const { requestApi } = useApi();
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
   const [showIdTypesBottom, setShowIdTypesBottom] = useState();
@@ -42,8 +43,6 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
     title: '',
     content: '',
   });
-  const [transactionID, setTransactionID] = useState('');
-  const [transactionStatus, setTransactionStatus] = useState('');
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
@@ -93,28 +92,30 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
     setShowLoading(true);
     const payload = {
       uuid_v: deviceId,
-      cus_email: 'testhyunji@gmail.com',
-      cus_bth_y4mm_dt: '19980220',
-      lcl_cus_rlnm_no:
-        '{"SeProtocolMessage":{"op":"7E05","data":"2A69B7682458FF988991A9A4A64AE9F9D0A634D46C4BF5ADAAEAB55450EAD89925767A1B400C7EFD9432A3272DDC2552C7213866739DFC256083192962EF374DEC7E88E3234B676ED87D466B9270E9B37C76C470CAD563803F2D981585E176EB25FB5D68F433BF5808C74475B25EB51F188C9830B34810BE40E5A4690EF2309D1347159685F347435ED17BB73CEE91ECE6C3E220655C9218D3A0B116613E149B094D8C710B3926780370B34125C0B8B26A6CFC699C36D2D98292363E1E2EC086ECC3C2A1DD889C22B40BE4816ACF82C24887398BCAF63442340E7044217B2EE289029F36BE24A4334921FE7D0506C56389E35B14B640C577F88B7957E4ED486F265DFD7C1104616211FC1F29016E5037"}}',
+      cus_email,
+      cus_bth_y4mm_dt,
+      lcl_cus_rlnm_no,
       lcl_cus_rlnm_no_t,
     };
     const { data, error, isSuccess } = await requestApi(endpoints.checkSignUpApprovalStatus, payload);
     setShowLoading(false);
     if (isSuccess) {
       const { rslt_d, inter_cus_yn } = data;
-      //TODO: Handle navigate
-      if (Number(rslt_d) === 9) {
+      if (Number(rslt_d) === SignUpStepStatus.INFO_REJECTED) {
         return onNavigateEkycResult({ isSuccess: false });
       }
-      if (Number(rslt_d) === 8) {
+      if (Number(rslt_d) === SignUpStepStatus.INFO_REVIEWING) {
         return onNavigateEkycResult({ isSuccess: true });
       }
-      if (inter_cus_yn === 'N') {
-        return onNavigateCreateId();
-      }
-      if (inter_cus_yn === 'Y') {
-        return onNavigateCreatePasscode();
+      const isEkycApproved = Number(ekycStepStatus.ekyc_aplct_stp_c) === SignUpStepStatus.INFO_APPROVED;
+      const isVerifySuccess = Number(rslt_d) === 1;
+      const isNeedToCreateId = inter_cus_yn === 'N';
+      if (isEkycApproved && isVerifySuccess) {
+        if (isNeedToCreateId) {
+          return onNavigateCreateId();
+        } else {
+          return onNavigateCreatePasscode();
+        }
       }
     } else {
       return setAlert({
