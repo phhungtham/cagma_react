@@ -748,6 +748,7 @@ export const signUpCreateIdLabels = {
   enterIdWith: 'lbl_CAET920000_0080', //Enter ID with 6-20 characters, include at least one letter.
   id: 'lbl_CAET920000_0081', //ID
   next: 'lbl_CTA_9216', //Next
+  idAlreadyUse: 'lbl_CAET920000_0281', //ID you entered is already in use.
 };
 
 export const signUpCreatePasswordLabels = {

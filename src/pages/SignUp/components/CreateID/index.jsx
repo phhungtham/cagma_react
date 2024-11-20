@@ -55,7 +55,7 @@ const SignUpCreateID = ({ onConfirm }) => {
       } else {
         return setAlert({
           isShow: true,
-          content: 'ID you entered is already in use.', //TODO: Missing label
+          content: t(labels.idAlreadyUse),
         });
       }
     } else {
