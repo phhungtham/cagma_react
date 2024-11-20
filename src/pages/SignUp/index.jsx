@@ -217,6 +217,7 @@ const SignUp = ({ translate }) => {
   };
 
   const getEkycInfoCallback = result => {
+    console.log('getEkycInfoCallback :>> ', result);
     const { isEkycProcessing, email, deviceId } = result || {};
     setEkycToNativeCache(result);
     setDeviceId(deviceId);
