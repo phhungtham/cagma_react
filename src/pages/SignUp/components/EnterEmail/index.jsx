@@ -138,14 +138,14 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
     setShowLoading(false);
     if (isSuccess) {
       const { screen_kd, cus_email } = data;
-      setEkycToNativeCache({
-        ...ekycCached,
-        email: cus_email,
-        isEkycProcessing: true,
-      });
       if (Number(screen_kd) === 1) {
         onNavigateMOTPAgreeTerms();
       } else if (Number(screen_kd) === 2) {
+        setEkycToNativeCache({
+          ...ekycCached,
+          email: cus_email,
+          isEkycProcessing: true,
+        });
         clearTempLoginInfo();
         onNavigateEkycVerify();
       }
