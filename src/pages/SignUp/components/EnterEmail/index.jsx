@@ -19,7 +19,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
-import { moveBack } from '@utilities/index';
+import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
 
 import { EnterEmailSchema } from './schema';
 
@@ -146,6 +146,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       if (Number(screen_kd) === 1) {
         onNavigateMOTPAgreeTerms();
       } else if (Number(screen_kd) === 2) {
+        clearTempLoginInfo();
         onNavigateEkycVerify();
       }
     } else {
@@ -193,6 +194,10 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
     }
   };
 
+  const handleClearTempLogin = () => {
+    clearTempLoginInfo();
+  };
+
   useEffect(() => {
     return () => {
       if (clearTimeOutRef.current) {
@@ -207,7 +212,8 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
         {showLoading && <Spinner />}
         <Header
           title={t(menuLabels.signUp)}
-          onClick={moveBack}
+          disabledMoveBack
+          onClickBack={handleClearTempLogin}
         />
         <div className="page__form">
           <div className="page__title">{t(labels.enterYourEmail)}</div>
