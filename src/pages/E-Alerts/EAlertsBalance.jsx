@@ -88,7 +88,7 @@ const EAlertsBalance = ({ translate: t }) => {
   };
 
   const handleCloseServerAlert = () => {
-    if (alert.requiredLogin) {
+    if (serverErrorAlert.requiredLogin) {
       moveInitHomeNative('initHome');
     }
     setServerErrorAlert(initAlert);

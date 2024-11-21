@@ -79,6 +79,7 @@ export const appointmentHomeLabels = {
   canceled: 'lbl_CAET900000_0007', //Canceled
   confirmed: 'lbl_CAET900000_0008', //Confirmed
   reserve: 'lbl_CAET900000_0010', //Reserve
+  cancelSuccess: 'lbl_CAET900020_0018', //Successfully canceled
 };
 
 export const bookAppointmentLabels = {
@@ -815,7 +816,7 @@ export const ctaLabels = {
   apply: 'lbl_CTA_9023', //Apply
   reset: 'lbl_CTA_9024', //Reset
   tryItNow: 'lbl_CTA_1031', //Try it now!
-  cancel: 'lbl_CTA_9021', //Try it now!
+  cancel: 'lbl_CTA_3002', //Cancel
   book: 'lbl_CTA_9019', //Book
   done: 'lbl_CTA_9020', //Done
   viewAppointment: 'lbl_CTA_9021', //View Appointment

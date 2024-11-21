@@ -8,13 +8,14 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
+import { initAlert } from '@common/constants/bottomsheet';
 import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, appointmentHomeLabels as labels, menuLabels } from '@common/constants/labels';
-import useGetAppointments from '@hooks/useGetAppointments';
+import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
+import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
-import { apiCall } from '@shared/api';
 import { moveBack, moveNext } from '@utilities/index';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -27,28 +28,20 @@ const maxAppointmentDisplay = 3;
 
 const AppointmentHome = ({ translate: t }) => {
   const { isLogin } = useLoginInfo();
-  const {
-    data: appointmentData,
-    isLoading: isLoadingAppointments,
-    sendRequest: sendRequestGetAppointments,
-    error: getAppointmentsError,
-  } = useGetAppointments();
   const [showLoading, setShowLoading] = useState(false);
   const [appointments, setAppointments] = useState([]);
   const [showAppointmentDetailBottom, setShowAppointmentDetailBottom] = useState({
     isShow: false,
     appointment: {},
   });
-  const [showAlert, setShowAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [showAlert, setShowAlert] = useState(initAlert);
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
     type: 'success',
   });
+  const { moveInitHomeNative } = useMove();
+  const { requestApi } = useApi();
 
   const handleNavigateBranchDirectory = type => {
     moveNext(
@@ -65,6 +58,13 @@ const AppointmentHome = ({ translate: t }) => {
     moveNext(MENU_CODE.APPOINTMENT_MANAGEMENT, {}, routePaths.appointmentManagement);
   };
 
+  const handleCloseAlert = () => {
+    if (showAlert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setShowAlert(initAlert);
+  };
+
   const handleCancelAppointment = async () => {
     setShowLoading(true);
     const { number, branchNo, status } = showAppointmentDetailBottom.appointment || {};
@@ -73,25 +73,25 @@ const AppointmentHome = ({ translate: t }) => {
       apint_brno: branchNo,
       apint_stat: status,
     };
-    const cancelAppointmentResponse = await apiCall(endpoints.cancelAppointment, 'POST', requestCancelPayload);
+    const { error, isSuccess, requiredLogin } = await requestApi(endpoints.cancelAppointment, requestCancelPayload);
     setShowLoading(false);
-    if (cancelAppointmentResponse?.data?.elData) {
+    if (isSuccess) {
       setShowAppointmentDetailBottom({
         isShow: false,
         appointment: {},
       });
       setShowToast({
         isShow: true,
-        message: 'Successfully canceled',
+        message: t(labels.cancelSuccess),
         type: 'success',
       });
-      sendRequestGetAppointments({ inq_cnt: maxAppointmentDisplay });
+      requestGetAppointments();
     } else {
-      const errorMessage = cancelAppointmentResponse?.data?.elHeader?.resMsgVo?.msgText || '';
       setShowAlert({
         isShow: true,
-        title: 'Sorry!',
-        content: errorMessage,
+        title: '',
+        content: error,
+        requiredLogin,
       });
     }
   };
@@ -127,36 +127,40 @@ const AppointmentHome = ({ translate: t }) => {
     });
   };
 
-  useEffect(() => {
-    if (getAppointmentsError) {
+  const requestGetAppointments = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getAppointments, {
+      inq_cnt: maxAppointmentDisplay,
+    });
+    setShowLoading(false);
+    if (isSuccess) {
+      if (data?.upcomingList || data?.previousList) {
+        const appointmentList = [...(data?.upcomingList || []), ...(data?.previousList || [])];
+        const appointmentsForDisplay = appointmentList.slice(0, maxAppointmentDisplay);
+        setAppointments(appointmentsForDisplay);
+      } else {
+        setAppointments([]);
+      }
+    } else {
       setShowAlert({
         isShow: true,
         title: '',
-        content: getAppointmentsError,
+        content: error,
+        requiredLogin,
       });
     }
-  }, [getAppointmentsError]);
-
-  useEffect(() => {
-    if (appointmentData?.upcomingList || appointmentData?.previousList) {
-      const appointmentList = [...(appointmentData?.upcomingList || []), ...(appointmentData?.previousList || [])];
-      const appointmentsForDisplay = appointmentList.slice(0, maxAppointmentDisplay);
-      setAppointments(appointmentsForDisplay);
-    } else {
-      setAppointments([]);
-    }
-  }, [appointmentData]);
+  };
 
   useEffect(() => {
     if (isLogin) {
-      sendRequestGetAppointments({ inq_cnt: maxAppointmentDisplay });
+      requestGetAppointments();
     }
   }, [isLogin]);
 
   return (
     <>
       <div className="appointment-home__wrapper">
-        {(isLoadingAppointments || showLoading) && <Spinner />}
+        {showLoading && <Spinner />}
         <Header
           title={t(menuLabels.appointment)}
           onClick={moveBack}
@@ -252,10 +256,10 @@ const AppointmentHome = ({ translate: t }) => {
         isShowAlert={showAlert.isShow}
         title={showAlert.title}
         subtitle={showAlert.content}
-        onClose={() => setShowAlert({ isShow: false, title: '', content: '' })}
+        onClose={handleCloseAlert}
         textAlign="left"
         firstButton={{
-          onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
+          onClick: handleCloseAlert,
           label: t(ctaLabels.confirm),
         }}
       />

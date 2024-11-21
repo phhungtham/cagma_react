@@ -5,12 +5,13 @@ import Spinner from '@common/components/atoms/Spinner';
 import Tabs from '@common/components/atoms/Tabs';
 import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
+import { initAlert } from '@common/constants/bottomsheet';
 import { getAppointmentStatus } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
-import { appointmentManageLabels as labels, menuLabels } from '@common/constants/labels';
+import { ctaLabels, appointmentManageLabels as labels, menuLabels } from '@common/constants/labels';
+import useApi from '@hooks/useApi';
 import useCommonCode from '@hooks/useCommonCode';
-import useGetAppointments from '@hooks/useGetAppointments';
-import { apiCall } from '@shared/api';
+import useMove from '@hooks/useMove';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -22,12 +23,6 @@ import { AppointmentManageTab } from './constants';
 import './styles.scss';
 
 const AppointmentManagement = ({ translate: t }) => {
-  const {
-    data: appointmentData,
-    isLoading: isLoadingAppointments,
-    sendRequest: sendRequestGetAppointments,
-    error: getAppointmentsError,
-  } = useGetAppointments();
   const {
     sendRequest: sendRequestGetCommonCode,
     data: commonCodeData,
@@ -42,22 +37,47 @@ const AppointmentManagement = ({ translate: t }) => {
     isShow: false,
     appointment: {},
   });
-  const [showAlert, setShowAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [showAlert, setShowAlert] = useState(initAlert);
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
     type: 'success',
   });
+  const { moveInitHomeNative } = useMove();
+  const { requestApi } = useApi();
 
   const handleTabChange = (tabName, tabIndex) => {
     const { previousList = [], upcomingList = [] } = appointmentResponseData;
     const currentTabAppointments = tabIndex === AppointmentManageTab.UPCOMING ? upcomingList : previousList;
     setAppointmentByTabList(currentTabAppointments);
     setTabIndex(tabIndex);
+  };
+
+  const handleCloseAlert = () => {
+    if (showAlert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setShowAlert(initAlert);
+  };
+
+  const requestGetAppointments = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getAppointments);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { previousList = [], upcomingList = [] } = data;
+      const currentTabAppointments = tabIndex === AppointmentManageTab.UPCOMING ? upcomingList : previousList;
+      setAppointmentByTabList(currentTabAppointments);
+      setAppointmentResponseData(data);
+      sendRequestGetCommonCode(getAppointmentStatus);
+    } else {
+      setShowAlert({
+        isShow: true,
+        title: '',
+        content: error,
+        requiredLogin,
+      });
+    }
   };
 
   const handleCancelAppointment = async () => {
@@ -68,9 +88,9 @@ const AppointmentManagement = ({ translate: t }) => {
       apint_brno: branchNo,
       apint_stat: status,
     };
-    const cancelAppointmentResponse = await apiCall(endpoints.cancelAppointment, 'POST', requestCancelPayload);
+    const { error, isSuccess, requiredLogin } = await requestApi(endpoints.cancelAppointment, requestCancelPayload);
     setShowLoading(false);
-    if (cancelAppointmentResponse?.data?.elData) {
+    if (isSuccess) {
       setShowAppointmentDetailBottom({
         isShow: false,
         appointment: {},
@@ -80,13 +100,13 @@ const AppointmentManagement = ({ translate: t }) => {
         message: t(labels.cancelSuccess),
         type: 'success',
       });
-      sendRequestGetAppointments();
+      requestGetAppointments();
     } else {
-      const errorMessage = cancelAppointmentResponse?.data?.elHeader?.resMsgVo?.msgText || '';
       setShowAlert({
         isShow: true,
-        title: 'Sorry!',
-        content: errorMessage,
+        title: '',
+        content: error,
+        requiredLogin,
       });
     }
   };
@@ -123,26 +143,6 @@ const AppointmentManagement = ({ translate: t }) => {
   };
 
   useEffect(() => {
-    if (getAppointmentsError) {
-      setShowAlert({
-        isShow: true,
-        title: 'Sorry!',
-        content: getAppointmentsError,
-      });
-    }
-  }, [getAppointmentsError]);
-
-  useEffect(() => {
-    if (appointmentData) {
-      const { previousList = [], upcomingList = [] } = appointmentData;
-      const currentTabAppointments = tabIndex === AppointmentManageTab.UPCOMING ? upcomingList : previousList;
-      setAppointmentByTabList(currentTabAppointments);
-      setAppointmentResponseData(appointmentData);
-      sendRequestGetCommonCode(getAppointmentStatus);
-    }
-  }, [appointmentData]);
-
-  useEffect(() => {
     if (commonCodeData?.apint_stat) {
       const convertedStatusList = commonCodeDataToOptions(commonCodeData.apint_stat);
       setStatusList(convertedStatusList);
@@ -150,12 +150,12 @@ const AppointmentManagement = ({ translate: t }) => {
   }, [commonCodeData]);
 
   useEffect(() => {
-    sendRequestGetAppointments();
+    requestGetAppointments();
   }, []);
 
   return (
     <>
-      {(showLoading || isLoadingAppointments || isLoadingGetCommonCode) && <Spinner />}
+      {(showLoading || isLoadingGetCommonCode) && <Spinner />}
       <div className="appointment-management__wrapper">
         <Header
           title={t(menuLabels.manageAppointment)}
@@ -210,10 +210,10 @@ const AppointmentManagement = ({ translate: t }) => {
         title={showAlert.title}
         subtitle={showAlert.content}
         textAlign="left"
-        onClose={() => setShowAlert({ isShow: false, title: '', content: '' })}
+        onClose={handleCloseAlert}
         firstButton={{
-          onClick: () => setShowAlert({ isShow: false, title: '', content: '' }),
-          label: 'Confirm',
+          onClick: handleCloseAlert,
+          label: t(ctaLabels.confirm),
         }}
       />
       <section className="toast__overlay">
