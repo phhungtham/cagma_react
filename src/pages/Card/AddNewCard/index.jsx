@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
+import { initAlert } from '@common/constants/bottomsheet';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AddNewCardSuccess from './components/AddNewCardSuccess';
@@ -14,18 +16,22 @@ import { ADD_NEW_CARD_STEP } from './constants';
 
 const AddNewCard = ({ translate: t }) => {
   const [currentStep, setCurrentStep] = useState(ADD_NEW_CARD_STEP.TERMS_CONDITIONS);
+  const { moveInitHomeNative } = useMove();
   const [addCardSuccessInfo, setAddCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [email, setEmail] = useState();
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
   const { requestApi } = useApi();
 
   const onSubmitAgreeTerms = () => {
     setCurrentStep(ADD_NEW_CARD_STEP.ENTER_INFORMATION);
+  };
+
+  const handleCloseAlert = () => {
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const handleSubmitAddNewCard = async values => {
@@ -60,7 +66,7 @@ const AddNewCard = ({ translate: t }) => {
       all_chip_card_use_lmt_amt: totalContactless === '' ? '' : Number(totalContactless),
       cusnm: 'CUS-TEST',
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.addNewCard, payload);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.addNewCard, payload);
     setShowLoading(false);
     if (isSuccess) {
       const {
@@ -87,14 +93,16 @@ const AddNewCard = ({ translate: t }) => {
     } else {
       setAlert({
         isShow: true,
+        title: '',
         content: error,
+        requiredLogin,
       });
     }
   };
 
   const requestGetCustomer = async () => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.inquiryUserInformation);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.inquiryUserInformation);
     setShowLoading(false);
     if (isSuccess) {
       const { cus_email } = data;
@@ -102,7 +110,9 @@ const AddNewCard = ({ translate: t }) => {
     } else {
       setAlert({
         isShow: true,
+        title: '',
         content: error,
+        requiredLogin,
       });
     }
   };
@@ -144,8 +154,9 @@ const AddNewCard = ({ translate: t }) => {
         title={alert.title}
         subtitle={alert.content}
         textAlign="left"
+        onClose={handleCloseAlert}
         firstButton={{
-          onClick: () => setAlert({ isShow: false, title: '', content: '' }),
+          onClick: handleCloseAlert,
           label: t(ctaLabels.confirm),
         }}
       />

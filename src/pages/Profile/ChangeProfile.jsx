@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -26,6 +25,7 @@ import { ctaLabels, changeProfileLabels as labels, menuLabels } from '@common/co
 import { fileUrls } from '@common/constants/url';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { apiCall } from '@shared/api';
 import {
   buildObjectMapFromResponse,
@@ -35,7 +35,6 @@ import {
 import getEtransferInfo from '@utilities/gmCommon/getEtransferInfo';
 import setEtransferInfo from '@utilities/gmCommon/setEtransferInfo';
 import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
-import { moveBack, moveHome } from '@utilities/index';
 import { isEqual } from '@utilities/object';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -54,7 +53,7 @@ import { changeProfileSchema } from './schema';
 import './styles.scss';
 
 const ChangeProfile = ({ translate: t }) => {
-  const navigate = useNavigate();
+  const { moveBackNative, moveInitHomeNative } = useMove();
   const [showLoading, setShowLoading] = useState(false);
   const [userInfo, setUserInfo] = useState();
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
@@ -110,15 +109,14 @@ const ChangeProfile = ({ translate: t }) => {
 
   const handleCloseAlert = () => {
     if (showAlert.requiredLogin) {
-      moveHome('initHome');
+      moveInitHomeNative('initHome');
     }
     setShowAlert(initAlert);
   };
 
   const handleCloseSaveChangeConfirmAlert = () => {
     setShowSaveChangeConfirmAlert(false);
-    moveBack();
-    navigate('/');
+    moveBackNative();
   };
 
   const handleOpenSelectEmploymentBottom = () => {

@@ -17,12 +17,17 @@ const useMove = () => {
     navigate('/');
   };
 
+  const moveInitHomeNative = () => {
+    moveHome('initHome');
+    navigate('/');
+  };
+
   const moveBackNative = () => {
     moveBack();
     navigate('/');
   };
 
-  return { moveScreenNative, moveHomeNative, moveBackNative };
+  return { moveScreenNative, moveHomeNative, moveBackNative, moveInitHomeNative };
 };
 
 export default useMove;

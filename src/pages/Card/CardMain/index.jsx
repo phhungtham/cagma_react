@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
+import { initAlert } from '@common/constants/bottomsheet';
 import { endpoints } from '@common/constants/endpoint';
-import { menuLabels } from '@common/constants/labels';
+import { ctaLabels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
-import { moveBack } from '@utilities/index';
+import useMove from '@hooks/useMove';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import ActiveCardView from './components/ActiveCardView';
@@ -16,19 +17,16 @@ import GuestCardView from './components/GuestCardView';
 import './styles.scss';
 
 const CardMain = ({ translate: t }) => {
+  const { moveInitHomeNative } = useMove();
   const { isLoading: isLoadingCheckUserLogin, isLogin } = useLoginInfo();
   const [card, setCard] = useState();
   const [showLoading, setShowLoading] = useState(false);
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
-  const { requestApi } = useApi();
+  const [alert, setAlert] = useState(initAlert);
+  const { requestApi } = useApi({ setAlert });
 
   const requestGetCardInfo = async () => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.getCardList);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getCardList);
     setShowLoading(false);
     if (isSuccess) {
       const { card_cnt: cardCount } = data || {};
@@ -57,17 +55,18 @@ const CardMain = ({ translate: t }) => {
     } else {
       setAlert({
         isShow: true,
+        title: '',
         content: error,
+        requiredLogin,
       });
     }
   };
 
   const handleCloseAlert = () => {
-    setAlert({
-      isShow: false,
-      title: '',
-      content: '',
-    });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   useEffect(() => {
@@ -80,10 +79,7 @@ const CardMain = ({ translate: t }) => {
     <>
       <div className="card-main__wrapper page__wrapper">
         {(showLoading || isLoadingCheckUserLogin) && <Spinner />}
-        <Header
-          title={t(menuLabels.cardMain)}
-          onClick={moveBack}
-        />
+        <Header title={t(menuLabels.cardMain)} />
         <div className="card-main__content">
           {!showLoading && !isLoadingCheckUserLogin && (
             <>
@@ -114,7 +110,7 @@ const CardMain = ({ translate: t }) => {
         onClose={handleCloseAlert}
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>
