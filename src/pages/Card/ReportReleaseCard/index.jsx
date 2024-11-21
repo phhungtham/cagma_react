@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
+import { initAlert } from '@common/constants/bottomsheet';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -19,11 +21,8 @@ const ReportReleaseCard = ({ translate: t }) => {
   const [reportDetail, setReportDetail] = useState();
   const [reportReleaseCardSuccessInfo, setReportReleaseCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
+  const { moveInitHomeNative } = useMove();
   const { requestApi } = useApi();
 
   const handleRequestReleaseCard = async values => {
@@ -33,7 +32,7 @@ const ReportReleaseCard = ({ translate: t }) => {
       cashcd_acdnt_c: reportDetail.cardAccountCode,
       cashcd_acdnt_rls_desc: values.accident,
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.reportReleaseCard, payload);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.reportReleaseCard, payload);
     setShowLoading(false);
     if (isSuccess) {
       const {
@@ -56,6 +55,8 @@ const ReportReleaseCard = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        title: '',
+        requiredLogin,
       });
     }
   };
@@ -65,17 +66,16 @@ const ReportReleaseCard = ({ translate: t }) => {
   };
 
   const handleCloseAlert = () => {
-    setAlert({
-      isShow: false,
-      title: '',
-      content: '',
-    });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const requestGetReportDetail = async () => {
     setShowLoading(true);
     await requestApi(endpoints.getCardList);
-    const { data, error, isSuccess } = await requestApi(endpoints.getReportCardDetail);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getReportCardDetail);
     setShowLoading(false);
     if (isSuccess) {
       const { r_GIBD2111_1Vo: reportDetails } = data || {};
@@ -99,6 +99,7 @@ const ReportReleaseCard = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
