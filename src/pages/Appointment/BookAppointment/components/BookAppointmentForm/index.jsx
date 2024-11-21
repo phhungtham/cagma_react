@@ -124,6 +124,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
     const fridayIndex = 5;
     if (dayOfWeekSelected !== fridayIndex) {
       if (hour === '16' && minute === '30') {
+        setTimeSelected('');
         setValue('time', '', { shouldValidate: true });
         setValue('timeDisplay', '', { shouldValidate: true });
         setShowAlert({
