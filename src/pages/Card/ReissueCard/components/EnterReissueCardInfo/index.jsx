@@ -7,7 +7,6 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
-import { isDevelopmentEnv } from '@common/constants/common';
 import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateExpiry, formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
@@ -42,11 +41,6 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
   };
 
   const handleOpenCalendar = () => {
-    if (isDevelopmentEnv) {
-      //For dummy data because it call native calendar
-      setValue('dob', '19690403', { shouldValidate: true });
-      setValue('dob_display', formatYYYYMMDDToDisplay('19690403'), { shouldValidate: true });
-    }
     openCalendar(handleSelectDate, { selectDate: dob || undefined });
   };
 

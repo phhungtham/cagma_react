@@ -3,10 +3,13 @@ import { useEffect, useState } from 'react';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
+import { initAlert } from '@common/constants/bottomsheet';
 import { getProvinceCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
+import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
+import useMove from '@hooks/useMove';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -17,17 +20,14 @@ import ReissueCardSuccess from './components/ReissueCardSuccess';
 import { REISSUE_CARD_STEP } from './constants';
 
 const ReissueCard = ({ translate: t }) => {
+  const { moveInitHomeNative } = useMove();
   const [currentStep, setCurrentStep] = useState(REISSUE_CARD_STEP.ENTER_CARD_INFORMATION);
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [cardInfo, setCardInfo] = useState({});
   const [email, setEmail] = useState();
   const [reissueCardSuccessInfo, setReissueCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
@@ -37,16 +37,17 @@ const ReissueCard = ({ translate: t }) => {
   const { isLogin } = useLoginInfo();
 
   const handleCloseAlert = () => {
-    setAlert({
-      isShow: false,
-      title: '',
-      content: '',
-    });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const requestGetCardInfo = async cardNumber => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.getCardInfo, { cashcd_no: cardNumber });
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getCardInfo, {
+      cashcd_no: cardNumber,
+    });
     setShowLoading(false);
     if (isSuccess) {
       const {
@@ -73,6 +74,8 @@ const ReissueCard = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        title: '',
+        requiredLogin,
       });
     }
   };
@@ -84,7 +87,7 @@ const ReissueCard = ({ translate: t }) => {
       cus_bth_y4mm_dt,
     };
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.cardVerificationStep2, payload);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.cardVerificationStep2, payload);
     setShowLoading(false);
     if (isSuccess) {
       if (Number(data?.result_cd) === 1) {
@@ -94,6 +97,8 @@ const ReissueCard = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        title: '',
+        requiredLogin,
       });
     }
   };
@@ -110,7 +115,7 @@ const ReissueCard = ({ translate: t }) => {
       cusnm: '',
       dbcd_iss_rsn_c: 'S0351',
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
     if (isSuccess) {
       const { result_cd } = data || {};
@@ -128,6 +133,8 @@ const ReissueCard = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        title: '',
+        requiredLogin,
       });
     }
   };
@@ -151,7 +158,7 @@ const ReissueCard = ({ translate: t }) => {
       post_cd,
     };
     await requestApi(endpoints.inquiryUserInformation); //Require by BE, do nothing
-    const { data, error, isSuccess } = await requestApi(endpoints.reissueCardLogged, payload);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.reissueCardLogged, payload);
     setShowLoading(false);
     if (isSuccess) {
       if (Number(data?.result_cd) === 1) {
@@ -179,6 +186,8 @@ const ReissueCard = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        title: '',
+        requiredLogin,
       });
     }
   };
@@ -316,7 +325,7 @@ const ReissueCard = ({ translate: t }) => {
         onClose={handleCloseAlert}
         firstButton={{
           onClick: handleCloseAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </>

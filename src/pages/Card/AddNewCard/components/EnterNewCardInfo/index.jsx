@@ -123,7 +123,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
 
   const requestGetAccounts = async () => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.getAccountList);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getAccountList);
     setShowLoading(false);
     if (isSuccess) {
       const { cus_acno_list: accountList } = data || {};
@@ -146,7 +146,9 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
     } else {
       setAlert({
         isShow: true,
+        title: '',
         content: error,
+        requiredLogin,
       });
     }
   };
