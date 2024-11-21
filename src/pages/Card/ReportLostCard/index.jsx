@@ -5,10 +5,12 @@ import reportLostImg from '@assets/images/loud-speaker.png';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
+import { initAlert } from '@common/constants/bottomsheet';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, reportLostCardLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
+import useMove from '@hooks/useMove';
 import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -31,16 +33,13 @@ const ReportLostCard = ({ translate: t }) => {
   const [accident, setAccident] = useState();
   const [formValues, setFormValues] = useState();
   const [showLoading, setShowLoading] = useState(false);
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
     type: 'success',
   });
+  const { moveInitHomeNative } = useMove();
   const { requestApi } = useApi();
 
   const handleSubmitForm = values => {
@@ -59,16 +58,15 @@ const ReportLostCard = ({ translate: t }) => {
   };
 
   const handleCloseAlert = () => {
-    setAlert({
-      isShow: false,
-      title: '',
-      content: '',
-    });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const requestReportLostLogged = async () => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.reportLostLogged, {
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.reportLostLogged, {
       cashcd_acdnt_c: '74', //Default account code
       cashcd_acdnt_desc: accident,
     });
@@ -85,6 +83,8 @@ const ReportLostCard = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        title: '',
+        requiredLogin,
       });
     }
   };
