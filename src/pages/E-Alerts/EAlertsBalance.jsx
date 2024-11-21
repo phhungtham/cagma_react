@@ -11,10 +11,12 @@ import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccountsBottom';
 import Header from '@common/components/organisms/Header';
+import { initAlert } from '@common/constants/bottomsheet';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import { eAlertLabels, menuLabels } from '@common/constants/labels';
+import { ctaLabels, eAlertLabels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { formatCurrencyDisplay } from '@utilities/currency';
 import { isIphone } from '@utilities/deviceDetected';
 import getPushToken from '@utilities/gmCommon/getPushToken';
@@ -50,16 +52,13 @@ const EAlertsBalance = ({ translate: t }) => {
     balancePushEnabled: false,
     balanceAmount: 0,
   });
-  const [serverErrorAlert, setServerErrorAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [serverErrorAlert, setServerErrorAlert] = useState(initAlert);
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
     type: 'success',
   });
+  const { moveInitHomeNative } = useMove();
 
   const isMoneyLeavingEnabled = setting.moneyLeavingEmailEnabled || setting.moneyLeavingPushEnabled;
   const isMoneyIntoEnabled = setting.moneyIntoEmailEnabled || setting.moneyIntoPushEnabled;
@@ -89,16 +88,15 @@ const EAlertsBalance = ({ translate: t }) => {
   };
 
   const handleCloseServerAlert = () => {
-    setServerErrorAlert({
-      isShow: false,
-      title: '',
-      content: '',
-    });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setServerErrorAlert(initAlert);
   };
 
   const requestGetEAlertSetting = async () => {
     setShowLoading(true);
-    const { isSuccess, error, data } = await requestApi(endpoints.getEAlertSetting, {});
+    const { isSuccess, error, data, requiredLogin } = await requestApi(endpoints.getEAlertSetting, {});
     if (isSuccess) {
       getPushToken(getTokenCallback);
       const { grid_01: accountList } = data || {};
@@ -123,6 +121,7 @@ const EAlertsBalance = ({ translate: t }) => {
       setServerErrorAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
     setShowLoading(false);
@@ -142,12 +141,13 @@ const EAlertsBalance = ({ translate: t }) => {
       push_tmn_no: tokenPlugin,
       tmn_d: isIphoneDevice ? 'I' : 'A',
     };
-    const { isSuccess, error, data } = await requestApi(endpoints.updateEAlertSetting, payload);
+    const { isSuccess, error, data, requiredLogin } = await requestApi(endpoints.updateEAlertSetting, payload);
     setShowLoading(false);
     if (!isSuccess) {
       return setServerErrorAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
     const { result_cd } = data;
@@ -247,6 +247,7 @@ const EAlertsBalance = ({ translate: t }) => {
   useEffect(() => {
     requestGetEAlertSetting();
   }, []);
+
   return (
     <div className="eAlerts-balance__wrapper">
       {showLoading && <Spinner />}
@@ -437,7 +438,7 @@ const EAlertsBalance = ({ translate: t }) => {
         onClose={handleCloseServerAlert}
         firstButton={{
           onClick: handleCloseServerAlert,
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
     </div>

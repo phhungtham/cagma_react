@@ -7,10 +7,12 @@ import Spinner from '@common/components/atoms/Spinner';
 import Switch from '@common/components/atoms/Switch';
 import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
+import { initAlert } from '@common/constants/bottomsheet';
 import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, eAlertLabels as labels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
 import { isIphone } from '@utilities/deviceDetected';
 import getPushToken from '@utilities/gmCommon/getPushToken';
@@ -35,16 +37,13 @@ const EAlertsManagement = ({ translate: t }) => {
     balanceEnabled: false,
     accountCount: 0,
   });
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
     type: 'success',
   });
+  const { moveInitHomeNative } = useMove();
 
   const isCustomerInfoEnabled = setting.customerEmailEnabled || setting.customerAppPushEnabled;
 
@@ -53,11 +52,10 @@ const EAlertsManagement = ({ translate: t }) => {
   };
 
   const handleCloseAlert = () => {
-    setAlert({
-      isShow: false,
-      title: '',
-      content: '',
-    });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const handleNavigateBalanceSetting = () => {
@@ -73,7 +71,7 @@ const EAlertsManagement = ({ translate: t }) => {
 
   const requestGetEAlertSetting = async () => {
     setShowLoading(true);
-    const { isSuccess, error, data } = await requestApi(endpoints.getEAlertSetting, {});
+    const { isSuccess, error, data, requiredLogin } = await requestApi(endpoints.getEAlertSetting, {});
     setShowLoading(false);
     if (isSuccess) {
       getPushToken(getTokenCallback);
@@ -95,6 +93,7 @@ const EAlertsManagement = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
@@ -108,12 +107,13 @@ const EAlertsManagement = ({ translate: t }) => {
       push_tmn_no: tokenPlugin,
       tmn_d: isIphoneDevice ? 'I' : 'A',
     };
-    const { isSuccess, error, data } = await requestApi(endpoints.updateEAlertSetting, payload);
+    const { isSuccess, error, data, requiredLogin } = await requestApi(endpoints.updateEAlertSetting, payload);
     setShowLoading(false);
     if (!isSuccess) {
       return setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
     return data;
