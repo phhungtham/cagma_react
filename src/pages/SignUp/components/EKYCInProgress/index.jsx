@@ -81,14 +81,14 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
     setShowLoading(false);
     if (isSuccess) {
       const { confm_proc_s: processingStatus, cusno } = data || {};
-      if (['20', '30', '40'].includes(processingStatus)) {
+      if (['20', '30'].includes(processingStatus)) {
         setShowRetryBtn(true);
         setShowToast({
           isShow: true,
           message: t(labels.unableToRetrieve),
           type: 'error',
         });
-      } else if (processingStatus === '10') {
+      } else if (processingStatus === '40') {
         const isFetchCustomerData = !!cusno;
         onConfirm(isFetchCustomerData);
       } else if (['50', '60'].includes(processingStatus)) {
