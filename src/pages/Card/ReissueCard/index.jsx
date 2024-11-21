@@ -20,7 +20,6 @@ import ReissueCardSuccess from './components/ReissueCardSuccess';
 import { REISSUE_CARD_STEP } from './constants';
 
 const ReissueCard = ({ translate: t }) => {
-  const { moveInitHomeNative } = useMove();
   const [currentStep, setCurrentStep] = useState(REISSUE_CARD_STEP.ENTER_CARD_INFORMATION);
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [cardInfo, setCardInfo] = useState({});
@@ -33,6 +32,7 @@ const ReissueCard = ({ translate: t }) => {
     message: '',
     type: 'success',
   });
+  const { moveInitHomeNative } = useMove();
   const { requestApi } = useApi();
   const { isLogin } = useLoginInfo();
 

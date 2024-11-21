@@ -2,10 +2,12 @@ import { useState } from 'react';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
+import { initAlert } from '@common/constants/bottomsheet';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, activeCardLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
+import useMove from '@hooks/useMove';
 import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 import { moveHome } from '@utilities/index';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -26,18 +28,15 @@ const ActiveCard = ({ translate: t }) => {
   const [incorrectInfoNumber, setIncorrectInfoNumber] = useState(0);
   const [activeCardSuccessInfo, setActiveCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
   const { isLogin } = useLoginInfo();
+  const { moveInitHomeNative } = useMove();
 
   const { requestApi } = useApi();
 
   const requestActiveCardLogged = async payload => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.activeCardLogged, payload);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.activeCardLogged, payload);
     setShowLoading(false);
     if (isSuccess) {
       const { cashcd_no_display: cardNo, cashcd_acno1_display: accountNumber, result_cd } = data;
@@ -52,6 +51,8 @@ const ActiveCard = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        title: '',
+        requiredLogin,
       });
     }
   };
@@ -93,7 +94,7 @@ const ActiveCard = ({ translate: t }) => {
       dep_trx_dtl_d: '01',
       dbcd_iss_rsn_c: '',
     };
-    const { error, isSuccess } = await requestApi(endpoints.cardVerificationStep1, payload);
+    const { error, isSuccess, requiredLogin } = await requestApi(endpoints.cardVerificationStep1, payload);
     setShowLoading(false);
     if (isSuccess) {
       if (isLogin) {
@@ -119,17 +120,18 @@ const ActiveCard = ({ translate: t }) => {
         setAlert({
           isShow: true,
           content: error,
+          title: '',
+          requiredLogin,
         });
       }
     }
   };
 
   const handleCloseAlert = () => {
-    setAlert({
-      isShow: false,
-      title: '',
-      content: '',
-    });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const handleSubmitAccountForm = async values => {
@@ -140,7 +142,7 @@ const ActiveCard = ({ translate: t }) => {
       adr_zipc: postalCode,
       cashcd_acno1: lastSixAccountNumber,
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.cardVerificationStep2, payload);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.cardVerificationStep2, payload);
     setShowLoading(false);
     if (isSuccess) {
       if (Number(data?.result_cd) === 1) {
@@ -153,6 +155,8 @@ const ActiveCard = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        title: '',
+        requiredLogin,
       });
     }
   };
