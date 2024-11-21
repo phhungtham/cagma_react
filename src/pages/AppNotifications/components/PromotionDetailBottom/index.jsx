@@ -35,7 +35,7 @@ const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry, tr
   }, [data]);
 
   const handleShare = () => {
-    const link = `${AppCfg.BASE_URL_IMAGE}/link.jsp?screenid=${MENU_CODE.NOTIFICATION}&promotion_seq=${data?.banner_seq}`;
+    const link = `/link.jsp?screenid=${MENU_CODE.NOTIFICATION}&promotion_seq=${data?.banner_seq}`;
     shareLink(link);
   };
 
