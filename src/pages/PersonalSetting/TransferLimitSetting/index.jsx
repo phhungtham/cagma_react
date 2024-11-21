@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
+import { initAlert } from '@common/constants/bottomsheet';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, manageLimitLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { buildObjectMapFromResponse } from '@utilities/convert';
 import { convertToNumber } from '@utilities/currency';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -30,11 +32,8 @@ const TransferLimitSetting = ({ translate: t }) => {
     title: '',
     content: '',
   });
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
+  const { moveInitHomeNative } = useMove();
 
   const handleSubmitForm = limit => {
     const newLimitNumber = convertToNumber(limit);
@@ -44,7 +43,6 @@ const TransferLimitSetting = ({ translate: t }) => {
       setAlert({
         isShow: true,
         title: t(labels.pleasConfirmAmount),
-        // eslint-disable-next-line quotes
         content: t(labels.notAllowZero),
       });
       return;
@@ -67,7 +65,7 @@ const TransferLimitSetting = ({ translate: t }) => {
 
   const requestGetTransferLimit = async () => {
     setShowLoading(true);
-    const { isSuccess, error, data } = await requestApi(endpoints.getBankingTransferLimit, {});
+    const { isSuccess, error, data, requiredLogin } = await requestApi(endpoints.getBankingTransferLimit, {});
     setShowLoading(false);
     if (isSuccess) {
       const detail = buildObjectMapFromResponse(data, transferLimitMapResponseFields);
@@ -78,6 +76,7 @@ const TransferLimitSetting = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
@@ -91,11 +90,10 @@ const TransferLimitSetting = ({ translate: t }) => {
   };
 
   const handleCloseAlert = () => {
-    setAlert({
-      isShow: false,
-      title: '',
-      content: '',
-    });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const requestChangeLimit = async () => {
@@ -124,13 +122,14 @@ const TransferLimitSetting = ({ translate: t }) => {
       result = await requestChangeLimit();
     }
     setShowLoading(false);
-    const { data, error } = result;
+    const { data, error, requiredLogin } = result;
     if (data?.result_cd === 1) {
       setCurrentStep(TRANSFER_LIMIT_SETTING_STEP.COMPLETED);
     } else {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
