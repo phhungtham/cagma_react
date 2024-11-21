@@ -9,7 +9,7 @@ import SelectTimeBottom from '@common/components/organisms/bottomSheets/SelectTi
 import Header from '@common/components/organisms/Header';
 import { CustomerTypes } from '@common/constants/account';
 import { getPurposeAppointment, getSubPurposeAppointment } from '@common/constants/commonCode';
-import { hoursFullOptions, minuteHalfOptions } from '@common/constants/dateTime';
+import { minuteHalfOptions } from '@common/constants/dateTime';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, bookAppointmentLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,6 +23,7 @@ import { moveBack } from '@utilities/index';
 import dayjs from 'dayjs';
 
 import {
+  appointmentHourOptions,
   bookAppointmentFormDefaultValues,
   businessPurposeKeys,
   customerTypeOptions,
@@ -32,7 +33,6 @@ import CustomerStatusBottom from '../CustomerStatusBottom';
 import { bookAppointmentSchema } from './schema';
 import './styles.scss';
 
-//TODO: Hidden Time BS content if not date selected.
 const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAlert }) => {
   const [showCustomerTypeBottom, setShowCustomerTypeBottom] = useState(false);
   const [showPurposeAppointmentBottom, setShowPurposeAppointmentBottom] = useState(false);
@@ -45,6 +45,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
   const [showLoading, setShowLoading] = useState(false);
   const [customer, setCustomer] = useState();
   const [dayOfWeekSelected, setDayOfWeekSelected] = useState();
+  const [timeSelected, setTimeSelected] = useState();
   const { requestApi } = useApi();
 
   const {
@@ -116,12 +117,33 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
     setShowPurposeAppointmentBottom(false);
   };
 
+  // //From monday to thursday 10:00 -> 16:00
+  // //Friday 10:00 -> 16:30
+  const checkAndResetIfInvalidTime = () => {
+    const [hour, minute] = timeSelected.split(' ');
+    const fridayIndex = 5;
+    if (dayOfWeekSelected !== fridayIndex) {
+      if (hour === '16' && minute === '30') {
+        setValue('time', '', { shouldValidate: true });
+        setValue('timeDisplay', '', { shouldValidate: true });
+        setShowAlert({
+          isShow: true,
+          title: t(labels.pleaseSelectAgain2),
+          content: t(labels.invalidConsultationTime),
+        });
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleSelectTime = time => {
+    setShowSelectTimeBottom(false);
+    setTimeSelected(time);
     const formattedTime = time.replace(' ', '');
     const timeDisplay = formatHHMMToDisplay(formattedTime);
     setValue('time', formattedTime, { shouldValidate: true });
     setValue('timeDisplay', timeDisplay, { shouldValidate: true });
-    setShowSelectTimeBottom(false);
   };
 
   const handleChangeCustomerStatus = values => {
@@ -145,7 +167,12 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
     setCustomer(data || {});
   };
 
-  const requestCheckIsBusinessDay = async date => {
+  const checkDateOfWeek = () => {
+    const dayOfWeek = dayjs(date, 'YYYYMMDD').day();
+    setDayOfWeekSelected(dayOfWeek);
+  };
+
+  const requestCheckIsBusinessDay = async () => {
     setShowLoading(true);
     const payload = {
       date,
@@ -163,6 +190,8 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
         });
         setValue('date', '', { shouldValidate: true });
         setValue('dateDisplay', '', { shouldValidate: true });
+      } else {
+        checkDateOfWeek();
       }
     }
   };
@@ -195,6 +224,12 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
       setPurposeTabs([]);
     }
   }, [customerType]);
+
+  useEffect(() => {
+    if (dayOfWeekSelected && timeSelected) {
+      checkAndResetIfInvalidTime();
+    }
+  }, [dayOfWeekSelected, timeSelected]);
 
   useEffect(() => {
     if (date) {
@@ -344,8 +379,9 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
         open={showSelectTimeBottom}
         onClose={() => setShowSelectTimeBottom(false)}
         onTimeChange={handleSelectTime}
-        hourOptions={hoursFullOptions}
+        hourOptions={appointmentHourOptions}
         minuteOptions={minuteHalfOptions}
+        hide={!date}
       />
       <CustomerStatusBottom
         open={showCustomerStatusBottom}

@@ -78,3 +78,5 @@ export const customerTypeOptions = [
 
 export const personalPurposeKeys = ['10', '20', '30'];
 export const businessPurposeKeys = ['40', '50'];
+
+export const appointmentHourOptions = ['10', '11', '12', '13', '14', '15', '16'];

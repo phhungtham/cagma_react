@@ -18,6 +18,7 @@ const SelectTimeBottom = ({
   defaultTime,
   hourOptions = hoursShortOptions,
   minuteOptions = timeTypes,
+  hide,
   translate: t,
 }) => {
   const valueRef = useRef({});
@@ -40,34 +41,36 @@ const SelectTimeBottom = ({
       clazz="bottom__dropdown__wrapper"
       type="fit-content"
     >
-      <div>
-        <div className="select_wrapper">
-          <ScrollSelect
-            options={hourOptions}
-            defaultValue={open ? selectedHour : selectedHour - 2}
-            onChangeValue={value => {
-              valueRef.current.hour = value;
-            }}
-          />
+      {!hide && (
+        <>
+          <div className="select_wrapper">
+            <ScrollSelect
+              options={hourOptions}
+              defaultValue={open ? selectedHour : selectedHour - 2}
+              onChangeValue={value => {
+                valueRef.current.hour = value;
+              }}
+            />
 
-          <ScrollSelect
-            options={minuteOptions}
-            defaultValue={selectedMinute}
-            onChangeValue={value => {
-              valueRef.current.minute = value;
-            }}
-          />
-        </div>
+            <ScrollSelect
+              options={minuteOptions}
+              defaultValue={selectedMinute}
+              onChangeValue={value => {
+                valueRef.current.minute = value;
+              }}
+            />
+          </div>
 
-        <div className="btn_container">
-          <Button
-            label={t(ctaLabels.confirm)}
-            variant="filled__primary"
-            className="w-full"
-            onClick={handleConfirmSelectedTime}
-          />
-        </div>
-      </div>
+          <div className="btn_container">
+            <Button
+              label={t(ctaLabels.confirm)}
+              variant="filled__primary"
+              className="w-full"
+              onClick={handleConfirmSelectedTime}
+            />
+          </div>
+        </>
+      )}
     </BottomSheet>
   );
 };

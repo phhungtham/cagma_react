@@ -153,6 +153,8 @@ export const bookAppointmentLabels = {
   address2: 'lbl_CAET900010_0069', //Address
   pleaseSelectAgain: 'lbl_CAET900010_0222', //Please select again
   thisIsNotABusinessDay: 'lbl_CAET900010_0223', //This is not a business day for consultation.
+  pleaseSelectAgain2: 'lbl_CAET900010_0224', //Please select again
+  invalidConsultationTime: 'lbl_CAET900010_0225', //This is not a consultation time. Mon-Thu (10:00-16:00), Fri (10:00-16:30)
 };
 
 export const manageLimitLabels = {

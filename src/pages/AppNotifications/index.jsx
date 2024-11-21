@@ -9,7 +9,7 @@ import Header from '@common/components/organisms/Header';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import { menuLabels } from '@common/constants/labels';
+import { ctaLabels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import useMove from '@hooks/useMove';
@@ -397,7 +397,7 @@ const AppNotifications = ({ translate: t }) => {
         subtitle={transactionLoadErrors?.msgText || offerLoadErrors?.msgText}
         firstButton={{
           onClick: () => alertMove(transactionLoadErrors?.msgId),
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
       <Alert
@@ -408,7 +408,7 @@ const AppNotifications = ({ translate: t }) => {
         textAlign="left"
         firstButton={{
           onClick: () => setAlert({ isShow: false, title: '', content: '' }),
-          label: 'Confirm',
+          label: t(ctaLabels.confirm),
         }}
       />
       {loadMoreNotify && loadTransactionState && listTransactionNotify.length > 0 && <LoadingInfinite />}
