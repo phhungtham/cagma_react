@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { ArrowRight } from '@assets/icons';
 import Tabs from '@common/components/atoms/Tabs';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { bookAppointmentLabels as labels } from '@common/constants/labels';
@@ -68,7 +67,6 @@ const PurposeAppointmentBottom = ({
               onClick={() => onSelectPurpose(item)}
             >
               <span className="option__label">{item.label}</span>
-              <ArrowRight />
             </div>
           ))}
         </div>

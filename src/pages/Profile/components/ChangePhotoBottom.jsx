@@ -1,4 +1,3 @@
-import { ArrowRight } from '@assets/icons';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { changeProfileLabels as labels } from '@common/constants/labels';
 import { PropTypes } from 'prop-types';
@@ -29,14 +28,12 @@ const ChangePhotoBottom = ({ open, onClose, onClickOpenCamera, onClickOpenGaller
             onClick={onClickAccessCamera}
           >
             <span className="option__label">{t(labels.takePhoto)}</span>
-            <ArrowRight />
           </div>
           <div
             className="dropdown__option"
             onClick={onClickAccessPhotos}
           >
             <span className="option__label">{t(labels.uploadGallery)}</span>
-            <ArrowRight />
           </div>
         </div>
       </BottomSheet>

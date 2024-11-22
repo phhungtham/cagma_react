@@ -329,7 +329,6 @@ const PersonalDetailLayout = ({ onSubmit }) => {
         onClose={onCloseSelectBottom}
         onSelect={handleChangeSelectBottom}
         options={selectBottom.options}
-        showArrow={false}
         title={selectBottom.title}
       />
       {showBranchBottom && branches && (

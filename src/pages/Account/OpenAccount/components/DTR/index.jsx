@@ -420,7 +420,6 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
         onClose={onCloseSelectBottom}
         onSelect={onChangeSelectBottom}
         options={selectBottom.options}
-        showArrow={false}
         title={selectBottom.title}
       />
     </>

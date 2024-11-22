@@ -361,7 +361,6 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
           onClose={() => setShowCustomerTypeBottom(false)}
           onSelect={handleSelectCustomerType}
           options={customerTypeFormattedOptions}
-          showArrow={false}
           title={t(labels.customerTypeSub)}
         />
       )}

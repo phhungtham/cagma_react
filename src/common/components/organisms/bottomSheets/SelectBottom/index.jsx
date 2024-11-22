@@ -1,8 +1,7 @@
-import { ArrowRight } from '@assets/icons';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { PropTypes } from 'prop-types';
 
-const SelectBottom = ({ open, onClose, onSelect, options, title, showArrow }) => {
+const SelectBottom = ({ open, onClose, onSelect, options, title }) => {
   const onSelectItem = item => {
     onSelect(item);
   };
@@ -23,7 +22,6 @@ const SelectBottom = ({ open, onClose, onSelect, options, title, showArrow }) =>
             onClick={() => onSelectItem(item)}
           >
             <span className="option__label">{item.label}</span>
-            {showArrow ? <ArrowRight /> : <></>}
           </div>
         ))}
       </div>

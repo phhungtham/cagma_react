@@ -501,7 +501,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             onClose={() => setShowIntendedUseAccountBottom(false)}
             onSelect={onSelectIntendedUseAccount}
             options={intendedUseAccountOptions}
-            showArrow={false}
             title={t(labels.intendedUseAccount)}
           />
         )}

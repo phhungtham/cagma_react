@@ -293,7 +293,6 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
         onClose={onCloseSelectBottom}
         onSelect={onChangeSelectBottom}
         options={selectBottom.options}
-        showArrow={currentSelectFieldName === 'amount'}
         title={selectBottom.title}
       />
     </>

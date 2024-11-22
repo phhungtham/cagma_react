@@ -47,7 +47,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
       type: '',
       options: provinceOptions,
       isShow: true,
-      title: 'Province',
+      title: 'Province', //TODO: Add label
     });
   };
 
@@ -292,7 +292,6 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
         onClose={onCloseSelectBottom}
         onSelect={onChangeSelectBottom}
         options={selectBottom.options}
-        showArrow
         title={selectBottom.title}
       />
       <ViewTermBottom

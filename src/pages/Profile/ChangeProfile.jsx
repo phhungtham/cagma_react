@@ -546,7 +546,6 @@ const ChangeProfile = ({ translate: t }) => {
         onClose={onCloseSelectBottom}
         onSelect={onChangeSelectBottom}
         options={selectBottom.options}
-        showArrow
         title={selectBottom.title}
       />
       <Alert

@@ -247,7 +247,6 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
         onClose={handleCloseSelectProvinceBottom}
         onSelect={handleChangeProvince}
         options={showSelectProvinceBottom.options}
-        showArrow
         title={showSelectProvinceBottom.title}
       />
     </>

@@ -63,7 +63,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
       type: '',
       options: options,
       isShow: true,
-      title: 'Province',
+      title: 'Province', //TODO: Add label
     });
   };
 
@@ -416,7 +416,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
         onClose={handleCloseSelectBottom}
         onSelect={handleChangeSelectBottom}
         options={selectBottom.options}
-        showArrow
         title={selectBottom.title}
       />
     </>

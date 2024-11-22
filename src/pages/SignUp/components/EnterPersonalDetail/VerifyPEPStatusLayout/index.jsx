@@ -258,7 +258,6 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
         onClose={onCloseSelectBottom}
         onSelect={handleChangeSelectBottom}
         options={selectBottom.options}
-        showArrow={false}
         title={selectBottom.title}
       />
       <Alert
