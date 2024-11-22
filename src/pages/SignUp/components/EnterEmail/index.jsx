@@ -24,7 +24,7 @@ import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
 import { EnterEmailSchema } from './schema';
 
 const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) => {
-  const { deviceId, ekycCached, setEkycToNativeCache, translate: t } = useContext(SignUpContext);
+  const { deviceId, ekycCached, setEkycToNativeCache, translate: t, isNavigateFromLogin } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
@@ -81,7 +81,10 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
     const request = {
       cus_email: email,
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.requestGetEmailVerifyCodeMotp, request);
+    const endpoint = isNavigateFromLogin
+      ? endpoints.requestGetEmailVerifyCodeMotp
+      : endpoints.requestGetEmailVerifyCode;
+    const { data, error, isSuccess } = await requestApi(endpoint, request);
     setShowLoading(false);
     if (!isSuccess) {
       return setAlert({
@@ -150,7 +153,8 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       cert_no: verificationCode,
       seqno: verifyCodeSessionNumberRef.current,
     };
-    const { data, isSuccess, error } = await requestApi(endpoints.sendEmailVerifyCodeMotp, request);
+    const endpoint = isNavigateFromLogin ? endpoints.sendEmailVerifyCodeMotp : endpoints.sendEmailVerifyCode;
+    const { data, isSuccess, error, requiredLogin } = await requestApi(endpoint, request);
     const resultCode = String(data?.result_cd || '');
     const isVerifyFailed = resultCode === '9';
     const isVerifySuccess = resultCode === '1';
@@ -171,9 +175,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       }
 
       return;
-    }
-
-    if (isVerifySuccess) {
+    } else if (isVerifySuccess) {
       setShowEmailVerifyCode(false);
       setValue('isEmailVerified', true, { shouldValidate: true });
       clearErrors('verificationCode');
