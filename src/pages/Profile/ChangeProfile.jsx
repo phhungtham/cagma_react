@@ -288,7 +288,7 @@ const ChangeProfile = ({ translate: t }) => {
         return setShowAlert({
           isShow: true,
           title: '',
-          content: 'Please verify your email', //TODO: Missing label
+          content: t(labels.pleaseVerifyYourEmail),
         });
       }
     }

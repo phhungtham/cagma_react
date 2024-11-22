@@ -243,6 +243,7 @@ export const changeProfileLabels = {
   changeProfileImage: 'lbl_CAME900000_0223', //Change profile image
   maxFileSize: 'lbl_CAME900000_0224', //*5MB Max
   addressType: 'lbl_CAME900000_0915', //Address Type
+  pleaseVerifyYourEmail: 'lbl_CAME900000_0188', //Please verify your email
 };
 
 export const openAccountLabels = {

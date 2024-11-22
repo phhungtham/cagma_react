@@ -50,7 +50,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
     if (!isSuccess) {
       return setAlert({
         isShow: true,
-        title: 'Sorry!',
+        title: '',
         content: error,
       });
     }
