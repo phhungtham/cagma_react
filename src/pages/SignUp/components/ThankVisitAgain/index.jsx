@@ -25,6 +25,7 @@ import { SignUpContext } from '@pages/SignUp';
 import { SignUpStepStatus } from '@pages/SignUp/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
+import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
@@ -100,11 +101,12 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
     const { data, error, isSuccess } = await requestApi(endpoints.checkSignUpApprovalStatus, payload);
     setShowLoading(false);
     if (isSuccess) {
-      const { rslt_d, inter_cus_yn } = data;
-      if (Number(rslt_d) === SignUpStepStatus.INFO_REJECTED) {
+      const { rslt_d, inter_cus_yn, ekyc_aplct_stp_c } = data;
+      if (Number(ekyc_aplct_stp_c) === SignUpStepStatus.INFO_REJECTED) {
+        clearEkycInfo();
         return onNavigateEkycResult({ isSuccess: false });
       }
-      if (Number(rslt_d) === SignUpStepStatus.INFO_REVIEWING) {
+      if (Number(ekyc_aplct_stp_c) === SignUpStepStatus.INFO_REVIEWING) {
         return onNavigateEkycResult({ isSuccess: true });
       }
       const isEkycApproved = Number(ekycStepStatus.ekyc_aplct_stp_c) === SignUpStepStatus.INFO_APPROVED;

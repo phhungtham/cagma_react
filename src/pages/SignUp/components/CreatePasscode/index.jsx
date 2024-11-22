@@ -5,7 +5,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Header from '@common/components/organisms/Header';
 import { signUpCreateMOTPLabels as labels, menuLabels } from '@common/constants/labels';
 import { SignUpContext } from '@pages/SignUp';
-import motpSuccessHandle from '@utilities/gmCommon/motpSuccessHandle';
+import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import createSecurityPasscode from '@utilities/gmSecure/createSecurityPasscode';
 import { moveBack } from '@utilities/index';
 
@@ -19,7 +19,7 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
   };
 
   const handleCreatePasscodeSuccess = () => {
-    motpSuccessHandle();
+    clearEkycInfo();
     onConfirm();
   };
 
