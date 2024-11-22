@@ -12,7 +12,7 @@ import { moveBack } from '@utilities/index';
 import './styles.scss';
 
 const SignUpCreatePasscode = ({ onConfirm }) => {
-  const { translate: t } = useContext(SignUpContext);
+  const { translate: t, isNavigateFromLogin } = useContext(SignUpContext);
 
   const handleCreatePasscodeFail = () => {
     //TODO: Handle case failed
@@ -24,7 +24,9 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
   };
 
   const handleSubmitForm = () => {
-    createSecurityPasscode(handleCreatePasscodeSuccess, handleCreatePasscodeFail);
+    createSecurityPasscode(handleCreatePasscodeSuccess, handleCreatePasscodeFail, {
+      isFromLogin: isNavigateFromLogin || false,
+    });
   };
 
   return (

@@ -37,6 +37,7 @@ const SignUp = ({ translate }) => {
   const [ekycStepStatus, setEkycStepStatus] = useState();
   const [existingCustomer, setExistingCustomer] = useState();
   const [userId, setUserId] = useState();
+  const [isNavigateFromLogin, setIsNavigateFromLogin] = useState(false);
   const [ekycResultSuccess, setEkycResultSuccess] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
@@ -211,6 +212,7 @@ const SignUp = ({ translate }) => {
     setDeviceId(deviceId);
     // setUserEmail(email);
     const isFromLogin = nativeParams?.isFromLogin;
+    setIsNavigateFromLogin(isFromLogin);
     if (!isEkycProcessing) {
       if (isFromLogin) {
         setCurrentStep(SignUpStep.ENTER_EMAIL);
@@ -229,7 +231,16 @@ const SignUp = ({ translate }) => {
 
   return (
     <SignUpContext.Provider
-      value={{ deviceId, userId, existingCustomer, ekycCached, setEkycToNativeCache, ekycStepStatus, translate }}
+      value={{
+        deviceId,
+        userId,
+        existingCustomer,
+        ekycCached,
+        setEkycToNativeCache,
+        ekycStepStatus,
+        translate,
+        isNavigateFromLogin,
+      }}
     >
       {showLoading && <Spinner />}
       <div className="sign-up__wrapper page__wrapper">

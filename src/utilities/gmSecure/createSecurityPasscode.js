@@ -1,7 +1,7 @@
 import { AppCfg } from '@configs/appConfigs';
 import { $h } from 'navigation/wmatrix_config';
 
-const createSecurityPasscode = async (successCb, errorCb) => {
+const createSecurityPasscode = async (successCb, errorCb, { isFromLogin }) => {
   if (AppCfg.ENV === 'development') return successCb();
   $h.exec(
     result => {
@@ -13,7 +13,11 @@ const createSecurityPasscode = async (successCb, errorCb) => {
     },
     'GMSecure',
     'createSecurityPasscode',
-    []
+    [
+      {
+        isFromLogin,
+      },
+    ]
   );
 };
 export default createSecurityPasscode;
