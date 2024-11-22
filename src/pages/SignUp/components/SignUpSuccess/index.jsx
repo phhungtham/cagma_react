@@ -10,7 +10,7 @@ import motpSuccessHandle from '@utilities/gmCommon/motpSuccessHandle';
 import { signUpSuccessFields } from './constants';
 
 const SignUpSuccess = () => {
-  const { ekycCached, translate: t } = useContext(SignUpContext);
+  const { ekycCached, translate: t, userId } = useContext(SignUpContext);
   const [signUpSuccessInfo, setSignUpSuccessInfo] = useState();
   const { moveHomeNative } = useMove();
 
@@ -21,7 +21,8 @@ const SignUpSuccess = () => {
 
   useEffect(() => {
     setSignUpSuccessInfo({
-      ...ekycCached,
+      email: ekycCached?.email || '',
+      userId,
       password: 'Registered',
       secretPasscode: 'Registered',
     });
