@@ -87,3 +87,10 @@
 .bg-white {
   background-color: $color-white;
 }
+
+//TODO:Add gradient for all page success
+.page-gradient {
+  background-image: linear-gradient($color-blue-100, #e2eaff, #fff);
+  background-size: 100% 200px;
+  background-repeat: no-repeat;
+}

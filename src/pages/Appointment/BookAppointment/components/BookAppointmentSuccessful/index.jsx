@@ -22,7 +22,7 @@ const BookAppointmentSuccessful = ({ appointmentInfo, translate: t }) => {
 
   return (
     <>
-      <div className="book-appointment-successful__wrapper">
+      <div className="book-appointment-successful__wrapper page-gradient">
         <div className="book-appointment__header">
           <div className="book-appointment__img">
             <img
