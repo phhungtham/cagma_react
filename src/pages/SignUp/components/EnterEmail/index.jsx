@@ -129,6 +129,10 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
     if (isSuccess) {
       const { screen_kd, cus_email } = data;
       if (Number(screen_kd) === 1) {
+        setEkycToNativeCache({
+          ...ekycCached,
+          email: cus_email,
+        });
         onNavigateMOTPAgreeTerms();
       } else if (Number(screen_kd) === 2) {
         setEkycToNativeCache({
