@@ -86,7 +86,8 @@ const Input = forwardRef((props, ref) => {
     handleFocusStatus('blur');
   };
 
-  const handleClearInputText = () => {
+  const handleClearInputText = e => {
+    e.preventDefault();
     setInputValues('');
     composeRef.current.value = '';
     // setErrorTextField('');
@@ -107,7 +108,9 @@ const Input = forwardRef((props, ref) => {
 
   useEffect(() => {
     setInputValues(value);
-    setCustomClass(value || value === 0 ? 'input__completed' : '');
+    if (customClass !== 'input__focus') {
+      setCustomClass(value || value === 0 ? 'input__completed' : '');
+    }
   }, [value]);
 
   useEffect(() => {
