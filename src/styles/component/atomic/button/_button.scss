@@ -73,7 +73,6 @@ $icon-circle-sizes: (
   .btn__#{$label} {
     @include button(map-get($map, background-nor));
     color: map-get($map, text-color);
-    &:hover,
     &:active {
       background-color: map-get($map, background-active);
       color: map-get($map, text-color-active);
@@ -95,7 +94,6 @@ $icon-circle-sizes: (
   }
   .btn__outlined__primary {
     border: 1px solid $color-blue-500;
-    &:hover,
     &:active {
       border: 1px solid $color-blue-800;
     }
@@ -106,7 +104,6 @@ $icon-circle-sizes: (
 
   .btn__outlined__gray {
     border: 1px solid $color-gray-400;
-    &:hover,
     &:active {
       border: 1px solid $color-gray-500;
     }
