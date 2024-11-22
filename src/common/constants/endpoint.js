@@ -15,6 +15,8 @@ export const endpoints = {
   inquiryUserInformation: '/ca/me/CAME001.pwkjson',
   requestGetEmailVerifyCode: '/ca/se/CASE001.pwkjson',
   sendEmailVerifyCode: '/ca/se/CASE002.pwkjson',
+  requestGetEmailVerifyCodeMotp: '/ca/se/CASE003.pwkjson',
+  sendEmailVerifyCodeMotp: '/ca/se/CASE004.pwkjson',
   updateEmail: '/ca/se/CASE105.pwkjson',
   preRegisterCustomerInfoStep1: '/ca/se/CASE106.pwkjson',
   preRegisterCustomerInfoStep2: '/ca/se/CASE107.pwkjson',

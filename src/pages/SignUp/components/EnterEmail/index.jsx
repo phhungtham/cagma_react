@@ -81,7 +81,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
     const request = {
       cus_email: email,
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.requestGetEmailVerifyCode, request);
+    const { data, error, isSuccess } = await requestApi(endpoints.requestGetEmailVerifyCodeMotp, request);
     setShowLoading(false);
     if (!isSuccess) {
       return setAlert({
@@ -89,42 +89,29 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
         content: error,
       });
     }
-    const resultCode = data?.cnt;
-    const isDuplicatedEmail = resultCode === 9;
-    const isEmailAvailable = resultCode === 0;
-    if (isDuplicatedEmail) {
-      return setAlert({
-        isShow: true,
-        title: '',
-        content: t(changeProfileLabels.emailAlreadyUse),
-      });
+    if (clearTimeOutRef.current) {
+      clearTimeout(clearTimeOutRef.current);
     }
+    clearErrors('verificationCode');
+    setValue('isEmailVerified', false, { shouldValidate: true });
+    setDisabledVerifyButton(false);
 
-    if (isEmailAvailable) {
-      if (clearTimeOutRef.current) {
-        clearTimeout(clearTimeOutRef.current);
-      }
-      clearErrors('verificationCode');
-      setValue('isEmailVerified', false, { shouldValidate: true });
-      setDisabledVerifyButton(false);
+    if (verifyTimerResetRef.current) verifyTimerResetRef.current();
 
-      if (verifyTimerResetRef.current) verifyTimerResetRef.current();
+    const { seqno } = data || {};
+    verifyCodeSessionNumberRef.current = seqno;
 
-      const { seqno } = data || {};
-      verifyCodeSessionNumberRef.current = seqno;
+    clearTimeOutRef.current = setTimeout(() => {
+      setError('verificationCode', {
+        type: 'timeout',
+        message: t(commonLabels.verifyEmailTimeout),
+      });
+      setDisabledVerifyButton(true);
+    }, EMAIL_VERIFY_IN_SECONDS * 1000);
+    setShowEmailVerifyCode(true);
 
-      clearTimeOutRef.current = setTimeout(() => {
-        setError('verificationCode', {
-          type: 'timeout',
-          message: t(commonLabels.verifyEmailTimeout),
-        });
-        setDisabledVerifyButton(true);
-      }, EMAIL_VERIFY_IN_SECONDS * 1000);
-      setShowEmailVerifyCode(true);
-
-      if (!alreadySendEmailVerification) {
-        setAlreadySendEmailVerification(true);
-      }
+    if (!alreadySendEmailVerification) {
+      setAlreadySendEmailVerification(true);
     }
   };
 
@@ -163,7 +150,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       cert_no: verificationCode,
       seqno: verifyCodeSessionNumberRef.current,
     };
-    const { data, isSuccess, error } = await requestApi(endpoints.sendEmailVerifyCode, request);
+    const { data, isSuccess, error } = await requestApi(endpoints.sendEmailVerifyCodeMotp, request);
     const resultCode = String(data?.result_cd || '');
     const isVerifyFailed = resultCode === '9';
     const isVerifySuccess = resultCode === '1';
