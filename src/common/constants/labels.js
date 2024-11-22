@@ -239,7 +239,7 @@ export const changeProfileLabels = {
   checkYourEmail: 'lbl_CAME900000_0218', //Please check your email
   emailAlreadyUse: 'lbl_CAME900000_0219', //This email is already in use
   emailVerifyComplete: 'lbl_CAME900000_0220', //Email verification is complete
-  doItNextTime: 'lbl_CAME900000_0204', //I'll do it next time
+  doItNextTime: 'lbl_CAME900000_0207', //I'll do it next time
   youNeedToClick: 'lbl_CAME900000_0030', //You need to click the Save button...
   changeProfileImage: 'lbl_CAME900000_0223', //Change profile image
   maxFileSize: 'lbl_CAME900000_0224', //*5MB Max
