@@ -53,6 +53,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   const [showIntendedUseAccountBottom, setShowIntendedUseAccountBottom] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState();
   const [showMoreInfo, setShowMoreInfo] = useState(false);
+  const [allowSelectTaxYear, setAllowSelectTaxYear] = useState(false);
   const [accounts, setAccounts] = useState();
   const [intendedUseAccountOptions, setIntendedUseAccountOptions] = useState();
   const [interestData, setInterestData] = useState();
@@ -215,6 +216,19 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     setShowMoreInfo(showMoreInfo);
   };
 
+  //Allow select tax year with RRSP e-Saving if current date between beginning of year until 60 days
+  const checkAllowSelectTaxYear = () => {
+    const startOfYear = dayjs().startOf('year');
+    const day60 = startOfYear.add('60', 'day');
+    const now = dayjs();
+    const allow = !now.isAfter(day60);
+    if (!allow) {
+      const currentYear = dayjs().year();
+      setValue('taxYear', currentYear, { shouldValidate: true });
+    }
+    setAllowSelectTaxYear(allow);
+  };
+
   const requestGetAccounts = async () => {
     setShowLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.getAccountList);
@@ -345,6 +359,9 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     if (productCode !== ProductCode.CHEQUING) {
       requestGetAccounts();
     }
+    if (productCode === ProductCode.RRSP_E_SAVINGS) {
+      checkAllowSelectTaxYear();
+    }
   }, []);
 
   return (
@@ -370,7 +387,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                       label={t(labels.numberOfTransactions)}
                       placeholder="Select"
                       value="Unlimited"
-                      disabled
+                      readonly
                     />
                   </section>
                 )}
@@ -428,7 +445,8 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                       label={t(labels.taxationYear)}
                       placeholder="Select"
                       onClick={handleOpenTaxYearBottom}
-                      value={taxYear} //TODO: Handle logic only select year in 60 days start of year
+                      value={allowSelectTaxYear ? taxYear : ''}
+                      disabled={!allowSelectTaxYear}
                     />
                   </section>
                 )}
