@@ -151,7 +151,8 @@ const SignUp = ({ translate }) => {
     setCurrentStep(SignUpStep.CREATE_PASSCODE);
   };
 
-  const handleCreatePasscodeSuccess = () => {
+  const handleCreatePasscodeSuccess = userId => {
+    setUserId(userId);
     setCurrentStep(SignUpStep.SIGN_UP_COMPLETE);
   };
 

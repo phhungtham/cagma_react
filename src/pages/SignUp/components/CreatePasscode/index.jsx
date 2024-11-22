@@ -14,17 +14,17 @@ import './styles.scss';
 const SignUpCreatePasscode = ({ onConfirm }) => {
   const { translate: t, isNavigateFromLogin } = useContext(SignUpContext);
 
-  const handleCreatePasscodeFail = () => {
-    //TODO: Handle case failed
-  };
-
-  const handleCreatePasscodeSuccess = () => {
-    clearEkycInfo();
-    onConfirm();
+  const handleCreatePasscodeCallback = ({ isDone, userId }) => {
+    if (isDone) {
+      clearEkycInfo();
+      onConfirm(userId);
+    } else {
+      //TODO: Handle case failed
+    }
   };
 
   const handleSubmitForm = () => {
-    createSecurityPasscode(handleCreatePasscodeSuccess, handleCreatePasscodeFail, {
+    createSecurityPasscode(handleCreatePasscodeCallback, {
       isFromLogin: isNavigateFromLogin || false,
     });
   };
