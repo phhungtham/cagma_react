@@ -21,7 +21,6 @@ const ProfileAvatar = ({ userName, setShowToast, translate: t }) => {
   const firstCharacterOfName = userName?.[0];
 
   const handleProfileImg = result => {
-    console.log('handleProfileImg:', result);
     const { statusCode, imageInfo, imageExt } = result || {};
     const isLoadSuccess = Number(statusCode) === 1000;
 
@@ -66,7 +65,6 @@ const ProfileAvatar = ({ userName, setShowToast, translate: t }) => {
   };
 
   const handleUpdateAvatarCallback = result => {
-    console.log('handleUpdateAvatarCallback:', result);
     const { statusCode } = result || {};
     const isUpdateSuccess = Number(statusCode) === 1000;
     if (isUpdateSuccess) {
@@ -80,24 +78,24 @@ const ProfileAvatar = ({ userName, setShowToast, translate: t }) => {
   };
 
   const handleCallCameraCallback = fileInfo => {
-    console.log('handleCallCameraCallback:', fileInfo);
     if (fileInfo) {
       saveProfileImg(handleUpdateAvatarCallback);
     }
   };
 
   const handleCallSelectImageCallback = fileInfo => {
-    console.log('handleCallSelectImageCallback:', fileInfo);
     if (fileInfo) {
       saveProfileImg(handleUpdateAvatarCallback);
     }
   };
 
   const handleCallPluginOpenCamera = () => {
+    onCloseChangePhotoBottom();
     callCamera(handleCallCameraCallback);
   };
 
   const handleCallPluginSelectImage = () => {
+    onCloseChangePhotoBottom();
     callSelectImage(handleCallSelectImageCallback);
   };
 
