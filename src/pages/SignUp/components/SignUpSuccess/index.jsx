@@ -3,14 +3,15 @@ import { useContext, useEffect, useState } from 'react';
 import completeImg from '@assets/images/complete.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { signUpCompleteLabels as labels } from '@common/constants/labels';
+import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
-import { moveHome } from '@utilities/index';
 
 import { signUpSuccessFields } from './constants';
 
 const SignUpSuccess = () => {
   const { ekycCached, translate: t } = useContext(SignUpContext);
   const [signUpSuccessInfo, setSignUpSuccessInfo] = useState();
+  const { moveHomeNative } = useMove();
 
   useEffect(() => {
     setSignUpSuccessInfo({
@@ -55,7 +56,7 @@ const SignUpSuccess = () => {
           variant="filled__primary"
           label={t(labels.done)}
           className="btn__cta"
-          onClick={moveHome}
+          onClick={moveHomeNative}
         />
       </div>
     </>

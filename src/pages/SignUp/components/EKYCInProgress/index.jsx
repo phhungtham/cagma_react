@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import VerifyId from '@assets/images/icon-fill-idpw-24.png';
 import LoadingImg from '@assets/images/signup-spinner.png';
@@ -13,13 +13,11 @@ import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
-import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 
 const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
-  const { deviceId, translate: t, ekycStepStatus } = useContext(SignUpContext);
+  const { deviceId, translate: t, ekycStepStatus, ekycCached } = useContext(SignUpContext);
   const { moveHomeNative } = useMove();
-  const [ekycPluginInfo, setEkycPluginInfo] = useState({});
   const [showLoading, setShowLoading] = useState(false);
   const [showRetryBtn, setShowRetryBtn] = useState(false);
   const [alert, setAlert] = useState({
@@ -40,7 +38,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
 
   const requestRegenerateEkycLink = async () => {
     setShowLoading(true);
-    const { email, firstName, lastName, packageId } = ekycPluginInfo;
+    const { email, firstName, lastName, packageId } = ekycCached;
     const payload = {
       cus_email: email,
       uuid_v: deviceId,
@@ -69,7 +67,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
       return onConfirm(isFetchCustomerData);
     }
     setShowLoading(true);
-    const { email, firstName, lastName, packageId } = ekycPluginInfo;
+    const { email, firstName, lastName, packageId } = ekycCached;
     const payload = {
       cus_email: email,
       uuid_v: deviceId,
@@ -108,14 +106,6 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
       isShow: false,
     });
   };
-
-  const getEkycInfoCallback = result => {
-    setEkycPluginInfo(result);
-  };
-
-  useEffect(() => {
-    getEkycInfo(getEkycInfoCallback);
-  }, []);
 
   return (
     <>
