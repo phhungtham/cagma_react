@@ -48,6 +48,8 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
 
   const formValues = watch();
 
+  const isExistingTabSelected = tabIndex === StatusTab.EXISTING;
+
   const handleTabChange = (tabName, tabIndex) => {
     if (tabIndex === StatusTab.EXISTING) {
       setNewCustomerFormData(formValues);
@@ -116,7 +118,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   <Input
                     label={t(labels.name2)}
                     type="text"
-                    disabled={!!name}
+                    disabled={isExistingTabSelected && !!name}
                     maxLength={300}
                     {...field}
                   />
@@ -129,7 +131,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   <Input
                     label={t(labels.phoneNumber)}
                     type="text"
-                    disabled={!!phoneNumber}
+                    disabled={isExistingTabSelected && !!phoneNumber}
                     maxLength={50}
                     {...field}
                   />
@@ -142,7 +144,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   <Input
                     label={t(labels.email2)}
                     type="text"
-                    disabled={!!email}
+                    disabled={isExistingTabSelected && !!email}
                     maxLength={50}
                     {...field}
                   />
