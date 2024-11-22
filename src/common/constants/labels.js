@@ -78,6 +78,7 @@ export const appointmentHomeLabels = {
   requested: 'lbl_CAET900000_0006', //Requested
   canceled: 'lbl_CAET900000_0007', //Canceled
   confirmed: 'lbl_CAET900000_0008', //Confirmed
+  completed: 'lbl_CAET900000_0009', //Completed
   reserve: 'lbl_CAET900000_0010', //Reserve
   cancelSuccess: 'lbl_CAET900020_0018', //Successfully canceled
 };

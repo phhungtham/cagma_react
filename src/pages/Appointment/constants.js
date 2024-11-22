@@ -46,13 +46,15 @@ export const AppointmentStatusKey = {
   REQUESTED: '1',
   CONFIRMED: '2',
   COMPLETED: '3',
+  COMPLETED_HIDDEN: '4',
   CANCELED: '9',
 };
 
 export const AppointmentStatusKeyWithLabel = {
   [AppointmentStatusKey.REQUESTED]: appointmentHomeLabels.requested,
   [AppointmentStatusKey.CONFIRMED]: appointmentHomeLabels.confirmed,
-  [AppointmentStatusKey.COMPLETED]: 'Completed', //TODO: Missing completed status
+  [AppointmentStatusKey.COMPLETED]: appointmentHomeLabels.completed,
+  [AppointmentStatusKey.COMPLETED_HIDDEN]: appointmentHomeLabels.completed,
   [AppointmentStatusKey.CANCELED]: appointmentHomeLabels.canceled,
 };
 
@@ -60,14 +62,16 @@ export const labelStatusWithVariant = {
   [AppointmentStatusKey.REQUESTED]: 'blue',
   [AppointmentStatusKey.CANCELED]: 'rose',
   [AppointmentStatusKey.CONFIRMED]: 'gray',
-  [AppointmentStatusKey.COMPLETED]: 'gray',
+  [AppointmentStatusKey.COMPLETED]: 'green',
+  [AppointmentStatusKey.COMPLETED_HIDDEN]: 'green',
 };
 
 export const labelStatusWithType = {
   [AppointmentStatusKey.REQUESTED]: 'filled',
   [AppointmentStatusKey.CANCELED]: 'filled',
   [AppointmentStatusKey.CONFIRMED]: 'filled',
-  [AppointmentStatusKey.COMPLETED]: 'outline',
+  [AppointmentStatusKey.COMPLETED]: 'filled',
+  [AppointmentStatusKey.COMPLETED_HIDDEN]: 'filled',
 };
 
 export const BookAppointmentType = {

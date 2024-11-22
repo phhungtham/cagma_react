@@ -27,7 +27,7 @@
 @include Filled(gray__filled, text__gray__filled, $color-gray-200, $color-gray-850);
 @include Filled(blue__filled, text__blue__filled, $color-blue-100, $color-blue-800);
 @include Filled(mint__filled, text__mint__filled, #d5f4f9, #007d91);
-@include Filled(green__filled, text__mint__filled, #eaf5f0, #149f6e);
+@include Filled(green__filled, text__green__filled, #eaf5f0, #149f6e);
 @include Filled(purple__filled, text__purple__filled, #e1e1ff, #4536ad);
 @include Filled(orange__filled, text__orange__filled, #ffeac1, #da4a09);
 @include Filled(coral__filled, text__coral__filled, #fdebe5, #eb6e47);
