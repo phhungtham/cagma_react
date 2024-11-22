@@ -90,7 +90,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
 
   const handleOpenCalendar = () => {
     const minDate = dayjs().add('1', 'day').format('YYYYMMDD');
-    openCalendar(handleSelectDate, { selectDate: date || undefined, startDate: minDate });
+    openCalendar(handleSelectDate, { selectDate: date || minDate, startDate: minDate });
   };
 
   const handleOpenSelectTimeBottom = () => {
