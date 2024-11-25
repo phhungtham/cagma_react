@@ -158,8 +158,8 @@ const CommonTestPage = () => {
     console.log('auth security media success');
   };
 
-  const handleCreateSecurityPasscodeCallback = () => {
-    console.log('create security passcode success');
+  const handleCreateSecurityPasscodeCallback = result => {
+    console.log('create security passcode result', result);
   };
 
   const handleShowCertificationCharCallback = result => {
