@@ -51,6 +51,12 @@
     &__value {
       font-weight: 500;
     }
+    &__img {
+      img {
+        height: 40px;
+        width: 40px;
+      }
+    }
   }
   .footer__buttons {
     padding-top: 32px;
@@ -73,6 +79,10 @@
       display: flex;
       align-items: flex-start;
       gap: 12px;
+      img {
+        height: 40px;
+        width: 40px;
+      }
     }
     &__id {
       font-size: 16px;
