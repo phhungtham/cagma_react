@@ -6,9 +6,9 @@ import Header from '@common/components/organisms/Header';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { buildRequestPayloadBaseMappingFields } from '@utilities/convert';
-import { moveBack } from '@utilities/index';
 
 import { signUpPepMapFields, signUpPersonalMapFields } from './constants';
 import PersonalDetailLayout from './PersonalDetailLayout';
@@ -19,13 +19,11 @@ const CurrentSteps = {
   VERIFY_PEP: 'verifyPEP',
 };
 
-const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
-  const { existingCustomer, ekycCached, deviceId, translate: t } = useContext(SignUpContext);
-  const [ekycPluginInfo, setEkycPluginInfo] = useState();
+const EnterPersonalDetail = ({ onConfirm }) => {
+  const { deviceId, translate: t } = useContext(SignUpContext);
   const [currentStep, setCurrentStep] = useState(CurrentSteps.PERSONAL_DETAIL);
   const [showLoading, setShowLoading] = useState(false);
   const [personalDetail, setPersonalDetail] = useState();
-  const [originCustomer, setOriginCustomer] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -33,6 +31,7 @@ const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
   });
 
   const { requestApi } = useApi();
+  const { moveBackNative } = useMove();
 
   const requestPreRegisterCustomerInfoStep4 = async pepValues => {
     setShowLoading(true);
@@ -58,6 +57,14 @@ const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
     }
   };
 
+  const handleClickBack = () => {
+    if (currentStep === CurrentSteps.VERIFY_PEP) {
+      setCurrentStep(CurrentSteps.PERSONAL_DETAIL);
+    } else {
+      moveBackNative();
+    }
+  };
+
   const handleSubmitPersonalDetail = values => {
     setPersonalDetail(values);
     setCurrentStep(CurrentSteps.VERIFY_PEP);
@@ -80,10 +87,15 @@ const EnterPersonalDetail = ({ onConfirm, isFetchDataPersonalStep }) => {
         {showLoading && <Spinner />}
         <Header
           title={t(menuLabels.signUp)}
-          onClick={moveBack}
+          disabledMoveBack
+          onClickBack={handleClickBack}
         />
-        {currentStep === CurrentSteps.PERSONAL_DETAIL && <PersonalDetailLayout onSubmit={handleSubmitPersonalDetail} />}
-        {currentStep === CurrentSteps.VERIFY_PEP && <VerifyPEPStatusLayout onSubmit={handleSubmitPEP} />}
+        <div className={currentStep === CurrentSteps.PERSONAL_DETAIL ? '' : 'hidden'}>
+          <PersonalDetailLayout onSubmit={handleSubmitPersonalDetail} />
+        </div>
+        <div className={currentStep === CurrentSteps.VERIFY_PEP ? '' : 'hidden'}>
+          <VerifyPEPStatusLayout onSubmit={handleSubmitPEP} />
+        </div>
       </div>
       <Alert
         isCloseButton={false}
