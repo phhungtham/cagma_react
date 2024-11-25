@@ -2,7 +2,7 @@ import { AppCfg } from '@configs/appConfigs';
 import { $h } from 'navigation/wmatrix_config';
 
 const showLogin = (cb, cbParams) => {
-  if (AppCfg.ENV === 'development') return;
+  if (AppCfg.ENV === 'development') return cb(true, cbParams);
   return $h.exec(
     result => {
       const { statusCode } = result || {};

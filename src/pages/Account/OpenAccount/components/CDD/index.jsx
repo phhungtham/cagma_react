@@ -142,7 +142,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
       trsf_expt_relt_ctt: trsf_expt_relt_ctt || '',
       trsf_expt_amt_c,
     };
-    const { error, isSuccess } = await requestApi(endpoints.registerCDD, payload);
+    const { error, isSuccess, requiredLogin } = await requestApi(endpoints.registerCDD, payload);
     setShowLoading(false);
     if (isSuccess) {
       onConfirm();
@@ -150,6 +150,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };

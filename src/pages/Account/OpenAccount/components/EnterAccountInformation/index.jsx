@@ -180,7 +180,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
       ctrt_trm_d: ProductUnitCodeWithTermType[unitCode],
       ctrt_trm_cnt: term,
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.inquiryProductDueDate, payload);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.inquiryProductDueDate, payload);
     setShowLoading(false);
     if (isSuccess) {
       const { biz_dt: maturityDate, biz_dt_display: maturityDateDisplay } = data;
@@ -192,6 +192,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
     return '';
@@ -231,7 +232,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
 
   const requestGetAccounts = async () => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.getAccountList);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getAccountList);
     setShowLoading(false);
     if (isSuccess) {
       const { cus_acno_list: accountList } = data || {};
@@ -261,6 +262,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
@@ -294,7 +296,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
       payload.period_count = Number(term);
       payload.product_amount = amount;
     }
-    const { data, error, isSuccess } = await requestApi(endpoints.inquiryProductInterestRate, payload);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.inquiryProductInterestRate, payload);
     setShowLoading(false);
     if (isSuccess) {
       setInterestData(data);
@@ -302,13 +304,14 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
 
   const requestGetCardCount = async () => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.getCardList);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getCardList);
     setShowLoading(false);
     if (isSuccess) {
       if (data && !data.card_cnt) {
@@ -321,6 +324,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };

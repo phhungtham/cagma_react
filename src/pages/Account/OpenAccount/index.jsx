@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { addressTypeMapping } from '@common/constants/address';
+import { initAlert } from '@common/constants/bottomsheet';
 import { MENU_CODE } from '@common/constants/common';
 import {
   getJobCode,
@@ -17,6 +18,7 @@ import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import { ProductCode } from '@common/constants/product';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveNext } from '@utilities/index';
@@ -59,12 +61,9 @@ const OpenAccount = ({ translate: t }) => {
   } = useOpenAccount({
     product: productInfo,
   });
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
   const { requestApi } = useApi();
+  const { moveInitHomeNative } = useMove();
 
   const { prdt_c: productCode, prdt_c_display, dep_sjt_class } = productInfo || {};
 
@@ -95,7 +94,10 @@ const OpenAccount = ({ translate: t }) => {
   };
 
   const handleCloseAlert = () => {
-    setAlert({ isShow: false, title: '', content: '' });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const handleConfirmCustomerInfo = () => {
@@ -149,7 +151,12 @@ const OpenAccount = ({ translate: t }) => {
 
   const requestGetCustomerInfo = async () => {
     setShowLoading(true);
-    const { data: customerResponse, error, isSuccess } = await requestApi(endpoints.inquiryUserInformation);
+    const {
+      data: customerResponse,
+      error,
+      isSuccess,
+      requiredLogin,
+    } = await requestApi(endpoints.inquiryUserInformation);
     setShowLoading(false);
     if (isSuccess) {
       const homeAddressType = Number(addressTypeMapping.home);
@@ -174,13 +181,14 @@ const OpenAccount = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
 
   const requestOpenDepositAccount = async values => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await openDepositAccount(values);
+    const { data, error, isSuccess, requiredLogin } = await openDepositAccount(values);
     setShowLoading(false);
     if (isSuccess) {
       const {
@@ -212,13 +220,14 @@ const OpenAccount = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
 
   const requestOpenInstallmentSavingAccount = async values => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await openInstallmentSavingAccount(values);
+    const { data, error, isSuccess, requiredLogin } = await openInstallmentSavingAccount(values);
     setShowLoading(false);
     if (isSuccess) {
       const {
@@ -252,13 +261,14 @@ const OpenAccount = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
 
   const requestOpenBankingAccount = async values => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await openBankingAccount(values);
+    const { data, error, isSuccess, requiredLogin } = await openBankingAccount(values);
     setShowLoading(false);
     if (isSuccess) {
       const {
@@ -285,6 +295,7 @@ const OpenAccount = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
@@ -305,7 +316,7 @@ const OpenAccount = ({ translate: t }) => {
 
   const checkUserRegisterCDD = async () => {
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.checkRegisterCDD);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.checkRegisterCDD);
     setShowLoading(false);
     if (isSuccess) {
       const { result_cd } = data;
@@ -318,6 +329,7 @@ const OpenAccount = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };
@@ -327,7 +339,7 @@ const OpenAccount = ({ translate: t }) => {
       return setCurrentStep(OPEN_ACCOUNT_STEP.VIEW_TERMS);
     }
     setShowLoading(true);
-    const { data, error, isSuccess } = await requestApi(endpoints.getDTRInformation);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getDTRInformation);
     setShowLoading(false);
     if (isSuccess) {
       const { dtr_yn } = data;
@@ -341,6 +353,7 @@ const OpenAccount = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };

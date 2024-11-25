@@ -140,7 +140,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
       etc_nat_tin_no2: tin2 || '',
       tin_un_regis_rsn_c2: reason2,
     };
-    const { error, isSuccess } = await requestApi(endpoints.registerDTR, payload);
+    const { error, isSuccess, requiredLogin } = await requestApi(endpoints.registerDTR, payload);
     setShowLoading(false);
     if (isSuccess) {
       setShowRegisterDTRSuccess(true);
@@ -148,6 +148,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
     }
   };

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import ScrollAnchorTabWrapper from '@common/components/templates/ScrollAnchorTabWrapper';
+import { initAlert } from '@common/constants/bottomsheet';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
@@ -16,6 +17,7 @@ import {
 } from '@common/constants/product';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
+import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 import showLogin from '@utilities/navigateScreen/showLogin';
@@ -38,15 +40,12 @@ const ProductList = ({ translate: t }) => {
   const [showLoadingGetProducts, setShowLoadingGetProducts] = useState(false);
   const [products, setProducts] = useState([]);
   const { requestApi } = useApi();
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
   const { isLogin } = useLoginInfo();
   const bankingTitleRef = useRef(null);
   const investmentTitleRef = useRef(null);
   const borrowingTitleRef = useRef(null);
+  const { moveInitHomeNative } = useMove();
 
   const sections = useMemo(
     () => [
@@ -78,7 +77,9 @@ const ProductList = ({ translate: t }) => {
 
   const getAccountsByProductType = async () => {
     setShowLoading(true);
-    const { isSuccess, error, data } = await requestApi(endpoints.getAccountsByProductType, { inquiry_type: 0 });
+    const { isSuccess, error, data, requiredLogin } = await requestApi(endpoints.getAccountsByProductType, {
+      inquiry_type: 0,
+    });
     setShowLoading(false);
     if (isSuccess) {
       const { acno_list01 = [], acno_list02 = [] } = data || {};
@@ -89,7 +90,9 @@ const ProductList = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
+        requiredLogin,
       });
+      return false;
     }
   };
 
@@ -99,6 +102,10 @@ const ProductList = ({ translate: t }) => {
       accountList = accounts;
     } else {
       accountList = await getAccountsByProductType();
+      //Break if calling API error
+      if (!accountList) {
+        return;
+      }
     }
     let isExistESavingAccount = false;
     const productCode = product.prdt_c;
@@ -119,7 +126,7 @@ const ProductList = ({ translate: t }) => {
         productCode
       )
     ) {
-      const isExistAccount = accountList?.some(account => account.prdt_c === productCode);
+      const isExistAccount = (accountList || []).some(account => account.prdt_c === productCode);
       if (isExistAccount) {
         return setAlert({
           isShow: true,
@@ -131,7 +138,7 @@ const ProductList = ({ translate: t }) => {
     //Required TFSA/RRSP E-Saving account before create TFSA/RRSP E-GIC account
     if (Object.keys(RequiredAccountBaseProductCode).includes(productCode)) {
       const requiredAccountProductCode = RequiredAccountBaseProductCode[productCode];
-      const isRequiredAccountExist = accountList.some(account => account.prdt_c === requiredAccountProductCode);
+      const isRequiredAccountExist = accountList?.some(account => account.prdt_c === requiredAccountProductCode);
       if (!isRequiredAccountExist) {
         let titleKey = '';
         let contentKey = '';
@@ -172,12 +179,11 @@ const ProductList = ({ translate: t }) => {
     }
   };
 
-  const handleCloseServerAlert = () => {
-    setAlert({
-      isShow: false,
-      title: '',
-      content: '',
-    });
+  const handleCloseAlert = () => {
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const requestGetProducts = async () => {
@@ -228,7 +234,6 @@ const ProductList = ({ translate: t }) => {
                       <div className="product__type">
                         <span>{product?.prdt_c_display || product?.lcl_prdt_nm}</span>
                       </div>
-                      {/* //TODO: Check css for just render 3 line => Check Figma */}
                       <div className="product__desc">
                         <span>{t(ProductListDescriptions[product.prdt_c])}</span>
                       </div>
@@ -315,9 +320,9 @@ const ProductList = ({ translate: t }) => {
         title={alert.title}
         subtitle={alert.content}
         textAlign="left"
-        onClose={handleCloseServerAlert}
+        onClose={handleCloseAlert}
         firstButton={{
-          onClick: handleCloseServerAlert,
+          onClick: handleCloseAlert,
           label: t(ctaLabels.confirm),
         }}
       />

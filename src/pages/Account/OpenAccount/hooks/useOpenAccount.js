@@ -97,7 +97,7 @@ const useOpenAccount = ({ product }) => {
       due_date,
     };
 
-    const { data, error, isSuccess } = await requestPreOpenDepositAccount(payload);
+    const { data, error, isSuccess, requiredLogin } = await requestPreOpenDepositAccount(payload);
     if (isSuccess) {
       const { gibintnbk_aplct_trx_mng_no } = data;
       const response = await requestApi(endpoints.openAccountDeposit, {
@@ -106,7 +106,7 @@ const useOpenAccount = ({ product }) => {
       });
       return response;
     } else {
-      return { isSuccess, error };
+      return { isSuccess, error, requiredLogin };
     }
   };
 
@@ -166,7 +166,7 @@ const useOpenAccount = ({ product }) => {
       et_payt_dd: Number(et_payt_dd),
     };
 
-    const { data, error, isSuccess } = await requestPreOpenInstallmentSavingAccount(payload);
+    const { data, error, isSuccess, requiredLogin } = await requestPreOpenInstallmentSavingAccount(payload);
     if (isSuccess) {
       const { gibintnbk_aplct_trx_mng_no, auto_trsf_st_dt } = data;
       const response = await requestApi(endpoints.openAccountInstallmentSaving, {
@@ -176,7 +176,7 @@ const useOpenAccount = ({ product }) => {
       });
       return response;
     } else {
-      return { isSuccess, error };
+      return { isSuccess, error, requiredLogin };
     }
   };
 
@@ -239,7 +239,7 @@ const useOpenAccount = ({ product }) => {
       apply_intrt,
       tax_calc_stnd_dt,
     };
-    const { data, error, isSuccess } = await requestPreOpenBankingAccount(payload);
+    const { data, error, isSuccess, requiredLogin } = await requestPreOpenBankingAccount(payload);
     if (isSuccess) {
       const { gibintnbk_aplct_trx_mng_no } = data;
       const response = await requestApi(endpoints.openAccountBanking, {
@@ -248,7 +248,7 @@ const useOpenAccount = ({ product }) => {
       });
       return response;
     } else {
-      return { isSuccess, error };
+      return { isSuccess, error, requiredLogin };
     }
   };
 
