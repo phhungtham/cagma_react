@@ -22,7 +22,7 @@ const ReportReleaseCardSuccess = ({ cardInfo, translate: t }) => {
 
   return (
     <>
-      <div className="report-release-card-successful__wrapper">
+      <div className="report-release-card-successful__wrapper page-gradient">
         <div className="report-release-card__header">
           <div className="report-release-card__img">
             <img

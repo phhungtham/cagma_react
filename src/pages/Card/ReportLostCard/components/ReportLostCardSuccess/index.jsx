@@ -39,7 +39,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
 
   return (
     <>
-      <div className="report-lost-card-successful__wrapper">
+      <div className="report-lost-card-successful__wrapper page-gradient">
         <div className="report-lost-card__header">
           <div className="report-lost-card__img">
             <img

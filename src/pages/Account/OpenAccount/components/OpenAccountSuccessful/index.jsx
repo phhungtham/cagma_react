@@ -52,7 +52,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
 
   return (
     <>
-      <div className="open-account-successful__wrapper">
+      <div className="open-account-successful__wrapper page-gradient">
         <div className="open-account__header">
           <div className="open-account__img">
             <img
@@ -61,7 +61,6 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
             />
           </div>
           <div className="open-account__title">
-            {/* //TODO: Check case %1 in english and 1음 in korean. Can't replace */}
             <div className="complete-message">{t(labels.youHaveSuccessfully).replace('%1', '')}</div>
             <div className="product-type">{openAccountInfo?.productName}</div>
             {!!creditChecked && (

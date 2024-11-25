@@ -5,7 +5,7 @@ import { openAccountDTRLabels as labels } from '@common/constants/labels';
 const RegisterDTRSuccess = ({ onConfirm, translate: t }) => {
   return (
     <>
-      <div className="page-success">
+      <div className="page-success page-gradient">
         <div className="success__header">
           <div className="success__img">
             <img

@@ -22,7 +22,7 @@ const ReissueCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
 
   return (
     <>
-      <div className="reissue-card-successful__wrapper">
+      <div className="reissue-card-successful__wrapper page-gradient">
         <div className="reissue-card__header">
           <div className="reissue-card__img">
             <img

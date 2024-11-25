@@ -50,7 +50,7 @@ const ActiveCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
 
   return (
     <>
-      <div className="active-card-successful__wrapper">
+      <div className="active-card-successful__wrapper page-gradient">
         <div className="active-card__header">
           <div className="active-card__img">
             <img

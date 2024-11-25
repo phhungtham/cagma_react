@@ -35,7 +35,7 @@ const EKYCResult = ({ isSuccess, onNavigateWelcome }) => {
 
   return (
     <>
-      <div className="page-success sign-up-personal-detail-review">
+      <div className="page-success sign-up-personal-detail-review page-gradient">
         <div className="success__header">
           <div className={isSuccess ? 'review__img' : 'success__img'}>
             <img

@@ -17,7 +17,7 @@ const AddNewCardSuccess = ({ cardInfo, translate: t }) => {
 
   return (
     <>
-      <div className="add-new-card-successful__wrapper">
+      <div className="add-new-card-successful__wrapper page-gradient">
         <div className="add-new-card__header">
           <div className="add-new-card__img">
             <img
