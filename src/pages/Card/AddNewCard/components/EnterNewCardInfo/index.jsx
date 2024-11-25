@@ -325,6 +325,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                           label={t(cardLabels.contactlessPerTransaction)}
                           placeholder=""
                           type="number"
+                          inputMode="numeric"
                           maxLength={22}
                           {...field}
                           onChange={value => {
@@ -345,6 +346,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                           label={t(cardLabels.totalContactless)}
                           placeholder=""
                           type="number"
+                          inputMode="numeric"
                           maxLength={22}
                           {...field}
                           onChange={value => {

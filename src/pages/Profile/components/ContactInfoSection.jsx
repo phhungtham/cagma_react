@@ -246,6 +246,7 @@ const ContactInfoSection = ({
             <Input
               label={t(labels.verificationCode)}
               type="number"
+              inputMode="numeric"
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
               onResetTimer={cb => (verifyTimerResetRef.current = cb)}
               endAdornment={

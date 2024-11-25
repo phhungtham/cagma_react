@@ -82,6 +82,7 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
                     label={t(labels.postalCode)}
                     placeholder="Please input 6numerics"
                     type="number"
+                    inputMode="numeric"
                     maxLength={6}
                     {...field}
                   />
@@ -95,6 +96,7 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
                     label={t(labels.lastSixDigits)}
                     placeholder="Please input 6numerics"
                     type="number"
+                    inputMode="numeric"
                     maxLength={6}
                     {...field}
                   />

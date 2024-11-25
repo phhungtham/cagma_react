@@ -240,6 +240,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
                   <Input
                     label={t(labels.verificationCode)}
                     type="number"
+                    inputMode="numeric"
                     placeholder="6 digits"
                     remainingTime={EMAIL_VERIFY_IN_SECONDS}
                     onResetTimer={cb => (verifyTimerResetRef.current = cb)}

@@ -113,6 +113,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
                         label={t(labels.postalCode3)}
                         placeholder="Please input 6 numerics"
                         type="number"
+                        inputMode="numeric"
                         maxLength={6}
                         {...field}
                       />

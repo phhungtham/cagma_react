@@ -171,6 +171,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
             <Input
               label={t(cardLabels.verificationCode)}
               type="number"
+              inputMode="numeric"
               placeholder="6 digits"
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
               onResetTimer={cb => (verifyTimerResetRef.current = cb)}

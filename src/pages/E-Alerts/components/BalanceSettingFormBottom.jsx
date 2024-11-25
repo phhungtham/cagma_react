@@ -103,6 +103,7 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit,
             <Input
               label={t(eAlertLabels.amount)}
               type="number"
+              inputMode="numeric"
               onChange={handleChangeAmount}
               value={amount}
               errorMessage={error}

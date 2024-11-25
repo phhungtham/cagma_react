@@ -216,6 +216,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                 <Input
                   label={t(labels.postalCode)}
                   type="number"
+                  inputMode="numeric"
                   placeholder="Please input 6numerics"
                   {...field}
                 />
