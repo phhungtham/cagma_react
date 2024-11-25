@@ -58,13 +58,12 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     setValue('confirmPasswordDisplay', '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
   };
 
-  //TODO: Handle maxlength and minlength
   const handleOpenSecurityKeyboardPassword = () => {
-    showCertificationChar(handleChangePassword);
+    showCertificationChar(handleChangePassword, { maxLength: 12 });
   };
 
   const handleOpenSecurityKeyboardConfirmPassword = () => {
-    showCertificationChar(handleChangeConfirmPassword);
+    showCertificationChar(handleChangeConfirmPassword, { maxLength: 12 });
   };
 
   const handleSubmitForm = async values => {

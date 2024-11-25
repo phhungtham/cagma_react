@@ -35,7 +35,6 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
-  const [showUnableVerifyEmailAlert, setShowUnableVerifyEmailAlert] = useState(false);
   const methods = useForm({
     mode: 'onChange',
     resolver: yupResolver(EnterEmailSchema),

@@ -179,6 +179,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
               render={({ field }) => (
                 <Input
                   label={t(labels.firstName)}
+                  maxLength={120}
                   {...field}
                 />
               )}
@@ -189,6 +190,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
               render={({ field }) => (
                 <Input
                   label={t(labels.lastName)}
+                  maxLength={60}
                   {...field}
                 />
               )}
