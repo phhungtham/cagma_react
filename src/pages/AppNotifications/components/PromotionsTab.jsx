@@ -9,38 +9,46 @@ import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import EmptyNotification from './EmptyNotification';
 
 const PromotionsTab = forwardRef((props, ref) => {
-  const { promotionList, translate, onClick, currentLang } = props;
+  const { promotionList, translate, onClick, currentLang, showLoading } = props;
   promotionList?.sort((pre, nex) => (pre.banner_seq > nex.banner_seq ? 1 : -1));
   return (
     <div
       ref={ref}
       className="notification__list"
     >
-      {promotionList?.length > 0 ? (
-        promotionList.map(item => (
-          <div
-            className="promotion__item__wrapper"
-            key={item?.banner_seq}
-            onClick={() => onClick(item)}
-          >
-            <div className="promotion__item">
-              <div className="promotion__img">
-                {item.banner_image_url && (
-                  <Image
-                    src={imgSrcDetected(AppCfg.BASE_URL_IMAGE, item.banner_image_url)}
-                    alt="promotion logo"
-                  />
-                )}
+      {!showLoading && (
+        <>
+          {promotionList?.length > 0 ? (
+            promotionList.map(item => (
+              <div
+                className="promotion__item__wrapper"
+                key={item?.banner_seq}
+                onClick={() => onClick(item)}
+              >
+                <div className="promotion__item">
+                  <div className="promotion__img">
+                    {item.banner_image_url && (
+                      <Image
+                        src={imgSrcDetected(AppCfg.BASE_URL_IMAGE, item.banner_image_url)}
+                        alt="promotion logo"
+                      />
+                    )}
+                  </div>
+                  <div className="promotion__item__main">
+                    <div className="promotion__title">
+                      {parserDataToHtml(item[`banner_main_content_${currentLang}`])}
+                    </div>
+                    <div className="promotion__content">
+                      {parserDataToHtml(item[`banner_sub_content_${currentLang}`])}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="promotion__item__main">
-                <div className="promotion__title">{parserDataToHtml(item[`banner_main_content_${currentLang}`])}</div>
-                <div className="promotion__content">{parserDataToHtml(item[`banner_sub_content_${currentLang}`])}</div>
-              </div>
-            </div>
-          </div>
-        ))
-      ) : (
-        <EmptyNotification translate={translate} />
+            ))
+          ) : (
+            <EmptyNotification translate={translate} />
+          )}
+        </>
       )}
     </div>
   );

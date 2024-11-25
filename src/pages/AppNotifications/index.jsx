@@ -6,6 +6,7 @@ import LoadingInfinite from '@common/components/atoms/LoadingInfinite';
 import Spinner from '@common/components/atoms/Spinner';
 import Tabs from '@common/components/atoms/Tabs';
 import Header from '@common/components/organisms/Header';
+import { initAlert } from '@common/constants/bottomsheet';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
@@ -13,14 +14,11 @@ import { ctaLabels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import useMove from '@hooks/useMove';
-import useReducers from '@hooks/useReducers';
-import useSagas from '@hooks/useSagas';
-import { alertMove } from '@utilities/alertMove';
-import { addDateWithMonth } from '@utilities/dateTimeUtils';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { getLanguageFM } from '@utilities/index';
 import { setIsNativeClickBack } from 'app/redux/action';
-import { appLanguage, backEventSelector, nativeParamsSelector, nativeRedirectStateSelector } from 'app/redux/selector';
+import { appLanguage, backEventSelector, nativeParamsSelector } from 'app/redux/selector';
+import dayjs from 'dayjs';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import PromotionDetailBottom from './components/PromotionDetailBottom';
@@ -29,93 +27,80 @@ import TransactionsTab from './components/TransactionsTab';
 import YourOffersTab from './components/YourOffersTab';
 import {
   initRecentMonthNumber,
+  initRequestNotification,
   NotificationLinkType,
   NotificationRequestType,
   NotificationTabIndex,
   NotificationTabLabel,
 } from './constants';
-import {
-  cleanupAppNotification,
-  getOfferNotificationList,
-  getTransactionNotificationList,
-  setTabIndex as setReduxTabIndex,
-} from './redux/action';
-import { appNotificationReducer } from './redux/reducer';
-import { appNotificationSaga } from './redux/saga';
-import {
-  listOfferLoadMoreCnt,
-  listTransactionLoadMoreCnt,
-  offerList,
-  offerLoadFailed,
-  offerLoadState,
-  tabIdx,
-  transactionList,
-  transactionLoadFailed,
-  transactionLoadState,
-} from './redux/selector';
-import { AppNotificationFeatureName } from './redux/type';
+import { cleanupAppNotification, setTabIndex as setReduxTabIndex } from './redux/action';
+import { tabIdx } from './redux/selector';
 
-//TODO: Refactor code, not use redux
 const AppNotifications = ({ translate: t }) => {
-  useReducers([{ key: AppNotificationFeatureName, reducer: appNotificationReducer }]);
-  useSagas([{ key: AppNotificationFeatureName, saga: appNotificationSaga }]);
-  const [showLoading, setShowLoading] = useState(false);
   const appLang = useSelector(appLanguage);
-  const listTransactionCount = useSelector(listTransactionLoadMoreCnt);
-  const listOfferCount = useSelector(listOfferLoadMoreCnt);
   const reduxTabIndex = useSelector(tabIdx);
   const [tabIndex, setTabIndex] = useState(reduxTabIndex);
-  const [showPromotionDetail, setShowPromotionDetail] = useState(false);
-  const [currentPromotionDetail, setCurrentPromotionDetail] = useState({});
-  const [loadMoreNotify, setLoadMoreNotify] = useState(false);
+  const [showFirstTimeLoading, setShowFirstTimeLoading] = useState(false);
+  const [showLoadingMore, setShowLoadingMore] = useState(false);
+  const [requestTransactionParams, setRequestTransactionParams] = useState({ ...initRequestNotification });
+  const [requestOfferParams, setRequestOfferParams] = useState({ ...initRequestNotification });
+
   const [promotions, setPromotions] = useState([]);
-  const { isLogin, isLoading: isLoadingCheckUserLogin } = useLoginInfo();
+  const [transactionList, setTransactionList] = useState([]);
+  const [offerList, setOfferList] = useState([]);
+  const [requestTransactionCount, setRequestTransactionCount] = useState(0);
+  const [requestOfferCount, setRequestOfferCount] = useState(0);
+  const [showPromotionDetail, setShowPromotionDetail] = useState(false);
+  const [triggerFetchMore, setTriggerFetchMore] = useState(false);
+  const [currentPromotionDetail, setCurrentPromotionDetail] = useState({});
+  const [alert, setAlert] = useState(initAlert);
   const { moveScreenNative, moveBackNative } = useMove();
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
   const { requestApi } = useApi();
+  const { moveInitHomeNative } = useMove();
+  const { isLogin, isLoading: isLoadingCheckUserLogin } = useLoginInfo();
   const notificationListRef = useRef(null);
 
-  const initRequestTransactionsNotify = {
-    push_lang_c: null,
-    inq_cnt: 0,
-    inq_st_dt: addDateWithMonth(initRecentMonthNumber),
-    ums_svc_c: NotificationRequestType.TRANSACTION,
-  };
-
-  const initRequestOffersNotify = {
-    push_lang_c: null,
-    inq_cnt: 0,
-    inq_st_dt: addDateWithMonth(initRecentMonthNumber),
-    ums_svc_c: NotificationRequestType.OFFER,
-  };
-
-  const [requestTransactionParams, setRequestTransactionParams] = useState({ ...initRequestTransactionsNotify });
-  const [requestOfferParams, setRequestOfferParams] = useState({ ...initRequestOffersNotify });
-
-  // selectors
-  const listTransactionNotify = useSelector(transactionList) || [];
-  const listOfferNotify = useSelector(offerList) || [];
-  const loadTransactionState = useSelector(transactionLoadState);
-  const loadOfferState = useSelector(offerLoadState);
-  const transactionLoadErrors = useSelector(transactionLoadFailed);
-  const offerLoadErrors = useSelector(offerLoadFailed);
-  const isNativeRedirect = useSelector(nativeRedirectStateSelector || false);
   const nativeParams = useSelector(nativeParamsSelector);
   const currentLang = getLanguageFM(appLang, false);
   const isNativeBack = useSelector(backEventSelector || false);
 
-  const getTransactionListFirstTime = () => {
-    getTransactionNotificationList({ ...initRequestTransactionsNotify });
-    setRequestTransactionParams({ ...initRequestTransactionsNotify });
-  };
-
-  const getOfferListFirstTime = () => {
-    getOfferNotificationList({ ...initRequestOffersNotify });
-    setRequestOfferParams({ ...initRequestOffersNotify });
+  const requestGetNotificationList = async (payload, type) => {
+    //Only show loading first time
+    let isShowLoadMore = false;
+    if (type === NotificationRequestType.TRANSACTION && transactionList?.length) {
+      isShowLoadMore = true;
+    } else if (type === NotificationRequestType.OFFER && offerList?.length) {
+      isShowLoadMore = true;
+    }
+    if (isShowLoadMore) {
+      setShowLoadingMore(true);
+    } else {
+      setShowFirstTimeLoading(true);
+    }
+    const lastRecentMonths = dayjs().subtract(initRecentMonthNumber, 'month').format('YYYYMMDD');
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getOffersNotify, {
+      ...payload,
+      inq_st_dt: lastRecentMonths,
+      ums_svc_c: type,
+    });
+    setShowFirstTimeLoading(false);
+    setShowLoadingMore(false);
+    if (isSuccess) {
+      const { list = [], list_cnt } = data;
+      if (type === NotificationRequestType.TRANSACTION) {
+        setRequestTransactionCount(list_cnt);
+        setTransactionList([...transactionList, ...list]);
+      } else if (type === NotificationRequestType.OFFER) {
+        setRequestOfferCount(list_cnt);
+        setOfferList([...offerList, ...list]);
+      }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+        requiredLogin,
+      });
+    }
   };
 
   const handleAppNotificationTouchMove = () => {
@@ -137,15 +122,22 @@ const AppNotifications = ({ translate: t }) => {
     const lastRowOffset = lastItemEle.offsetTop + lastItemEle.clientHeight + paddingEleNumber;
 
     if (lastRowOffset > Math.floor(elementScrollOffset + elementScrollHeight + 1)) {
-      setLoadMoreNotify(false);
+      setTriggerFetchMore(false);
     } else {
-      setLoadMoreNotify(true);
+      setTriggerFetchMore(true);
     }
   };
 
   const handleViewPromotionDetail = data => {
     setShowPromotionDetail(true);
     setCurrentPromotionDetail(data);
+  };
+
+  const handleCloseAlert = () => {
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const handleClickTryItNow = () => {
@@ -167,35 +159,31 @@ const AppNotifications = ({ translate: t }) => {
 
   const handleTabChange = (tabName, tabIndex) => {
     setTabIndex(tabIndex);
-    if (tabIndex === NotificationTabIndex.TRANSACTIONS && !listTransactionNotify?.length) {
-      getTransactionNotificationList({
-        ...requestTransactionParams,
-      });
-    } else if (tabIndex === NotificationTabIndex.OFFERS && !listOfferNotify?.length) {
-      getOfferNotificationList({
-        ...requestOfferParams,
-      });
+    if (tabIndex === NotificationTabIndex.TRANSACTIONS && !transactionList?.length) {
+      requestGetNotificationList(requestTransactionParams, NotificationRequestType.TRANSACTION);
+    } else if (tabIndex === NotificationTabIndex.OFFERS && !offerList?.length) {
+      requestGetNotificationList(requestOfferParams, NotificationRequestType.OFFER);
     } else if (tabIndex === NotificationTabIndex.PROMOTIONS && !promotions?.length) {
       requestGetPromotionList();
     }
   };
 
-  const fetchMoreListNotify = () => {
+  const fetchMoreNotifications = () => {
     if (tabIndex === NotificationTabIndex.TRANSACTIONS) {
-      const newListChecking = {
+      const params = {
         ...requestTransactionParams,
         inq_cnt:
-          listTransactionCount !== 0 ? (requestTransactionParams.inq_cnt += 50) : requestTransactionParams.inq_cnt,
+          requestTransactionCount !== 0 ? (requestTransactionParams.inq_cnt += 50) : requestTransactionParams.inq_cnt,
       };
-      getTransactionNotificationList(newListChecking);
-      setRequestTransactionParams(newListChecking);
+      requestGetNotificationList(params, NotificationRequestType.TRANSACTION);
+      setRequestTransactionParams(params);
     } else if (tabIndex === NotificationTabIndex.OFFERS) {
-      const newListOffer = {
+      const params = {
         ...requestOfferParams,
-        inq_cnt: listOfferCount !== 0 ? (requestOfferParams.inq_cnt += 50) : requestOfferParams.inq_cnt,
+        inq_cnt: requestOfferCount !== 0 ? (requestOfferParams.inq_cnt += 50) : requestOfferParams.inq_cnt,
       };
-      getOfferNotificationList(newListOffer);
-      setRequestOfferParams(newListOffer);
+      requestGetNotificationList(params, NotificationRequestType.OFFER);
+      setRequestOfferParams(params);
     }
   };
 
@@ -226,9 +214,9 @@ const AppNotifications = ({ translate: t }) => {
     if (promotions?.length) {
       return;
     }
-    setShowLoading(true);
+    setShowFirstTimeLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.getPromotionNotify);
-    setShowLoading(false);
+    setShowFirstTimeLoading(false);
     if (isSuccess) {
       // display only "display_pos"== "8", "1", "6" and sort with banner_seq big to small
       // 8: Promotion
@@ -245,6 +233,12 @@ const AppNotifications = ({ translate: t }) => {
       });
     }
   };
+
+  useEffect(() => {
+    if (triggerFetchMore) {
+      fetchMoreNotifications();
+    }
+  }, [triggerFetchMore]);
 
   useEffect(() => {
     if (isLoadingCheckUserLogin) {
@@ -269,9 +263,9 @@ const AppNotifications = ({ translate: t }) => {
     }
     setTabIndex(currentTabIndex);
     if (currentTabIndex === NotificationTabIndex.TRANSACTIONS) {
-      getTransactionListFirstTime();
+      requestGetNotificationList(requestTransactionParams, NotificationRequestType.TRANSACTION);
     } else if (currentTabIndex === NotificationTabIndex.OFFERS) {
-      getOfferListFirstTime();
+      requestGetNotificationList(requestOfferParams, NotificationRequestType.OFFER);
     } else {
       requestGetPromotionList();
     }
@@ -279,7 +273,7 @@ const AppNotifications = ({ translate: t }) => {
     return () => {
       cleanupAppNotification();
     };
-  }, [isNativeRedirect, nativeParams, isLoadingCheckUserLogin]);
+  }, [nativeParams, isLoadingCheckUserLogin]);
 
   useEffect(() => {
     if (notificationListRef.current) {
@@ -290,10 +284,6 @@ const AppNotifications = ({ translate: t }) => {
       notificationListRef.current &&
       notificationListRef.current.removeEventListener('scroll', handleAppNotificationTouchMove);
   }, [tabIndex, notificationListRef.current]);
-
-  useEffect(() => {
-    loadMoreNotify && fetchMoreListNotify();
-  }, [loadMoreNotify]);
 
   useEffect(() => {
     if (nativeParams?.promotion_seq && promotions) {
@@ -320,9 +310,7 @@ const AppNotifications = ({ translate: t }) => {
 
   return (
     <div className="notification__wrapper">
-      {loadTransactionState && !listTransactionNotify?.length && <Spinner />}
-      {loadOfferState && !listOfferNotify?.length && <Spinner />}
-      {showLoading && <Spinner />}
+      {showFirstTimeLoading && <Spinner />}
       <div className="notification__header">
         <Header title={t(menuLabels.appNotification)} />
       </div>
@@ -348,15 +336,17 @@ const AppNotifications = ({ translate: t }) => {
               {tabIndex === NotificationTabIndex.TRANSACTIONS && (
                 <TransactionsTab
                   notificationListRef={notificationListRef}
-                  transactionList={listTransactionNotify}
+                  transactionList={transactionList}
                   onClick={handleClickTransaction}
+                  showLoading={showFirstTimeLoading}
                   translate={t}
                 />
               )}
               {tabIndex === NotificationTabIndex.OFFERS && (
                 <YourOffersTab
                   notificationListRef={notificationListRef}
-                  offerList={listOfferNotify}
+                  offerList={offerList}
+                  showLoading={showFirstTimeLoading}
                   translate={t}
                 />
               )}
@@ -366,6 +356,7 @@ const AppNotifications = ({ translate: t }) => {
                   promotionList={promotions}
                   onClick={handleViewPromotionDetail}
                   currentLang={currentLang}
+                  showLoading={showFirstTimeLoading}
                   translate={t}
                 />
               )}
@@ -376,6 +367,7 @@ const AppNotifications = ({ translate: t }) => {
               promotionList={promotions}
               onClick={handleViewPromotionDetail}
               currentLang={currentLang}
+              showLoading={showFirstTimeLoading}
               translate={t}
             />
           )}
@@ -393,26 +385,17 @@ const AppNotifications = ({ translate: t }) => {
       )}
       <Alert
         isCloseButton={false}
-        isShowAlert={transactionLoadErrors || offerLoadErrors}
-        subtitle={transactionLoadErrors?.msgText || offerLoadErrors?.msgText}
-        firstButton={{
-          onClick: () => alertMove(transactionLoadErrors?.msgId),
-          label: t(ctaLabels.confirm),
-        }}
-      />
-      <Alert
-        isCloseButton={false}
         isShowAlert={alert.isShow}
         title={alert.title}
         subtitle={alert.content}
         textAlign="left"
+        onClose={handleCloseAlert}
         firstButton={{
-          onClick: () => setAlert({ isShow: false, title: '', content: '' }),
+          onClick: handleCloseAlert,
           label: t(ctaLabels.confirm),
         }}
       />
-      {loadMoreNotify && loadTransactionState && listTransactionNotify.length > 0 && <LoadingInfinite />}
-      {loadMoreNotify && loadOfferState && listOfferNotify.length > 0 && <LoadingInfinite />}
+      {showLoadingMore && <LoadingInfinite />}
     </div>
   );
 };

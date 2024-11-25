@@ -24,3 +24,8 @@ export const NotificationLinkType = {
 };
 
 export const initRecentMonthNumber = 3;
+
+export const initRequestNotification = {
+  push_lang_c: null,
+  inq_cnt: 0,
+};
