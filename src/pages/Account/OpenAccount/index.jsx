@@ -34,6 +34,7 @@ import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
 import {
   ignoreCheckDTRProductCodes,
+  ignoreCheckSINNumberProductCodes,
   OPEN_ACCOUNT_STEP,
   TermOptionsWithProductCode,
   TermUnitCodeDisplay,
@@ -85,6 +86,9 @@ const OpenAccount = ({ translate: t }) => {
     }
     if (existingCustomer) {
       const existSinNumber = !!existingCustomer.lcl_cus_rlnm_no;
+      if (ignoreCheckSINNumberProductCodes.includes(productCode)) {
+        return setShowCustomerInfoBottom(true);
+      }
       if (existSinNumber) {
         setShowCustomerInfoBottom(true);
       } else {

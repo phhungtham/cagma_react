@@ -82,6 +82,13 @@ export const ignoreCheckDTRProductCodes = [
   ProductCode.RRSP_E_SAVINGS,
 ];
 
+export const ignoreCheckSINNumberProductCodes = [
+  ProductCode.TFSA_E_GIC,
+  ProductCode.RRSP_E_GIC,
+  ProductCode.TFSA_E_SAVINGS,
+  ProductCode.RRSP_E_SAVINGS,
+];
+
 export const TermOptionsWithProductCode = {
   [ProductCode.E_POWER_TERM_DEPOSIT]: selectTermsByMonthOptions,
   [ProductCode.E_GREEN_TERM_DEPOSIT]: selectGreenTermsOptions,
