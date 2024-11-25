@@ -16,37 +16,6 @@ export const OPEN_ACCOUNT_STEP = {
   COMPLETED: 'completed',
 };
 
-export const customerInfoFields = [
-  {
-    label: labels.name,
-    value: 'cus_snm_nm',
-  },
-  {
-    label: labels.dob,
-    value: 'cus_bth_y4mm_dt_display',
-  },
-  {
-    label: labels.sin,
-    value: 'lcl_cus_rlnm_no',
-  },
-  {
-    label: labels.emailAddress,
-    value: 'cus_email',
-  },
-  {
-    label: labels.phoneNumber,
-    value: 'cus_adr_telno',
-  },
-  {
-    label: labels.cellNumber,
-    value: 'cus_cell_no',
-  },
-  {
-    label: labels.occupation,
-    value: 'job',
-  },
-];
-
 export const accountFormMapFields = {
   accountNo: 'acno',
   amount: 'trx_amt',

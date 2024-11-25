@@ -255,7 +255,8 @@ export const openAccountLabels = {
   eSavingDesc: 'lbl_CAPR501000_0002', //This product provides high interest rate even for a day saving with convenient deposit and withdrawal system.
   interestRate: 'lbl_CAPR501000_0003', //Interest Rate
   terms: 'lbl_CAPR501000_0005', //Terms
-  customerInfo: 'lbl_CAPR501000_0011', //Customer Info
+  customerInfo: 'lbl_CAPR521000_0115', //Customer Info
+  pleaseReviewYourPersonalInfo: 'lbl_CAPR521000_0116', //Please review your personal information...
   byClickingNewAccount: 'lbl_CAPR501000_0012', //By clicking New Account below, you agree that the information displayed above is true and correct.
   name: 'lbl_CAPR501000_0013', //Name
   dob: 'lbl_CAPR501000_0014', //Date of Birth
