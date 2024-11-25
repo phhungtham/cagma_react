@@ -6,13 +6,10 @@ import Tabs from '@common/components/atoms/Tabs';
 import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
 import { initAlert } from '@common/constants/bottomsheet';
-import { getAppointmentStatus } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, appointmentManageLabels as labels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
-import useCommonCode from '@hooks/useCommonCode';
 import useMove from '@hooks/useMove';
-import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -23,11 +20,6 @@ import { AppointmentManageTab } from './constants';
 import './styles.scss';
 
 const AppointmentManagement = ({ translate: t }) => {
-  const {
-    sendRequest: sendRequestGetCommonCode,
-    data: commonCodeData,
-    isLoading: isLoadingGetCommonCode,
-  } = useCommonCode();
   const [tabIndex, setTabIndex] = useState(AppointmentManageTab.UPCOMING);
   const [appointmentResponseData, setAppointmentResponseData] = useState([]);
   const [appointmentByTabList, setAppointmentByTabList] = useState();
@@ -60,6 +52,25 @@ const AppointmentManagement = ({ translate: t }) => {
     setShowAlert(initAlert);
   };
 
+  //Currently, hardcode instead of using status list from API
+  // const requestGetCommonCode = async () => {
+  //   setShowLoading(true);
+  //   const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
+  //     code: getAppointmentStatus,
+  //   });
+  //   setShowLoading(false);
+  //   if (isSuccess) {
+  //     const { [getAppointmentStatus]: status } = data || {};
+  //     const convertedStatusList = commonCodeDataToOptions(status);
+  //     setStatusList(convertedStatusList);
+  //   } else {
+  //     setShowAlert({
+  //       isShow: true,
+  //       content: error,
+  //     });
+  //   }
+  // };
+
   const requestGetAppointments = async () => {
     setShowLoading(true);
     const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getAppointments);
@@ -69,7 +80,7 @@ const AppointmentManagement = ({ translate: t }) => {
       const currentTabAppointments = tabIndex === AppointmentManageTab.UPCOMING ? upcomingList : previousList;
       setAppointmentByTabList(currentTabAppointments);
       setAppointmentResponseData(data);
-      sendRequestGetCommonCode(getAppointmentStatus);
+      // requestGetCommonCode();
     } else {
       setShowAlert({
         isShow: true,
@@ -143,19 +154,12 @@ const AppointmentManagement = ({ translate: t }) => {
   };
 
   useEffect(() => {
-    if (commonCodeData?.apint_stat) {
-      const convertedStatusList = commonCodeDataToOptions(commonCodeData.apint_stat);
-      setStatusList(convertedStatusList);
-    }
-  }, [commonCodeData]);
-
-  useEffect(() => {
     requestGetAppointments();
   }, []);
 
   return (
     <>
-      {(showLoading || isLoadingGetCommonCode) && <Spinner />}
+      {showLoading && <Spinner />}
       <div className="appointment-management__wrapper">
         <Header
           title={t(menuLabels.manageAppointment)}

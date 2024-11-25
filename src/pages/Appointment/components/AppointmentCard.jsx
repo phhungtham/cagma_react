@@ -15,7 +15,8 @@ const AppointmentCard = ({ onClick, appointmentInfo, statusList, translate: t })
     lcl_br_nm: branchName,
   } = appointmentInfo || {};
   const isUsingZoom = apint_visit_chk === 'N';
-  // const statusDisplay = statusList?.find(item => item.value === status)?.label; Currently, hardcode instead of using status list from API
+  //Currently, hardcode instead of using status list from API
+  // const statusDisplay = statusList?.find(item => item.value === status)?.label;
 
   const onClickViewAppointmentDetail = () => {
     onClick(appointmentInfo);
