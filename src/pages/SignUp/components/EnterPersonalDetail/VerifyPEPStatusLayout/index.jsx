@@ -175,6 +175,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                       render={({ field }) => (
                         <Input
                           label={t(labels.firstNamePep)}
+                          maxLength={120}
                           {...field}
                         />
                       )}
@@ -185,6 +186,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                       render={({ field }) => (
                         <Input
                           label={t(labels.lastNamePep)}
+                          maxLength={60}
                           {...field}
                         />
                       )}
@@ -209,6 +211,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
                   render={({ field }) => (
                     <Input
                       label={t(labels.nameOfOrganization)}
+                      maxLength={100}
                       {...field}
                     />
                   )}

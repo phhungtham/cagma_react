@@ -48,6 +48,7 @@ const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.firstName)}
             disabled={!!existingCustomer}
+            maxLength={120}
             {...field}
           />
         )}
@@ -58,6 +59,7 @@ const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <Input
             label={t(labels.middleName)}
+            maxLength={60}
             {...field}
           />
         )}
@@ -69,6 +71,7 @@ const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.lastName)}
             disabled={!!existingCustomer}
+            maxLength={60}
             {...field}
           />
         )}

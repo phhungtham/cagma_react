@@ -79,10 +79,6 @@ const AgreeTermsConditions = ({ onConfirm }) => {
               <ul className="terms-instructions">
                 <li className="instruction-item">{t(labels.termDescription)}</li>
               </ul>
-              {/* <div className="mt-2 terms-subs">
-                Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices
-                mauris.
-              </div> */}
             </div>
           </div>
           <div className="divider__group" />

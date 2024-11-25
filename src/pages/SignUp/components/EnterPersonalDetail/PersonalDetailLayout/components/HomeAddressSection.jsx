@@ -38,6 +38,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <Input
             label={t(labels.postalCode)}
+            maxLength={10}
             {...field}
           />
         )}
@@ -50,6 +51,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
             label={t(labels.aptNumber)}
             type="number"
             inputMode="numeric"
+            maxLength={40}
             {...field}
             onBlur={handleFieldAddressOnBlur}
           />
@@ -63,6 +65,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
             label={t(labels.streetNumber)}
             type="number"
             inputMode="numeric"
+            maxLength={60}
             {...field}
             onBlur={handleFieldAddressOnBlur}
           />
@@ -74,6 +77,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <Input
             label={t(labels.streetName)}
+            maxLength={80}
             {...field}
             onBlur={handleFieldAddressOnBlur}
           />
@@ -85,6 +89,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <Input
             label={t(labels.address)}
+            maxLength={200}
             {...field}
           />
         )}
@@ -95,6 +100,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <Input
             label={t(labels.city)}
+            maxLength={50}
             {...field}
           />
         )}
@@ -119,6 +125,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
             label={t(labels.housePhoneNumber)}
             type="number"
             inputMode="numeric"
+            maxLength={30}
             {...field}
           />
         )}

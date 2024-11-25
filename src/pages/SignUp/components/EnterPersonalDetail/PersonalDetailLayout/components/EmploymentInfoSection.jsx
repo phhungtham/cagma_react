@@ -60,6 +60,7 @@ const EmploymentInfoSection = ({ onOpenSelectBottom, commonCode, occupation2Opti
         render={({ field }) => (
           <Input
             label={t(labels.occupation3)}
+            maxLength={100}
             {...field}
           />
         )}

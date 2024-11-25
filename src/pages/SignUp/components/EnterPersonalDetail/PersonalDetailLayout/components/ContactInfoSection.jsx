@@ -16,6 +16,7 @@ const ContactInfoSection = () => {
         render={({ field }) => (
           <Input
             label={t(labels.cellNumber)}
+            maxLength={30}
             {...field}
           />
         )}
@@ -27,6 +28,7 @@ const ContactInfoSection = () => {
           <Input
             label={t(labels.emailAddress)}
             disabled={!!existingCustomer}
+            maxLength={40}
             {...field}
           />
         )}
