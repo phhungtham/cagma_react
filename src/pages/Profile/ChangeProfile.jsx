@@ -429,7 +429,6 @@ const ChangeProfile = ({ translate: t }) => {
       requestGetUserInfo();
     }
   };
-
   useEffect(() => {
     if (userInfo) {
       const user = buildObjectMapFromResponse(userInfo, profileFormMapFields);
@@ -448,6 +447,9 @@ const ChangeProfile = ({ translate: t }) => {
       user.address2 = defaultAddress?.cus_adr2;
       user.address3 = defaultAddress?.cus_adr3;
       user.isEmailVerified = false;
+      user.uploaded = false;
+      user.filePath = '';
+      user.fileName = '';
       user.telno_nat_c = defaultAddress?.telno_nat_c;
       if (user.country === 'CA') {
         user.aptNumber = defaultAddress?.adr_strt_nm;

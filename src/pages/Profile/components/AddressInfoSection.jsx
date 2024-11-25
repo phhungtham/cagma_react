@@ -50,10 +50,10 @@ const AddressInfoSection = ({
     const { file, success, error, fileLocation, fileName } = result;
     setShowLoading(false);
     if (success) {
-      setFile(URL.createObjectURL(file));
-      setValue('uploaded', true);
-      setValue('filePath', fileLocation);
-      setValue('fileName', fileName);
+      setFile(URL.createObjectURL(file), { shouldDirty: true });
+      setValue('uploaded', true, { shouldDirty: true });
+      setValue('filePath', fileLocation, { shouldDirty: true });
+      setValue('fileName', fileName, { shouldDirty: true });
     } else {
       let content = error;
       let title = t(labels.reviewDocument);
@@ -92,10 +92,10 @@ const AddressInfoSection = ({
 
   const handleRemoveUpload = e => {
     e?.stopPropagation();
-    setFile('');
-    setValue('uploaded', false);
-    setValue('filePath', '');
-    setValue('fileName', '');
+    setFile('', { shouldDirty: true });
+    setValue('uploaded', false, { shouldDirty: true });
+    setValue('filePath', '', { shouldDirty: true });
+    setValue('fileName', '', { shouldDirty: true });
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -123,42 +123,41 @@ const AddressInfoSection = ({
         state_c = '',
         telno_nat_c = '',
       } = defaultAddress;
-
       handleRemoveUpload();
       if (defaultAddress) {
-        setValue('postalCode', cus_adr_zipc);
-        setValue('phoneNumber', cus_adr_telno);
-        setValue('faxNumber', cus_faxno);
-        setValue('province', state_c);
-        setValue('telno_nat_c', telno_nat_c);
+        setValue('postalCode', cus_adr_zipc, { shouldDirty: true });
+        setValue('phoneNumber', cus_adr_telno, { shouldDirty: true });
+        setValue('faxNumber', cus_faxno, { shouldDirty: true });
+        setValue('province', state_c, { shouldDirty: true });
+        setValue('telno_nat_c', telno_nat_c, { shouldDirty: true });
         if (adr_nat_c === 'CA' || adr_nat_c === '') {
-          setValue('country', 'CA');
-          setValue('addressLine1', cus_adr1);
-          setValue('city', cus_adr2);
-          setValue('aptNumber', adr_strt_nm);
-          setValue('streetNumber', adr_houseno_in_ctt);
-          setValue('streetName', adr_colny_nm);
-          setValue('address1', '');
-          setValue('address2', '');
-          setValue('address3', '');
+          setValue('country', 'CA', { shouldDirty: true });
+          setValue('addressLine1', cus_adr1, { shouldDirty: true });
+          setValue('city', cus_adr2, { shouldDirty: true });
+          setValue('aptNumber', adr_strt_nm, { shouldDirty: true });
+          setValue('streetNumber', adr_houseno_in_ctt, { shouldDirty: true });
+          setValue('streetName', adr_colny_nm, { shouldDirty: true });
+          setValue('address1', '', { shouldDirty: true });
+          setValue('address2', '', { shouldDirty: true });
+          setValue('address3', '', { shouldDirty: true });
         } else {
-          setValue('country', adr_nat_c);
-          setValue('address1', cus_adr1);
-          setValue('address2', cus_adr2);
-          setValue('address3', cus_adr3);
-          setValue('addressLine1', '');
-          setValue('city', '');
-          setValue('aptNumber', '');
-          setValue('streetNumber', '');
-          setValue('streetName', '');
+          setValue('country', adr_nat_c, { shouldDirty: true });
+          setValue('address1', cus_adr1, { shouldDirty: true });
+          setValue('address2', cus_adr2, { shouldDirty: true });
+          setValue('address3', cus_adr3, { shouldDirty: true });
+          setValue('addressLine1', '', { shouldDirty: true });
+          setValue('city', '', { shouldDirty: true });
+          setValue('aptNumber', '', { shouldDirty: true });
+          setValue('streetNumber', '', { shouldDirty: true });
+          setValue('streetName', '', { shouldDirty: true });
         }
       } else {
-        setValue('postalCode', '');
-        setValue('phoneNumber', '');
-        setValue('faxNumber', '');
-        setValue('addressLine1', '');
-        setValue('city', '');
-        setValue('province', '');
+        setValue('postalCode', '', { shouldDirty: true });
+        setValue('phoneNumber', '', { shouldDirty: true });
+        setValue('faxNumber', '', { shouldDirty: true });
+        setValue('addressLine1', '', { shouldDirty: true });
+        setValue('city', '', { shouldDirty: true });
+        setValue('province', '', { shouldDirty: true });
       }
       trigger();
     }
