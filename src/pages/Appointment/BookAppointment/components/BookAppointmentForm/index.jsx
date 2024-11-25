@@ -153,7 +153,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
       setValue(key, value);
     }
     const selectedLang = preferredLanguages.find(language => language.value === values.lang);
-    setValue('langDisplay', selectedLang?.label, { shouldValidate: true });
+    setValue('langDisplay', selectedLang?.label ? t(selectedLang.label) : '', { shouldValidate: true });
     setShowCustomerStatusInfo(true);
   };
 
