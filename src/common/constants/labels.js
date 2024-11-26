@@ -99,7 +99,7 @@ export const bookAppointmentLabels = {
   purpose: 'lbl_CAET900010_0013', //Purpose
   date: 'lbl_CAET900010_0014', //Date
   time: 'lbl_CAET900010_0015', //Time
-  customerStatus: 'lbl_CAET900010_0016', //Customer status
+  customerInformation: 'lbl_CAET900010_0316', //Customer Information
   zoomAppointment: 'lbl_CAET900010_0017', //Zoom Appointment
   name: 'lbl_CAET900010_0018', //Name
   phoneNo: 'lbl_CAET900010_0019', //Phone no.

@@ -55,7 +55,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
     <BottomSheet
       open={open}
       onClose={onClose}
-      title="Customer Information" //TODO: Missing label
+      title={t(labels.customerInformation)}
       clazz="customer-status__wrapper include-footer"
       type="fit-content"
     >
