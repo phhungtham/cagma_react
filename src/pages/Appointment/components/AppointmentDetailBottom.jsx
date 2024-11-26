@@ -6,7 +6,7 @@ import inPersonImg from '@assets/images/icon_fill_atm_40.png';
 import Alert from '@common/components/atoms/Alert';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { ctaLabels, appointmentManageLabels as labels } from '@common/constants/labels';
+import { appointmentManageLabels as labels } from '@common/constants/labels';
 
 import { appointmentDetailFields } from '../constants';
 import './styles.scss';
@@ -98,7 +98,7 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel, 
         textAlign="left"
         firstButton={{
           onClick: onClickConfirmCancel,
-          label: t(ctaLabels.cancel),
+          label: t(labels.cancelBtn),
         }}
         secondButton={{
           onClick: onCloseCancelAppointment,

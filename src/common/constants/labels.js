@@ -67,6 +67,7 @@ export const appointmentManageLabels = {
   doItNextTime: 'lbl_CAET900020_0017', //I’ll do it next time
   cancelSuccess: 'lbl_CAET900020_0018', //Successfully canceled
   inPersonAppointment: 'lbl_CAET900020_0019', //In-Person Appointment
+  cancelBtn: 'lbl_CTA_9122', //Cancel
 };
 
 export const appointmentHomeLabels = {
