@@ -12,6 +12,7 @@ import { openAccountLabels as labels } from '@common/constants/labels';
 import { postalCodeNotAllowRegex } from '@common/constants/regex';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
+import dayjs from 'dayjs';
 
 import { thirdPartyActiveOptions } from './constants';
 
@@ -30,7 +31,8 @@ const ThirdPartyFormSection = ({ provinces, translate: t }) => {
   };
 
   const handleOpenCalendar = () => {
-    openCalendar(handleSelectDate, { selectDate: dob || undefined });
+    const maxDate = dayjs().subtract('1', 'day').format('YYYYMMDD');
+    openCalendar(handleSelectDate, { selectDate: dob || undefined, endDate: maxDate });
   };
 
   const handleOpenSelectProvinceDropdown = () => {

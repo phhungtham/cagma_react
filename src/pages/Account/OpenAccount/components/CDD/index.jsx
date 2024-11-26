@@ -134,14 +134,20 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
       otherRelationship: trsf_expt_relt_ctt,
       amount: trsf_expt_amt_c,
     } = values;
-    const payload = {
+    let payload = {
       cdd_high_amut_ovs_fund_trsf_yn,
-      trsf_expt_prd_c,
-      trsf_expt_nat_c,
-      trsf_expt_relt_c,
-      trsf_expt_relt_ctt: trsf_expt_relt_ctt || '',
-      trsf_expt_amt_c,
     };
+    if (isReceiveTransfer) {
+      payload = {
+        cdd_high_amut_ovs_fund_trsf_yn,
+        trsf_expt_prd_c,
+        trsf_expt_nat_c,
+        trsf_expt_relt_c,
+        trsf_expt_relt_ctt,
+        trsf_expt_amt_c,
+      };
+    }
+
     const { error, isSuccess, requiredLogin } = await requestApi(endpoints.registerCDD, payload);
     setShowLoading(false);
     if (isSuccess) {
