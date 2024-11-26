@@ -66,7 +66,6 @@ const EnterAmountBottom = ({
     } else if (
       (value === '.' && (currentAmount.includes('.') || currentAmount === '')) ||
       (currentAmount === '0' && value === '0') ||
-      //TODO: Prevent input when exceed maxlength
       (!currentAmount.includes('.') && currentAmount.replace(/,/g, '').length > 12 && value !== '.') ||
       (currentAmount.includes('.') && currentAmount.slice(currentAmount.lastIndexOf('.') + 1).length > 1) //Exceed two digit after decimal
     ) {
@@ -159,7 +158,7 @@ const EnterAmountBottom = ({
             </div>
           )}
           {hasExchangeRate && (
-            //TODO: Handle Exchange Rate
+            //Just for display. Handle later
             <div className="amount-exchange-rate__wrapper">
               <span className="mr-1">Exchange rate</span>
               <div className="exchange-rate__value__block mr-2">

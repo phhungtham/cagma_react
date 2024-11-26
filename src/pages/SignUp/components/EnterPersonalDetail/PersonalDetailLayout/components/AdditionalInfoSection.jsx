@@ -49,7 +49,7 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
             label={t(labels.sinNumber)}
             helperText={t(labels.yourSinWillBe)}
             disabled={!!notSin}
-            {...field} //TODO: open customer keyboard plugin
+            {...field}
           />
         )}
         control={control}

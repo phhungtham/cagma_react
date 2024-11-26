@@ -63,7 +63,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
       type: '',
       options: options,
       isShow: true,
-      title: 'Province', //TODO: Add label
+      title: t(cardLabels.province),
     });
   };
 

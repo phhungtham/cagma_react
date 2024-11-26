@@ -236,7 +236,6 @@ const Input = forwardRef((props, ref) => {
         >{`${inputValues?.length}/${maxLength}bytes`}</section>
       ) : (
         <>
-          {/* TODO: Add icon error prefix */}
           {errorTextField && <section className="input__subtitle error">{errorMessage}</section>}
           {helperText && !errorTextField && <section className="input__subtitle">{helperText}</section>}
         </>

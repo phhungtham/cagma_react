@@ -251,7 +251,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
         onClose={() => setShowIdTypesBottom(false)}
         onSelect={handleChangeIdType}
         options={idTypes}
-        title="ID Type" //TODO: Add label
+        title={t(labels.idType)}
       />
       {showIncorrectInfoAlert && (
         <Alert

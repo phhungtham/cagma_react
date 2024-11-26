@@ -47,7 +47,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
       type: '',
       options: provinceOptions,
       isShow: true,
-      title: 'Province', //TODO: Add label
+      title: t(labels.province),
     });
   };
 
