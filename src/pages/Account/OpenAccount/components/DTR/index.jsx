@@ -170,7 +170,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
             title={t(menuLabels.openAccount)}
             onClick={moveBack}
           />
-          <div className="page__form px-0 answer-tax__wrapper">
+          <div className="py-5 answer-tax__wrapper">
             {showLoading && <Spinner />}
             <div className="page__container pb-4">
               <h1 className="page__title">{t(labels.answerQuestion)}</h1>

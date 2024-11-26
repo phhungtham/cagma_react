@@ -171,7 +171,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
         title={t(menuLabels.openAccount)}
         onClick={moveBack}
       />
-      <div className="page__form px-0 answer-cdd__wrapper">
+      <div className="py-5 answer-cdd__wrapper">
         {showLoading && <Spinner />}
         <div className="page__container">
           <h1 className="page__title">{t(labels.answerQuestionCDD)}</h1>
