@@ -1,7 +1,7 @@
 import { ArrowDown } from '@assets/icons';
 import PropTypes from 'prop-types';
 
-const TextDropdown = ({ label, value, placeholder, onClick, align, disabled, readonly, children }) => {
+const TextDropdown = ({ label, value, placeholder, onClick, align, disabled, readonly, children, hiddenValue }) => {
   const onClickDropdown = () => {
     if (disabled || readonly) {
       return;
@@ -20,7 +20,7 @@ const TextDropdown = ({ label, value, placeholder, onClick, align, disabled, rea
           <div
             className={`text-dropdown__value ${!!value ? 'selected' : ''} ${disabled ? 'disabled' : ''} ${
               readonly ? 'readonly' : ''
-            }`}
+            } ${hiddenValue ? 'hidden' : ''}`}
           >
             {value || placeholder}
           </div>

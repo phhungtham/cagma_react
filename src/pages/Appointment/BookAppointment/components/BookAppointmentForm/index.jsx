@@ -318,10 +318,10 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
               <Controller
                 render={({ field: { value } }) => (
                   <TextDropdown
-                    label={t(labels.customerStatus)}
-                    placeholder="Select"
+                    label="Customer Information" //TODO: Missing label
                     value={value}
                     onClick={handleOpenCustomerStatusBottom}
+                    hiddenValue
                   />
                 )}
                 control={control}
