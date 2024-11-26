@@ -24,6 +24,7 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
   };
 
   const handleSubmitForm = () => {
+    console.log('call Plugin Create Security Passcode Params isNavigateFromLogin :>> ', isNavigateFromLogin);
     createSecurityPasscode(handleCreatePasscodeCallback, {
       isFromLogin: isNavigateFromLogin || false,
     });
