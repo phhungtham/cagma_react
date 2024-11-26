@@ -34,28 +34,17 @@
 @include Filled(rose__filled, text__rose__filled, #fff2f2, #eb3d4f);
 @include Filled(brown__filled, text__brown__filled, #f1decd, #804714);
 
-// TODO: DEFINE Outline Label
-@include Outline(gray__outline, text__gray__outline, #808892, $color-black);
-@include Outline(blue__outline, text__blue__outline, $color-blue-500, $color-blue-600);
-@include Outline(basic__outline, text__basic__outline, #0aa6be, $color-aqua);
-@include Outline(sky-blue__outline, text__sky-blue__outline, #149f6e, $color-green-500);
-@include Outline(mint__outline, text__mint__outline, #7466ce, $color-purple-500);
-@include Outline(orange__outline, text__orange__outline, $color-orange-500, $color-orange-500);
-@include Outline(purple__outline, text__purple__outline, $color-orange-600, $color-orange-600);
-@include Outline(coral__outline, text__coral__outline, $color-red-500, $color-red-500);
-@include Outline(rose__outline, text__rose__outline, $color-brown-500, $color-brown-500);
-@include Outline(brown__outline, text__brown__outline, $color-gray-300, $color-gray-700);
+@include Outline(gray__outline, text__gray__outline, $color-gray-500, $color-gray-900);
+@include Outline(blue__outline, text__blue__outline, $color-blue-500, $color-blue-500);
+@include Outline(mint__outline, text__mint__outline, #0aa6be, #0aa6be);
+@include Outline(green__outline, text__green__outline, #149f6e, #149f6e);
+@include Outline(purple__outline, text__purple__outline, #7466ce, #7466ce);
+@include Outline(orange__outline, text__orange__outline, #f78812, #f78812);
+@include Outline(coral__outline, text__coral__outline, #eb6e47, #eb6e47);
+@include Outline(rose__outline, text__rose__outline, #eb3d4f, #eb3d4f);
+@include Outline(brown__outline, text__brown__outline, #804714, #804714);
 
-//TODO: DEFINE Ghost Label
-@include Ghost(text__primary__ghost, #3270ea);
-@include Ghost(text__gray__ghost, #bec1c6);
-@include Ghost(text__sky-blue__ghost, #14aec6);
-@include Ghost(text__mint__ghost, #2eb086);
-@include Ghost(text__purple__ghost, #7466ce);
-@include Ghost(text__orange__ghost, #f78812);
-@include Ghost(text__coral__ghost, #ff6a63);
-@include Ghost(text__rose__ghost, #b8405e);
-@include Ghost(text__brown__ghost, #896646);
+@include Ghost(text__primary__ghost, $color-blue-700);
 
 .label {
   width: fit-content;
