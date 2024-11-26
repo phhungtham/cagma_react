@@ -18,8 +18,6 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
     if (isDone) {
       clearEkycInfo();
       onConfirm(userId);
-    } else {
-      //TODO: Handle case failed
     }
   };
 
