@@ -16,6 +16,7 @@ import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveNext } from '@utilities/index';
+import homeAndLogin from '@utilities/navigateScreen/homeAndLogin';
 
 import { ButtonResultLabel, VerifyMembershipResultMessages } from './constants';
 
@@ -40,16 +41,14 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
 
   const handleConfirm = () => {
     if (type === VerifyMembershipResultStatus.ALREADY_INDIVIDUAL) {
-      //TODO: Navigate login
-    }
-    if (type === VerifyMembershipResultStatus.ALREADY_CORPORATE) {
-      openInternalWebview({
+      return homeAndLogin();
+    } else if (type === VerifyMembershipResultStatus.ALREADY_CORPORATE) {
+      return openInternalWebview({
         url: externalUrls.sbank,
         title: '',
       });
-    }
-    if (type === VerifyMembershipResultStatus.FAILED) {
-      onNavigateVerifyMembership();
+    } else if (type === VerifyMembershipResultStatus.FAILED) {
+      return onNavigateVerifyMembership();
     }
   };
 

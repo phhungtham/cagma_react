@@ -338,6 +338,7 @@ export const openAccountLabels = {
   sinNumberRequired: 'lbl_CAPR521000_0118', //SIN Number is required, but there is no SIN in your information. Please contact your branch.
   searchBranch: 'lbl_CAPR521000_0119', //Search Branch
   bookAnAppointment: 'lbl_CAPR521000_0120', //Book an Appointment
+  next: 'lbl_CTA_5103', //Next
 };
 
 export const openAccountDTRLabels = {
