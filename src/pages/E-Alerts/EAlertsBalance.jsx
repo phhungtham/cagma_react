@@ -276,8 +276,8 @@ const EAlertsBalance = ({ translate: t }) => {
             className="balance__setting-item"
             onClick={onOpenMoneyLeavingAccountBottom}
           >
-            <div className="item__title">
-              {t(eAlertLabels.moneyLeaving)}
+            <div>
+              <div className="item__title">{t(eAlertLabels.moneyLeaving)}</div>
               {isMoneyLeavingEnabled && (
                 <div className="item__sub">
                   <span>
@@ -311,8 +311,8 @@ const EAlertsBalance = ({ translate: t }) => {
             className="balance__setting-item"
             onClick={onOpenMoneyIntoAccountBottom}
           >
-            <div className="item__title">
-              <div>{t(eAlertLabels.moneyInto)}</div>
+            <div>
+              <div className="item__title">{t(eAlertLabels.moneyInto)}</div>
               {isMoneyIntoEnabled && (
                 <div className="item__sub">
                   <span>
@@ -346,8 +346,8 @@ const EAlertsBalance = ({ translate: t }) => {
             className="balance__setting-item"
             onClick={onOpenLowBalanceWarningBottom}
           >
-            <div className="item__title">
-              <div>{t(eAlertLabels.lowBalance)}</div>
+            <div>
+              <div className="item__title">{t(eAlertLabels.lowBalance)}</div>
               {isLowBalanceEnabled && (
                 <div className="item__sub">
                   <span>{t(eAlertLabels.under).replace('%1', `$${formatCurrencyDisplay(setting.balanceAmount)}`)}</span>
