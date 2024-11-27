@@ -76,7 +76,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     const payload = {
       uuid_v: deviceId,
       cus_email: ekycCached?.email,
-      user_id: userId,
+      user_id: userId ? userId.toUpperCase() : '',
       new_user_pwd: values.e2e,
     };
     const { data, error, isSuccess } = await requestApi(endpoints.registerElectricFinancial, payload);
