@@ -231,7 +231,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
                     <Button
                       label={alreadySendEmailVerification ? t(cardLabels.resend) : t(cardLabels.request)}
                       variant="outlined__primary"
-                      className="btn__send btn__sm"
+                      className="btn-request-email btn__sm"
                       onClick={handleRequestGetEmailVerifyCode}
                       disable={enabledVerifyCode}
                     />

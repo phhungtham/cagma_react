@@ -121,3 +121,10 @@ $icon-circle-sizes: (
     font-size: $val;
   }
 }
+
+.btn__outlined__primary {
+  &.btn-request-email {
+    width: unset !important;
+    padding: 0 16px;
+  }
+}
