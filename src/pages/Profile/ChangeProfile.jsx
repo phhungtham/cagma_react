@@ -539,7 +539,7 @@ const ChangeProfile = ({ translate: t }) => {
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSubmit(handleSubmitSaveForm)}
-            disable={!isValid}
+            disable={!isValid || !isFormDirty}
           />
         </div>
       </div>
