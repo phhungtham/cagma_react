@@ -64,6 +64,11 @@ $input-on-background: background-color(dark-sky-blue);
     &.disable {
       background: $color-gray-100;
     }
+
+    &.readonly {
+      background: $color-gray-50;
+    }
+
     &.onBackground {
       @include inputOnBackground();
     }

@@ -190,7 +190,7 @@ const ContactInfoSection = ({
           <Input
             label={t(labels.name)}
             type="text"
-            disabled
+            readOnly
             {...field}
           />
         )}
@@ -202,7 +202,7 @@ const ContactInfoSection = ({
           <Input
             label={t(labels.dob)}
             type="text"
-            disabled
+            readOnly
             {...field}
           />
         )}
@@ -214,7 +214,7 @@ const ContactInfoSection = ({
           <Input
             label={t(labels.sin)}
             type="text"
-            disabled
+            readOnly
             {...field}
           />
         )}

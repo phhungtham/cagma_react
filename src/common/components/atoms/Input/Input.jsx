@@ -37,6 +37,7 @@ const Input = forwardRef((props, ref) => {
     endAdornment,
     regex,
     onResetTimer,
+    ignoreReadonlyStyle, //Using for call plugin, prevent enter value. Keep style like enable
     ...otherProps
   } = props;
   const [inputValues, setInputValues] = useState(value);
@@ -172,8 +173,8 @@ const Input = forwardRef((props, ref) => {
       )}
       <section
         className={`input__wrapper ${customClass} ${tagName} ${errorTextField && 'input__error'} ${
-          disabled && 'disable'
-        } ${mode}`}
+          disabled ? 'disable' : ''
+        } ${readOnly && !ignoreReadonlyStyle ? 'readonly' : ''} ${mode}`}
         onBlur={handleOnBlur}
       >
         <div className={`input__wrapper__label ${customClass} ${disabled && 'disable'} ${mode}`}>{label}</div>

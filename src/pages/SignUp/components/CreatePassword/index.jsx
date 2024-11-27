@@ -122,6 +122,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
                   type="password"
                   onFocus={handleOpenSecurityKeyboardPassword}
                   readOnly
+                  ignoreReadonlyStyle
                   {...field}
                 />
               )}
@@ -135,6 +136,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
                   type="password"
                   onFocus={handleOpenSecurityKeyboardConfirmPassword}
                   readOnly
+                  ignoreReadonlyStyle
                   {...field}
                 />
               )}

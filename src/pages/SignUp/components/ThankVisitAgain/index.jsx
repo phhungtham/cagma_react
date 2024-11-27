@@ -207,6 +207,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
                   onFocus={handleOpenSecurityKeyboard}
                   type="password"
                   readOnly
+                  ignoreReadonlyStyle
                   {...field}
                 />
               )}
