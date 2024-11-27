@@ -26,6 +26,10 @@ export const bookAppointmentSuccessFields = [
     label: labels.confirmNumber,
     value: 'confirmNumber',
   },
+  {
+    label: labels.addComments,
+    value: 'additionalComments',
+  },
 ];
 
 export const bookAppointmentFormDefaultValues = {

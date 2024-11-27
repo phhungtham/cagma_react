@@ -35,7 +35,8 @@ const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry, tr
   }, [data]);
 
   const handleShare = () => {
-    const link = `/link.jsp?screenid=${MENU_CODE.NOTIFICATION}&promotion_seq=${data?.banner_seq}`; //TODO: Check case empty domain
+    const link = `${AppCfg.BASE_URL_IMAGE}/link.jsp?screenid=${MENU_CODE.NOTIFICATION}&promotion_seq=${data?.banner_seq}`; //TODO: Check case empty domain
+
     shareLink(link);
   };
 

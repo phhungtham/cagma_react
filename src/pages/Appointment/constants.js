@@ -1,29 +1,37 @@
-import { appointmentHomeLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
+import {
+  appointmentDetailLabels,
+  appointmentHomeLabels,
+  bookAppointmentLabels as labels,
+} from '@common/constants/labels';
 
 export const appointmentDetailFields = [
   {
-    label: labels.confirmNumber,
+    label: appointmentDetailLabels.confirmNumber,
     value: 'number',
   },
   {
-    label: labels.method,
+    label: appointmentDetailLabels.method,
     value: 'method',
   },
   {
-    label: labels.appointmentDate,
+    label: appointmentDetailLabels.appointmentDate,
     value: 'date',
   },
   {
-    label: labels.appointmentTime,
+    label: appointmentDetailLabels.appointmentTime,
     value: 'time',
   },
   {
-    label: labels.branchName,
+    label: appointmentDetailLabels.nameOfBranch,
     value: 'branchName',
   },
   {
-    label: labels.branchAddress,
+    label: appointmentDetailLabels.branchAddress,
     value: 'branchAddress',
+  },
+  {
+    label: appointmentDetailLabels.addComments,
+    value: 'additionalComments',
   },
 ];
 

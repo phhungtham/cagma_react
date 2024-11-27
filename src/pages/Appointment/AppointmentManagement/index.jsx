@@ -133,6 +133,7 @@ const AppointmentManagement = ({ translate: t }) => {
       lcl_br_nm: branchName,
       br_adr: branchAddress,
       cancel_yn,
+      apint_memo: additionalComments,
     } = appointment;
     const appointmentDetail = {
       method: apint_visit_chk === 'N' ? 'Zoom' : 'In person',
@@ -146,6 +147,7 @@ const AppointmentManagement = ({ translate: t }) => {
       isUpcoming: tabIndex === AppointmentManageTab.UPCOMING,
       allowCancel: cancel_yn === 1,
       branchNo,
+      additionalComments,
     };
     setShowAppointmentDetailBottom({
       isShow: true,

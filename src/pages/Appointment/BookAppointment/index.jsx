@@ -51,6 +51,7 @@ const BookAppointment = ({ translate: t }) => {
         apint_reg_dt_display: date,
         apint_reg_tm_display: time,
         apint_seq: confirmNumber,
+        apint_memo: additionalComments,
       } = bookAppointmentResponse.data.elData || {};
       const bookAppointmentSuccessData = {
         visitCheck,
@@ -60,6 +61,7 @@ const BookAppointment = ({ translate: t }) => {
         date,
         time,
         confirmNumber: `#${confirmNumber}`,
+        additionalComments,
       };
       setAppointmentSuccessData(bookAppointmentSuccessData);
       setCurrentStep(BookAppointmentStep.COMPLETED);

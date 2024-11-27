@@ -160,6 +160,16 @@ export const bookAppointmentLabels = {
   invalidConsultationTime: 'lbl_CAET900010_0225', //This is not a consultation time. Mon-Thu (10:00-16:00), Fri (10:00-16:30)
 };
 
+export const appointmentDetailLabels = {
+  confirmNumber: 'lbl_CAET900020_0008', //Confirmation Number
+  method: 'lbl_CAET900020_0009', //Method
+  appointmentDate: 'lbl_CAET900020_0010', //Appointment  Date
+  appointmentTime: 'lbl_CAET900020_0011', //Appointment  Time
+  nameOfBranch: 'lbl_CAET900020_0012', //Name of the Branch
+  branchAddress: 'lbl_CAET900020_0013', //Branch Address
+  addComments: 'lbl_CAET900010_0022', //Additional Comments
+};
+
 export const manageLimitLabels = {
   onlineBankingLimit: 'lbl_CAME900010_0001', //Online Banking Transfer Limit
   changeDetail: 'lbl_CAME900010_0002', //Change details
