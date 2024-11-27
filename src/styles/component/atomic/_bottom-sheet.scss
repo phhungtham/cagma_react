@@ -30,7 +30,7 @@
   flex-direction: column;
 
   z-index: 1000;
-
+  padding-bottom: 25px;
   &.include-footer {
     .bottom__sheet__content {
       overflow-y: hidden;
@@ -136,12 +136,11 @@
   &.fit-content {
     height: fit-content;
     max-height: 93vh;
-    overflow-y: auto;
   }
 
   &__content {
-    padding: 0 24px 30px;
-
+    padding: 0 24px;
+    overflow: auto;
     &.max-scroll {
       overflow-y: scroll;
 

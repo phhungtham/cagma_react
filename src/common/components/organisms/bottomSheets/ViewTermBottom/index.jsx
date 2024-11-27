@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -11,7 +11,12 @@ import './style.scss';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
+const heightHeaderBS = '59px';
+const heightFooterAndHeaderBS = '181px';
+const paddingY = 48;
+
 const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hiddenConfirmBtn, translate: t }) => {
+  const widthPDf = (window.innerWidth || document.documentElement.clientWidth) - paddingY;
   const [numPages, setNumPages] = useState(null);
   const containerRef = useRef(null);
   const pageRefs = useRef([]);
@@ -20,15 +25,8 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
   const bottomRef = useRef(null);
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  const getResponsiveWidth = () => {
-    if (window.innerWidth > 425) {
-      return { width: 310, scale: 1.2 };
-    } else if (window.innerWidth > 375) {
-      return { width: 300, scale: 1.1 };
-    } else {
-      return { width: 550, scale: 0.6 };
-    }
-  };
+  const [scaleTouchMove, setScaleTouchMove] = useState(1);
+  const initialDistance = useRef(0);
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
@@ -78,14 +76,11 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
 
   useEffect(() => {
     const container = containerRef.current;
-
     if (container) {
       container.addEventListener('scroll', debounceScroll);
       return () => container.removeEventListener('scroll', debounceScroll);
     }
   }, []);
-
-  const { width, scale } = useMemo(() => getResponsiveWidth(), []);
 
   const handleConfirmViewTerm = () => {
     if (bottomRef.current && !hasScrolledToEnd && !hasScrolled) {
@@ -110,6 +105,40 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
     }
   };
 
+  const handleTouchStart = e => {
+    if (e.touches.length === 2) {
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      initialDistance.current = Math.sqrt((touch1.pageX - touch2.pageX) ** 2 + (touch1.pageY - touch2.pageY) ** 2);
+    }
+  };
+
+  const handleTouchMove = e => {
+    if (e.touches.length === 2) {
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const newDistance = Math.sqrt((touch1.pageX - touch2.pageX) ** 2 + (touch1.pageY - touch2.pageY) ** 2);
+
+      const scaleChange = newDistance / initialDistance.current;
+      setScaleTouchMove(prevScale => {
+        const newScale = Math.max(1, Math.min(2.5, prevScale * scaleChange));
+        const newPadding = (newScale - 1) * 300;
+        if (newScale === 1) {
+          document.documentElement.style.removeProperty('--padding');
+        } else {
+          document.documentElement.style.setProperty('--padding', `${newPadding}px`);
+        }
+        return newScale;
+      });
+      initialDistance.current = newDistance;
+    }
+  };
+
+  useEffect(() => {
+    const heightTerm = `calc(93vh - ${hiddenConfirmBtn ? heightHeaderBS : heightFooterAndHeaderBS})`;
+    document.documentElement.style.setProperty('--heightTerm', heightTerm);
+  }, []);
+
   return (
     <BottomSheet
       open={open}
@@ -117,31 +146,38 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
       title={title}
       subTitle={subTitle}
       clazz="view-term-bottom__wrapper"
-      type="max-scroll"
+      type="max"
     >
       <div className="view-term__content">
         <div className="view-term__detail">
           <div
             className="view-term__item"
             ref={containerRef}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
           >
-            <Document
-              file={pdfFile}
-              onLoadSuccess={onDocumentLoadSuccess}
+            <div
+              className="view-term_children"
+              style={{ transform: `scale(${scaleTouchMove})` }}
             >
-              {[...Array(numPages)].map((_, index) => (
-                <Fragment key={index + 1}>
-                  <Page
-                    pageNumber={index + 1}
-                    renderTextLayer={false}
-                    renderAnnotationLayer={false}
-                    scale={scale}
-                    width={width}
-                  />
-                </Fragment>
-              ))}
-              <div ref={bottomRef} />
-            </Document>
+              <Document
+                file={pdfFile}
+                onLoadSuccess={onDocumentLoadSuccess}
+              >
+                {[...Array(numPages)].map((_, index) => (
+                  <Fragment key={index + 1}>
+                    <Page
+                      pageNumber={index + 1}
+                      renderTextLayer={false}
+                      renderAnnotationLayer={false}
+                      scale={1}
+                      width={widthPDf}
+                    />
+                  </Fragment>
+                ))}
+                <div ref={bottomRef} />
+              </Document>
+            </div>
           </div>
         </div>
         {!hiddenConfirmBtn && (
