@@ -18,6 +18,7 @@ import {
 } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import useFocus from '@hooks/useFocus';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
@@ -34,7 +35,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
   });
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
-  const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
+  const [enabledVerifyCode, setEnabledVerifyCode] = useState(false);
   const methods = useForm({
     mode: 'onChange',
     resolver: yupResolver(EnterEmailSchema),
@@ -55,6 +56,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
   const verifyTimerResetRef = useRef(null);
   const verifyCodeSessionNumberRef = useRef(null);
   const verifyEmailFailedNumber = useRef(0);
+  const { focusField } = useFocus();
 
   const [verificationCode, email] = watch(['verificationCode', 'email']);
 
@@ -98,7 +100,8 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
     }
     clearErrors('verificationCode');
     setValue('isEmailVerified', false, { shouldValidate: true });
-    setDisabledVerifyButton(false);
+    setEnabledVerifyCode(true);
+    setValue('verificationCode', '', { shouldValidate: true });
 
     if (verifyTimerResetRef.current) verifyTimerResetRef.current();
 
@@ -110,9 +113,12 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
         type: 'timeout',
         message: t(commonLabels.verifyEmailTimeout),
       });
-      setDisabledVerifyButton(true);
+      setEnabledVerifyCode(false);
     }, EMAIL_VERIFY_IN_SECONDS * 1000);
     setShowEmailVerifyCode(true);
+    setTimeout(() => {
+      focusField('verificationCode'); //Trigger auto focus after show email verify
+    }, 100);
 
     if (!alreadySendEmailVerification) {
       setAlreadySendEmailVerification(true);
@@ -166,12 +172,12 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
     setShowLoading(false);
     if (isVerifyFailed) {
       verifyEmailFailedNumber.current += 1;
-      if (verifyEmailFailedNumber.current === EMAIL_VERIFY_RETRY_MAX) {
+      if (verifyEmailFailedNumber.current >= EMAIL_VERIFY_RETRY_MAX) {
         setError('verificationCode', {
           type: 'wrong',
           message: t(commonLabels.verifyEmailWrongMax).replace('%1', EMAIL_VERIFY_RETRY_MAX),
         });
-        setDisabledVerifyButton(true);
+        setEnabledVerifyCode(false);
       } else {
         setError('verificationCode', {
           type: 'wrong',
@@ -182,6 +188,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
       return;
     } else if (isVerifySuccess) {
       setShowEmailVerifyCode(false);
+      setEnabledVerifyCode(false);
       setValue('isEmailVerified', true, { shouldValidate: true });
       clearErrors('verificationCode');
       requestUpdateEmail();
@@ -219,12 +226,14 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
                   label={t(labels.email)}
                   placeholder="emailname@email.com"
                   type="text"
+                  disabled={enabledVerifyCode}
                   endAdornment={
                     <Button
                       label={alreadySendEmailVerification ? t(cardLabels.resend) : t(cardLabels.request)}
                       variant="outlined__primary"
                       className="btn__send btn__sm"
                       onClick={handleRequestGetEmailVerifyCode}
+                      disable={enabledVerifyCode}
                     />
                   }
                   maxLength={64}
@@ -246,6 +255,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
                     onResetTimer={cb => (verifyTimerResetRef.current = cb)}
                     maxLength={6}
                     errorMessage={errors?.verificationCode?.message || ''}
+                    disabled={!enabledVerifyCode}
                     {...field}
                   />
                 )}
@@ -261,7 +271,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
             variant="filled__primary"
             className="btn__cta"
             onClick={handleSendEmailVerifyCode}
-            disable={invalidVerificationCode || disabledVerifyButton}
+            disable={invalidVerificationCode || !enabledVerifyCode}
           />
         </div>
       </div>

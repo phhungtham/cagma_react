@@ -102,10 +102,9 @@ const ContactInfoSection = ({
         clearTimeout(clearTimeOutRef.current);
       }
       clearErrors('verificationCode');
-      setValue('isEmailVerified', false);
+      setValue('isEmailVerified', false, { shouldValidate: true });
       setEnabledVerifyCode(true);
-      setValue('verificationCode', '', { shouldDirty: true });
-      focusField('verificationCode');
+      setValue('verificationCode', '', { shouldValidate: true });
 
       if (verifyTimerResetRef.current) verifyTimerResetRef.current();
 
@@ -121,6 +120,9 @@ const ContactInfoSection = ({
         setEnabledVerifyCode(false);
       }, EMAIL_VERIFY_IN_SECONDS * 1000);
       setShowEmailVerifyCode(true);
+      setTimeout(() => {
+        focusField('verificationCode'); //Trigger auto focus after show email verify
+      }, 100);
 
       if (!alreadySendEmailVerification) {
         setAlreadySendEmailVerification(true);
@@ -159,6 +161,7 @@ const ContactInfoSection = ({
 
     if (isVerifySuccess) {
       setShowEmailVerifyCode(false);
+      setEnabledVerifyCode(false);
       setValue('isEmailVerified', true);
       clearErrors('verificationCode');
       setShowToast({
