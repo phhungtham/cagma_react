@@ -52,6 +52,7 @@ const VerifyIdInfoBottom = ({ open, onClose, onSubmit }) => {
               <Input
                 label="Social Insurance Number"
                 onFocus={handleOpenSecurityKeyboard}
+                readOnly
                 {...field}
               />
             )}

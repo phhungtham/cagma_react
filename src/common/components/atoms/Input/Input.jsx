@@ -49,7 +49,9 @@ const Input = forwardRef((props, ref) => {
   const composeRef = useComposeRefs(ref);
 
   const handleFocusStatus = (focusMode = 'focus') => {
-    onFocus();
+    if (focusMode === 'focus') {
+      onFocus?.();
+    }
     if (readOnly) {
       setCustomClass('input__completed');
       return;
