@@ -38,6 +38,8 @@ const SignUpCreatePassword = ({ onConfirm }) => {
     resolver: yupResolver(createIdFormSchema),
   });
 
+  console.log('errors :>> ', errors);
+
   const handleCloseAlert = () => {
     setAlert({
       ...alert,
@@ -47,6 +49,8 @@ const SignUpCreatePassword = ({ onConfirm }) => {
 
   const handleChangePassword = result => {
     const { uniqueValue: value, e2e, length } = result;
+    console.log('E2E', e2e);
+    console.log('Password Unique Value :>> ', value);
     setValue('password', value, { shouldValidate: true });
     setValue('passwordDisplay', '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
     setValue('e2e', e2e, { shouldValidate: true });
@@ -54,6 +58,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
 
   const handleChangeConfirmPassword = result => {
     const { uniqueValue: value, length } = result;
+    console.log('ConfirmPassword Unique Value :>> ', value);
     setValue('confirmPassword', value, { shouldValidate: true });
     setValue('confirmPasswordDisplay', '*'.repeat(length || 0), { shouldValidate: true }); //Just for display number character by length
   };
