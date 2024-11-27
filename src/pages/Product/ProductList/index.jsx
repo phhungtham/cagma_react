@@ -280,7 +280,7 @@ const ProductList = ({ translate: t }) => {
       <div className="product-list__wrapper">
         {(showLoadingGetProducts || showLoading) && <Spinner />}
         <div className="header__wrapper">
-          <span className="page__title">{t(labels.productCenter)}</span>
+          <span className="product-list-header__title">{t(labels.productCenter)}</span>
         </div>
         {!showLoadingGetProducts && (
           <ScrollAnchorTabWrapper

@@ -10,6 +10,7 @@ import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { Button } from '../ButtonGroup/Button/Button';
 import Input from '../Input/Input';
 
+//TODO: Handle enable, disable email like Change Profile and Sign Up
 const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, translate: t }) => {
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
