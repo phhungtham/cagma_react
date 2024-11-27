@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-
-const useFocus = fieldName => {
-  useEffect(() => {
+const useFocus = () => {
+  const focusField = fieldName => {
     const element = document.querySelector([`[name='${fieldName}']`]);
     if (!element) return;
     element?.focus();
-  }, [fieldName]);
+  };
+
+  return { focusField };
 };
 export default useFocus;

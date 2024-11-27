@@ -12,6 +12,7 @@ import { endpoints } from '@common/constants/endpoint';
 import { commonLabels, changeProfileLabels as labels } from '@common/constants/labels';
 import { notAllowNumberRegex } from '@common/constants/regex';
 import useApi from '@hooks/useApi';
+import useFocus from '@hooks/useFocus';
 
 import { changeProfileSchema } from '../schema';
 
@@ -38,6 +39,7 @@ const ContactInfoSection = ({
   } = useFormContext();
 
   const { requestApi } = useApi();
+  const { focusField } = useFocus();
 
   const [employment, verificationCode, email, isEmailVerified] = watch([
     'employment',
@@ -47,7 +49,7 @@ const ContactInfoSection = ({
   ]);
 
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
-  const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
+  const [enabledVerifyCode, setEnabledVerifyCode] = useState(false);
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
 
   const verifyCodeSessionNumberRef = useRef(null);
@@ -101,7 +103,9 @@ const ContactInfoSection = ({
       }
       clearErrors('verificationCode');
       setValue('isEmailVerified', false);
-      setDisabledVerifyButton(false);
+      setEnabledVerifyCode(true);
+      setValue('verificationCode', '', { shouldDirty: true });
+      focusField('verificationCode');
 
       if (verifyTimerResetRef.current) verifyTimerResetRef.current();
 
@@ -114,7 +118,7 @@ const ContactInfoSection = ({
           type: 'timeout',
           message: t(commonLabels.verifyEmailTimeout),
         });
-        setDisabledVerifyButton(true);
+        setEnabledVerifyCode(false);
       }, EMAIL_VERIFY_IN_SECONDS * 1000);
       setShowEmailVerifyCode(true);
 
@@ -142,7 +146,7 @@ const ContactInfoSection = ({
           type: 'wrong',
           message: t(commonLabels.verifyEmailWrongMax).replace('%1', EMAIL_VERIFY_RETRY_MAX),
         });
-        setDisabledVerifyButton(true);
+        setEnabledVerifyCode(false);
       } else {
         setError('verificationCode', {
           type: 'wrong',
@@ -226,6 +230,7 @@ const ContactInfoSection = ({
             type="text"
             maxLength={40}
             helperText={isEmailVerified && !showEmailVerifyCode ? t(labels.youNeedToClick) : ''}
+            disabled={enabledVerifyCode}
             {...field}
             endAdornment={
               <Button
@@ -233,6 +238,7 @@ const ContactInfoSection = ({
                 variant="outlined__primary"
                 className="btn__send btn__sm"
                 onClick={handleRequestGetEmailVerifyCode}
+                disable={enabledVerifyCode}
               />
             }
           />
@@ -254,13 +260,14 @@ const ContactInfoSection = ({
                   label={t(labels.verify)}
                   variant="outlined__primary"
                   className="btn__send btn__sm"
-                  disable={invalidVerificationCode || disabledVerifyButton}
+                  disable={invalidVerificationCode || !enabledVerifyCode}
                   onClick={handleSendEmailVerifyCode}
                 />
               }
               maxLength={6}
               errorMessage={errors?.verificationCode?.message || ''}
               helperText={t(labels.clickSaveButton)}
+              disabled={!enabledVerifyCode}
               {...field}
             />
           )}
