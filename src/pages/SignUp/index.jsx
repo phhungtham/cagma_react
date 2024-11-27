@@ -195,10 +195,8 @@ const SignUp = ({ translate }) => {
         setCurrentStep(SignUpStep.THANK_VISIT_AGAIN);
       }
     } else {
-      return setAlert({
-        isShow: true,
-        content: error,
-      });
+      //Sign Up New Account
+      setCurrentStep(SignUpStep.VERIFY_USER_INFO);
     }
   };
 
@@ -219,7 +217,7 @@ const SignUp = ({ translate }) => {
         setCurrentStep(SignUpStep.ENTER_EMAIL);
       } else {
         //Sign Up New Account
-        setCurrentStep(SignUpStep.ENTER_EMAIL);
+        setCurrentStep(SignUpStep.VERIFY_USER_INFO);
       }
     } else {
       requestCheckEkycStatus({ deviceId, email });
