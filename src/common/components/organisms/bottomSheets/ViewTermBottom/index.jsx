@@ -25,7 +25,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
   const bottomRef = useRef(null);
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  const [scaleTouchMove, setScaleTouchMove] = useState(1);
+  const [zoomTouchMove, setZoomTouchMove] = useState(1);
   const initialDistance = useRef(0);
 
   const onDocumentLoadSuccess = ({ numPages }) => {
@@ -120,15 +120,9 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
       const newDistance = Math.sqrt((touch1.pageX - touch2.pageX) ** 2 + (touch1.pageY - touch2.pageY) ** 2);
 
       const scaleChange = newDistance / initialDistance.current;
-      setScaleTouchMove(prevScale => {
-        const newScale = Math.max(1, Math.min(2.5, prevScale * scaleChange));
-        const newPadding = (newScale - 1) * 300;
-        if (newScale === 1) {
-          document.documentElement.style.removeProperty('--padding');
-        } else {
-          document.documentElement.style.setProperty('--padding', `${newPadding}px`);
-        }
-        return newScale;
+      setZoomTouchMove(prevScale => {
+        const newZoom = Math.max(1, Math.min(2.5, prevScale * scaleChange));
+        return newZoom;
       });
       initialDistance.current = newDistance;
     }
@@ -158,7 +152,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
           >
             <div
               className="view-term_children"
-              style={{ transform: `scale(${scaleTouchMove})` }}
+              style={{ zoom: `${zoomTouchMove}` }}
             >
               <Document
                 file={pdfFile}
