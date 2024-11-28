@@ -7,7 +7,7 @@ import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
-import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
+import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
 import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -74,10 +74,7 @@ const SignUp = ({ translate }) => {
   };
 
   const handleNavigateEKYCProgress = ekycVerifyExternalLink => {
-    openInternalWebview({
-      url: ekycVerifyExternalLink,
-      title: '',
-    });
+    openURLInBrowser(ekycVerifyExternalLink);
     setCurrentStep(SignUpStep.EKYC_IN_PROGRESS);
   };
 
