@@ -13,10 +13,20 @@
     line-height: 28px;
   }
   .scroll-anchor-tab__wrapper {
+    position: relative;
     .anchor__tab__wrapper {
       padding-left: 24px;
       padding-right: 24px;
-      background: linear-gradient(180deg, #ffffff 88.94%, rgba(255, 255, 255, 0) 100%);
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        height: 10px;
+        background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+        z-index: 1000;
+      }
     }
     .scroll-anchor__content {
       height: calc(100vh - 116px);
