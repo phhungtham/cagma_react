@@ -10,8 +10,8 @@ import { SignUpContext } from '@pages/SignUp';
 import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
-  const { existingCustomer, translate: t } = useContext(SignUpContext);
-  const { control, watch, setValue } = useFormContext();
+  const { translate: t } = useContext(SignUpContext);
+  const { control, watch } = useFormContext();
 
   const [notSin] = watch(['notSin']);
 
@@ -24,7 +24,6 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
             label={t(labels.nationality)}
             onFocus={() => onOpenSelectBottom(SignUpSelectType.NATIONALITY)}
             options={commonCode[CommonCodeFieldName.COUNTRY]}
-            disabled={!!existingCustomer}
             {...field}
           />
         )}
