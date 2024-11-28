@@ -13,7 +13,7 @@ import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
-import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
+import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 
 const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
   const { deviceId, translate: t, ekycStepStatus, ekycCached } = useContext(SignUpContext);
@@ -50,7 +50,10 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
     setShowLoading(false);
     if (isSuccess) {
       const link = data?.signingUrl || '';
-      openURLInBrowser(link);
+      openInternalWebview({
+        url: link,
+        title: '',
+      });
     } else {
       return setAlert({
         isShow: true,
