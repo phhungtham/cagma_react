@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import completeImg from '@assets/images/complete.png';
 import PaymentIcon from '@assets/images/icon-fill-payment-24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -45,10 +47,13 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
     if (isChequingCreditChecked) {
       moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
     } else {
-      syncAccountInfo();
       moveHomeNative();
     }
   };
+
+  useEffect(() => {
+    syncAccountInfo();
+  }, []);
 
   return (
     <>
