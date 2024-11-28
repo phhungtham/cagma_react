@@ -82,10 +82,10 @@ const PromotionDetailBottom = ({ onClose, data = {}, currentLang, onClickTry, tr
           <div className="main__desc">{parserDataToHtml(data[`banner_sub_content_${currentLang}`])}</div>
         </div>
         {data?.link_url && (
-          <div className="btn__ctas">
+          <div className="footer__fixed promotion__bottom__footer">
             <Button
               label={t(ctaLabels.tryItNow)}
-              className="w-full"
+              className="btn__cta"
               variant="filled__primary"
               onClick={onClickTry}
             />
