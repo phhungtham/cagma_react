@@ -8,11 +8,12 @@ import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/Icon
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
-import { ctaLabels, signUpVerifyIdentityLabels as labels } from '@common/constants/labels';
+import { ctaLabels, signUpVerifyIdentityLabels as labels, signUpVerifyUserLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
+import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 
 const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
@@ -33,6 +34,11 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
   const { requestApi } = useApi();
 
   const handleNavigateHome = () => {
+    moveHomeNative();
+  };
+
+  const handleStartOver = () => {
+    clearEkycInfo();
     moveHomeNative();
   };
 
@@ -136,6 +142,14 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
             />
           </div>
         )}
+        <div className="flex-center mt-4">
+          <Button
+            variant="filled__secondary-blue"
+            label={t(signUpVerifyUserLabels.startOver)}
+            className="btn__cta"
+            onClick={handleStartOver}
+          />
+        </div>
       </div>
 
       <div className="footer__fixed">
