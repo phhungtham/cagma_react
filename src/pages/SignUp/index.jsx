@@ -223,7 +223,7 @@ const SignUp = ({ translate }) => {
         setCurrentStep(SignUpStep.ENTER_EMAIL);
       } else {
         //Sign Up New Account
-        setCurrentStep(SignUpStep.ENTER_PERSONAL_DETAIL);
+        setCurrentStep(SignUpStep.VERIFY_USER_INFO);
       }
     } else {
       requestCheckEkycStatus({ deviceId, email });
