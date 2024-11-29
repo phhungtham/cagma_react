@@ -67,4 +67,5 @@ export const endpoints = {
   getEkycDetail: '/ca/se/CASE117.pwkjson',
   logout: '/gm/lo/GMLO004.pwkjson',
   checkBusinessDay: '/gm/co/GMCO012.pwkjson',
+  checkAccountSinExist: '/ca/me/CAME018.pwkjson',
 };

@@ -4,7 +4,7 @@ import { openAccountLabels as labels } from '@common/constants/labels';
 
 import './styles.scss';
 
-const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChangeProfile, translate: t }) => {
+const CustomerInfoBottom = ({ onClickConfirm, onClose, onClickChangeProfile, translate: t }) => {
   return (
     <BottomSheet
       open

@@ -3,16 +3,9 @@ import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
-import { addressTypeMapping } from '@common/constants/address';
 import { initAlert } from '@common/constants/bottomsheet';
 import { MENU_CODE } from '@common/constants/common';
-import {
-  getJobCode,
-  getMaturityOption,
-  getProvinceCode,
-  getSubJobCode,
-  getTermOptions,
-} from '@common/constants/commonCode';
+import { getMaturityOption, getProvinceCode, getTermOptions } from '@common/constants/commonCode';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
@@ -54,7 +47,6 @@ const OpenAccount = ({ translate: t }) => {
   const [provinceOptions, setProvinceOptions] = useState();
   const [maturityOptions, setMaturityOptions] = useState(); //Using for display Maturity Option on completed screen
   const [termOptions, setTermOptions] = useState([]); //Using for display Maturity Option on completed screen
-  const [customer, setCustomer] = useState();
   const {
     requestOpenDepositAccount: openDepositAccount,
     requestOpenBankingAccount: openBankingAccount,
@@ -77,23 +69,25 @@ const OpenAccount = ({ translate: t }) => {
   };
 
   const onSubmitAgreeTerms = async () => {
-    let existingCustomer = customer;
-    if (!existingCustomer) {
-      existingCustomer = await requestGetCustomerInfo();
-      if (existingCustomer) {
-        setCustomer(existingCustomer);
-      }
+    if (ignoreCheckSINNumberProductCodes.includes(productCode)) {
+      return setShowCustomerInfoBottom(true);
     }
-    if (existingCustomer) {
-      const existSinNumber = !!existingCustomer.lcl_cus_rlnm_no;
-      if (ignoreCheckSINNumberProductCodes.includes(productCode)) {
-        return setShowCustomerInfoBottom(true);
-      }
-      if (existSinNumber) {
+    setShowLoading(true);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.checkAccountSinExist);
+    setShowLoading(false);
+    if (isSuccess) {
+      const isSinExist = Number(data.result_cd) === 1;
+      if (isSinExist) {
         setShowCustomerInfoBottom(true);
       } else {
         setShowBranchVisitNoticeBottom(true);
       }
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+        requiredLogin,
+      });
     }
   };
 
@@ -104,8 +98,9 @@ const OpenAccount = ({ translate: t }) => {
     setAlert(initAlert);
   };
 
-  const handleConfirmCustomerInfo = () => {
+  const handleConfirmCustomerInfo = async () => {
     setShowCustomerInfoBottom(false);
+    await requestGetCommonCode();
     setCurrentStep(OPEN_ACCOUNT_STEP.ENTER_ACCOUNT_INFORMATION);
   };
 
@@ -127,9 +122,7 @@ const OpenAccount = ({ translate: t }) => {
   const requestGetCommonCode = async () => {
     setShowLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
-      code: [getJobCode, getSubJobCode, getProvinceCode, getMaturityOption, `${getTermOptions}_${productCode}`].join(
-        ';'
-      ),
+      code: [getProvinceCode, getMaturityOption, `${getTermOptions}_${productCode}`].join(';'),
     });
     setShowLoading(false);
     if (isSuccess) {
@@ -149,43 +142,6 @@ const OpenAccount = ({ translate: t }) => {
       setAlert({
         isShow: true,
         content: error,
-      });
-    }
-  };
-
-  const requestGetCustomerInfo = async () => {
-    setShowLoading(true);
-    const {
-      data: customerResponse,
-      error,
-      isSuccess,
-      requiredLogin,
-    } = await requestApi(endpoints.inquiryUserInformation);
-    setShowLoading(false);
-    if (isSuccess) {
-      const homeAddressType = Number(addressTypeMapping.home);
-      const homeAddress = customerResponse?.r_CAME001_1Vo?.find(
-        address => Number(address.cus_adr_t) === homeAddressType
-      );
-      const cus_adr_telno = homeAddress?.cus_adr_telno || '';
-      const jobData = await requestGetCommonCode();
-      const jobType = customerResponse.job_t;
-      const { job_t: jobMapList, sub_job_t: subJobMapList } = jobData || {};
-      const jobDisplay = jobMapList.find(item => item.key === jobType)?.value || '';
-      const subJobType = customerResponse.sub_job_t_v;
-      const subJobDisplay = subJobMapList.find(item => item.key === subJobType)?.value || '';
-      const result = {
-        ...customerResponse,
-        cus_adr_telno,
-        jobDisplay,
-        subJobDisplay,
-      };
-      return result;
-    } else {
-      setAlert({
-        isShow: true,
-        content: error,
-        requiredLogin,
       });
     }
   };
@@ -402,9 +358,8 @@ const OpenAccount = ({ translate: t }) => {
           />
         )}
 
-        {showCustomerInfoBottom && customer && (
+        {showCustomerInfoBottom && (
           <CustomerInfoBottom
-            customerInfo={customer}
             onClose={() => setShowCustomerInfoBottom(false)}
             onClickConfirm={handleConfirmCustomerInfo}
             onClickChangeProfile={handleNavigateChangeProfile}

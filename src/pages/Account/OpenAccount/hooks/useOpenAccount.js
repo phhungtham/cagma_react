@@ -211,7 +211,7 @@ const useOpenAccount = ({ product }) => {
     } = values || {};
     const payload = {
       prdt_c: productCode,
-      trx_amt: Number(trx_amt),
+      trx_amt: Number(trx_amt) || 0,
       trx_ccy_c: productCurrencyCode,
       y4mm_intrt_d,
       intrt_trm_c,

@@ -143,7 +143,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   };
 
   const onChangeAmount = value => {
-    setValue('amount', value?.amount || '', { shouldValidate: true });
+    setValue('amount', value?.amount.replace(/,/g, '') || '', { shouldValidate: true });
     setShowEnterAmountBottom(false);
   };
 
