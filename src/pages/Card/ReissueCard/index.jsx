@@ -4,7 +4,7 @@ import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import { initAlert } from '@common/constants/bottomsheet';
-import { getProvinceCode } from '@common/constants/commonCode';
+import { getCanadaProvinceCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
@@ -256,11 +256,11 @@ const ReissueCard = ({ translate: t }) => {
   const requestGetProvinces = async () => {
     setShowLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
-      code: getProvinceCode,
+      code: getCanadaProvinceCode,
     });
     setShowLoading(false);
     if (isSuccess) {
-      const { state_c: provinces } = data || {};
+      const { ca_state_c: provinces } = data || {};
       const convertedProvince = commonCodeDataToOptions(provinces);
       setProvinceOptions(convertedProvince);
     } else {

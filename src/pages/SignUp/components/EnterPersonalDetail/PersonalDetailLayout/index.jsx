@@ -9,11 +9,11 @@ import { employmentValuesDisableOccupation } from '@common/constants/account';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import {
   EmploymentMap,
+  getCanadaProvinceCode,
   getCountryCode,
   getCustomerTitleName,
   getEmploymentCode,
   getJobCode,
-  getProvinceCode,
   getResidentialStatus,
   getSubJobCode,
 } from '@common/constants/commonCode';
@@ -156,7 +156,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
         getSubJobCode,
         getCustomerTitleName,
         getCountryCode,
-        getProvinceCode,
+        getCanadaProvinceCode,
         getResidentialStatus,
       ].join(';'),
     };
@@ -168,7 +168,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
         [getSubJobCode]: subJobs,
         [getCustomerTitleName]: customerTitleNames,
         [getCountryCode]: countries,
-        [getProvinceCode]: provinces,
+        [getCanadaProvinceCode]: provinces,
         [getEmploymentCode]: employmentStatus,
         [getResidentialStatus]: residentialStatus,
       } = data;

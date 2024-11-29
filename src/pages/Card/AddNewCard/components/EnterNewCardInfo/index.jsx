@@ -11,7 +11,7 @@ import MyAccountsBottom from '@common/components/organisms/bottomSheets/MyAccoun
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import Header from '@common/components/organisms/Header';
 import { initSelectBottom } from '@common/constants/bottomsheet';
-import { getCardAreaProvinceCode, getProvinceCode } from '@common/constants/commonCode';
+import { getCanadaProvinceCode, getCardAreaProvinceCode } from '@common/constants/commonCode';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
@@ -104,11 +104,11 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
   const requestGetProvinces = async () => {
     setShowLoading(true);
     const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
-      code: [getProvinceCode, getCardAreaProvinceCode].join(';'),
+      code: [getCanadaProvinceCode, getCardAreaProvinceCode].join(';'),
     });
     setShowLoading(false);
     if (isSuccess) {
-      const { state_c: provinces, ca_cashcd_use_regn_d: areaProvinces } = data || {};
+      const { ca_state_c: provinces, ca_cashcd_use_regn_d: areaProvinces } = data || {};
       const convertedProvince = commonCodeDataToOptions(provinces);
       const convertedAreaProvince = commonCodeDataToOptions(areaProvinces);
       setProvinceOptions(convertedProvince);

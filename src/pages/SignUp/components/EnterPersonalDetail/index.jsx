@@ -94,7 +94,10 @@ const EnterPersonalDetail = ({ onConfirm }) => {
           <PersonalDetailLayout onSubmit={handleSubmitPersonalDetail} />
         </div>
         <div className={currentStep === CurrentSteps.VERIFY_PEP ? '' : 'hidden'}>
-          <VerifyPEPStatusLayout onSubmit={handleSubmitPEP} />
+          <VerifyPEPStatusLayout
+            onSubmit={handleSubmitPEP}
+            isShow={currentStep === CurrentSteps.VERIFY_PEP}
+          />
         </div>
       </div>
       <Alert

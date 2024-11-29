@@ -28,7 +28,7 @@ import {
 import { VerifyPEPStatusSchema } from '../schema';
 import './styles.scss';
 
-const VerifyPEPStatusLayout = ({ onSubmit }) => {
+const VerifyPEPStatusLayout = ({ onSubmit, isShow }) => {
   const { translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
@@ -37,9 +37,7 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
     title: '',
     content: '',
   });
-  const [commonCode, setCommonCode] = useState({
-    [CommonCodeFieldName.RELATIONSHIP]: [],
-  });
+  const [commonCode, setCommonCode] = useState();
   const {
     control,
     watch,
@@ -120,8 +118,10 @@ const VerifyPEPStatusLayout = ({ onSubmit }) => {
   };
 
   useEffect(() => {
-    requestGetCommonCode();
-  }, []);
+    if (isShow && !commonCode) {
+      requestGetCommonCode();
+    }
+  }, [isShow]);
 
   return (
     <>
