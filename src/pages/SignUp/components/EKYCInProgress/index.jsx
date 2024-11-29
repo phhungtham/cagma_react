@@ -8,7 +8,7 @@ import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/Icon
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
-import { ctaLabels, signUpVerifyIdentityLabels as labels, signUpVerifyUserLabels } from '@common/constants/labels';
+import { ctaLabels, signUpVerifyIdentityLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
@@ -145,7 +145,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
         <div className="flex-center mt-4">
           <Button
             variant="filled__secondary-blue"
-            label={t(signUpVerifyUserLabels.startOver)}
+            label="Start Over (Before Design)"
             className="btn__cta"
             onClick={handleStartOver}
           />
