@@ -18,8 +18,9 @@ import {
 import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
-import { moveBack } from '@utilities/index';
+import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 
 import BranchVisitNoticeBottom from '../BranchVisitNoticeBottom';
 import { VerifyIdentityType } from './constants';
@@ -36,6 +37,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
   });
   const [showBranchVisitBottom, setShowBranchVisitBottom] = useState(false);
   const { requestApi } = useApi();
+  const { moveBackNative } = useMove();
 
   const {
     control,
@@ -98,6 +100,11 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
     });
   };
 
+  const handleClickBack = () => {
+    clearEkycInfo();
+    moveBackNative();
+  };
+
   useEffect(() => {
     if (ekycCached) {
       const { firstName, lastName } = ekycCached;
@@ -112,7 +119,8 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
       <div className="verify-identity-terms__wrapper">
         <Header
           title={t(menuLabels.signUp)}
-          onClick={moveBack}
+          disabledMoveBack
+          onClickBack={handleClickBack}
         />
         <div className="page__form px-0">
           <div className="page__container">

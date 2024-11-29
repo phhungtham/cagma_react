@@ -6,6 +6,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
@@ -46,7 +47,7 @@ const SignUp = ({ translate }) => {
     content: '',
   });
   const { requestApi } = useApi();
-  const nativeParams = useSelector(nativeParamsSelector);
+  const { isFromLogin, cusno } = useSelector(nativeParamsSelector) || {};
 
   const handleConfirmVerifyID = values => {
     setCurrentStep(SignUpStep.VERIFY_USER_INFO);
@@ -181,6 +182,12 @@ const SignUp = ({ translate }) => {
     const { data, error, isSuccess } = await requestApi(endpoints.checkEkycStatus, payload);
     setShowLoading(false);
     if (isSuccess) {
+      //Check case user is sign up process but login with user empty MOTP
+      //If user login different with user sign-up process. Clear all ekyc cache and move to email verify follow isFromLogin
+      if (isFromLogin && cusno !== data.cusno) {
+        clearEkycInfo();
+        return setCurrentStep(SignUpStep.ENTER_EMAIL);
+      }
       setEkycStepStatus(data);
       const { ekyc_aplct_stp_c: applyCode } = data;
       if (Number(applyCode) === SignUpStepStatus.REGISTERED_EMAIL) {
@@ -210,7 +217,6 @@ const SignUp = ({ translate }) => {
     setEkycToNativeCache(result);
     setDeviceId(deviceId);
     // setUserEmail(email);
-    const isFromLogin = nativeParams?.isFromLogin;
     setIsNavigateFromLogin(isFromLogin);
     if (!isEkycProcessing) {
       if (isFromLogin) {

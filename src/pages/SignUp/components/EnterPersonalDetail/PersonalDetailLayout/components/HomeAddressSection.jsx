@@ -90,6 +90,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.address)}
             maxLength={200}
+            readOnly
             {...field}
           />
         )}
