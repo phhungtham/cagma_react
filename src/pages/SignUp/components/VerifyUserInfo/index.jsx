@@ -23,6 +23,7 @@ import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import { moveBack } from '@utilities/index';
+import dayjs from 'dayjs';
 
 import { CustomerInfoVerifyErrorCode } from './constants';
 import { verifyUserInfoFormSchema } from './schema';
@@ -59,7 +60,8 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
   };
 
   const handleOpenCalendar = () => {
-    openCalendar(handleSelectDate, { selectDate: dob || undefined });
+    const maxDate = dayjs().subtract(1, 'day').format('YYYYMMDD');
+    openCalendar(handleSelectDate, { selectDate: dob || maxDate, endDate: maxDate });
   };
 
   const handleCloseAlert = () => {
