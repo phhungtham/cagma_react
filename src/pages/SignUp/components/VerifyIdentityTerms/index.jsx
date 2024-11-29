@@ -153,36 +153,35 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                 />
                 <label className="circle-radio__label">{t(labels.iHaveAValidDriver)}</label>
               </div>
-              {type === VerifyIdentityType.AVAILABLE && (
-                <div className="form__section">
-                  <Controller
-                    render={({ field }) => (
-                      <Input
-                        label={t(signUpWelcomeLabels.firstName)}
-                        type="text"
-                        regex={notAllowNumberAlphabetRegex}
-                        maxLength={20}
-                        {...field}
-                      />
-                    )}
-                    control={control}
-                    name="firstName"
-                  />
-                  <Controller
-                    render={({ field }) => (
-                      <Input
-                        label={t(signUpWelcomeLabels.lastName)}
-                        type="text"
-                        regex={notAllowNumberAlphabetRegex}
-                        maxLength={20}
-                        {...field}
-                      />
-                    )}
-                    control={control}
-                    name="lastName"
-                  />
-                </div>
-              )}
+
+              <div className={`${type === VerifyIdentityType.AVAILABLE ? 'form__section' : 'hidden'}`}>
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      label={t(signUpWelcomeLabels.firstName)}
+                      type="text"
+                      regex={notAllowNumberAlphabetRegex}
+                      maxLength={20}
+                      {...field}
+                    />
+                  )}
+                  control={control}
+                  name="firstName"
+                />
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      label={t(signUpWelcomeLabels.lastName)}
+                      type="text"
+                      regex={notAllowNumberAlphabetRegex}
+                      maxLength={20}
+                      {...field}
+                    />
+                  )}
+                  control={control}
+                  name="lastName"
+                />
+              </div>
               <div
                 className="circle-radio__item"
                 onClick={() => onChangeType(VerifyIdentityType.UNAVAILABLE)}
