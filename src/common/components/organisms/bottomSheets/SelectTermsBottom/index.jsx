@@ -90,9 +90,9 @@ const SelectTermsBottom = ({
     let messageError = '';
     if (termValue) {
       if (max && Number(termValue) > max) {
-        messageError = `Please input an amount less than ${max} ${t(typeWithUnitLabel[type])}`; //TODO: Missing labels
+        messageError = `Please enter less than ${max} ${t(typeWithUnitLabel[type])}`; //TODO: Missing labels
       } else if (min && Number(termValue) < min) {
-        messageError = `Please input an amount more than ${min} ${t(typeWithUnitLabel[type])}`; //TODO: Missing labels
+        messageError = `Please enter more than ${min} ${t(typeWithUnitLabel[type])}`; //TODO: Missing labels
       }
     }
     if (messageError) {

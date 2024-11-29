@@ -84,10 +84,10 @@ const EnterAmountBottom = ({
 
   const getInvalidMessage = type => {
     if (type === InvalidType.MIN) {
-      return `Please input an amount more than ${formatCurrencyDisplay(min)} ${currency}`;
+      return `Please input an amount more than ${formatCurrencyDisplay(min)} ${currency}`; //TODO: Missing label
     }
     if (type === InvalidType.MAX) {
-      return `You can send up to $${formatCurrencyDisplay(max)} at a time.`;
+      return `You can send up to $${formatCurrencyDisplay(max)} at a time.`; //TODO: Missing label
     }
     return '';
   };
