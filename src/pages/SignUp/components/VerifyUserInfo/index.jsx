@@ -180,7 +180,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
               render={({ field }) => (
                 <Input
                   label={t(labels.firstName)}
-                  maxLength={120}
+                  maxLength={20}
                   regex={notAllowNumberAlphabetRegex}
                   {...field}
                 />
@@ -192,7 +192,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
               render={({ field }) => (
                 <Input
                   label={t(labels.lastName)}
-                  maxLength={60}
+                  maxLength={20}
                   regex={notAllowNumberAlphabetRegex}
                   {...field}
                 />

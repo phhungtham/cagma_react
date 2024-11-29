@@ -161,7 +161,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                         label={t(signUpWelcomeLabels.firstName)}
                         type="text"
                         regex={notAllowNumberAlphabetRegex}
-                        maxLength={120}
+                        maxLength={20}
                         {...field}
                       />
                     )}
@@ -174,7 +174,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                         label={t(signUpWelcomeLabels.lastName)}
                         type="text"
                         regex={notAllowNumberAlphabetRegex}
-                        maxLength={60}
+                        maxLength={20}
                         {...field}
                       />
                     )}
