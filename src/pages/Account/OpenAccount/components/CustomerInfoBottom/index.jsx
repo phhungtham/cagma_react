@@ -20,12 +20,12 @@ const CustomerInfoBottom = ({ customerInfo, onClickConfirm, onClose, onClickChan
         <div className="customer__cta">
           <Button
             variant="filled__secondary-blue"
-            label={t(labels.next)}
+            label={t(labels.updateProfile)}
             onClick={onClickChangeProfile}
           />
           <Button
             variant="filled__primary"
-            label={t(labels.newAccount)}
+            label={t(labels.next)}
             onClick={onClickConfirm}
           />
         </div>
