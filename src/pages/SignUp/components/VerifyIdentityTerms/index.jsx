@@ -15,6 +15,7 @@ import {
   menuLabels,
   signUpWelcomeLabels,
 } from '@common/constants/labels';
+import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
@@ -151,7 +152,8 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                       <Input
                         label={t(signUpWelcomeLabels.firstName)}
                         type="text"
-                        // maxLength={64}
+                        regex={notAllowNumberAlphabetRegex}
+                        maxLength={120}
                         {...field}
                       />
                     )}
@@ -163,7 +165,8 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                       <Input
                         label={t(signUpWelcomeLabels.lastName)}
                         type="text"
-                        // maxLength={64}
+                        regex={notAllowNumberAlphabetRegex}
+                        maxLength={60}
                         {...field}
                       />
                     )}

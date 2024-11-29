@@ -14,6 +14,7 @@ import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getProvinceCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, signUpWelcomeLabels as labels, menuLabels } from '@common/constants/labels';
+import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
@@ -180,6 +181,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
                 <Input
                   label={t(labels.firstName)}
                   maxLength={120}
+                  regex={notAllowNumberAlphabetRegex}
                   {...field}
                 />
               )}
@@ -191,6 +193,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
                 <Input
                   label={t(labels.lastName)}
                   maxLength={60}
+                  regex={notAllowNumberAlphabetRegex}
                   {...field}
                 />
               )}
