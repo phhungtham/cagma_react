@@ -90,7 +90,7 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
           {
             label: labels.productFeature,
             value: '2',
-            title: labels.userAgreement,
+            title: labels.productFeature,
             fileUrl: productFeatureFile,
           },
         ],
