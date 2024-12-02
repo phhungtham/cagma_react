@@ -6,6 +6,7 @@ import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
+import { notAllowSpaceRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { preferredLanguages } from '@pages/Appointment/constants';
 
@@ -95,6 +96,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   label={t(labels.email2)}
                   type="text"
                   disabled={!!email}
+                  regex={notAllowSpaceRegex}
                   maxLength={50}
                   {...field}
                 />

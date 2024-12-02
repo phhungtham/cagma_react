@@ -19,6 +19,7 @@ import {
   menuLabels,
   signUpEnterPersonalLabels,
 } from '@common/constants/labels';
+import { notAllowSpaceRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
@@ -229,6 +230,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
               render={({ field }) => (
                 <Input
                   label={t(labels.email)}
+                  regex={notAllowSpaceRegex}
                   {...field}
                 />
               )}

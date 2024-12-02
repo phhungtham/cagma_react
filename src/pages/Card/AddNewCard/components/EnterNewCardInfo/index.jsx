@@ -15,6 +15,7 @@ import { getCanadaProvinceCode, getCardAreaProvinceCode } from '@common/constant
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
+import { notAllowSpaceRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -379,20 +380,21 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                   control={control}
                   name="getTransactionNotice"
                 />
-                {getTransactionNotice && (
-                  <Controller
-                    render={({ field }) => (
-                      <Input
-                        label={t(cardLabels.emailAddress)}
-                        maxLength={40}
-                        placeholder=""
-                        {...field}
-                      />
-                    )}
-                    control={control}
-                    name="email"
-                  />
-                )}
+
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      label={t(cardLabels.emailAddress)}
+                      maxLength={40}
+                      placeholder=""
+                      regex={notAllowSpaceRegex}
+                      clazz={getTransactionNotice ? '' : 'hidden'}
+                      {...field}
+                    />
+                  )}
+                  control={control}
+                  name="email"
+                />
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { cardLabels, changeProfileLabels, commonLabels } from '@common/constants/labels';
+import { notAllowSpaceRegex } from '@common/constants/regex';
 import useApi from '@hooks/useApi';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -151,6 +152,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
             label={t(cardLabels.emailAddress2)}
             placeholder="emailname@email.com"
             type="text"
+            regex={notAllowSpaceRegex}
             endAdornment={
               <Button
                 label={alreadySendEmailVerification ? t(cardLabels.resend) : t(cardLabels.request)}

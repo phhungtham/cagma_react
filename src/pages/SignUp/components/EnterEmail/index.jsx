@@ -16,6 +16,7 @@ import {
   signUpEnterEmailLabels as labels,
   menuLabels,
 } from '@common/constants/labels';
+import { notAllowSpaceRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import useFocus from '@hooks/useFocus';
@@ -230,6 +231,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
                   label={t(labels.email)}
                   placeholder="emailname@email.com"
                   type="text"
+                  regex={notAllowSpaceRegex}
                   disabled={enabledVerifyCode}
                   endAdornment={
                     <Button

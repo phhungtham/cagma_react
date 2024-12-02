@@ -10,7 +10,7 @@ import { employmentValuesDisableOccupation } from '@common/constants/account';
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { commonLabels, changeProfileLabels as labels } from '@common/constants/labels';
-import { notAllowNumberRegex } from '@common/constants/regex';
+import { notAllowNumberRegex, notAllowSpaceRegex } from '@common/constants/regex';
 import useApi from '@hooks/useApi';
 import useFocus from '@hooks/useFocus';
 
@@ -232,6 +232,7 @@ const ContactInfoSection = ({
             label={t(labels.mailAddress)}
             type="text"
             maxLength={40}
+            regex={notAllowSpaceRegex}
             helperText={isEmailVerified && !showEmailVerifyCode ? t(labels.youNeedToClick) : ''}
             disabled={enabledVerifyCode}
             {...field}
