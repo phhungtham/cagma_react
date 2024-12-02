@@ -16,12 +16,11 @@ import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveNext } from '@utilities/index';
-import homeAndLogin from '@utilities/navigateScreen/homeAndLogin';
 
 import { ButtonResultLabel, VerifyMembershipResultMessages } from './constants';
 
 const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
-  const { moveHomeNative } = useMove();
+  const { moveHomeNative, moveHomeAndLoginNative } = useMove();
 
   const { translate: t } = useContext(SignUpContext);
   const handleNavigateHome = () => {
@@ -41,7 +40,7 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
 
   const handleConfirm = () => {
     if (type === VerifyMembershipResultStatus.ALREADY_INDIVIDUAL) {
-      return homeAndLogin();
+      return moveHomeAndLoginNative();
     } else if (type === VerifyMembershipResultStatus.ALREADY_CORPORATE) {
       return openInternalWebview({
         url: externalUrls.sbank,

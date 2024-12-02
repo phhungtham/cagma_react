@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { moveBack, moveHome, moveNext } from '@utilities/index';
+import homeAndLogin from '@utilities/navigateScreen/homeAndLogin';
 
 //For refresh navigate history
 //Check case move next to native screen or websquare screen and back to React screen.
@@ -27,7 +28,12 @@ const useMove = () => {
     navigate('/');
   };
 
-  return { moveScreenNative, moveHomeNative, moveBackNative, moveInitHomeNative };
+  const moveHomeAndLoginNative = () => {
+    homeAndLogin();
+    navigate('/');
+  };
+
+  return { moveScreenNative, moveHomeNative, moveBackNative, moveInitHomeNative, moveHomeAndLoginNative };
 };
 
 export default useMove;

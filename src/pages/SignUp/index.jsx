@@ -245,6 +245,7 @@ const SignUp = ({ translate }) => {
         ekycStepStatus,
         translate,
         isNavigateFromLogin,
+        isFromLogin,
       }}
     >
       {showLoading && <Spinner />}
