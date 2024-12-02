@@ -15,10 +15,6 @@ export const chequingSuccessFields = [
     value: 'interestRate',
   },
   {
-    label: labels.transactionLimit,
-    value: 'limit',
-  },
-  {
     label: labels.numberOfTransactions2,
     value: 'numberTransactions',
   },
