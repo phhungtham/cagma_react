@@ -215,9 +215,16 @@ export const formatYYYYMMDDToDisplay = date => {
 };
 
 export const formatHHMMToDisplay = time => {
-  const hour = time.slice(0, 2);
+  let type = 'AM';
+  let hour = Number(time.slice(0, 2));
+  if (hour >= 12) {
+    type = 'PM';
+    if (hour > 12) {
+      hour = hour - 12;
+    }
+  }
   const minute = time.slice(2, 4);
-  return `${hour}:${minute}`;
+  return `${hour}:${minute} ${type}`;
 };
 
 export const appendZeroToTime = time => {
