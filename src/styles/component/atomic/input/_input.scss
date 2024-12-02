@@ -97,6 +97,12 @@ $input-on-background: background-color(dark-sky-blue);
       }
     }
 
+    &.has-endAdornment {
+      input {
+        padding-right: 115px !important;
+      }
+    }
+
     textarea {
       resize: none;
       overflow: hidden;

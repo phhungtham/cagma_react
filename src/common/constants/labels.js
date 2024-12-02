@@ -858,4 +858,5 @@ export const commonLabels = {
   selectFrequency: 'lbl_com_4109', //Select Frequency
   youCanSendUpTo: 'lbl_com_4950', //You can send up to %1 at a time.
   pleaseEnterLessThan: 'lbl_com_4951', //Please enter less than %1
+  pleaseEnterMoreThan: 'lbl_com_4952', //Please enter more than %1
 };

@@ -92,7 +92,7 @@ const SelectTermsBottom = ({
       if (max && Number(termValue) > max) {
         messageError = `${t(commonLabels.pleaseEnterLessThan).replace('%1', `${max} ${t(typeWithUnitLabel[type])}`)}`;
       } else if (min && Number(termValue) < min) {
-        messageError = `Please enter more than ${min} ${t(typeWithUnitLabel[type])}`; //TODO: Missing labels
+        messageError = `${t(commonLabels.pleaseEnterMoreThan).replace('%1', `${min} ${t(typeWithUnitLabel[type])}`)}`;
       }
     }
     if (messageError) {

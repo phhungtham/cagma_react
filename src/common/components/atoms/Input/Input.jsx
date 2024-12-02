@@ -174,7 +174,7 @@ const Input = forwardRef((props, ref) => {
       <section
         className={`input__wrapper ${customClass} ${tagName} ${errorTextField && 'input__error'} ${
           disabled ? 'disable' : ''
-        } ${readOnly && !ignoreReadonlyStyle ? 'readonly' : ''} ${mode}`}
+        } ${readOnly && !ignoreReadonlyStyle ? 'readonly' : ''} ${mode} ${!!endAdornment ? 'has-endAdornment' : ''}`}
         onBlur={handleOnBlur}
       >
         <div className={`input__wrapper__label ${customClass} ${disabled && 'disable'} ${mode}`}>{label}</div>

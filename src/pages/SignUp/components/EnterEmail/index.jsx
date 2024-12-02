@@ -229,7 +229,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
               render={({ field }) => (
                 <Input
                   label={t(labels.email)}
-                  placeholder="emailname@email.com"
+                  placeholder=""
                   type="text"
                   regex={notAllowSpaceRegex}
                   disabled={enabledVerifyCode}
