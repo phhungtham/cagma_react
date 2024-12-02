@@ -245,7 +245,6 @@ const SignUp = ({ translate }) => {
         ekycStepStatus,
         translate,
         isNavigateFromLogin,
-        isFromLogin,
       }}
     >
       {showLoading && <Spinner />}
@@ -267,6 +266,7 @@ const SignUp = ({ translate }) => {
             onConfirm={handleConfirmEmail}
             onNavigateEkycVerify={handleNavigateEkycVerify}
             onNavigateMOTPAgreeTerms={handleNavigateMOTPAgreeTerms}
+            onNavigateVerifyMember={handleNavigateVerifyMembership}
           />
         )}
         {currentStep === SignUpStep.VERIFY_IDENTITY_TERMS && (
@@ -276,6 +276,7 @@ const SignUp = ({ translate }) => {
           <EKYCInProgress
             onConfirm={handleConfirmEKYC}
             navigateToVerifyResult={handleNavigateToVerifyMemberResult}
+            onNavigateVerifyMember={handleNavigateVerifyMembership}
           />
         )}
         {currentStep === SignUpStep.ENTER_PERSONAL_DETAIL && (

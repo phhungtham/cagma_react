@@ -25,7 +25,7 @@ import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
 
 import { EnterEmailSchema } from './schema';
 
-const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) => {
+const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNavigateVerifyMember }) => {
   const { deviceId, ekycCached, setEkycToNativeCache, translate: t, isNavigateFromLogin } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
@@ -196,8 +196,12 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms }) =>
   };
 
   const handleClickBack = () => {
-    clearTempLoginInfo();
-    moveInitHomeNative();
+    if (isNavigateFromLogin) {
+      clearTempLoginInfo();
+      moveInitHomeNative();
+    } else {
+      onNavigateVerifyMember();
+    }
   };
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 
 import VerifyId from '@assets/images/icon-fill-idpw-24.png';
+import StartOverIcon from '@assets/images/icon_fill_restart_24.png';
 import LoadingImg from '@assets/images/signup-spinner.png';
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -8,7 +9,7 @@ import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/Icon
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
-import { ctaLabels, signUpVerifyIdentityLabels as labels } from '@common/constants/labels';
+import { ctaLabels, signUpVerifyIdentityLabels as labels, signUpVerifyUserLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
@@ -16,8 +17,10 @@ import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 
-const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
-  const { deviceId, translate: t, ekycStepStatus, ekycCached } = useContext(SignUpContext);
+import './styles.scss';
+
+const EKYCInProgress = ({ onConfirm, navigateToVerifyResult, onNavigateVerifyMember }) => {
+  const { deviceId, translate: t, ekycStepStatus, ekycCached, isNavigateFromLogin } = useContext(SignUpContext);
   const { moveHomeNative } = useMove();
   const [showLoading, setShowLoading] = useState(false);
   const [showRetryBtn, setShowRetryBtn] = useState(false);
@@ -38,8 +41,12 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
   };
 
   const handleStartOver = () => {
-    clearEkycInfo();
-    moveHomeNative();
+    if (isNavigateFromLogin) {
+      clearEkycInfo();
+      moveHomeNative();
+    } else {
+      onNavigateVerifyMember();
+    }
   };
 
   const requestRegenerateEkycLink = async () => {
@@ -116,7 +123,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
   return (
     <>
       {showLoading && <Spinner />}
-      <div className="page-success">
+      <div className="page-success ekyc-in-progress-page">
         <div className="success__header">
           <div className="success__img">
             <div className="spinning">
@@ -131,8 +138,9 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
           </div>
           <div className="note">{t(labels.pleaseCompleteVerification)}</div>
         </div>
-        {showRetryBtn && (
-          <div className="flex-center">
+
+        <div className="flex-center gap-14 items-start">
+          {showRetryBtn && (
             <IconButton
               size="lg"
               type="circle"
@@ -140,13 +148,13 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
               icon={<img src={VerifyId} />}
               onClick={requestRegenerateEkycLink}
             />
-          </div>
-        )}
-        <div className="flex-center mt-4">
-          <Button
-            variant="filled__secondary-blue"
-            label="Start Over (Before Design)"
-            className="btn__cta"
+          )}
+          <IconButton
+            size="lg"
+            type="circle"
+            className="start-over__icon"
+            label={t(signUpVerifyUserLabels.startOver)}
+            icon={<img src={StartOverIcon} />}
             onClick={handleStartOver}
           />
         </div>
@@ -166,7 +174,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult }) => {
           onClick={requestRegisterCustomerInfoStep3}
         />
       </div>
-      <section className="toast__overlay margin-min">
+      <section className="toast__overlay ekyc-in-progress__toast">
         <Toast
           isShowToast={showToast.isShow}
           type={showToast.type}

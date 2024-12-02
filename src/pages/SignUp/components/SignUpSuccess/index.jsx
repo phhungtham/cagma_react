@@ -10,12 +10,12 @@ import motpSuccessHandle from '@utilities/gmCommon/motpSuccessHandle';
 import { signUpSuccessFields } from './constants';
 
 const SignUpSuccess = () => {
-  const { ekycCached, translate: t, userId, isFromLogin } = useContext(SignUpContext);
+  const { ekycCached, translate: t, userId, isNavigateFromLogin } = useContext(SignUpContext);
   const [signUpSuccessInfo, setSignUpSuccessInfo] = useState();
   const { moveHomeNative, moveHomeAndLoginNative } = useMove();
 
   const handleClickDone = () => {
-    if (isFromLogin) {
+    if (isNavigateFromLogin) {
       motpSuccessHandle();
     } else {
       moveHomeAndLoginNative();

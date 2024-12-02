@@ -76,6 +76,7 @@ const AppointmentDetailBottom = ({ open, appointment, onClose, onConfirmCancel, 
                 <IconButton
                   size="lg"
                   type="circle"
+                  className="active-success__icon"
                   label={t(labels.cancel)}
                   icon={<FillDeleteIcon />}
                   onClick={onShowCancelAppointmentAlert}

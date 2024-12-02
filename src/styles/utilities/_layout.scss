@@ -88,10 +88,18 @@
   flex-direction: column;
 }
 
+.items-start {
+  align-items: flex-start !important;
+}
+
 .opacity-0 {
   opacity: 0;
 }
 
 .hidden {
   display: none;
+}
+
+.w-max-unset {
+  max-width: unset !important;
 }

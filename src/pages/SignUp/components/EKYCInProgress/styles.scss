@@ -1,0 +1,16 @@
+.ekyc-in-progress-page {
+  .start-over__icon {
+    max-width: unset !important;
+    .icon__container {
+      img {
+        width: 24px;
+        height: 24px;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.ekyc-in-progress__toast {
+  bottom: 70px !important;
+}
