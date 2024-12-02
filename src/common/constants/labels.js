@@ -350,6 +350,7 @@ export const openAccountLabels = {
   searchBranch: 'lbl_CAPR521000_0119', //Search Branch
   bookAnAppointment: 'lbl_CAPR521000_0120', //Book an Appointment
   next: 'lbl_CTA_5103', //Next
+  pleaseInputAmountMore: 'lbl_CAPR501000_0252', //Please input an amount more than %1
 };
 
 export const openAccountDTRLabels = {
@@ -855,4 +856,6 @@ export const commonLabels = {
   verifyEmailTimeout: 'lbl_com_4119', //Verification code has timed out. Resend E-mail and try again.
   myAccounts: 'lbl_com_4013', //My accounts
   selectFrequency: 'lbl_com_4109', //Select Frequency
+  youCanSendUpTo: 'lbl_com_4950', //You can send up to %1 at a time.
+  pleaseEnterLessThan: 'lbl_com_4951', //Please enter less than %1
 };

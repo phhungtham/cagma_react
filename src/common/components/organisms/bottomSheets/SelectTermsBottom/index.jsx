@@ -4,7 +4,7 @@ import { ErrorIcon } from '@assets/icons';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Chips from '@common/components/atoms/Chips';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { ctaLabels, openAccountLabels as labels } from '@common/constants/labels';
+import { commonLabels, ctaLabels, openAccountLabels as labels } from '@common/constants/labels';
 import { SelectTermDurationTypes } from '@common/constants/terms';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -90,7 +90,7 @@ const SelectTermsBottom = ({
     let messageError = '';
     if (termValue) {
       if (max && Number(termValue) > max) {
-        messageError = `Please enter less than ${max} ${t(typeWithUnitLabel[type])}`; //TODO: Missing labels
+        messageError = `${t(commonLabels.pleaseEnterLessThan).replace('%1', `${max} ${t(typeWithUnitLabel[type])}`)}`;
       } else if (min && Number(termValue) < min) {
         messageError = `Please enter more than ${min} ${t(typeWithUnitLabel[type])}`; //TODO: Missing labels
       }

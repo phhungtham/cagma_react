@@ -5,7 +5,7 @@ import KeypadDeleteIcon from '@assets/icons/KeypadDeleteIcon';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { CurrencyAmountDefaultBaseCode, CurrencyCode, CurrencyPrefixBaseCode } from '@common/constants/currency';
-import { ctaLabels } from '@common/constants/labels';
+import { commonLabels, ctaLabels, openAccountLabels } from '@common/constants/labels';
 import { convertToNumber, formatCurrencyDisplay, stringNumberToCurrency } from '@utilities/currency';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -84,10 +84,10 @@ const EnterAmountBottom = ({
 
   const getInvalidMessage = type => {
     if (type === InvalidType.MIN) {
-      return `Please input an amount more than ${formatCurrencyDisplay(min)} ${currency}`; //TODO: Missing label
+      return `${t(openAccountLabels.pleaseInputAmountMore).replace('%1', `${formatCurrencyDisplay(min)} ${currency}`)}`;
     }
     if (type === InvalidType.MAX) {
-      return `You can send up to $${formatCurrencyDisplay(max)} at a time.`; //TODO: Missing label
+      return `${t(commonLabels.youCanSendUpTo).replace('%1', `$${formatCurrencyDisplay(max)}`)}`;
     }
     return '';
   };
