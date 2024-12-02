@@ -51,7 +51,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
   } = methods;
 
   const { requestApi } = useApi();
-  const { moveInitHomeNative } = useMove();
+  const { moveHomeNative } = useMove();
   const clearTimeOutRef = useRef();
   const verifyTimerResetRef = useRef(null);
   const verifyCodeSessionNumberRef = useRef(null);
@@ -198,7 +198,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
   const handleClickBack = () => {
     if (isNavigateFromLogin) {
       clearTempLoginInfo();
-      moveInitHomeNative();
+      moveHomeNative();
     } else {
       onNavigateVerifyMember();
     }
