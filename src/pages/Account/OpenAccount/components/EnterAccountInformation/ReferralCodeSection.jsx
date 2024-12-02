@@ -109,6 +109,8 @@ const ReferralCodeSection = ({ productCode, translate: t }) => {
             <Input
               label={t(labels.referralCode)}
               maxLength={8}
+              type="number"
+              inputMode="numeric"
               {...field}
             />
           )}
