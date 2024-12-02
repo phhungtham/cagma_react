@@ -385,16 +385,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             <div className="enter-account__form">
               <div className="page__container">
                 <h1 className="page__title">{productName || lcl_prdt_nm}</h1>
-                {isChequing && (
-                  <section>
-                    <TextDropdown
-                      label={t(labels.numberOfTransactions)}
-                      placeholder="Select"
-                      value="Unlimited"
-                      readonly
-                    />
-                  </section>
-                )}
+
                 {showTerms && (
                   <section>
                     <TextDropdown
@@ -442,7 +433,16 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                     value={intendedUseAccountDisplay}
                   />
                 </section>
-
+                {isChequing && (
+                  <section>
+                    <TextDropdown
+                      label={t(labels.numberOfTransactions)}
+                      placeholder="Select"
+                      value="Unlimited"
+                      readonly
+                    />
+                  </section>
+                )}
                 {isRRSPESaving && (
                   <section>
                     <TextDropdown
