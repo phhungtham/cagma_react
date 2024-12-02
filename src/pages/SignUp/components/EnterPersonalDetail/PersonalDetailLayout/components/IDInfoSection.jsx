@@ -5,7 +5,7 @@ import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
-import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
+import { invalidNameRegex, notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { SignUpContext } from '@pages/SignUp';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -51,7 +51,7 @@ const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.firstName)}
             disabled={!!existingCustomer}
-            regex={notAllowNumberAlphabetRegex}
+            regex={invalidNameRegex}
             maxLength={20}
             {...field}
           />
@@ -76,7 +76,7 @@ const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.lastName)}
             disabled={!!existingCustomer}
-            regex={notAllowNumberAlphabetRegex}
+            regex={invalidNameRegex}
             maxLength={20}
             {...field}
           />

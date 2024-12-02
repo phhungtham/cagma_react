@@ -15,7 +15,7 @@ import {
   menuLabels,
   signUpWelcomeLabels,
 } from '@common/constants/labels';
-import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
+import { invalidNameRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
@@ -160,7 +160,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                     <Input
                       label={t(signUpWelcomeLabels.firstName)}
                       type="text"
-                      regex={notAllowNumberAlphabetRegex}
+                      regex={invalidNameRegex}
                       maxLength={20}
                       {...field}
                     />
@@ -173,7 +173,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
                     <Input
                       label={t(signUpWelcomeLabels.lastName)}
                       type="text"
-                      regex={notAllowNumberAlphabetRegex}
+                      regex={invalidNameRegex}
                       maxLength={20}
                       {...field}
                     />
