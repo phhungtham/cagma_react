@@ -18,16 +18,14 @@ import {
 import { invalidNameRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
-import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
-import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 
 import BranchVisitNoticeBottom from '../BranchVisitNoticeBottom';
 import { VerifyIdentityType } from './constants';
 import { VerifyIdentityTermsSchema } from './schema';
 import './styles.scss';
 
-const VerifyIdentityTerms = ({ onConfirm }) => {
+const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
   const { deviceId, ekycCached, setEkycToNativeCache, translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
@@ -37,7 +35,6 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
   });
   const [showBranchVisitBottom, setShowBranchVisitBottom] = useState(false);
   const { requestApi } = useApi();
-  const { moveBackNative } = useMove();
 
   const {
     control,
@@ -50,8 +47,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
     resolver: yupResolver(VerifyIdentityTermsSchema),
   });
 
-  const [type, agreeTerms] = watch(['type', 'agreeTerms']);
-  console.log('agreeTerms :>> ', agreeTerms);
+  const [type] = watch(['type']);
 
   const onChangeType = value => {
     setValue('type', value, { shouldValidate: true });
@@ -101,8 +97,7 @@ const VerifyIdentityTerms = ({ onConfirm }) => {
   };
 
   const handleClickBack = () => {
-    clearEkycInfo();
-    moveBackNative();
+    onNavigateEnterEmail();
   };
 
   useEffect(() => {

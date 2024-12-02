@@ -74,6 +74,10 @@ const SignUp = ({ translate }) => {
     setCurrentStep(SignUpStep.VERIFY_IDENTITY_TERMS);
   };
 
+  const handleNavigateEnterEmail = () => {
+    setCurrentStep(SignUpStep.ENTER_EMAIL);
+  };
+
   const handleNavigateEKYCProgress = ekycVerifyExternalLink => {
     openURLInBrowser(ekycVerifyExternalLink);
     setCurrentStep(SignUpStep.EKYC_IN_PROGRESS);
@@ -252,7 +256,7 @@ const SignUp = ({ translate }) => {
         {currentStep === SignUpStep.VERIFY_USER_INFO && (
           <VerifyUserInfo
             navigateToVerifyResult={handleNavigateToVerifyMemberResult}
-            navigateToVerifyEmail={() => setCurrentStep(SignUpStep.ENTER_EMAIL)}
+            navigateToVerifyEmail={handleNavigateEnterEmail}
           />
         )}
         {currentStep === SignUpStep.VERIFY_MEMBERSHIP_RESULT && (
@@ -270,7 +274,10 @@ const SignUp = ({ translate }) => {
           />
         )}
         {currentStep === SignUpStep.VERIFY_IDENTITY_TERMS && (
-          <VerifyIdentityTerms onConfirm={handleNavigateEKYCProgress} />
+          <VerifyIdentityTerms
+            onConfirm={handleNavigateEKYCProgress}
+            onNavigateEnterEmail={handleNavigateEnterEmail}
+          />
         )}
         {currentStep === SignUpStep.EKYC_IN_PROGRESS && (
           <EKYCInProgress
