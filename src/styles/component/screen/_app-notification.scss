@@ -53,6 +53,11 @@
       display: none;
     }
   }
+  &__list__fullContent {
+    overflow-y: scroll;
+    height: calc(100vh - 59px);
+  }
+
   &__bottom__sheet {
     & .bottom__sheet__content {
       padding-top: 0;

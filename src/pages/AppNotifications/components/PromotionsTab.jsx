@@ -9,12 +9,12 @@ import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import EmptyNotification from './EmptyNotification';
 
 const PromotionsTab = forwardRef((props, ref) => {
-  const { promotionList, translate, onClick, currentLang, showLoading } = props;
+  const { promotionList, translate, onClick, currentLang, showLoading, fullContent = false } = props;
   promotionList?.sort((pre, nex) => (pre.banner_seq > nex.banner_seq ? 1 : -1));
   return (
     <div
       ref={ref}
-      className="notification__list"
+      className={`${fullContent ? 'notification__list__fullContent' : 'notification__list'}`}
     >
       {!showLoading && (
         <>

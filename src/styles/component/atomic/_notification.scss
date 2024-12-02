@@ -1,4 +1,7 @@
 .notification {
+  &__wrapper {
+    height: 100vh;
+  }
   &__custom {
     border: none;
     padding-bottom: 0;

@@ -363,6 +363,7 @@ const AppNotifications = ({ translate: t }) => {
             </>
           ) : (
             <PromotionsTab
+              fullContent
               ref={notificationListRef}
               promotionList={promotions}
               onClick={handleViewPromotionDetail}
