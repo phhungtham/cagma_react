@@ -13,8 +13,11 @@
       padding-bottom: 32px;
     }
     &__img {
-      width: 64px;
-      height: 64px;
+      .img__icon {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+      }
     }
     &__title {
       margin-top: 16px;

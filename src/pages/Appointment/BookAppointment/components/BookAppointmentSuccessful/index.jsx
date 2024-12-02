@@ -26,6 +26,7 @@ const BookAppointmentSuccessful = ({ appointmentInfo, translate: t }) => {
         <div className="book-appointment__header">
           <div className="book-appointment__img">
             <img
+              className="img__icon"
               src={completeImg}
               alt="Complete"
             />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import Accordion from '@common/components/atoms/Accordion';
@@ -31,6 +31,10 @@ const BranchDirectory = ({ translate: t }) => {
   });
 
   const { requestApi } = useApi();
+
+  const [branchIndex, setBranchIndex] = useState(null);
+  const elementsBranchRef = useRef([]);
+  const refTimeout = useRef(null);
 
   const onClickCallPhone = phoneNumber => {
     callPhone(phoneNumber);
@@ -73,6 +77,19 @@ const BranchDirectory = ({ translate: t }) => {
     requestGetBranches();
   }, []);
 
+  const handleOnClickAccordion = index => {
+    clearTimeout(refTimeout.current);
+    setBranchIndex(prevIndex => (prevIndex === index ? null : index));
+    refTimeout.current = setTimeout(() => {
+      if (elementsBranchRef.current[index]) {
+        elementsBranchRef.current[index].scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    }, 50);
+  };
+
   return (
     <>
       <div className="branch-directory__wrapper">
@@ -92,8 +109,13 @@ const BranchDirectory = ({ translate: t }) => {
                   <Accordion
                     title={branch.lcl_br_nm}
                     caption={branch.br_adr}
+                    isExpand={branchIndex === index}
+                    onClick={() => handleOnClickAccordion(index)}
                   >
-                    <div className="accordion__table__bottom">
+                    <div
+                      className="accordion__table__bottom"
+                      ref={el => (elementsBranchRef.current[index] = el)}
+                    >
                       <div className="table__info">
                         {branchFields.map(({ label, value }) => (
                           <div

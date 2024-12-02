@@ -18,9 +18,7 @@ const Accordion = ({
   children,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const handleToggleExpand = e => {
-    e.stopPropagation();
     setIsOpen(!isOpen);
   };
 

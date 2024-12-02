@@ -3,10 +3,11 @@
 
 .branch-directory__wrapper {
   height: 100vh;
-  overflow-y: auto;
 }
 
 .branch-directory__content {
+  height: calc(100vh - 56px);
+  overflow: auto;
   padding-top: 16px;
   .branch-directory__item {
     .accordion__item__content {
