@@ -36,7 +36,26 @@ export const selectTermsByDateOptions = [
   },
 ];
 
-export const selectTermsByLongDateOptions = [
+export const selectTFSAeGICOptions = [
+  {
+    label: '90d',
+    value: 90,
+  },
+  {
+    label: '365d',
+    value: 365,
+  },
+  {
+    label: '1095d',
+    value: 1095,
+  },
+  {
+    label: '1825d',
+    value: 1825,
+  },
+];
+
+export const selectRRSPeGICOptions = [
   {
     label: '30d',
     value: 30,

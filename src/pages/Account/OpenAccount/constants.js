@@ -2,9 +2,10 @@ import { DepositSubjectClass } from '@common/constants/deposit';
 import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode, ProductPeriodUnitCode } from '@common/constants/product';
 import {
+  selectRRSPeGICOptions,
   selectTermsByDateOptions,
-  selectTermsByLongDateOptions,
   selectTermsByMonthOptions,
+  selectTFSAeGICOptions,
 } from '@common/constants/terms';
 
 export const OPEN_ACCOUNT_STEP = {
@@ -94,8 +95,8 @@ export const TermOptionsWithProductCode = {
   [ProductCode.E_LONG_TERM_GIC]: selectTermsByMonthOptions,
   [ProductCode.E_LONG_MATURITY]: selectTermsByMonthOptions,
   [ProductCode.E_SHORT_TERM_GIC]: selectTermsByDateOptions,
-  [ProductCode.TFSA_E_GIC]: selectTermsByLongDateOptions,
-  [ProductCode.RRSP_E_GIC]: selectTermsByLongDateOptions,
+  [ProductCode.TFSA_E_GIC]: selectTFSAeGICOptions,
+  [ProductCode.RRSP_E_GIC]: selectRRSPeGICOptions,
 };
 
 export const OpenAccountDescriptions = {
