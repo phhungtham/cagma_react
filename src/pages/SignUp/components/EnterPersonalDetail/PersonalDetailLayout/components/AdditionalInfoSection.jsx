@@ -49,6 +49,8 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
             helperText={t(labels.yourSinWillBe)}
             disabled={!!notSin}
             maxLength={9}
+            type="number"
+            inputMode="numeric"
             {...field}
           />
         )}
