@@ -6,15 +6,15 @@ import { endpoints } from '@common/constants/endpoint';
 import { cardLabels, changeProfileLabels, commonLabels } from '@common/constants/labels';
 import { notAllowSpaceRegex } from '@common/constants/regex';
 import useApi from '@hooks/useApi';
+import useFocus from '@hooks/useFocus';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { Button } from '../ButtonGroup/Button/Button';
 import Input from '../Input/Input';
 
-//TODO: Handle enable, disable email like Change Profile and Sign Up
 const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, translate: t }) => {
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
-  const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
+  const [enabledVerifyCode, setEnabledVerifyCode] = useState(false);
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
   const {
     control,
@@ -29,6 +29,8 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
   const verifyTimerResetRef = useRef(null);
   const verifyCodeSessionNumberRef = useRef(null);
   const verifyEmailFailedNumber = useRef(0);
+  const { focusField } = useFocus();
+
   const [verificationCode, email] = watch(['verificationCode', 'email']);
   const invalidVerificationCode = verificationCode?.length !== 6;
 
@@ -73,7 +75,8 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
       }
       clearErrors('verificationCode');
       setValue('isEmailVerified', false, { shouldValidate: true });
-      setDisabledVerifyButton(false);
+      setEnabledVerifyCode(true);
+      setValue('verificationCode', '', { shouldValidate: true });
 
       if (verifyTimerResetRef.current) verifyTimerResetRef.current();
 
@@ -85,9 +88,12 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
           type: 'timeout',
           message: t(commonLabels.verifyEmailTimeout),
         });
-        setDisabledVerifyButton(true);
+        setEnabledVerifyCode(false);
       }, EMAIL_VERIFY_IN_SECONDS * 1000);
       setShowEmailVerifyCode(true);
+      setTimeout(() => {
+        focusField('verificationCode'); //Trigger auto focus after show email verify
+      }, 100);
 
       if (!alreadySendEmailVerification) {
         setAlreadySendEmailVerification(true);
@@ -113,7 +119,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
           type: 'wrong',
           message: t(commonLabels.verifyEmailWrongMax).replace('%1', EMAIL_VERIFY_RETRY_MAX),
         });
-        setDisabledVerifyButton(true);
+        setEnabledVerifyCode(false);
       } else {
         setError('verificationCode', {
           type: 'wrong',
@@ -126,6 +132,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
 
     if (isVerifySuccess) {
       setShowEmailVerifyCode(false);
+      setEnabledVerifyCode(false);
       setValue('isEmailVerified', true, { shouldValidate: true });
       clearErrors('verificationCode');
       setShowToast({
@@ -153,15 +160,17 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
             placeholder="emailname@email.com"
             type="text"
             regex={notAllowSpaceRegex}
+            disabled={enabledVerifyCode}
+            maxLength={64}
             endAdornment={
               <Button
                 label={alreadySendEmailVerification ? t(cardLabels.resend) : t(cardLabels.request)}
                 variant="outlined__primary"
                 className="btn__send btn__sm"
                 onClick={handleRequestGetEmailVerifyCode}
+                disable={enabledVerifyCode}
               />
             }
-            maxLength={64}
             {...field}
           />
         )}
@@ -178,17 +187,18 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
               placeholder="6 digits"
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
               onResetTimer={cb => (verifyTimerResetRef.current = cb)}
+              maxLength={6}
+              errorMessage={errors?.verificationCode?.message || ''}
+              disabled={!enabledVerifyCode}
               endAdornment={
                 <Button
                   label={t(cardLabels.verify)}
                   variant="outlined__primary"
                   className="btn__send btn__sm"
-                  disable={invalidVerificationCode || disabledVerifyButton}
+                  disable={invalidVerificationCode || !enabledVerifyCode}
                   onClick={handleSendEmailVerifyCode}
                 />
               }
-              maxLength={6}
-              errorMessage={errors?.verificationCode?.message || ''}
               {...field}
             />
           )}
