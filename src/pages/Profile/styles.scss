@@ -2,20 +2,6 @@
 
 .change-profile__wrapper {
   height: 100vh;
-  position: relative;
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 86px;
-    height: 43px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
-    z-index: 1000;
-  }
-  .footer__fixed {
-    padding-top: 0;
-  }
   .change-profile__content {
     height: calc(100vh - 59px);
     overflow-y: auto;

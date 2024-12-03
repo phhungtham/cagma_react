@@ -133,7 +133,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
           </div>
         </div>
       </div>
-      <div className="bottom__footer btn__ctas">
+      <div className="footer__fixed">
         <Button
           variant="filled__primary"
           label={t(ctaLabels.next)}
