@@ -35,11 +35,27 @@ const AgreeTermsConditions = ({ onConfirm }) => {
     });
   };
 
+  const scrollToBottom = () => {
+    const container = document.querySelector('.page__wrapper');
+    if (!container) return;
+    const isBottom = container.scrollHeight - container.scrollTop === container.clientHeight;
+    if (isBottom) return;
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
   const handleCheckOption = (value, checked) => {
     if (checked) {
       setCheckedOptions([...checkedOptions, value]);
     } else {
       setCheckedOptions(checkedOptions.filter(option => option !== value));
+    }
+    //Because hard to know other options below. Need to scroll to bottom when check the first option
+    const isCheckFirstOptions = signUpTermConditionConfig.options[0].value === value;
+    if (isCheckFirstOptions) {
+      scrollToBottom();
     }
   };
 
