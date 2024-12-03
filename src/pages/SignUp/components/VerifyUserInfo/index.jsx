@@ -17,13 +17,13 @@ import { ctaLabels, signUpWelcomeLabels as labels, menuLabels } from '@common/co
 import { invalidNameRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { CustomerInfoVerifyType, VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import openCalendar from '@utilities/gmCommon/openCalendar';
-import { moveBack } from '@utilities/index';
 import dayjs from 'dayjs';
 
 import { CustomerInfoVerifyErrorCode } from './constants';
@@ -40,6 +40,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [showSelectProvinceBottom, setShowSelectProvinceBottom] = useState(initSelectBottom);
   const { requestApi } = useApi();
+  const { moveBackNative } = useMove();
   const {
     control,
     setValue,
@@ -156,7 +157,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
   };
   const handleClickBack = () => {
     clearEkycInfo();
-    moveBack();
+    moveBackNative();
   };
 
   useEffect(() => {
@@ -169,7 +170,8 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
       <div>
         <Header
           title={t(menuLabels.signUp)}
-          onClick={handleClickBack}
+          disabledMoveBack
+          onClickBack={handleClickBack}
         />
         <div className="page__form">
           <div className="page__title">
