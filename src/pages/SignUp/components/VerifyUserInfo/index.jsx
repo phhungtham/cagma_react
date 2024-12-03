@@ -21,6 +21,7 @@ import { SignUpContext } from '@pages/SignUp';
 import { CustomerInfoVerifyType, VerifyMembershipResultStatus } from '@pages/SignUp/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
+import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import { moveBack } from '@utilities/index';
 import dayjs from 'dayjs';
@@ -153,6 +154,10 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
       });
     }
   };
+  const handleClickBack = () => {
+    clearEkycInfo();
+    moveBack();
+  };
 
   useEffect(() => {
     requestGetProvinces();
@@ -164,7 +169,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
       <div>
         <Header
           title={t(menuLabels.signUp)}
-          onClick={moveBack}
+          onClick={handleClickBack}
         />
         <div className="page__form">
           <div className="page__title">
