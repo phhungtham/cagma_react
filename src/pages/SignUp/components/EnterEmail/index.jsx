@@ -22,6 +22,7 @@ import useApi from '@hooks/useApi';
 import useFocus from '@hooks/useFocus';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
+import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
 
 import { EnterEmailSchema } from './schema';
@@ -131,11 +132,18 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
     const payload = {
       cus_email: email,
       uuid_v: deviceId,
+      isFromLogin: isNavigateFromLogin ? '1' : '0',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.updateEmail, payload);
     setShowLoading(false);
     if (isSuccess) {
-      const { screen_kd, cus_email } = data;
+      const { screen_kd, cus_email, isFromLogin } = data;
+      //Check case lost session on server or lost cusno
+      if (isFromLogin === 0 || isFromLogin === '0') {
+        clearEkycInfo();
+        moveHomeNative();
+        return;
+      }
       if (Number(screen_kd) === 1) {
         setEkycToNativeCache({
           ...ekycCached,
