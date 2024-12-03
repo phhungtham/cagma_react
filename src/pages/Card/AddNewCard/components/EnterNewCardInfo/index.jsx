@@ -43,6 +43,9 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(newCardFormSchema),
+    defaultValues: {
+      applyContactless: true,
+    },
   });
 
   const [applyContactless, getTransactionNotice] = watch(['applyContactless', 'getTransactionNotice']);
