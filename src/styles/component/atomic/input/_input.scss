@@ -2,11 +2,12 @@ $input-on-background: background-color(dark-sky-blue);
 @mixin textFieldStyles {
   position: absolute;
   bottom: 0;
+  left: 20px;
   width: 90%;
   max-width: 90%;
   height: 40px;
   background-color: transparent;
-  padding: 0 35px 0 4px;
+  padding: 0 35px 0 0;
   padding-bottom: 14px;
   font-size: 16px;
   color: $color-gray-900;
@@ -15,7 +16,6 @@ $input-on-background: background-color(dark-sky-blue);
   caret-color: $color-blue-500;
 
   border: 0;
-  border-radius: 12px;
   box-shadow: none;
   border-color: transparent;
 }
