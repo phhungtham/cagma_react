@@ -141,6 +141,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
       //Check case lost session on server or lost cusno
       if (isFromLogin === 0 || isFromLogin === '0') {
         clearEkycInfo();
+        clearTempLoginInfo();
         moveHomeNative();
         return;
       }
