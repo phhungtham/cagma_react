@@ -141,22 +141,24 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult, onNavigateVerifyMem
 
         <div className="flex-center gap-14 items-start">
           {showRetryBtn && (
-            <IconButton
-              size="lg"
-              type="circle"
-              label={t(labels.retryIdVerification)}
-              icon={<img src={VerifyId} />}
-              onClick={requestRegenerateEkycLink}
-            />
+            <>
+              <IconButton
+                size="lg"
+                type="circle"
+                label={t(labels.retryIdVerification)}
+                icon={<img src={VerifyId} />}
+                onClick={requestRegenerateEkycLink}
+              />
+              <IconButton
+                size="lg"
+                type="circle"
+                className="start-over__icon"
+                label={t(signUpVerifyUserLabels.startOver)}
+                icon={<img src={StartOverIcon} />}
+                onClick={handleStartOver}
+              />
+            </>
           )}
-          <IconButton
-            size="lg"
-            type="circle"
-            className="start-over__icon"
-            label={t(signUpVerifyUserLabels.startOver)}
-            icon={<img src={StartOverIcon} />}
-            onClick={handleStartOver}
-          />
         </div>
       </div>
 
