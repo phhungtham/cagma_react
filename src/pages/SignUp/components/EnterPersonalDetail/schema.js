@@ -54,13 +54,11 @@ export const SignUpPersonalDetailSchema = Yup.object().shape({
     otherwise: schema => schema.notRequired(),
   }),
   notSin: Yup.boolean(),
-  sin: Yup.string()
-    .length(9)
-    .when(['showAdditionalInfo', 'notSin'], {
-      is: (showAdditionalInfo, notSin) => showAdditionalInfo === true && !notSin,
-      then: schema => schema.required(),
-      otherwise: schema => schema.notRequired(),
-    }),
+  sin: Yup.string().when(['showAdditionalInfo', 'notSin'], {
+    is: (showAdditionalInfo, notSin) => showAdditionalInfo === true && !notSin,
+    then: schema => schema.required().length(9),
+    otherwise: schema => schema.notRequired(),
+  }),
   branchNo: Yup.string().when('showAdditionalInfo', {
     is: true,
     then: schema => schema.required(),
