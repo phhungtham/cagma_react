@@ -30,6 +30,7 @@ import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import { moveBack } from '@utilities/index';
+import dayjs from 'dayjs';
 
 import { verifyIdFormSchema } from './schema';
 
@@ -81,7 +82,8 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
   };
 
   const handleOpenCalendar = () => {
-    openCalendar(handleSelectDate, { selectDate: dob || undefined });
+    const maxDate = dayjs().subtract(1, 'day').format('YYYYMMDD');
+    openCalendar(handleSelectDate, { selectDate: dob || maxDate, endDate: maxDate });
   };
 
   const handleCloseIncorrectAlert = () => {

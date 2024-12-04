@@ -84,15 +84,12 @@ const SignUpCreateID = ({ onConfirm }) => {
           </div>
           <div className="form__section mt-4">
             <Controller
-              render={({ field: { value, onChange } }) => (
+              render={({ field }) => (
                 <Input
                   label={t(labels.id)}
                   regex={notAllowNumberAlphabetRegex}
                   maxLength={20}
-                  value={value}
-                  onChange={inputValue => {
-                    onChange(inputValue.replace(/\s/g, '').toLowerCase());
-                  }}
+                  {...field}
                 />
               )}
               control={control}
