@@ -17,6 +17,8 @@ const ContactInfoSection = () => {
           <Input
             label={t(labels.cellNumber)}
             maxLength={30}
+            type="number"
+            inputMode="numeric"
             {...field}
           />
         )}

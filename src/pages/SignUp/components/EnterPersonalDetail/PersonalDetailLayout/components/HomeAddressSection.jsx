@@ -4,6 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
+import { notAllowNumberAlphabetRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import { SignUpContext } from '@pages/SignUp';
 
 import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
@@ -39,6 +40,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.postalCode)}
             maxLength={10}
+            regex={postalCodeNotAllowRegex}
             {...field}
           />
         )}
@@ -78,6 +80,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.streetName)}
             maxLength={80}
+            regex={notAllowNumberAlphabetRegex}
             {...field}
             onBlur={handleFieldAddressOnBlur}
           />
@@ -102,6 +105,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.city)}
             maxLength={50}
+            regex={notAllowNumberAlphabetRegex}
             {...field}
           />
         )}
