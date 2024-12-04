@@ -71,7 +71,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
   };
 
   const handleOpenSecurityKeyboard = () => {
-    showCertificationChar(handleChangeID);
+    showCertificationChar(handleChangeID, { maxLength: 15 });
   };
 
   const handleSelectDate = selectedDate => {
