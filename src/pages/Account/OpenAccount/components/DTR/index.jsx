@@ -200,6 +200,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
                       label={t(labels.sinNumber)}
                       type="number"
                       inputMode="numeric"
+                      maxLength={9}
                       placeholder="(Social Insurance Number)"
                       helperText={t(labels.yourSinWillBe)}
                       {...field}
@@ -233,6 +234,9 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
                       render={({ field }) => (
                         <Input
                           label={t(labels.tinTaxIdentification)}
+                          type="number"
+                          inputMode="numeric"
+                          maxLength={9}
                           {...field}
                         />
                       )}
@@ -275,6 +279,9 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
                           render={({ field }) => (
                             <Input
                               label={t(labels.tinTaxIdentification2)}
+                              type="number"
+                              inputMode="numeric"
+                              maxLength={30}
                               disabled={notHaveTin1}
                               {...field}
                             />
@@ -348,6 +355,9 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
                           <Input
                             label={t(labels.tinTaxIdentification2)}
                             disabled={notHaveTin2}
+                            type="number"
+                            inputMode="numeric"
+                            maxLength={30}
                             {...field}
                           />
                         )}
