@@ -121,8 +121,12 @@ const OpenAccount = ({ translate: t }) => {
 
   const requestGetCommonCode = async () => {
     setShowLoading(true);
+    const codes = [getProvinceCode, getMaturityOption];
+    if (dep_sjt_class === DepositSubjectClass.INSTALLMENT_SAVING) {
+      codes.push(`${getTermOptions}_${productCode}`);
+    }
     const { data, error, isSuccess } = await requestApi(endpoints.getCommonCode, {
-      code: [getProvinceCode, getMaturityOption, `${getTermOptions}_${productCode}`].join(';'),
+      code: codes.join(';'),
     });
     setShowLoading(false);
     if (isSuccess) {
