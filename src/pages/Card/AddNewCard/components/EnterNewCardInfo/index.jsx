@@ -15,7 +15,7 @@ import { getCanadaProvinceCode, getCardAreaProvinceCode } from '@common/constant
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
-import { notAllowSpaceRegex } from '@common/constants/regex';
+import { notAllowNumberAlphabetRegex, notAllowSpaceRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -220,6 +220,8 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     label={t(cardLabels.streetNumber)}
                     maxLength={100}
                     placeholder="Please input Detail text"
+                    type="number"
+                    inputMode="numeric"
                     {...field}
                   />
                 )}
@@ -232,6 +234,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     label={t(cardLabels.streetName)}
                     maxLength={100}
                     placeholder="Please input Detail text"
+                    regex={notAllowNumberAlphabetRegex}
                     {...field}
                   />
                 )}
@@ -245,6 +248,8 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                       label={t(cardLabels.aptNumber)}
                       maxLength={100}
                       placeholder="Please input Detail text"
+                      type="number"
+                      inputMode="numeric"
                       {...field}
                     />
                   );
@@ -258,6 +263,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     label={t(cardLabels.city)}
                     maxLength={50}
                     placeholder="Please input Detail text"
+                    regex={notAllowNumberAlphabetRegex}
                     {...field}
                   />
                 )}
@@ -282,6 +288,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     label={t(cardLabels.postalCode)}
                     maxLength={110}
                     placeholder="Please input 6numerics"
+                    regex={postalCodeNotAllowRegex}
                     {...field}
                   />
                 )}
