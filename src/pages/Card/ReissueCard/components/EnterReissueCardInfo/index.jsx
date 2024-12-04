@@ -8,6 +8,7 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
 import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
+import { postalCodeNotAllowRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateExpiry, formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import { formatCardNumber } from '@utilities/formater';
@@ -111,11 +112,14 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
                     render={({ field }) => (
                       <Input
                         label={t(labels.postalCode3)}
-                        placeholder="Please input 6 numerics"
-                        type="number"
-                        inputMode="numeric"
+                        placeholder=""
                         maxLength={6}
+                        regex={postalCodeNotAllowRegex}
                         {...field}
+                        onChange={value => {
+                          const upperCaseValue = value ? value.toUpperCase() : '';
+                          field.onChange(upperCaseValue);
+                        }}
                       />
                     )}
                     control={control}

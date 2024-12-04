@@ -10,7 +10,7 @@ import Input from '@common/components/atoms/Input/Input';
 import { addressTypeMapping } from '@common/constants/address';
 import { FileErrorType } from '@common/constants/error';
 import { changeProfileLabels as labels } from '@common/constants/labels';
-import { notAllowNumberRegex } from '@common/constants/regex';
+import { notAllowNumberRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import useFile from '@hooks/useFile';
 
 const maxUploadAddressSize = 5 * 1024 * 1024; //5MB
@@ -226,7 +226,8 @@ const AddressInfoSection = ({
             label={t(labels.postalCode)}
             disabled={isDisableAddress}
             value={value}
-            maxLength={10}
+            maxLength={6}
+            regex={postalCodeNotAllowRegex}
             onChange={value => {
               const upperCaseValue = value ? value.toUpperCase() : '';
               onChange(upperCaseValue);

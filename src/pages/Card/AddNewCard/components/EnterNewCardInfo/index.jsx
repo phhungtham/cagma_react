@@ -286,10 +286,14 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                 render={({ field }) => (
                   <Input
                     label={t(cardLabels.postalCode)}
-                    maxLength={110}
-                    placeholder="Please input 6numerics"
+                    maxLength={6}
+                    placeholder=""
                     regex={postalCodeNotAllowRegex}
                     {...field}
+                    onChange={value => {
+                      const upperCaseValue = value ? value.toUpperCase() : '';
+                      field.onChange(upperCaseValue);
+                    }}
                   />
                 )}
                 control={control}

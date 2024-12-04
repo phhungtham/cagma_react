@@ -12,6 +12,7 @@ import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
+import { postalCodeNotAllowRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { moveBack } from '@utilities/index';
 
@@ -215,10 +216,14 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
               render={({ field }) => (
                 <Input
                   label={t(labels.postalCode)}
-                  type="number"
-                  inputMode="numeric"
-                  placeholder="Please input 6numerics"
+                  regex={postalCodeNotAllowRegex}
+                  placeholder=""
+                  maxLength={6}
                   {...field}
+                  onChange={value => {
+                    const upperCaseValue = value ? value.toUpperCase() : '';
+                    field.onChange(upperCaseValue);
+                  }}
                 />
               )}
               control={control}

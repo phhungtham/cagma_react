@@ -39,9 +39,13 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <Input
             label={t(labels.postalCode)}
-            maxLength={10}
+            maxLength={6}
             regex={postalCodeNotAllowRegex}
             {...field}
+            onChange={value => {
+              const upperCaseValue = value ? value.toUpperCase() : '';
+              field.onChange(upperCaseValue);
+            }}
           />
         )}
         control={control}

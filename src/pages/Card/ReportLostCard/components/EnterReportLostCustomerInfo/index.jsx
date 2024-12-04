@@ -7,6 +7,7 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
 import { reportLostCardLabels as labels, menuLabels } from '@common/constants/labels';
+import { postalCodeNotAllowRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -104,11 +105,14 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
                 render={({ field }) => (
                   <Input
                     label={t(labels.postalCode)}
-                    placeholder="Please input 6numerics"
-                    type="number"
-                    inputMode="numeric"
+                    placeholder=""
+                    regex={postalCodeNotAllowRegex}
                     maxLength={6}
                     {...field}
+                    onChange={value => {
+                      const upperCaseValue = value ? value.toUpperCase() : '';
+                      field.onChange(upperCaseValue);
+                    }}
                   />
                 )}
                 control={control}
