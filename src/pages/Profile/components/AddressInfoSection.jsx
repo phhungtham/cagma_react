@@ -10,7 +10,7 @@ import Input from '@common/components/atoms/Input/Input';
 import { addressTypeMapping } from '@common/constants/address';
 import { FileErrorType } from '@common/constants/error';
 import { changeProfileLabels as labels } from '@common/constants/labels';
-import { notAllowNumberRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
+import { invalidNameRegex, notAllowNumberRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import useFile from '@hooks/useFile';
 
 const maxUploadAddressSize = 5 * 1024 * 1024; //5MB
@@ -272,6 +272,7 @@ const AddressInfoSection = ({
               label={t(labels.streetName)}
               disabled={isDisableAddress}
               maxLength={80}
+              regex={invalidNameRegex}
               {...field}
               onBlur={handleFieldAddressOnBlur}
             />

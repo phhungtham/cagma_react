@@ -12,7 +12,7 @@ import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
-import { postalCodeNotAllowRegex } from '@common/constants/regex';
+import { invalidNameRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { moveBack } from '@utilities/index';
 
@@ -170,6 +170,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                 <Input
                   label={t(labels.streetName)}
                   placeholder="Please input Detail text"
+                  regex={invalidNameRegex}
                   {...field}
                 />
               )}

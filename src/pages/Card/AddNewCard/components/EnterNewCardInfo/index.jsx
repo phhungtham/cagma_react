@@ -15,7 +15,12 @@ import { getCanadaProvinceCode, getCardAreaProvinceCode } from '@common/constant
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
-import { notAllowNumberAlphabetRegex, notAllowSpaceRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
+import {
+  invalidNameRegex,
+  notAllowNumberAlphabetRegex,
+  notAllowSpaceRegex,
+  postalCodeNotAllowRegex,
+} from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -234,7 +239,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     label={t(cardLabels.streetName)}
                     maxLength={100}
                     placeholder="Please input Detail text"
-                    regex={notAllowNumberAlphabetRegex}
+                    regex={invalidNameRegex}
                     {...field}
                   />
                 )}
