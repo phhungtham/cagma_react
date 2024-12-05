@@ -14,6 +14,7 @@ import { formatDateExpiry, formatYYYYMMDDToDisplay } from '@utilities/dateTimeUt
 import { formatCardNumber } from '@utilities/formater';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import { moveBack } from '@utilities/index';
+import dayjs from 'dayjs';
 
 import { reissueCardFormSchema } from './schema';
 import './styles.scss';
@@ -42,7 +43,8 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
   };
 
   const handleOpenCalendar = () => {
-    openCalendar(handleSelectDate, { selectDate: dob || undefined });
+    const maxDate = dayjs().subtract('1', 'day').format('YYYYMMDD');
+    openCalendar(handleSelectDate, { selectDate: dob || maxDate, endDate: maxDate });
   };
 
   useEffect(() => {

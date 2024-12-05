@@ -32,7 +32,7 @@ const ThirdPartyFormSection = ({ provinces, translate: t }) => {
 
   const handleOpenCalendar = () => {
     const maxDate = dayjs().subtract('1', 'day').format('YYYYMMDD');
-    openCalendar(handleSelectDate, { selectDate: dob || undefined, endDate: maxDate });
+    openCalendar(handleSelectDate, { selectDate: dob || maxDate, endDate: maxDate });
   };
 
   const handleOpenSelectProvinceDropdown = () => {
