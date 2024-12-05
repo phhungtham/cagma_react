@@ -16,7 +16,7 @@ import {
   signUpEnterEmailLabels as labels,
   menuLabels,
 } from '@common/constants/labels';
-import { notAllowSpaceRegex } from '@common/constants/regex';
+import { notAllowNumberRegex, notAllowSpaceRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import useFocus from '@hooks/useFocus';
@@ -266,6 +266,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
                     type="number"
                     inputMode="numeric"
                     placeholder="6 digits"
+                    regex={notAllowNumberRegex}
                     remainingTime={EMAIL_VERIFY_IN_SECONDS}
                     onResetTimer={cb => (verifyTimerResetRef.current = cb)}
                     maxLength={6}
