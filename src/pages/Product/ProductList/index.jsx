@@ -311,7 +311,10 @@ const ProductList = ({ translate: t }) => {
         )}
 
         {showBorrowingInstructionBottom && (
-          <BorrowingInstructionBottom onClose={() => setShowBorrowingInstructionBottom(false)} />
+          <BorrowingInstructionBottom
+            onClose={() => setShowBorrowingInstructionBottom(false)}
+            translate={t}
+          />
         )}
       </div>
       <Alert

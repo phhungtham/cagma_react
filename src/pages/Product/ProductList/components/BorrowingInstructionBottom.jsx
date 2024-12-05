@@ -4,12 +4,13 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { MENU_CODE } from '@common/constants/common';
+import { productLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveNext } from '@utilities/index';
 
-const BorrowingInstructionBottom = ({ onClose }) => {
+const BorrowingInstructionBottom = ({ onClose, translate: t }) => {
   const handleNavigateMoreInformation = () => {
     openInternalWebview({
       url: externalUrls.loan,
@@ -36,17 +37,14 @@ const BorrowingInstructionBottom = ({ onClose }) => {
       type="fit-content"
     >
       <div className="borrowing-instruction-bottom__content">
-        <div className="borrowing-title">Want to Find out more?</div>
-        <div className="borrowing-description">
-          Visit our website for more details or talk to one of our advisors. We are more than happy to discuss and plan
-          your financials together.
-        </div>
+        <div className="borrowing-title">{t(labels.wantToFindOutMore)}</div>
+        <div className="borrowing-description">{t(labels.visitOurWebsiteFor)}</div>
         <div className="divider__item__solid w-full mt-5" />
         <div className="borrowing-icon-buttons">
           <IconButton
             size="lg"
             type="circle"
-            label="More Information"
+            label={t(labels.moreInformation)}
             className="call__icon"
             icon={<img src={ExclamationMarkIcon} />}
             onClick={handleNavigateMoreInformation}
@@ -54,7 +52,7 @@ const BorrowingInstructionBottom = ({ onClose }) => {
           <IconButton
             size="lg"
             type="circle"
-            label="Branch Info"
+            label={t(labels.branchInfo)}
             icon={<img src={BranchInfoIcon} />}
             onClick={handleNavigateBranchInfo}
           />
@@ -62,7 +60,7 @@ const BorrowingInstructionBottom = ({ onClose }) => {
         <div className="pt-8 w-full">
           <Button
             variant="filled__primary"
-            label="Book an Appointment"
+            label={t(labels.bookAnAppointment)}
             className="w-full"
             onClick={handleBookAppointment}
           />

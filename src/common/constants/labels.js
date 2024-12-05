@@ -645,6 +645,11 @@ export const productLabels = {
   doNotOwnTfsaESaving: 'lbl_CAPR500000_0096', //You currently do not own a TFSA e-savings account
   noRrspESaving: 'lbl_CAPR500000_0097', //There is no RRSP e-savings account.
   doNotOwnRrspESaving: 'lbl_CAPR500000_0098', //You currently do not own a RRSP e-savings account
+  wantToFindOutMore: 'lbl_CAPR501100_0010', //Want to Find Out More?
+  visitOurWebsiteFor: 'lbl_CAPR501100_0011', //Visit our website for more details or talk to one of our advisors.  We are more...
+  moreInformation: 'lbl_CAPR501100_0012', //More Information
+  branchInfo: 'lbl_CAPR501100_0013', //Branch Info
+  bookAnAppointment: 'lbl_CTA_5013', //Book an appointment
 };
 
 export const signUpWelcomeLabels = {
