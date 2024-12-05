@@ -26,6 +26,7 @@ import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 
+import { newCardMaxContactless } from '../../constants';
 import { newCardFormSchema } from './schema';
 import './styles.scss';
 
@@ -169,7 +170,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
   }, [email]);
 
   useEffect(() => {
-    const defaultContactlessValue = applyContactless ? '250' : '';
+    const defaultContactlessValue = applyContactless ? newCardMaxContactless : '';
     setValue('contactlessPerTransaction', defaultContactlessValue, { shouldValidate: true });
     setValue('totalContactless', defaultContactlessValue, { shouldValidate: true });
   }, [applyContactless]);
@@ -349,8 +350,11 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                           maxLength={22}
                           {...field}
                           onChange={value => {
-                            if (!Number(value)) {
+                            const numberValue = Number(value);
+                            if (!numberValue) {
                               field.onChange('');
+                            } else if (numberValue > Number(newCardMaxContactless)) {
+                              return;
                             } else {
                               field.onChange(value);
                             }
@@ -370,8 +374,11 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                           maxLength={22}
                           {...field}
                           onChange={value => {
-                            if (!Number(value)) {
+                            const numberValue = Number(value);
+                            if (!numberValue) {
                               field.onChange('');
+                            } else if (numberValue > Number(newCardMaxContactless)) {
+                              return;
                             } else {
                               field.onChange(value);
                             }

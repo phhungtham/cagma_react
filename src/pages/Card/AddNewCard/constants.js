@@ -55,3 +55,5 @@ export const addNewCardSuccessFields = [
     value: 'issueDate',
   },
 ];
+
+export const newCardMaxContactless = '250';
