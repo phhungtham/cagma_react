@@ -353,6 +353,12 @@ const AddressInfoSection = ({
           name="address3"
         />
       </div>
+      {isDisableAddress && (
+        <InfoBox
+          variant="informative"
+          label={t(labels.theHomeAddressInfo)}
+        />
+      )}
 
       {isShowProofAddress && !isDisableAddress && (
         <>

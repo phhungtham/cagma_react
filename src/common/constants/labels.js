@@ -256,6 +256,7 @@ export const changeProfileLabels = {
   maxFileSize: 'lbl_CAME900000_0224', //*5MB Max
   addressType: 'lbl_CAME900000_0915', //Address Type
   pleaseVerifyYourEmail: 'lbl_CAME900000_0188', //Please verify your email
+  theHomeAddressInfo: 'lbl_CAME900000_0337', //The home address info is currently being corrected.
 };
 
 export const openAccountLabels = {
