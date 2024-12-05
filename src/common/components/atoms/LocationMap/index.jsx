@@ -20,7 +20,7 @@ const LocationMap = ({ address, width, height, title }) => {
       height={height}
       title={title}
       loading="lazy"
-      sandbox="allow-scripts allow-popups allow-same-origin"
+      // sandbox="allow-scripts allow-popups allow-same-origin"
       src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyC820r5kTO-4w5G2FYKR3J7SPgga5a2iY8
           &q=${formatAddress(address)}&zoom=18`}
     />
