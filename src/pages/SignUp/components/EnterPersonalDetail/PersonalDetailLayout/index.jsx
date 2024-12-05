@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import Alert from '@common/components/atoms/Alert';
@@ -24,6 +24,7 @@ import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
 import { buildObjectMapFromResponse, commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
+import { scrollToElement } from '@utilities/scrollInToElement';
 
 import {
   CommonCodeFieldName,
@@ -61,7 +62,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
     [CommonCodeFieldName.PROVINCE]: [],
     [CommonCodeFieldName.EMPLOYMENT_STATUS]: [],
   });
-
+  const employmentSectionRef = useRef(null);
   const { requestApi } = useApi();
 
   const methods = useForm({
@@ -140,10 +141,13 @@ const PersonalDetailLayout = ({ onSubmit }) => {
   };
 
   const handleSubmitForm = values => {
+    const container = document.querySelector('.page__wrapper');
     if (showAdditionalInfo) {
       onSubmit(values);
     } else {
       setValue('showAdditionalInfo', true, { shouldValidate: true });
+      if (!container) return;
+      setTimeout(() => scrollToElement(employmentSectionRef, container), 150);
     }
   };
 
@@ -300,11 +304,14 @@ const PersonalDetailLayout = ({ onSubmit }) => {
             />
             {showAdditionalInfo && (
               <>
-                <EmploymentInfoSection
-                  onOpenSelectBottom={handleOpenSelectBottom}
-                  commonCode={commonCode}
-                  occupation2Options={occupation2Options}
-                />
+                <div ref={employmentSectionRef}>
+                  <EmploymentInfoSection
+                    onOpenSelectBottom={handleOpenSelectBottom}
+                    commonCode={commonCode}
+                    occupation2Options={occupation2Options}
+                  />
+                </div>
+
                 <AdditionalInfoSection
                   onOpenSelectBottom={handleOpenSelectBottom}
                   commonCode={commonCode}
