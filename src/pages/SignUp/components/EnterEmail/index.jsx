@@ -100,6 +100,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
     if (clearTimeOutRef.current) {
       clearTimeout(clearTimeOutRef.current);
     }
+    verifyEmailFailedNumber.current = 0;
     clearErrors('verificationCode');
     setValue('isEmailVerified', false, { shouldValidate: true });
     setEnabledVerifyCode(true);
