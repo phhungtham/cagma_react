@@ -93,13 +93,12 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
 
   const handleSubmitForm = async values => {
     setShowLoading(true);
-    const { dob: cus_bth_y4mm_dt, firstName: fst_nm, lastName: lst_nm, province, house_adr_state_c } = values;
+    const { dob: cus_bth_y4mm_dt, firstName: fst_nm, lastName: lst_nm, province } = values;
     const payload = {
       cus_bth_y4mm_dt,
       fst_nm,
       lst_nm,
-      province,
-      house_adr_state_c,
+      house_adr_state_c: province,
       trx_type: CustomerInfoVerifyType.EKYC,
     };
     const { errorCode, data, isSuccess, error } = await requestApi(endpoints.customerInfoVerify, payload);
