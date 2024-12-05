@@ -263,7 +263,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
                 render={({ field }) => (
                   <Input
                     label={t(labels.verificationCode)}
-                    type="number"
+                    type="tel"
                     inputMode="numeric"
                     placeholder="6 digits"
                     regex={notAllowNumberRegex}
