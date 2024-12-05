@@ -263,9 +263,9 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
                 render={({ field }) => (
                   <Input
                     label={t(labels.verificationCode)}
-                    type="text"
                     inputMode="numeric"
                     placeholder="6 digits"
+                    type="text"
                     regex={notAllowNumberRegex}
                     remainingTime={EMAIL_VERIFY_IN_SECONDS}
                     onResetTimer={cb => (verifyTimerResetRef.current = cb)}

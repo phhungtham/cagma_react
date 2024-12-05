@@ -4,7 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { cardLabels, changeProfileLabels, commonLabels } from '@common/constants/labels';
-import { notAllowSpaceRegex } from '@common/constants/regex';
+import { notAllowNumberRegex, notAllowSpaceRegex } from '@common/constants/regex';
 import useApi from '@hooks/useApi';
 import useFocus from '@hooks/useFocus';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -182,9 +182,10 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
           render={({ field }) => (
             <Input
               label={t(cardLabels.verificationCode)}
-              type="number"
               inputMode="numeric"
               placeholder="6 digits"
+              type="text"
+              regex={notAllowNumberRegex}
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
               onResetTimer={cb => (verifyTimerResetRef.current = cb)}
               maxLength={6}

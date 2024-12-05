@@ -255,8 +255,9 @@ const ContactInfoSection = ({
           render={({ field }) => (
             <Input
               label={t(labels.verificationCode)}
-              type="number"
               inputMode="numeric"
+              type="text"
+              regex={notAllowNumberRegex}
               remainingTime={EMAIL_VERIFY_IN_SECONDS}
               onResetTimer={cb => (verifyTimerResetRef.current = cb)}
               endAdornment={
