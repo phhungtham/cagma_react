@@ -277,6 +277,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
                     placeholder="Select"
                     onClick={handleOpenPurposeAppointmentBottom}
                     value={value}
+                    disabled={!customerType}
                   >
                     {subPurposeDisplay && <div className="purpose__detail">{subPurposeDisplay}</div>}
                   </TextDropdown>
