@@ -35,7 +35,7 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
           title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
-        <div className="page__form px-0">
+        <div className="h-screen__content pt-5 px-0">
           <div className="page__container">
             <div className="page__title">{t(labels.createSecurityPasscode)}</div>
             <div className="passcode-banner">

@@ -182,7 +182,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
           title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
-        <div className="page__form">
+        <div className="h-screen__content pt-5">
           <div className="page__title">{t(labels.thankYouVisiting)}</div>
           <div className="mt-4">
             <InfoBox

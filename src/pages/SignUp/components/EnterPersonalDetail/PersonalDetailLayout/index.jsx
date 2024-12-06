@@ -141,7 +141,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
   };
 
   const handleSubmitForm = values => {
-    const container = document.querySelector('.page__wrapper');
+    const container = document.querySelector('.h-screen__content');
     if (showAdditionalInfo) {
       onSubmit(values);
     } else {
@@ -289,7 +289,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
   return (
     <>
       {showLoading && <Spinner />}
-      <div className="page__form">
+      <div className="h-screen__content pt-5">
         <div className="page__title">{t(labels.enterYourPersonal)}</div>
         <div className="pt-8 d-flex flex-column gap-10">
           <FormProvider {...methods}>

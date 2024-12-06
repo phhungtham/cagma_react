@@ -117,7 +117,7 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
           disabledMoveBack
           onClickBack={handleClickBack}
         />
-        <div className="page__form px-0">
+        <div className="h-screen__content px-0 pt-5">
           <div className="page__container">
             <div className="page__title">{t(labels.verifyYourIdentity)}</div>
             <div className="verify-identity-banner">

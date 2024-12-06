@@ -106,7 +106,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
           title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
-        <div className="create-password__wrapper page__form">
+        <div className="create-password__wrapper h-screen__content pt-5">
           <div className="page__title">{t(labels.createYourLoginPass)}</div>
           <div className="mt-4">
             <InfoBox

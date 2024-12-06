@@ -74,7 +74,7 @@ const SignUpCreateID = ({ onConfirm }) => {
           title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
-        <div className="page__form">
+        <div className="h-screen__content pt-5">
           <div className="page__title">{t(labels.createYourId)}</div>
           <div className="mt-4">
             <InfoBox

@@ -252,7 +252,7 @@ const SignUp = ({ translate }) => {
       }}
     >
       {showLoading && <Spinner />}
-      <div className="sign-up__wrapper page__wrapper">
+      <div className="sign-up__wrapper h-screen">
         {currentStep === SignUpStep.VERIFY_USER_INFO && (
           <VerifyUserInfo
             navigateToVerifyResult={handleNavigateToVerifyMemberResult}

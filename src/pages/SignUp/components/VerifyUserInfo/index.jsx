@@ -172,7 +172,7 @@ const VerifyUserInfo = ({ navigateToVerifyResult, navigateToVerifyEmail }) => {
           disabledMoveBack
           onClickBack={handleClickBack}
         />
-        <div className="page__form">
+        <div className="h-screen__content pt-5">
           <div className="page__title">
             <p>{t(labels.welcome)}</p>
           </div>
