@@ -123,7 +123,7 @@ const AddNewCard = ({ translate: t }) => {
 
   return (
     <>
-      <div className="add-new-card__wrapper page__wrapper">
+      <div className="add-new-card__wrapper h-screen">
         {showLoading && <Spinner />}
         {currentStep === ADD_NEW_CARD_STEP.TERMS_CONDITIONS && (
           <TermsAndConditions

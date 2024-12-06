@@ -5,7 +5,9 @@
 }
 
 .add-new-card.term-conditions__content {
-  padding: 20px 0 150px;
+  height: calc(100vh - 145px);
+  overflow: auto;
+  padding: 20px 0 50px;
 
   .term-condition__title {
     font-size: 28px;
