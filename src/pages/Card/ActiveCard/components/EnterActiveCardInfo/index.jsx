@@ -27,7 +27,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin, translate: t }) => {
         title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
-      <div className="active-card__container">
+      <div className="h-screen__content pt-5">
         <h1 className="page__title">{t(labels.activateCard)}</h1>
         <div className="active-card__form mt-4">
           <div className="form__section">
