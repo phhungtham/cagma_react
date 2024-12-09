@@ -14,7 +14,7 @@ import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { BookAppointmentType } from '../constants';
 import BookAppointmentForm from './components/BookAppointmentForm';
 import BookAppointmentSuccessful from './components/BookAppointmentSuccessful';
-import { bookAppointmentFormMapFields, CustomerStatusType } from './constants';
+import { bookAppointmentFormMapFields } from './constants';
 
 const BookAppointmentStep = {
   ENTER_INFO_FORM: 'enterInfo',
@@ -37,8 +37,7 @@ const BookAppointment = ({ translate: t }) => {
   const handleBookAppointment = async formValues => {
     setShowLoading(true);
     const request = buildRequestPayloadBaseMappingFields(formValues, bookAppointmentFormMapFields);
-    const guestCustomerStatus = formValues.customerStatusType === CustomerStatusType.EXISTING ? 'N' : 'Y';
-    request.apint_guest_chk = isLogin ? guestCustomerStatus : 'Y'; //Alway is new customer if user not logged
+    request.apint_guest_chk = isLogin ? 'N' : 'Y'; //Alway is new customer if user not logged
     request.apint_visit_chk = type === BookAppointmentType.IN_PERSON ? 'Y' : 'N';
     request.apint_brno = branchNo;
     const bookAppointmentResponse = await apiCall(endpoints.bookAppointment, 'POST', request);

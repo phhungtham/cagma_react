@@ -109,6 +109,9 @@ const Login = () => {
   }, [isLoginSuccess]);
 
   const handleLogout = async () => {
+    if (isDevelopmentEnv) {
+      localStorage.removeItem('isLogin');
+    }
     await requestApi(endpoints.logout);
   };
 

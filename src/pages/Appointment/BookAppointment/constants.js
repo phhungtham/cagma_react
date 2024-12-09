@@ -41,18 +41,11 @@ export const bookAppointmentFormDefaultValues = {
   dateDisplay: '',
   time: '',
   timeDisplay: '',
-  customerStatusType: '',
-  customerStatusTypeDisplay: '',
   name: '',
   phoneNumber: '',
   email: '',
   lang: 'en',
   comment: '',
-};
-
-export const CustomerStatusType = {
-  NEW: 'new',
-  EXISTING: 'existing',
 };
 
 export const bookAppointmentFormMapFields = {
@@ -61,7 +54,6 @@ export const bookAppointmentFormMapFields = {
   subPurpose: 'apint_sub_purp',
   date: 'apint_reg_dt',
   time: 'apint_reg_tm',
-  customerStatusType: 'apint_guest_chk',
   name: 'apint_user_nm',
   email: 'apint_user_email',
   phoneNumber: 'apint_user_telno',

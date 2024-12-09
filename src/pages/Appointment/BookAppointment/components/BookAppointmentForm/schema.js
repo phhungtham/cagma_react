@@ -10,7 +10,6 @@ export const bookAppointmentSchema = Yup.object().shape({
   phoneNumber: Yup.string().nullable().optional(),
   lang: Yup.string().nullable().optional(),
   comment: Yup.string().nullable().optional(),
-  customerStatusType: Yup.string().nullable().optional(),
   customerTypeDisplay: Yup.string().nullable().optional(),
   purposeDisplay: Yup.string().nullable().optional(),
   dateDisplay: Yup.string().nullable().optional(),
