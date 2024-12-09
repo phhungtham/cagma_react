@@ -61,7 +61,7 @@ const VerifyPEPStatusLayout = ({ onSubmit, isShow }) => {
       type,
       options,
       isShow: true,
-      title: type,
+      title: t(type),
     });
   };
 
