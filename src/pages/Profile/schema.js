@@ -17,35 +17,48 @@ export const changeProfileSchema = Yup.object().shape({
     otherwise: schema => schema.notRequired(),
   }),
   occupation3: Yup.string().required('Required field'),
-  addressType: Yup.string().required('Required field'),
+  isReviewingAddress: Yup.boolean(),
+  addressType: Yup.string().when('isReviewingAddress', {
+    is: false,
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
   phoneNumber: Yup.string(),
   faxNumber: Yup.string(),
-  country: Yup.string().required('Required field'),
-  postalCode: Yup.string().required('Required field'),
-  streetNumber: Yup.string().when('country', {
-    is: 'CA',
+  country: Yup.string().when('isReviewingAddress', {
+    is: false,
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
-  streetName: Yup.string().when('country', {
-    is: 'CA',
+  postalCode: Yup.string().when('isReviewingAddress', {
+    is: false,
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
-  city: Yup.string().when('country', {
-    is: 'CA',
+  streetNumber: Yup.string().when(['isReviewingAddress', 'country'], {
+    is: (isReviewingAddress, country) => !isReviewingAddress && country === 'CA',
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
-  province: Yup.string().when('country', {
-    is: 'CA',
+  streetName: Yup.string().when(['isReviewingAddress', 'country'], {
+    is: (isReviewingAddress, country) => !isReviewingAddress && country === 'CA',
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
-  address1: Yup.string().when('country', {
-    is: employment => employment !== 'CA',
+  city: Yup.string().when(['isReviewingAddress', 'country'], {
+    is: (isReviewingAddress, country) => !isReviewingAddress && country === 'CA',
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
-  telno_nat_c: Yup.string(),
+  province: Yup.string().when(['isReviewingAddress', 'country'], {
+    is: (isReviewingAddress, country) => !isReviewingAddress && country === 'CA',
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  address1: Yup.string().when(['isReviewingAddress', 'country'], {
+    is: (isReviewingAddress, country) => !isReviewingAddress && country !== 'CA',
+    then: schema => schema.required(),
+    otherwise: schema => schema.notRequired(),
+  }),
+  telno_nat_c: Yup.string().nullable(),
 });

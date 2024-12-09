@@ -31,20 +31,20 @@ const AddressInfoSection = ({
 }) => {
   const [file, setFile] = useState();
   const { control, watch, setValue, trigger } = useFormContext();
-  const [country, addressType, aptNumber, streetNumber, streetName, fileName] = watch([
+  const [country, addressType, aptNumber, streetNumber, streetName, isReviewingAddress] = watch([
     'country',
     'addressType',
     'aptNumber',
     'streetNumber',
     'streetName',
-    'fileName',
+    'isReviewingAddress',
   ]);
   const isCanadaCountrySelected = country === 'CA';
   const isShowProofAddress = addressType === addressTypeMapping.home;
   const { handleUploadFile } = useFile();
   const fileInputRef = useRef(null);
 
-  const isDisableAddress = Number(userInfo?.noproc_cnt || 0) > 0;
+  const isDisableAddress = isReviewingAddress;
 
   const handleUploadCallback = result => {
     const { file, success, error, fileLocation, fileName } = result;

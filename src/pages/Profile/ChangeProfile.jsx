@@ -451,6 +451,7 @@ const ChangeProfile = ({ translate: t }) => {
       user.filePath = '';
       user.fileName = '';
       user.telno_nat_c = defaultAddress?.telno_nat_c;
+      user.isReviewingAddress = Number(userInfo?.noproc_cnt || 0) > 0;
       if (user.country === 'CA') {
         user.aptNumber = defaultAddress?.adr_strt_nm;
         user.streetNumber = defaultAddress?.adr_houseno_in_ctt;
