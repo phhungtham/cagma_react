@@ -72,11 +72,4 @@
       color: #4f8bf4;
     }
   }
-  .active-success__button {
-    width: 100px;
-    @include flexCenter();
-    .btn__icon__wrapper {
-      max-width: unset !important;
-    }
-  }
 }

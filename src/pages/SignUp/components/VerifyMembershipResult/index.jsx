@@ -72,7 +72,7 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
             />
           </div>
         </div>
-        <div className="success-icon-buttons gap-14">
+        <div className="success-icon-buttons">
           <IconButton
             size="lg"
             type="circle"

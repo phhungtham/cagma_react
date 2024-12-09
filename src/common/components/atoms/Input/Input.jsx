@@ -6,8 +6,6 @@ import { formatSecondsDisplay } from '@utilities/dateTimeUtils';
 import { ClearIcon } from 'assets/icons';
 import PropTypes from 'prop-types';
 
-import { IconButton } from '../ButtonGroup/IconButton/IconButton';
-
 const Input = forwardRef((props, ref) => {
   const {
     // autoComplete,
@@ -23,7 +21,6 @@ const Input = forwardRef((props, ref) => {
     minLength,
     name,
     readOnly,
-    isMemo,
     placeHolder,
     style,
     type,
@@ -163,14 +160,6 @@ const Input = forwardRef((props, ref) => {
 
   return (
     <div className={`text__field ${clazz}`}>
-      {isMemo && (
-        <section className="input__memo">
-          <div className="input__memo__title">Memo</div>
-          <div className="input__memo__icon">
-            <IconButton size={'w-16'} />
-          </div>
-        </section>
-      )}
       <section
         className={`input__wrapper ${customClass} ${tagName} ${errorTextField && 'input__error'} ${
           disabled ? 'disable' : ''
@@ -262,7 +251,6 @@ Input.propTypes = {
   name: PropTypes.string,
   readOnly: PropTypes.bool,
   isCountCharacter: PropTypes.bool,
-  isMemo: PropTypes.bool,
   placeHolder: PropTypes.string,
   remainingTime: PropTypes.number,
   style: PropTypes.object,
@@ -279,7 +267,6 @@ Input.defaultProps = {
   type: 'text',
   label: '',
   readOnly: false,
-  isMemo: false,
   maxLength: null,
   minLength: null,
   placeHolder: '',

@@ -112,6 +112,8 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
       if (Number(ekyc_aplct_stp_c) === SignUpStepStatus.INFO_REVIEWING) {
         return onNavigateEkycResult({ isSuccess: true });
       }
+      //TODO: Check issue cannot navigate when clicking button Confirm.
+      //Consider using ekyc_aplct_stp_c response from this API instead of using ekycStepStatus.ekyc_aplct_stp_c
       const isEkycApproved = Number(ekycStepStatus.ekyc_aplct_stp_c) === SignUpStepStatus.INFO_APPROVED;
       const isVerifySuccess = Number(rslt_d) === 1;
       const isNeedToCreateId = inter_cus_yn === 'N';

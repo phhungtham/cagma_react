@@ -65,6 +65,9 @@
   .rrsp-button {
     .btn__icon__wrapper {
       max-width: 270px !important;
+      .btn__icon__label {
+        width: 270px !important;
+      }
     }
   }
 }
