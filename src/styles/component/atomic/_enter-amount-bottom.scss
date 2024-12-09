@@ -2,6 +2,8 @@
   padding: 0 !important;
   .bottom__sheet__content {
     padding: 0;
+    user-select: none;
+    touch-action: none;
   }
   .numpad {
     display: flex;
