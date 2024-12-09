@@ -37,7 +37,7 @@ const OPBranchVisitNoticeBottom = ({ onClose, open, translate: t }) => {
       <div className="op-branch-visit-notice__content">
         <div className="instruction">{t(labels.sinNumberRequired)}</div>
         <div className="divider__item__solid" />
-        <div className="flex-center gap-14 pt-8 pb-4">
+        <div className="d-flex justify-center pt-8 pb-4">
           <IconButton
             size="lg"
             type="circle"

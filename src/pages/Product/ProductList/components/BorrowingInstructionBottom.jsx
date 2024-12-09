@@ -1,5 +1,5 @@
-import ExclamationMarkIcon from '@assets/images/exclamation-mark.png';
 import BranchInfoIcon from '@assets/images/icon-fill-atm-24.png';
+import ExclamationMarkIcon from '@assets/images/icon_fill_informative_24.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import BottomSheet from '@common/components/templates/BottomSheet';

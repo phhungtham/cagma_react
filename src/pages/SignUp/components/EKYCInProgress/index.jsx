@@ -139,7 +139,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult, onNavigateVerifyMem
           <div className="note">{t(labels.pleaseCompleteVerification)}</div>
         </div>
 
-        <div className="flex-center gap-14 items-start">
+        <div className="d-flex justify-center items-start">
           {showRetryBtn && (
             <>
               <IconButton

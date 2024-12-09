@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Input from '@common/components/atoms/Input/Input';
 
 // eslint-disable-next-line

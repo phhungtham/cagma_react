@@ -85,7 +85,8 @@
   }
 
   .success-icon-buttons {
-    @include flexCenter();
+    display: flex;
+    justify-content: center;
   }
 }
 

@@ -56,17 +56,11 @@
 
   .active-success__ctas {
     margin-top: 32px;
-    @include flexCenter();
+    display: flex;
+    justify-content: center;
     .call__icon {
       font-size: 24px;
       color: $color-shinhan-navy-900;
-    }
-    .active-success__button {
-      width: 100px;
-      @include flexCenter();
-      .btn__icon__wrapper {
-        max-width: 80px;
-      }
     }
   }
 }

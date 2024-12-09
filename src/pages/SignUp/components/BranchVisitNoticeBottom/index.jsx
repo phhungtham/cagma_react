@@ -41,7 +41,7 @@ const BranchVisitNoticeBottom = ({ onClose, open }) => {
       <div className="branch-visit-notice__content">
         <div className="instruction">{t(labels.ifYouAreNotAvailable)}</div>
         <div className="divider__item__solid" />
-        <div className="flex-center gap-14 pt-8 pb-4">
+        <div className="d-flex justify-center pt-8 pb-4">
           <IconButton
             size="lg"
             type="circle"

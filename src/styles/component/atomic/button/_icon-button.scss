@@ -30,9 +30,9 @@ $icon-circle-sizes: (
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100px;
     @each $size, $map in $icon-circle-sizes {
       &.icon--#{$size} {
-        max-width: map-get($map, width);
         .btn__icon__main {
           background: $color-gray-100;
           display: flex;
@@ -46,13 +46,20 @@ $icon-circle-sizes: (
           &:hover {
             background-color: $color-gray-400;
           }
+          img {
+            //Hardcode just for lg size
+            height: 24px;
+            width: 24px;
+          }
         }
         .btn__icon__label {
           margin-top: 8px;
           font-size: 13px;
           line-height: 18px;
           text-align: center;
+          width: 93px;
           color: $color-gray-900;
+          word-break: keep-all;
         }
       }
     }
