@@ -41,11 +41,12 @@ const ContactInfoSection = ({
   const { requestApi } = useApi();
   const { focusField } = useFocus();
 
-  const [employment, verificationCode, email, isEmailVerified] = watch([
+  const [employment, verificationCode, email, isEmailVerified, idTypeDisplay] = watch([
     'employment',
     'verificationCode',
     'email',
     'isEmailVerified',
+    'idTypeDisplay',
   ]);
 
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
@@ -213,7 +214,7 @@ const ContactInfoSection = ({
       <Controller
         render={({ field }) => (
           <Input
-            label={t(labels.sin)}
+            label={idTypeDisplay || t(labels.sin)}
             type="text"
             readOnly
             {...field}

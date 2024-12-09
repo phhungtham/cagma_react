@@ -20,6 +20,7 @@ export const profileFormMapFields = {
   name: 'cus_snm_nm',
   dob: 'cus_bth_y4mm_dt',
   dobDisplay: 'cus_bth_y4mm_dt_display',
+  idTypeDisplay: 'lcl_cus_rlnm_no_t_display',
   sin: 'lcl_cus_rlnm_no',
   email: 'cus_email',
   callNumber: 'cus_cell_no',
