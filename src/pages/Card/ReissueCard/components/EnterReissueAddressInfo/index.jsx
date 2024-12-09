@@ -125,7 +125,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
         title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
-      <div className="reissue-card-address__wrapper page__form px-0">
+      <div className="reissue-card-address__wrapper h-screen__content px-0">
         <div className="page__container">
           <h1 className="page__title">{t(labels.reissueYourCard)}</h1>
           {isLogin && (

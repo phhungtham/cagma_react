@@ -62,6 +62,12 @@
   height: 100vh;
 }
 
+.h-screen__content {
+  height: calc(100vh - 145px); // minus header and button footer
+  overflow: auto;
+  padding: 0 24px 32px;
+}
+
 .w-full {
   width: 100%;
 }

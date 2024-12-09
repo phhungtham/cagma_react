@@ -36,7 +36,7 @@ const AgreeTermsConditions = ({ onConfirm }) => {
   };
 
   const scrollToBottom = () => {
-    const container = document.querySelector('.page__wrapper');
+    const container = document.querySelector('.h-screen__content');
     if (!container) return;
     const isBottom = container.scrollHeight - container.scrollTop === container.clientHeight;
     if (isBottom) return;
@@ -82,7 +82,7 @@ const AgreeTermsConditions = ({ onConfirm }) => {
           title={t(menuLabels.signUp)}
           onClick={moveBack}
         />
-        <div className="page__form px-0">
+        <div className="h-screen__content pt-5 px-0">
           <div className="page__container">
             <div className="page__title">{t(labels.agreeToTerms)}</div>
             <div className="terms-banner">

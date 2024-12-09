@@ -57,7 +57,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
         title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
-      <div className="page__form reissue-card-info__form">
+      <div className="reissue-card-info__form h-screen__content">
         <h1 className="page__title">{t(labels.reissueYourCard)}</h1>
         <div className="mt-4">
           <div className="form__section">

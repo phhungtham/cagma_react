@@ -52,7 +52,7 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
         title={t(menuLabels.accessCardService)}
         onClick={moveBack}
       />
-      <div className="page__form px-0">
+      <div className="h-screen__content pt-5 px-0">
         <div className="page__container">
           <h1 className="page__title">{t(labels.activateCard)}</h1>
           <div className="mt-4">

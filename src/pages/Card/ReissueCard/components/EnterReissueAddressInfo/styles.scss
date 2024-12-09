@@ -2,6 +2,7 @@
 @import 'styles/utilities/mixin';
 
 .reissue-card-address__wrapper {
+  padding-top: 20px !important;
   .card {
     &__details {
       padding: 8px 20px;

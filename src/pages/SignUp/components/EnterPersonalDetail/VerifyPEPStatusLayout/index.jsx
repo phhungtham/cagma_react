@@ -126,8 +126,8 @@ const VerifyPEPStatusLayout = ({ onSubmit, isShow }) => {
   return (
     <>
       {showLoading && <Spinner />}
-      <div className="page__form px-0 verify-pep-status__wrapper">
-        <div className="page__container">
+      <div className="h-screen__content px-0 verify-pep-status__wrapper">
+        <div className="page__container pt-5">
           <div className="page__title">{t(labels.pepStatusConfirmation)}</div>
           <div className="pep-banner">
             <img

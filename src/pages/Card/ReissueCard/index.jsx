@@ -277,7 +277,7 @@ const ReissueCard = ({ translate: t }) => {
 
   return (
     <>
-      <div className="reissue-card__wrapper page__wrapper">
+      <div className="reissue-card__wrapper h-screen">
         {showLoading && <Spinner />}
         {currentStep === REISSUE_CARD_STEP.ENTER_CARD_INFORMATION && (
           <EnterReissueCardInfo
