@@ -46,9 +46,14 @@ const EnterAmountBottom = ({
   const onClickRefreshExchangeRate = () => {};
 
   const onClickConfirm = () => {
+    let amount = currentAmount;
+    const lastChar = currentAmount ? currentAmount.slice(-1) : '';
+    if (lastChar === '.') {
+      amount = amount.replace('.', '');
+    }
     onChangeAmount({
       currency: selectedCurrency,
-      amount: currentAmount,
+      amount,
     });
   };
 
@@ -64,7 +69,7 @@ const EnterAmountBottom = ({
         }
       }
     } else if (
-      (value === '.' && (currentAmount.includes('.') || currentAmount === '')) ||
+      (value === '.' && currentAmount.includes('.')) ||
       (currentAmount === '0' && value === '0') ||
       (!currentAmount.includes('.') && currentAmount.replace(/,/g, '').length > 12 && value !== '.') ||
       (currentAmount.includes('.') && currentAmount.slice(currentAmount.lastIndexOf('.') + 1).length > 1) //Exceed two digit after decimal
@@ -75,7 +80,11 @@ const EnterAmountBottom = ({
       if (currentAmount === '0' && value !== '.') {
         newInput = value;
       } else {
-        newInput = currentAmount + value;
+        if (currentAmount === '' && value === '.') {
+          newInput = '0.';
+        } else {
+          newInput = currentAmount + value;
+        }
       }
       const formattedInput = stringNumberToCurrency(newInput);
       setCurrentAmount(formattedInput);

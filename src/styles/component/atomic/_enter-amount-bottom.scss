@@ -2,13 +2,12 @@
   padding: 0 !important;
   .bottom__sheet__content {
     padding: 0;
-    user-select: none;
-    touch-action: none;
   }
   .numpad {
     display: flex;
     flex-flow: row wrap;
     font-size: 20px;
+    overflow: hidden;
   }
   .btn__keypad {
     display: flex;
