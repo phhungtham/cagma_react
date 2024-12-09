@@ -44,9 +44,7 @@ const BookAppointmentSuccessful = ({ appointmentInfo, translate: t }) => {
               key={value}
             >
               <span className="appointment-label">{t(label)}</span>
-              <span className="appointment-value">
-                <span>{appointmentInfo?.[value]}</span>
-              </span>
+              <span className="appointment-value">{appointmentInfo?.[value]}</span>
             </div>
           ))}
         </div>
