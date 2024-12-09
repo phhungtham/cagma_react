@@ -56,14 +56,8 @@
     border-radius: 16px;
     position: relative;
     padding: 24px;
-    &.banking {
-      background-color: $color-blue-100;
-    }
-    &.investment {
-      background-color: $color-green-100;
-    }
+    background-color: $color-blue-100;
     &.borrowing {
-      background-color: $color-blue-350;
       .product-card__main {
         gap: 12px;
       }
