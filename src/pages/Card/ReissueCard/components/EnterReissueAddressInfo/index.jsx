@@ -301,13 +301,15 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
         options={selectBottom.options}
         title={selectBottom.title}
       />
-      <ViewTermBottom
-        open={viewTermBottom.open}
-        onClose={onCloseViewTermBottom}
-        title={viewTermBottom.title}
-        pdfFile={viewTermBottom.fileUrl}
-        onConfirm={handleConfirmTerm}
-      />
+      {viewTermBottom.open && (
+        <ViewTermBottom
+          open={viewTermBottom.open}
+          onClose={onCloseViewTermBottom}
+          title={viewTermBottom.title}
+          pdfFile={viewTermBottom.fileUrl}
+          onConfirm={handleConfirmTerm}
+        />
+      )}
     </>
   );
 };

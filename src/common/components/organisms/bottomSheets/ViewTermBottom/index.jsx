@@ -1,8 +1,9 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { ctaLabels } from '@common/constants/labels';
+import { isScrolledToBottom } from '@utilities/scroll';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
@@ -20,10 +21,8 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
   const [numPages, setNumPages] = useState(null);
   const containerRef = useRef(null);
   const pageRefs = useRef([]);
-  const isScrollable = useRef(false);
   const [hasScrolledToEnd, setHasScrolledToEnd] = useState(false);
   const bottomRef = useRef(null);
-  const [hasScrolled, setHasScrolled] = useState(false);
 
   const [zoomTouchMove, setZoomTouchMove] = useState(1);
   const initialDistance = useRef(0);
@@ -35,68 +34,30 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
     checkIfScrollable();
   };
 
-  const handleScroll = useCallback(() => {
-    if (isScrollable.current) {
-      checkIfScrolledToEnd();
-    }
-  }, []);
-
-  const checkIfScrollable = useCallback(() => {
-    if (pageRefs.current.length > 1) {
-      isScrollable.current = true;
-    } else {
-      isScrollable.current = false;
+  const checkIfScrollable = () => {
+    if (pageRefs.current.length <= 1) {
       setHasScrolledToEnd(true);
     }
-  }, []);
-
-  const checkIfScrolledToEnd = useCallback(() => {
-    if (bottomRef.current && containerRef.current) {
-      const bottom = bottomRef.current.getBoundingClientRect();
-      const container = containerRef.current.getBoundingClientRect();
-      if (Math.floor(bottom.bottom) <= container.bottom) {
-        setHasScrolledToEnd(true);
-      } else {
-        setHasScrolledToEnd(false);
-      }
-    }
-  }, []);
-
-  const debounce = (func, delay) => {
-    let timeOut;
-    return (...args) => {
-      clearTimeout(timeOut);
-      timeOut = setTimeout(() => {
-        func(...args);
-      }, delay);
-    };
   };
 
-  const debounceScroll = debounce(handleScroll, 500);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('scroll', debounceScroll);
-      return () => container.removeEventListener('scroll', debounceScroll);
-    }
-  }, []);
-
   const handleConfirmViewTerm = () => {
-    if (bottomRef.current && !hasScrolledToEnd && !hasScrolled) {
-      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
-      setHasScrolled(true);
-    } else if (hasScrolled || hasScrolledToEnd) {
-      setHasScrolled(false);
-      if (onConfirm) {
-        onConfirm();
+    let allowSubmit = false;
+    if (hasScrolledToEnd) {
+      allowSubmit = true;
+    } else if (bottomRef.current) {
+      const container = document.querySelector('.bottom__sheet__content');
+      const scrolledBottom = isScrolledToBottom(container);
+      if (scrolledBottom) {
+        allowSubmit = true;
       } else {
-        onClose();
+        bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+        setHasScrolledToEnd(true);
       }
+    } else {
+      allowSubmit = true;
     }
 
-    //Load file failed
-    if (!bottomRef.current) {
+    if (allowSubmit) {
       if (onConfirm) {
         onConfirm();
       } else {

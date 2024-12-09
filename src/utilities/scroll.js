@@ -14,3 +14,14 @@ export const scrollToElement = (targetRef, containerRef, headerSelector, anchorS
     behavior: 'smooth',
   });
 };
+
+export const isScrolledToBottom = element => {
+  if (element) {
+    //TODO: Just for reissue card return client height of bottom sheet view term container is 0. Check later
+    if (element.clientHeight === 0) {
+      return false;
+    }
+    return element.scrollHeight - element.scrollTop <= element.clientHeight + 50;
+  }
+  return true;
+};

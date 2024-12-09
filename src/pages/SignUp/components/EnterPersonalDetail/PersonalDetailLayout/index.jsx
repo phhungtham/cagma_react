@@ -24,7 +24,7 @@ import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
 import { buildObjectMapFromResponse, commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
-import { scrollToElement } from '@utilities/scrollInToElement';
+import { scrollToElement } from '@utilities/scroll';
 
 import {
   CommonCodeFieldName,

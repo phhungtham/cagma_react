@@ -414,12 +414,13 @@ const CommonTestPage = () => {
             }}
           />
         )}
-
-        <ViewTermBottom
-          open={showBottomSheet.ViewTermBottom}
-          onClose={() => setShowBottomSheet({ ...showBottomSheet, ViewTermBottom: false })}
-          onSelect={() => alert('Selected account')}
-        />
+        {showBottomSheet.ViewTermBottom && (
+          <ViewTermBottom
+            open={showBottomSheet.ViewTermBottom}
+            onClose={() => setShowBottomSheet({ ...showBottomSheet, ViewTermBottom: false })}
+            onSelect={() => alert('Selected account')}
+          />
+        )}
 
         {/* {showBottomSheet.ViewMapBottom && ( */}
         <ViewMapBottom
