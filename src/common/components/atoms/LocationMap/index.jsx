@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import useMove from '@hooks/useMove';
+import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { PropTypes } from 'prop-types';
 
 import './styles.scss';
@@ -51,7 +51,7 @@ const LocationMap = ({ address, width, height, title }) => {
     if (!iframeLoaded) return;
     const urlViewLargerMap = `https://www.google.com/maps/search/?api=1&query=${formatAddress(address)}`;
     console.log(urlViewLargerMap);
-    moveScreenNative(urlViewLargerMap);
+    openURLInBrowser(urlViewLargerMap);
   };
 
   const handleOnLoadIframe = () => {
