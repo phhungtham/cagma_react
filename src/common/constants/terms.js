@@ -74,6 +74,25 @@ export const selectRRSPeGICOptions = [
   },
 ];
 
+export const selectEGreenTermDepositOptions = [
+  {
+    label: '1m',
+    value: 1,
+  },
+  {
+    label: '3m',
+    value: 3,
+  },
+  {
+    label: '6m',
+    value: 6,
+  },
+  {
+    label: '12m',
+    value: 12,
+  },
+];
+
 export const SelectTermDurationTypes = {
   DAY: 'D',
   WEEK: 'W',

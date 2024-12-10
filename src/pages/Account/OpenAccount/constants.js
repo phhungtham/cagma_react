@@ -2,6 +2,7 @@ import { DepositSubjectClass } from '@common/constants/deposit';
 import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode, ProductPeriodUnitCode } from '@common/constants/product';
 import {
+  selectEGreenTermDepositOptions,
   selectRRSPeGICOptions,
   selectTermsByDateOptions,
   selectTermsByMonthOptions,
@@ -91,7 +92,7 @@ export const checkSINNumberProductCodes = [
 
 export const TermOptionsWithProductCode = {
   [ProductCode.E_POWER_TERM_DEPOSIT]: selectTermsByMonthOptions,
-  [ProductCode.E_GREEN_TERM_DEPOSIT]: selectTermsByDateOptions,
+  [ProductCode.E_GREEN_TERM_DEPOSIT]: selectEGreenTermDepositOptions,
   [ProductCode.E_LONG_TERM_GIC]: selectTermsByMonthOptions,
   [ProductCode.E_LONG_MATURITY]: selectTermsByMonthOptions,
   [ProductCode.E_SHORT_TERM_GIC]: selectTermsByDateOptions,
