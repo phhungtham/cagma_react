@@ -70,7 +70,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                 <Input
                   label={t(labels.name2)}
                   type="text"
-                  regex={invalidNameRegex}
+                  regex={invalidNameRegex} //TODO: Check regex, on Figma, it allow common but some ticket issue not allow
                   disabled={!!name}
                   maxLength={20}
                   {...field}
