@@ -1,3 +1,4 @@
+import { emailFormatRegex } from '@common/constants/regex';
 import * as Yup from 'yup';
 
 export const bookAppointmentSchema = Yup.object().shape({
@@ -6,7 +7,7 @@ export const bookAppointmentSchema = Yup.object().shape({
   date: Yup.string().required('Required field'),
   time: Yup.string().required('Required field'),
   name: Yup.string().required('Required field'),
-  email: Yup.string().email('Please check your email').required('Required field'),
+  email: Yup.string().matches(emailFormatRegex, 'Please check your email').required('Required field'),
   phoneNumber: Yup.string().nullable().optional(),
   lang: Yup.string().nullable().optional(),
   comment: Yup.string().nullable().optional(),

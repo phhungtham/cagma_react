@@ -1,3 +1,4 @@
+import { emailFormatRegex } from '@common/constants/regex';
 import * as Yup from 'yup';
 
 export const reissueCardFormSchema = Yup.object().shape({
@@ -7,7 +8,7 @@ export const reissueCardFormSchema = Yup.object().shape({
     .length(5, 'Expired date must be exactly 4 characters long (MM/YY)')
     .required('Required field'),
   email: Yup.string()
-    .email('Please check your e-mail address')
+    .matches(emailFormatRegex, 'Please check your email')
     .when('isLogin', {
       is: false,
       then: schema => schema.required(),

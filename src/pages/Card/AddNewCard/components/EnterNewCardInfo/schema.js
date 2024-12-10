@@ -1,3 +1,4 @@
+import { emailFormatRegex } from '@common/constants/regex';
 import * as Yup from 'yup';
 
 export const newCardFormSchema = Yup.object().shape({
@@ -22,7 +23,7 @@ export const newCardFormSchema = Yup.object().shape({
   }),
   getTransactionNotice: Yup.boolean().nullable(),
   email: Yup.string()
-    .email('Please check your email')
+    .matches(emailFormatRegex, 'Please check your email')
     .when('getTransactionNotice', {
       is: true,
       then: schema => schema.required(),

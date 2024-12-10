@@ -1,8 +1,9 @@
 import { employmentValuesDisableOccupation } from '@common/constants/account';
+import { emailFormatRegex } from '@common/constants/regex';
 import * as Yup from 'yup';
 
 export const changeProfileSchema = Yup.object().shape({
-  email: Yup.string().required('Required field').email('Please check your e-mail address'),
+  email: Yup.string().required('Required field').matches(emailFormatRegex, 'Please check your email'),
   isEmailVerified: Yup.bool(),
   callNumber: Yup.string().required('Required field'),
   employment: Yup.string().required('Required field'),
