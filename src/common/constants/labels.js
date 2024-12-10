@@ -831,6 +831,7 @@ export const menuLabels = {
   accessCardService: 'men_title_CACA010100', //Access Card Service
   openAccount: 'men_title_CAPR010100', //Open Account
   signUp: 'men_title_CAME060000', //Sign Up
+  security: 'mymen_CAOTLA0006', //Security
 };
 
 export const ctaLabels = {

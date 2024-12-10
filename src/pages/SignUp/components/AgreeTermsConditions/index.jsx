@@ -79,7 +79,7 @@ const AgreeTermsConditions = ({ onConfirm }) => {
     <>
       <div className="agree-terms-conditions__wrapper">
         <Header
-          title={t(menuLabels.signUp)}
+          title={t(menuLabels.security)}
           onClick={moveBack}
         />
         <div className="h-screen__content pt-5 px-0">
