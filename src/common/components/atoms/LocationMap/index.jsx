@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 
-import useMove from '@hooks/useMove';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import { PropTypes } from 'prop-types';
 
@@ -8,7 +7,6 @@ import './styles.scss';
 
 const LocationMap = ({ address, width, height, title }) => {
   const timeOutRef = useRef(null);
-  const { moveScreenNative } = useMove();
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
   const formatAddress = () => {
