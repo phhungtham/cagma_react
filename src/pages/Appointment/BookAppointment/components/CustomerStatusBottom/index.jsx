@@ -6,7 +6,7 @@ import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import BottomSheet from '@common/components/templates/BottomSheet';
 import { ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
-import { notAllowSpaceRegex } from '@common/constants/regex';
+import { invalidNameRegex, notAllowNumberRegex, notAllowSpaceRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { preferredLanguages } from '@pages/Appointment/constants';
 
@@ -20,6 +20,8 @@ const initValues = {
   email: '',
   comment: '',
 };
+
+const invalidCommentRegex = /[^0-9a-zA-Z.,‘’'-\s]/g;
 
 const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t }) => {
   const { cus_snm_nm: name, cus_cell_no: phoneNumber, cus_email: email } = customer || {};
@@ -68,8 +70,9 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                 <Input
                   label={t(labels.name2)}
                   type="text"
+                  regex={invalidNameRegex}
                   disabled={!!name}
-                  maxLength={300}
+                  maxLength={20}
                   {...field}
                 />
               )}
@@ -80,8 +83,9 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
               render={({ field }) => (
                 <Input
                   label={t(labels.phoneNumber)}
-                  type={!!phoneNumber ? 'text' : 'number'}
+                  type="text"
                   inputMode="numeric"
+                  regex={notAllowNumberRegex}
                   disabled={!!phoneNumber}
                   maxLength={50}
                   {...field}
@@ -122,8 +126,9 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
               render={({ field }) => (
                 <Input
                   label={t(labels.addComments2)}
+                  regex={invalidCommentRegex}
                   type="text"
-                  maxLength={4000}
+                  maxLength={50}
                   {...field}
                 />
               )}
