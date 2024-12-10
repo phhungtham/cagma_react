@@ -6,7 +6,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
-import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX } from '@common/constants/common';
+import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX, isDevelopmentEnv } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import {
   cardLabels,
@@ -205,10 +205,17 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
       requestUpdateEmail();
     }
   };
+  const handleLogout = async () => {
+    if (isDevelopmentEnv) {
+      localStorage.removeItem('isLogin');
+    }
+    await requestApi(endpoints.logout);
+  };
 
   const handleClickBack = () => {
     if (isNavigateFromLogin) {
       clearTempLoginInfo();
+      handleLogout();
       moveHomeNative();
     } else {
       onNavigateVerifyMember();
