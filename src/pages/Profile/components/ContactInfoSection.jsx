@@ -286,6 +286,7 @@ const ContactInfoSection = ({
         render={({ field }) => (
           <Input
             label={t(labels.callNumber)}
+            inputMode="numeric"
             type="text"
             regex={notAllowNumberRegex}
             maxLength={30}

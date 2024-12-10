@@ -42,6 +42,7 @@ import HomeAddressSection from './components/HomeAddressSection';
 import IDInfoSection from './components/IDInfoSection';
 import ManagementBranch from './components/ManagementBranch';
 
+//TODO: Handle regex for field. Check ticket CMRU-659
 const PersonalDetailLayout = ({ onSubmit }) => {
   const { existingCustomer, translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);

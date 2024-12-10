@@ -10,7 +10,13 @@ import Input from '@common/components/atoms/Input/Input';
 import { addressTypeMapping } from '@common/constants/address';
 import { FileErrorType } from '@common/constants/error';
 import { changeProfileLabels as labels } from '@common/constants/labels';
-import { invalidNameRegex, notAllowNumberRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
+import {
+  invalidNameRegex,
+  notAllowAlphabetRegex,
+  notAllowNumberAlphabetRegex,
+  notAllowNumberRegex,
+  postalCodeNotAllowRegex,
+} from '@common/constants/regex';
 import useFile from '@hooks/useFile';
 
 const maxUploadAddressSize = 5 * 1024 * 1024; //5MB
@@ -185,6 +191,8 @@ const AddressInfoSection = ({
         render={({ field }) => (
           <Input
             label={t(labels.phoneNumber)}
+            inputMode="numeric"
+            type="text"
             regex={notAllowNumberRegex}
             disabled={isDisableAddress}
             maxLength={30}
@@ -198,6 +206,8 @@ const AddressInfoSection = ({
         render={({ field }) => (
           <Input
             label={t(labels.faxNumber)}
+            inputMode="numeric"
+            type="text"
             regex={notAllowNumberRegex}
             disabled={isDisableAddress}
             maxLength={20}
@@ -245,6 +255,7 @@ const AddressInfoSection = ({
                 label={t(labels.aptNumber)}
                 disabled={isDisableAddress}
                 maxLength={40}
+                regex={notAllowNumberAlphabetRegex}
                 {...field}
                 onBlur={handleFieldAddressOnBlur}
               />
@@ -259,6 +270,7 @@ const AddressInfoSection = ({
               label={t(labels.streetNumber)}
               disabled={isDisableAddress}
               maxLength={60}
+              regex={notAllowNumberAlphabetRegex}
               {...field}
               onBlur={handleFieldAddressOnBlur}
             />
@@ -297,6 +309,7 @@ const AddressInfoSection = ({
             <Input
               label={t(labels.city)}
               disabled={isDisableAddress}
+              regex={notAllowAlphabetRegex}
               maxLength={200}
               {...field}
             />

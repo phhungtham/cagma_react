@@ -5,3 +5,5 @@ export const notAllowNumberAlphabetRegex = /[^0-9a-zA-Z]/g;
 export const notAllowSpaceRegex = /\s+/g;
 export const invalidNameRegex = /[^0-9a-zA-Z.‘’'-\s]/g;
 export const invalidCityRegex = /[^0-9a-zA-Z.‘’'\s]/g;
+export const notAllowAlphabetSpaceRegex = /[^a-zA-Z\s]/g;
+export const notAllowAlphabetRegex = /[^a-zA-Z]/g;
