@@ -242,6 +242,12 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     placeholder="Please input Detail text"
                     regex={invalidNameRegex}
                     {...field}
+                    onChange={value => {
+                      if (value) {
+                        value = value.replace(/- -|--+/g, '-');
+                      }
+                      field.onChange(value);
+                    }}
                   />
                 )}
                 control={control}
