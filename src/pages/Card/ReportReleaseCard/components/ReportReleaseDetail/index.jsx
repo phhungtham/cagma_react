@@ -4,6 +4,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
 import { releaseCardLabels as labels, menuLabels } from '@common/constants/labels';
+import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { moveBack } from '@utilities/index';
 
@@ -51,6 +52,7 @@ const ReportReleaseDetail = ({ onSubmit, reportDetail, translate: t }) => {
             render={({ field }) => (
               <Input
                 label={t(labels.accidentReleaseDetail)}
+                regex={notAllowNumberAlphabetRegex}
                 placeholder="Please input Detail text"
                 {...field}
               />

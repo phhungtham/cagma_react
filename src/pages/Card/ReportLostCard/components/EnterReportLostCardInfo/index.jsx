@@ -6,6 +6,7 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
 import { reportLostCardLabels as labels, menuLabels } from '@common/constants/labels';
+import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateExpiry } from '@utilities/dateTimeUtils';
 import { formatCardNumber } from '@utilities/formater';
@@ -85,6 +86,7 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
                 render={({ field }) => (
                   <Input
                     label={t(labels.detailOfAccident)}
+                    regex={notAllowNumberAlphabetRegex}
                     placeholder="Please input Detail text"
                     {...field}
                   />
