@@ -54,7 +54,7 @@ const LocationMap = ({ address, width, height, title }) => {
 
   const handleOnLoadIframe = () => {
     clearTimeout(timeOutRef.current);
-    timeOutRef.current = setTimeout(() => setIframeLoaded(true), 900);
+    timeOutRef.current = setTimeout(() => setIframeLoaded(true), 200);
   };
 
   return (

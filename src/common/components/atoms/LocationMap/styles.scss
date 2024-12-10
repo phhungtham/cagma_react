@@ -18,16 +18,16 @@
     padding-bottom: 2px;
   }
   .view__larger__map {
-    background-color: #ffff;
+    background-color: #fff;
     border-radius: 3px;
-    position: absolute;
-    padding: 9px 11px 9px 11px;
-    top: 11px;
-    left: 11px;
-    height: 58px;
-    width: 50%;
-    max-width: 268px;
     display: flex;
     flex-direction: column;
+    height: 60px;
+    left: 10px;
+    max-width: 268px;
+    padding: 9px 11px;
+    position: absolute;
+    top: 10px;
+    width: 58%;
   }
 }
