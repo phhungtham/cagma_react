@@ -292,7 +292,7 @@ const EAlertsBalance = ({ translate: t }) => {
                   {setting.moneyLeavingPushEnabled && (
                     <>
                       <span className="divider__vertical" />
-                      <span>SMS</span>
+                      <span>{t(eAlertLabels.appPush2)}</span>
                     </>
                   )}
                 </div>
@@ -327,7 +327,7 @@ const EAlertsBalance = ({ translate: t }) => {
                   {setting.moneyIntoPushEnabled && (
                     <>
                       <span className="divider__vertical" />
-                      <span>SMS</span>
+                      <span>{t(eAlertLabels.appPush2)}</span>
                     </>
                   )}
                 </div>
@@ -360,7 +360,7 @@ const EAlertsBalance = ({ translate: t }) => {
                   {setting.balancePushEnabled && (
                     <>
                       <span className="divider__vertical" />
-                      <span>SMS</span>
+                      <span>{t(eAlertLabels.appPush2)}</span>
                     </>
                   )}
                 </div>
