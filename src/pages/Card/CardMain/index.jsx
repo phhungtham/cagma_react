@@ -22,7 +22,7 @@ const CardMain = ({ translate: t }) => {
   const [card, setCard] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState(initAlert);
-  const { requestApi } = useApi({ setAlert });
+  const { requestApi } = useApi();
 
   const requestGetCardInfo = async () => {
     setShowLoading(true);
@@ -91,7 +91,11 @@ const CardMain = ({ translate: t }) => {
                       translate={t}
                     />
                   ) : (
-                    <EmptyCardView translate={t} />
+                    <EmptyCardView
+                      translate={t}
+                      setShowLoading={setShowLoading}
+                      setAlert={setAlert}
+                    />
                   )}
                 </>
               ) : (

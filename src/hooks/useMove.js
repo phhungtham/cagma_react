@@ -5,6 +5,7 @@ import homeAndLogin from '@utilities/navigateScreen/homeAndLogin';
 
 //For refresh navigate history
 //Check case move next to native screen or websquare screen and back to React screen.
+//TODO: Check case move next to other screen Native or Websquare. Should we navigate to home?
 const useMove = () => {
   const navigate = useNavigate();
 

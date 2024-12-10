@@ -45,6 +45,7 @@ export const endpoints = {
   getReportCardDetail: '/ca/ca/CACA010.pwkjson',
   reportReleaseCard: '/ca/ca/CACA012.pwkjson',
   addNewCard: '/ca/ca/CACA014.pwkjson',
+  checkCardIssuanceProgress: '/ca/ca/CACA015.pwkjson',
   getCardInfo: '/ca/ca/CACA003.pwkjson',
   reissueCardLogged: '/ca/ca/CACA006.pwkjson',
   reportLostLogged: '/ca/ca/CACA011.pwkjson',
