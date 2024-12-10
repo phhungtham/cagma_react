@@ -7,7 +7,7 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
 import { reportLostCardLabels as labels, menuLabels } from '@common/constants/labels';
-import { invalidNameRegex, notAllowNumberAlphabetRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
+import { invalidAccident, invalidNameRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -136,7 +136,7 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
                 render={({ field }) => (
                   <Input
                     label={t(labels.detailOfAccident)}
-                    regex={notAllowNumberAlphabetRegex}
+                    regex={invalidAccident}
                     placeholder="Please input Detail text"
                     {...field}
                   />
