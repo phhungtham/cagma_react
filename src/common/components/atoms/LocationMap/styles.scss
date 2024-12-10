@@ -1,0 +1,33 @@
+.view__map {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  .map__address__title {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+  .google__map__link {
+    color: blue;
+    font-size: 13px;
+    font-weight: 500;
+    padding-bottom: 2px;
+  }
+  .view__larger__map {
+    background-color: #ffff;
+    border-radius: 3px;
+    position: absolute;
+    padding: 9px 11px 9px 11px;
+    top: 11px;
+    left: 11px;
+    height: 58px;
+    width: 50%;
+    max-width: 268px;
+    display: flex;
+    flex-direction: column;
+  }
+}

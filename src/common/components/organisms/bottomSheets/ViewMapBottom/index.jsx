@@ -26,39 +26,9 @@ const viewMapBranchFields = [
 ];
 
 const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment, translate: t }) => {
-  const encodeToURL = str => {
-    if (!str) {
-      return '';
-    }
-    return str
-      .replace(/"/g, '%22')
-      .replace(/#/g, '%23')
-      .replace(/\$/g, '%24')
-      .replace(/%/g, '%25')
-      .replace(/&/g, '%26')
-      .replace(/'/g, '%27')
-      .replace(/\(/g, '%28')
-      .replace(/\)/g, '%29')
-      .replace(/\+/g, '%2B')
-      .replace(/,/g, '%2C')
-      .replace(/\//g, '%2F')
-      .replace(/:/g, '%3A')
-      .replace(/;/g, '%3B')
-      .replace(/</g, '%3C')
-      .replace(/=/g, '%3D')
-      .replace(/>/g, '%3E')
-      .replace(/\?/g, '%3F')
-      .replace(/@/g, '%40')
-      .replace(/\[/g, '%5B')
-      .replace(/\]/g, '%5D')
-      .replace(/\|/g, '%7C');
-  };
-
   const onClickCallPhone = () => {
     callPhone(branchData?.br_telno);
   };
-
-  const formattedAddress = encodeToURL(branchData?.br_adr || '');
 
   return (
     <BottomSheet
@@ -69,7 +39,7 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment, translate
       type="fit-content"
     >
       <div className="view_map">
-        <div className="map">{!!formattedAddress && <LocationMap address={formattedAddress} />}</div>
+        <div className="map">{!!branchData?.br_adr && <LocationMap address={branchData?.br_adr} />}</div>
         <div className="content">
           <div className="title">{branchData?.lcl_br_nm || ''}</div>
           <div className="detail_info">
