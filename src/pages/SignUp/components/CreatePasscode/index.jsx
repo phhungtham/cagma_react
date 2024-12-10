@@ -47,11 +47,12 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
             <div className="mt-4 pb-6">
               <ul className="passcode-instructions">
                 <li className="instruction-item">{t(labels.descriptions)}</li>
+                <li className="instruction-item mt-2">{t(labels.thisNumberWillBeUsed)}</li>
               </ul>
-              {/* <div>
-                <div className="mt-2 passcode-subs">Cannot include more than 3 consecutive numbers.</div>
-                <div className="mt-2 passcode-subs">Cannot include more than 3 repeated numbers.</div>
-              </div> */}
+              <div>
+                <div className="mt-2 passcode-subs">{t(labels.cannotIncludeMoreConsecutive)}</div>
+                <div className="mt-2 passcode-subs">{t(labels.cannotIncludedMoreRepeated)}</div>
+              </div>
             </div>
           </div>
         </div>

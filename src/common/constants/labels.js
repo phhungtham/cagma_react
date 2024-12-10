@@ -806,6 +806,9 @@ export const signUpCreateMOTPLabels = {
   createSecurityPasscode: 'lbl_CAET920000_0094', //Create Security Passcode for your safe SOL experience
   descriptions: 'lbl_CAET920000_0095', //description...
   next: 'lbl_CTA_9219', //Next
+  thisNumberWillBeUsed: 'lbl_CAET920000_0395', //This number will be used for...
+  cannotIncludeMoreConsecutive: 'lbl_CAET920000_0396', //Cannot include more than 3 consecutive
+  cannotIncludedMoreRepeated: 'lbl_CAET920000_0397', //Cannot include more than 3 repeated numbers
 };
 
 export const signUpCompleteLabels = {
