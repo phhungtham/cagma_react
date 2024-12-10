@@ -26,8 +26,8 @@ import EnterAccountInformation from './components/EnterAccountInformation';
 import OpenAccountSuccessful from './components/OpenAccountSuccessful';
 import TermAndConditions from './components/TermAndConditions';
 import {
-  checkSINNumberProductCodes,
   ignoreCheckDTRProductCodes,
+  ignoreCheckSINNumberProductCodes,
   OPEN_ACCOUNT_STEP,
   TermOptionsWithProductCode,
   TermUnitCodeDisplay,
@@ -69,7 +69,7 @@ const OpenAccount = ({ translate: t }) => {
   };
 
   const onSubmitAgreeTerms = async () => {
-    if (!checkSINNumberProductCodes.includes(productCode)) {
+    if (ignoreCheckSINNumberProductCodes.includes(productCode)) {
       return setShowCustomerInfoBottom(true);
     }
     setShowLoading(true);
