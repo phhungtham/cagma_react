@@ -107,21 +107,20 @@ const Input = forwardRef((props, ref) => {
     }
   };
 
-  const handleCompositionEnd = e => {
-    let value = e.target.value;
-    console.log('value input composition end :>> ', value);
-    if (regex) {
-      value = value.replace(regex, '');
-    }
-    //Handle for case input type number
-    if (maxLength) {
-      if (value?.length > maxLength) {
-        value = value.slice(0, maxLength);
-      }
-    }
-    onChange(value);
-    setInputValues(value);
-  };
+  // const handleCompositionEnd = e => {
+  //   let value = e.target.value;
+  //   if (regex) {
+  //     value = value.replace(regex, '');
+  //   }
+  //   //Handle for case input type number
+  //   if (maxLength) {
+  //     if (value?.length > maxLength) {
+  //       value = value.slice(0, maxLength);
+  //     }
+  //   }
+  //   onChange(value);
+  //   setInputValues(value);
+  // };
 
   useEffect(() => {
     setInputValues(value);
@@ -194,7 +193,7 @@ const Input = forwardRef((props, ref) => {
             placeholder={placeHolder}
             disabled={disabled}
             onChange={handleInputChange}
-            onCompositionEnd={handleCompositionEnd}
+            // onCompositionEnd={handleCompositionEnd}
             onFocus={() => handleFocusStatus()}
             onBlur={handleOnBlur}
             style={style}
