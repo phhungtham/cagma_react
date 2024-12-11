@@ -86,6 +86,7 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
                 render={({ field }) => (
                   <Input
                     label={t(labels.detailOfAccident)}
+                    maxLength={400}
                     regex={invalidAccident}
                     placeholder="Please input Detail text"
                     {...field}

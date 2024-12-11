@@ -137,6 +137,7 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
                   <Input
                     label={t(labels.detailOfAccident)}
                     regex={invalidAccident}
+                    maxLength={400}
                     placeholder="Please input Detail text"
                     {...field}
                   />
