@@ -54,7 +54,11 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
     },
   });
 
-  const [applyContactless, getTransactionNotice] = watch(['applyContactless', 'getTransactionNotice']);
+  const [applyContactless, getTransactionNotice, totalContactless] = watch([
+    'applyContactless',
+    'getTransactionNotice',
+    'totalContactless',
+  ]);
 
   const handleOpenMyAccountBottom = () => {
     setShowMyAccountBottom(true);
@@ -359,8 +363,15 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                             const numberValue = Number(value);
                             if (!numberValue) {
                               field.onChange('');
-                            } else if (numberValue > Number(newCardMaxContactless)) {
-                              return;
+                            } else if (
+                              numberValue > Number(newCardMaxContactless) ||
+                              (totalContactless && numberValue > Number(totalContactless))
+                            ) {
+                              if (totalContactless) {
+                                field.onChange(totalContactless);
+                              } else {
+                                field.onChange(newCardMaxContactless);
+                              }
                             } else {
                               field.onChange(value);
                             }
@@ -384,7 +395,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                             if (!numberValue) {
                               field.onChange('');
                             } else if (numberValue > Number(newCardMaxContactless)) {
-                              return;
+                              field.onChange(newCardMaxContactless);
                             } else {
                               field.onChange(value);
                             }
