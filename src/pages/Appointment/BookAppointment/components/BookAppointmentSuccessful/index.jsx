@@ -9,7 +9,7 @@ import { moveNext } from '@utilities/index';
 import { bookAppointmentSuccessFields } from '../../constants';
 import './styles.scss';
 
-const BookAppointmentSuccessful = ({ appointmentInfo, translate: t }) => {
+const BookAppointmentSuccessful = ({ appointmentInfo, translate: t, isLogin }) => {
   const { moveHomeNative } = useMove();
 
   const onClickNavigateAppointmentManagement = () => {
@@ -33,7 +33,11 @@ const BookAppointmentSuccessful = ({ appointmentInfo, translate: t }) => {
           </div>
           <div className="book-appointment__title">
             <div className="complete-message">{t(labels.requestSuccess)}</div>
-            {appointmentInfo?.visitCheck === 'N' && <div className="note">{t(labels.zoomSendEmail)}</div>}
+            {isLogin ? (
+              <>{appointmentInfo?.visitCheck === 'N' && <div className="note">{t(labels.zoomSendEmail)}</div>}</>
+            ) : (
+              <div className="note">{t(labels.youCanCheckTheConsultation)}</div>
+            )}
           </div>
         </div>
         <div className="divider__item__black" />
@@ -50,12 +54,15 @@ const BookAppointmentSuccessful = ({ appointmentInfo, translate: t }) => {
         </div>
       </div>
       <div className="footer__fixed book-appointment__footer">
-        <Button
-          variant="filled__secondary-blue"
-          label={t(ctaLabels.viewAppointment)}
-          className="btn__cta"
-          onClick={onClickNavigateAppointmentManagement}
-        />
+        {isLogin && (
+          <Button
+            variant="filled__secondary-blue"
+            label={t(ctaLabels.viewAppointment)}
+            className="btn__cta"
+            onClick={onClickNavigateAppointmentManagement}
+          />
+        )}
+
         <Button
           variant="filled__primary"
           label={t(ctaLabels.done)}

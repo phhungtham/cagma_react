@@ -109,6 +109,7 @@ const BookAppointment = ({ translate: t }) => {
         <BookAppointmentSuccessful
           appointmentInfo={appointmentSuccessData}
           translate={t}
+          isLogin={isLogin}
         />
       )}
       <Alert

@@ -158,6 +158,7 @@ export const bookAppointmentLabels = {
   thisIsNotABusinessDay: 'lbl_CAET900010_0223', //This is not a business day for consultation.
   pleaseSelectAgain2: 'lbl_CAET900010_0224', //Please select again
   invalidConsultationTime: 'lbl_CAET900010_0225', //This is not a consultation time. Mon-Thu (10:00-16:00), Fri (10:00-16:30)
+  youCanCheckTheConsultation: 'lbl_CAET900010_0166', //You can check the consultation details in your email.
 };
 
 export const appointmentDetailLabels = {
