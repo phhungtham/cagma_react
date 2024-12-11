@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
 import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
 
 const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
-  const { existingCustomer, translate: t } = useContext(SignUpContext);
+  const { existingCustomer, translate: t, getExistingCustomerByEkyc } = useContext(SignUpContext);
   const { control, watch, setValue } = useFormContext();
 
   const [dob] = watch(['dob']);
@@ -88,7 +88,7 @@ const IDInfoSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field: { value } }) => (
           <InputDate
             label={t(labels.dob)}
-            disabled={!!existingCustomer}
+            disabled={!!existingCustomer && !getExistingCustomerByEkyc} //Allow edit dob when get existing customer from get Ekyc detail
             onFocus={handleOpenCalendar}
             value={value}
           />

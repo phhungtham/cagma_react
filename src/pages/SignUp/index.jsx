@@ -6,6 +6,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
@@ -37,6 +38,7 @@ const SignUp = ({ translate }) => {
   const [ekycCached, setEkycCached] = useState();
   const [ekycStepStatus, setEkycStepStatus] = useState();
   const [existingCustomer, setExistingCustomer] = useState();
+  const [getExistingCustomerByEkyc, setGetExistingCustomerByEkyc] = useState(false);
   const [userId, setUserId] = useState();
   const [isNavigateFromLogin, setIsNavigateFromLogin] = useState(false);
   const [ekycResultSuccess, setEkycResultSuccess] = useState(false);
@@ -45,8 +47,10 @@ const SignUp = ({ translate }) => {
     isShow: false,
     title: '',
     content: '',
+    isMoveHome: false,
   });
   const { requestApi } = useApi();
+  const { moveHomeNative } = useMove();
   const { isFromLogin, cusno } = useSelector(nativeParamsSelector) || {};
 
   const handleConfirmVerifyID = values => {
@@ -90,14 +94,20 @@ const SignUp = ({ translate }) => {
       cus_email: cus_email,
       uuid_v: deviceId,
     };
-    const { data, error, isSuccess } = await requestApi(endpoints.getExistingCustomerInfo, payload);
+    const { data, error, isSuccess, errorCode } = await requestApi(endpoints.getExistingCustomerInfo, payload);
     setShowLoading(false);
     if (isSuccess) {
       setExistingCustomer(data);
     } else {
+      let shouldMoveHome = false;
+      if (errorCode === 'CASE.006') {
+        shouldMoveHome = true;
+      }
       return setAlert({
         isShow: true,
         content: error,
+        title: '',
+        isMoveHome: shouldMoveHome,
       });
     }
   };
@@ -113,6 +123,7 @@ const SignUp = ({ translate }) => {
     setShowLoading(false);
     if (isSuccess) {
       setExistingCustomer(data);
+      setGetExistingCustomerByEkyc(true);
     } else {
       return setAlert({
         isShow: true,
@@ -171,6 +182,9 @@ const SignUp = ({ translate }) => {
   };
 
   const handleCloseAlert = () => {
+    if (alert.isMoveHome) {
+      moveHomeNative();
+    }
     setAlert({
       ...alert,
       isShow: false,
@@ -249,6 +263,7 @@ const SignUp = ({ translate }) => {
         ekycStepStatus,
         translate,
         isNavigateFromLogin,
+        getExistingCustomerByEkyc,
       }}
     >
       {showLoading && <Spinner />}
