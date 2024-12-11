@@ -188,7 +188,7 @@ const SignUp = ({ translate }) => {
     if (isSuccess) {
       //Check case user is sign up process but login with user empty MOTP
       //If user login different with user sign-up process. Clear all ekyc cache and move to email verify follow isFromLogin
-      if (isFromLogin && cusno !== data.cusno) {
+      if (isFromLogin && String(cusno) !== String(data.cusno)) {
         clearEkycInfo();
         return setCurrentStep(SignUpStep.ENTER_EMAIL);
       }
