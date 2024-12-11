@@ -1,46 +1,96 @@
+import { useState } from 'react';
+
 import { ArrowRight, PlusIcon } from '@assets/icons';
 import cardEmptyImg from '@assets/images/card-empty.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import Spinner from '@common/components/atoms/Spinner';
 import { MENU_CODE } from '@common/constants/common';
+import { endpoints } from '@common/constants/endpoint';
 import { cardLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
 import { moveNext } from '@utilities/index';
 
-const EmptyCardView = ({ translate: t, setShowLoading, setAlert }) => {
-  // const [showBSError, setShowBSError] = useState({});
+const EmptyCardView = ({ translate: t, setAlert }) => {
+  const [showLoading, setShowLoading] = useState(false);
+  const [requestedNewCardResponse, setRequestedNewCardResponse] = useState();
   const { requestApi } = useApi();
 
-  const handleNavigateAddNewCard = async () => {
-    moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
-    //TODO: Handle check card in progress
-    // setShowLoading(true);
-    // const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.checkCardIssuanceProgress);
-    // setShowLoading(false);
-    // if (isSuccess) {
-    //   const { cnt } = data || {};
-    //   const isAddCardInProgress = Number(cnt) === 0;
-    //   if (isAddCardInProgress) {
-    //     setShowCardInProgress();
-    //   } else {
-    //     moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
-    //   }
-    // } else {
-    //   setAlert({
-    //     isShow: true,
-    //     title: '',
-    //     content: error,
-    //     requiredLogin,
-    //   });
-    // }
+  const checkNavigateAddCard = isAddCardInProgress => {
+    if (isAddCardInProgress) {
+      setAlert({
+        isShow: true,
+        title: t(cardLabels.pleaseCheck),
+        content: t(cardLabels.youCannotApplyBecause),
+      });
+    } else {
+      moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
+    }
   };
 
-  const handleNavigateActiveCard = () => {
-    moveNext(MENU_CODE.ACTIVE_CARD, {}, routePaths.activeCard);
+  const handleNavigateAddNewCard = async () => {
+    if (requestedNewCardResponse) {
+      const { cnt } = requestedNewCardResponse;
+      const isAddCardInProgress = Number(cnt) > 0;
+      return checkNavigateAddCard(isAddCardInProgress);
+    }
+    setShowLoading(true);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.checkCardIssuanceProgress);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { cnt } = data || {};
+      const isAddCardInProgress = Number(cnt) > 0;
+      setRequestedNewCardResponse(data);
+      return checkNavigateAddCard(isAddCardInProgress);
+    } else {
+      setAlert({
+        isShow: true,
+        title: '',
+        content: error,
+        requiredLogin,
+      });
+    }
+  };
+
+  const checkNavigateActiveCard = isAddCardInProgress => {
+    if (!isAddCardInProgress) {
+      setAlert({
+        isShow: true,
+        title: t(cardLabels.pleaseCheck2),
+        content: t(cardLabels.noCardToActivate),
+      });
+    } else {
+      moveNext(MENU_CODE.ACTIVE_CARD, {}, routePaths.activeCard);
+    }
+  };
+
+  const handleNavigateActiveCard = async () => {
+    if (requestedNewCardResponse) {
+      const { cnt } = requestedNewCardResponse;
+      const isAddCardInProgress = Number(cnt) > 0;
+      return checkNavigateActiveCard(isAddCardInProgress);
+    }
+    setShowLoading(true);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.checkCardIssuanceProgress);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { cnt } = data || {};
+      const isAddCardInProgress = Number(cnt) > 0;
+      setRequestedNewCardResponse(data);
+      return checkNavigateActiveCard(isAddCardInProgress);
+    } else {
+      setAlert({
+        isShow: true,
+        title: '',
+        content: error,
+        requiredLogin,
+      });
+    }
   };
 
   return (
     <>
+      {showLoading && <Spinner />}
       <div className="empty-card-view__wrapper page__container">
         <div className="empty-card__content">
           <div className="empty-card__img">
@@ -74,28 +124,6 @@ const EmptyCardView = ({ translate: t, setShowLoading, setAlert }) => {
           </div>
         </div>
       </div>
-      {/* <BottomSheet
-        open={is}
-        onClose={onClose}
-        title={t(labels.changeProfileImage)}
-        clazz="bottom__dropdown__wrapper"
-        type="fit-content"
-      >
-        <div className="bottom__dropdown__list">
-          <div
-            className="dropdown__option"
-            onClick={onClickAccessCamera}
-          >
-            <span className="option__label">{t(labels.takePhoto)}</span>
-          </div>
-          <div
-            className="dropdown__option"
-            onClick={onClickAccessPhotos}
-          >
-            <span className="option__label">{t(labels.uploadGallery)}</span>
-          </div>
-        </div>
-      </BottomSheet> */}
     </>
   );
 };

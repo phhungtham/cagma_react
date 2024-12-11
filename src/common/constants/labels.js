@@ -471,6 +471,10 @@ export const cardLabels = {
   hasBeenCompleted: 'lbl_CACA600000_0945', //has been completed
   releaseLost: 'lbl_CACA600000_0191', //Release Lost
   agreeTerms: 'lbl_CACA600000_1022', //I agree to the Application and Agreement of the Shinhan Access Card
+  pleaseCheck: 'lbl_CACA600000_5115', //Please check
+  youCannotApplyBecause: 'lbl_CACA600000_5116', //You cannot apply because you already have a card...
+  pleaseCheck2: 'lbl_CACA600000_5117', //Please check
+  noCardToActivate: 'lbl_CACA600000_5118', //No cards to activate.
 };
 
 export const activeCardLabels = {

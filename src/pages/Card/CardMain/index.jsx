@@ -93,7 +93,6 @@ const CardMain = ({ translate: t }) => {
                   ) : (
                     <EmptyCardView
                       translate={t}
-                      setShowLoading={setShowLoading}
                       setAlert={setAlert}
                     />
                   )}
