@@ -18,6 +18,7 @@ import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
 import {
   invalidCityRegex,
   invalidNameRegex,
+  notAllowNumberRegex,
   notAllowSpaceRegex,
   postalCodeNotAllowRegex,
 } from '@common/constants/regex';
@@ -230,8 +231,9 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     label={t(cardLabels.streetNumber)}
                     maxLength={100}
                     placeholder="Please input Detail text"
-                    type="number"
                     inputMode="numeric"
+                    type="text"
+                    regex={notAllowNumberRegex}
                     {...field}
                   />
                 )}
@@ -264,8 +266,9 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                       label={t(cardLabels.aptNumber)}
                       maxLength={100}
                       placeholder="Please input Detail text"
-                      type="number"
                       inputMode="numeric"
+                      type="text"
+                      regex={notAllowNumberRegex}
                       {...field}
                     />
                   );
