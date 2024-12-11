@@ -46,7 +46,7 @@ const SelectTimeBottom = ({
           <div className="select_wrapper">
             <ScrollSelect
               options={hourOptions}
-              defaultValue={open ? selectedHour : selectedHour - 2}
+              defaultValue={selectedHour}
               onChangeValue={value => {
                 valueRef.current.hour = value;
               }}
