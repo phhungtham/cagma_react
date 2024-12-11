@@ -68,6 +68,10 @@ const Input = forwardRef((props, ref) => {
 
   const handleInputChange = e => {
     let value = e.target.value;
+    if (regex) {
+      value = value.split(regex).join('');
+    }
+    //Handle for case input type number
     if (maxLength) {
       if (value?.length > maxLength) {
         value = value.slice(0, maxLength);
@@ -153,19 +157,6 @@ const Input = forwardRef((props, ref) => {
     };
   }, []);
 
-  const handleKeyDown = e => {
-    if (regex) {
-      const key = e.key;
-      if (key === 'Shift' || key === 'Control' || key === 'Alt') {
-        return;
-      }
-      const isMatch = key.match(regex);
-      if (isMatch) {
-        e.preventDefault();
-      }
-    }
-  };
-
   return (
     <div className={`text__field ${clazz}`}>
       <section
@@ -191,7 +182,6 @@ const Input = forwardRef((props, ref) => {
             style={style}
             type={type}
             value={value}
-            onKeyDown={handleKeyDown}
             {...otherProps}
           />
         ) : (
