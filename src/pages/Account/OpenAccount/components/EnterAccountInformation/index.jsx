@@ -205,6 +205,9 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
         showMoreInfo = !!intendedUseAccountDisplay;
       } else {
         showMoreInfo = !!amount && !!intendedUseAccountDisplay && !!selectedAccount;
+        if (productCode === ProductCode.E_SAVING && Number(amount || '') === 0) {
+          showMoreInfo = !!amount && !!intendedUseAccountDisplay; //Allow create e-Saving account if amount = 0
+        }
         if (productCode === ProductCode.RRSP_E_SAVINGS && showMoreInfo) {
           showMoreInfo = !!taxYear;
         }

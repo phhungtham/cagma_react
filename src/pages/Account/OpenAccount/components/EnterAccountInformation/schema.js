@@ -6,8 +6,9 @@ import { requiredTermProductCodes } from '../../constants';
 export const openAccountSchema = Yup.object().shape({
   accountNo: Yup.string()
     .required('Required field')
-    .when('productCode', {
-      is: ProductCode.CHEQUING,
+    .when(['productCode', 'amount'], {
+      is: (productCode, amount) =>
+        productCode === ProductCode.CHEQUING || (productCode === ProductCode.E_SAVING && Number(amount || 0) === 0), //Allow create e-Saving account if amount = 0
       then: schema => schema.notRequired(),
       otherwise: schema => schema.required(),
     }), //acno
