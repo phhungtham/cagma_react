@@ -14,10 +14,10 @@ const ReferralCodeSection = ({ productCode, translate: t }) => {
     ProductCode.RRSP_E_SAVINGS,
     ProductCode.CHEQUING,
   ].includes(productCode);
-  const isShowDebitCardCheckbox = [ProductCode.E_SAVING, ProductCode.CHEQUING].includes(productCode);
   const isShowTFSACheckbox = productCode === ProductCode.TFSA_E_SAVINGS;
   const isShowRRSPCheckbox = productCode === ProductCode.RRSP_E_SAVINGS;
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext();
+  const isShowDebitCardCheckbox = watch('isShowDebitCardIssuance');
 
   return (
     <div className="referral-code__section">

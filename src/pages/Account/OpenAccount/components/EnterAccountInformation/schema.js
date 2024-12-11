@@ -26,6 +26,7 @@ export const openAccountSchema = Yup.object().shape({
       then: schema => schema.notRequired(),
       otherwise: schema => schema.required(),
     }), //dep_ac_usag_d
+  isShowDebitCardIssuance: Yup.boolean().nullable(),
   debitCardIssuance: Yup.boolean().nullable(), //credit_chk
   thirdPartyChecked: Yup.string().oneOf(['Y', 'N']).nullable(), //tpd_chk
   productCode: Yup.string(),

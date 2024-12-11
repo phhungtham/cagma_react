@@ -317,8 +317,29 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getCardList);
     setShowLoading(false);
     if (isSuccess) {
+      let isShowDebitCardIssuanceOption = false;
+      //Only display debit card issuance checkbox when there is no card exist and not card in progress add new
       if (data && !data.card_cnt) {
-        setValue('debitCardIssuance', true, { shouldValidate: true });
+        isShowDebitCardIssuanceOption = true;
+      }
+      if (isShowDebitCardIssuanceOption) {
+        setShowLoading(true);
+        const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.checkCardIssuanceProgress);
+        setShowLoading(false);
+        if (isSuccess) {
+          if (data && Number(data.cnt) > 0) {
+            isShowDebitCardIssuanceOption = false;
+          }
+        } else {
+          setAlert({
+            isShow: true,
+            content: error,
+            requiredLogin,
+          });
+        }
+      }
+      if (isShowDebitCardIssuanceOption) {
+        setValue('isShowDebitCardIssuance', true, { shouldValidate: true });
       }
       if (productCode === ProductCode.CHEQUING) {
         requestGetInterestRate(); //Get interest rate for chequing account after get card count
