@@ -12,11 +12,13 @@ import { nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { BookAppointmentType } from '../constants';
+import BookAppointmentAgreement from './components/BookAppointmentAgreement';
 import BookAppointmentForm from './components/BookAppointmentForm';
 import BookAppointmentSuccessful from './components/BookAppointmentSuccessful';
 import { bookAppointmentFormMapFields } from './constants';
 
 const BookAppointmentStep = {
+  AGREEMENT: 'agreement',
   ENTER_INFO_FORM: 'enterInfo',
   COMPLETED: 'completed',
 };
@@ -30,9 +32,13 @@ const BookAppointment = ({ translate: t }) => {
     title: '',
     content: '',
   });
-  const [currentStep, setCurrentStep] = useState(BookAppointmentStep.ENTER_INFO_FORM);
+  const [currentStep, setCurrentStep] = useState(BookAppointmentStep.AGREEMENT);
   const [appointmentSuccessData, setAppointmentSuccessData] = useState();
   const { type, branchNo } = nativeParams || {};
+
+  const handleAgreeTerms = () => {
+    setCurrentStep(BookAppointmentStep.ENTER_INFO_FORM);
+  };
 
   const handleBookAppointment = async formValues => {
     setShowLoading(true);
@@ -76,9 +82,19 @@ const BookAppointment = ({ translate: t }) => {
     }
   };
 
+  const handleMoveBack = () => {
+    setCurrentStep(BookAppointmentStep.AGREEMENT);
+  };
+
   return (
     <>
       {showLoading && <Spinner />}
+      {currentStep === BookAppointmentStep.AGREEMENT && (
+        <BookAppointmentAgreement
+          onSubmit={handleAgreeTerms}
+          translate={t}
+        />
+      )}
       {currentStep === BookAppointmentStep.ENTER_INFO_FORM && (
         <BookAppointmentForm
           type={type}
@@ -86,6 +102,7 @@ const BookAppointment = ({ translate: t }) => {
           translate={t}
           isLogin={isLogin}
           setShowAlert={setShowAlert}
+          moveBack={handleMoveBack}
         />
       )}
       {currentStep === BookAppointmentStep.COMPLETED && (

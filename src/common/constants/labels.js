@@ -170,6 +170,14 @@ export const appointmentDetailLabels = {
   addComments: 'lbl_CAET900010_0022', //Additional Comments
 };
 
+export const appointmentAgreementLabels = {
+  appointmentAgreement: 'lbl_CAET900010_0001', //Appointment Agreement
+  toUseAppointmentService: 'lbl_CAET900010_0002', //To use Appointment service, please review and agree to the Service Agreement for Appointment service.
+  serviceAgreement: 'lbl_CAET900010_0003', //Service Agreement
+  iCheckedConsent: 'lbl_CAET900010_0005', //l checked, consent and agree to the below Service Agreement.
+  confirm: 'lbl_CTA_9027', //Confirm
+};
+
 export const manageLimitLabels = {
   onlineBankingLimit: 'lbl_CAME900010_0001', //Online Banking Transfer Limit
   changeDetail: 'lbl_CAME900010_0002', //Change details

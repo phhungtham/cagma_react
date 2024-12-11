@@ -19,7 +19,6 @@ import { BookAppointmentType, customerStatusFields, preferredLanguages } from '@
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatHHMMToDisplay, formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
-import { moveBack } from '@utilities/index';
 import dayjs from 'dayjs';
 
 import {
@@ -33,7 +32,7 @@ import CustomerStatusBottom from '../CustomerStatusBottom';
 import { bookAppointmentSchema } from './schema';
 import './styles.scss';
 
-const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAlert }) => {
+const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAlert, moveBack }) => {
   const [showCustomerTypeBottom, setShowCustomerTypeBottom] = useState(false);
   const [showPurposeAppointmentBottom, setShowPurposeAppointmentBottom] = useState(false);
   const [showSelectTimeBottom, setShowSelectTimeBottom] = useState(false);
@@ -248,7 +247,8 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
         {showLoading && <Spinner />}
         <Header
           title={t(menuLabels.bookAppointment)}
-          onClick={moveBack}
+          onClickBack={moveBack}
+          disabledMoveBack
         />
         <div className="book-appointment__content">
           <div className="book-appointment__form page__container">
