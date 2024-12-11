@@ -297,7 +297,6 @@ const AddressInfoSection = ({
             <Input
               label={t(labels.addressLine1)}
               disabled={isDisableAddress}
-              autoComplete="new-password"
               maxLength={200}
               {...field}
             />
