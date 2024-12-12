@@ -170,10 +170,6 @@ const Input = forwardRef((props, ref) => {
     }
   };
 
-  const handleCompositionEnd = event => {
-    console.log('composition end event.target.value :>> ', event.target.value);
-  };
-
   return (
     <div className={`text__field ${clazz}`}>
       <section
@@ -195,7 +191,6 @@ const Input = forwardRef((props, ref) => {
             disabled={disabled}
             onChange={handleInputChange}
             onFocus={() => handleFocusStatus()}
-            onCompositionEnd={handleCompositionEnd}
             onBlur={handleOnBlur}
             style={style}
             type={type}
