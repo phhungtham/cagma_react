@@ -2,6 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import Spinner from '@common/components/atoms/Spinner';
 import { ctaLabels } from '@common/constants/labels';
 import { isScrolledToBottom } from '@utilities/scroll';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -23,11 +24,12 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
   const pageRefs = useRef([]);
   const [hasScrolledToEnd, setHasScrolledToEnd] = useState(false);
   const bottomRef = useRef(null);
-
   const [zoomTouchMove, setZoomTouchMove] = useState(1);
   const initialDistance = useRef(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const onDocumentLoadSuccess = ({ numPages }) => {
+    setIsLoading(false);
     setNumPages(numPages);
     setHasScrolledToEnd(false);
     pageRefs.current = new Array(numPages);
@@ -94,6 +96,11 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
     document.documentElement.style.setProperty('--heightTerm', heightTerm);
   }, []);
 
+  const handleOnLoadError = error => {
+    console.log('error load >>>>', error);
+    setIsLoading(false);
+  };
+
   return (
     <BottomSheet
       open={open}
@@ -104,6 +111,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
       type="max"
     >
       <div className="view-term__content">
+        {isLoading && <Spinner />}
         <div className="view-term__detail">
           <div
             className="view-term__item"
@@ -118,6 +126,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
               <Document
                 file={pdfFile}
                 onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={handleOnLoadError}
               >
                 {[...Array(numPages)].map((_, index) => (
                   <Fragment key={index + 1}>

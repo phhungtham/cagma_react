@@ -1,9 +1,30 @@
 @import 'styles/utilities/variables';
+.view-term__content {
+  position: relative;
+  .spinner__wrapper {
+    background-color: transparent;
+    height: auto;
+    width: auto;
+    position: unset;
+  }
+
+  .spinner {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: auto;
+    width: auto;
+  }
+}
 
 .view-term__item {
   height: var(--heightTerm);
   .view-term__children {
     transition: scale 0.3s ease-in-out;
+  }
+  .react-pdf__message {
+    display: none;
   }
 }
 
