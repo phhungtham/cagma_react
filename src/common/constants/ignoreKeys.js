@@ -1,0 +1,15 @@
+export const ignoreKeys = [
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown',
+  'Backspace',
+  'Delete',
+  'Tab',
+  'Enter',
+  'Escape',
+  'Home',
+  'End',
+  'PageUp',
+  'PageDown',
+];

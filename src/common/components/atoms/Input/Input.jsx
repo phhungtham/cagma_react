@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
 
 import { SIZE, TAG_NAME } from '@common/components/constants';
+import { ignoreKeys } from '@common/constants/ignoreKeys';
 import useComposeRefs from '@hooks/useComposeRefs';
 import { formatSecondsDisplay } from '@utilities/dateTimeUtils';
 import { ClearIcon } from 'assets/icons';
@@ -158,6 +159,17 @@ const Input = forwardRef((props, ref) => {
     };
   }, []);
 
+  const handleKeyDown = event => {
+    if (regex) {
+      if (ignoreKeys.includes(event.key)) return;
+      if (event.ctrlKey || event.metaKey) return;
+      let convertRegex = new RegExp(regex);
+      if (convertRegex && convertRegex.test(event.key)) {
+        event.preventDefault();
+      }
+    }
+  };
+
   return (
     <div className={`text__field ${clazz}`}>
       <section
@@ -183,6 +195,7 @@ const Input = forwardRef((props, ref) => {
             style={style}
             type={type}
             value={value}
+            onKeyDown={handleKeyDown}
             {...otherProps}
           />
         ) : (
