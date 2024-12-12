@@ -158,6 +158,16 @@ const Input = forwardRef((props, ref) => {
     };
   }, []);
 
+  const handleKeyDown = event => {
+    if (regex) {
+      let convertRegex = new RegExp(regex);
+      convertRegex = new RegExp(convertRegex.source.replace(/g$/, ''));
+      if (convertRegex && convertRegex.test(event.key) && !event.ctrlKey && !event.metaKey) {
+        event.preventDefault();
+      }
+    }
+  };
+
   return (
     <div className={`text__field ${clazz}`}>
       <section
@@ -183,6 +193,7 @@ const Input = forwardRef((props, ref) => {
             style={style}
             type={type}
             value={value}
+            onKeyDown={handleKeyDown}
             {...otherProps}
           />
         ) : (
