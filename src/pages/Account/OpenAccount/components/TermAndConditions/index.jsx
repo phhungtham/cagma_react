@@ -8,12 +8,11 @@ import TermConditionChecklist from '@common/components/organisms/TermConditionCh
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { ctaLabels, openAccountLabels as labels, menuLabels } from '@common/constants/labels';
 import { PeriodUnitCodeDisplay } from '@common/constants/product';
-import { BannerMapProductCode } from '@pages/Product/ProductList/constants';
 import { moveBack } from '@utilities/index';
 import { appLanguage } from 'app/redux/selector';
 
 import { OpenAccountDescriptions, ProductType } from '../../constants';
-import { OpenAccountTermFile } from './constants';
+import { OpenAccountBanner, OpenAccountTermFile } from './constants';
 import './styles.scss';
 
 const TermAndConditions = ({ onSubmit, product, translate: t }) => {
@@ -139,7 +138,7 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
               )}
             </div>
             <div className="banner__image">
-              <img src={BannerMapProductCode[productCode]} />
+              <img src={OpenAccountBanner[productCode]} />
             </div>
           </div>
           <div className="term-condition__checklist">
