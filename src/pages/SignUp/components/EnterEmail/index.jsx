@@ -6,6 +6,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
+import { initAlert } from '@common/constants/bottomsheet';
 import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX, isDevelopmentEnv } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import {
@@ -30,14 +31,11 @@ import { EnterEmailSchema } from './schema';
 const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNavigateVerifyMember }) => {
   const { deviceId, ekycCached, setEkycToNativeCache, translate: t, isNavigateFromLogin } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
-  const [alert, setAlert] = useState({
-    isShow: false,
-    title: '',
-    content: '',
-  });
+  const [alert, setAlert] = useState(initAlert);
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
   const [enabledVerifyCode, setEnabledVerifyCode] = useState(false);
+  const { moveInitHomeNative } = useMove();
   const methods = useForm({
     mode: 'onChange',
     resolver: yupResolver(EnterEmailSchema),
@@ -65,10 +63,10 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
   const invalidVerificationCode = verificationCode?.length !== 6;
 
   const handleCloseAlert = () => {
-    setAlert({
-      ...alert,
-      isShow: false,
-    });
+    if (alert.requiredLogin) {
+      moveInitHomeNative('initHome');
+    }
+    setAlert(initAlert);
   };
 
   const handleRequestGetEmailVerifyCode = async () => {
@@ -89,12 +87,14 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
     const endpoint = isNavigateFromLogin
       ? endpoints.requestGetEmailVerifyCodeMotp
       : endpoints.requestGetEmailVerifyCode;
-    const { data, error, isSuccess } = await requestApi(endpoint, request);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoint, request);
     setShowLoading(false);
     if (!isSuccess) {
       return setAlert({
         isShow: true,
+        title: '',
         content: error,
+        requiredLogin,
       });
     }
     if (clearTimeOutRef.current) {
