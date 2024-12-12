@@ -2,7 +2,7 @@ import { AppCfg } from '@configs/appConfigs';
 import { $h } from 'navigation/wmatrix_config';
 
 const openCalendar = (cb, { selectDate, startDate, endDate }) => {
-  if (AppCfg.ENV === 'development') return cb('19700109');
+  if (AppCfg.ENV === 'development') return cb('20241211');
   return $h.exec(
     result => {
       const selectedDate = result?.data ? JSON.parse(result.data)?.selectDate : '';

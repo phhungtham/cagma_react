@@ -8,7 +8,7 @@ export const bookAppointmentSchema = Yup.object().shape({
   time: Yup.string().required('Required field'),
   name: Yup.string().required('Required field'),
   email: Yup.string().matches(emailFormatRegex, 'Please check your email').required('Required field'),
-  phoneNumber: Yup.string().nullable().optional(),
+  phoneNumber: Yup.string().required('Required field'),
   lang: Yup.string().nullable().optional(),
   comment: Yup.string().nullable().optional(),
   customerTypeDisplay: Yup.string().nullable().optional(),
