@@ -29,7 +29,6 @@ const Dropdown = forwardRef((props, ref) => {
 
   const handleFocusStatus = () => {
     if (readOnly || disabled) {
-      setCustomClass('dropdown__completed');
       return;
     }
     onFocus();
@@ -71,7 +70,9 @@ const Dropdown = forwardRef((props, ref) => {
             {children}
           </div>
         </div>
-        <div className="dropdown__icon">{customClass === 'dropdown__focus' ? <ArrowUp /> : <ArrowDown />}</div>
+        <div className={`dropdown__icon ${disabled ? 'disable' : ''}`}>
+          {customClass === 'dropdown__focus' ? <ArrowUp /> : <ArrowDown />}
+        </div>
       </section>
     </div>
   );
