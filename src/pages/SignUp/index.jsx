@@ -7,6 +7,7 @@ import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
+import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import getEkycInfo from '@utilities/gmCommon/getEkycInfo';
 import openURLInBrowser from '@utilities/gmCommon/openURLInBrowser';
 import setEkycInfo from '@utilities/gmCommon/setEkycInfo';
@@ -202,13 +203,13 @@ const SignUp = ({ translate }) => {
       //Check case user is sign up process but login with user empty MOTP
       //If user login different with user sign-up process. Clear all ekyc cache and move to email verify follow isFromLogin
       if (isFromLogin && String(cusno) !== String(data.cusno)) {
-        setAlert({
-          isShow: true,
-          title: 'Test',
-          content: `cusno from login: ${cusno} and cusno from CASE109: ${data.cusno}`,
-        });
-        // clearEkycInfo();
-        // return setCurrentStep(SignUpStep.ENTER_EMAIL);
+        // setAlert({
+        //   isShow: true,
+        //   title: 'Test',
+        //   content: `cusno from login: ${cusno} and cusno from CASE109: ${data.cusno}`,
+        // });
+        clearEkycInfo();
+        return setCurrentStep(SignUpStep.ENTER_EMAIL);
       }
       setEkycStepStatus(data);
       const { ekyc_aplct_stp_c: applyCode } = data;
