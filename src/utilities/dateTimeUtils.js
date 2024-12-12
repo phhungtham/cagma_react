@@ -52,6 +52,7 @@ export const formatDateExpiry = event => {
   if (allowedKeys.indexOf(code) !== -1) {
     return;
   }
+
   event.target.value = event.target.value
     .replace(
       /^([1-9]\/|[2-9])$/g,
@@ -70,7 +71,7 @@ export const formatDateExpiry = event => {
       '$1/$2' // 141 > 01/41
     )
     .replace(
-      /^([0]+)\/|[0]+$/g,
+      /^([0]+)[0]+$/g,
       '0' // 0/ > 0 and 00 > 0
     )
     .replace(
@@ -81,6 +82,22 @@ export const formatDateExpiry = event => {
       /\/\//g,
       '/' // Prevent entering more than 1 `/`
     );
+
+  if (event.target.value?.length > 2) {
+    const [mm = '', yy = ''] = event.target.value.split('/');
+    if (mm.length > 2) {
+      event.target.value = mm.slice(0, 2) + '/' + yy; //Prevent enter more than 3 character
+    }
+    if (Number(mm) > 12) {
+      event.target.value = mm.slice(0, 1) + '/' + yy; //Prevent enter MM > 12
+    }
+    if (mm === '00') {
+      event.target.value = '0/' + yy; //00 -> 0
+    }
+    if (yy.length > 2) {
+      event.target.value = mm + '/' + yy.slice(0, 2); //Prevent enter more than 3 character
+    }
+  }
 };
 
 export const convertToShortTime = timeString => {
