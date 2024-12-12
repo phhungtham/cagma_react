@@ -20,6 +20,9 @@
 
   &.disable {
     background: $color-gray-100;
+    &.has-value {
+      background: $color-gray-50;
+    }
   }
 
   .dropdown__icon {

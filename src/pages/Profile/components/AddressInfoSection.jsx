@@ -194,7 +194,7 @@ const AddressInfoSection = ({
             inputMode="numeric"
             type="text"
             regex={notAllowNumberRegex}
-            disabled={isDisableAddress}
+            readOnly={isDisableAddress}
             maxLength={30}
             {...field}
           />
@@ -209,7 +209,7 @@ const AddressInfoSection = ({
             inputMode="numeric"
             type="text"
             regex={notAllowNumberRegex}
-            disabled={isDisableAddress}
+            readOnly={isDisableAddress}
             maxLength={20}
             {...field}
           />
@@ -234,7 +234,7 @@ const AddressInfoSection = ({
         render={({ field: { value, onChange } }) => (
           <Input
             label={t(labels.postalCode)}
-            disabled={isDisableAddress}
+            readOnly={isDisableAddress}
             value={value}
             maxLength={6}
             regex={postalCodeNotAllowRegex}
@@ -253,7 +253,7 @@ const AddressInfoSection = ({
             return (
               <Input
                 label={t(labels.aptNumber)}
-                disabled={isDisableAddress}
+                readOnly={isDisableAddress}
                 maxLength={40}
                 regex={notAllowNumberAlphabetRegex}
                 {...field}
@@ -268,7 +268,7 @@ const AddressInfoSection = ({
           render={({ field }) => (
             <Input
               label={t(labels.streetNumber)}
-              disabled={isDisableAddress}
+              readOnly={isDisableAddress}
               maxLength={60}
               regex={notAllowNumberAlphabetRegex}
               {...field}
@@ -282,7 +282,7 @@ const AddressInfoSection = ({
           render={({ field }) => (
             <Input
               label={t(labels.streetName)}
-              disabled={isDisableAddress}
+              readOnly={isDisableAddress}
               maxLength={80}
               regex={invalidNameRegex}
               {...field}
@@ -296,7 +296,7 @@ const AddressInfoSection = ({
           render={({ field }) => (
             <Input
               label={t(labels.addressLine1)}
-              disabled={isDisableAddress}
+              readOnly={isDisableAddress}
               maxLength={200}
               {...field}
             />
@@ -308,7 +308,7 @@ const AddressInfoSection = ({
           render={({ field }) => (
             <Input
               label={t(labels.city)}
-              disabled={isDisableAddress}
+              readOnly={isDisableAddress}
               regex={notAllowAlphabetRegex}
               maxLength={200}
               {...field}
@@ -336,7 +336,7 @@ const AddressInfoSection = ({
           render={({ field }) => (
             <Input
               label={t(labels.address1)}
-              disabled={isDisableAddress}
+              readOnly={isDisableAddress}
               {...field}
             />
           )}
@@ -347,7 +347,7 @@ const AddressInfoSection = ({
           render={({ field }) => (
             <Input
               label={t(labels.address2)}
-              disabled={isDisableAddress}
+              readOnly={isDisableAddress}
               {...field}
             />
           )}
@@ -358,7 +358,7 @@ const AddressInfoSection = ({
           render={({ field }) => (
             <Input
               label={t(labels.address3)}
-              disabled={isDisableAddress}
+              readOnly={isDisableAddress}
               {...field}
             />
           )}
