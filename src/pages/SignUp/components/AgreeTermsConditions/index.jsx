@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 
-import termsConditionsBanner from '@assets/images/terms-condition.png';
+import termsConditionsBanner from '@assets/images/agree-terms.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';

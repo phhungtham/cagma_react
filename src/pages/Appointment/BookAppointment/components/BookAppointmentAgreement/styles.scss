@@ -3,14 +3,11 @@
 
 .book-appointment-agreement__wrapper {
   .agreement__banner {
-    height: 220px;
     width: 100%;
-    //Just for test dummy image. Will remove after add image for agreement appointment
-    background-color: #6ea4fc;
     @include flexCenter();
     &__img {
-      height: 220px;
-      width: 100%;
+      height: 144px;
+      width: 144px;
       object-fit: cover;
     }
   }

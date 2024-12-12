@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { ViewDetailIcon } from '@assets/icons';
-import BannerImg from '@assets/images/appointment-agreement-test.png';
+import BannerImg from '@assets/images/agree-terms.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Checkbox from '@common/components/atoms/Checkbox';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
