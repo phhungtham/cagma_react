@@ -89,17 +89,16 @@ const Input = forwardRef((props, ref) => {
     // }
   };
 
-  const handleOnBlur = e => {
+  const handleOnBlur = () => {
     onBlur?.();
     handleFocusStatus('blur');
-    onChange(inputValues);
   };
 
   const handleClearInputText = e => {
     e.preventDefault();
     setInputValues('');
     composeRef.current.value = '';
-    setErrorTextField('');
+    // setErrorTextField('');
     onChange();
     onClearInput();
   };
