@@ -169,8 +169,8 @@ const Input = forwardRef((props, ref) => {
     }
   };
 
-  const handleCompositionEnd = event => {
-    console.log('composition end event.target.value :>> ', event.target.value);
+  const onCompositionStart = event => {
+    console.log('composition start event.target.value :>> ', event.target.value);
   };
 
   return (
@@ -194,8 +194,8 @@ const Input = forwardRef((props, ref) => {
             disabled={disabled}
             onChange={handleInputChange}
             onFocus={() => handleFocusStatus()}
-            onCompositionEnd={handleCompositionEnd}
             onBlur={handleOnBlur}
+            onCompositionStart={onCompositionStart}
             style={style}
             type={type}
             value={value}
