@@ -49,6 +49,7 @@ const Input = forwardRef((props, ref) => {
   const isComposingRef = useRef(false);
 
   const handleFocusStatus = (focusMode = 'focus') => {
+    isComposingRef.current = false;
     if (focusMode === 'focus') {
       onFocus?.();
     }
@@ -122,6 +123,7 @@ const Input = forwardRef((props, ref) => {
   //Handle the final step where onInput will no longer trigger. Handle for IME
   const handleOnCompositionEnd = e => {
     if (isComposingRef) {
+      isComposingRef.current = false;
       validateInput(e.target.value);
     }
   };
