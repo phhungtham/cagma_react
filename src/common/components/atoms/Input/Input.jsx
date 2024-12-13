@@ -46,12 +46,10 @@ const Input = forwardRef((props, ref) => {
   const displayRef = useRef(null);
 
   const composeRef = useComposeRefs(ref);
-  const isComposingRef = useRef(false);
+  const [isComposing, setIsComposing] = useState(false);
 
   const handleFocusStatus = (focusMode = 'focus') => {
-    if (isComposingRef) {
-      isComposingRef.current = false;
-    }
+    // setIsComposing(false);
     if (focusMode === 'focus') {
       onFocus?.();
     }
@@ -85,24 +83,23 @@ const Input = forwardRef((props, ref) => {
   };
 
   const handleInputChange = e => {
-    console.log('access handleInputChange e.target.value :>> ', e.target.value);
-    console.log('access handleInputChange isComposing :>> ', isComposingRef.current);
     let value = e.target.value;
-    if (!isComposingRef?.current) {
-      validateInput(value);
-    }
+    // if (!isComposing) {
+    validateInput(value);
+    // }
   };
 
-  const handleOnBlur = () => {
+  const handleOnBlur = e => {
     onBlur?.();
     handleFocusStatus('blur');
+    onChange(inputValues);
   };
 
   const handleClearInputText = e => {
     e.preventDefault();
     setInputValues('');
     composeRef.current.value = '';
-    // setErrorTextField('');
+    setErrorTextField('');
     onChange();
     onClearInput();
   };
@@ -118,21 +115,15 @@ const Input = forwardRef((props, ref) => {
     }
   };
 
-  const handleOnCompositionStart = () => {
-    if (isComposingRef) {
-      console.log('access composition start :>> ');
-      isComposingRef.current = true;
-    }
-  };
+  // const handleOnCompositionStart = () => {
+  // setIsComposing(true);
+  // };
 
   //Handle the final step where onInput will no longer trigger. Handle for IME
-  const handleOnCompositionEnd = e => {
-    if (isComposingRef) {
-      console.log('access composition end e.target.value :>> ', e.target.value);
-      isComposingRef.current = false;
-      validateInput(e.target.value);
-    }
-  };
+  // const handleOnCompositionEnd = e => {
+  //   setIsComposing(false);
+  //   validateInput(e.target.value);
+  // };
 
   useEffect(() => {
     setInputValues(value);
@@ -218,8 +209,8 @@ const Input = forwardRef((props, ref) => {
             onChange={handleInputChange}
             onFocus={() => handleFocusStatus()}
             onBlur={handleOnBlur}
-            onCompositionStart={handleOnCompositionStart}
-            onCompositionEnd={handleOnCompositionEnd}
+            // onCompositionStart={handleOnCompositionStart}
+            // onCompositionEnd={handleOnCompositionEnd}
             style={style}
             type={type}
             value={value}

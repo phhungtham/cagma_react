@@ -100,7 +100,7 @@ const SignUp = ({ translate }) => {
       setExistingCustomer(data);
     } else {
       let shouldMoveHome = false;
-      if (errorCode === 'CASE.006') {
+      if (errorCode === 'CASE.0006') {
         shouldMoveHome = true;
       }
       return setAlert({
