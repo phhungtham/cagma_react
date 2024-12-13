@@ -38,7 +38,7 @@ const useOpenAccount = ({ product }) => {
         productCode
       )
     ) {
-      return filteredAccounts.filter(account => account.prdt_c === ProductCode.E_SAVING);
+      return filteredAccounts.filter(account => [ProductCode.E_SAVING, ProductCode.CHEQUING].includes(account.prdt_c));
     }
     return filteredAccounts;
   };

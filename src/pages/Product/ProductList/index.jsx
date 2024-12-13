@@ -107,14 +107,16 @@ const ProductList = ({ translate: t }) => {
         return;
       }
     }
-    let isExistESavingAccount = false;
+    let isExistESavingOrChequingAccount = false;
     const productCode = product.prdt_c;
     if (accountList?.length) {
       //Must to has e-Saving account before create other account
-      isExistESavingAccount = accountList.some(account => account.prdt_c === ProductCode.E_SAVING);
+      isExistESavingOrChequingAccount = accountList.some(account =>
+        [ProductCode.E_SAVING, ProductCode.CHEQUING].includes(account.prdt_c)
+      );
     }
     const isProductOtherChequingAndESaving = ![ProductCode.CHEQUING, ProductCode.E_SAVING].includes(productCode);
-    if (isProductOtherChequingAndESaving && !isExistESavingAccount) {
+    if (isProductOtherChequingAndESaving && !isExistESavingOrChequingAccount) {
       return setAlert({
         isShow: true,
         title: t(labels.noESavingAccount),
