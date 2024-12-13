@@ -228,7 +228,8 @@ const Input = forwardRef((props, ref) => {
           </div>
         ) : (
           customClass === 'input__focus' &&
-          inputValues && (
+          inputValues &&
+          !endAdornment && (
             <div
               onMouseDown={handleClearInputText}
               className={`input__icon ${tagName}`}
