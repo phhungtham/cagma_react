@@ -67,21 +67,24 @@ const Input = forwardRef((props, ref) => {
     }
   };
 
+  const validateInput = value => {
+    if (regex) {
+      value = value.replace(regex, '');
+    }
+    //Handle for case input type number
+    if (maxLength) {
+      if (value?.length > maxLength) {
+        value = value.slice(0, maxLength);
+      }
+    }
+    onChange(value);
+    setInputValues(value);
+  };
+
   const handleInputChange = e => {
-    console.log('access handleInputChange');
     let value = e.target.value;
     if (!isComposingRef?.current) {
-      if (regex) {
-        value = value.replace(regex, '');
-      }
-      //Handle for case input type number
-      if (maxLength) {
-        if (value?.length > maxLength) {
-          value = value.slice(0, maxLength);
-        }
-      }
-      onChange(value);
-      setInputValues(value);
+      validateInput(value);
     }
   };
 
@@ -112,15 +115,14 @@ const Input = forwardRef((props, ref) => {
 
   const handleOnCompositionStart = () => {
     if (isComposingRef) {
-      console.log('access composition start');
       isComposingRef.current = true;
     }
   };
 
-  const handleOnCompositionEnd = () => {
+  //Handle the final step where onInput will no longer trigger. Handle for IME
+  const handleOnCompositionEnd = e => {
     if (isComposingRef) {
-      console.log('access composition end');
-      isComposingRef.current = false;
+      validateInput(e.target.value);
     }
   };
 
