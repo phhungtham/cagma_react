@@ -68,18 +68,19 @@ const Input = forwardRef((props, ref) => {
 
   const handleInputChange = e => {
     let value = e.target.value;
-    console.log('value input change :>> ', value);
-    if (regex) {
-      value = value.replace(regex, '');
-    }
-    //Handle for case input type number
-    if (maxLength) {
-      if (value?.length > maxLength) {
-        value = value.slice(0, maxLength);
+    if (!e.isComposing) {
+      if (regex) {
+        value = value.replace(regex, '');
       }
+      //Handle for case input type number
+      if (maxLength) {
+        if (value?.length > maxLength) {
+          value = value.slice(0, maxLength);
+        }
+      }
+      onChange(value);
+      setInputValues(value);
     }
-    onChange(value);
-    setInputValues(value);
   };
 
   const handleOnBlur = () => {
@@ -169,10 +170,6 @@ const Input = forwardRef((props, ref) => {
     }
   };
 
-  const onCompositionStart = event => {
-    console.log('composition start event.target.value :>> ', event.target.value);
-  };
-
   return (
     <div className={`text__field ${clazz}`}>
       <section
@@ -195,7 +192,8 @@ const Input = forwardRef((props, ref) => {
             onChange={handleInputChange}
             onFocus={() => handleFocusStatus()}
             onBlur={handleOnBlur}
-            onCompositionStart={onCompositionStart}
+            onCompositionStart={e => (e.isComposing = true)}
+            onCompositionEnd={e => (e.isComposing = false)}
             style={style}
             type={type}
             value={value}
