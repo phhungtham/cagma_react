@@ -68,6 +68,7 @@ const Input = forwardRef((props, ref) => {
   };
 
   const handleInputChange = e => {
+    console.log('access handleInputChange');
     let value = e.target.value;
     if (!isComposingRef?.current) {
       if (regex) {
@@ -111,12 +112,14 @@ const Input = forwardRef((props, ref) => {
 
   const handleOnCompositionStart = () => {
     if (isComposingRef) {
+      console.log('access composition start');
       isComposingRef.current = true;
     }
   };
 
   const handleOnCompositionEnd = () => {
     if (isComposingRef) {
+      console.log('access composition end');
       isComposingRef.current = false;
     }
   };
