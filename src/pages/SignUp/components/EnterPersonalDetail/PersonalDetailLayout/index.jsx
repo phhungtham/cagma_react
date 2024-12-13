@@ -276,6 +276,8 @@ const PersonalDetailLayout = ({ onSubmit }) => {
       customer.dob_display = customer.dob ? formatYYYYMMDDToDisplay(customer.dob) : '';
       reset({
         ...customer,
+        employmentStatus: String(customer?.employmentStatus || ''),
+        occupation1: String(customer?.occupation1 || ''),
         showAdditionalInfo: false,
         title: customer.title || 'MR',
       });
