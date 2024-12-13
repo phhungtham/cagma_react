@@ -16,12 +16,18 @@ import dayjs from 'dayjs';
 
 import { reportLostCardCustomerInfoSchema } from './schema';
 
-const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setShowToast, translate: t }) => {
+const EnterReportLostCustomerInfo = ({
+  onSubmit,
+  setAlert,
+  setShowLoading,
+  setShowToast,
+  showIdentification,
+  translate: t,
+}) => {
   const methods = useForm({
     mode: 'onChange',
     resolver: yupResolver(reportLostCardCustomerInfoSchema),
   });
-
   const {
     handleSubmit,
     control,
@@ -122,6 +128,21 @@ const EnterReportLostCustomerInfo = ({ onSubmit, setAlert, setShowLoading, setSh
                 control={control}
                 name="postalCode"
               />
+              {showIdentification && (
+                <Controller
+                  render={({ field }) => (
+                    <Input
+                      label={t(labels.identification)}
+                      placeholder=""
+                      maxLength={30}
+                      {...field}
+                    />
+                  )}
+                  control={control}
+                  name="identification"
+                />
+              )}
+
               <EmailVerifyControl
                 schema={reportLostCardCustomerInfoSchema}
                 setAlert={setAlert}

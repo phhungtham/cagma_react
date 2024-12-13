@@ -39,6 +39,7 @@ const ReportLostCard = ({ translate: t }) => {
     message: '',
     type: 'success',
   });
+  const [showIdentificationUnknownCard, setShowIdentificationUnknownCard] = useState(false);
   const { moveInitHomeNative } = useMove();
   const { requestApi } = useApi();
 
@@ -110,6 +111,7 @@ const ReportLostCard = ({ translate: t }) => {
         lastName: cus_last_nm,
         phoneNumber: cus_adr_telno,
         postalCode: cus_adr_zipc,
+        identification: lcl_cus_rlnm_no,
       } = formValues;
 
       payload = {
@@ -120,15 +122,17 @@ const ReportLostCard = ({ translate: t }) => {
         cus_last_nm,
         cus_adr_telno,
         cus_adr_zipc,
+        lcl_cus_rlnm_no,
       };
     }
-    const { data, error, isSuccess } = await requestApi(endpoints.reportLostNotLogged, payload);
+    const { data, error, isSuccess, errorCode } = await requestApi(endpoints.reportLostNotLogged, payload);
     setShowLoading(false);
     if (isSuccess) {
       if (Number(data?.result_cd) === 1) {
         setCurrentStep(REPORT_LOST_CARD_STEP.COMPLETED);
       }
     } else {
+      setShowIdentificationUnknownCard(true);
       setAlert({
         isShow: true,
         content: error,
@@ -180,6 +184,7 @@ const ReportLostCard = ({ translate: t }) => {
                     setShowLoading={setShowLoading}
                     setShowToast={setShowToast}
                     translate={t}
+                    showIdentification={showIdentificationUnknownCard}
                   />
                 )}
               </>

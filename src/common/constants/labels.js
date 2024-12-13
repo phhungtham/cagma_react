@@ -598,6 +598,7 @@ export const reportLostCardLabels = {
   registerTheAccident: 'lbl_CACA600000_0148', //Register the accident report
   hasBeenCompleted: 'lbl_CACA600000_0548', //has been completed
   isNowComplete: 'lbl_CACA600000_0573', //is now complete
+  identification: 'lbl_CACA600000_0169', //Identification(Optional)
 };
 
 export const releaseCardLabels = {
