@@ -119,8 +119,8 @@ const ProductList = ({ translate: t }) => {
     if (isProductOtherChequingAndESaving && !isExistESavingOrChequingAccount) {
       return setAlert({
         isShow: true,
-        title: t(labels.noESavingAccount),
-        content: t(labels.pleaseOpenSavingAccount),
+        title: t(labels.thereIsNoAccount),
+        content: t(labels.pleaseOpenSOLChequingESaving),
       });
     }
     if (
