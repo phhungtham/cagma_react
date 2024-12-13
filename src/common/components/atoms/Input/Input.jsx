@@ -68,6 +68,7 @@ const Input = forwardRef((props, ref) => {
 
   const handleInputChange = e => {
     let value = e.target.value;
+    console.log('access handleInputChange');
     if (!e.isComposing) {
       if (regex) {
         value = value.replace(regex, '');
@@ -106,6 +107,23 @@ const Input = forwardRef((props, ref) => {
     } else {
       clearInterval(timerRef.current);
     }
+  };
+
+  const handleOnCompositionStart = e => {
+    console.log('accessing handleOnCompositionStart');
+    console.log('e.isComposing :>> ', e.isComposing);
+    e.isComposing = true;
+  };
+
+  const handleOnCompositionUpdate = e => {
+    console.log('accessing handleOnCompositionUpdate');
+    console.log('e.isComposing :>> ', e.isComposing);
+  };
+
+  const handleOnCompositionEnd = e => {
+    console.log('accessing handleOnCompositionEnd');
+    console.log('e.isComposing :>> ', e.isComposing);
+    e.isComposing = false;
   };
 
   useEffect(() => {
@@ -192,8 +210,9 @@ const Input = forwardRef((props, ref) => {
             onChange={handleInputChange}
             onFocus={() => handleFocusStatus()}
             onBlur={handleOnBlur}
-            onCompositionStart={e => (e.isComposing = true)}
-            onCompositionEnd={e => (e.isComposing = false)}
+            onCompositionStart={handleOnCompositionStart}
+            onCompositionUpdate={handleOnCompositionUpdate}
+            onCompositionEnd={handleOnCompositionEnd}
             style={style}
             type={type}
             value={value}
