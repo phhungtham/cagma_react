@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { forwardRef, useEffect, useRef, useState } from 'react';
 
 import { SIZE, TAG_NAME } from '@common/components/constants';

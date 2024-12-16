@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Fragment, useEffect, useState } from 'react';
 
 import Alert from '@common/components/atoms/Alert';

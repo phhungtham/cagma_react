@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client';
-import { pdfjs } from 'react-pdf';
 import { Provider } from 'react-redux';
 import { BrowserRouter, HashRouter as Router } from 'react-router-dom';
 

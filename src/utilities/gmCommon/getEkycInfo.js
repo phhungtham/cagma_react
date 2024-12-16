@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { AppCfg } from '@configs/appConfigs';
 import { $h } from 'navigation/wmatrix_config';
 

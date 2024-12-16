@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useContext, useState } from 'react';
 
 import Alert from '@common/components/atoms/Alert';

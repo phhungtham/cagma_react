@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
 import { ProductCode } from '@common/constants/product';
