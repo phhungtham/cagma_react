@@ -82,6 +82,7 @@ const Input = forwardRef((props, ref) => {
   };
 
   const handleInputChange = e => {
+    console.log('isEnterKey onChange >>>', isEnterKey.current);
     if (isEnterKey.current) {
       let value = e.target.value;
       validateInput(value);
@@ -89,6 +90,7 @@ const Input = forwardRef((props, ref) => {
   };
 
   const handleOnBlur = () => {
+    console.log('isEnterKey blur >>>', isEnterKey.current);
     onBlur?.();
     handleFocusStatus('blur');
     isEnterKey.current = false;
@@ -98,6 +100,7 @@ const Input = forwardRef((props, ref) => {
     e.preventDefault();
     setInputValues('');
     composeRef.current.value = '';
+    isEnterKey.current = false;
     // setErrorTextField('');
     onChange();
     onClearInput();
@@ -113,7 +116,6 @@ const Input = forwardRef((props, ref) => {
       clearInterval(timerRef.current);
     }
   };
-
   //Handle the final step where onInput will no longer trigger. Handle for IME
   // const handleOnCompositionEnd = e => {
   //   setIsComposing(false);
