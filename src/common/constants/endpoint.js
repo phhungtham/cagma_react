@@ -67,6 +67,6 @@ export const endpoints = {
   checkSignUpApprovalStatus: '/ca/se/CASE103.pwkjson',
   getEkycDetail: '/ca/se/CASE117.pwkjson',
   logout: '/gm/lo/GMLO004.pwkjson',
-  checkBusinessDay: '/gm/co/GMCO012.pwkjson',
+  checkBusinessDay: '/ca/co/CACO007.pwkjson',
   checkAccountSinExist: '/ca/me/CAME018.pwkjson',
 };
