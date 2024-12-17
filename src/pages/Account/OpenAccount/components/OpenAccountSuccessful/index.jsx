@@ -25,9 +25,9 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
   const { moveScreenNative, moveHomeNative } = useMove();
 
   const onClickViewAccount = () => {
-    const accountNumberParam = JSON.stringify({
+    const accountNumberParam = {
       lcl_acno: openedAccountNumber,
-    });
+    };
     let menuCode = '';
     if (dep_sjt_class === DepositSubjectClass.REGULAR_SAVING) {
       menuCode = MENU_CODE.ACCOUNT_ACTIVITY_BANKING;
