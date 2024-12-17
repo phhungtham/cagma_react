@@ -47,7 +47,6 @@ const Input = forwardRef((props, ref) => {
   const displayRef = useRef(null);
 
   const composeRef = useComposeRefs(ref);
-  const isEnterKey = useRef(false);
   const handleFocusStatus = (focusMode = 'focus') => {
     if (focusMode === 'focus') {
       onFocus?.();
@@ -82,25 +81,19 @@ const Input = forwardRef((props, ref) => {
   };
 
   const handleInputChange = e => {
-    console.log('isEnterKey onChange >>>', isEnterKey.current);
-    if (isEnterKey.current) {
-      let value = e.target.value;
-      validateInput(value);
-    }
+    let value = e.target.value;
+    validateInput(value);
   };
 
   const handleOnBlur = () => {
-    console.log('isEnterKey blur >>>', isEnterKey.current);
     onBlur?.();
     handleFocusStatus('blur');
-    isEnterKey.current = false;
   };
 
   const handleClearInputText = e => {
     e.preventDefault();
     setInputValues('');
     composeRef.current.value = '';
-    isEnterKey.current = false;
     // setErrorTextField('');
     onChange();
     onClearInput();
@@ -174,10 +167,6 @@ const Input = forwardRef((props, ref) => {
   }, []);
 
   const handleKeyDown = event => {
-    if (!isEnterKey.current) {
-      isEnterKey.current = true;
-    }
-
     if (regex) {
       if (ignoreKeys.includes(event.key)) return;
       if (event.ctrlKey || event.metaKey) return;
@@ -210,8 +199,6 @@ const Input = forwardRef((props, ref) => {
             onChange={handleInputChange}
             onFocus={() => handleFocusStatus()}
             onBlur={handleOnBlur}
-            // onCompositionStart={handleOnCompositionStart}
-            // onCompositionEnd={handleOnCompositionEnd}
             style={style}
             type={type}
             value={value}
