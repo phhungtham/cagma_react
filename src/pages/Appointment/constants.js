@@ -46,7 +46,7 @@ export const branchFields = [
   },
   {
     label: 'Branch No',
-    value: 'brno',
+    value: 'brno_display',
   },
 ];
 
