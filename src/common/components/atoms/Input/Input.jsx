@@ -47,10 +47,7 @@ const Input = forwardRef((props, ref) => {
   const displayRef = useRef(null);
 
   const composeRef = useComposeRefs(ref);
-  const [isComposing, setIsComposing] = useState(false);
-
   const handleFocusStatus = (focusMode = 'focus') => {
-    // setIsComposing(false);
     if (focusMode === 'focus') {
       onFocus?.();
     }
@@ -85,9 +82,7 @@ const Input = forwardRef((props, ref) => {
 
   const handleInputChange = e => {
     let value = e.target.value;
-    // if (!isComposing) {
     validateInput(value);
-    // }
   };
 
   const handleOnBlur = () => {
@@ -114,11 +109,6 @@ const Input = forwardRef((props, ref) => {
       clearInterval(timerRef.current);
     }
   };
-
-  // const handleOnCompositionStart = () => {
-  // setIsComposing(true);
-  // };
-
   //Handle the final step where onInput will no longer trigger. Handle for IME
   // const handleOnCompositionEnd = e => {
   //   setIsComposing(false);
@@ -209,8 +199,6 @@ const Input = forwardRef((props, ref) => {
             onChange={handleInputChange}
             onFocus={() => handleFocusStatus()}
             onBlur={handleOnBlur}
-            // onCompositionStart={handleOnCompositionStart}
-            // onCompositionEnd={handleOnCompositionEnd}
             style={style}
             type={type}
             value={value}

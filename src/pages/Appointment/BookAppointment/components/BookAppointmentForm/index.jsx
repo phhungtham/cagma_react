@@ -175,14 +175,13 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
   const requestCheckIsBusinessDay = async () => {
     setShowLoading(true);
     const payload = {
-      date,
-      pattern: 'yyyyMMdd',
+      trx_dt: date,
     };
     const { data, isSuccess } = await requestApi(endpoints.checkBusinessDay, payload);
     setShowLoading(false);
     if (isSuccess) {
-      const { isOpDate } = data;
-      if (isOpDate === 'false') {
+      const { result_cd } = data;
+      if (Number(result_cd) !== 0) {
         setShowAlert({
           isShow: true,
           title: t(labels.pleaseSelectAgain),

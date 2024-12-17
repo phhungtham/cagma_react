@@ -191,6 +191,7 @@ const AppNotifications = ({ translate: t }) => {
     const accountNumberParam = JSON.stringify({
       lcl_acno: accountNumber,
     });
+
     let menuCode = '';
     if (screenType === DepositSubjectClass.REGULAR_SAVING) {
       menuCode = MENU_CODE.ACCOUNT_ACTIVITY_BANKING;
