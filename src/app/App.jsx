@@ -13,6 +13,7 @@ import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
 import publicRoutes from '@routes/service/public-routes';
 import { languageStorageKeys } from '@utilities/transform';
+import 'flex-gap-polyfill/dist/index.js';
 import { reloadLanguageResource } from 'i18n/reloadLanguageResource';
 import { $h, wmatrix } from 'navigation/wmatrix_config';
 import { polyfill } from 'smoothscroll-polyfill';
