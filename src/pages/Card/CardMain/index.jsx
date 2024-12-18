@@ -17,7 +17,7 @@ import GuestCardView from './components/GuestCardView';
 import './styles.scss';
 
 const CardMain = ({ translate: t }) => {
-  const { moveInitHomeNative } = useMove();
+  const { moveInitHomeNative, moveHomeNative } = useMove();
   const { isLoading: isLoadingCheckUserLogin, isLogin } = useLoginInfo();
   const [card, setCard] = useState();
   const [showLoading, setShowLoading] = useState(false);
@@ -69,6 +69,10 @@ const CardMain = ({ translate: t }) => {
     setAlert(initAlert);
   };
 
+  const handleClickBack = () => {
+    moveHomeNative();
+  };
+
   useEffect(() => {
     if (isLogin) {
       requestGetCardInfo();
@@ -79,7 +83,11 @@ const CardMain = ({ translate: t }) => {
     <>
       <div className="card-main__wrapper page__wrapper">
         {(showLoading || isLoadingCheckUserLogin) && <Spinner />}
-        <Header title={t(menuLabels.cardMain)} />
+        <Header
+          title={t(menuLabels.cardMain)}
+          disabledMoveBack
+          onClickBack={handleClickBack}
+        />
         <div className="card-main__content">
           {!showLoading && !isLoadingCheckUserLogin && (
             <>
