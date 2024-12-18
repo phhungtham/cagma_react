@@ -20,7 +20,6 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
   const { creditChecked, openedAccountNumber } = openAccountInfo || {};
 
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
-  const isChequingCreditChecked = productCode === ProductCode.CHEQUING && creditChecked;
 
   const { moveScreenNative, moveHomeNative } = useMove();
 
@@ -44,7 +43,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
   };
 
   const handleClickConfirm = () => {
-    if (isChequingCreditChecked) {
+    if (creditChecked) {
       moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
     } else {
       moveHomeNative();
@@ -68,11 +67,6 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
           <div className="open-account__title">
             <div className="complete-message">{t(labels.youHaveSuccessfully).replace('%1', '')}</div>
             <div className="product-type">{openAccountInfo?.productName}</div>
-            {!!creditChecked && (
-              <div className="note">
-                {isChequingCreditChecked ? t(labels.issueYourCard) : t(labels.debitCardWillBe)}
-              </div>
-            )}
           </div>
         </div>
         <div className="divider__item__black" />
@@ -105,15 +99,18 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
         )}
       </div>
       <div className="footer__fixed">
-        <Button
-          variant="filled__secondary-blue"
-          label={t(labels.viewAccount)}
-          className="btn__cta"
-          onClick={onClickViewAccount}
-        />
+        {!creditChecked && (
+          <Button
+            variant="filled__secondary-blue"
+            label={t(labels.viewAccount)}
+            className="btn__cta"
+            onClick={onClickViewAccount}
+          />
+        )}
+
         <Button
           variant="filled__primary"
-          label={isChequingCreditChecked ? t(labels.getNewCard) : t(labels.home)}
+          label={creditChecked ? t(labels.getNewCard) : t(labels.home)}
           className="btn__cta"
           onClick={handleClickConfirm}
         />
