@@ -52,6 +52,12 @@
       position: absolute;
       bottom: 0;
       right: 0;
+
+      img {
+        width: 327px;
+        height: 308px;
+        object-fit: cover;
+      }
     }
   }
 

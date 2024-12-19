@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { ArrowRight } from '@assets/icons';
-import ChequingIcon from '@assets/images/icon-fill-chequing.png';
+import ChequingIcon from '@assets/images/icon-fill-chequing-40.png';
 import InvestmentIcon from '@assets/images/icon-fill-investment-40.png';
 import SavingIcon from '@assets/images/icon-fill-saving-40.png';
 import Alert from '@common/components/atoms/Alert';
