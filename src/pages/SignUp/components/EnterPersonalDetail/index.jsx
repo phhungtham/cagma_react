@@ -43,7 +43,7 @@ const EnterPersonalDetail = ({ onConfirm }) => {
       ...pepPayload,
       uuid_v: deviceId,
       lcl_cus_rlnm_no2_yn: personalDetail.notSin ? 'N' : 'Y',
-      rsdc_yn: personalDetail.residentialStatus === '04' ? '0' : '1',
+      rsdc_yn: personalDetail.residentialStatus === '04' ? 'N' : 'Y',
     };
 
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep4, payload);
