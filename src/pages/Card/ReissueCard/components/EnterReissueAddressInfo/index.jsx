@@ -164,6 +164,8 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                 <Input
                   label={t(labels.streetNumber)}
                   placeholder="Please input Detail text"
+                  maxLength={60}
+                  regex={notAllowNumberAlphabetRegex}
                   {...field}
                 />
               )}
