@@ -9,7 +9,7 @@ import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import Tooltip from '@common/components/atoms/Tooltip';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import { openAccountLabels as labels } from '@common/constants/labels';
-import { postalCodeNotAllowRegex } from '@common/constants/regex';
+import { notAllowAlphabetRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import dayjs from 'dayjs';
@@ -108,6 +108,7 @@ const ThirdPartyFormSection = ({ provinces, translate: t }) => {
               render={({ field }) => (
                 <Input
                   label={t(labels.city)}
+                  regex={notAllowAlphabetRegex}
                   maxLength={200}
                   {...field}
                 />

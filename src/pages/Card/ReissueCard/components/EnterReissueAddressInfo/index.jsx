@@ -12,7 +12,12 @@ import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
-import { invalidNameRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
+import {
+  invalidNameRegex,
+  notAllowAlphabetRegex,
+  notAllowNumberAlphabetRegex,
+  postalCodeNotAllowRegex,
+} from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { moveBack } from '@utilities/index';
 
@@ -183,6 +188,8 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                   <Input
                     label={t(labels.aptNumber)}
                     placeholder="Please input Detail text"
+                    maxLength={40}
+                    regex={notAllowNumberAlphabetRegex}
                     {...field}
                   />
                 );
@@ -195,6 +202,8 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                 <Input
                   label={t(labels.city)}
                   placeholder="Please input Detail text"
+                  regex={notAllowAlphabetRegex}
+                  maxLength={200}
                   {...field}
                 />
               )}
