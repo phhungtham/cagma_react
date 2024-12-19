@@ -1,4 +1,4 @@
-import { RequiredLoginCode, SessionExpiredCode } from '@common/constants/error';
+import { RequiredLoginCodes } from '@common/constants/error';
 import { apiCall } from '@shared/api';
 
 const useApi = () => {
@@ -14,7 +14,7 @@ const useApi = () => {
     } else {
       error = response?.data?.elHeader?.resMsg || '';
       errorCode = response?.data?.elHeader?.resCode;
-      requiredLogin = errorCode === RequiredLoginCode || errorCode === SessionExpiredCode;
+      requiredLogin = RequiredLoginCodes.includes(errorCode);
     }
 
     return { isSuccess, error, data, errorCode, requiredLogin };
