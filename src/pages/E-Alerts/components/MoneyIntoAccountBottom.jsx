@@ -20,6 +20,7 @@ const MoneyIntoAccountBottom = ({ onClose, onSubmit, data, translate: t }) => {
         onSubmit={onSubmit}
         data={data}
         translate={t}
+        min={0}
       />
     </BottomSheet>
   );

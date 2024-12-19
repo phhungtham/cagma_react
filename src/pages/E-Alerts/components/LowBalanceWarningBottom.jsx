@@ -20,6 +20,7 @@ const LowBalanceWarningBottom = ({ onClose, onSubmit, data, translate: t }) => {
         balanceOptions={eAlertLowBalanceWarningOptions}
         data={data}
         translate={t}
+        min={100}
       />
     </BottomSheet>
   );
