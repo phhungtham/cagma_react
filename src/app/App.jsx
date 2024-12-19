@@ -58,6 +58,8 @@ const App = () => {
   };
 
   const getLanguageFile = async () => {
+    if (!currentLanguage || currentLanguage === 'undefined') return;
+
     if (process.env.NODE_ENV === 'development') {
       if (localStorage.getItem(`ca_${currentLanguage}`)) {
         reloadLanguageResource(currentLanguage);
@@ -74,7 +76,7 @@ const App = () => {
       }
       return;
     }
-    let url = `../../../../websquare/langpack/511_${currentLanguage || 'en'}.js`;
+    let url = `../../../../websquare/langpack/511_${currentLanguage}.js`;
     await fetch(url)
       .then(response => response.text())
       .then(data => {
