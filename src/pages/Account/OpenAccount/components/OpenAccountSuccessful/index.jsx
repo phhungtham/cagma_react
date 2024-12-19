@@ -38,10 +38,6 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
     }
   };
 
-  const handleNavigateAccountActivity = () => {
-    moveScreenNative(MENU_CODE.ACCOUNT_ACTIVITY_BANKING);
-  };
-
   const handleClickConfirm = () => {
     if (creditChecked) {
       moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
@@ -92,7 +88,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
                 type="circle"
                 label={t(labels.youCanCheckRRSP)}
                 icon={<img src={PaymentIcon} />}
-                onClick={handleNavigateAccountActivity}
+                onClick={onClickViewAccount}
               />
             </div>
           </>
