@@ -73,6 +73,7 @@ $icon-circle-sizes: (
   .btn__#{$label} {
     @include button(map-get($map, background-nor));
     color: map-get($map, text-color);
+    -webkit-tap-highlight-color: transparent;
     &:active {
       background-color: map-get($map, background-active);
       color: map-get($map, text-color-active);

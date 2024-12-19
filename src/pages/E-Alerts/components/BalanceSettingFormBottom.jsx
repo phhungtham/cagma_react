@@ -9,9 +9,15 @@ import { ctaLabels, eAlertLabels } from '@common/constants/labels';
 import { EAlertCustomerMethod, eAlertSettingMethodOptions } from '../constants';
 
 const amountMaxLength = 22;
-const amountMinValue = 100;
 
-const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit, translate: t }) => {
+const BalanceSettingFormBottom = ({
+  description,
+  balanceOptions,
+  data,
+  onSubmit,
+  translate: t,
+  min: amountMinValue,
+}) => {
   const [selectedAmountOption, setSelectedAmountOption] = useState();
   const [amount, setAmount] = useState();
   const [checkedOptions, setCheckedOptions] = useState([]);
@@ -19,7 +25,7 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit,
 
   const onChangeAmountOption = value => {
     if (value === 'custom') {
-      setAmount(amount || 100);
+      setAmount(String(amountMinValue));
     } else {
       setAmount(Number(value));
     }
@@ -32,7 +38,7 @@ const BalanceSettingFormBottom = ({ description, balanceOptions, data, onSubmit,
       return setAmount(amount);
     }
     if (Number(value || 0) < amountMinValue) {
-      setError('It must be at least $100');
+      setError(t(eAlertLabels.itMustBeAtLeast).replace('%1', `$${amountMinValue}`));
     } else {
       setError('');
     }

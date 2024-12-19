@@ -223,6 +223,29 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
     }
   };
 
+  const fetchEmailByCurrentUser = async () => {
+    setShowLoading(true);
+    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.inquiryUserInformation);
+    setShowLoading(false);
+    if (isSuccess) {
+      const { cus_email } = data;
+      setValue('email', cus_email, { shouldValidate: true });
+    } else {
+      setAlert({
+        isShow: true,
+        title: '',
+        content: error,
+        requiredLogin,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isNavigateFromLogin) {
+      fetchEmailByCurrentUser();
+    }
+  }, [isNavigateFromLogin]);
+
   useEffect(() => {
     return () => {
       if (clearTimeOutRef.current) {
@@ -250,7 +273,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
                   placeholder=""
                   type="text"
                   regex={notAllowSpaceRegex}
-                  disabled={enabledVerifyCode}
+                  readOnly={enabledVerifyCode || isNavigateFromLogin}
                   endAdornment={
                     <Button
                       label={alreadySendEmailVerification ? t(cardLabels.resend) : t(cardLabels.request)}
@@ -280,7 +303,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
                     onResetTimer={cb => (verifyTimerResetRef.current = cb)}
                     maxLength={6}
                     errorMessage={errors?.verificationCode?.message || ''}
-                    disabled={!enabledVerifyCode}
+                    readOnly={!enabledVerifyCode}
                     {...field}
                   />
                 )}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import ChequingIcon from '@assets/images/icon-fill-chequing.png';
+import ChequingIcon from '@assets/images/icon-fill-chequing-40.png';
 import SavingIcon from '@assets/images/icon-fill-saving-40.png';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import CheckBox from '@common/components/atoms/Checkbox';

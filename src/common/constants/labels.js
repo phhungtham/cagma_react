@@ -38,6 +38,7 @@ export const eAlertLabels = {
   appPush2: 'lbl_CAME900020_0037', //App Push
   sendAlertWhenLess: 'lbl_CAME900020_0126', //Send alert when available balance is less than
   fiveHundredCurrency: 'lbl_CAME900020_0127', //$500
+  itMustBeAtLeast: 'lbl_CAME900020_0130', //It must be at least %1
 };
 
 export const appNotiLabels = {

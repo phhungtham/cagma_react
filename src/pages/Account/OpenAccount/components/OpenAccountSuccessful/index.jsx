@@ -20,7 +20,6 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
   const { creditChecked, openedAccountNumber } = openAccountInfo || {};
 
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
-  const isChequingCreditChecked = productCode === ProductCode.CHEQUING && creditChecked;
 
   const { moveScreenNative, moveHomeNative } = useMove();
 
@@ -39,12 +38,8 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
     }
   };
 
-  const handleNavigateAccountActivity = () => {
-    moveScreenNative(MENU_CODE.ACCOUNT_ACTIVITY_BANKING);
-  };
-
   const handleClickConfirm = () => {
-    if (isChequingCreditChecked) {
+    if (creditChecked) {
       moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
     } else {
       moveHomeNative();
@@ -68,11 +63,6 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
           <div className="open-account__title">
             <div className="complete-message">{t(labels.youHaveSuccessfully).replace('%1', '')}</div>
             <div className="product-type">{openAccountInfo?.productName}</div>
-            {!!creditChecked && (
-              <div className="note">
-                {isChequingCreditChecked ? t(labels.issueYourCard) : t(labels.debitCardWillBe)}
-              </div>
-            )}
           </div>
         </div>
         <div className="divider__item__black" />
@@ -98,22 +88,25 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
                 type="circle"
                 label={t(labels.youCanCheckRRSP)}
                 icon={<img src={PaymentIcon} />}
-                onClick={handleNavigateAccountActivity}
+                onClick={onClickViewAccount}
               />
             </div>
           </>
         )}
       </div>
       <div className="footer__fixed">
-        <Button
-          variant="filled__secondary-blue"
-          label={t(labels.viewAccount)}
-          className="btn__cta"
-          onClick={onClickViewAccount}
-        />
+        {!creditChecked && (
+          <Button
+            variant="filled__secondary-blue"
+            label={t(labels.viewAccount)}
+            className="btn__cta"
+            onClick={onClickViewAccount}
+          />
+        )}
+
         <Button
           variant="filled__primary"
-          label={isChequingCreditChecked ? t(labels.getNewCard) : t(labels.home)}
+          label={creditChecked ? t(labels.getNewCard) : t(labels.home)}
           className="btn__cta"
           onClick={handleClickConfirm}
         />

@@ -363,7 +363,6 @@ const ChangeProfile = ({ translate: t }) => {
 
   const requestGetUserInfo = async () => {
     setShowLoading(true);
-    setShowLoading(true);
     const {
       data: customerResponse,
       error,

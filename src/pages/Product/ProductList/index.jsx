@@ -42,6 +42,7 @@ const ProductList = ({ translate: t }) => {
   const { requestApi } = useApi();
   const [alert, setAlert] = useState(initAlert);
   const { isLogin } = useLoginInfo();
+  const [isUserLogged, setIsUserLogged] = useState(false);
   const bankingTitleRef = useRef(null);
   const investmentTitleRef = useRef(null);
   const borrowingTitleRef = useRef(null);
@@ -169,12 +170,13 @@ const ProductList = ({ translate: t }) => {
 
   const handleLoginStatus = (isLoginSuccess, product) => {
     if (isLoginSuccess) {
+      setIsUserLogged(true);
       handleNavigateOpenAccount(product);
     }
   };
 
   const handleClickOpenAccount = async product => {
-    if (!isLogin) {
+    if (!isUserLogged) {
       showLogin(handleLoginStatus, product);
     } else {
       handleNavigateOpenAccount(product);
@@ -204,6 +206,10 @@ const ProductList = ({ translate: t }) => {
       });
     }
   };
+
+  useEffect(() => {
+    setIsUserLogged(isLogin);
+  }, [isLogin]);
 
   useEffect(() => {
     requestGetProducts();

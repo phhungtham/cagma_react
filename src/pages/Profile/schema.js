@@ -24,8 +24,8 @@ export const changeProfileSchema = Yup.object().shape({
     then: schema => schema.required(),
     otherwise: schema => schema.notRequired(),
   }),
-  phoneNumber: Yup.string(),
-  faxNumber: Yup.string(),
+  phoneNumber: Yup.string().nullable().optional(),
+  faxNumber: Yup.string().nullable().optional(),
   country: Yup.string().when('isReviewingAddress', {
     is: false,
     then: schema => schema.required(),
