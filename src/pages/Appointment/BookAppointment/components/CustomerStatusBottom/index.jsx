@@ -88,7 +88,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   inputMode="numeric"
                   regex={notAllowNumberRegex}
                   disabled={!!phoneNumber}
-                  maxLength={50}
+                  maxLength={30}
                   {...field}
                 />
               )}
