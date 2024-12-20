@@ -1,94 +1,94 @@
 export const selectTermsByMonthOptions = [
   {
-    label: '12m',
+    label: '12M',
     value: 12,
   },
   {
-    label: '24m',
+    label: '24M',
     value: 24,
   },
   {
-    label: '36m',
+    label: '36M',
     value: 36,
   },
   {
-    label: '60m',
+    label: '60M',
     value: 60,
   },
 ];
 
 export const selectTermsByDateOptions = [
   {
-    label: '30d',
+    label: '30D',
     value: 30,
   },
   {
-    label: '90d',
+    label: '90D',
     value: 90,
   },
   {
-    label: '180d',
+    label: '180D',
     value: 180,
   },
   {
-    label: '366d',
+    label: '366D',
     value: 366,
   },
 ];
 
 export const selectTFSAeGICOptions = [
   {
-    label: '90d',
+    label: '90D',
     value: 90,
   },
   {
-    label: '365d',
+    label: '365D',
     value: 365,
   },
   {
-    label: '1095d',
+    label: '1095D',
     value: 1095,
   },
   {
-    label: '1825d',
+    label: '1825D',
     value: 1825,
   },
 ];
 
 export const selectRRSPeGICOptions = [
   {
-    label: '30d',
+    label: '30D',
     value: 30,
   },
   {
-    label: '90d',
+    label: '90D',
     value: 90,
   },
   {
-    label: '1095d',
+    label: '1095D',
     value: 1095,
   },
   {
-    label: '1825d',
+    label: '1825D',
     value: 1825,
   },
 ];
 
 export const selectEGreenTermDepositOptions = [
   {
-    label: '1m',
+    label: '1M',
     value: 1,
   },
   {
-    label: '3m',
+    label: '3M',
     value: 3,
   },
   {
-    label: '6m',
+    label: '6M',
     value: 6,
   },
   {
-    label: '12m',
+    label: '12M',
     value: 12,
   },
 ];
