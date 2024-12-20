@@ -152,7 +152,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
             </div>
           )}
 
-          <div className="form__section flex-gap-y-12 pt-4 flex-gap-y-12">
+          <div className="form__section pt-4 flex-gap-y-12">
             {isLogin && (
               <div className="form__section__title">
                 <span>{t(labels.mailingAddress)}</span>
