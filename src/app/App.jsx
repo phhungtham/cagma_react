@@ -58,25 +58,25 @@ const App = () => {
   };
 
   const getLanguageFile = async () => {
-    if (!currentLanguage || currentLanguage === 'undefined') return;
-
+    if (!currentLanguage?.language) return;
+    const langStr = currentLanguage.language;
     if (process.env.NODE_ENV === 'development') {
-      if (localStorage.getItem(`ca_${currentLanguage}`)) {
-        reloadLanguageResource(currentLanguage);
+      if (localStorage.getItem(`ca_${langStr}`)) {
+        reloadLanguageResource(langStr);
         return;
       }
-      const { data } = await requestApi('/gm/co/GMCO005.pwkjson', { appLanguage: currentLanguage });
+      const { data } = await requestApi('/gm/co/GMCO005.pwkjson', { appLanguage: langStr });
       if (data?.languageList) {
         const langpack = data.languageList.reduce((acc, cur) => {
           acc[cur.key?.trim()] = cur.value;
           return acc;
         }, {});
-        localStorageService.setLang(langpack, languageStorageKeys(currentLanguage));
-        reloadLanguageResource(currentLanguage);
+        localStorageService.setLang(langpack, languageStorageKeys(langStr));
+        reloadLanguageResource(langStr);
       }
       return;
     }
-    let url = `../../../../websquare/langpack/511_${currentLanguage}.js`;
+    let url = `../../../../websquare/langpack/511_${langStr}.js`;
     await fetch(url)
       .then(response => response.text())
       .then(data => {
@@ -87,11 +87,11 @@ const App = () => {
           data = data.substring(0, data.length - 1);
         }
         let langpack = data.substring(firstLanguageContentIndex, data.length);
-        localStorageService.setLang(JSON.parse(langpack), languageStorageKeys(currentLanguage));
-        reloadLanguageResource(currentLanguage);
+        localStorageService.setLang(JSON.parse(langpack), languageStorageKeys(langStr));
+        reloadLanguageResource(langStr);
       })
       .then(() => {
-        i18n.changeLanguage(currentLanguage);
+        i18n.changeLanguage(langStr);
       });
   };
 
@@ -137,9 +137,7 @@ const App = () => {
       'changeLanguage',
       e => {
         const language = String(e.detail);
-        console.log('language change from native :>> ', language);
-        // changeAppFont(language);
-        setCurrentLanguage(language);
+        setCurrentLanguage({ language: language }); //Using object for always trigger get file language when native trigger event
         localStorageService.setLanguageCode(language);
       },
       false
@@ -164,7 +162,7 @@ const App = () => {
     polyfill();
     // for development
     if (process.env.NODE_ENV === 'development') {
-      setCurrentLanguage('en');
+      setCurrentLanguage({ language: 'en' });
       // setAppPath(window.location.pathname);
     }
   }, []);

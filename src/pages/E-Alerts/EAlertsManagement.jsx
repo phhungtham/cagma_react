@@ -103,7 +103,7 @@ const EAlertsManagement = ({ translate: t }) => {
     const isIphoneDevice = isIphone();
     const payload = {
       ...value,
-      push_lang_c: (currentLanguage || 'en').toUpperCase(),
+      push_lang_c: (currentLanguage?.language || 'en').toUpperCase(),
       push_tmn_no: tokenPlugin,
       tmn_d: isIphoneDevice ? 'I' : 'A',
     };

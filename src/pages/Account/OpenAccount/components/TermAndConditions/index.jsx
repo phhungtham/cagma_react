@@ -76,7 +76,7 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
     if (productCode) {
       const urlPrefix = OpenAccountTermFile[productCode];
       const userAgreementFile = `${urlPrefix}_agree_en.pdf`;
-      const productFeatureFile = `${urlPrefix}_${currentLanguage || 'en'}.pdf`;
+      const productFeatureFile = `${urlPrefix}_${currentLanguage?.language || 'en'}.pdf`;
       const termConditionConfig = {
         selectAllLabel: labels.agreeTermsAll,
         options: [

@@ -137,7 +137,7 @@ const EAlertsBalance = ({ translate: t }) => {
       email_yn: emailEnabled ? '01' : '00',
       ums_ntc_amt: Number(amount),
       ums_ntc_acno: selectedAccount?.lcl_ac_no,
-      push_lang_c: (currentLanguage || 'en').toUpperCase(),
+      push_lang_c: (currentLanguage?.language || 'en').toUpperCase(),
       push_tmn_no: tokenPlugin,
       tmn_d: isIphoneDevice ? 'I' : 'A',
     };
