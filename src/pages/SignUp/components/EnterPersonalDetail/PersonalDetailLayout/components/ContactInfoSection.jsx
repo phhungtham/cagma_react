@@ -4,6 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import Input from '@common/components/atoms/Input/Input';
 import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
+import { notAllowNumberRegex } from '@common/constants/regex';
 import { SignUpContext } from '@pages/SignUp';
 
 const ContactInfoSection = () => {
@@ -18,8 +19,9 @@ const ContactInfoSection = () => {
           <Input
             label={t(labels.cellNumber)}
             maxLength={30}
-            type="number"
             inputMode="numeric"
+            type="text"
+            regex={notAllowNumberRegex}
             {...field}
           />
         )}

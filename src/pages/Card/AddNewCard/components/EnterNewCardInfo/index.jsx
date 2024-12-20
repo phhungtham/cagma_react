@@ -358,8 +358,9 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                         <Input
                           label={t(cardLabels.contactlessPerTransaction)}
                           placeholder=""
-                          type="number"
                           inputMode="numeric"
+                          type="text"
+                          regex={notAllowNumberRegex}
                           maxLength={22}
                           {...field}
                           onChange={value => {
@@ -389,8 +390,9 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                         <Input
                           label={t(cardLabels.totalContactless)}
                           placeholder=""
-                          type="number"
                           inputMode="numeric"
+                          type="text"
+                          regex={notAllowNumberRegex}
                           maxLength={22}
                           {...field}
                           onChange={value => {

@@ -7,7 +7,7 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
 import { commonLabels, activeCardLabels as labels, menuLabels } from '@common/constants/labels';
-import { notAllowSpaceRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
+import { notAllowNumberRegex, notAllowSpaceRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -101,8 +101,9 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
                   <Input
                     label={t(labels.lastSixDigits)}
                     placeholder="Please input 6numerics"
-                    type="number"
                     inputMode="numeric"
+                    type="text"
+                    regex={notAllowNumberRegex}
                     maxLength={6}
                     {...field}
                   />

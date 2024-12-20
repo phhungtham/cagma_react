@@ -5,6 +5,7 @@ import CheckBox from '@common/components/atoms/Checkbox';
 import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
+import { notAllowNumberRegex } from '@common/constants/regex';
 import { SignUpContext } from '@pages/SignUp';
 
 import { CommonCodeFieldName, SignUpSelectType } from '../../constants';
@@ -49,8 +50,9 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
             helperText={t(labels.yourSinWillBe)}
             disabled={!!notSin}
             maxLength={9}
-            type="number"
             inputMode="numeric"
+            type="text"
+            regex={notAllowNumberRegex}
             {...field}
           />
         )}

@@ -5,6 +5,7 @@ import CheckBox from '@common/components/atoms/Checkbox';
 import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import { ctaLabels, eAlertLabels } from '@common/constants/labels';
+import { notAllowNumberRegex } from '@common/constants/regex';
 
 import { EAlertCustomerMethod, eAlertSettingMethodOptions } from '../constants';
 
@@ -108,8 +109,9 @@ const BalanceSettingFormBottom = ({
           <div className="mt-3">
             <Input
               label={t(eAlertLabels.amount)}
-              type="number"
               inputMode="numeric"
+              type="text"
+              regex={notAllowNumberRegex}
               onChange={handleChangeAmount}
               value={amount}
               errorMessage={error}

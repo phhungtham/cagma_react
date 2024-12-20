@@ -14,6 +14,7 @@ import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getCountryCode, tinUnregisterReason } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { openAccountDTRLabels as labels, menuLabels } from '@common/constants/labels';
+import { notAllowNumberRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
@@ -198,8 +199,9 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
                   render={({ field }) => (
                     <Input
                       label={t(labels.sinNumber)}
-                      type="number"
                       inputMode="numeric"
+                      type="text"
+                      regex={notAllowNumberRegex}
                       maxLength={9}
                       placeholder="(Social Insurance Number)"
                       helperText={t(labels.yourSinWillBe)}
@@ -234,8 +236,9 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
                       render={({ field }) => (
                         <Input
                           label={t(labels.tinTaxIdentification)}
-                          type="number"
                           inputMode="numeric"
+                          type="text"
+                          regex={notAllowNumberRegex}
                           maxLength={9}
                           {...field}
                         />
@@ -279,8 +282,9 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
                           render={({ field }) => (
                             <Input
                               label={t(labels.tinTaxIdentification2)}
-                              type="number"
                               inputMode="numeric"
+                              type="text"
+                              regex={notAllowNumberRegex}
                               maxLength={30}
                               disabled={notHaveTin1}
                               {...field}
@@ -355,8 +359,9 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
                           <Input
                             label={t(labels.tinTaxIdentification2)}
                             disabled={notHaveTin2}
-                            type="number"
                             inputMode="numeric"
+                            type="text"
+                            regex={notAllowNumberRegex}
                             maxLength={30}
                             {...field}
                           />

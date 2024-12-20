@@ -60,8 +60,9 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <Input
             label={t(labels.aptNumber)}
-            type="number"
             inputMode="numeric"
+            type="text"
+            regex={notAllowNumberRegex}
             maxLength={40}
             {...field}
             onBlur={handleFieldAddressOnBlur}
@@ -138,8 +139,9 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
         render={({ field }) => (
           <Input
             label={t(labels.housePhoneNumber)}
-            type="number"
             inputMode="numeric"
+            type="text"
+            regex={notAllowNumberRegex}
             maxLength={30}
             {...field}
           />

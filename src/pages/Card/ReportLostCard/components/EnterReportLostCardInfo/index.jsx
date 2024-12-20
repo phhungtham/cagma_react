@@ -6,7 +6,7 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import Header from '@common/components/organisms/Header';
 import { reportLostCardLabels as labels, menuLabels } from '@common/constants/labels';
-import { invalidAccident } from '@common/constants/regex';
+import { invalidAccident, notAllowNumberRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateExpiry } from '@utilities/dateTimeUtils';
 import { formatCardNumber } from '@utilities/formater';
@@ -42,8 +42,9 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
                   <Input
                     label={t(labels.currentCardNumber)}
                     placeholder="Please input 16 numerics"
-                    type="tel"
                     inputMode="numeric"
+                    type="text"
+                    regex={notAllowNumberRegex}
                     maxLength={19}
                     value={value}
                     onChange={inputValue => {
