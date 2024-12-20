@@ -122,7 +122,6 @@ const App = () => {
         try {
           if (typeof e.detail === 'object') {
             const data = e.detail;
-            console.log('redirect data :>> ', data);
             const path = String(data.src);
             navigate(path);
             setAppPath(path);
@@ -165,7 +164,6 @@ const App = () => {
   }, [currentLanguage]);
 
   useEffect(() => {
-    console.log('init react app');
     polyfill();
     if (process.env.NODE_ENV === 'development') {
       setCurrentLanguage({ language: 'en' });

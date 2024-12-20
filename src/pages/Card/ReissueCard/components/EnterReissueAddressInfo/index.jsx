@@ -247,7 +247,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                   render={({ field }) => (
                     <Input
                       label={t(labels.phoneNumber)}
-                      placeholder="Please include the '-'."
+                      placeholder="Please include the '-'." //TODO: Confirm phone number for input mode numeric and max length
                       {...field}
                     />
                   )}
