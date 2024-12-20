@@ -73,7 +73,7 @@ const EKYCResult = ({ isSuccess, onNavigateWelcome }) => {
           />
         </div>
       </div>
-      <div className="footer__fixed">
+      <div className="footer__fixed flex-gap-x-8">
         <Button
           variant={isSuccess ? 'filled__primary' : 'filled__secondary-blue'}
           label={t(labels.home)}

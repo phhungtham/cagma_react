@@ -196,7 +196,7 @@ const EAlertsManagement = ({ translate: t }) => {
             onClick={onClickShowCustomerInfoBottom}
           >
             <div className="item__title">{t(labels.customerInformation)}</div>
-            <div className="item__value">
+            <div className="item__value flex-gap-x-18">
               <span className={isCustomerInfoEnabled ? 'on' : ''}>
                 {isCustomerInfoEnabled ? t(labels.on) : t(labels.off)}
               </span>
@@ -207,7 +207,7 @@ const EAlertsManagement = ({ translate: t }) => {
           </div>
           <div className="alert__item">
             <div className="item__title">{t(labels.offers)}</div>
-            <div className="item__value">
+            <div className="item__value flex-gap-x-18">
               <span className="switch-icon">
                 <Switch
                   active={!!setting.offerEnabled}
@@ -221,7 +221,7 @@ const EAlertsManagement = ({ translate: t }) => {
             onClick={handleNavigateBalanceSetting}
           >
             <div className="item__title">{t(labels.balance)}</div>
-            <div className="item__value">
+            <div className="item__value flex-gap-x-18">
               <span className={setting.balanceEnabled ? 'on' : ''}>
                 {setting.balanceEnabled ? t(labels.on) : t(labels.off)}
               </span>

@@ -35,7 +35,7 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
       <div className="page__form">
         <h1 className="page__title">{t(labels.reportLostAccessCard)}</h1>
         <div className="report-lost-card-info__form mt-4">
-          <div className="form__section">
+          <div className="form__section flex-gap-y-12">
             <FormProvider {...methods}>
               <Controller
                 render={({ field: { value, onChange } }) => (

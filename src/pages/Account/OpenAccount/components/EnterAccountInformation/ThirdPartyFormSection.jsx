@@ -46,7 +46,7 @@ const ThirdPartyFormSection = ({ provinces, translate: t }) => {
 
   return (
     <div className="third-party__section page__container">
-      <div className="option-item">
+      <div className="option-item flex-gap-x-8">
         <div className="form__section__title mb-0">{t(labels.thirdPartyDetermination)}</div>
         <Tooltip
           content={t(labels.ifThisAccount)}
@@ -57,7 +57,7 @@ const ThirdPartyFormSection = ({ provinces, translate: t }) => {
           </div>
         </Tooltip>
       </div>
-      <section className="third_party-form__wrapper">
+      <section className="third_party-form__wrapper flex-gap-y-12">
         <Controller
           render={({ field }) => (
             <BoxRadio

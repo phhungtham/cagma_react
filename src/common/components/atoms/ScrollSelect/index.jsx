@@ -80,7 +80,7 @@ const ScrollSelect = ({ options = [], defaultValue, onChangeValue }) => {
   return (
     <div
       ref={containerRef}
-      className="select_item_wrapper"
+      className="select_item_wrapper flex-gap-y-10"
     >
       {options.map((item, idx) => (
         <div

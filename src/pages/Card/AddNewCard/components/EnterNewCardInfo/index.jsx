@@ -207,7 +207,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
           </div>
           <div className="divider__group" />
           <div className="enter-card__form form__wrapper">
-            <div className="form__section mt-2">
+            <div className="form__section flex-gap-y-12 mt-2">
               <div className="form__section__title">
                 <span>{t(cardLabels.linkedAccount)}</span>
               </div>
@@ -221,7 +221,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                 {selectedAccount ? <div className="account-number">{selectedAccount?.number}</div> : ''}
               </Dropdown>
             </div>
-            <div className="form__section mt-6">
+            <div className="form__section mt-6 flex-gap-y-12">
               <div className="form__section__title">
                 <span>{t(cardLabels.mailingAddress)}</span>
               </div>
@@ -319,7 +319,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                 name="postalCode"
               />
             </div>
-            <div className="form__section mt-6">
+            <div className="form__section mt-6 flex-gap-y-12">
               <div className="form__section__title">
                 <span>{t(cardLabels.useAreaInformation)}</span>
               </div>
@@ -338,7 +338,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
             </div>
             <div className="divider__item__solid mt-5" />
             <div className="mt-4">
-              <div className="form__section mt-4">
+              <div className="form__section mt-4 flex-gap-y-12">
                 <Controller
                   render={({ field }) => (
                     <CheckBox
@@ -413,7 +413,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
               </div>
             </div>
             <div className="mt-4">
-              <div className="form__section mt-4">
+              <div className="form__section mt-4 flex-gap-y-12">
                 <Controller
                   render={({ field }) => (
                     <CheckBox

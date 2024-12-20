@@ -30,7 +30,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin, translate: t }) => {
       <div className="h-screen__content pt-5">
         <h1 className="page__title">{t(labels.activateCard)}</h1>
         <div className="active-card__form mt-4">
-          <div className="form__section">
+          <div className="form__section flex-gap-y-12">
             {!isLogin && (
               <InfoBox
                 variant="informative"

@@ -60,7 +60,7 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
       <div className="reissue-card-info__form h-screen__content">
         <h1 className="page__title">{t(labels.reissueYourCard)}</h1>
         <div className="mt-4">
-          <div className="form__section">
+          <div className="form__section flex-gap-y-12">
             <FormProvider {...methods}>
               <Controller
                 render={({ field: { value, onChange } }) => (

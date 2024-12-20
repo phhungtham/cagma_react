@@ -26,7 +26,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
   };
 
   return (
-    <div className="form__section">
+    <div className="form__section flex-gap-y-12">
       <div className="form__section__title">{t(labels.homeAddress)}</div>
       <Controller
         render={({ field }) => (

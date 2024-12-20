@@ -6,7 +6,7 @@ const InterestRateSection = ({ interestRate, translate: t }) => {
   return (
     <div className="interest-rate__section">
       <section className="pb-6">
-        <div className="enter-account__interest-rate">
+        <div className="enter-account__interest-rate flex-gap-x-8">
           <span>{t(labels.interestRate2)}</span>
           <span>{interestRate}% APR</span>
           <span className="interest-rate__arrow">

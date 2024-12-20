@@ -119,7 +119,7 @@ const BalanceSettingFormBottom = ({
       </div>
       <div className="balance-setting__method mt-6">
         <div className="title">{t(eAlertLabels.methodsTitle)}</div>
-        <div className="checklist___options">
+        <div className="checklist___options flex-gap-y-12">
           {eAlertSettingMethodOptions.map(({ label, value }) => (
             <div
               className="option-item"
@@ -135,7 +135,7 @@ const BalanceSettingFormBottom = ({
           ))}
         </div>
       </div>
-      <div className="btn__ctas">
+      <div className="btn__ctas flex-gap-x-8">
         <Button
           variant="filled__secondary-blue"
           label={t(ctaLabels.reset)}

@@ -123,7 +123,7 @@ const SelectTermsBottom = ({
             inputMode="numeric" // numeric keypad on iOS
             disabled={disabled}
           />
-          <div className={`select-terms__value ${termValue ? 'has-value' : ''}`}>
+          <div className={`select-terms__value  flex-gap-x-4 ${termValue ? 'has-value' : ''}`}>
             <span className="select-terms__number">{termValue || `${min || ''}~${max || ''}`}</span>
             <span className="select-terms__unit">{t(typeWithUnitLabel[type])}</span>
           </div>

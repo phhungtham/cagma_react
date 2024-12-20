@@ -115,7 +115,7 @@ const SignUpCreatePassword = ({ onConfirm }) => {
               label={t(labels.enterAPassWith)}
             />
           </div>
-          <div className="form__section mt-4">
+          <div className="form__section mt-4 flex-gap-y-12">
             <Controller
               render={({ field }) => (
                 <Input

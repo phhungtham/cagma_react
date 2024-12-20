@@ -144,7 +144,7 @@ const VerifyPEPStatusLayout = ({ onSubmit, isShow }) => {
         <div className="divider__group" />
         <div className="page__container pt-7">
           <div className="form__section__title">{t(labels.pepDetermination)}</div>
-          <div className="form__section mt-4">
+          <div className="form__section mt-4 flex-gap-y-12">
             <Controller
               render={({ field }) => (
                 <BoxRadio

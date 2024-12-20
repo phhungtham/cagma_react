@@ -65,7 +65,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
     >
       <div className="customer-status__content bottom__content-main">
         <div className="customer-status__form">
-          <section className="form__section pb-6">
+          <section className="form__section flex-gap-y-12 pb-6">
             <Controller
               render={({ field }) => (
                 <Input
@@ -112,7 +112,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
             />
           </section>
           <div className="divider__item__solid" />
-          <div className="form__section pt-7">
+          <div className="form__section flex-gap-y-12 pt-7">
             <span className="form__section__title">{t(labels.preferredLang2)}</span>
             <Controller
               render={({ field }) => (

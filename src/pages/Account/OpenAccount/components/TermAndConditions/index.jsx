@@ -119,7 +119,7 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
             <div className="banner__spec">
               <div className="product__item">
                 <div className="item__label">{t(labels.interestRate)}</div>
-                <div className="item__value">
+                <div className="item__value flex-gap-x-4">
                   <span className="item__note">{t(labels.upTo)}</span>
                   <span className="item__quantity">{product?.ntfct_intrt}</span>
                   <span className="item__unit">%</span>
@@ -128,7 +128,7 @@ const TermAndConditions = ({ onSubmit, product, translate: t }) => {
               {product?.dep_sjt_class && product.dep_sjt_class !== DepositSubjectClass.REGULAR_SAVING && (
                 <div className="product__item">
                   <div className="item__label">{t(labels.terms)}</div>
-                  <div className="item__value">
+                  <div className="item__value flex-gap-x-4">
                     <span className="item__quantity">
                       {product?.prdt_st_trm_unit_cnt}~{product?.prdt_close_trm_unit_cnt}
                     </span>

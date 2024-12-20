@@ -56,7 +56,7 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
         <div className="page__container">
           <h1 className="page__title">{t(labels.activateCard)}</h1>
           <div className="mt-4">
-            <div className="form__section">
+            <div className="form__section flex-gap-y-12">
               <Controller
                 render={({ field }) => (
                   <Input

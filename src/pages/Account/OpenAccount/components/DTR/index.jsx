@@ -190,7 +190,7 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
             </div>
             <div className="divider__group" />
             <div className="page__container pt-5 pb-6">
-              <div className="form__section">
+              <div className="form__section flex-gap-y-12">
                 <div className="form__section__title">
                   <span>{t(labels.sinNumberTitle)}</span>
                 </div>

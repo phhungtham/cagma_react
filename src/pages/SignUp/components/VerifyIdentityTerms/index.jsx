@@ -134,9 +134,9 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
           </div>
           <div className="divider__group" />
           <div className="page__container py-5">
-            <div className="circle-radio__wrapper">
+            <div className="circle-radio__wrapper flex-gap-y-16">
               <div
-                className="circle-radio__item"
+                className="circle-radio__item flex-gap-x-8"
                 onClick={() => onChangeType(VerifyIdentityType.AVAILABLE)}
               >
                 <input
@@ -149,7 +149,7 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
                 <label className="circle-radio__label">{t(labels.iHaveAValidDriver)}</label>
               </div>
 
-              <div className={`${type === VerifyIdentityType.AVAILABLE ? 'form__section' : 'hidden'}`}>
+              <div className={`${type === VerifyIdentityType.AVAILABLE ? 'form__section flex-gap-y-12' : 'hidden'}`}>
                 <Controller
                   render={({ field }) => (
                     <Input
@@ -178,7 +178,7 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
                 />
               </div>
               <div
-                className="circle-radio__item"
+                className="circle-radio__item flex-gap-x-8"
                 onClick={() => onChangeType(VerifyIdentityType.UNAVAILABLE)}
               >
                 <input

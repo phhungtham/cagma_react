@@ -16,7 +16,7 @@ const AdditionalInfoSection = ({ onOpenSelectBottom, commonCode }) => {
   const [notSin] = watch(['notSin']);
 
   return (
-    <div className="form__section">
+    <div className="form__section flex-gap-y-12">
       <div className="form__section__title">{t(labels.additionalInfo)}</div>
       <Controller
         render={({ field }) => (

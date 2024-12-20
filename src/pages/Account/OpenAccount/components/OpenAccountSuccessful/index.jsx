@@ -66,7 +66,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
           </div>
         </div>
         <div className="divider__item__black" />
-        <div className="open-account__info">
+        <div className="open-account__info flex-gap-y-16">
           {(openAccountSuccessFields[productCode] || []).map(({ label, value }) => (
             <div
               className="account-item"
@@ -94,7 +94,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
           </>
         )}
       </div>
-      <div className="footer__fixed">
+      <div className="footer__fixed flex-gap-x-8">
         {!creditChecked && (
           <Button
             variant="filled__secondary-blue"

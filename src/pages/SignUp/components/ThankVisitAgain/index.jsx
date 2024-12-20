@@ -193,7 +193,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
               label={t(labels.pleaseWriteTheInfo)}
             />
           </div>
-          <div className="form__section mt-4">
+          <div className="form__section flex-gap-y-12 mt-4">
             <Controller
               render={({ field }) => (
                 <Dropdown

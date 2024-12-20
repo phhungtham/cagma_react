@@ -82,7 +82,7 @@ const SignUpCreateID = ({ onConfirm }) => {
               label={t(labels.enterIdWith)}
             />
           </div>
-          <div className="form__section mt-4">
+          <div className="form__section mt-4 flex-gap-y-12">
             <Controller
               render={({ field }) => (
                 <Input

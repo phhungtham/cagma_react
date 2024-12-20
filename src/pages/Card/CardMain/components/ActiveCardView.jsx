@@ -48,7 +48,7 @@ const ActiveCardView = ({ card, translate: t }) => {
           {isReportedLostCard && <div className="report-lost-note pb-2">{t(cardLabels.thisCardHasBeen)}</div>}
           <div className="card__number">{card?.cardNumber}</div>
           <div className="card__desc">{card?.cardAccountNumber}</div>
-          <div className="card__ctas">
+          <div className="card__ctas flex-gap-x-8">
             <Button
               label={t(cardLabels.reissue)}
               size="xl"

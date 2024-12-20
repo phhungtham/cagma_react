@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Routes, useNavigate } from 'react-router-dom';
@@ -12,8 +12,8 @@ import useApi from '@hooks/useApi';
 import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
 import publicRoutes from '@routes/service/public-routes';
+import { isGapSupported } from '@utilities/polyfillFlexGap';
 import { languageStorageKeys } from '@utilities/transform';
-import 'flex-gap-polyfill/dist/index.js';
 import { reloadLanguageResource } from 'i18n/reloadLanguageResource';
 import { $h, wmatrix } from 'navigation/wmatrix_config';
 import { polyfill } from 'smoothscroll-polyfill';
@@ -39,6 +39,11 @@ const App = () => {
 
   const { i18n } = useTranslation();
   const { requestApi } = useApi();
+
+  //Fix for old browser version. <= IOS 14 || Android 10
+  const isBrowserSupportFlexGap = useMemo(() => {
+    return isGapSupported();
+  }, []);
 
   const scriptLoad = async isMobileDevice => {
     if (AppCfg.ENV === 'development') return;
@@ -160,17 +165,15 @@ const App = () => {
 
   useEffect(() => {
     polyfill();
-    // for development
     if (process.env.NODE_ENV === 'development') {
       setCurrentLanguage({ language: 'en' });
-      // setAppPath(window.location.pathname);
     }
   }, []);
 
   return (
     <ErrorBoundary>
       <TooltipProvider>
-        <div className="bg-white">
+        <div className={`bg-white ${isBrowserSupportFlexGap ? '' : 'polyfill-browser'}`}>
           <Suspense fallback={<Fallback />}>
             <Routes>
               {privateRoutes()}

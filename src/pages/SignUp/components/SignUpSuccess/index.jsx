@@ -48,10 +48,10 @@ const SignUpSuccess = () => {
           </div>
         </div>
         <div className="divider__item__black" />
-        <div className="success__info">
+        <div className="success__info flex-gap-y-16">
           {signUpSuccessFields.map(({ label, value }) => (
             <div
-              className="success-info__item"
+              className="success-info__item flex-gap-x-16"
               key={value}
             >
               <span className="success-info__label">{t(label)}</span>

@@ -37,7 +37,7 @@ const Toast = ({ isShowToast, iconStatus, clazz, message, iconClose, children, o
       onClick={handleClose}
     >
       {iconStatus && <section className="icon__status">{iconStatus}</section>}
-      <div className="toast__wrap">
+      <div className="toast__wrap flex-gap-x-8">
         {type && <div className={`toast__icon ${type}`}>{renderIcon(type)}</div>}
         <div className="toast__msg">
           <span>{message}</span>

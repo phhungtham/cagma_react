@@ -57,6 +57,16 @@
     flex: $i;
   }
 }
+.polyfill-browser {
+  @for $i from 0 through 50 {
+    .flex-gap-x-#{$i} > *:not(:last-child) {
+      margin-right: #{$i}px;
+    }
+    .flex-gap-y-#{$i} > *:not(:last-child) {
+      margin-bottom: #{$i}px;
+    }
+  }
+}
 
 .h-screen {
   height: 100vh;

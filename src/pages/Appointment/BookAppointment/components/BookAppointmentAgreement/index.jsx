@@ -28,7 +28,7 @@ const BookAppointmentAgreement = ({ translate: t, onSubmit }) => {
     <div className="book-appointment-agreement__wrapper h-screen">
       <Header title={t(menuLabels.bookAppointment)} />
       <div className="h-screen__content px-0">
-        <div className="agreement__view">
+        <div className="agreement__view flex-gap-y-16">
           <p className="page__title">{t(labels.appointmentAgreement)}</p>
           <div className="agreement__banner">
             <img
@@ -41,7 +41,7 @@ const BookAppointmentAgreement = ({ translate: t, onSubmit }) => {
           </ul>
         </div>
         <div className="divider__group" />
-        <div className="agreement__service">
+        <div className="agreement__service flex-gap-y-12">
           <div
             className="agreement__view-document"
             onClick={handleClickViewAgreementTermBottom}

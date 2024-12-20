@@ -184,7 +184,7 @@ const ContactInfoSection = ({
   }, []);
 
   return (
-    <div className="form__section">
+    <div className="form__section flex-gap-y-12">
       <div className="form__section__title">
         <span>{t(labels.contactInfo)}</span>
       </div>

@@ -265,7 +265,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
         />
         <div className="page__form">
           <div className="page__title">{t(labels.enterYourEmail)}</div>
-          <div className="form__section mt-4">
+          <div className="form__section mt-4 flex-gap-y-12">
             <Controller
               render={({ field }) => (
                 <Input

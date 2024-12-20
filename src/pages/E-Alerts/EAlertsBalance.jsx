@@ -298,7 +298,7 @@ const EAlertsBalance = ({ translate: t }) => {
                 </div>
               )}
             </div>
-            <div className="item__value">
+            <div className="item__value flex-gap-x-18">
               <span className={isMoneyLeavingEnabled ? 'on' : ''}>
                 {isMoneyLeavingEnabled ? t(eAlertLabels.on) : t(eAlertLabels.off)}
               </span>
@@ -333,7 +333,7 @@ const EAlertsBalance = ({ translate: t }) => {
                 </div>
               )}
             </div>
-            <div className="item__value">
+            <div className="item__value flex-gap-x-18">
               <span className={isMoneyIntoEnabled ? 'on' : ''}>
                 {isMoneyIntoEnabled ? t(eAlertLabels.on) : t(eAlertLabels.off)}
               </span>
@@ -366,7 +366,7 @@ const EAlertsBalance = ({ translate: t }) => {
                 </div>
               )}
             </div>
-            <div className="item__value">
+            <div className="item__value flex-gap-x-18">
               <span className={isLowBalanceEnabled ? 'on' : ''}>
                 {isLowBalanceEnabled ? t(eAlertLabels.on) : t(eAlertLabels.off)}
               </span>
