@@ -5,6 +5,7 @@ import { AppCfg } from '@configs/appConfigs';
 import RoutesConfig from './routes-config';
 
 const privateRoutes = () => {
+  console.log('render private routes');
   if (AppCfg.ENV !== 'development') return;
   return RoutesConfig.filter(route => route.private).map(route => (
     <Route

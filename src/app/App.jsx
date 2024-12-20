@@ -165,6 +165,7 @@ const App = () => {
   }, [currentLanguage]);
 
   useEffect(() => {
+    console.log('init react app');
     polyfill();
     if (process.env.NODE_ENV === 'development') {
       setCurrentLanguage({ language: 'en' });
