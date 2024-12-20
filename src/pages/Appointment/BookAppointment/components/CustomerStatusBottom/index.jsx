@@ -44,7 +44,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
   };
 
   useEffect(() => {
-    if (customer && open) {
+    if (customer) {
       reset({
         name,
         phoneNumber,
@@ -53,7 +53,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
         comment: '',
       });
     }
-  }, [customer, open]);
+  }, [customer]);
 
   return (
     <BottomSheet
