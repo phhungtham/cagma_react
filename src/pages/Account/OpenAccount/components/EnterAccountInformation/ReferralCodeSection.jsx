@@ -6,6 +6,7 @@ import Input from '@common/components/atoms/Input/Input';
 import Tooltip from '@common/components/atoms/Tooltip';
 import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode } from '@common/constants/product';
+import { notAllowNumberRegex } from '@common/constants/regex';
 
 const ReferralCodeSection = ({ productCode, translate: t }) => {
   const isShowCheckboxList = [
@@ -109,8 +110,9 @@ const ReferralCodeSection = ({ productCode, translate: t }) => {
             <Input
               label={t(labels.referralCode)}
               maxLength={8}
-              type="number"
               inputMode="numeric"
+              type="text"
+              regex={notAllowNumberRegex}
               {...field}
             />
           )}
