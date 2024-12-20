@@ -6,7 +6,7 @@ import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
-import { activeCardLabels as labels, menuLabels } from '@common/constants/labels';
+import { commonLabels, activeCardLabels as labels, menuLabels } from '@common/constants/labels';
 import { notAllowSpaceRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
@@ -22,7 +22,7 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
     control,
     setValue,
     watch,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(activeCardEnterAccountSchema),
@@ -116,6 +116,7 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
                     label={t(labels.email)}
                     placeholder="emailname@email.com"
                     regex={notAllowSpaceRegex}
+                    errorMessage={errors?.email?.type === 'matches' ? t(commonLabels.invalidEmailFormat) : ''}
                     {...field}
                   />
                 )}

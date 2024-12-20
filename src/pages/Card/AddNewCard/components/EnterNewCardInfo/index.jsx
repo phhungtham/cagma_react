@@ -14,7 +14,7 @@ import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getCanadaProvinceCode, getCardAreaProvinceCode } from '@common/constants/commonCode';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
+import { cardLabels, commonLabels, ctaLabels, menuLabels } from '@common/constants/labels';
 import {
   invalidCityRegex,
   invalidNameRegex,
@@ -46,7 +46,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
     control,
     setValue,
     watch,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(newCardFormSchema),
@@ -435,6 +435,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                       placeholder=""
                       regex={notAllowSpaceRegex}
                       clazz={getTransactionNotice ? '' : 'hidden'}
+                      errorMessage={errors?.email?.type === 'matches' ? t(commonLabels.invalidEmailFormat) : ''}
                       {...field}
                     />
                   )}

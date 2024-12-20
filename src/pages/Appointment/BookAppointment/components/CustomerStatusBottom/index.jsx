@@ -6,7 +6,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
+import { commonLabels, ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
 import { invalidNameRegex, notAllowNumberRegex, notAllowSpaceRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { preferredLanguages } from '@pages/Appointment/constants';
@@ -32,7 +32,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
     control,
     reset,
     watch,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: initValues,
@@ -103,6 +103,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   disabled={!!email}
                   regex={notAllowSpaceRegex}
                   maxLength={50}
+                  errorMessage={errors?.email?.type === 'matches' ? t(commonLabels.invalidEmailFormat) : ''}
                   {...field}
                 />
               )}

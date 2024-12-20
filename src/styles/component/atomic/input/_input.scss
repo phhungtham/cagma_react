@@ -30,6 +30,9 @@ $input-on-background: background-color(dark-sky-blue);
 
   .input__wrapper.input__focus {
     border: 1px solid border-color(color-primary) !important;
+    &.input__error {
+      border: 1px solid $color-error !important;
+    }
   }
 
   .input__memo {

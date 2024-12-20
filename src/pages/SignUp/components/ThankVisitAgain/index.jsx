@@ -14,6 +14,7 @@ import Header from '@common/components/organisms/Header';
 import { getIdTypes } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import {
+  commonLabels,
   ctaLabels,
   signUpThankVisitLabels as labels,
   menuLabels,
@@ -56,7 +57,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
     setValue,
     watch,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(verifyIdFormSchema),
@@ -235,6 +236,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
                 <Input
                   label={t(labels.email)}
                   regex={notAllowSpaceRegex}
+                  errorMessage={errors?.email?.type === 'matches' ? t(commonLabels.invalidEmailFormat) : ''}
                   {...field}
                 />
               )}
