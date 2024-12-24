@@ -362,6 +362,7 @@ export const openAccountLabels = {
   bookAnAppointment: 'lbl_CAPR521000_0120', //Book an Appointment
   next: 'lbl_CTA_5103', //Next
   pleaseInputAmountMore: 'lbl_CAPR501000_0252', //Please input an amount more than %1
+  amountMaxDisplay: 'lbl_CAPR501000_0320', // or more (amount max display)
 };
 
 export const openAccountDTRLabels = {
