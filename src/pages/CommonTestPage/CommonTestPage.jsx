@@ -171,10 +171,6 @@ const CommonTestPage = () => {
     console.log('Get Email Update Info Callback data:>>', result);
   };
 
-  const handleSetEmailUpdateInfoCallback = result => {
-    console.log('Set Email Update Info Callback data:>>', result);
-  };
-
   const handleClearEmailUpdateInfoCallback = result => {
     console.log('Clear Email Update Info Callback data:>>', result);
   };
@@ -230,12 +226,12 @@ const CommonTestPage = () => {
         {
           title: 'Set Email Update Info',
           label: 'setEmailUpdateInfo',
-          action: () => setEmailUpdateInfo(handleSetEmailUpdateInfoCallback),
+          action: () => setEmailUpdateInfo({ email: 'testemail@gmail.com', userId: 'usertestid' }),
         },
         {
           title: 'Clear Email Update Info',
           label: 'clearEmailUpdateInfo',
-          action: () => clearEmailUpdateInfo(handleClearEmailUpdateInfoCallback),
+          action: () => clearEmailUpdateInfo(),
         },
         {
           title: 'Get LoginInfo',
