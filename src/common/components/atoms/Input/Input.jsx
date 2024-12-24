@@ -48,6 +48,11 @@ const Input = forwardRef((props, ref) => {
 
   const composeRef = useComposeRefs(ref);
   const handleFocusStatus = (focusMode = 'focus') => {
+    if (composeRef.current) {
+      // Always scroll to the last content, do not hide the cursor
+      composeRef.current.scrollLeft = composeRef.current.scrollWidth;
+    }
+
     if (focusMode === 'focus') {
       onFocus?.();
     }
@@ -83,10 +88,6 @@ const Input = forwardRef((props, ref) => {
   const handleOnBlur = () => {
     onBlur?.();
     handleFocusStatus('blur');
-    if (composeRef.current) {
-      // Always scroll to the last content, do not hide the cursor
-      composeRef.current.scrollLeft = composeRef.current.scrollWidth;
-    }
   };
 
   const handleClearInputText = e => {
