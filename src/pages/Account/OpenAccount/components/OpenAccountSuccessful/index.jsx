@@ -61,8 +61,8 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
             />
           </div>
           <div className="open-account__title">
-            <div className="complete-message">{t(labels.youHaveSuccessfully).replace('%1', '')}</div>
             <div className="product-type">{openAccountInfo?.productName}</div>
+            <div className="complete-message">{t(labels.youHaveSuccessfully)}</div>
           </div>
         </div>
         <div className="divider__item__black" />
