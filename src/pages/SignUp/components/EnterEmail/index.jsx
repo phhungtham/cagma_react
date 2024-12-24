@@ -259,7 +259,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
       <div>
         {showLoading && <Spinner />}
         <Header
-          title={t(menuLabels.signUp)}
+          title={isNavigateFromLogin ? t(menuLabels.security) : t(menuLabels.signUp)}
           disabledMoveBack
           onClickBack={handleClickBack}
         />
