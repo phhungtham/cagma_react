@@ -141,18 +141,27 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
     const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getAccountList);
     setShowLoading(false);
     if (isSuccess) {
-      const { cus_acno_list: accountList } = data || {};
-      let newAccounts = (accountList || []).map(item => {
-        return {
-          ...item,
-          name: item.dep_ac_alnm_nm,
-          number: item.lcl_ac_no_display,
-          balance: item.pabl_blc_display,
-        };
-      });
-      const filteredAccounts = newAccounts.filter(
-        account => account.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING
-      );
+      const accountKindDepositWithDrawal = '01';
+      const { cus_acno_list: totalAccountList = [], homeAccountList = [] } = data || {};
+      const withdrawalDepositAccountNumbers = homeAccountList
+        .filter(account => account.ac_k_cd === accountKindDepositWithDrawal)
+        .map(account => account.acno);
+
+      const filteredAccounts = totalAccountList.reduce((result, account) => {
+        if (
+          withdrawalDepositAccountNumbers.includes(account.lcl_ac_no) &&
+          account.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING
+        ) {
+          result.push({
+            ...account,
+            name: account.dep_ac_alnm_nm,
+            number: account.lcl_ac_no_display,
+            balance: account.pabl_blc_display,
+          });
+        }
+        return result;
+      }, []);
+
       if (filteredAccounts?.length) {
         handleSelectAccount(filteredAccounts[0]);
       }
