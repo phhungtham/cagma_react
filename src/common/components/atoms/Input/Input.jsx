@@ -71,11 +71,6 @@ const Input = forwardRef((props, ref) => {
       value = value.replace(regex, '');
     }
     //Handle for case input type number
-    if (maxLength) {
-      if (value?.length > maxLength) {
-        value = value.slice(0, maxLength);
-      }
-    }
     onChange(value);
     setInputValues(value);
   };
@@ -88,6 +83,10 @@ const Input = forwardRef((props, ref) => {
   const handleOnBlur = () => {
     onBlur?.();
     handleFocusStatus('blur');
+    if (composeRef.current) {
+      // Always scroll to the last content, do not hide the cursor
+      composeRef.current.scrollLeft = composeRef.current.scrollWidth;
+    }
   };
 
   const handleClearInputText = e => {
@@ -177,6 +176,20 @@ const Input = forwardRef((props, ref) => {
     }
   };
 
+  const handleOnInput = e => {
+    if (maxLength) {
+      const enc = new TextEncoder();
+      let uint8 = enc.encode(e.target.value); // Encode the input value to a Uint8Array (UTF-8 encoded bytes).
+      //Use loops so that the condition is always true when spamming Japanese
+      while (uint8.length > maxLength) {
+        // Check if the length of the encoded bytes exceeds the specified maxLength.
+        e.target.value = e.target.value.slice(0, -1);
+        // Re-encode the updated input value and check again.
+        uint8 = enc.encode(e.target.value);
+      }
+    }
+  };
+
   return (
     <div className={`text__field ${clazz}`}>
       <section
@@ -200,6 +213,7 @@ const Input = forwardRef((props, ref) => {
             onFocus={() => handleFocusStatus()}
             onBlur={handleOnBlur}
             style={style}
+            onInput={handleOnInput}
             type={type}
             value={value}
             onKeyDown={handleKeyDown}
