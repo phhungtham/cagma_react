@@ -208,8 +208,8 @@ const Login = () => {
           <div className="mt-6">
             <BoxRadio
               options={languages}
-              value={currentLanguage}
-              onChange={value => setCurrentLanguage(value)}
+              value={currentLanguage?.language}
+              onChange={value => setCurrentLanguage({ language: value })}
             />
           </div>
         </div>

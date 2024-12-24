@@ -19,16 +19,19 @@ import useReducers from '@hooks/useReducers';
 import useSagas from '@hooks/useSagas';
 import callCamera from '@utilities/gmCommon/callCamera';
 import callSelectImage from '@utilities/gmCommon/callSelectImage';
+import clearEmailUpdateInfo from '@utilities/gmCommon/clearEmailUpdateInfo';
+import getEmailUpdateInfo from '@utilities/gmCommon/getEmailUpdateInfo';
 import initProfileImg from '@utilities/gmCommon/initProfileImg';
 import loadProfileImgInfo from '@utilities/gmCommon/loadProfileImgInfo';
 import saveProfileImg from '@utilities/gmCommon/saveProfileImg';
+import setEmailUpdateInfo from '@utilities/gmCommon/setEmailUpdateInfo';
 import authSecurityMedia from '@utilities/gmSecure/authSecurityMedia';
 import createSecurityPasscode from '@utilities/gmSecure/createSecurityPasscode';
 import hideSecureKeyboardChar from '@utilities/gmSecure/hideSecureKeyboardChar';
 import hideSecureKeyboardNumber from '@utilities/gmSecure/hideSecureKeyboardNumber';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
 import showSecureKeyboardNumber from '@utilities/gmSecure/showSecureKeyboardNumber';
-import { callPhone, clearHistory, decryptCVC, getLoginInfo, moveBack, moveHome, moveNext } from '@utilities/index';
+import { callPhone, clearHistory, getLoginInfo, moveBack, moveHome, moveNext } from '@utilities/index';
 import homeAndLogin from '@utilities/navigateScreen/homeAndLogin';
 import { setAuthenticated } from 'shared/features/auth/action';
 
@@ -139,16 +142,8 @@ const CommonTestPage = () => {
     console.log('init profile image data :>> ', data);
   };
 
-  const handleShowKeyboardCharCallback = data => {
-    console.log('show secure keyboard char data :>> ', data);
-  };
-
   const handleHideKeyboardCharCallback = data => {
     console.log('hide secure keyboard char data :>> ', data);
-  };
-
-  const handleShowKeyboardNumberCallback = data => {
-    console.log('show secure keyboard number data :>> ', data);
   };
 
   const handleHideKeyboardNumberCallback = data => {
@@ -167,21 +162,17 @@ const CommonTestPage = () => {
     console.log('Show Certification Char Callback data:>>', result);
   };
 
-  const handleBackToHome = () => {
-    moveBack();
-  };
-
   const handleLoginInfo = result => {
     alert(JSON.stringify(result));
     setLoginInfo(result);
   };
 
-  const handleDecryptCVC = () => {
-    decryptCVC(cvcText, decryptCVCCallback);
+  const handleGetEmailUpdateInfoCallback = result => {
+    console.log('Get Email Update Info Callback data:>>', result);
   };
 
-  const decryptCVCCallback = result => {
-    alert(JSON.stringify(result));
+  const handleClearEmailUpdateInfoCallback = result => {
+    console.log('Clear Email Update Info Callback data:>>', result);
   };
 
   const renderNavigationEl = (sectionLabel, items) => {
@@ -227,6 +218,21 @@ const CommonTestPage = () => {
     {
       label: '• GMCommon',
       items: [
+        {
+          title: 'Get Email Update Info',
+          label: 'getEmailUpdateInfo',
+          action: () => getEmailUpdateInfo(handleGetEmailUpdateInfoCallback),
+        },
+        {
+          title: 'Set Email Update Info',
+          label: 'setEmailUpdateInfo',
+          action: () => setEmailUpdateInfo({ email: 'testemail@gmail.com', userId: 'usertestid' }),
+        },
+        {
+          title: 'Clear Email Update Info',
+          label: 'clearEmailUpdateInfo',
+          action: () => clearEmailUpdateInfo(),
+        },
         {
           title: 'Get LoginInfo',
           label: 'getLoginInfo',

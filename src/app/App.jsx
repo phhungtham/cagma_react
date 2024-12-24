@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Routes, useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import useApi from '@hooks/useApi';
 import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
 import publicRoutes from '@routes/service/public-routes';
+import { isGapSupported } from '@utilities/polyfillFlexGap';
 import { languageStorageKeys } from '@utilities/transform';
 import 'flex-gap-polyfill/dist/index.js';
 import { reloadLanguageResource } from 'i18n/reloadLanguageResource';
@@ -40,6 +41,11 @@ const App = () => {
   const { i18n } = useTranslation();
   const { requestApi } = useApi();
 
+  //Fix for old browser version. <= IOS 14 || Android 10
+  const isBrowserSupportFlexGap = useMemo(() => {
+    return isGapSupported();
+  }, []);
+
   const scriptLoad = async isMobileDevice => {
     if (AppCfg.ENV === 'development') return;
     if (isMobileDevice) {
@@ -58,25 +64,25 @@ const App = () => {
   };
 
   const getLanguageFile = async () => {
-    if (!currentLanguage || currentLanguage === 'undefined') return;
-
+    if (!currentLanguage?.language) return;
+    const langStr = currentLanguage.language;
     if (process.env.NODE_ENV === 'development') {
-      if (localStorage.getItem(`ca_${currentLanguage}`)) {
-        reloadLanguageResource(currentLanguage);
+      if (localStorage.getItem(`ca_${langStr}`)) {
+        reloadLanguageResource(langStr);
         return;
       }
-      const { data } = await requestApi('/gm/co/GMCO005.pwkjson', { appLanguage: currentLanguage });
+      const { data } = await requestApi('/gm/co/GMCO005.pwkjson', { appLanguage: langStr });
       if (data?.languageList) {
         const langpack = data.languageList.reduce((acc, cur) => {
           acc[cur.key?.trim()] = cur.value;
           return acc;
         }, {});
-        localStorageService.setLang(langpack, languageStorageKeys(currentLanguage));
-        reloadLanguageResource(currentLanguage);
+        localStorageService.setLang(langpack, languageStorageKeys(langStr));
+        reloadLanguageResource(langStr);
       }
       return;
     }
-    let url = `../../../../websquare/langpack/511_${currentLanguage}.js`;
+    let url = `../../../../websquare/langpack/511_${langStr}.js`;
     await fetch(url)
       .then(response => response.text())
       .then(data => {
@@ -87,11 +93,11 @@ const App = () => {
           data = data.substring(0, data.length - 1);
         }
         let langpack = data.substring(firstLanguageContentIndex, data.length);
-        localStorageService.setLang(JSON.parse(langpack), languageStorageKeys(currentLanguage));
-        reloadLanguageResource(currentLanguage);
+        localStorageService.setLang(JSON.parse(langpack), languageStorageKeys(langStr));
+        reloadLanguageResource(langStr);
       })
       .then(() => {
-        i18n.changeLanguage(currentLanguage);
+        i18n.changeLanguage(langStr);
       });
   };
 
@@ -137,8 +143,7 @@ const App = () => {
       'changeLanguage',
       e => {
         const language = String(e.detail);
-        // changeAppFont(language);
-        setCurrentLanguage(language);
+        setCurrentLanguage({ language: language }); //Using object for always trigger get file language when native trigger event
         localStorageService.setLanguageCode(language);
       },
       false
@@ -161,17 +166,15 @@ const App = () => {
 
   useEffect(() => {
     polyfill();
-    // for development
     if (process.env.NODE_ENV === 'development') {
-      setCurrentLanguage('en');
-      // setAppPath(window.location.pathname);
+      setCurrentLanguage({ language: 'en' });
     }
   }, []);
 
   return (
     <ErrorBoundary>
       <TooltipProvider>
-        <div className="bg-white">
+        <div className={`bg-white ${isBrowserSupportFlexGap ? '' : 'polyfill-browser'}`}>
           <Suspense fallback={<Fallback />}>
             <Routes>
               {privateRoutes()}

@@ -12,11 +12,13 @@ const TextDropdown = ({ label, value, placeholder, onClick, align, disabled, rea
   return (
     <div className="text-dropdown__wrapper">
       <div
-        className={`text-dropdown__main align-${align} ${disabled ? 'disabled' : ''} ${readonly ? 'readonly' : ''}`}
+        className={`text-dropdown__main flex-gap-x-4 align-${align} ${disabled ? 'disabled' : ''} ${
+          readonly ? 'readonly' : ''
+        }`}
         onClick={onClickDropdown}
       >
         <div className={`text-dropdown__label ${disabled ? 'disabled' : ''}`}>{label}</div>
-        <div className="d-flex items-center gap-2">
+        <div className="d-flex items-center gap-2 flex-gap-x-8">
           <div
             className={`text-dropdown__value ${!!value ? 'selected' : ''} ${disabled ? 'disabled' : ''} ${
               readonly ? 'readonly' : ''

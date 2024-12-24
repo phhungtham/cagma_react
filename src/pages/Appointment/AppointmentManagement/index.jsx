@@ -7,11 +7,13 @@ import Tabs from '@common/components/atoms/Tabs';
 import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
 import { initAlert } from '@common/constants/bottomsheet';
+import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, appointmentManageLabels as labels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
-import { moveBack } from '@utilities/index';
+import { routePaths } from '@routes/paths';
+import { moveNext } from '@utilities/index';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AppointmentCard from '../components/AppointmentCard';
@@ -156,6 +158,10 @@ const AppointmentManagement = ({ translate: t }) => {
     });
   };
 
+  const handleClickBack = () => {
+    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
+  };
+
   useEffect(() => {
     requestGetAppointments();
   }, []);
@@ -166,7 +172,8 @@ const AppointmentManagement = ({ translate: t }) => {
       <div className="appointment-management__wrapper">
         <Header
           title={t(menuLabels.manageAppointment)}
-          onClick={moveBack}
+          disabledMoveBack
+          onClickBack={handleClickBack}
         />
         <div className="appointment-management__content">
           <Tabs

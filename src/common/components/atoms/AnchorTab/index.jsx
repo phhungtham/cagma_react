@@ -18,7 +18,7 @@ const AnchorTab = props => {
   }, [defaultActive]);
 
   return (
-    <div className="anchor__tab__wrapper">
+    <div className="anchor__tab__wrapper flex-gap-x-8">
       {segments?.map((chip, idx) => (
         <div
           key={idx}

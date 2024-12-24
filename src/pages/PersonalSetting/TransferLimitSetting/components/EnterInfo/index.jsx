@@ -49,7 +49,7 @@ const TransferLimitSettingForm = ({ onSubmit, detail, onCancelLimit, translate: 
           <div className="box__details mt-4">
             {transferLimitChangeDetails.map(({ label, value }) => (
               <div
-                className="box__item"
+                className="box__item flex-gap-x-25"
                 key={label}
               >
                 <span className="box__label">{t(label)}</span>

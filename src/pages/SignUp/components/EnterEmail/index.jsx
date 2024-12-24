@@ -259,13 +259,13 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
       <div>
         {showLoading && <Spinner />}
         <Header
-          title={t(menuLabels.signUp)}
+          title={isNavigateFromLogin ? t(menuLabels.security) : t(menuLabels.signUp)}
           disabledMoveBack
           onClickBack={handleClickBack}
         />
         <div className="page__form">
           <div className="page__title">{t(labels.enterYourEmail)}</div>
-          <div className="form__section mt-4">
+          <div className="form__section mt-4 flex-gap-y-12">
             <Controller
               render={({ field }) => (
                 <Input

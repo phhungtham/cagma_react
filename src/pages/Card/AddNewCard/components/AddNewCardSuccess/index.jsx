@@ -31,7 +31,7 @@ const AddNewCardSuccess = ({ cardInfo, translate: t }) => {
             <div className="note">{t(cardLabels.cardDelivered)}</div>
           </div>
         </div>
-        <div className="add-new-card__info add-new-card__linked-to">
+        <div className="add-new-card__info add-new-card__linked-to flex-gap-y-16">
           <div className="form__section__title mb-0">{t(cardLabels.linkedTo)}</div>
           <div className="divider__item__black" />
           <div className="card-item">
@@ -41,7 +41,7 @@ const AddNewCardSuccess = ({ cardInfo, translate: t }) => {
             </span>
           </div>
         </div>
-        <div className="add-new-card__info mt-4">
+        <div className="add-new-card__info mt-4 flex-gap-y-16">
           <div className="form__section__title mb-0">{t(cardLabels.mailingAddress2)}</div>
           <div className="divider__item__black" />
           {addNewCardSuccessFields.map(({ label, value }) => (

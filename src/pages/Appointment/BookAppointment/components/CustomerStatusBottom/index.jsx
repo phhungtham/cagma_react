@@ -6,7 +6,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import BoxRadio from '@common/components/atoms/RadioButton/BoxRadio';
 import BottomSheet from '@common/components/templates/BottomSheet';
-import { ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
+import { commonLabels, ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
 import { invalidNameRegex, notAllowNumberRegex, notAllowSpaceRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { preferredLanguages } from '@pages/Appointment/constants';
@@ -32,7 +32,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
     control,
     reset,
     watch,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: initValues,
@@ -44,7 +44,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
   };
 
   useEffect(() => {
-    if (customer && open) {
+    if (customer) {
       reset({
         name,
         phoneNumber,
@@ -53,7 +53,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
         comment: '',
       });
     }
-  }, [customer, open]);
+  }, [customer]);
 
   return (
     <BottomSheet
@@ -65,7 +65,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
     >
       <div className="customer-status__content bottom__content-main">
         <div className="customer-status__form">
-          <section className="form__section pb-6">
+          <section className="form__section flex-gap-y-12 pb-6">
             <Controller
               render={({ field }) => (
                 <Input
@@ -88,7 +88,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   inputMode="numeric"
                   regex={notAllowNumberRegex}
                   disabled={!!phoneNumber}
-                  maxLength={50}
+                  maxLength={30}
                   {...field}
                 />
               )}
@@ -103,6 +103,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
                   disabled={!!email}
                   regex={notAllowSpaceRegex}
                   maxLength={50}
+                  errorMessage={errors?.email?.type === 'matches' ? t(commonLabels.invalidEmailFormat) : ''}
                   {...field}
                 />
               )}
@@ -111,7 +112,7 @@ const CustomerStatusBottom = ({ open, onClose, onConfirm, customer, translate: t
             />
           </section>
           <div className="divider__item__solid" />
-          <div className="form__section pt-7">
+          <div className="form__section flex-gap-y-12 pt-7">
             <span className="form__section__title">{t(labels.preferredLang2)}</span>
             <Controller
               render={({ field }) => (

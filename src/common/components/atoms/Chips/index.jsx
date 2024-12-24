@@ -10,7 +10,7 @@ const Chips = props => {
   };
 
   return (
-    <div className="chips__wrapper">
+    <div className="chips__wrapper flex-gap-x-9">
       {segments?.map(({ label, value }) => (
         <div
           key={value}

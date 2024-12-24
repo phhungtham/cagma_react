@@ -35,7 +35,7 @@ const ReissueCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
             <div className="complete-message">{t(labels.hasBeenCompleted)}</div>
           </div>
         </div>
-        <div className="reissue-card__info">
+        <div className="reissue-card__info flex-gap-y-16">
           <div className="form__section__title">{t(labels.mailingAddress2)}</div>
           <div className="divider__item__black" />
           {reissueCardSuccessFields.map(({ label, value }) => (
@@ -50,7 +50,7 @@ const ReissueCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
             </div>
           ))}
         </div>
-        <div className="reissue-card__info mt-4">
+        <div className="reissue-card__info mt-4 flex-gap-y-16">
           <div className="form__section__title mb-0">{t(labels.reissueInformation)}</div>
           <div className="divider__item__black" />
           <div className="card-item">

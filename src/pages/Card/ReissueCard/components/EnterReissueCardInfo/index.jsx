@@ -8,7 +8,7 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
 import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
-import { postalCodeNotAllowRegex } from '@common/constants/regex';
+import { notAllowNumberRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateExpiry, formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import { formatCardNumber } from '@utilities/formater';
@@ -60,15 +60,16 @@ const EnterReissueCardInfo = ({ onSubmit, isLogin, setShowLoading, setAlert, set
       <div className="reissue-card-info__form h-screen__content">
         <h1 className="page__title">{t(labels.reissueYourCard)}</h1>
         <div className="mt-4">
-          <div className="form__section">
+          <div className="form__section flex-gap-y-12">
             <FormProvider {...methods}>
               <Controller
                 render={({ field: { value, onChange } }) => (
                   <Input
                     label={t(labels.currentCardNumber)}
                     placeholder="Please input 16 numerics"
-                    type="tel"
                     inputMode="numeric"
+                    type="text"
+                    regex={notAllowNumberRegex}
                     maxLength={19}
                     value={value}
                     onChange={inputValue => {

@@ -63,7 +63,7 @@ const CustomerInfoChangeBottom = ({ onClose, onSubmit, setting, translate: t }) 
     >
       <div className="customer-info__content">
         <div className="title">{t(labels.methods)}</div>
-        <div className="checklist___options">
+        <div className="checklist___options flex-gap-y-12">
           {eAlertSettingMethodOptions.map(({ label, value }) => (
             <div
               className="option-item"
@@ -78,7 +78,7 @@ const CustomerInfoChangeBottom = ({ onClose, onSubmit, setting, translate: t }) 
             </div>
           ))}
         </div>
-        <div className="btn__ctas">
+        <div className="btn__ctas flex-gap-x-8">
           <Button
             variant="filled__secondary-blue"
             label={t(ctaLabels.reset)}

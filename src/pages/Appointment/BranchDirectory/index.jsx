@@ -136,7 +136,7 @@ const BranchDirectory = ({ translate: t }) => {
                           </div>
                         ))}
                       </div>
-                      <div className="accordion__ctas">
+                      <div className="accordion__ctas flex-gap-x-8">
                         <Button
                           label={t(labels.viewMap)}
                           variant="outlined__primary"

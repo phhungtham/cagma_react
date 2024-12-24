@@ -14,7 +14,7 @@ import { initSelectBottom } from '@common/constants/bottomsheet';
 import { getCanadaProvinceCode, getCardAreaProvinceCode } from '@common/constants/commonCode';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
+import { cardLabels, commonLabels, ctaLabels, menuLabels } from '@common/constants/labels';
 import {
   invalidCityRegex,
   invalidNameRegex,
@@ -46,7 +46,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
     control,
     setValue,
     watch,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(newCardFormSchema),
@@ -141,18 +141,27 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
     const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.getAccountList);
     setShowLoading(false);
     if (isSuccess) {
-      const { cus_acno_list: accountList } = data || {};
-      let newAccounts = (accountList || []).map(item => {
-        return {
-          ...item,
-          name: item.dep_ac_alnm_nm,
-          number: item.lcl_ac_no_display,
-          balance: item.pabl_blc_display,
-        };
-      });
-      const filteredAccounts = newAccounts.filter(
-        account => account.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING
-      );
+      const accountKindDepositWithDrawal = '01';
+      const { cus_acno_list: totalAccountList = [], homeAccountList = [] } = data || {};
+      const withdrawalDepositAccountNumbers = homeAccountList
+        .filter(account => account.ac_k_cd === accountKindDepositWithDrawal)
+        .map(account => account.acno);
+
+      const filteredAccounts = totalAccountList.reduce((result, account) => {
+        if (
+          withdrawalDepositAccountNumbers.includes(account.lcl_ac_no) &&
+          account.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING
+        ) {
+          result.push({
+            ...account,
+            name: account.dep_ac_alnm_nm,
+            number: account.lcl_ac_no_display,
+            balance: account.pabl_blc_display,
+          });
+        }
+        return result;
+      }, []);
+
       if (filteredAccounts?.length) {
         handleSelectAccount(filteredAccounts[0]);
       }
@@ -207,7 +216,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
           </div>
           <div className="divider__group" />
           <div className="enter-card__form form__wrapper">
-            <div className="form__section mt-2">
+            <div className="form__section flex-gap-y-12 mt-2">
               <div className="form__section__title">
                 <span>{t(cardLabels.linkedAccount)}</span>
               </div>
@@ -221,7 +230,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                 {selectedAccount ? <div className="account-number">{selectedAccount?.number}</div> : ''}
               </Dropdown>
             </div>
-            <div className="form__section mt-6">
+            <div className="form__section mt-6 flex-gap-y-12">
               <div className="form__section__title">
                 <span>{t(cardLabels.mailingAddress)}</span>
               </div>
@@ -248,12 +257,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     placeholder="Please input Detail text"
                     regex={invalidNameRegex}
                     {...field}
-                    onChange={value => {
-                      if (value) {
-                        value = value.replace(/- -|--+/g, '-');
-                      }
-                      field.onChange(value);
-                    }}
                   />
                 )}
                 control={control}
@@ -319,7 +322,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                 name="postalCode"
               />
             </div>
-            <div className="form__section mt-6">
+            <div className="form__section mt-6 flex-gap-y-12">
               <div className="form__section__title">
                 <span>{t(cardLabels.useAreaInformation)}</span>
               </div>
@@ -338,7 +341,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
             </div>
             <div className="divider__item__solid mt-5" />
             <div className="mt-4">
-              <div className="form__section mt-4">
+              <div className="form__section mt-4 flex-gap-y-12">
                 <Controller
                   render={({ field }) => (
                     <CheckBox
@@ -358,8 +361,9 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                         <Input
                           label={t(cardLabels.contactlessPerTransaction)}
                           placeholder=""
-                          type="number"
                           inputMode="numeric"
+                          type="text"
+                          regex={notAllowNumberRegex}
                           maxLength={22}
                           {...field}
                           onChange={value => {
@@ -389,8 +393,9 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                         <Input
                           label={t(cardLabels.totalContactless)}
                           placeholder=""
-                          type="number"
                           inputMode="numeric"
+                          type="text"
+                          regex={notAllowNumberRegex}
                           maxLength={22}
                           {...field}
                           onChange={value => {
@@ -413,7 +418,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
               </div>
             </div>
             <div className="mt-4">
-              <div className="form__section mt-4">
+              <div className="form__section mt-4 flex-gap-y-12">
                 <Controller
                   render={({ field }) => (
                     <CheckBox
@@ -435,6 +440,7 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                       placeholder=""
                       regex={notAllowSpaceRegex}
                       clazz={getTransactionNotice ? '' : 'hidden'}
+                      errorMessage={errors?.email?.type === 'matches' ? t(commonLabels.invalidEmailFormat) : ''}
                       {...field}
                     />
                   )}

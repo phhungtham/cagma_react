@@ -5,11 +5,11 @@ import { borrowings } from '../constants';
 const BorrowingList = ({ borrowingTitleRef, onClick, translate: t }) => {
   return (
     <div
-      className="product-type-section"
+      className="product-type-section flex-gap-y-12"
       ref={borrowingTitleRef}
     >
       <div className="product-list__title">{t(productLabels.borrowing)}</div>
-      <div className="product-type-list">
+      <div className="product-type-list flex-gap-y-16">
         {borrowings.map((product, index) => (
           <div
             key={index}

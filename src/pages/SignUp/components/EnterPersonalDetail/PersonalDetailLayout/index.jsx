@@ -295,7 +295,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
       {showLoading && <Spinner />}
       <div className="h-screen__content pt-5">
         <div className="page__title">{t(labels.enterYourPersonal)}</div>
-        <div className="pt-8 d-flex flex-column gap-10">
+        <div className="pt-8 d-flex flex-column gap-10 flex-gap-y-40">
           <FormProvider {...methods}>
             <IDInfoSection
               onOpenSelectBottom={handleOpenSelectBottom}

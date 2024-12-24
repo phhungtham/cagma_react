@@ -17,7 +17,7 @@ const CustomerInfoBottom = ({ onClickConfirm, onClose, onClickChangeProfile, tra
         <section className="instruction-info">
           <span>{t(labels.pleaseReviewYourPersonalInfo)}</span>
         </section>
-        <div className="customer__cta">
+        <div className="customer__cta flex-gap-x-8">
           <Button
             variant="filled__secondary-blue"
             label={t(labels.updateProfile)}

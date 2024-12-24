@@ -74,7 +74,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     product_min_amount: enterAmountMin,
     product_max_amount: enterAmountMax,
     product_min_amount_display: amountMinDisplay,
-    product_max_amount_display: amountMaxDisplay,
   } = product || {};
 
   const selectFrequencyOptions = frequencyTypeOptions.filter(item => item.value === FrequencyType.MONTHLY);
@@ -432,7 +431,9 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                   <section>
                     <TextDropdown
                       label={isInstallmentSaving ? t(labels.monthlyInstallmentAmount) : t(labels.amount)}
-                      placeholder={`${amountMinDisplay} ~ ${amountMaxDisplay} ${productCurrencyCode}`}
+                      placeholder={`${amountMinDisplay} ${enterAmountMin ? productCurrencyCode : ''} ${t(
+                        labels.amountMaxDisplay
+                      )} ${productCurrencyCode}`}
                       onClick={onOpenEnterAmountBottom}
                       value={amount ? `${formatCurrencyDisplay(amount)} ${productCurrencyCode}` : undefined}
                     />

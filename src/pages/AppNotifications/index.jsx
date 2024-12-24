@@ -61,7 +61,7 @@ const AppNotifications = ({ translate: t }) => {
   const notificationListRef = useRef(null);
 
   const nativeParams = useSelector(nativeParamsSelector);
-  const currentLang = getLanguageFM(appLang, false);
+  const currentLang = getLanguageFM(appLang?.language, false);
   const isNativeBack = useSelector(backEventSelector || false);
 
   const requestGetNotificationList = async (payload, type) => {

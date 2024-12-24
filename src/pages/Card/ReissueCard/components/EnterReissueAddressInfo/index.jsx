@@ -152,7 +152,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
             </div>
           )}
 
-          <div className="form__section pt-4">
+          <div className="form__section pt-4 flex-gap-y-12">
             {isLogin && (
               <div className="form__section__title">
                 <span>{t(labels.mailingAddress)}</span>
@@ -247,7 +247,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                   render={({ field }) => (
                     <Input
                       label={t(labels.phoneNumber)}
-                      placeholder="Please include the '-'."
+                      placeholder="Please include the '-'." //TODO: Confirm phone number for input mode numeric and max length
                       {...field}
                     />
                   )}

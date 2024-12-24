@@ -105,7 +105,7 @@ const TermsAndConditions = ({ onSubmit, translate: t }) => {
               <img src={BannerImg} />
             </div>
           </div>
-          <div className="term-condition__more-info">
+          <div className="term-condition__more-info flex-gap-y-12">
             <div className="more-info__desc">{t(cardLabels.moreInformation)}</div>
             <div className="more-info__links">
               <IconButton

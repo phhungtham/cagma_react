@@ -362,6 +362,7 @@ export const openAccountLabels = {
   bookAnAppointment: 'lbl_CAPR521000_0120', //Book an Appointment
   next: 'lbl_CTA_5103', //Next
   pleaseInputAmountMore: 'lbl_CAPR501000_0252', //Please input an amount more than %1
+  amountMaxDisplay: 'lbl_CAPR501000_0320', // or more (amount max display)
 };
 
 export const openAccountDTRLabels = {
@@ -884,4 +885,5 @@ export const commonLabels = {
   youCanSendUpTo: 'lbl_com_4950', //You can send up to %1 at a time.
   pleaseEnterLessThan: 'lbl_com_4951', //Please enter less than %1
   pleaseEnterMoreThan: 'lbl_com_4952', //Please enter more than %1
+  invalidEmailFormat: 'lbl_com_5171', //Invalid email format
 };

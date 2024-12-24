@@ -198,7 +198,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
           <>
             <div className="divider__group mt-6" />
             <div className="page__container pt-5 pb-6">
-              <div className="form__section">
+              <div className="form__section flex-gap-y-12">
                 <div className="form__section__title">
                   <span>{t(labels.frequency)}</span>
                 </div>

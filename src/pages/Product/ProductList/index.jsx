@@ -224,10 +224,10 @@ const ProductList = ({ translate: t }) => {
     return (
       <div
         ref={ref}
-        className="product-type-section"
+        className="product-type-section flex-gap-y-12"
       >
         <div className="product-list__title">{title}</div>
-        <div className="product-type-list">
+        <div className="product-type-list flex-gap-y-16">
           {products.map(product => {
             const itemImg = BannerMapProductCode[product.prdt_c];
             return (
@@ -237,7 +237,7 @@ const ProductList = ({ translate: t }) => {
                 onClick={() => handleClickOpenAccount(product)}
               >
                 <>
-                  <div className="product-card__main">
+                  <div className="product-card__main flex-gap-y-20">
                     <div className="product-card__desc">
                       <div className="product__type">
                         <span>{product?.prdt_c_display || product?.lcl_prdt_nm}</span>
@@ -246,19 +246,19 @@ const ProductList = ({ translate: t }) => {
                         <span>{t(ProductListDescriptions[product.prdt_c])}</span>
                       </div>
                     </div>
-                    <div className="product-card__spec">
-                      <div className="product__item">
+                    <div className="product-card__spec flex-gap-y-8">
+                      <div className="product__item flex-gap-x-6">
                         <div className="item__label">{t(labels.rate)}</div>
-                        <div className="item__value">
+                        <div className="item__value flex-gap-x-4">
                           <span className="item__unit">up to</span>
                           <span className="item__quantity">{product?.ntfct_intrt}</span>
                           <span className="item__unit">%</span>
                         </div>
                       </div>
                       {product?.dep_sjt_class !== DepositSubjectClass.REGULAR_SAVING && (
-                        <div className="product__item">
+                        <div className="product__item flex-gap-x-6">
                           <div className="item__label">{t(labels.terms)}</div>
-                          <div className="item__value">
+                          <div className="item__value flex-gap-x-4">
                             <span className="item__quantity">
                               {product?.prdt_st_trm_unit_cnt}~{product?.prdt_close_trm_unit_cnt}
                             </span>
@@ -296,7 +296,7 @@ const ProductList = ({ translate: t }) => {
             sections={sections}
             options={options}
           >
-            <div className="product-list__main">
+            <div className="product-list__main flex-gap-y-32">
               {renderProductSection(
                 bankingTitleRef,
                 bankingProducts,

@@ -170,7 +170,7 @@ const AddressInfoSection = ({
   }, [addressType]);
 
   return (
-    <div className="form__section pt-9">
+    <div className="form__section pt-9 flex-gap-y-12">
       <div className="form__section__title">
         <span>{t(labels.addressInfo)}</span>
       </div>
@@ -247,7 +247,7 @@ const AddressInfoSection = ({
         control={control}
         name="postalCode"
       />
-      <div className={`${isCanadaCountrySelected ? 'address__info' : 'hidden '}`}>
+      <div className={`${isCanadaCountrySelected ? 'address__info flex-gap-y-12' : 'hidden '}`}>
         <Controller
           render={({ field }) => {
             return (
@@ -376,7 +376,7 @@ const AddressInfoSection = ({
       {isShowProofAddress && !isDisableAddress && (
         <>
           <div className="divider__item__solid mt-4" />
-          <div className="form__section pt-4">
+          <div className="form__section pt-4 flex-gap-y-12">
             <div className="form__section__title">
               <span>{t(labels.proofOfAddress)}</span>
             </div>

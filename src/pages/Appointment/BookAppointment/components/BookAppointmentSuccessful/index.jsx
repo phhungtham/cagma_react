@@ -41,10 +41,10 @@ const BookAppointmentSuccessful = ({ appointmentInfo, translate: t, isLogin }) =
           </div>
         </div>
         <div className="divider__item__black" />
-        <div className="book-appointment__info">
+        <div className="book-appointment__info flex-gap-y-16">
           {bookAppointmentSuccessFields.map(({ label, value }) => (
             <div
-              className="appointment-item"
+              className="appointment-item flex-gap-x-16"
               key={value}
             >
               <span className="appointment-label">{t(label)}</span>
@@ -53,7 +53,7 @@ const BookAppointmentSuccessful = ({ appointmentInfo, translate: t, isLogin }) =
           ))}
         </div>
       </div>
-      <div className="footer__fixed book-appointment__footer">
+      <div className="footer__fixed book-appointment__footer flex-gap-x-8">
         {isLogin && (
           <Button
             variant="filled__secondary-blue"
