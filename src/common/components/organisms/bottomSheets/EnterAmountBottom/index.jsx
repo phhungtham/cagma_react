@@ -93,7 +93,7 @@ const EnterAmountBottom = ({
 
   const getInvalidMessage = type => {
     if (type === InvalidType.MIN) {
-      return `${t(openAccountLabels.pleaseInputAmountMore).replace('%1', `${formatCurrencyDisplay(min)} ${currency}`)}`;
+      return `${t(openAccountLabels.pleaseInputAmountMore).replace('%1', `$${formatCurrencyDisplay(min)}`)}`;
     }
     if (type === InvalidType.MAX) {
       return `${t(commonLabels.youCanSendUpTo).replace('%1', `$${formatCurrencyDisplay(max)}`)}`;

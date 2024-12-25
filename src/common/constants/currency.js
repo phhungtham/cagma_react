@@ -2,6 +2,7 @@ export const CurrencyCode = {
   CAD: 'CAD',
   USD: 'USD',
   KRW: 'KRW',
+  DOLLAR: '$',
 };
 
 export const CurrencyPrefixBaseCode = {
