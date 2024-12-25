@@ -82,7 +82,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
   const isInstallmentSaving = productCode === ProductCode.E_INSTALLMENT_SAVING;
   const isRRSPESaving = productCode === ProductCode.RRSP_E_SAVINGS;
   const showTerms = productType !== DepositSubjectClass.REGULAR_SAVING;
-
   const methods = useForm({
     defaultValues: openAccountDefaultValues,
     mode: 'onChange',
@@ -431,11 +430,9 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                   <section>
                     <TextDropdown
                       label={isInstallmentSaving ? t(labels.monthlyInstallmentAmount) : t(labels.amount)}
-                      placeholder={`${amountMinDisplay} ${enterAmountMin ? productCurrencyCode : ''} ${t(
-                        labels.amountMaxDisplay
-                      )} ${productCurrencyCode}`}
+                      placeholder={`${CurrencyCode.DOLLAR} ${amountMinDisplay} ${t(labels.amountMaxDisplay)}`}
                       onClick={onOpenEnterAmountBottom}
-                      value={amount ? `${formatCurrencyDisplay(amount)} ${productCurrencyCode}` : undefined}
+                      value={amount ? `${CurrencyCode.DOLLAR} ${formatCurrencyDisplay(amount)}` : undefined}
                     />
                   </section>
                 )}
