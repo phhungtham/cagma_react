@@ -10,12 +10,14 @@ import { updateEmailLabels as labels, menuLabels } from '@common/constants/label
 import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { UpdateEmailContext } from '@pages/UpdateEmail';
 
 import { EnterUserIdSchema } from './schema';
 
 const EnterUserId = ({ onConfirm }) => {
   const { translate: t, setShowLoading, setAlert } = useContext(UpdateEmailContext);
+  const { moveHomeNative } = useMove();
 
   const methods = useForm({
     mode: 'onChange',
@@ -51,10 +53,18 @@ const EnterUserId = ({ onConfirm }) => {
     }
   };
 
+  const handleClickBack = () => {
+    moveHomeNative();
+  };
+
   return (
     <>
       <div>
-        <Header title={t(menuLabels.manageLogin)} />
+        <Header
+          title={t(menuLabels.manageLogin)}
+          disabledMoveBack
+          onClickBack={handleClickBack}
+        />
         <div className="page__form">
           <div className="page__title">{t(labels.updateYourEmail)}</div>
           <div className="form__section mt-4 flex-gap-y-12">
