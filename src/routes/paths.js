@@ -17,4 +17,5 @@ export const routePaths = {
   eAlertsManagement: '/e-alerts-management',
   eAlertsBalance: '/e-alerts-balance',
   signUp: '/sign-up',
+  updateEmail: '/update-email',
 };

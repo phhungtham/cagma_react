@@ -20,6 +20,7 @@ import TransferLimitSetting from '@pages/PersonalSetting/TransferLimitSetting';
 import ProductList from '@pages/Product/ProductList';
 import ChangeProfile from '@pages/Profile/ChangeProfile';
 import SignUp from '@pages/SignUp';
+import UpdateEmail from '@pages/UpdateEmail';
 import { routePaths } from '@routes/paths';
 
 const RoutesConfig = [
@@ -132,6 +133,11 @@ const RoutesConfig = [
   {
     path: routePaths.signUp,
     component: SignUp,
+    private: false,
+  },
+  {
+    path: routePaths.updateEmail,
+    component: UpdateEmail,
     private: false,
   },
 ];

@@ -9,7 +9,12 @@ import { $h } from 'navigation/wmatrix_config';
  * userId: string
  */
 const getEmailUpdateInfo = cb => {
-  if (AppCfg.ENV === 'development') return;
+  if (AppCfg.ENV === 'development') {
+    return cb({
+      email: 'email@gmail.com',
+      userId: 'WTLEE815',
+    });
+  }
   return $h.exec(
     result => {
       cb(result);

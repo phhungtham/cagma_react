@@ -1,0 +1,26 @@
+.update-email-in-progress__wrapper {
+  .start-over__icon {
+    max-width: unset !important;
+    .icon__container {
+      img {
+        width: 24px;
+        height: 24px;
+        object-fit: cover;
+      }
+    }
+  }
+  .review__img {
+    height: 120px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      height: 160px;
+    }
+  }
+}
+
+// .ekyc-in-progress__toast {
+//   bottom: 70px !important;
+// }
