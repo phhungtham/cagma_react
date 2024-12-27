@@ -9,9 +9,8 @@ import { MENU_CODE } from '@common/constants/common';
 import { activeCardLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import useMove from '@hooks/useMove';
-import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { moveNext } from '@utilities/index';
+import { clearHistory } from '@utilities/index';
 
 import { activeCardSuccessFields } from '../../constants';
 import './styles.scss';
@@ -20,7 +19,7 @@ const ActiveCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
   const { moveHomeNative } = useMove();
 
   const handleNavigateCardMain = () => {
-    moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards); //TODO: Handle clearHistory
+    clearHistory(MENU_CODE.CARD_MAIN);
   };
 
   const handleNavigateHome = () => {
