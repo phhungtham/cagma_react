@@ -69,10 +69,6 @@ const CardMain = ({ translate: t }) => {
     setAlert(initAlert);
   };
 
-  const handleClickBack = () => {
-    moveHomeNative();
-  };
-
   useEffect(() => {
     if (isLogin) {
       requestGetCardInfo();
@@ -83,11 +79,7 @@ const CardMain = ({ translate: t }) => {
     <>
       <div className="card-main__wrapper page__wrapper">
         {(showLoading || isLoadingCheckUserLogin) && <Spinner />}
-        <Header
-          title={t(menuLabels.cardMain)}
-          disabledMoveBack
-          onClickBack={handleClickBack}
-        />
+        <Header title={t(menuLabels.cardMain)} />
         <div className="card-main__content">
           {!showLoading && !isLoadingCheckUserLogin && (
             <>
