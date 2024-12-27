@@ -699,6 +699,11 @@ export const signUpEnterEmailLabels = {
   email: 'lbl_CAET920000_0026', //Email
   next: 'lbl_CTA_9209', //Next
   verificationCode: 'lbl_CAET920000_0027', //Verification code
+  unableToVerifyEmail: 'lbl_CAET920000_0330', //Unable to verify this email?
+  unableToVerifyEmail2: 'lbl_CAET920000_0331', //Unable to verify this email?
+  forSecurityReasons: 'lbl_CAET920000_0332', //For security reasons, please verify the email registered with Shinhan Bank Canada...
+  cancel: 'lbl_CAET920000_0333', //Cancel
+  updateEmail: 'lbl_CTA_9309', //Update Email
 };
 
 export const signUpVerifyIdentityLabels = {

@@ -351,7 +351,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
             <div className="mt-4 flex-center">
               <Button
                 variant="text__gray"
-                label="Unable to verify this email?" //TODO: Missing labels
+                label={t(labels.unableToVerifyEmail)}
                 size="sm"
                 endIcon={<ArrowRight />}
                 onClick={handleShowUpdateEmailConfirmAlert}
@@ -373,19 +373,16 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
         isCloseButton={false}
         isShowAlert={showUpdateEmailConfirmAlert}
         onClose={handleCloseUpdateEmailConfirmAlert}
-        title={'Unable to verify this email?'} //TODO: Missing label
-        subtitle={
-          // eslint-disable-next-line quotes
-          "For security reasons, please verify the email registered with Shinhan Bank Canada. If you're unsure, you can update your email after verifying your ID information."
-        }
+        title={t(labels.unableToVerifyEmail2)}
+        subtitle={t(labels.forSecurityReasons)}
         textAlign="left"
         firstButton={{
           onClick: handleClickUpdateEmail,
-          label: 'Update Email',
+          label: t(labels.updateEmail),
         }}
         secondButton={{
           onClick: handleCloseUpdateEmailConfirmAlert,
-          label: 'Cancel',
+          label: t(labels.cancel),
         }}
       />
       <Alert
