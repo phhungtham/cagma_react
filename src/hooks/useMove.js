@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { moveBack, moveHome, moveNext } from '@utilities/index';
+import { clearHistory, moveBack, moveHome, moveNext } from '@utilities/index';
 import homeAndLogin from '@utilities/navigateScreen/homeAndLogin';
 
 //For refresh navigate history
@@ -34,7 +34,19 @@ const useMove = () => {
     navigate('/');
   };
 
-  return { moveScreenNative, moveHomeNative, moveBackNative, moveInitHomeNative, moveHomeAndLoginNative };
+  const clearHistoryNative = (menuCode, params, reactPath) => {
+    clearHistory(menuCode, params);
+    navigate('/');
+  };
+
+  return {
+    moveScreenNative,
+    moveHomeNative,
+    moveBackNative,
+    moveInitHomeNative,
+    moveHomeAndLoginNative,
+    clearHistoryNative,
+  };
 };
 
 export default useMove;
