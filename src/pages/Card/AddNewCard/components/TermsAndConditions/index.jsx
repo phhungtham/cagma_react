@@ -73,14 +73,14 @@ const TermsAndConditions = ({ onSubmit, translate: t }) => {
   const handleNavigateBranchInfo = () => {
     openInternalWebview({
       url: externalUrls.branchInfo,
-      title: 'Search Branch',
+      title: '',
     });
   };
 
   const handleNavigateContactUs = () => {
     openInternalWebview({
       url: externalUrls.contactUs,
-      title: 'Contact Us',
+      title: '',
     });
   };
 

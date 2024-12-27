@@ -1,0 +1,28 @@
+@import 'styles/utilities/variables';
+
+.update-email-identification__wrapper {
+  .verify-identity-banner {
+    height: 220px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    img {
+      height: 100%;
+    }
+  }
+  .verify-identity-instructions {
+    color: $color-gray-700;
+    font-size: 15px;
+    line-height: 20px;
+    list-style-position: outside;
+    list-style-type: disc;
+    padding-left: 24px;
+    .instruction-item {
+      &::marker {
+        color: $color-gray-600;
+        padding-left: 20px;
+      }
+    }
+  }
+}

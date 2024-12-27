@@ -3,8 +3,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { MENU_CODE } from '@common/constants/common';
 import { releaseCardLabels as labels } from '@common/constants/labels';
 import useMove from '@hooks/useMove';
-import { routePaths } from '@routes/paths';
-import { moveNext } from '@utilities/index';
+import { clearHistory } from '@utilities/index';
 
 import { reportReleaseCardSuccessFields } from '../../constants';
 import './styles.scss';
@@ -13,7 +12,7 @@ const ReportReleaseCardSuccess = ({ cardInfo, translate: t }) => {
   const { moveHomeNative } = useMove();
 
   const handleNavigateCardMain = () => {
-    moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
+    clearHistory(MENU_CODE.CARD_MAIN);
   };
 
   const handleNavigateHome = () => {

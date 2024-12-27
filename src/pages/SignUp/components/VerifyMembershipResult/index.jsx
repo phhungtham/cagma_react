@@ -13,9 +13,8 @@ import { externalUrls } from '@common/constants/url';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { VerifyMembershipResultStatus } from '@pages/SignUp/constants';
-import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { moveNext } from '@utilities/index';
+import { clearHistory } from '@utilities/index';
 
 import { ButtonResultLabel, VerifyMembershipResultMessages } from './constants';
 
@@ -35,7 +34,7 @@ const VerifyMembershipResult = ({ type, onNavigateVerifyMembership }) => {
   };
 
   const handleNavigateAppointmentMain = () => {
-    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
+    clearHistory(MENU_CODE.APPOINTMENT_MAIN);
   };
 
   const handleConfirm = () => {

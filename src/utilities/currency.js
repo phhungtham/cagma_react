@@ -1,4 +1,7 @@
 export const stringNumberToCurrency = value => {
+  if (value === undefined || value === null) {
+    return '';
+  }
   value = String(value).replace(/,/g, '');
   return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };

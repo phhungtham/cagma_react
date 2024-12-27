@@ -9,9 +9,8 @@ import { DepositSubjectClass } from '@common/constants/deposit';
 import { openAccountLabels as labels } from '@common/constants/labels';
 import { ProductCode } from '@common/constants/product';
 import useMove from '@hooks/useMove';
-import { routePaths } from '@routes/paths';
 import syncAccountInfo from '@utilities/gmCommon/syncAccountInfo';
-import { moveNext } from '@utilities/index';
+import { clearHistory } from '@utilities/index';
 
 import { openAccountSuccessFields } from './constants';
 import './styles.scss';
@@ -21,7 +20,7 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
 
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
 
-  const { moveScreenNative, moveHomeNative } = useMove();
+  const { moveScreenNative, moveHomeNative, clearHistoryNative } = useMove();
 
   const onClickViewAccount = () => {
     const accountNumberParam = JSON.stringify({
@@ -34,13 +33,13 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
       menuCode = MENU_CODE.ACCOUNT_ACTIVITY_INVESTMENT;
     }
     if (menuCode) {
-      moveScreenNative(menuCode, { param: accountNumberParam });
+      clearHistoryNative(menuCode, { param: accountNumberParam });
     }
   };
 
   const handleClickConfirm = () => {
     if (creditChecked) {
-      moveNext(MENU_CODE.ADD_NEW_CARD, {}, routePaths.addNewCard);
+      clearHistory(MENU_CODE.ADD_NEW_CARD);
     } else {
       moveHomeNative();
     }

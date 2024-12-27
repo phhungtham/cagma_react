@@ -32,7 +32,7 @@ const EnterAmountBottom = ({
   translate: t,
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(currency);
-  const [currentAmount, setCurrentAmount] = useState(amount);
+  const [currentAmount, setCurrentAmount] = useState(stringNumberToCurrency(amount));
   const [invalidAmount, setInvalidAmount] = useState({
     invalid: false,
     type: '',

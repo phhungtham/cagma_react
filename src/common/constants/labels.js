@@ -699,6 +699,11 @@ export const signUpEnterEmailLabels = {
   email: 'lbl_CAET920000_0026', //Email
   next: 'lbl_CTA_9209', //Next
   verificationCode: 'lbl_CAET920000_0027', //Verification code
+  unableToVerifyEmail: 'lbl_CAET920000_0330', //Unable to verify this email?
+  unableToVerifyEmail2: 'lbl_CAET920000_0331', //Unable to verify this email?
+  forSecurityReasons: 'lbl_CAET920000_0332', //For security reasons, please verify the email registered with Shinhan Bank Canada...
+  cancel: 'lbl_CAET920000_0333', //Cancel
+  updateEmail: 'lbl_CTA_9309', //Update Email
 };
 
 export const signUpVerifyIdentityLabels = {
@@ -837,6 +842,39 @@ export const signUpCompleteLabels = {
   done: 'lbl_CTA_9220', //Done
 };
 
+export const updateEmailLabels = {
+  updateYourEmail: 'lbl_CASE810010_0223', //Update your e-mail
+  userId: 'lbl_CASE810010_0224', //User ID
+  next: 'lbl_CTA_8161', //Next
+  email: 'lbl_CASE810010_0225', //e-mail
+  request: 'lbl_CASE810010_0226', //Request
+  verificationCode: 'lbl_CASE810010_0227', //Verification code
+  resend: 'lbl_CASE810010_0228', //Resend
+  next2: 'lbl_CTA_8162', //Next
+  verifyYourIdentity: 'lbl_CASE810010_0229', //Verify your identification
+  toProtectYourPersonal: 'lbl_CASE810010_0230', //To protect your personal information and ensure a secure authentication process...
+  iHaveAValidDriver: 'lbl_CASE810010_0231', //I have a valid Driver’s License or Passport
+  iDontHave: 'lbl_CASE810010_0232', //I don't have or want to submit an ID
+  firstName: 'lbl_CASE810010_0233', //First name
+  lastName: 'lbl_CASE810010_0234', //Last name
+  iAgreeToProvide: 'lbl_CASE810010_0235', //I agree to provide information to third parties
+  proceedWithId: 'lbl_CTA_8163', //Proceed with ID Verification
+  identityVerifyIsOnProgress: 'lbl_CASE810010_0236', //Identification verification is on progress
+  weHaveRequestedAnIDV: 'lbl_CASE810010_0237', //We have requested an IDV to your e-mail. Please complete...
+  home: 'lbl_CTA_8164', //Home
+  continue: 'lbl_CTA_8165', //Continue
+  close: 'lbl_CTA_8167', //Close
+  unableToRetrieveTheVerify: 'lbl_CASE810010_0239', //Unable to retrieve the verification result. Please check again.
+  resendEmail: 'lbl_CASE810010_0240', //Resend e-mail
+  yourRequestHasBeenSuccess: 'lbl_CASE810010_0241', //Your request has been successfully submitted
+  afterReviewingYourSubmitted: 'lbl_CASE810010_0242', //After reviewing your submitted information, the email will be updated.
+  weSorry: 'lbl_CASE810010_0243', //We’re sorry
+  youCannotProceed: 'lbl_CASE810010_0244', //You cannot proceed with online registration
+  forMoreInformation: 'lbl_CASE810010_0245', //For more information, please visit a branch or contact a service center
+  searchBranch: 'lbl_CASE810010_0246', //Search Branch
+  bookAnAppointment: 'lbl_CASE810010_0247', //Book an Appointment
+};
+
 export const menuLabels = {
   eAlertManage: 'mymen_CAME050000', //mymen_CAME900020
   balance: 'lbl_CAME900020_0003', //Balance
@@ -851,6 +889,7 @@ export const menuLabels = {
   openAccount: 'men_title_CAPR010100', //Open Account
   signUp: 'men_title_CAME060000', //Sign Up
   security: 'mymen_CAOTLA0006', //Security
+  manageLogin: 'men_title_CASE010000', //Manage Login
 };
 
 export const ctaLabels = {

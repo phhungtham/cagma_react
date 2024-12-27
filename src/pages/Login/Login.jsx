@@ -104,14 +104,15 @@ const Login = () => {
       if (isDevelopmentEnv) {
         localStorage.setItem('isLogin', true);
       }
-      moveNext('', { param: JSON.stringify({ isFromLogin: true }) }, routePaths.productList);
+      moveNext('', { param: JSON.stringify({ isFromLogin: true }) }, routePaths.signUp);
     }
   }, [isLoginSuccess]);
 
-  const handleLogout = async () => {
+  const handleLogout = async e => {
     if (isDevelopmentEnv) {
       localStorage.removeItem('isLogin');
     }
+    e.preventDefault();
     await requestApi(endpoints.logout);
   };
 

@@ -8,9 +8,8 @@ import { MENU_CODE } from '@common/constants/common';
 import { reportLostCardLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import useMove from '@hooks/useMove';
-import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { moveNext } from '@utilities/index';
+import { clearHistory } from '@utilities/index';
 
 import { reportLostCardSuccessFields } from '../../constants';
 import './styles.scss';
@@ -19,7 +18,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
   const { moveHomeNative } = useMove();
 
   const handleNavigateCardMain = () => {
-    moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
+    clearHistory(MENU_CODE.CARD_MAIN);
   };
 
   const handleNavigateHome = () => {
@@ -29,12 +28,12 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
   const handleNavigateBranchInfo = () => {
     openInternalWebview({
       url: externalUrls.branchInfo,
-      title: 'Search Branch',
+      title: '',
     });
   };
 
   const handleNavigateAppointment = () => {
-    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
+    clearHistory(MENU_CODE.APPOINTMENT_MAIN);
   };
 
   return (

@@ -2,13 +2,14 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import { ArrowRight } from '@assets/icons';
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
 import { initAlert } from '@common/constants/bottomsheet';
-import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX, isDevelopmentEnv } from '@common/constants/common';
+import { EMAIL_VERIFY_IN_SECONDS, EMAIL_VERIFY_RETRY_MAX, isDevelopmentEnv, MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import {
   cardLabels,
@@ -24,8 +25,10 @@ import useApi from '@hooks/useApi';
 import useFocus from '@hooks/useFocus';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
+import { routePaths } from '@routes/paths';
 import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
+import { moveNext } from '@utilities/index';
 
 import { EnterEmailSchema } from './schema';
 
@@ -36,6 +39,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
   const [alreadySendEmailVerification, setAlreadySendEmailVerification] = useState(false);
   const [showEmailVerifyCode, setShowEmailVerifyCode] = useState(false);
   const [enabledVerifyCode, setEnabledVerifyCode] = useState(false);
+  const [showUpdateEmailConfirmAlert, setShowUpdateEmailConfirmAlert] = useState(false);
   const { moveInitHomeNative } = useMove();
   const methods = useForm({
     mode: 'onChange',
@@ -199,8 +203,6 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
 
       return;
     } else if (isVerifySuccess) {
-      setShowEmailVerifyCode(false);
-      setEnabledVerifyCode(false);
       setValue('isEmailVerified', true, { shouldValidate: true });
       clearErrors('verificationCode');
       requestUpdateEmail();
@@ -223,13 +225,21 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
     }
   };
 
+  const maskEmail = email => {
+    return email.replace(/^(.)(.*)(@.*)$/, (match, firstChar, middle, domain) => {
+      return `${firstChar}${'*'.repeat(middle.length)}${domain}`;
+    });
+  };
+
   const fetchEmailByCurrentUser = async () => {
     setShowLoading(true);
     const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.inquiryUserInformation);
     setShowLoading(false);
     if (isSuccess) {
       const { cus_email } = data;
+      const maskedEmail = maskEmail(cus_email);
       setValue('email', cus_email, { shouldValidate: true });
+      setValue('maskedEmail', maskedEmail);
     } else {
       setAlert({
         isShow: true,
@@ -238,6 +248,31 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
         requiredLogin,
       });
     }
+  };
+
+  const handleShowUpdateEmailConfirmAlert = () => {
+    setShowUpdateEmailConfirmAlert(true);
+  };
+
+  const handleCloseUpdateEmailConfirmAlert = () => {
+    setShowUpdateEmailConfirmAlert(false);
+  };
+
+  const handleClearCacheLogin = async () => {
+    setShowLoading(true);
+    await requestApi(endpoints.logout);
+    clearTempLoginInfo();
+    setShowLoading(false);
+  };
+
+  const handleNavigateUpdateEmail = () => {
+    moveNext(MENU_CODE.UPDATE_EMAIL, {}, routePaths.updateEmail);
+  };
+
+  const handleClickUpdateEmail = async () => {
+    handleCloseUpdateEmailConfirmAlert();
+    await handleClearCacheLogin();
+    handleNavigateUpdateEmail();
   };
 
   useEffect(() => {
@@ -288,7 +323,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
                 />
               )}
               control={control}
-              name="email"
+              name={isNavigateFromLogin ? 'maskedEmail' : 'email'}
             />
             {showEmailVerifyCode && (
               <Controller
@@ -312,6 +347,17 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
               />
             )}
           </div>
+          {isNavigateFromLogin && (
+            <div className="mt-4 flex-center">
+              <Button
+                variant="text__gray"
+                label={t(labels.unableToVerifyEmail)}
+                size="sm"
+                endIcon={<ArrowRight />}
+                onClick={handleShowUpdateEmailConfirmAlert}
+              />
+            </div>
+          )}
         </div>
         <div className="footer__fixed">
           <Button
@@ -323,6 +369,22 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
           />
         </div>
       </div>
+      <Alert
+        isCloseButton={false}
+        isShowAlert={showUpdateEmailConfirmAlert}
+        onClose={handleCloseUpdateEmailConfirmAlert}
+        title={t(labels.unableToVerifyEmail2)}
+        subtitle={t(labels.forSecurityReasons)}
+        textAlign="left"
+        firstButton={{
+          onClick: handleClickUpdateEmail,
+          label: t(labels.updateEmail),
+        }}
+        secondButton={{
+          onClick: handleCloseUpdateEmailConfirmAlert,
+          label: t(labels.cancel),
+        }}
+      />
       <Alert
         isCloseButton={false}
         isShowAlert={alert.isShow}

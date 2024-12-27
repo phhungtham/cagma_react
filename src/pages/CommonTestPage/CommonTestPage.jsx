@@ -206,11 +206,11 @@ const CommonTestPage = () => {
     {
       label: '• NavigationPlugin',
       items: [
-        { title: 'Move', label: 'move', action: () => moveNext(MENU_CODE.ACCOUNT) },
+        { title: 'Move', label: 'move', action: () => moveNext(MENU_CODE.APPOINTMENT_MAIN) },
         { title: 'Back', label: 'back', action: () => moveBack() },
-        { title: 'Clear History', label: 'clear history', action: () => clearHistory(MENU_CODE.ACCOUNT) },
+        { title: 'Clear History', label: 'clear history', action: () => clearHistory(MENU_CODE.APPOINTMENT_MAIN) },
         { title: 'Home', label: 'home', action: () => moveHome() },
-        { title: 'Move', label: 'move', action: () => moveNext(MENU_CODE.ACCOUNT) },
+        { title: 'Move', label: 'move', action: () => moveNext(MENU_CODE.APPOINTMENT_MAIN) },
         { title: 'Sign up test API page', label: 'move', action: () => moveNext(MENU_CODE.SIGN_UP) },
         { title: 'Home and Login', label: 'homeAndLogin', action: () => homeAndLogin() },
       ],

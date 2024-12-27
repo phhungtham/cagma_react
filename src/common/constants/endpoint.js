@@ -69,4 +69,6 @@ export const endpoints = {
   logout: '/gm/lo/GMLO004.pwkjson',
   checkBusinessDay: '/ca/co/CACO007.pwkjson',
   checkAccountSinExist: '/ca/me/CAME018.pwkjson',
+  inquiryByUserId: '/ca/se/CASE118.pwkjson',
+  inquiryUserVerification: '/ca/se/CASE119.pwkjson',
 };
