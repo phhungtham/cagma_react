@@ -16,6 +16,7 @@ import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
+import { isIOS14 } from '@utilities/deviceDetected';
 import { moveBack, moveNext } from '@utilities/index';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
@@ -158,6 +159,11 @@ const AppointmentHome = ({ translate: t }) => {
       requestGetAppointments();
     }
   }, [isLogin]);
+
+  useEffect(() => {
+    const isIOS14Iphone = isIOS14();
+    alert('isIOS14Iphone: ' + isIOS14Iphone);
+  }, []);
 
   return (
     <>
