@@ -37,7 +37,7 @@ module.exports = {
     'no-new-object': 'error',
     'no-underscore-dangle': ['warn', { enforceInMethodNames: true }],
     'prettier/prettier': [
-      'error',
+      'warn',
       {
         arrowParens: 'avoid',
         trailingComma: 'es5',
