@@ -4,7 +4,7 @@ import { MENU_CODE } from '@common/constants/common';
 import { ctaLabels, bookAppointmentLabels as labels } from '@common/constants/labels';
 import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
-import { moveNext } from '@utilities/index';
+import { clearHistory } from '@utilities/index';
 
 import { bookAppointmentSuccessFields } from '../../constants';
 import './styles.scss';
@@ -13,7 +13,7 @@ const BookAppointmentSuccessful = ({ appointmentInfo, translate: t, isLogin }) =
   const { moveHomeNative } = useMove();
 
   const onClickNavigateAppointmentManagement = () => {
-    moveNext(MENU_CODE.APPOINTMENT_MANAGEMENT, {}, routePaths.appointmentManagement);
+    clearHistory(MENU_CODE.APPOINTMENT_MANAGEMENT, {}, routePaths.appointmentManagement);
   };
 
   const onClickNavigateHome = () => {
