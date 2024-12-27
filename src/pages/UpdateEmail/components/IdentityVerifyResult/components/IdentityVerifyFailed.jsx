@@ -9,9 +9,8 @@ import { MENU_CODE } from '@common/constants/common';
 import { updateEmailLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import { UpdateEmailContext } from '@pages/UpdateEmail';
-import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { moveNext } from '@utilities/index';
+import { clearHistory } from '@utilities/index';
 
 const IdentityVerifyFailed = () => {
   const { translate: t } = useContext(UpdateEmailContext);
@@ -24,7 +23,7 @@ const IdentityVerifyFailed = () => {
   };
 
   const handleNavigateAppointmentMain = () => {
-    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment); //TODO: Handle clear history
+    clearHistory(MENU_CODE.APPOINTMENT_MAIN);
   };
 
   return (

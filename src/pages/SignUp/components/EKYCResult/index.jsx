@@ -12,9 +12,8 @@ import { signUpEkycResultLabels as labels, signUpVerifyUserLabels } from '@commo
 import { externalUrls } from '@common/constants/url';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
-import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { moveNext } from '@utilities/index';
+import { clearHistory } from '@utilities/index';
 
 import './styles.scss';
 
@@ -30,7 +29,7 @@ const EKYCResult = ({ isSuccess, onNavigateWelcome }) => {
   };
 
   const handleNavigateAppointmentMain = () => {
-    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
+    clearHistory(MENU_CODE.APPOINTMENT_MAIN);
   };
 
   return (

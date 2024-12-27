@@ -8,9 +8,8 @@ import { MENU_CODE } from '@common/constants/common';
 import { reportLostCardLabels as labels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import useMove from '@hooks/useMove';
-import { routePaths } from '@routes/paths';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
-import { clearHistory, moveNext } from '@utilities/index';
+import { clearHistory } from '@utilities/index';
 
 import { reportLostCardSuccessFields } from '../../constants';
 import './styles.scss';
@@ -34,7 +33,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
   };
 
   const handleNavigateAppointment = () => {
-    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment); //TODO: Handle clear history
+    clearHistory(MENU_CODE.APPOINTMENT_MAIN);
   };
 
   return (
