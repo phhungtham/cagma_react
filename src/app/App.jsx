@@ -12,6 +12,7 @@ import useApi from '@hooks/useApi';
 import useReducers from '@hooks/useReducers';
 import privateRoutes from '@routes/service/private-routes';
 import publicRoutes from '@routes/service/public-routes';
+import { isIOS14 } from '@utilities/deviceDetected';
 import { isGapSupported } from '@utilities/polyfillFlexGap';
 import { languageStorageKeys } from '@utilities/transform';
 import { reloadLanguageResource } from 'i18n/reloadLanguageResource';
@@ -168,6 +169,11 @@ const App = () => {
     if (process.env.NODE_ENV === 'development') {
       setCurrentLanguage({ language: 'en' });
     }
+  }, []);
+
+  useEffect(() => {
+    const isIOS14Iphone = isIOS14();
+    console.log('isIOS14Iphone :>> ', isIOS14Iphone);
   }, []);
 
   return (

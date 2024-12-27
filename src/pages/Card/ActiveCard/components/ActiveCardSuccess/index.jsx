@@ -20,7 +20,7 @@ const ActiveCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
   const { moveHomeNative } = useMove();
 
   const handleNavigateCardMain = () => {
-    moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
+    moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards); //TODO: Handle clearHistory
   };
 
   const handleNavigateHome = () => {

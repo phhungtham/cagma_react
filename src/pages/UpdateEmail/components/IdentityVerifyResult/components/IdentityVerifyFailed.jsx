@@ -24,7 +24,7 @@ const IdentityVerifyFailed = () => {
   };
 
   const handleNavigateAppointmentMain = () => {
-    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
+    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment); //TODO: Handle clear history
   };
 
   return (

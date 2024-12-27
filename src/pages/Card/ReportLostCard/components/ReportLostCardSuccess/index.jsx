@@ -19,7 +19,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
   const { moveHomeNative } = useMove();
 
   const handleNavigateCardMain = () => {
-    moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards);
+    moveNext(MENU_CODE.CARD_MAIN, {}, routePaths.cards); //TODO: Handle clear history
   };
 
   const handleNavigateHome = () => {
@@ -34,7 +34,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
   };
 
   const handleNavigateAppointment = () => {
-    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment);
+    moveNext(MENU_CODE.APPOINTMENT_MAIN, {}, routePaths.appointment); //TODO: Handle clear history
   };
 
   return (

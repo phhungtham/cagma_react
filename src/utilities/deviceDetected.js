@@ -14,4 +14,18 @@ export const isIphone = () => {
   }
 };
 
+export const isIOS14 = () => {
+  debugger;
+  const isIOSDevice = isIphone();
+  if (isIOSDevice) {
+    const match = navigator.userAgent.match(/OS (\d+)_\d+/); //Get IOS version
+    console.log('userAgent Match :>> ', match);
+    if (match) {
+      const majorVersion = parseInt(match[1], 10);
+      return majorVersion === 14;
+    }
+  }
+  return false;
+};
+
 export default deviceDetected;
