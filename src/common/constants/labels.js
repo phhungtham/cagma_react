@@ -877,6 +877,7 @@ export const updateEmailLabels = {
   aVerificationEmailHas: 'lbl_CASE810010_0249', //A verification email has already been sent to your email. Please complete verification at %1
   resend2: 'lbl_CASE810010_0252', //Resend
   confirm: 'lbl_CTA_8168', //confirm
+  unableToRetrieve: 'lbl_CASE810010_0255', //Unable to retrieve the verification result. Please check again
 };
 
 export const menuLabels = {

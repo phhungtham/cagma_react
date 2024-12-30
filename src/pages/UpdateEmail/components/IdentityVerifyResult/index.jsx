@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
+import Toast from '@common/components/atoms/Toast';
 import { endpoints } from '@common/constants/endpoint';
 import { updateEmailLabels as labels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
@@ -64,11 +65,11 @@ const IdentityVerifyResult = () => {
       }
       if (['20', '30'].includes(processingStatus)) {
         setShowRetryBtn(true);
-        // setShowToast({
-        //   isShow: true,
-        //   message: t(labels.unableToRetrieve),
-        //   type: 'error',
-        // });
+        setShowToast({
+          isShow: true,
+          message: t(labels.unableToRetrieve),
+          type: 'error',
+        });
       } else if (['10', '40'].includes(processingStatus)) {
         clearEmailUpdateInfo();
         setVerifyStatus(UpdateEmailVerifyStatus.SUCCESS);
@@ -145,14 +146,14 @@ const IdentityVerifyResult = () => {
           onClick={onClickConfirmBtn}
         />
       </div>
-      {/* <section className="toast__overlay ekyc-in-progress__toast">
+      <section className="toast__overlay update-email-in-progress__toast">
         <Toast
           isShowToast={showToast.isShow}
           type={showToast.type}
           onClose={() => setShowToast({ ...showToast, isShow: false })}
           message={showToast.message}
         />
-      </section> */}
+      </section>
     </>
   );
 };
