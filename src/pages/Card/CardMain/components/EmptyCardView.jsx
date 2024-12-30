@@ -52,40 +52,8 @@ const EmptyCardView = ({ translate: t, setAlert }) => {
     }
   };
 
-  const checkNavigateActiveCard = isAddCardInProgress => {
-    if (!isAddCardInProgress) {
-      setAlert({
-        isShow: true,
-        title: t(cardLabels.pleaseCheck2),
-        content: t(cardLabels.noCardToActivate),
-      });
-    } else {
-      moveNext(MENU_CODE.ACTIVE_CARD, {}, routePaths.activeCard);
-    }
-  };
-
   const handleNavigateActiveCard = async () => {
-    if (requestedNewCardResponse) {
-      const { cnt } = requestedNewCardResponse;
-      const isAddCardInProgress = Number(cnt) > 0;
-      return checkNavigateActiveCard(isAddCardInProgress);
-    }
-    setShowLoading(true);
-    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.checkCardIssuanceProgress);
-    setShowLoading(false);
-    if (isSuccess) {
-      const { cnt } = data || {};
-      const isAddCardInProgress = Number(cnt) > 0;
-      setRequestedNewCardResponse(data);
-      return checkNavigateActiveCard(isAddCardInProgress);
-    } else {
-      setAlert({
-        isShow: true,
-        title: '',
-        content: error,
-        requiredLogin,
-      });
-    }
+    moveNext(MENU_CODE.ACTIVE_CARD, {}, routePaths.activeCard);
   };
 
   return (

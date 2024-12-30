@@ -39,11 +39,11 @@ const EnterUserId = ({ onConfirm }) => {
   const handleSubmitForm = async values => {
     setShowLoading(true);
     const { userId } = values;
-    const payload = { userId };
+    const payload = { userId: userId ? userId.toUpperCase() : '' };
     const { data, isSuccess, error } = await requestApi(endpoints.inquiryByUserId, payload);
     setShowLoading(false);
     if (isSuccess) {
-      onConfirm(data);
+      onConfirm({ userId: userId ? userId.toUpperCase() : '' });
     } else {
       setAlert({
         isShow: true,

@@ -4,6 +4,7 @@ import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
 import { ctaLabels } from '@common/constants/labels';
 import useMove from '@hooks/useMove';
+import clearEmailUpdateInfo from '@utilities/gmCommon/clearEmailUpdateInfo';
 import getEmailUpdateInfo from '@utilities/gmCommon/getEmailUpdateInfo';
 import setEmailUpdateInfo from '@utilities/gmCommon/setEmailUpdateInfo';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -18,8 +19,7 @@ export const UpdateEmailContext = createContext();
 
 const UpdateEmail = ({ translate }) => {
   const [currentStep, setCurrentStep] = useState();
-  const [userId, setUserId] = useState();
-  const [email, setEmail] = useState();
+  const [updateEmailInfo, setUpdateEmailInfo] = useState();
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -39,13 +39,17 @@ const UpdateEmail = ({ translate }) => {
     });
   };
 
+  const setDataToNativeCache = data => {
+    setEmailUpdateInfo(data);
+  };
+
   const handleConfirmEnterUserId = ({ userId }) => {
-    setUserId(userId);
+    setUpdateEmailInfo({ userId });
     setCurrentStep(UpdateEmailStep.ENTER_EMAIL);
   };
 
   const handleConfirmEmail = email => {
-    setEmail(email);
+    setUpdateEmailInfo({ ...updateEmailInfo, email });
     setCurrentStep(UpdateEmailStep.VERIFY_YOUR_IDENTIFICATION);
   };
 
@@ -57,20 +61,26 @@ const UpdateEmail = ({ translate }) => {
     setCurrentStep(UpdateEmailStep.ENTER_EMAIL);
   };
 
-  const handleConfirmVerifyIdentification = () => {
-    setEmailUpdateInfo({ email, userId });
+  const handleConfirmVerifyIdentification = ({ firstName, lastName }) => {
+    setDataToNativeCache({ ...updateEmailInfo, firstName, lastName });
+    setUpdateEmailInfo({ ...updateEmailInfo, firstName, lastName });
     setCurrentStep(UpdateEmailStep.IDENTIFICATION_RESULT);
   };
 
   const getEmailUpdateInfoCallback = result => {
-    const { email, userId } = result || {};
-    if (email && userId) {
-      setEmail(email);
-      setUserId(userId);
+    const { email } = result || {};
+    if (email) {
+      //Just check one param, don't need check all params
+      setUpdateEmailInfo(result);
       setCurrentStep(UpdateEmailStep.IDENTIFICATION_RESULT);
     } else {
       setCurrentStep(UpdateEmailStep.ENTER_USER_ID);
     }
+  };
+
+  const handleRestart = () => {
+    clearEmailUpdateInfo();
+    setCurrentStep(UpdateEmailStep.ENTER_USER_ID);
   };
 
   useEffect(() => {
@@ -83,8 +93,8 @@ const UpdateEmail = ({ translate }) => {
         translate,
         setShowLoading,
         setAlert,
-        email,
-        userId,
+        updateEmailInfo,
+        onRestart: handleRestart,
       }}
     >
       {showLoading && <Spinner />}

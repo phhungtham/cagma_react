@@ -873,6 +873,11 @@ export const updateEmailLabels = {
   forMoreInformation: 'lbl_CASE810010_0245', //For more information, please visit a branch or contact a service center
   searchBranch: 'lbl_CASE810010_0246', //Search Branch
   bookAnAppointment: 'lbl_CASE810010_0247', //Book an Appointment
+  emailHasAlreadySent: 'lbl_CASE810010_0248', //Email has already been sent.
+  aVerificationEmailHas: 'lbl_CASE810010_0249', //A verification email has already been sent to your email. Please complete verification at %1
+  resend2: 'lbl_CASE810010_0252', //Resend
+  confirm: 'lbl_CTA_8168', //confirm
+  unableToRetrieve: 'lbl_CASE810010_0255', //Unable to retrieve the verification result. Please check again
 };
 
 export const menuLabels = {
