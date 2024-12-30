@@ -19,7 +19,7 @@ import { VerifyIdentityTermsSchema } from './schema';
 import './styles.scss';
 
 const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
-  const { translate: t, setShowLoading, setAlert, userId, email } = useContext(UpdateEmailContext);
+  const { translate: t, setShowLoading, setAlert, updateEmailInfo } = useContext(UpdateEmailContext);
 
   const [showBranchVisitBottom, setShowBranchVisitBottom] = useState(false);
   const { requestApi } = useApi();
@@ -45,15 +45,16 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
     const { firstName, lastName } = values;
     setShowLoading(true);
     const payload = {
-      userId,
-      cus_email: email,
+      userId: updateEmailInfo.userId,
+      cus_email: updateEmailInfo.email,
       cus_fst_nm: firstName,
       cus_last_nm: lastName,
+      rsnd_flg: 'N',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.inquiryUserVerification, payload);
     setShowLoading(false);
     if (isSuccess) {
-      onConfirm();
+      onConfirm({ firstName, lastName });
     } else {
       return setAlert({
         isShow: true,

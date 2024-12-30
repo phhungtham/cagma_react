@@ -1,13 +1,14 @@
 import { useContext } from 'react';
 
 import VerifyId from '@assets/images/icon-fill-idpw-24.png';
+import StartOverIcon from '@assets/images/icon_fill_restart_24.png';
 import LoadingImg from '@assets/images/signup-spinner.png';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import { updateEmailLabels as labels } from '@common/constants/labels';
 import { UpdateEmailContext } from '@pages/UpdateEmail';
 
 const IdentityVerifyInProgress = ({ showRetryBtn, onClickResendEmail }) => {
-  const { translate: t } = useContext(UpdateEmailContext);
+  const { translate: t, onRestart } = useContext(UpdateEmailContext);
 
   return (
     <>
@@ -36,14 +37,14 @@ const IdentityVerifyInProgress = ({ showRetryBtn, onClickResendEmail }) => {
               icon={<img src={VerifyId} />}
               onClick={onClickResendEmail}
             />
-            {/* <IconButton
-          size="lg"
-          type="circle"
-          className="start-over__icon"
-          label={t(labels.startOver)}
-          icon={<img src={StartOverIcon} />}
-          onClick={handleStartOver}
-        /> */}
+            <IconButton
+              size="lg"
+              type="circle"
+              className="start-over__icon"
+              label="Start Over" //TODO: Missing label
+              icon={<img src={StartOverIcon} />}
+              onClick={onRestart}
+            />
           </>
         )}
       </div>

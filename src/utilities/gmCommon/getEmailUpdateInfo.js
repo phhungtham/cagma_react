@@ -10,10 +10,14 @@ import { $h } from 'navigation/wmatrix_config';
  */
 const getEmailUpdateInfo = cb => {
   if (AppCfg.ENV === 'development') {
-    return cb({
-      email: 'email@gmail.com',
-      userId: 'WTLEE815',
-    });
+    const rawData = localStorage.getItem('emailUpdate');
+    if (rawData) {
+      const parseData = JSON.parse(rawData);
+      return cb({
+        ...parseData,
+      });
+    }
+    return cb();
   }
   return $h.exec(
     result => {

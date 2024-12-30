@@ -21,7 +21,7 @@ const LabelsConfirmWithStatus = {
 };
 
 const IdentityVerifyResult = () => {
-  const { translate: t, userId, email, setShowLoading, setAlert } = useContext(UpdateEmailContext);
+  const { translate: t, updateEmailInfo, setShowLoading, setAlert } = useContext(UpdateEmailContext);
   const { moveHomeNative } = useMove();
   const [showRetryBtn, setShowRetryBtn] = useState(false);
   const [verifyStatus, setVerifyStatus] = useState(UpdateEmailVerifyStatus.IN_PROGRESS);
@@ -45,80 +45,23 @@ const IdentityVerifyResult = () => {
     // }
   };
 
-  const requestRegenerateEkycLink = async () => {
-    // setShowLoading(true);
-    // const { email, firstName, lastName, packageId } = ekycCached;
-    // const payload = {
-    //   cus_email: email,
-    //   uuid_v: deviceId,
-    //   cus_fst_nm: firstName,
-    //   cus_last_nm: lastName,
-    //   e_sgn_trx_id: packageId,
-    // };
-    // const { data, error, isSuccess } = await requestApi(endpoints.regenerateEkycLink, payload);
-    // setShowLoading(false);
-    // if (isSuccess) {
-    //   const link = data?.signingUrl || '';
-    //   openURLInBrowser(link, true);
-    // } else {
-    //   return setAlert({
-    //     isShow: true,
-    //     content: error,
-    //   });
-    // }
-  };
-
-  const requestRegisterCustomerInfoStep3 = async () => {
-    // const { ekyc_aplct_stp_c, cusno } = ekycStepStatus || {};
-    // //Ignore call API, navigate directly to Enter Personal Detail Screen
-    // if (Number(ekyc_aplct_stp_c) === 3) {
-    //   const isFetchCustomerData = !!cusno;
-    //   return onConfirm(isFetchCustomerData);
-    // }
-    // setShowLoading(true);
-    // const { email, firstName, lastName, packageId } = ekycCached;
-    // const payload = {
-    //   cus_email: email,
-    //   uuid_v: deviceId,
-    //   cus_fst_nm: firstName,
-    //   cus_last_nm: lastName,
-    //   e_sgn_trx_id: packageId,
-    // };
-    // const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep3, payload);
-    // setShowLoading(false);
-    // if (isSuccess) {
-    //   const { confm_proc_s: processingStatus, cusno } = data || {};
-    //   if (['20', '30'].includes(processingStatus)) {
-    //     setShowRetryBtn(true);
-    //     setShowToast({
-    //       isShow: true,
-    //       message: t(labels.unableToRetrieve),
-    //       type: 'error',
-    //     });
-    //   } else if (processingStatus === '40') {
-    //     const isFetchCustomerData = !!cusno;
-    //     onConfirm(isFetchCustomerData);
-    //   } else if (['50', '60'].includes(processingStatus)) {
-    //     return navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
-    //   }
-    // } else {
-    //   return setAlert({
-    //     isShow: true,
-    //     content: error,
-    //   });
-    // }
-  };
-
   const checkUpdateEmailStatus = async () => {
     setShowLoading(true);
     const payload = {
-      userId,
-      cus_email: email,
+      userId: updateEmailInfo.userId,
+      cus_email: updateEmailInfo.email,
+      cus_fst_nm: updateEmailInfo.firstName,
+      cus_last_nm: updateEmailInfo.lastName,
     };
     const { data, error, isSuccess } = await requestApi(endpoints.inquiryUserVerification, payload);
     setShowLoading(false);
     if (isSuccess) {
-      const { confm_proc_s: processingStatus } = data || {};
+      const { confm_proc_s: processingStatus, rslt_d: resultStatus } = data || {};
+      if (!Number(resultStatus) || ['50', '60'].includes(processingStatus)) {
+        clearEmailUpdateInfo();
+        setVerifyStatus(UpdateEmailVerifyStatus.FAILED);
+        return;
+      }
       if (['20', '30'].includes(processingStatus)) {
         setShowRetryBtn(true);
         // setShowToast({
@@ -126,12 +69,9 @@ const IdentityVerifyResult = () => {
         //   message: t(labels.unableToRetrieve),
         //   type: 'error',
         // });
-      } else if (processingStatus === '40') {
+      } else if (['10', '40'].includes(processingStatus)) {
         clearEmailUpdateInfo();
         setVerifyStatus(UpdateEmailVerifyStatus.SUCCESS);
-      } else if (['50', '60'].includes(processingStatus)) {
-        clearEmailUpdateInfo();
-        setVerifyStatus(UpdateEmailVerifyStatus.FAILED);
       }
     } else {
       return setAlert({
@@ -142,7 +82,24 @@ const IdentityVerifyResult = () => {
   };
 
   const handleResendEmail = async () => {
-    //TODO: Handle resend email
+    setShowLoading(true);
+    const payload = {
+      userId: updateEmailInfo.userId,
+      cus_email: updateEmailInfo.email,
+      cus_fst_nm: updateEmailInfo.firstName,
+      cus_last_nm: updateEmailInfo.lastName,
+      rsnd_flg: 'Y',
+    };
+    const { data, error, isSuccess } = await requestApi(endpoints.inquiryUserVerification, payload);
+    setShowLoading(false);
+    if (isSuccess) {
+      //TODO: Show toast
+    } else {
+      return setAlert({
+        isShow: true,
+        content: error,
+      });
+    }
   };
 
   const onClickConfirmBtn = () => {
