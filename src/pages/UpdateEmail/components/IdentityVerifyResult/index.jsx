@@ -37,20 +37,10 @@ const IdentityVerifyResult = () => {
     moveHomeNative();
   };
 
-  const handleStartOver = () => {
-    // if (isNavigateFromLogin) {
-    //   clearEkycInfo();
-    //   moveHomeNative();
-    // } else {
-    //   onNavigateVerifyMember();
-    // }
-  };
-
   const checkUpdateEmailStatus = async () => {
     setShowLoading(true);
     const payload = {
-      // userId: updateEmailInfo.userId,
-      userId: 'SOLTEST11',
+      userId: updateEmailInfo.userId,
       cus_email: updateEmailInfo.email,
       cus_fst_nm: updateEmailInfo.firstName,
       cus_last_nm: updateEmailInfo.lastName,
