@@ -27,6 +27,8 @@ const ReissueCard = ({ translate: t }) => {
   const [reissueCardSuccessInfo, setReissueCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState(initAlert);
+  const [userInfo, setUserInfo] = useState();
+
   const [showToast, setShowToast] = useState({
     isShow: false,
     message: '',
@@ -70,6 +72,7 @@ const ReissueCard = ({ translate: t }) => {
         issueDate,
         expireDate,
       });
+      requestGetUserInfo();
     } else {
       setAlert({
         isShow: true,
@@ -271,6 +274,27 @@ const ReissueCard = ({ translate: t }) => {
     }
   };
 
+  const requestGetUserInfo = async () => {
+    setShowLoading(true);
+    const {
+      data: customerResponse,
+      error,
+      isSuccess,
+      requiredLogin,
+    } = await requestApi(endpoints.inquiryUserInformation);
+    setShowLoading(false);
+    if (isSuccess) {
+      setUserInfo(customerResponse);
+    } else {
+      setAlert({
+        isShow: true,
+        content: error,
+        title: '',
+        requiredLogin,
+      });
+    }
+  };
+
   useEffect(() => {
     requestGetProvinces();
   }, []);
@@ -297,6 +321,7 @@ const ReissueCard = ({ translate: t }) => {
             email={email}
             isLogin={isLogin}
             provinceOptions={provinceOptions}
+            userInfo={userInfo}
             translate={t}
           />
         )}

@@ -13,7 +13,7 @@ import TfsaSaving from '@assets/images/account-tfsa-saving.png';
 import { ProductCode } from '@common/constants/product';
 
 export const OpenAccountTermFile = {
-  [ProductCode.CHEQUING]: '/img/511/pdf/5117020025',
+  [ProductCode.CHEQUING]: '/img/511/pdf/5117020029',
   [ProductCode.E_SAVING]: '/img/511/pdf/5117020025',
   [ProductCode.TFSA_E_SAVINGS]: '/img/511/pdf/5117020027',
   [ProductCode.RRSP_E_SAVINGS]: '/img/511/pdf/5117020028',

@@ -593,7 +593,7 @@ const ChangeProfile = ({ translate: t }) => {
           open={showViewAgreementTermBottom}
           onClose={() => setShowViewAgreementTermBottom(false)}
           title={t(labels.electronicAgree)}
-          pdfFile={fileUrls.electronicCommunicationAgreement}
+          pdfFile={fileUrls.electronicCommunicationProfile}
           hiddenConfirmBtn
         />
       )}

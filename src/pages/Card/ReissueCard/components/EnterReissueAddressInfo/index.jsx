@@ -10,6 +10,7 @@ import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
+import { addressTypeMapping } from '@common/constants/address';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
 import {
@@ -19,13 +20,14 @@ import {
   postalCodeNotAllowRegex,
 } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { buildObjectMapFromResponse } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 
-import { reissueCardDetails, reissueCardTermsConfig } from '../../constants';
+import { mailingAddressFormMapFields, reissueCardDetails, reissueCardTermsConfig } from '../../constants';
 import { reissueCardAddressSchema } from './schema';
 import './styles.scss';
 
-const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceOptions, translate: t }) => {
+const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceOptions, userInfo, translate: t }) => {
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [viewTermBottom, setViewTermBottom] = useState({
     open: false,
@@ -41,6 +43,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
     setValue,
     watch,
     formState: { isValid },
+    reset,
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(reissueCardAddressSchema),
@@ -123,6 +126,16 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
   useEffect(() => {
     setValue('isLogin', !!isLogin);
   }, [isLogin]);
+
+  useEffect(() => {
+    if (userInfo) {
+      const defaultAddress = (userInfo?.r_CAME001_1Vo || []).find(
+        item => String(item.cus_adr_t) === addressTypeMapping.home
+      );
+      const mailingAddressDefaultValue = buildObjectMapFromResponse(defaultAddress, mailingAddressFormMapFields);
+      reset(mailingAddressDefaultValue);
+    }
+  }, [userInfo]);
 
   return (
     <>

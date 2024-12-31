@@ -37,15 +37,6 @@ const IdentityVerifyResult = () => {
     moveHomeNative();
   };
 
-  const handleStartOver = () => {
-    // if (isNavigateFromLogin) {
-    //   clearEkycInfo();
-    //   moveHomeNative();
-    // } else {
-    //   onNavigateVerifyMember();
-    // }
-  };
-
   const checkUpdateEmailStatus = async () => {
     setShowLoading(true);
     const payload = {
