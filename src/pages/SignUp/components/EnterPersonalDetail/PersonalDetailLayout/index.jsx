@@ -71,7 +71,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
     mode: 'onChange',
     resolver: yupResolver(SignUpPersonalDetailSchema),
     defaultValues: {
-      title: 'MR',
+      title: '',
       showAdditionalInfo: false,
     },
   });
@@ -280,7 +280,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
         employmentStatus: String(customer?.employmentStatus || ''),
         occupation1: String(customer?.occupation1 || ''),
         showAdditionalInfo: false,
-        title: customer.title || 'MR',
+        title: customer.title || '',
       });
       trigger();
     }
