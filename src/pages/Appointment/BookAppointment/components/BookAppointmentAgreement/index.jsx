@@ -66,7 +66,7 @@ const BookAppointmentAgreement = ({ translate: t, onSubmit }) => {
           open={showViewAgreementTermBottom}
           onClose={() => setShowViewAgreementTermBottom(false)}
           title={t(labels.serviceAgreement)}
-          pdfFile={fileUrls.cardHolderAgreement}
+          pdfFile={fileUrls.bookAppointmentAgreement}
           onConfirm={handleConfirmAgreement}
         />
       )}

@@ -7,7 +7,7 @@ export const signUpTermConditionConfig = {
       label: labels.collectAndUse,
       value: '1',
       title: labels.collectAndUse,
-      fileUrl: fileUrls.cardHolderAgreement,
+      fileUrl: fileUrls.personalBankingAgreement,
     },
     {
       label: labels.generalTerms,
@@ -19,25 +19,25 @@ export const signUpTermConditionConfig = {
       label: labels.electronicDelivery,
       value: '3',
       title: labels.electronicDelivery,
-      fileUrl: fileUrls.cardHolderAgreement,
+      fileUrl: fileUrls.electronicCommunicationSignUp,
     },
     {
       label: labels.automatedProcessing,
       value: '4',
       title: labels.automatedProcessing,
-      fileUrl: fileUrls.cardHolderAgreement,
+      fileUrl: fileUrls.privacyCode,
     },
     {
       label: labels.privacyCode,
       value: '5',
       title: labels.privacyCode,
-      fileUrl: fileUrls.cardHolderAgreement,
+      fileUrl: fileUrls.digitalAccessAgreement,
     },
     {
       label: labels.identityVerification,
       value: '6',
       title: labels.identityVerification,
-      fileUrl: fileUrls.cardHolderAgreement,
+      fileUrl: fileUrls.identityVerification,
     },
   ],
 };
