@@ -85,7 +85,8 @@ const IdentityVerifyResult = () => {
   const handleResendEmail = async () => {
     setShowLoading(true);
     const payload = {
-      userId: updateEmailInfo.userId,
+      // userId: updateEmailInfo.userId,
+      userId: 'SOLTEST11',
       cus_email: updateEmailInfo.email,
       cus_fst_nm: updateEmailInfo.firstName,
       cus_last_nm: updateEmailInfo.lastName,
