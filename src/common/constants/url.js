@@ -6,7 +6,7 @@ export const fileUrls = {
   electronicCommunicationSignUp: '/pdf/Electronic_Communication_Agreement_122424.pdf',
   privacyCode: '/pdf/Privacy_Code_122424.pdf',
   digitalAccessAgreement: '/pdf/Digital_Access_Agreement_122424.pdf',
-  identityVerification: '/pdf/pdf/Identify_Verification.pdf',
+  identityVerification: '/pdf/Identify_Verification.pdf',
 };
 
 export const externalUrls = {
