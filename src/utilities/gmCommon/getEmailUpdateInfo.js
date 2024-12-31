@@ -21,7 +21,9 @@ const getEmailUpdateInfo = cb => {
   }
   return $h.exec(
     result => {
-      cb(result);
+      console.log('call getEmailUpdateInfo data :>> ', result);
+      const cbData = result?.data || {};
+      cb(cbData);
     },
     'GMCommon',
     'getEmailUpdateInfo',
