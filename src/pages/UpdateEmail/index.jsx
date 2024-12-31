@@ -68,8 +68,8 @@ const UpdateEmail = ({ translate }) => {
   };
 
   const getEmailUpdateInfoCallback = result => {
-    const { email } = result || {};
-    if (email) {
+    const { email, userId, firstName, lastName } = result || {};
+    if (email && userId && firstName && lastName) {
       //Just check one param, don't need check all params
       setUpdateEmailInfo(result);
       setCurrentStep(UpdateEmailStep.IDENTIFICATION_RESULT);
