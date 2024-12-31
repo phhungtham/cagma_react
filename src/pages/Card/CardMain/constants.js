@@ -10,10 +10,6 @@ export const guestCardOptions = [
     value: CardActionTypes.ACTIVE,
   },
   {
-    label: cardLabels.reissueAccessCard,
-    value: CardActionTypes.REISSUE,
-  },
-  {
     label: cardLabels.reportLostCard,
     value: CardActionTypes.REPORT_LOST,
   },
@@ -23,10 +19,6 @@ export const CardTypeWithNavigateParams = {
   [CardActionTypes.ACTIVE]: {
     menuCode: MENU_CODE.ACTIVE_CARD,
     path: routePaths.activeCard,
-  },
-  [CardActionTypes.REISSUE]: {
-    menuCode: MENU_CODE.REISSUE_CARD,
-    path: routePaths.reissueCard,
   },
   [CardActionTypes.REPORT_LOST]: {
     menuCode: MENU_CODE.REPORT_LOST_CARD,

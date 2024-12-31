@@ -46,14 +46,8 @@ export const reissueCardTermsConfig = {
   selectAllLabel: labels.agreeToApplication,
   options: [
     {
-      label: labels.accessCardApplication,
-      value: '1',
-      title: 'Access Card Application',
-      fileUrl: fileUrls.cardHolderAgreement,
-    },
-    {
       label: labels.cardholderAgreement,
-      value: '2',
+      value: '1',
       title: 'Cardholder Agreement',
       fileUrl: fileUrls.cardHolderAgreement,
     },
@@ -86,3 +80,12 @@ export const reissueCardSuccessFields = [
     value: 'postalCode',
   },
 ];
+
+export const mailingAddressFormMapFields = {
+  postalCode: 'cus_adr_zipc',
+  province: 'state_c',
+  streetName: 'adr_colny_nm',
+  aptNumber: 'adr_strt_nm',
+  streetNumber: 'adr_houseno_in_ctt',
+  city: 'cus_adr2',
+};
