@@ -33,11 +33,5 @@ export const signUpTermConditionConfig = {
       title: labels.privacyCode,
       fileUrl: fileUrls.digitalAccessAgreement,
     },
-    {
-      label: labels.identityVerification,
-      value: '6',
-      title: labels.identityVerification,
-      fileUrl: fileUrls.identityVerification,
-    },
   ],
 };
