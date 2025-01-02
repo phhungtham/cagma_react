@@ -327,7 +327,12 @@ const SignUp = ({ translate }) => {
           />
         )}
         {currentStep === SignUpStep.CREATE_ID && <SignUpCreateID onConfirm={handleCreateID} />}
-        {currentStep === SignUpStep.CREATE_PASSWORD && <SignUpCreatePassword onConfirm={handleCreatePassword} />}
+        {currentStep === SignUpStep.CREATE_PASSWORD && (
+          <SignUpCreatePassword
+            onConfirm={handleCreatePassword}
+            onNavigateCreateId={handleNavigateCreateId}
+          />
+        )}
         {currentStep === SignUpStep.MOTP_AGREE_TERMS && (
           <AgreeTermsConditions onConfirm={handleConfirmTermsConditions} />
         )}
