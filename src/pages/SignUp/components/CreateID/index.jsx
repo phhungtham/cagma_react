@@ -13,11 +13,10 @@ import { notAllowNumberAlphabetRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
-import { moveBack } from '@utilities/index';
 
 import { createIdFormSchema } from './schema';
 
-const SignUpCreateID = ({ onConfirm }) => {
+const SignUpCreateID = ({ onConfirm, onNavigateThankVisitAgain }) => {
   const { translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
@@ -72,7 +71,8 @@ const SignUpCreateID = ({ onConfirm }) => {
         {showLoading && <Spinner />}
         <Header
           title={t(menuLabels.signUp)}
-          onClick={moveBack}
+          disabledMoveBack
+          onClickBack={onNavigateThankVisitAgain}
         />
         <div className="h-screen__content pt-5">
           <div className="page__title">{t(labels.createYourId)}</div>

@@ -75,10 +75,6 @@ const SignUp = ({ translate }) => {
     setCurrentStep(SignUpStep.MOTP_AGREE_TERMS);
   };
 
-  const handleConfirmEmail = values => {
-    setCurrentStep(SignUpStep.VERIFY_IDENTITY_TERMS);
-  };
-
   const handleNavigateEnterEmail = () => {
     setCurrentStep(SignUpStep.ENTER_EMAIL);
   };
@@ -196,6 +192,10 @@ const SignUp = ({ translate }) => {
     });
   };
 
+  const handleNavigateThankVisitAgain = () => {
+    setCurrentStep(SignUpStep.THANK_VISIT_AGAIN);
+  };
+
   const requestCheckEkycStatus = async ({ deviceId, email }) => {
     setShowLoading(true);
     const payload = {
@@ -289,7 +289,6 @@ const SignUp = ({ translate }) => {
         )}
         {currentStep === SignUpStep.ENTER_EMAIL && (
           <SignUpEnterEmail
-            onConfirm={handleConfirmEmail}
             onNavigateEkycVerify={handleNavigateEkycVerify}
             onNavigateMOTPAgreeTerms={handleNavigateMOTPAgreeTerms}
             onNavigateVerifyMember={handleNavigateVerifyMembership}
@@ -326,7 +325,12 @@ const SignUp = ({ translate }) => {
             onNavigateCreatePasscode={handleNavigateCreatePasscode}
           />
         )}
-        {currentStep === SignUpStep.CREATE_ID && <SignUpCreateID onConfirm={handleCreateID} />}
+        {currentStep === SignUpStep.CREATE_ID && (
+          <SignUpCreateID
+            onConfirm={handleCreateID}
+            onNavigateThankVisitAgain={handleNavigateThankVisitAgain}
+          />
+        )}
         {currentStep === SignUpStep.CREATE_PASSWORD && (
           <SignUpCreatePassword
             onConfirm={handleCreatePassword}
