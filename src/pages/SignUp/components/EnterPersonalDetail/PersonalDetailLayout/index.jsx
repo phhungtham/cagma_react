@@ -194,6 +194,14 @@ const PersonalDetailLayout = ({ onSubmit }) => {
         [CommonCodeFieldName.EMPLOYMENT_STATUS]: convertedEmploymentStatus,
         [CommonCodeFieldName.RESIDENTIAL_STATUS]: convertedResidentialStatus,
       });
+      if (existingCustomer) {
+        const isCustomerTitleValid = (convertedCustomerTitleNames || []).some(
+          title => title.value === existingCustomer.cus_ttl_nm
+        );
+        if (!isCustomerTitleValid) {
+          setValue('title', '', { shouldValidate: true });
+        }
+      }
       requestGetBranches();
     } else {
       return setAlert({
@@ -275,6 +283,10 @@ const PersonalDetailLayout = ({ onSubmit }) => {
     if (existingCustomer) {
       const customer = buildObjectMapFromResponse(existingCustomer, signUpPersonalMapFields);
       customer.dob_display = customer.dob ? formatYYYYMMDDToDisplay(customer.dob) : '';
+      //Set sin empty with type different sin type
+      if (existingCustomer?.lcl_cus_rlnm_no_t2 !== '53') {
+        customer.sin = '';
+      }
       reset({
         ...customer,
         employmentStatus: String(customer?.employmentStatus || ''),
