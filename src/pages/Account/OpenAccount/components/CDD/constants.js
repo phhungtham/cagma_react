@@ -17,4 +17,4 @@ export const CDDSelectType = {
   AMOUNT: 'amount',
 };
 
-export const cddRelationshipOther = '05';
+export const cddRelationshipOthers = ['7', '9'];

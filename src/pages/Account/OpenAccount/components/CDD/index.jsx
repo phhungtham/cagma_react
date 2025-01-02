@@ -22,7 +22,7 @@ import useApi from '@hooks/useApi';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { moveBack } from '@utilities/index';
 
-import { accountReceiveLargeTransferOptions, cddRelationshipOther, CDDSelectType } from './constants';
+import { accountReceiveLargeTransferOptions, cddRelationshipOthers, CDDSelectType } from './constants';
 import { cddFormSchema } from './schema';
 import './styles.scss';
 
@@ -48,7 +48,7 @@ const CDD = ({ setAlert, onConfirm, translate: t }) => {
 
   const [accountReceiveTransferYN, relationship] = watch(['accountReceiveTransferYN', 'relationship']);
   const isReceiveTransfer = accountReceiveTransferYN === '1';
-  const isRelationshipOtherSelected = relationship === cddRelationshipOther;
+  const isRelationshipOtherSelected = cddRelationshipOthers.includes(relationship);
 
   const handleOpenSelectCountryBottom = () => {
     setCurrentSelectFieldName('country');
