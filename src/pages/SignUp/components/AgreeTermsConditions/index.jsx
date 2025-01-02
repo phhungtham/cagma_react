@@ -5,15 +5,19 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
+import { isDevelopmentEnv } from '@common/constants/common';
+import { endpoints } from '@common/constants/endpoint';
 import { signUpMOTPAgreeTermsLabels as labels, menuLabels } from '@common/constants/labels';
+import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
-import { moveBack } from '@utilities/index';
+import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
 
 import { signUpTermConditionConfig } from './constants';
 import './styles.scss';
 
 const AgreeTermsConditions = ({ onConfirm }) => {
-  const { translate: t } = useContext(SignUpContext);
+  const { translate: t, isNavigateFromLogin } = useContext(SignUpContext);
   const [checkedOptions, setCheckedOptions] = useState([]);
   const [viewTermBottom, setViewTermBottom] = useState({
     open: false,
@@ -21,6 +25,8 @@ const AgreeTermsConditions = ({ onConfirm }) => {
     fileUrl: '',
     value: '',
   });
+  const { requestApi } = useApi();
+  const { moveHomeNative } = useMove();
 
   const isValidForm = checkedOptions?.length === signUpTermConditionConfig.options.length;
 
@@ -75,12 +81,28 @@ const AgreeTermsConditions = ({ onConfirm }) => {
     setViewTermBottom({ ...viewTermBottom, open: false });
   };
 
+  const handleLogout = async () => {
+    if (isDevelopmentEnv) {
+      localStorage.removeItem('isLogin');
+    }
+    await requestApi(endpoints.logout);
+  };
+
+  const handleClickBack = async () => {
+    if (isNavigateFromLogin) {
+      clearTempLoginInfo();
+      await handleLogout();
+    }
+    moveHomeNative();
+  };
+
   return (
     <>
       <div className="agree-terms-conditions__wrapper">
         <Header
           title={t(menuLabels.security)}
-          onClick={moveBack}
+          disabledMoveBack
+          onClickBack={handleClickBack}
         />
         <div className="h-screen__content pt-5 px-0">
           <div className="page__container">

@@ -75,10 +75,6 @@ const SignUp = ({ translate }) => {
     setCurrentStep(SignUpStep.MOTP_AGREE_TERMS);
   };
 
-  const handleConfirmEmail = values => {
-    setCurrentStep(SignUpStep.VERIFY_IDENTITY_TERMS);
-  };
-
   const handleNavigateEnterEmail = () => {
     setCurrentStep(SignUpStep.ENTER_EMAIL);
   };
@@ -152,7 +148,7 @@ const SignUp = ({ translate }) => {
   };
 
   const handleNavigateCreatePasscode = () => {
-    setCurrentStep(SignUpStep.MOTP_AGREE_TERMS);
+    handleNavigatePasscodeAgreeTerms();
   };
 
   const handleCreateID = id => {
@@ -160,8 +156,12 @@ const SignUp = ({ translate }) => {
     setCurrentStep(SignUpStep.CREATE_PASSWORD);
   };
 
-  const handleCreatePassword = () => {
+  const handleNavigatePasscodeAgreeTerms = () => {
     setCurrentStep(SignUpStep.MOTP_AGREE_TERMS);
+  };
+
+  const handleCreatePassword = () => {
+    handleNavigatePasscodeAgreeTerms();
   };
 
   const handleConfirmTermsConditions = () => {
@@ -190,6 +190,10 @@ const SignUp = ({ translate }) => {
       ...alert,
       isShow: false,
     });
+  };
+
+  const handleNavigateThankVisitAgain = () => {
+    setCurrentStep(SignUpStep.THANK_VISIT_AGAIN);
   };
 
   const requestCheckEkycStatus = async ({ deviceId, email }) => {
@@ -285,7 +289,6 @@ const SignUp = ({ translate }) => {
         )}
         {currentStep === SignUpStep.ENTER_EMAIL && (
           <SignUpEnterEmail
-            onConfirm={handleConfirmEmail}
             onNavigateEkycVerify={handleNavigateEkycVerify}
             onNavigateMOTPAgreeTerms={handleNavigateMOTPAgreeTerms}
             onNavigateVerifyMember={handleNavigateVerifyMembership}
@@ -322,12 +325,27 @@ const SignUp = ({ translate }) => {
             onNavigateCreatePasscode={handleNavigateCreatePasscode}
           />
         )}
-        {currentStep === SignUpStep.CREATE_ID && <SignUpCreateID onConfirm={handleCreateID} />}
-        {currentStep === SignUpStep.CREATE_PASSWORD && <SignUpCreatePassword onConfirm={handleCreatePassword} />}
+        {currentStep === SignUpStep.CREATE_ID && (
+          <SignUpCreateID
+            onConfirm={handleCreateID}
+            onNavigateThankVisitAgain={handleNavigateThankVisitAgain}
+          />
+        )}
+        {currentStep === SignUpStep.CREATE_PASSWORD && (
+          <SignUpCreatePassword
+            onConfirm={handleCreatePassword}
+            onNavigateCreateId={handleNavigateCreateId}
+          />
+        )}
         {currentStep === SignUpStep.MOTP_AGREE_TERMS && (
           <AgreeTermsConditions onConfirm={handleConfirmTermsConditions} />
         )}
-        {currentStep === SignUpStep.CREATE_PASSCODE && <SignUpCreatePasscode onConfirm={handleCreatePasscodeSuccess} />}
+        {currentStep === SignUpStep.CREATE_PASSCODE && (
+          <SignUpCreatePasscode
+            onConfirm={handleCreatePasscodeSuccess}
+            onNavigatePasscodeAgreeTerms={handleNavigatePasscodeAgreeTerms}
+          />
+        )}
         {currentStep === SignUpStep.SIGN_UP_COMPLETE && <SignUpSuccess />}
       </div>
       <Alert

@@ -14,12 +14,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import { SignUpContext } from '@pages/SignUp';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
-import { moveBack } from '@utilities/index';
 
 import { createIdFormSchema } from './schema';
 import './styles.scss';
 
-const SignUpCreatePassword = ({ onConfirm }) => {
+const SignUpCreatePassword = ({ onConfirm, onNavigateCreateId }) => {
   const { deviceId, userId, setEkycToNativeCache, ekycCached, translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
@@ -105,7 +104,8 @@ const SignUpCreatePassword = ({ onConfirm }) => {
         {showLoading && <Spinner />}
         <Header
           title={t(menuLabels.signUp)}
-          onClick={moveBack}
+          disabledMoveBack
+          onClickBack={onNavigateCreateId}
         />
         <div className="create-password__wrapper h-screen__content pt-5">
           <div className="page__title">{t(labels.createYourLoginPass)}</div>

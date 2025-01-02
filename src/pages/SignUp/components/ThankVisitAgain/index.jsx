@@ -11,6 +11,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import Header from '@common/components/organisms/Header';
+import { isDevelopmentEnv } from '@common/constants/common';
 import { getIdTypes } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import {
@@ -23,21 +24,21 @@ import {
 import { notAllowSpaceRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { SignUpStepStatus } from '@pages/SignUp/constants';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
+import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
 import openCalendar from '@utilities/gmCommon/openCalendar';
 import showCertificationChar from '@utilities/gmSecure/showCertificationChar';
-import { moveBack } from '@utilities/index';
 import dayjs from 'dayjs';
 
 import { verifyIdFormSchema } from './schema';
 
 const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, onNavigateCreatePasscode }) => {
-  const { deviceId, ekycStepStatus, translate: t } = useContext(SignUpContext);
-  const { requestApi } = useApi();
+  const { deviceId, ekycStepStatus, translate: t, isNavigateFromLogin } = useContext(SignUpContext);
   const [showIncorrectInfoAlert, setShowIncorrectInfoAlert] = useState(false);
   const [showIdTypesBottom, setShowIdTypesBottom] = useState();
   const [idTypes, setIdTypes] = useState([]);
@@ -62,6 +63,8 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
     mode: 'onChange',
     resolver: yupResolver(verifyIdFormSchema),
   });
+  const { requestApi } = useApi();
+  const { moveHomeNative } = useMove();
 
   const [dob] = watch(['dob']);
 
@@ -173,6 +176,21 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
     }
   };
 
+  const handleLogout = async () => {
+    if (isDevelopmentEnv) {
+      localStorage.removeItem('isLogin');
+    }
+    await requestApi(endpoints.logout);
+  };
+
+  const handleClickBack = async () => {
+    if (isNavigateFromLogin) {
+      clearTempLoginInfo();
+      await handleLogout();
+    }
+    moveHomeNative();
+  };
+
   useEffect(() => {
     requestGetIdTypes();
   }, []);
@@ -183,7 +201,8 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
       <div>
         <Header
           title={t(menuLabels.signUp)}
-          onClick={moveBack}
+          disabledMoveBack
+          onClickBack={handleClickBack}
         />
         <div className="h-screen__content pt-5">
           <div className="page__title">{t(labels.thankYouVisiting)}</div>
