@@ -152,7 +152,7 @@ const SignUp = ({ translate }) => {
   };
 
   const handleNavigateCreatePasscode = () => {
-    setCurrentStep(SignUpStep.MOTP_AGREE_TERMS);
+    handleNavigatePasscodeAgreeTerms();
   };
 
   const handleCreateID = id => {
@@ -160,8 +160,12 @@ const SignUp = ({ translate }) => {
     setCurrentStep(SignUpStep.CREATE_PASSWORD);
   };
 
-  const handleCreatePassword = () => {
+  const handleNavigatePasscodeAgreeTerms = () => {
     setCurrentStep(SignUpStep.MOTP_AGREE_TERMS);
+  };
+
+  const handleCreatePassword = () => {
+    handleNavigatePasscodeAgreeTerms();
   };
 
   const handleConfirmTermsConditions = () => {
@@ -327,7 +331,12 @@ const SignUp = ({ translate }) => {
         {currentStep === SignUpStep.MOTP_AGREE_TERMS && (
           <AgreeTermsConditions onConfirm={handleConfirmTermsConditions} />
         )}
-        {currentStep === SignUpStep.CREATE_PASSCODE && <SignUpCreatePasscode onConfirm={handleCreatePasscodeSuccess} />}
+        {currentStep === SignUpStep.CREATE_PASSCODE && (
+          <SignUpCreatePasscode
+            onConfirm={handleCreatePasscodeSuccess}
+            onNavigatePasscodeAgreeTerms={handleNavigatePasscodeAgreeTerms}
+          />
+        )}
         {currentStep === SignUpStep.SIGN_UP_COMPLETE && <SignUpSuccess />}
       </div>
       <Alert

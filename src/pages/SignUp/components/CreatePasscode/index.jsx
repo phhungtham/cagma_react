@@ -7,11 +7,10 @@ import { signUpCreateMOTPLabels as labels, menuLabels } from '@common/constants/
 import { SignUpContext } from '@pages/SignUp';
 import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import createSecurityPasscode from '@utilities/gmSecure/createSecurityPasscode';
-import { moveBack } from '@utilities/index';
 
 import './styles.scss';
 
-const SignUpCreatePasscode = ({ onConfirm }) => {
+const SignUpCreatePasscode = ({ onConfirm, onNavigatePasscodeAgreeTerms }) => {
   const { translate: t, isNavigateFromLogin } = useContext(SignUpContext);
 
   const handleCreatePasscodeCallback = ({ isDone, userId }) => {
@@ -22,10 +21,13 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
   };
 
   const handleSubmitForm = () => {
-    console.log('call Plugin Create Security Passcode Params isNavigateFromLogin :>> ', isNavigateFromLogin);
     createSecurityPasscode(handleCreatePasscodeCallback, {
       isFromLogin: isNavigateFromLogin || false,
     });
+  };
+
+  const handleClickBack = async () => {
+    onNavigatePasscodeAgreeTerms();
   };
 
   return (
@@ -33,7 +35,8 @@ const SignUpCreatePasscode = ({ onConfirm }) => {
       <div className="create-passcode__wrapper">
         <Header
           title={t(menuLabels.security)}
-          onClick={moveBack}
+          disabledMoveBack
+          onClickBack={handleClickBack}
         />
         <div className="h-screen__content pt-5 px-0">
           <div className="page__container">

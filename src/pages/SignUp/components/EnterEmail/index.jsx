@@ -215,10 +215,10 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
     await requestApi(endpoints.logout);
   };
 
-  const handleClickBack = () => {
+  const handleClickBack = async () => {
     if (isNavigateFromLogin) {
       clearTempLoginInfo();
-      handleLogout();
+      await handleLogout();
       moveHomeNative();
     } else {
       onNavigateVerifyMember();
