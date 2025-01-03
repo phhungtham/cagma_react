@@ -79,6 +79,10 @@ export const reissueCardSuccessFields = [
     label: labels.postalCode2,
     value: 'postalCode',
   },
+  {
+    label: labels.issueDate2,
+    value: 'issueDate',
+  },
 ];
 
 export const mailingAddressFormMapFields = {
