@@ -9,7 +9,7 @@ import { callPhone } from '@utilities/index';
 import { reissueCardSuccessFields } from '../../constants';
 import './styles.scss';
 
-const ReissueCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
+const ReissueCardSuccess = ({ cardInfo, translate: t }) => {
   const { moveHomeNative } = useMove();
 
   const onClickNavigateHome = () => {
@@ -49,16 +49,6 @@ const ReissueCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
               </span>
             </div>
           ))}
-        </div>
-        <div className="reissue-card__info mt-4 flex-gap-y-16">
-          <div className="form__section__title mb-0">{t(labels.reissueInformation)}</div>
-          <div className="divider__item__black" />
-          <div className="card-item">
-            <span className="card-label">{t(labels.issueDate2)}</span>
-            <span className="card-value">
-              <span>{cardInfo?.issueDate}</span>
-            </span>
-          </div>
         </div>
         <div className="reissue-card__ctas">
           <div className="reissue-card__button">

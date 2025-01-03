@@ -61,7 +61,10 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
                 render={({ field }) => (
                   <Input
                     label={t(labels.phoneNumber)}
-                    placeholder="eg. 647-123-4567"
+                    type="text"
+                    inputMode="numeric"
+                    regex={notAllowNumberRegex}
+                    maxLength={30}
                     {...field}
                   />
                 )}

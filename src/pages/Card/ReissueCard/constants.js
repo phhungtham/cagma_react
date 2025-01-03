@@ -3,7 +3,6 @@ import { fileUrls } from '@common/constants/url';
 
 export const REISSUE_CARD_STEP = {
   ENTER_CARD_INFORMATION: 'enterInformation',
-  ENTER_ADDRESS_INFORMATION: 'enterAddressInformation',
   COMPLETED: 'completed',
 };
 
@@ -78,6 +77,10 @@ export const reissueCardSuccessFields = [
   {
     label: labels.postalCode2,
     value: 'postalCode',
+  },
+  {
+    label: labels.issueDate2,
+    value: 'issueDate',
   },
 ];
 

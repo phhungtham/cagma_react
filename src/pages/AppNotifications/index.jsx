@@ -16,7 +16,7 @@ import useLoginInfo from '@hooks/useLoginInfo';
 import useMove from '@hooks/useMove';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { getLanguageFM } from '@utilities/index';
-import { setIsNativeClickBack } from 'app/redux/action';
+import { setIsNativeClickBack, setNativeParams } from 'app/redux/action';
 import { appLanguage, backEventSelector, nativeParamsSelector } from 'app/redux/selector';
 import dayjs from 'dayjs';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -309,11 +309,22 @@ const AppNotifications = ({ translate: t }) => {
     };
   }, [isNativeBack]);
 
+  const handleOnClickBack = () => {
+    if (nativeParams) {
+      setNativeParams({}); // cleanup param from native
+    }
+    moveBackNative();
+  };
+  console.log('nativeParams >>>', nativeParams);
   return (
     <div className="notification__wrapper">
       {showFirstTimeLoading && <Spinner />}
       <div className="notification__header">
-        <Header title={t(menuLabels.appNotification)} />
+        <Header
+          title={t(menuLabels.appNotification)}
+          disabledMoveBack
+          onClickBack={handleOnClickBack}
+        />
       </div>
       <div className="notification__content">
         <Tabs

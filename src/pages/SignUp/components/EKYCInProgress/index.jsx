@@ -8,6 +8,7 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/IconButton';
 import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
+import { isDevelopmentEnv } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, signUpVerifyIdentityLabels as labels, signUpVerifyUserLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
@@ -36,7 +37,17 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult, onNavigateVerifyMem
   });
   const { requestApi } = useApi();
 
-  const handleNavigateHome = () => {
+  const handleLogout = async () => {
+    if (isDevelopmentEnv) {
+      localStorage.removeItem('isLogin');
+    }
+    await requestApi(endpoints.logout);
+  };
+
+  const handleNavigateHome = async () => {
+    if (isNavigateFromLogin) {
+      await handleLogout();
+    }
     moveHomeNative();
   };
 
