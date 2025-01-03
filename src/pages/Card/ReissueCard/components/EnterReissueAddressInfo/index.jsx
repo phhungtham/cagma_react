@@ -17,6 +17,7 @@ import {
   invalidNameRegex,
   notAllowAlphabetRegex,
   notAllowNumberAlphabetRegex,
+  notAllowNumberRegex,
   postalCodeNotAllowRegex,
 } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -260,7 +261,10 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
                   render={({ field }) => (
                     <Input
                       label={t(labels.phoneNumber)}
-                      placeholder="Please include the '-'." //TODO: Confirm phone number for input mode numeric and max length
+                      type="text"
+                      inputMode="numeric"
+                      regex={notAllowNumberRegex}
+                      maxLength={30}
                       {...field}
                     />
                   )}

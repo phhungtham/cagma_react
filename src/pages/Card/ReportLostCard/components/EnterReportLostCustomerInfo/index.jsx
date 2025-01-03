@@ -7,7 +7,12 @@ import Input from '@common/components/atoms/Input/Input';
 import InputDate from '@common/components/atoms/Input/InputDate';
 import Header from '@common/components/organisms/Header';
 import { reportLostCardLabels as labels, menuLabels } from '@common/constants/labels';
-import { invalidAccident, invalidNameRegex, postalCodeNotAllowRegex } from '@common/constants/regex';
+import {
+  invalidAccident,
+  invalidNameRegex,
+  notAllowNumberRegex,
+  postalCodeNotAllowRegex,
+} from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import openCalendar from '@utilities/gmCommon/openCalendar';
@@ -104,7 +109,10 @@ const EnterReportLostCustomerInfo = ({
                 render={({ field }) => (
                   <Input
                     label={t(labels.phoneNumber)}
-                    placeholder="Please include the '-'." //TODO: Confirm phone number for input mode numeric and max length
+                    type="text"
+                    inputMode="numeric"
+                    regex={notAllowNumberRegex}
+                    maxLength={30}
                     {...field}
                   />
                 )}
