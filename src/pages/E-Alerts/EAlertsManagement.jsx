@@ -15,7 +15,6 @@ import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
 import { isIphone } from '@utilities/deviceDetected';
-import getNotificationPermission from '@utilities/gmCommon/getNotificationPermission';
 import getPushToken from '@utilities/gmCommon/getPushToken';
 import { moveBack, moveNext } from '@utilities/index';
 import { appLanguage } from 'app/redux/selector';
@@ -179,7 +178,6 @@ const EAlertsManagement = ({ translate: t }) => {
   };
 
   useEffect(() => {
-    getNotificationPermission();
     requestGetEAlertSetting();
   }, []);
 
