@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
-import CheckBox from '@common/components/atoms/Checkbox';
 import Dropdown from '@common/components/atoms/Dropdown';
-import InfoBox from '@common/components/atoms/InfoBox';
 import Input from '@common/components/atoms/Input/Input';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
@@ -17,7 +15,6 @@ import {
   invalidNameRegex,
   notAllowAlphabetRegex,
   notAllowNumberAlphabetRegex,
-  notAllowNumberRegex,
   postalCodeNotAllowRegex,
 } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -28,7 +25,7 @@ import { mailingAddressFormMapFields, reissueCardDetails, reissueCardTermsConfig
 import { reissueCardAddressSchema } from './schema';
 import './styles.scss';
 
-const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceOptions, userInfo, translate: t }) => {
+const EnterReissueAddressInfo = ({ onSubmit, cardInfo, provinceOptions, userInfo, translate: t }) => {
   const [selectBottom, setSelectBottom] = useState(initSelectBottom);
   const [viewTermBottom, setViewTermBottom] = useState({
     open: false,
@@ -42,15 +39,12 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
     handleSubmit,
     control,
     setValue,
-    watch,
     formState: { isValid },
     reset,
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(reissueCardAddressSchema),
   });
-
-  const [isAgreeEmail] = watch(['isAgreeEmail']);
 
   const handleOpenSelectProvinceBottom = () => {
     setSelectBottom({
@@ -110,23 +104,9 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
     setViewTermBottom({ ...viewTermBottom, open: false });
   };
 
-  const handleCheckAgreeEmail = checked => {
-    setValue('isAgreeEmail', checked, { shouldValidate: true });
-  };
-
   const handleSubmitReissue = values => {
     onSubmit({ ...values, provinceOptions });
   };
-
-  useEffect(() => {
-    if (!isLogin && email) {
-      setValue('email', email);
-    }
-  }, [isLogin, email]);
-
-  useEffect(() => {
-    setValue('isLogin', !!isLogin);
-  }, [isLogin]);
 
   useEffect(() => {
     if (userInfo) {
@@ -147,31 +127,27 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
       <div className="reissue-card-address__wrapper h-screen__content px-0">
         <div className="page__container">
           <h1 className="page__title">{t(labels.reissueYourCard)}</h1>
-          {isLogin && (
-            <div className="py-4 mt-3">
-              <div className="form__section__title">
-                <span>{t(labels.cardDetails)}</span>
-              </div>
-              <div className="card__details mt-3">
-                {reissueCardDetails.map(({ label, value }) => (
-                  <div
-                    className="card__item"
-                    key={label}
-                  >
-                    <span className="card__label">{t(label)}</span>
-                    <span className="card__value">{cardInfo?.[value]}</span>
-                  </div>
-                ))}
-              </div>
+          <div className="py-4 mt-3">
+            <div className="form__section__title">
+              <span>{t(labels.cardDetails)}</span>
             </div>
-          )}
+            <div className="card__details mt-3">
+              {reissueCardDetails.map(({ label, value }) => (
+                <div
+                  className="card__item"
+                  key={label}
+                >
+                  <span className="card__label">{t(label)}</span>
+                  <span className="card__value">{cardInfo?.[value]}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="form__section pt-4 flex-gap-y-12">
-            {isLogin && (
-              <div className="form__section__title">
-                <span>{t(labels.mailingAddress)}</span>
-              </div>
-            )}
+            <div className="form__section__title">
+              <span>{t(labels.mailingAddress)}</span>
+            </div>
 
             <Controller
               render={({ field }) => (
@@ -255,55 +231,10 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, isLogin, email, provinceO
               control={control}
               name="postalCode"
             />
-            {!isLogin && (
-              <>
-                <Controller
-                  render={({ field }) => (
-                    <Input
-                      label={t(labels.phoneNumber)}
-                      type="text"
-                      inputMode="numeric"
-                      regex={notAllowNumberRegex}
-                      maxLength={30}
-                      {...field}
-                    />
-                  )}
-                  control={control}
-                  name="phoneNumber"
-                />
-                <Controller
-                  render={({ field }) => (
-                    <Input
-                      label={t(labels.email)}
-                      placeholder="emailname@email.com"
-                      disabled
-                      {...field}
-                    />
-                  )}
-                  control={control}
-                  name="email"
-                />
-                <InfoBox
-                  variant="informative"
-                  label={t(labels.yourEmailWillOnly)}
-                />
-              </>
-            )}
           </div>
         </div>
-        <div className={`divider__group ${isLogin ? 'mt-8' : 'mt-4'}`} />
+        <div className="divider__group mt-8" />
         <div className="term-condition__checklist page__container">
-          {!isLogin && (
-            <div className="agree-use-email">
-              <CheckBox
-                size="large"
-                label={labels.agreeUseEmail}
-                onChange={handleCheckAgreeEmail}
-                checked={isAgreeEmail}
-              />
-            </div>
-          )}
-
           <TermConditionChecklist
             config={reissueCardTermsConfig}
             onClickViewTerm={onClickViewTermDetail}

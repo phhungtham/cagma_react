@@ -8,12 +8,10 @@ import { getCanadaProvinceCode } from '@common/constants/commonCode';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
-import useLoginInfo from '@hooks/useLoginInfo';
 import useMove from '@hooks/useMove';
 import { commonCodeDataToOptions } from '@utilities/convert';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
-import { formatCardDateRequest } from '../utils/format';
 import EnterReissueAddressInfo from './components/EnterReissueAddressInfo';
 import EnterReissueCardInfo from './components/EnterReissueCardInfo';
 import ReissueCardSuccess from './components/ReissueCardSuccess';
@@ -23,7 +21,6 @@ const ReissueCard = ({ translate: t }) => {
   const [currentStep, setCurrentStep] = useState(REISSUE_CARD_STEP.ENTER_CARD_INFORMATION);
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [cardInfo, setCardInfo] = useState({});
-  const [email, setEmail] = useState();
   const [reissueCardSuccessInfo, setReissueCardSuccessInfo] = useState();
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState(initAlert);
@@ -36,7 +33,6 @@ const ReissueCard = ({ translate: t }) => {
   });
   const { moveInitHomeNative } = useMove();
   const { requestApi } = useApi();
-  const { isLogin } = useLoginInfo();
 
   const handleCloseAlert = () => {
     if (alert.requiredLogin) {
@@ -108,11 +104,9 @@ const ReissueCard = ({ translate: t }) => {
 
   const handleSubmitCardInfo = async values => {
     setShowLoading(true);
-    const { cardNumber, expiryDate } = values;
-    const cashcd_vldt_dt = formatCardDateRequest(expiryDate);
+    const { cardNumber } = values;
     const formattedCardNumber = cardNumber.replace(/\D/g, '');
     const payload = {
-      cashcd_vldt_dt,
       cashcd_no: formattedCardNumber,
       dep_trx_dtl_d: '09',
       cusnm: '',
@@ -123,14 +117,8 @@ const ReissueCard = ({ translate: t }) => {
     if (isSuccess) {
       const { result_cd } = data || {};
       if (Number(result_cd) === 1) {
-        if (isLogin) {
-          await requestGetCardInfo(formattedCardNumber);
-          setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
-        } else {
-          const { cus_email } = data;
-          setEmail(cus_email);
-          requestVerifyStep2NotLogged(values);
-        }
+        await requestGetCardInfo(formattedCardNumber);
+        setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
       }
     } else {
       setAlert({
@@ -195,65 +183,8 @@ const ReissueCard = ({ translate: t }) => {
     }
   };
 
-  const requestReissueCardNotLogged = async values => {
-    setShowLoading(true);
-    await requestApi(endpoints.getCardReplacement); //Require by BE, do nothing
-    const {
-      streetNumber: street_no,
-      streetName: street_nm,
-      aptNumber: apt_suite_no,
-      city,
-      province,
-      postalCode: post_cd,
-      phoneNumber: cell_telno,
-    } = values;
-    const payload = {
-      street_no,
-      street_nm,
-      apt_suite_no,
-      city,
-      province,
-      post_cd,
-      cell_telno,
-    };
-    const { data, error, isSuccess } = await requestApi(endpoints.reissueCardNotLogged, payload);
-    setShowLoading(false);
-    if (isSuccess) {
-      if (Number(data?.result_cd) === 1) {
-        const {
-          street_no: streetNumber,
-          street_nm: streetName,
-          apt_suite_no: aptNumber,
-          cus_city_nm: city,
-          state_c_display: province,
-          adr_zipc: postalCode,
-          cashcd_iss_dt_display: issueDate,
-        } = data;
-        setReissueCardSuccessInfo({
-          streetNumber,
-          streetName,
-          aptNumber,
-          city,
-          province,
-          postalCode,
-          issueDate,
-        });
-        setCurrentStep(REISSUE_CARD_STEP.COMPLETED);
-      }
-    } else {
-      setAlert({
-        isShow: true,
-        content: error,
-      });
-    }
-  };
-
   const handleSubmitAddressInfo = async values => {
-    if (isLogin) {
-      requestReissueCardLogged(values);
-    } else {
-      requestReissueCardNotLogged(values);
-    }
+    requestReissueCardLogged(values);
   };
 
   const requestGetProvinces = async () => {
@@ -306,11 +237,6 @@ const ReissueCard = ({ translate: t }) => {
         {currentStep === REISSUE_CARD_STEP.ENTER_CARD_INFORMATION && (
           <EnterReissueCardInfo
             onSubmit={handleSubmitCardInfo}
-            isLogin={isLogin}
-            setShowLoading={setShowLoading}
-            requestApi={requestApi}
-            setAlert={setAlert}
-            setShowToast={setShowToast}
             translate={t}
           />
         )}
@@ -318,8 +244,6 @@ const ReissueCard = ({ translate: t }) => {
           <EnterReissueAddressInfo
             onSubmit={handleSubmitAddressInfo}
             cardInfo={cardInfo}
-            email={email}
-            isLogin={isLogin}
             provinceOptions={provinceOptions}
             userInfo={userInfo}
             translate={t}
@@ -328,7 +252,6 @@ const ReissueCard = ({ translate: t }) => {
         {currentStep === REISSUE_CARD_STEP.COMPLETED && (
           <ReissueCardSuccess
             cardInfo={reissueCardSuccessInfo}
-            isLogin={isLogin}
             translate={t}
           />
         )}

@@ -9,7 +9,7 @@ import { callPhone } from '@utilities/index';
 import { reissueCardSuccessFields } from '../../constants';
 import './styles.scss';
 
-const ReissueCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
+const ReissueCardSuccess = ({ cardInfo, translate: t }) => {
   const { moveHomeNative } = useMove();
 
   const onClickNavigateHome = () => {
