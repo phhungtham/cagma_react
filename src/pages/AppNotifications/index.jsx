@@ -315,7 +315,7 @@ const AppNotifications = ({ translate: t }) => {
     }
     moveBackNative();
   };
-  console.log('nativeParams >>>', nativeParams);
+
   return (
     <div className="notification__wrapper">
       {showFirstTimeLoading && <Spinner />}

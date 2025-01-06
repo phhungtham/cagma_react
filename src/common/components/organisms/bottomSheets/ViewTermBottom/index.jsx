@@ -97,7 +97,6 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
   }, []);
 
   const handleOnLoadError = error => {
-    console.log('error load >>>>', error);
     setIsLoading(false);
   };
 

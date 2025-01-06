@@ -243,6 +243,7 @@ const OpenAccount = ({ translate: t }) => {
         dep_acno: openedAccountNumber,
         trx_amt_display: amount,
         trx_ccy_c: currency,
+        dep_acno_stat: accountStatus,
       } = data;
       setOpenAccountSuccessInfo({
         creditChecked: values.debitCardIssuance,
@@ -253,6 +254,7 @@ const OpenAccount = ({ translate: t }) => {
         amount: `${amount} ${currency}`,
         depositFrom,
         numberTransactions: 'Unlimited',
+        accountStatus,
       });
       setCurrentStep(OPEN_ACCOUNT_STEP.COMPLETED);
     } else {

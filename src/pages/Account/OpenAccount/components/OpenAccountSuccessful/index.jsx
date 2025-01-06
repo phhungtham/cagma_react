@@ -16,7 +16,8 @@ import { openAccountSuccessFields } from './constants';
 import './styles.scss';
 
 const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, translate: t }) => {
-  const { creditChecked, openedAccountNumber } = openAccountInfo || {};
+  const { creditChecked, openedAccountNumber, accountStatus } = openAccountInfo || {};
+  const isUnstableChequingAccount = accountStatus === '19';
 
   const showRRSPButton = productCode === ProductCode.RRSP_E_SAVINGS;
 
@@ -37,12 +38,8 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
     }
   };
 
-  const handleClickConfirm = () => {
-    if (creditChecked) {
-      clearHistory(MENU_CODE.ADD_NEW_CARD);
-    } else {
-      moveHomeNative();
-    }
+  const handleNavigateAddNewCard = () => {
+    clearHistory(MENU_CODE.ADD_NEW_CARD);
   };
 
   useEffect(() => {
@@ -94,21 +91,40 @@ const OpenAccountSuccessful = ({ openAccountInfo, productCode, dep_sjt_class, tr
         )}
       </div>
       <div className="footer__fixed flex-gap-x-8">
-        {!creditChecked && (
+        {isUnstableChequingAccount ? (
           <Button
-            variant="filled__secondary-blue"
-            label={t(labels.viewAccount)}
+            variant="filled__primary"
+            label={t(labels.home)}
             className="btn__cta"
-            onClick={onClickViewAccount}
+            onClick={moveHomeNative}
           />
+        ) : (
+          <>
+            {creditChecked ? (
+              <Button
+                variant="filled__primary"
+                label={t(labels.getNewCard)}
+                className="btn__cta"
+                onClick={handleNavigateAddNewCard}
+              />
+            ) : (
+              <>
+                <Button
+                  variant="filled__secondary-blue"
+                  label={t(labels.viewAccount)}
+                  className="btn__cta"
+                  onClick={onClickViewAccount}
+                />
+                <Button
+                  variant="filled__primary"
+                  label={t(labels.home)}
+                  className="btn__cta"
+                  onClick={moveHomeNative}
+                />
+              </>
+            )}
+          </>
         )}
-
-        <Button
-          variant="filled__primary"
-          label={creditChecked ? t(labels.getNewCard) : t(labels.home)}
-          className="btn__cta"
-          onClick={handleClickConfirm}
-        />
       </div>
     </>
   );

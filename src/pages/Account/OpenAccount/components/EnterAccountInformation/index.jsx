@@ -146,12 +146,18 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
     setShowEnterAmountBottom(false);
   };
 
-  const onChangeTerms = result => {
-    const { termValue, maturityDate, maturityDateDisplay } = result || {};
-    setValue('term', termValue);
-    setValue('maturityDate', maturityDate);
-    setValue('maturityDateDisplay', maturityDateDisplay);
+  const onChangeTerms = async termValue => {
     setShowSelectTermsBottom(false);
+    setValue('term', termValue);
+    const result = await getMaturityDate(termValue);
+    if (result) {
+      const { maturityDate, maturityDateDisplay } = result;
+      setValue('maturityDate', maturityDate);
+      setValue('maturityDateDisplay', maturityDateDisplay);
+    } else {
+      setValue('maturityDate', '');
+      setValue('maturityDateDisplay', '');
+    }
     // setShowEnterAmountBottom(true); //This logic not good when choose enter amount before select terms
   };
 
@@ -578,7 +584,6 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
             min={minTerms}
             disabled={isInstallmentSaving}
             options={termOptions}
-            inquiryMaturityDate={getMaturityDate}
           />
         )}
 

@@ -14,7 +14,7 @@ import privateRoutes from '@routes/service/private-routes';
 import publicRoutes from '@routes/service/public-routes';
 import { isGapSupported } from '@utilities/polyfillFlexGap';
 import { languageStorageKeys } from '@utilities/transform';
-import 'flex-gap-polyfill/dist/index.js';
+import { tryCatch } from '@utilities/tryCatch';
 import { reloadLanguageResource } from 'i18n/reloadLanguageResource';
 import { $h, wmatrix } from 'navigation/wmatrix_config';
 import { polyfill } from 'smoothscroll-polyfill';
@@ -124,11 +124,11 @@ const App = () => {
           if (typeof e.detail === 'object') {
             const data = e.detail;
             const path = String(data.src);
+            // get param from native side
+            const params = tryCatch(JSON.parse, {}, data.param);
+            setNativeParams(params);
             navigate(path);
             setAppPath(path);
-            // get param from native side
-            const params = JSON.parse(data.param);
-            setNativeParams(params);
           }
         } catch (error) {}
         setIsNativeRedirect();

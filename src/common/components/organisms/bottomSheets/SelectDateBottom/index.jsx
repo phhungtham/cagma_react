@@ -38,8 +38,6 @@ const SelectDateBottom = ({
       const currentMonth = Number(valueRef.current.month);
       onDateChange(`${currentMonth < 10 ? '0' + currentMonth : currentMonth}.${currentYear}`);
     }
-
-    console.log(valueRef.current);
   };
 
   return (

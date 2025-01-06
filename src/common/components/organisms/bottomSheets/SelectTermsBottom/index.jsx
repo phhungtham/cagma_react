@@ -24,13 +24,11 @@ const SelectTermsBottom = ({
   max,
   min,
   options = [],
-  inquiryMaturityDate,
   disabled,
   translate: t,
 }) => {
   const [termError, setTermError] = useState();
   const [termValue, setTermValue] = useState(value);
-  const [maturityDate, setMaturityDate] = useState();
   const inputRef = useRef(null);
 
   const handleCloseBottomSheet = () => {
@@ -52,34 +50,8 @@ const SelectTermsBottom = ({
   };
 
   const onClickConfirm = event => {
-    onChange({
-      termValue: termValue,
-      maturityDate: maturityDate?.value,
-      maturityDateDisplay: maturityDate?.valueDisplay,
-    });
+    onChange(termValue);
     event.preventDefault();
-  };
-
-  const getMaturityDate = async () => {
-    const result = await inquiryMaturityDate(termValue);
-    if (result) {
-      const { maturityDate, maturityDateDisplay } = result;
-      setMaturityDate({
-        value: maturityDate,
-        valueDisplay: maturityDateDisplay,
-      });
-    } else {
-      setMaturityDate('');
-    }
-    // if (inquiryMaturityDate && termValue) {
-    //   const value = await inquiryMaturityDate(termValue);
-    //   return value;
-    // }
-    // return '';
-    // const currentDate = dayjs();
-    // const maturityDate = currentDate.add(termValue, typeWithUnitLabel[type]);
-    // const formattedDate = maturityDate.format(dateFormat);
-    // return formattedDate;
   };
 
   useEffect(() => {
@@ -94,11 +66,6 @@ const SelectTermsBottom = ({
       } else if (min && Number(termValue) < min) {
         messageError = `${t(commonLabels.pleaseEnterMoreThan).replace('%1', `${min} ${t(typeWithUnitLabel[type])}`)}`;
       }
-    }
-    if (messageError) {
-      setMaturityDate();
-    } else {
-      getMaturityDate();
     }
     setTermError(messageError);
   }, [termValue]);
@@ -142,12 +109,6 @@ const SelectTermsBottom = ({
               value={termValue}
             />
           </div>
-          {maturityDate?.valueDisplay && (
-            <div className="maturity-date">
-              <span>{t(labels.maturityDate)}</span>
-              <span>{maturityDate.valueDisplay}</span>
-            </div>
-          )}
           <div className="btn-submit__wrapper">
             <Button
               label={t(ctaLabels.next)}
