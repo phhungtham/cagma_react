@@ -217,6 +217,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
 
   const handleClickBack = async () => {
     if (isNavigateFromLogin) {
+      clearEkycInfo();
       clearTempLoginInfo();
       await handleLogout();
       moveHomeNative();
