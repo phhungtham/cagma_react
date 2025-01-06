@@ -15,8 +15,9 @@ import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
 import useMove from '@hooks/useMove';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
+import syncAccountInfo from '@utilities/gmCommon/syncAccountInfo';
 import { getLanguageFM } from '@utilities/index';
-import { setIsNativeClickBack, setNativeParams } from 'app/redux/action';
+import { setIsNativeClickBack } from 'app/redux/action';
 import { appLanguage, backEventSelector, nativeParamsSelector } from 'app/redux/selector';
 import dayjs from 'dayjs';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
@@ -310,9 +311,7 @@ const AppNotifications = ({ translate: t }) => {
   }, [isNativeBack]);
 
   const handleOnClickBack = () => {
-    if (nativeParams) {
-      setNativeParams({}); // cleanup param from native
-    }
+    syncAccountInfo();
     moveBackNative();
   };
 
