@@ -12,6 +12,7 @@
     "chartjs-plugin-annotation": "^3.0.1",
     "dayjs": "^1.11.13",
     "debounce": "^1.2.1",
+    "flex-gap-polyfill": "^5.0.0",
     "html-react-parser": "^3.0.7",
     "html2canvas": "^1.4.1",
     "http-proxy-middleware": "^2.0.6",
