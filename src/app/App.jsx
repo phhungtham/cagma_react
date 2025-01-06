@@ -123,12 +123,12 @@ const App = () => {
           if (typeof e.detail === 'object') {
             const data = e.detail;
             const path = String(data.src);
+            const params = JSON.parse(data.param);
+            setNativeParams(params);
+            console.log('params from Native :>> ', params);
             navigate(path);
             setAppPath(path);
             // get param from native side
-            const params = JSON.parse(data.param);
-            console.log('params from Native :>> ', params);
-            setNativeParams(params);
           }
         } catch (error) {}
         setIsNativeRedirect();
