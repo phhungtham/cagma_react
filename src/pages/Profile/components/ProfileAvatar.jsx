@@ -23,7 +23,6 @@ const ProfileAvatar = ({ userName, setShowToast, translate: t }) => {
   const handleProfileImg = result => {
     const { statusCode, imageInfo, imageExt } = result || {};
     const isLoadSuccess = Number(statusCode) === 1000;
-    console.log('image info callback base64 :>> ', imageInfo);
     if (isLoadSuccess && imageInfo) {
       setAvatarUrl(`data:image/${imageExt};base64,${imageInfo}`);
       setShowDefaultAvatar(false);
@@ -45,7 +44,6 @@ const ProfileAvatar = ({ userName, setShowToast, translate: t }) => {
   };
 
   const handleDeleteProfileCallback = result => {
-    console.log('handleDeleteProfileCallback:', result);
     const { statusCode } = result || {};
     const isDeleteSuccess = Number(statusCode) === 1000;
     if (isDeleteSuccess) {

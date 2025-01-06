@@ -21,7 +21,6 @@ const getEmailUpdateInfo = cb => {
   }
   return $h.exec(
     result => {
-      console.log('call getEmailUpdateInfo data :>> ', result);
       const cbData = result?.data || {};
       cb(cbData);
     },

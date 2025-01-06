@@ -123,7 +123,6 @@ const App = () => {
         try {
           if (typeof e.detail === 'object') {
             const data = e.detail;
-            console.log('data redirect :>> ', data);
             const path = String(data.src);
             // get param from native side
             const params = tryCatch(JSON.parse, {}, data.param);

@@ -3,7 +3,6 @@ import BottomSheet from '@common/components/templates/BottomSheet';
 import './styles.scss';
 
 const SelectBranchBottom = ({ open, onClose, onSelect, branches, title }) => {
-  console.log('branches :>> ', branches);
   return (
     <BottomSheet
       open={open}

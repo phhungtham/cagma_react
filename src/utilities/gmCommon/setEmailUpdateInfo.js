@@ -8,7 +8,6 @@ import { $h } from 'navigation/wmatrix_config';
  * userId: string
  */
 const setEmailUpdateInfo = data => {
-  console.log('call setEmailUpdateInfo data :>> ', data);
   if (AppCfg.ENV === 'development') {
     return localStorage.setItem('emailUpdate', JSON.stringify(data));
   }

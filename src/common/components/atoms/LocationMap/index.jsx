@@ -48,7 +48,6 @@ const LocationMap = ({ address, width, height, title }) => {
   const handleClick = () => {
     if (!iframeLoaded) return;
     const urlViewLargerMap = `https://www.google.com/maps/search/?api=1&query=${formatAddress(address)}`;
-    console.log(urlViewLargerMap);
     openURLInBrowser(urlViewLargerMap);
   };
 
