@@ -122,6 +122,7 @@ const App = () => {
         try {
           if (typeof e.detail === 'object') {
             const data = e.detail;
+            console.log('data redirect :>> ', data);
             const path = String(data.src);
             navigate(path);
             setAppPath(path);
