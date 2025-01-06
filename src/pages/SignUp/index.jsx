@@ -211,6 +211,7 @@ const SignUp = ({ translate }) => {
       console.log(`cusno from login: ${cusno} and cusno from CASE109: ${data.cusno}`);
       if (isFromLogin && String(cusno) !== String(data.cusno)) {
         clearEkycInfo();
+        setEkycCached({});
         return setCurrentStep(SignUpStep.ENTER_EMAIL);
       }
       setEkycStepStatus(data);
