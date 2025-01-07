@@ -119,13 +119,14 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
             onTouchMove={handleTouchMove}
           >
             <div
-              className="view-term_children"
+              className="view-term__children"
               style={{ zoom: `${zoomTouchMove}` }}
             >
               <Document
                 file={pdfFile}
                 onLoadSuccess={onDocumentLoadSuccess}
                 onLoadError={handleOnLoadError}
+                className="view-term__document"
               >
                 {[...Array(numPages)].map((_, index) => (
                   <Fragment key={index + 1}>
@@ -135,6 +136,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
                       renderAnnotationLayer={false}
                       scale={1}
                       width={widthPDf}
+                      className="view-term__page"
                     />
                   </Fragment>
                 ))}

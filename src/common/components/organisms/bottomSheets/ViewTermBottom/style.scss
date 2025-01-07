@@ -1,4 +1,13 @@
 @import 'styles/utilities/variables';
+
+.view-term-bottom__wrapper {
+  .bottom__sheet__content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #525659;
+  }
+}
+
 .view-term__content {
   position: relative;
   .spinner__wrapper {
@@ -20,11 +29,18 @@
 
 .view-term__item {
   height: var(--heightTerm);
+  overflow-x: auto;
   .view-term__children {
     transition: scale 0.3s ease-in-out;
   }
   .react-pdf__message {
     display: none;
+  }
+
+  .view-term__page {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
   }
 }
 
