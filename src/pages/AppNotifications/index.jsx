@@ -311,7 +311,9 @@ const AppNotifications = ({ translate: t }) => {
   }, [isNativeBack]);
 
   const handleOnClickBack = () => {
-    syncAccountInfo();
+    if (isLogin) {
+      syncAccountInfo();
+    }
     moveBackNative();
   };
 
