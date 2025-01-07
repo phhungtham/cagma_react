@@ -136,7 +136,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
                       renderAnnotationLayer={false}
                       scale={1}
                       width={widthPDf}
-                      className="view-term__page"
+                      className={`view-term__page ${zoomTouchMove >= 1 ? '' : 'zoom-out'}`}
                     />
                   </Fragment>
                 ))}
