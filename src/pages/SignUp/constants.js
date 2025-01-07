@@ -33,4 +33,5 @@ export const SignUpStepStatus = {
   INFO_APPROVED: 4,
   INFO_REVIEWING: 8,
   INFO_REJECTED: 9,
+  SKIP_THANK_VISIT_AGAIN: 90,
 };
