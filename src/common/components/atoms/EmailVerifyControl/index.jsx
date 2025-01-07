@@ -48,7 +48,7 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
     }
     setShowLoading(true);
     const request = {
-      cus_email: email?.toLowerCase(),
+      cus_email: email,
     };
     const { data, error, isSuccess } = await requestApi(endpoints.requestGetEmailVerifyCode, request);
     setShowLoading(false);

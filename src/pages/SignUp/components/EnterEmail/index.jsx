@@ -87,7 +87,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
     }
     setShowLoading(true);
     const request = {
-      cus_email: email?.toLowerCase(),
+      cus_email: email,
     };
     const endpoint = isNavigateFromLogin
       ? endpoints.requestGetEmailVerifyCodeMotp

@@ -59,7 +59,7 @@ const EnterEmail = ({ onNavigateEnterId, onConfirm }) => {
     }
     setShowLoading(true);
     const request = {
-      cus_email: email?.toLowerCase(),
+      cus_email: email,
     };
     const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.requestGetEmailVerifyCode, request);
     setShowLoading(false);
