@@ -11,8 +11,8 @@ import { addressTypeMapping } from '@common/constants/address';
 import { FileErrorType } from '@common/constants/error';
 import { changeProfileLabels as labels } from '@common/constants/labels';
 import {
+  invalidCityRegex,
   invalidNameRegex,
-  notAllowAlphabetRegex,
   notAllowNumberAlphabetRegex,
   notAllowNumberRegex,
   postalCodeNotAllowRegex,
@@ -309,7 +309,7 @@ const AddressInfoSection = ({
             <Input
               label={t(labels.city)}
               readOnly={isDisableAddress}
-              regex={notAllowAlphabetRegex}
+              regex={invalidCityRegex}
               maxLength={200}
               {...field}
             />

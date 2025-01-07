@@ -12,8 +12,8 @@ import { addressTypeMapping } from '@common/constants/address';
 import { initSelectBottom } from '@common/constants/bottomsheet';
 import { reissueCardLabels as labels, menuLabels } from '@common/constants/labels';
 import {
+  invalidCityRegex,
   invalidNameRegex,
-  notAllowAlphabetRegex,
   notAllowNumberAlphabetRegex,
   postalCodeNotAllowRegex,
 } from '@common/constants/regex';
@@ -194,7 +194,7 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, provinceOptions, userInfo
                 <Input
                   label={t(labels.city)}
                   placeholder="Please input Detail text"
-                  regex={notAllowAlphabetRegex}
+                  regex={invalidCityRegex}
                   maxLength={200}
                   {...field}
                 />

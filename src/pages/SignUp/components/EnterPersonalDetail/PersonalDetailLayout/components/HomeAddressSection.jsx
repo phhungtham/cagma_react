@@ -5,8 +5,8 @@ import Dropdown from '@common/components/atoms/Dropdown';
 import Input from '@common/components/atoms/Input/Input';
 import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
 import {
+  invalidCityRegex,
   invalidNameRegex,
-  notAllowNumberAlphabetRegex,
   notAllowNumberRegex,
   postalCodeNotAllowRegex,
 } from '@common/constants/regex';
@@ -116,7 +116,7 @@ const HomeAddressSection = ({ onOpenSelectBottom, commonCode }) => {
           <Input
             label={t(labels.city)}
             maxLength={50}
-            regex={notAllowNumberAlphabetRegex}
+            regex={invalidCityRegex}
             {...field}
           />
         )}
