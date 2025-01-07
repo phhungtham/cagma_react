@@ -100,7 +100,7 @@ const ThankVisitAgain = ({ onConfirm, onNavigateEkycResult, onNavigateCreateId, 
     setShowLoading(true);
     const payload = {
       uuid_v: deviceId,
-      cus_email,
+      cus_email: cus_email?.toLowerCase(),
       cus_bth_y4mm_dt,
       lcl_cus_rlnm_no,
       lcl_cus_rlnm_no_t,

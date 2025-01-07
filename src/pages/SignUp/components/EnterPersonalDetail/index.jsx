@@ -44,6 +44,7 @@ const EnterPersonalDetail = ({ onConfirm }) => {
       uuid_v: deviceId,
       lcl_cus_rlnm_no2_yn: personalDetail.notSin ? 'N' : 'Y',
       rsdc_yn: personalDetail.residentialStatus === '04' ? '0' : '1',
+      cus_email: personalDetail.emailAddress?.toLowerCase(),
     };
 
     const { data, error, isSuccess } = await requestApi(endpoints.preRegisterCustomerInfoStep4, payload);

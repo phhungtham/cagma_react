@@ -87,7 +87,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
     }
     setShowLoading(true);
     const request = {
-      cus_email: email,
+      cus_email: email?.toLowerCase(),
     };
     const endpoint = isNavigateFromLogin
       ? endpoints.requestGetEmailVerifyCodeMotp
@@ -136,7 +136,7 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
   const requestUpdateEmail = async () => {
     setShowLoading(true);
     const payload = {
-      cus_email: email,
+      cus_email: email?.toLowerCase(),
       uuid_v: deviceId,
       isFromLogin: isNavigateFromLogin ? '1' : '0',
     };
@@ -154,13 +154,13 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
       if (Number(screen_kd) === 1) {
         setEkycToNativeCache({
           ...ekycCached,
-          email: cus_email,
+          email: cus_email?.toLowerCase(),
         });
         onNavigateMOTPAgreeTerms();
       } else if (Number(screen_kd) === 2) {
         setEkycToNativeCache({
           ...ekycCached,
-          email: cus_email,
+          email: cus_email?.toLowerCase(),
           isEkycProcessing: true,
         });
         clearTempLoginInfo();

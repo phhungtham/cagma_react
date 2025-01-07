@@ -49,7 +49,7 @@ const UpdateEmail = ({ translate }) => {
   };
 
   const handleConfirmEmail = email => {
-    setUpdateEmailInfo({ ...updateEmailInfo, email });
+    setUpdateEmailInfo({ ...updateEmailInfo, email: email?.toLowerCase() });
     setCurrentStep(UpdateEmailStep.VERIFY_YOUR_IDENTIFICATION);
   };
 

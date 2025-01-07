@@ -76,7 +76,7 @@ const ContactInfoSection = ({
     setShowLoading(true);
     await requestApi(endpoints.inquiryUserInformation);
     const request = {
-      cus_email: email,
+      cus_email: email?.toLowerCase(),
     };
     const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.requestGetEmailVerifyCode, request);
     setShowLoading(false);
