@@ -84,7 +84,7 @@ const ViewTermBottom = ({ open, onClose, title, subTitle, pdfFile, onConfirm, hi
 
       const scaleChange = newDistance / initialDistance.current;
       setZoomTouchMove(prevScale => {
-        const newZoom = Math.max(1, Math.min(2.5, prevScale * scaleChange));
+        const newZoom = Math.max(0.5, Math.min(2.5, prevScale * scaleChange));
         return newZoom;
       });
       initialDistance.current = newDistance;
