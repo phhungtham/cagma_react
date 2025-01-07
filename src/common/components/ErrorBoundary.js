@@ -16,7 +16,10 @@ class ErrorBoundary extends React.Component {
     return { hasError: true, error: error };
   }
 
-  componentDidCatch(error, errorInfo) {}
+  componentDidCatch(error, errorInfo) {
+    console.log('error boundary :>> ', error);
+    console.log('errorInfo :>> ', errorInfo);
+  }
 
   render() {
     if (this.state.hasError) {
@@ -24,7 +27,7 @@ class ErrorBoundary extends React.Component {
         <Alert
           isCloseButton={false}
           isShowAlert={this.state.hasError}
-          subtitle="Sorry, An unexpected error occurred. If it occurs during a transaction, Please check the transaction history of your account."
+          subtitle="Something went wrong. Please try again"
           firstButton={{
             onClick: () => {
               moveHome();
