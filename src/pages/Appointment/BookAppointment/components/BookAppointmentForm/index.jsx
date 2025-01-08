@@ -307,6 +307,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
                     placeholder="Select"
                     value={value}
                     onClick={handleOpenSelectTimeBottom}
+                    disabled={!date}
                   />
                 )}
                 control={control}

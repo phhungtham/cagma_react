@@ -941,4 +941,5 @@ export const commonLabels = {
   pleaseEnterLessThan: 'lbl_com_4951', //Please enter less than %1
   pleaseEnterMoreThan: 'lbl_com_4952', //Please enter more than %1
   invalidEmailFormat: 'lbl_com_5171', //Invalid email format
+  select: 'lbl_com_0821', //Select
 };
