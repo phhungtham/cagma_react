@@ -172,6 +172,12 @@ export const appointmentDetailLabels = {
   addComments: 'lbl_CAET900010_0022', //Additional Comments
 };
 
+export const branchDirectoryLabels = {
+  phone: 'lbl_CAET900010_0107', //Phone
+  fax: 'lbl_CAET900010_0108', //Fax
+  branchNo: 'lbl_CAET900010_0109', //Branch No
+};
+
 export const appointmentAgreementLabels = {
   appointmentAgreement: 'lbl_CAET900010_0001', //Appointment Agreement
   toUseAppointmentService: 'lbl_CAET900010_0002', //To use Appointment service, please review and agree to the Service Agreement for Appointment service.
@@ -516,6 +522,7 @@ export const activeCardLabels = {
   pleaseRegisterYouPin: 'lbl_CACA600000_0067', //Please register your PIN at a Shinhan Bank ATM
   accessCard: 'lbl_CACA600000_0066', //Access Card
   hasBeenActivated: 'lbl_CACA600000_0566', //has been activated
+  toGetStarted: 'lbl_CACA600000_1074', //To get started, please enter your current 16-digit Access Card number.
 };
 
 export const reissueCardLabels = {
@@ -601,6 +608,7 @@ export const reportLostCardLabels = {
   hasBeenCompleted: 'lbl_CACA600000_0548', //has been completed
   isNowComplete: 'lbl_CACA600000_0573', //is now complete
   identification: 'lbl_CACA600000_0169', //Identification(Optional)
+  toGetStarted: 'lbl_CACA600000_1074', //To get started, please enter your current 16-digit Access Card number.
 };
 
 export const releaseCardLabels = {
@@ -782,6 +790,7 @@ export const signUpEnterPersonalLabels = {
   sourceOfFunds: 'lbl_CAET920000_0224', //Source of Funds
   firstNamePep: 'lbl_CAET920000_0225', //First Name of the PEP/HIO
   lastNamePep: 'lbl_CAET920000_0226', //Last Name of the PEP/HIO
+  branchNo: 'lbl_CAET920000_0254', //Branch No
 };
 
 export const signUpThankVisitLabels = {

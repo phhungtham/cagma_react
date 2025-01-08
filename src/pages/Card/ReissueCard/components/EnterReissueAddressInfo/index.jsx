@@ -153,7 +153,6 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, provinceOptions, userInfo
               render={({ field }) => (
                 <Input
                   label={t(labels.streetNumber)}
-                  placeholder="Please input Detail text"
                   maxLength={60}
                   regex={notAllowNumberAlphabetRegex}
                   {...field}
@@ -166,7 +165,6 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, provinceOptions, userInfo
               render={({ field }) => (
                 <Input
                   label={t(labels.streetName)}
-                  placeholder="Please input Detail text"
                   regex={invalidNameRegex}
                   {...field}
                 />
@@ -179,7 +177,6 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, provinceOptions, userInfo
                 return (
                   <Input
                     label={t(labels.aptNumber)}
-                    placeholder="Please input Detail text"
                     maxLength={40}
                     regex={notAllowNumberAlphabetRegex}
                     {...field}
@@ -193,7 +190,6 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, provinceOptions, userInfo
               render={({ field }) => (
                 <Input
                   label={t(labels.city)}
-                  placeholder="Please input Detail text"
                   regex={invalidCityRegex}
                   maxLength={200}
                   {...field}
@@ -219,7 +215,6 @@ const EnterReissueAddressInfo = ({ onSubmit, cardInfo, provinceOptions, userInfo
                 <Input
                   label={t(labels.postalCode)}
                   regex={postalCodeNotAllowRegex}
-                  placeholder=""
                   maxLength={6}
                   {...field}
                   onChange={value => {

@@ -361,6 +361,7 @@ const PersonalDetailLayout = ({ onSubmit }) => {
           onSelect={handleSelectBranch}
           branches={branches}
           title={t(labels.selectBranch)}
+          translate={t}
         />
       )}
 

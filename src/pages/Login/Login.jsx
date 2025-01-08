@@ -153,7 +153,6 @@ const Login = () => {
                   <Input
                     label={'User Name'}
                     type={'text'}
-                    placeholder={'User Name'}
                     {...field}
                   />
                 )}
@@ -166,7 +165,6 @@ const Login = () => {
                     value="qwer1234"
                     label="Password"
                     type="password"
-                    placeholder="Password"
                     {...field}
                   />
                 )}

@@ -73,7 +73,6 @@ const EnterReportLostCustomerInfo = ({
                     <Input
                       label={t(labels.firstName)}
                       regex={invalidNameRegex}
-                      placeholder="Please input Detail text"
                       {...field}
                     />
                   )}
@@ -85,7 +84,6 @@ const EnterReportLostCustomerInfo = ({
                     <Input
                       label={t(labels.lastName)}
                       regex={invalidNameRegex}
-                      placeholder="Please input Detail text"
                       {...field}
                     />
                   )}
@@ -123,7 +121,6 @@ const EnterReportLostCustomerInfo = ({
                 render={({ field }) => (
                   <Input
                     label={t(labels.postalCode)}
-                    placeholder=""
                     regex={postalCodeNotAllowRegex}
                     maxLength={6}
                     {...field}
@@ -141,7 +138,6 @@ const EnterReportLostCustomerInfo = ({
                   render={({ field }) => (
                     <Input
                       label={t(labels.identification)}
-                      placeholder=""
                       maxLength={30}
                       {...field}
                     />
@@ -167,7 +163,6 @@ const EnterReportLostCustomerInfo = ({
                     label={t(labels.detailOfAccident)}
                     regex={invalidAccident}
                     maxLength={400}
-                    placeholder="Please input Detail text"
                     {...field}
                   />
                 )}

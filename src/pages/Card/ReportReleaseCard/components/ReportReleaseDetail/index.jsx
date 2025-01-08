@@ -55,7 +55,6 @@ const ReportReleaseDetail = ({ onSubmit, reportDetail, translate: t }) => {
                 label={t(labels.accidentReleaseDetail)}
                 regex={invalidAccident}
                 maxLength={400}
-                placeholder="Please input Detail text"
                 {...field}
               />
             )}

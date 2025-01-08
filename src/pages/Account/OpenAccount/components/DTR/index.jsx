@@ -203,7 +203,6 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
                       type="text"
                       regex={notAllowNumberRegex}
                       maxLength={9}
-                      placeholder="(Social Insurance Number)"
                       helperText={t(labels.yourSinWillBe)}
                       {...field}
                     />

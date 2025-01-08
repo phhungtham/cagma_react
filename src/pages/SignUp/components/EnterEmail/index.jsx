@@ -306,7 +306,6 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
               render={({ field }) => (
                 <Input
                   label={t(labels.email)}
-                  placeholder=""
                   type="text"
                   regex={notAllowSpaceRegex}
                   readOnly={enabledVerifyCode || isNavigateFromLogin}
@@ -332,7 +331,6 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
                   <Input
                     label={t(labels.verificationCode)}
                     inputMode="numeric"
-                    placeholder="6 digits"
                     type="text"
                     regex={notAllowNumberRegex}
                     remainingTime={EMAIL_VERIFY_IN_SECONDS}

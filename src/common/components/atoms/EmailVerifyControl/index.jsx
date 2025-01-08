@@ -159,7 +159,6 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
         render={({ field }) => (
           <Input
             label={t(cardLabels.emailAddress2)}
-            placeholder="emailname@email.com"
             type="text"
             regex={notAllowSpaceRegex}
             disabled={enabledVerifyCode}
@@ -185,7 +184,6 @@ const EmailVerifyControl = ({ schema, setAlert, setShowLoading, setShowToast, tr
             <Input
               label={t(cardLabels.verificationCode)}
               inputMode="numeric"
-              placeholder="6 digits"
               type="text"
               regex={notAllowNumberRegex}
               remainingTime={EMAIL_VERIFY_IN_SECONDS}

@@ -122,7 +122,7 @@ const BranchDirectory = ({ translate: t }) => {
                             className="table__item"
                             key={`${value}-${index}`}
                           >
-                            <div className="table__item__label">{label}</div>
+                            <div className="table__item__label">{t(label)}</div>
                             {value === 'br_telno' ? (
                               <div
                                 className="table__item__value phone"

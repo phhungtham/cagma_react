@@ -239,7 +239,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                   <Input
                     label={t(cardLabels.streetNumber)}
                     maxLength={100}
-                    placeholder="Please input Detail text"
                     inputMode="numeric"
                     type="text"
                     regex={notAllowNumberRegex}
@@ -254,7 +253,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                   <Input
                     label={t(cardLabels.streetName)}
                     maxLength={100}
-                    placeholder="Please input Detail text"
                     regex={invalidNameRegex}
                     {...field}
                   />
@@ -268,7 +266,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     <Input
                       label={t(cardLabels.aptNumber)}
                       maxLength={100}
-                      placeholder="Please input Detail text"
                       inputMode="numeric"
                       type="text"
                       regex={notAllowNumberRegex}
@@ -284,7 +281,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                   <Input
                     label={t(cardLabels.city)}
                     maxLength={50}
-                    placeholder="Please input Detail text"
                     regex={invalidCityRegex}
                     {...field}
                   />
@@ -309,7 +305,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                   <Input
                     label={t(cardLabels.postalCode)}
                     maxLength={6}
-                    placeholder=""
                     regex={postalCodeNotAllowRegex}
                     {...field}
                     onChange={value => {
@@ -360,7 +355,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                       render={({ field }) => (
                         <Input
                           label={t(cardLabels.contactlessPerTransaction)}
-                          placeholder=""
                           inputMode="numeric"
                           type="text"
                           regex={notAllowNumberRegex}
@@ -392,7 +386,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                       render={({ field }) => (
                         <Input
                           label={t(cardLabels.totalContactless)}
-                          placeholder=""
                           inputMode="numeric"
                           type="text"
                           regex={notAllowNumberRegex}
@@ -437,7 +430,6 @@ const EnterNewCardInfo = ({ onSubmit, setShowLoading, setAlert, email, translate
                     <Input
                       label={t(cardLabels.emailAddress)}
                       maxLength={40}
-                      placeholder=""
                       regex={notAllowSpaceRegex}
                       clazz={getTransactionNotice ? '' : 'hidden'}
                       errorMessage={errors?.email?.type === 'matches' ? t(commonLabels.invalidEmailFormat) : ''}

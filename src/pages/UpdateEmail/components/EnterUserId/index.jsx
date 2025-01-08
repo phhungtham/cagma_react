@@ -72,7 +72,6 @@ const EnterUserId = ({ onConfirm }) => {
               render={({ field }) => (
                 <Input
                   label={t(labels.userId)}
-                  placeholder=""
                   type="text"
                   lang="en"
                   inputMode="latin"

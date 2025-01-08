@@ -39,7 +39,6 @@ const EnterReissueCardInfo = ({ onSubmit, translate: t }) => {
                 render={({ field: { value, onChange } }) => (
                   <Input
                     label={t(labels.currentCardNumber)}
-                    placeholder="Please input 16 numerics"
                     inputMode="numeric"
                     type="text"
                     regex={notAllowNumberRegex}

@@ -41,7 +41,6 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
                 render={({ field: { value, onChange } }) => (
                   <Input
                     label={t(labels.currentCardNumber)}
-                    placeholder="Please input 16 numerics"
                     inputMode="numeric"
                     type="text"
                     regex={notAllowNumberRegex}
@@ -50,7 +49,7 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
                     onChange={inputValue => {
                       onChange(formatCardNumber(inputValue));
                     }}
-                    helperText="To get started, please enter your current 16-digit Access Card number."
+                    helperText={t(labels.toGetStarted)}
                   />
                 )}
                 control={control}
@@ -61,7 +60,6 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
                   return (
                     <Input
                       label={t(labels.expiryDate)}
-                      placeholder="Enter MM/YY"
                       type="tel"
                       maxLength={5}
                       inputMode="numeric"
@@ -89,7 +87,6 @@ const EnterReportLostCardInfo = ({ onSubmit, setAlert, setShowLoading, setShowTo
                     label={t(labels.detailOfAccident)}
                     maxLength={400}
                     regex={invalidAccident}
-                    placeholder="Please input Detail text"
                     {...field}
                   />
                 )}

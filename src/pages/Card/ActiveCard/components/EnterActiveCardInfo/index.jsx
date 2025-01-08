@@ -35,14 +35,13 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin, translate: t }) => {
             {!isLogin && (
               <InfoBox
                 variant="informative"
-                label="To get started, please enter your current 16-digit Access Card number."
+                label={t(labels.toGetStarted)}
               />
             )}
             <Controller
               render={({ field }) => (
                 <Input
                   label={t(labels.name)}
-                  placeholder="Please input Detail text"
                   maxLength={100}
                   {...field}
                 />
@@ -54,7 +53,6 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin, translate: t }) => {
               render={({ field: { value, onChange } }) => (
                 <Input
                   label={t(labels.cardNumber)}
-                  placeholder="Please input 16 numerics"
                   inputMode="numeric"
                   type="text"
                   regex={notAllowNumberRegex}
@@ -73,7 +71,6 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin, translate: t }) => {
                 return (
                   <Input
                     label={t(labels.expiryDate)}
-                    placeholder="Enter MM/YY"
                     type="tel"
                     maxLength={5}
                     pattern="\d{2}/\d{2}"

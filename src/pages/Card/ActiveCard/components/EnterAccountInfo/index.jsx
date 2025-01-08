@@ -86,7 +86,6 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
                 render={({ field }) => (
                   <Input
                     label={t(labels.postalCode)}
-                    placeholder=""
                     regex={postalCodeNotAllowRegex}
                     maxLength={6}
                     {...field}
@@ -103,7 +102,6 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
                 render={({ field }) => (
                   <Input
                     label={t(labels.lastSixDigits)}
-                    placeholder="Please input 6numerics"
                     inputMode="numeric"
                     type="text"
                     regex={notAllowNumberRegex}
@@ -118,7 +116,6 @@ const EnterAccountInfo = ({ onSubmit, translate: t }) => {
                 render={({ field }) => (
                   <Input
                     label={t(labels.email)}
-                    placeholder="emailname@email.com"
                     regex={notAllowSpaceRegex}
                     errorMessage={errors?.email?.type === 'matches' ? t(commonLabels.invalidEmailFormat) : ''}
                     {...field}

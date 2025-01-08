@@ -38,7 +38,6 @@ const EnterReportLostReason = ({ onSubmit, translate: t }) => {
                   label={t(labels.detailOfAccident)}
                   regex={invalidAccident}
                   maxLength={400}
-                  placeholder="Please input Detail text"
                   {...field}
                 />
               )}
