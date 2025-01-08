@@ -66,6 +66,7 @@ const IdentityVerifyResult = () => {
         setVerifyStatus(UpdateEmailVerifyStatus.SUCCESS);
       }
     } else {
+      setShowRetryBtn(true);
       return setAlert({
         isShow: true,
         content: error,

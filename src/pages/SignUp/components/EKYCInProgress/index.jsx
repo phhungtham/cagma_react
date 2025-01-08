@@ -117,6 +117,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult, onNavigateVerifyMem
         return navigateToVerifyResult(VerifyMembershipResultStatus.FAILED);
       }
     } else {
+      setShowRetryBtn(true);
       return setAlert({
         isShow: true,
         content: error,

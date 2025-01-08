@@ -56,7 +56,7 @@ const IdentityVerifyInProgress = ({ showRetryBtn, onClickResendEmail }) => {
               size="lg"
               type="circle"
               className="start-over__icon"
-              label="Start Over" //TODO: Missing label
+              label={t(labels.startOver)}
               icon={<img src={StartOverIcon} />}
               onClick={onRestart}
             />

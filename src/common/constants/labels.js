@@ -878,6 +878,7 @@ export const updateEmailLabels = {
   resend2: 'lbl_CASE810010_0252', //Resend
   confirm: 'lbl_CTA_8168', //confirm
   unableToRetrieve: 'lbl_CASE810010_0255', //Unable to retrieve the verification result. Please check again
+  startOver: 'lbl_CASE810010_0280', //Start Over
 };
 
 export const menuLabels = {
