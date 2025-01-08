@@ -226,7 +226,7 @@ const SignUp = ({ translate }) => {
         )
       ) {
         setCurrentStep(SignUpStep.THANK_VISIT_AGAIN);
-      } else if (Number(applyCode) === SignUpStepStatus.SKIP_THANK_VISIT_AGAIN) {
+      } else if (isFromLogin && Number(applyCode) === SignUpStepStatus.SKIP_THANK_VISIT_AGAIN) {
         clearEkycInfo();
         setEkycCached({});
         return setCurrentStep(SignUpStep.ENTER_EMAIL);
