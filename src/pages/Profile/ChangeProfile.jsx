@@ -432,7 +432,15 @@ const ChangeProfile = ({ translate: t }) => {
   useEffect(() => {
     if (userInfo) {
       const user = buildObjectMapFromResponse(userInfo, profileFormMapFields);
-      const addressType = userInfo.cus_pst_dspch_apnd_t || addressTypeMapping.home;
+      let addressTypeDefault = addressTypeMapping.home;
+      if (
+        [addressTypeMapping.home, addressTypeMapping.work, addressTypeMapping.alternativeMailing].includes(
+          userInfo.cus_pst_dspch_apnd_t
+        )
+      ) {
+        addressTypeDefault = userInfo.cus_pst_dspch_apnd_t;
+      }
+      const addressType = addressTypeDefault;
       const defaultAddress =
         (userInfo?.r_CAME001_1Vo || []).find(item => String(item.cus_adr_t) === addressTypeMapping.home) ||
         userInfo?.r_CAME001_1Vo?.[0];
