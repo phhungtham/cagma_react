@@ -7,7 +7,7 @@ import { initAlert } from '@common/constants/bottomsheet';
 import { MENU_CODE } from '@common/constants/common';
 import { DepositSubjectClass } from '@common/constants/deposit';
 import { endpoints } from '@common/constants/endpoint';
-import { ctaLabels, productLabels as labels } from '@common/constants/labels';
+import { ctaLabels, productLabels as labels, openAccountLabels } from '@common/constants/labels';
 import {
   PeriodUnitCodeDisplay,
   ProductCode,
@@ -250,7 +250,7 @@ const ProductList = ({ translate: t }) => {
                       <div className="product__item flex-gap-x-6">
                         <div className="item__label">{t(labels.rate)}</div>
                         <div className="item__value flex-gap-x-4">
-                          <span className="item__unit">up to</span>
+                          <span className="item__unit">{t(openAccountLabels.upTo)}</span>
                           <span className="item__quantity">{product?.ntfct_intrt}</span>
                           <span className="item__unit">%</span>
                         </div>
