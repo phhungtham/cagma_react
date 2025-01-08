@@ -39,13 +39,14 @@ const ReportReleaseCard = ({ translate: t }) => {
         result_cd,
         mask_cashcd_no: cardNumber,
         cashcd_acno: accountNo,
+        cashcd_acno_display: accountNoDisplay,
         issue_dt: issueDate,
         acdnt_cnt: accidentCount,
       } = data || {};
       if (Number(result_cd) === 1) {
         setReportReleaseCardSuccessInfo({
           cardNumber: cardNumber,
-          accountNo: accountNo,
+          accountNo: accountNoDisplay || accountNo,
           issueDate: issueDate,
           status: accidentCount === CardAccidentType.REPORTED ? 'Accident' : 'Normal',
         });

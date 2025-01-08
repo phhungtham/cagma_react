@@ -76,7 +76,7 @@ const ReportLostCard = ({ translate: t }) => {
     if (isSuccess) {
       setReportLostCardSuccessInfo({
         cardNumber: data?.mask_cashcd_no,
-        accountNo: data?.cashcd_acno,
+        accountNo: data?.cashcd_acno_display || data?.cashcd_acno,
         issueDate: data?.issue_dt,
         status: Number(data?.acdnt_cnt) === 1 ? 'Accident' : 'Normal',
       });
