@@ -86,7 +86,11 @@ const IdentityVerifyResult = () => {
     const { data, error, isSuccess } = await requestApi(endpoints.inquiryUserVerification, payload);
     setShowLoading(false);
     if (isSuccess) {
-      //TODO: Show toast
+      setShowToast({
+        isShow: true,
+        message: t(labels.anEmailHasBeenSent),
+        type: 'success',
+      });
     } else {
       return setAlert({
         isShow: true,
