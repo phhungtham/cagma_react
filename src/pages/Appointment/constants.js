@@ -1,6 +1,7 @@
 import {
   appointmentDetailLabels,
   appointmentHomeLabels,
+  branchDirectoryLabels,
   bookAppointmentLabels as labels,
 } from '@common/constants/labels';
 
@@ -37,15 +38,15 @@ export const appointmentDetailFields = [
 
 export const branchFields = [
   {
-    label: 'Phone',
+    label: branchDirectoryLabels.phone,
     value: 'br_telno',
   },
   {
-    label: 'Fax',
+    label: branchDirectoryLabels.fax,
     value: 'br_fax_no',
   },
   {
-    label: 'Branch No',
+    label: branchDirectoryLabels.branchNo,
     value: 'brno_display',
   },
 ];

@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { ArrowRight } from '@assets/icons';
 import inPersonAppointmentImg from '@assets/images/in_person_consultation.png';
@@ -9,6 +10,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
 import { initAlert } from '@common/constants/bottomsheet';
+import { languageMapWithBranchNameField } from '@common/constants/branch';
 import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, appointmentHomeLabels as labels, menuLabels } from '@common/constants/labels';
@@ -17,6 +19,7 @@ import useLoginInfo from '@hooks/useLoginInfo';
 import useMove from '@hooks/useMove';
 import { routePaths } from '@routes/paths';
 import { moveBack, moveNext } from '@utilities/index';
+import { appLanguage } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AppointmentCard from '../components/AppointmentCard';
@@ -42,6 +45,8 @@ const AppointmentHome = ({ translate: t }) => {
   });
   const { moveInitHomeNative } = useMove();
   const { requestApi } = useApi();
+  const currentLanguage = useSelector(appLanguage);
+  const langStr = currentLanguage?.language;
 
   const handleNavigateBranchDirectory = type => {
     moveNext(
@@ -104,11 +109,11 @@ const AppointmentHome = ({ translate: t }) => {
       apint_reg_tm_display: time,
       apint_stat: status,
       apint_brno: branchNo,
-      lcl_br_nm: branchName,
       br_adr: branchAddress,
       cancel_yn,
       apint_memo: additionalComments,
     } = appointment;
+    const branchName = appointment[languageMapWithBranchNameField[langStr]] || appointment.lcl_br_nm;
     const appointmentDetail = {
       method: apint_visit_chk === 'N' ? 'Zoom' : 'In person',
       number,

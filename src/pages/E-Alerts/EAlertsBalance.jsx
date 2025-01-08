@@ -104,7 +104,7 @@ const EAlertsBalance = ({ translate: t }) => {
         return {
           ...item,
           name: item.acno_nm,
-          number: item.lcl_ac_no,
+          number: item.lcl_ac_no_display,
           balance: formatCurrencyDisplay(item.pabl_blc),
         };
       });
@@ -266,7 +266,7 @@ const EAlertsBalance = ({ translate: t }) => {
               value={selectedAccount?.acno_nm}
               startAdornment={<RenderAccountIcon />}
             >
-              {selectedAccount ? <div className="account-number">{selectedAccount?.lcl_ac_no}</div> : ''}
+              {selectedAccount ? <div className="account-number">{selectedAccount?.lcl_ac_no_display}</div> : ''}
             </Dropdown>
           </div>
         </div>

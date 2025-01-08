@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Fragment, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
@@ -7,11 +8,13 @@ import Tabs from '@common/components/atoms/Tabs';
 import Toast from '@common/components/atoms/Toast';
 import Header from '@common/components/organisms/Header';
 import { initAlert } from '@common/constants/bottomsheet';
+import { languageMapWithBranchNameField } from '@common/constants/branch';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels, appointmentManageLabels as labels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
 import { moveBack } from '@utilities/index';
+import { appLanguage } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import AppointmentCard from '../components/AppointmentCard';
@@ -38,6 +41,8 @@ const AppointmentManagement = ({ translate: t }) => {
   });
   const { moveInitHomeNative } = useMove();
   const { requestApi } = useApi();
+  const currentLanguage = useSelector(appLanguage);
+  const langStr = currentLanguage?.language;
 
   const handleTabChange = (tabName, tabIndex) => {
     const { previousList = [], upcomingList = [] } = appointmentResponseData;
@@ -131,11 +136,11 @@ const AppointmentManagement = ({ translate: t }) => {
       apint_reg_tm_display: time,
       apint_stat: status,
       apint_brno: branchNo,
-      lcl_br_nm: branchName,
       br_adr: branchAddress,
       cancel_yn,
       apint_memo: additionalComments,
     } = appointment;
+    const branchName = appointment[languageMapWithBranchNameField[langStr]] || appointment.lcl_br_nm;
     const appointmentDetail = {
       method: apint_visit_chk === 'N' ? 'Zoom' : 'In person',
       number,

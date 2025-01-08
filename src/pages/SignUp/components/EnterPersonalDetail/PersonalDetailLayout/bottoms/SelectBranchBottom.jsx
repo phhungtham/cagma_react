@@ -1,8 +1,16 @@
+import { useSelector } from 'react-redux';
+
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { languageMapWithBranchNameField } from '@common/constants/branch';
+import { signUpEnterPersonalLabels as labels } from '@common/constants/labels';
+import { appLanguage } from 'app/redux/selector';
 
 import './styles.scss';
 
-const SelectBranchBottom = ({ open, onClose, onSelect, branches, title }) => {
+const SelectBranchBottom = ({ open, onClose, onSelect, branches, title, translate: t }) => {
+  const currentLanguage = useSelector(appLanguage);
+  const langStr = currentLanguage?.language;
+
   return (
     <BottomSheet
       open={open}
@@ -18,9 +26,11 @@ const SelectBranchBottom = ({ open, onClose, onSelect, branches, title }) => {
             key={item.value}
             onClick={() => onSelect(item)}
           >
-            <div className="name">{item.lcl_br_nm}</div>
+            <div className="name">{item[languageMapWithBranchNameField[langStr]] || item.lcl_br_nm}</div>
             <div className="address">{item.br_adr}</div>
-            <div className="number">Branch No. {item.brno_display || item.brno}</div>
+            <div className="number">
+              {t(labels.branchNo)} {item.brno_display || item.brno}
+            </div>
           </div>
         ))}
       </div>

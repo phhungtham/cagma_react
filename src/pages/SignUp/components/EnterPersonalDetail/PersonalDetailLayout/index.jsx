@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useContext, useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
@@ -8,6 +9,7 @@ import Spinner from '@common/components/atoms/Spinner';
 import SelectBottom from '@common/components/organisms/bottomSheets/SelectBottom';
 import { employmentValuesDisableOccupation } from '@common/constants/account';
 import { initSelectBottom } from '@common/constants/bottomsheet';
+import { languageMapWithBranchNameField } from '@common/constants/branch';
 import {
   EmploymentMap,
   getCanadaProvinceCode,
@@ -26,6 +28,7 @@ import { SignUpContext } from '@pages/SignUp';
 import { buildObjectMapFromResponse, commonCodeDataToOptions } from '@utilities/convert';
 import { formatYYYYMMDDToDisplay } from '@utilities/dateTimeUtils';
 import { scrollToElement } from '@utilities/scroll';
+import { appLanguage } from 'app/redux/selector';
 
 import {
   CommonCodeFieldName,
@@ -66,6 +69,8 @@ const PersonalDetailLayout = ({ onSubmit }) => {
   });
   const employmentSectionRef = useRef(null);
   const { requestApi } = useApi();
+  const currentLanguage = useSelector(appLanguage);
+  const langStr = currentLanguage?.language;
 
   const methods = useForm({
     mode: 'onChange',
@@ -236,8 +241,9 @@ const PersonalDetailLayout = ({ onSubmit }) => {
   };
 
   const handleSelectBranch = branch => {
+    const branchName = branch[languageMapWithBranchNameField[langStr]] || branch.lcl_br_nm;
     setValue('branchNo', branch.brno, { shouldValidate: true });
-    setValue('branchDisplay', branch.lcl_br_nm, { shouldValidate: true });
+    setValue('branchDisplay', branchName, { shouldValidate: true });
     handleCloseBranchBottom();
   };
 
@@ -252,7 +258,8 @@ const PersonalDetailLayout = ({ onSubmit }) => {
     if (isSuccess) {
       const branchList = data.r_CACO006_1Vo || [];
       if (existingCustomer?.branchNo) {
-        const branchName = branchList.find(item => item.brno === existingCustomer.branchNo)?.lcl_br_nm || '';
+        const branch = branchList.find(item => item.brno === existingCustomer.branchNo);
+        const branchName = branch[languageMapWithBranchNameField[langStr]] || branch.lcl_br_nm;
         setValue('branchDisplay', branchName, { shouldValidate: true });
       }
       setBranches(branchList);

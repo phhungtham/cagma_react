@@ -1,10 +1,13 @@
 import { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import LocationMap from '@common/components/atoms/LocationMap';
 import BottomSheet from '@common/components/templates/BottomSheet';
+import { languageMapWithBranchNameField } from '@common/constants/branch';
 import { bookAppointmentLabels as labels } from '@common/constants/labels';
 import { callPhone } from '@utilities/index';
+import { appLanguage } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 import { PropTypes } from 'prop-types';
 
@@ -26,6 +29,9 @@ const viewMapBranchFields = [
 ];
 
 const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment, translate: t }) => {
+  const currentLanguage = useSelector(appLanguage);
+  const langStr = currentLanguage?.language;
+
   const onClickCallPhone = () => {
     callPhone(branchData?.br_telno);
   };
@@ -41,7 +47,7 @@ const ViewMapBottom = ({ open, onClose, branchData, onBookAppointment, translate
       <div className="view_map">
         <div className="map">{!!branchData?.br_adr && <LocationMap address={branchData?.br_adr} />}</div>
         <div className="content">
-          <div className="title">{branchData?.lcl_br_nm || ''}</div>
+          <div className="title">{branchData?.[languageMapWithBranchNameField[langStr]] || branchData?.lcl_br_nm}</div>
           <div className="detail_info">
             {!!branchData &&
               viewMapBranchFields.map(({ label, value }, index) => (

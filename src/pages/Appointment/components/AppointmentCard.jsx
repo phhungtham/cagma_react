@@ -1,18 +1,24 @@
+import { useSelector } from 'react-redux';
+
 import zoomImg from '@assets/images/apparatus_zoom_40.png';
 import inPersonImg from '@assets/images/icon_fill_atm_40.png';
 import Label from '@common/components/atoms/Label';
+import { languageMapWithBranchNameField } from '@common/constants/branch';
+import { appLanguage } from 'app/redux/selector';
 
 import { AppointmentStatusKeyWithLabel, labelStatusWithType, labelStatusWithVariant } from '../constants';
 import './styles.scss';
 
 const AppointmentCard = ({ onClick, appointmentInfo, statusList, translate: t }) => {
+  const currentLanguage = useSelector(appLanguage);
+  const langStr = currentLanguage?.language;
+
   const {
     apint_visit_chk,
     apint_seq: id,
     apint_reg_dt_display: date,
     apint_reg_tm_display: time,
     apint_stat: status,
-    lcl_br_nm: branchName,
   } = appointmentInfo || {};
   const isUsingZoom = apint_visit_chk === 'N';
   //Currently, hardcode instead of using status list from API
@@ -36,7 +42,9 @@ const AppointmentCard = ({ onClick, appointmentInfo, statusList, translate: t })
         </div>
         <div className="item-card__info">
           <div className="item-card__id">#{id}</div>
-          <div className="item-card__branch-name">{branchName}</div>
+          <div className="item-card__branch-name">
+            {appointmentInfo[languageMapWithBranchNameField[langStr]] || appointmentInfo.lcl_br_nm}
+          </div>
           <div className="item-card__time mt-1">
             <span className="item-card__date">{date}</span>
             <span className="divider__vertical" />

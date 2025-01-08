@@ -6,13 +6,14 @@ import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 import Spinner from '@common/components/atoms/Spinner';
 import ViewMapBottom from '@common/components/organisms/bottomSheets/ViewMapBottom';
 import Header from '@common/components/organisms/Header';
+import { languageMapWithBranchNameField } from '@common/constants/branch';
 import { MENU_CODE } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import { bookAppointmentLabels as labels, menuLabels } from '@common/constants/labels';
 import useApi from '@hooks/useApi';
 import { routePaths } from '@routes/paths';
 import { callPhone, moveBack, moveNext } from '@utilities/index';
-import { nativeParamsSelector } from 'app/redux/selector';
+import { appLanguage, nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { branchFields } from '../constants';
@@ -20,6 +21,8 @@ import './styles.scss';
 
 const BranchDirectory = ({ translate: t }) => {
   const nativeParams = useSelector(nativeParamsSelector);
+  const currentLanguage = useSelector(appLanguage);
+  const langStr = currentLanguage?.language;
 
   const [branches, setBranches] = useState();
 
@@ -107,7 +110,7 @@ const BranchDirectory = ({ translate: t }) => {
                   key={branch.brno}
                 >
                   <Accordion
-                    title={branch.lcl_br_nm}
+                    title={branch[languageMapWithBranchNameField[langStr]] || branch.lcl_br_nm}
                     caption={branch.br_adr}
                     isExpand={branchIndex === index}
                     onClick={() => handleOnClickAccordion(index)}

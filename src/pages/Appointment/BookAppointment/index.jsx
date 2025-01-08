@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 
 import Alert from '@common/components/atoms/Alert';
 import Spinner from '@common/components/atoms/Spinner';
+import { languageMapWithBranchNameField } from '@common/constants/branch';
 import { endpoints } from '@common/constants/endpoint';
 import { ctaLabels } from '@common/constants/labels';
+import useApi from '@hooks/useApi';
 import useLoginInfo from '@hooks/useLoginInfo';
-import { apiCall } from '@shared/api';
 import { buildRequestPayloadBaseMappingFields } from '@utilities/convert';
-import { nativeParamsSelector } from 'app/redux/selector';
+import { appLanguage, nativeParamsSelector } from 'app/redux/selector';
 import withHTMLParseI18n from 'hocs/withHTMLParseI18n';
 
 import { BookAppointmentType } from '../constants';
@@ -25,6 +26,7 @@ const BookAppointmentStep = {
 
 const BookAppointment = ({ translate: t }) => {
   const nativeParams = useSelector(nativeParamsSelector);
+  const currentLanguage = useSelector(appLanguage);
   const { isLogin } = useLoginInfo();
   const [showLoading, setShowLoading] = useState(false);
   const [showAlert, setShowAlert] = useState({
@@ -34,6 +36,8 @@ const BookAppointment = ({ translate: t }) => {
   });
   const [currentStep, setCurrentStep] = useState(BookAppointmentStep.AGREEMENT);
   const [appointmentSuccessData, setAppointmentSuccessData] = useState();
+  const { requestApi } = useApi();
+  const langStr = currentLanguage?.language;
   const { type, branchNo } = nativeParams || {};
 
   const handleAgreeTerms = () => {
@@ -46,18 +50,18 @@ const BookAppointment = ({ translate: t }) => {
     request.apint_guest_chk = isLogin ? 'N' : 'Y'; //Alway is new customer if user not logged
     request.apint_visit_chk = type === BookAppointmentType.IN_PERSON ? 'Y' : 'N';
     request.apint_brno = branchNo;
-    const bookAppointmentResponse = await apiCall(endpoints.bookAppointment, 'POST', request);
+    const { data, error, isSuccess } = await requestApi(endpoints.bookAppointment, request);
     setShowLoading(false);
-    if (bookAppointmentResponse?.data?.elData) {
+    if (isSuccess) {
       const {
         apint_visit_chk: visitCheck,
-        lcl_br_nm: branchName,
         br_adr: address,
         apint_reg_dt_display: date,
         apint_reg_tm_display: time,
         apint_seq: confirmNumber,
         apint_memo: additionalComments,
-      } = bookAppointmentResponse.data.elData || {};
+      } = data;
+      const branchName = data[languageMapWithBranchNameField[langStr]] || data.lcl_br_nm;
       const bookAppointmentSuccessData = {
         visitCheck,
         method: visitCheck === 'Y' ? 'In person' : 'Zoom',
@@ -71,13 +75,11 @@ const BookAppointment = ({ translate: t }) => {
       setAppointmentSuccessData(bookAppointmentSuccessData);
       setCurrentStep(BookAppointmentStep.COMPLETED);
       return;
-    }
-    const responseErrorMessage = bookAppointmentResponse?.data?.elHeader?.resMsgVo?.msgText;
-    if (responseErrorMessage) {
+    } else {
       setShowAlert({
         isShow: true,
+        content: error,
         title: '',
-        content: bookAppointmentResponse.data.elHeader.resMsgVo.msgText,
       });
     }
   };
