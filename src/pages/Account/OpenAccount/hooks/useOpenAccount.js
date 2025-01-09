@@ -6,6 +6,16 @@ import useApi from '@hooks/useApi';
 
 import { UnitCodeWithPeriodType } from '../constants';
 
+const productFilterMap = {
+  [ProductCode.TFSA_E_SAVINGS]: account => account.prdt_c !== ProductCode.RRSP_E_SAVINGS,
+  [ProductCode.RRSP_E_SAVINGS]: account => account.prdt_c !== ProductCode.TFSA_E_SAVINGS,
+  [ProductCode.TFSA_E_GIC]: account => account.prdt_c === ProductCode.TFSA_E_SAVINGS,
+  [ProductCode.RRSP_E_GIC]: account => account.prdt_c === ProductCode.RRSP_E_SAVINGS,
+  [ProductCode.E_POWER_TERM_DEPOSIT]: account => [ProductCode.E_SAVING, ProductCode.CHEQUING].includes(account.prdt_c),
+  [ProductCode.E_GREEN_TERM_DEPOSIT]: account => [ProductCode.E_SAVING, ProductCode.CHEQUING].includes(account.prdt_c),
+  [ProductCode.E_INSTALLMENT_SAVING]: account => [ProductCode.E_SAVING, ProductCode.CHEQUING].includes(account.prdt_c),
+};
+
 const useOpenAccount = ({ product }) => {
   const {
     prdt_c: productCode,
@@ -19,29 +29,14 @@ const useOpenAccount = ({ product }) => {
   const { requestApi } = useApi();
 
   const getFilteredBasedProductCode = accounts => {
-    const filteredAccounts = (accounts || []).filter(
-      account => account.dep_sjt_class === DepositSubjectClass.REGULAR_SAVING && Number(account.acno_jiacno_gbn) === 1
-    );
-    if (productCode === ProductCode.TFSA_E_SAVINGS) {
-      return filteredAccounts.filter(account => account.prdt_c !== ProductCode.RRSP_E_SAVINGS);
-    }
-    if (productCode === ProductCode.RRSP_E_SAVINGS) {
-      return filteredAccounts.filter(account => account.prdt_c !== ProductCode.TFSA_E_SAVINGS);
-    }
-    if (productCode === ProductCode.TFSA_E_GIC) {
-      return filteredAccounts.filter(account => account.prdt_c === ProductCode.TFSA_E_SAVINGS);
-    }
-    if (productCode === ProductCode.RRSP_E_GIC) {
-      return filteredAccounts.filter(account => account.prdt_c === ProductCode.RRSP_E_SAVINGS);
-    }
-    if (
-      [ProductCode.E_POWER_TERM_DEPOSIT, ProductCode.E_GREEN_TERM_DEPOSIT, ProductCode.E_INSTALLMENT_SAVING].includes(
-        productCode
-      )
-    ) {
-      return filteredAccounts.filter(account => [ProductCode.E_SAVING, ProductCode.CHEQUING].includes(account.prdt_c));
-    }
-    return filteredAccounts;
+    const filteredAccounts = (accounts || []).filter(account => {
+      const { dep_sjt_class, acno_jiacno_gbn, ccy_c } = account;
+      const isSameCurrency = productCurrencyCode === ccy_c;
+      const isRegularSaving = dep_sjt_class === DepositSubjectClass.REGULAR_SAVING;
+      return isRegularSaving && isSameCurrency && Number(acno_jiacno_gbn) === 1;
+    });
+    const filterCondition = productFilterMap[productCode];
+    return filterCondition ? filteredAccounts.filter(filterCondition) : filteredAccounts;
   };
 
   const requestPreOpenDepositAccount = async payload => {
