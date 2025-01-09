@@ -419,7 +419,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                   <section>
                     <TextDropdown
                       label={t(labels.terms)}
-                      placeholder="Select"
+                      placeholder={t(commonLabels.select)}
                       onClick={onOpenSelectTermsBottom}
                       value={term ? `${term} ${t(PeriodUnitCodeDisplay[unitCode])}` : ''}
                     >
@@ -447,7 +447,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                   <section>
                     <TextDropdown
                       label={t(labels.paymentDateEachSession)}
-                      placeholder="Select"
+                      placeholder={t(commonLabels.select)}
                       onClick={handleOpenSelectFrequencyBottom}
                       value={paymentDate}
                     />
@@ -456,7 +456,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                 <section>
                   <TextDropdown
                     label={t(labels.intendedUseAccount)}
-                    placeholder="Select"
+                    placeholder={t(commonLabels.select)}
                     align="vertical"
                     onClick={handleOpenIntendedUseAccountBottom}
                     value={intendedUseAccountDisplay}
@@ -466,7 +466,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                   <section>
                     <TextDropdown
                       label={t(labels.numberOfTransactions)}
-                      placeholder="Select"
+                      placeholder={t(commonLabels.select)}
                       value="Unlimited"
                       readonly
                     />
@@ -476,7 +476,7 @@ const EnterAccountInformation = ({ onSubmit, product, setAlert, provinces, termO
                   <section>
                     <TextDropdown
                       label={t(labels.taxationYear)}
-                      placeholder="Select"
+                      placeholder={t(commonLabels.select)}
                       onClick={handleOpenTaxYearBottom}
                       value={allowSelectTaxYear ? taxYear : ''}
                       disabled={!allowSelectTaxYear}

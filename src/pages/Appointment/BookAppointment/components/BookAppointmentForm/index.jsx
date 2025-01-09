@@ -11,7 +11,7 @@ import { CustomerTypes } from '@common/constants/account';
 import { getPurposeAppointment, getSubPurposeAppointment } from '@common/constants/commonCode';
 import { minuteHalfOptions } from '@common/constants/dateTime';
 import { endpoints } from '@common/constants/endpoint';
-import { ctaLabels, bookAppointmentLabels as labels, menuLabels } from '@common/constants/labels';
+import { commonLabels, ctaLabels, bookAppointmentLabels as labels, menuLabels } from '@common/constants/labels';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
 import PurposeAppointmentBottom from '@pages/Appointment/components/PurposeAppointmentBottom';
@@ -259,7 +259,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
                 render={({ field: { value } }) => (
                   <TextDropdown
                     label={t(labels.customerType)}
-                    placeholder="Select"
+                    placeholder={t(commonLabels.select)}
                     onClick={handleOpenCustomerTypeBottom}
                     value={value}
                   />
@@ -273,7 +273,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
                 render={({ field: { value } }) => (
                   <TextDropdown
                     label={t(labels.purpose)}
-                    placeholder="Select"
+                    placeholder={t(commonLabels.select)}
                     onClick={handleOpenPurposeAppointmentBottom}
                     value={value}
                     disabled={!customerType}
@@ -290,7 +290,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
                 render={({ field: { value } }) => (
                   <TextDropdown
                     label={t(labels.date)}
-                    placeholder="Select"
+                    placeholder={t(commonLabels.select)}
                     onClick={handleOpenCalendar}
                     value={value}
                   />
@@ -304,7 +304,7 @@ const BookAppointmentForm = ({ type, onSubmit, translate: t, isLogin, setShowAle
                 render={({ field: { value } }) => (
                   <TextDropdown
                     label={t(labels.time)}
-                    placeholder="Select"
+                    placeholder={t(commonLabels.select)}
                     value={value}
                     onClick={handleOpenSelectTimeBottom}
                     disabled={!date}
