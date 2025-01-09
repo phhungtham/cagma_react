@@ -44,13 +44,13 @@ const SignUpCreateID = ({ onConfirm, onNavigateThankVisitAgain }) => {
   const handleSubmitForm = async values => {
     setShowLoading(true);
     const payload = {
-      user_id: values.id,
+      user_id: values.id?.toUpperCase() || '',
     };
     const { data, error, isSuccess } = await requestApi(endpoints.verifyIdDuplicate, payload);
     setShowLoading(false);
     if (isSuccess) {
       if (Number(data.cnt) === 0) {
-        onConfirm(values.id);
+        onConfirm(values.id?.toUpperCase() || '');
       } else {
         return setAlert({
           isShow: true,
