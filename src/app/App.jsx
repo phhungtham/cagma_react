@@ -128,6 +128,8 @@ const App = () => {
       e => {
         try {
           if (typeof e.detail === 'object') {
+            console.log('access redirect event from native');
+            console.log('redirect event detail :>> ', e.detail);
             const data = e.detail;
             const path = String(data.src);
             // get param from native side
