@@ -57,6 +57,8 @@ const App = () => {
         $h = window.$h;
         if (!$h) {
           console.log('Failed to load script file wmatrix.js onload');
+        } else {
+          console.log('Load wmatrix successfully');
         }
         $h.dismissScreen();
       };
@@ -92,6 +94,7 @@ const App = () => {
     await fetch(url)
       .then(response => response.text())
       .then(data => {
+        console.log('load file langpack successfully');
         // ignore text 'Websquare.WebsquareLang = '
         let firstLanguageContentIndex = data.indexOf('{');
         let lastLanguageContent = data.charAt(data.length - 1);
@@ -127,9 +130,9 @@ const App = () => {
       'redirect',
       e => {
         try {
+          console.log('access redirect event from native');
+          console.log('redirect event detail :>> ', e.detail);
           if (typeof e.detail === 'object') {
-            console.log('access redirect event from native');
-            console.log('redirect event detail :>> ', e.detail);
             const data = e.detail;
             const path = String(data.src);
             // get param from native side
