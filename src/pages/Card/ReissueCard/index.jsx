@@ -79,29 +79,6 @@ const ReissueCard = ({ translate: t }) => {
     }
   };
 
-  const requestVerifyStep2NotLogged = async formValues => {
-    const { postalCode: adr_zipc, dob: cus_bth_y4mm_dt } = formValues;
-    const payload = {
-      adr_zipc,
-      cus_bth_y4mm_dt,
-    };
-    setShowLoading(true);
-    const { data, error, isSuccess, requiredLogin } = await requestApi(endpoints.cardVerificationStep2, payload);
-    setShowLoading(false);
-    if (isSuccess) {
-      if (Number(data?.result_cd) === 1) {
-        setCurrentStep(REISSUE_CARD_STEP.ENTER_ADDRESS_INFORMATION);
-      }
-    } else {
-      setAlert({
-        isShow: true,
-        content: error,
-        title: '',
-        requiredLogin,
-      });
-    }
-  };
-
   const handleSubmitCardInfo = async values => {
     setShowLoading(true);
     const { cardNumber } = values;

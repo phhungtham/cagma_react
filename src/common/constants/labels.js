@@ -523,6 +523,7 @@ export const activeCardLabels = {
   accessCard: 'lbl_CACA600000_0066', //Access Card
   hasBeenActivated: 'lbl_CACA600000_0566', //has been activated
   toGetStarted: 'lbl_CACA600000_1074', //To get started, please enter your current 16-digit Access Card number.
+  next: 'lbl_CTA_6010', //Next
 };
 
 export const reissueCardLabels = {

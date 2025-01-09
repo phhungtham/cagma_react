@@ -27,13 +27,15 @@ class ErrorBoundary extends React.Component {
         <Alert
           isCloseButton={false}
           isShowAlert={this.state.hasError}
-          subtitle="Something went wrong. Please try again"
+          textAlign="center"
+          title="A temporary error has occurred." //TODO: Missing label lbl_com_4261
+          subtitle="Please try again later." //lbl_com_4262
           firstButton={{
             onClick: () => {
               moveHome();
               reloadWebView();
             },
-            label: 'Confirm',
+            label: 'Home', //lbl_com_4263
           }}
         />
       );

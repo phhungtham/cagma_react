@@ -88,7 +88,7 @@ const EnterActiveCardInfo = ({ onSubmit, isLogin, translate: t }) => {
       </div>
       <div className="footer__fixed">
         <Button
-          label={isLogin ? t(ctaLabels.activate) : 'Next'}
+          label={isLogin ? t(ctaLabels.activate) : t(ctaLabels.next)}
           variant="filled__primary"
           className="btn__cta"
           onClick={handleSubmit(onSubmit)}
