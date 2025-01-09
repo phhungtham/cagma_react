@@ -55,7 +55,13 @@ const App = () => {
       script.onload = () => {
         wmatrix = window.wmatrix;
         $h = window.$h;
+        if (!$h) {
+          console.log('Failed to load script file wmatrix.js onload');
+        }
         $h.dismissScreen();
+      };
+      script.onerror = () => {
+        console.log('Failed to load script file wmatrix.js on error');
       };
       document.body.appendChild(script);
     } else {
