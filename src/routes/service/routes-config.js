@@ -16,6 +16,7 @@ import EAlertsBalance from '@pages/E-Alerts/EAlertsBalance';
 import EAlertsManagement from '@pages/E-Alerts/EAlertsManagement';
 import Home from '@pages/Home/Home';
 import Login from '@pages/Login/Login';
+import PageNotFound from '@pages/PageNotFound';
 import TransferLimitSetting from '@pages/PersonalSetting/TransferLimitSetting';
 import ProductList from '@pages/Product/ProductList';
 import ChangeProfile from '@pages/Profile/ChangeProfile';
@@ -30,12 +31,23 @@ const RoutesConfig = [
     private: false,
   },
   {
-    path: '/login',
-    component: Login,
-    private: false,
+    path: '/demo',
+    component: DemoComponent,
+    private: true,
   },
   {
-    path: '/change-profile',
+    path: '/login',
+    component: Login,
+    private: true,
+  },
+  {
+    path: '/react-test-page',
+    component: CommonTestPage,
+    private: false,
+    navigatePath: '/',
+  },
+  {
+    path: routePaths.changeProfile,
     component: ChangeProfile,
     private: false,
   },
@@ -119,17 +131,7 @@ const RoutesConfig = [
     component: TransferLimitSetting,
     private: false,
   },
-  {
-    path: '/demo',
-    component: DemoComponent,
-    private: true,
-  },
-  {
-    path: '/react-test-page',
-    component: CommonTestPage,
-    private: false,
-    navigatePath: '/',
-  },
+
   {
     path: routePaths.signUp,
     component: SignUp,
@@ -138,6 +140,11 @@ const RoutesConfig = [
   {
     path: routePaths.updateEmail,
     component: UpdateEmail,
+    private: false,
+  },
+  {
+    path: '*',
+    component: PageNotFound, //TODO: Handle Page Not Found
     private: false,
   },
 ];
