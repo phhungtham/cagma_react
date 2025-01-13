@@ -29,7 +29,6 @@ const Chips = props => {
 
 Chips.propTypes = {
   clazz: PropTypes.string,
-  defaultActive: PropTypes.string,
   type: PropTypes.oneOf(['amount', 'small', 'default']),
   onChange: PropTypes.func,
   segments: PropTypes.arrayOf(
@@ -49,7 +48,6 @@ Chips.defaultProps = {
     },
   ],
   onChange: () => {},
-  defaultActive: '',
 };
 
 export default Chips;

@@ -15,11 +15,8 @@ AmountChip.args = {
 export const DefaultChip = Template.bind({});
 DefaultChip.args = {
   label: 'Label',
-  segments: 2,
-};
-export const SmallChip = Template.bind({});
-SmallChip.args = {
-  label: 'Label',
-  type: 'small',
-  segments: 4,
+  segments: [
+    { label: 'label1', value: 'label1' },
+    { label: 'label2', value: 'label2' },
+  ],
 };
