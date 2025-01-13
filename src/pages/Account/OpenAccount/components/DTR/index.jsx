@@ -155,6 +155,18 @@ const DTR = ({ setAlert, DTRInfo, onConfirm, translate: t }) => {
   };
 
   useEffect(() => {
+    if (notHaveTin1) {
+      setValue('tin1', '', { shouldValidate: true });
+    }
+  }, [notHaveTin1]);
+
+  useEffect(() => {
+    if (notHaveTin2) {
+      setValue('tin2', '', { shouldValidate: true });
+    }
+  }, [notHaveTin2]);
+
+  useEffect(() => {
     requestGetCommonCode();
   }, []);
 
