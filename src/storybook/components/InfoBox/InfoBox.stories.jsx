@@ -1,9 +1,7 @@
-import React from 'react';
-
 import InfoBox from '@common/components/atoms/InfoBox';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/InfoBox/InfoBox',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/InfoBox/InfoBox',
   component: InfoBox,
 };
 

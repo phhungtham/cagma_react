@@ -1,7 +1,7 @@
 import CalendarInput from '@common/components/atoms/Calendar/CalendarInput';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Calendar/CalendarInputBox',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Calendar/CalendarInputBox',
   component: CalendarInput,
 };
 

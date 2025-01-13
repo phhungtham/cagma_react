@@ -1,7 +1,7 @@
 import DatePicker from '@common/components/atoms/Calendar/DatePicker';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Calendar/DatePickerBox',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Calendar/DatePickerBox',
   component: DatePicker,
 };
 

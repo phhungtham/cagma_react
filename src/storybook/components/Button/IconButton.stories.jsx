@@ -2,7 +2,7 @@ import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/Icon
 
 // eslint-disable-next-line
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Button/IconButton',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Button/IconButton',
   component: IconButton,
 };
 

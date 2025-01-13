@@ -1,9 +1,7 @@
-import React from 'react';
-
 import Label from '@common/components/atoms/Label';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Label/Label',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Label/Label',
   component: Label,
 };
 

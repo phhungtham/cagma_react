@@ -1,10 +1,8 @@
-import React from 'react';
-
 import Popover from '@common/components/atoms/Popover';
 import { CheckIcon } from 'assets/icons';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Popover/Popover With Icon',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Popover/Popover With Icon',
   component: Popover,
 };
 

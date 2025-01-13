@@ -1,11 +1,9 @@
-import React from 'react';
-
 import InputPin from '@common/components/atoms/Input/InputPin';
 import { INPUT_MODE } from '@common/components/constants';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Input/Input Pin',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Input/Input Pin',
   component: InputPin,
 };
 

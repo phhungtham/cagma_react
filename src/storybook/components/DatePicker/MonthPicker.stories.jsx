@@ -1,7 +1,7 @@
 import MonthPicker from '@common/components/atoms/Calendar/MonthPicker';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Calendar/MonthPickerBox',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Calendar/MonthPickerBox',
   component: MonthPicker,
 };
 

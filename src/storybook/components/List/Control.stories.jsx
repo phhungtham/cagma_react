@@ -1,7 +1,7 @@
 import List from '@common/components/atoms/ListGroup/List';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/List/Control List',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/List/Control List',
   component: List,
 };
 

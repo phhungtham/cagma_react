@@ -1,9 +1,7 @@
-import React from 'react';
-
 import Spinner from '@common/components/atoms/Spinner';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Spinner/Spinner',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Spinner/Spinner',
   component: Spinner,
 };
 

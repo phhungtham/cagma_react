@@ -1,10 +1,8 @@
-import React from 'react';
-
 import Accordion from '@common/components/atoms/Accordion';
 import { AnswerIcon, QuestionIcon } from 'assets/icons';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Accordion/Accordion',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Accordion/Accordion',
   component: Accordion,
 };
 

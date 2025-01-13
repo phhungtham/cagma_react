@@ -1,9 +1,7 @@
-import React from 'react';
-
 import Chips from '@common/components/atoms/Chips';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Chips/Chip',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Chips/Chip',
   component: Chips,
 };
 

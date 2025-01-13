@@ -1,7 +1,7 @@
 import Alert from '@common/components/atoms/Alert';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Alert/Alert',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Alert/Alert',
   component: Alert,
 };
 

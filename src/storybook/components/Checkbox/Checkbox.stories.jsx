@@ -1,11 +1,9 @@
-import React from 'react';
-
 import CheckBox from '@common/components/atoms/Checkbox';
 import { SIZE } from '@common/components/constants';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Checkbox/Checkbox',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Checkbox/Checkbox',
   component: CheckBox,
 };
 

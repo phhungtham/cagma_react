@@ -1,10 +1,8 @@
-import React from 'react';
-
 import Switch from '@atomic/Switch';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Switch/Switch With Label',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Switch/Switch With Label',
   component: Switch,
 };
 

@@ -1,7 +1,7 @@
 import Tabs from '@common/components/atoms/Tabs';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Tabs/Tab',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Tabs/Tab',
   component: Tabs,
 };
 

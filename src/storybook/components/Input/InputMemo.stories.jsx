@@ -2,7 +2,7 @@ import Input from '@common/components/atoms/Input/Input';
 
 // eslint-disable-next-line
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Input/Input Memo',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Input/Input Memo',
   component: Input,
 };
 

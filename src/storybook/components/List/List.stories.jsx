@@ -2,7 +2,7 @@ import List from '@common/components/atoms/ListGroup/List';
 import { CheckingIcon, ShareIcon } from 'assets/icons';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/List/Default List',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/List/Default List',
   component: List,
 };
 

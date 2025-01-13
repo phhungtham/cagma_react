@@ -1,10 +1,8 @@
-import React from 'react';
-
 import { Button } from '@common/components/atoms/ButtonGroup/Button/Button';
 
 // eslint-disable-next-line
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Button/OneButton',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Button/OneButton',
   component: Button,
 };
 

@@ -1,10 +1,8 @@
-import React from 'react';
-
 import { TripleButton } from '@atomic/ButtonGroup/TripleButton/TripleButton';
 
 // eslint-disable-next-line
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Button/TripleButton',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Button/TripleButton',
   component: TripleButton,
 };
 

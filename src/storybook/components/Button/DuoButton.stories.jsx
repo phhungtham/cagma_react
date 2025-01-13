@@ -1,10 +1,8 @@
-import React from 'react';
-
 import { DuoButton } from '@atomic/ButtonGroup/DuoButton/DuoButton';
 
 // eslint-disable-next-line
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Button/DuoButton',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Button/DuoButton',
   component: DuoButton,
 };
 

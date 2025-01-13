@@ -1,9 +1,7 @@
-import React from 'react';
-
 import Currency from '@common/components/atoms/Currency';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Currency/Currency',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Currency/Currency',
   component: Currency,
 };
 

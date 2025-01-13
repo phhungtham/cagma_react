@@ -1,9 +1,7 @@
-import React from 'react';
-
 import Popover from '@common/components/atoms/Popover';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Popover/Popover Single Line',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Popover/Popover Single Line',
   component: Popover,
 };
 

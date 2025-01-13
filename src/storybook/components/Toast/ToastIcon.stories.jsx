@@ -1,10 +1,8 @@
-import React from 'react';
-
 import Toast from '@common/components/atoms/Toast';
 import { CheckIcon } from 'assets/icons';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Toast/Toast With Icon',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Toast/Toast With Icon',
   component: Toast,
 };
 

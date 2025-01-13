@@ -1,9 +1,7 @@
-import React from 'react';
-
 import Toast from '@common/components/atoms/Toast';
 
 export default {
-  title: 'SOL CAMBODIA STORYBOOKS/Atomic Component/Toast/Toast',
+  title: 'SOL CANADA STORYBOOKS/Atomic Component/Toast/Toast',
   component: Toast,
 };
 
