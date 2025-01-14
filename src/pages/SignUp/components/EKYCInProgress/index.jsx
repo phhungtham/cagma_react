@@ -74,7 +74,7 @@ const EKYCInProgress = ({ onConfirm, navigateToVerifyResult, onNavigateVerifyMem
     setShowLoading(false);
     if (isSuccess) {
       const link = data?.signingUrl || '';
-      openURLInBrowser(link, true);
+      openURLInBrowser(link);
     } else {
       return setAlert({
         isShow: true,

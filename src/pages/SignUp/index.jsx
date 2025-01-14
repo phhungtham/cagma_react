@@ -80,7 +80,7 @@ const SignUp = ({ translate }) => {
   };
 
   const handleNavigateEKYCProgress = ekycVerifyExternalLink => {
-    openURLInBrowser(ekycVerifyExternalLink, true);
+    openURLInBrowser(ekycVerifyExternalLink);
     setCurrentStep(SignUpStep.EKYC_IN_PROGRESS);
   };
 
