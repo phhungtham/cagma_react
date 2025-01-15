@@ -8,7 +8,7 @@ import { IconButton } from '@common/components/atoms/ButtonGroup/IconButton/Icon
 import ViewTermBottom from '@common/components/organisms/bottomSheets/ViewTermBottom';
 import Header from '@common/components/organisms/Header';
 import TermConditionChecklist from '@common/components/organisms/TermConditionChecklist';
-import { cardLabels, ctaLabels, menuLabels } from '@common/constants/labels';
+import { cardLabels, menuLabels } from '@common/constants/labels';
 import { externalUrls } from '@common/constants/url';
 import openInternalWebview from '@utilities/gmCommon/openInternalWebview';
 import { moveBack } from '@utilities/index';
@@ -140,7 +140,7 @@ const TermsAndConditions = ({ onSubmit, translate: t }) => {
       </div>
       <div className="footer__fixed">
         <Button
-          label={t(ctaLabels.next)}
+          label={t(cardLabels.next)}
           variant="filled__primary"
           className="btn__cta"
           onClick={onClickSubmit}

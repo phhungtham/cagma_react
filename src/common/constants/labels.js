@@ -493,6 +493,7 @@ export const cardLabels = {
   youCannotApplyBecause: 'lbl_CACA600000_5116', //You cannot apply because you already have a card...
   pleaseCheck2: 'lbl_CACA600000_5117', //Please check
   noCardToActivate: 'lbl_CACA600000_5118', //No cards to activate.
+  next: 'lbl_CTA_6001', //Next
 };
 
 export const activeCardLabels = {
