@@ -504,6 +504,7 @@ export const activeCardLabels = {
   cardInfoIncorrect: 'lbl_CACA600000_0061', //Card information is incorrect
   incorrectMaxTimes: 'lbl_CACA600000_0062', //If your card information is entered incorrectly 5 times, online activation will be blocked. Please try again.
   activationAttempts: 'lbl_CACA600000_0063', //Activation attempts
+  cardInfoIncorrect2: 'lbl_CACA600000_0064', //Card information is incorrect
   incorrectBlocked: 'lbl_CACA600000_0065', //You have entered the card information incorrectly 5 times, and Please try again. Go to Home.
   phoneNumber: 'lbl_CACA600000_0077', //Phone Number
   dob: 'lbl_CACA600000_0078', //Date of Birth

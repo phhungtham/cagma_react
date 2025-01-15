@@ -209,7 +209,7 @@ const ActiveCard = ({ translate: t }) => {
       <Alert
         isCloseButton={false}
         isShowAlert={showActiveBlockAlert}
-        title={t(labels.cardInfoIncorrect)}
+        title={t(labels.cardInfoIncorrect2)}
         subtitle={t(labels.incorrectBlocked)}
         textAlign="center"
         onClose={() => setShowActiveBlockAlert(false)}
