@@ -8,6 +8,7 @@ import CheckBox from '@common/components/atoms/Checkbox';
 import Input from '@common/components/atoms/Input/Input';
 import Spinner from '@common/components/atoms/Spinner';
 import Header from '@common/components/organisms/Header';
+import { isDevelopmentEnv } from '@common/constants/common';
 import { endpoints } from '@common/constants/endpoint';
 import {
   ctaLabels,
@@ -18,7 +19,9 @@ import {
 import { invalidNameRegex } from '@common/constants/regex';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useApi from '@hooks/useApi';
+import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
+import { isIphoneIOS14OrOlder } from '@utilities/deviceDetected';
 
 import BranchVisitNoticeBottom from '../BranchVisitNoticeBottom';
 import { VerifyIdentityType } from './constants';
@@ -26,15 +29,18 @@ import { VerifyIdentityTermsSchema } from './schema';
 import './styles.scss';
 
 const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
-  const { deviceId, ekycCached, setEkycToNativeCache, translate: t } = useContext(SignUpContext);
+  const { deviceId, ekycCached, setEkycToNativeCache, translate: t, isNavigateFromLogin } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
     content: '',
   });
+  const [showAlertRequireVersion, setShowAlertRequireVersion] = useState(false);
+  const [showAlertConfirmLogout, setShowAlertConfirmLogout] = useState(false);
   const [showBranchVisitBottom, setShowBranchVisitBottom] = useState(false);
   const { requestApi } = useApi();
+  const { moveHomeNative } = useMove();
 
   const {
     control,
@@ -85,6 +91,11 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
     if (type === VerifyIdentityType.UNAVAILABLE) {
       setShowBranchVisitBottom(true);
     } else {
+      const isIOS14OrOlder = isIphoneIOS14OrOlder();
+      if (isIOS14OrOlder) {
+        setShowAlertRequireVersion(true);
+        return;
+      }
       requestPreRegisterCustomerStep2(values);
     }
   };
@@ -98,6 +109,26 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
 
   const handleClickBack = () => {
     onNavigateEnterEmail();
+  };
+
+  const handleCloseAlertConfirmLogout = async () => {
+    if (isDevelopmentEnv) {
+      localStorage.removeItem('isLogin');
+    }
+    setShowAlertConfirmLogout(false);
+    setShowLoading(true);
+    await requestApi(endpoints.logout);
+    setShowLoading(false);
+    moveHomeNative();
+  };
+
+  const handleCloseAlertRequireVersion = () => {
+    setShowAlertRequireVersion(false);
+    if (isNavigateFromLogin) {
+      setShowAlertConfirmLogout(true);
+      return;
+    }
+    moveHomeNative();
   };
 
   useEffect(() => {
@@ -241,6 +272,34 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
           label: t(ctaLabels.confirm),
         }}
       />
+      {showAlertRequireVersion && (
+        <Alert
+          isCloseButton={false}
+          isShowAlert={showAlertRequireVersion}
+          title={t(labels.signUpRequires)}
+          subtitle={t(labels.youNeedtoUpdate)}
+          onClose={() => setShowAlertRequireVersion(false)}
+          textAlign="left"
+          firstButton={{
+            onClick: handleCloseAlertRequireVersion,
+            label: t(labels.home),
+          }}
+        />
+      )}
+      {showAlertConfirmLogout && (
+        <Alert
+          isCloseButton={false}
+          isShowAlert={showAlertConfirmLogout}
+          title={t(labels.forSecurityReasons)}
+          subtitle=""
+          onClose={() => setShowAlertConfirmLogout(false)}
+          textAlign="left"
+          firstButton={{
+            onClick: handleCloseAlertConfirmLogout,
+            label: t(labels.confirm),
+          }}
+        />
+      )}
     </>
   );
 };

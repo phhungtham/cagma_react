@@ -736,6 +736,11 @@ export const signUpVerifyIdentityLabels = {
   reservationConsultation: 'lbl_CTA_3114', //Reservation Consultation
   unableToRetrieve: 'lbl_CAET920000_0207', //Unable to retrieve the verification result. Please check again.
   retryIdVerification: 'lbl_CAET920000_0206', //Retry ID Verification
+  signUpRequires: 'lbl_CAET920000_0337', //Sign up requires IOS 15.0 or later
+  youNeedtoUpdate: 'lbl_CAET920000_0338', //You need to update to IOS 15.0 to use the Sign up.
+  home2: 'lbl_CTA_9511', //Home
+  forSecurityReasons: 'lbl_CAET920000_0339', //For security reasons, you will be logged out.
+  confirm: 'lbl_CTA_9512', //confirm
 };
 
 export const signUpEkycResultLabels = {
