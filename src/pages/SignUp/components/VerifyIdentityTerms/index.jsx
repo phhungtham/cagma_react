@@ -22,6 +22,8 @@ import useApi from '@hooks/useApi';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
 import { isIphoneIOS14OrOlder } from '@utilities/deviceDetected';
+import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
+import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
 
 import BranchVisitNoticeBottom from '../BranchVisitNoticeBottom';
 import { VerifyIdentityType } from './constants';
@@ -111,14 +113,20 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
     onNavigateEnterEmail();
   };
 
-  const handleCloseAlertConfirmLogout = async () => {
+  const handleLogout = async () => {
     if (isDevelopmentEnv) {
       localStorage.removeItem('isLogin');
     }
-    setShowAlertConfirmLogout(false);
     setShowLoading(true);
     await requestApi(endpoints.logout);
     setShowLoading(false);
+  };
+
+  const handleCloseAlertConfirmLogout = async () => {
+    setShowAlertConfirmLogout(false);
+    await handleLogout();
+    clearEkycInfo();
+    clearTempLoginInfo();
     moveHomeNative();
   };
 
@@ -128,6 +136,7 @@ const VerifyIdentityTerms = ({ onConfirm, onNavigateEnterEmail }) => {
       setShowAlertConfirmLogout(true);
       return;
     }
+    clearEkycInfo();
     moveHomeNative();
   };
 
