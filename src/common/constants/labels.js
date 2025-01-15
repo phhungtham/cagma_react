@@ -421,7 +421,8 @@ export const openAccountCDDLabels = {
 };
 
 export const cardLabels = {
-  accessCardService: 'lbl_CACA600000_0001', //Access Card Service
+  debitCardService: 'lbl_CACA600000_0001', //Debit Card Service
+  debitCardService2: 'lbl_CACA600000_0005', //Debit Card Service
   activeAccessCard: 'lbl_CACA600000_0002', //Activate your Access Card
   reissueAccessCard: 'lbl_CACA600000_0003', //Reissue your Access Card
   reportLostCard: 'lbl_CACA600000_0004', //Report a Lost/Stolen Access Card
@@ -901,7 +902,7 @@ export const menuLabels = {
   manageAppointment: 'lbl_CAET900020_0001', //Manage Appointment
   personalSetting: 'mymen_CAOTLA0005', //Personal Setting
   changeProfile: 'mymen_CAME030100', //Change Profile
-  cardMain: 'mymen_CAOTLA0004', //Card
+  cardMain: 'men_title_CACA010000', //Card
   accessCardService: 'men_title_CACA010100', //Access Card Service
   openAccount: 'men_title_CAPR010100', //Open Account
   signUp: 'men_title_CAME060000', //Sign Up

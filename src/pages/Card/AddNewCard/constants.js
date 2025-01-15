@@ -11,14 +11,8 @@ export const termConditionConfig = {
   selectAllLabel: cardLabels.agreeTerms,
   options: [
     {
-      label: cardLabels.accessCardApplication,
-      value: '1',
-      title: cardLabels.accessCardApplication,
-      fileUrl: fileUrls.cardHolderAgreement,
-    },
-    {
       label: cardLabels.cardholderAgreement,
-      value: '2',
+      value: '1',
       title: cardLabels.cardholderAgreement,
       fileUrl: fileUrls.cardHolderAgreement,
     },

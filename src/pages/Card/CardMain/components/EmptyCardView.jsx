@@ -67,7 +67,7 @@ const EmptyCardView = ({ translate: t, setAlert }) => {
               alt="card empty"
             />
           </div>
-          <div className="empty-card__title">{t(cardLabels.accessCardService)}</div>
+          <div className="empty-card__title">{t(cardLabels.debitCardService2)}</div>
           <div className="empty-card__desc">
             <p>{t(cardLabels.emptyCardGuide)}</p>
           </div>

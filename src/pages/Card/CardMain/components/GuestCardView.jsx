@@ -38,7 +38,7 @@ const GuestCardView = ({ translate: t }) => {
     <>
       <div className="guest-card-view__wrapper page__container">
         <div className="guest-card__header">
-          <div className="page__title">{t(cardLabels.accessCardService)}</div>
+          <div className="page__title">{t(cardLabels.debitCardService)}</div>
         </div>
         <div className="guest-card__options">
           {guestCardOptions.map(item => (

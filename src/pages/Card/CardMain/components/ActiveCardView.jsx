@@ -28,7 +28,7 @@ const ActiveCardView = ({ card, translate: t }) => {
     <div className="active-card-view__wrapper">
       <div className="active-card__content page__container">
         <div className="active-card__header">
-          <div className="page__title">{t(cardLabels.accessCardService)}</div>
+          <div className="page__title">{t(cardLabels.debitCardService)}</div>
         </div>
         <div className="active-card__main">
           <div className="active-card__img">
