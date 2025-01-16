@@ -32,7 +32,12 @@ import { moveNext } from '@utilities/index';
 
 import { EnterEmailSchema } from './schema';
 
-const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNavigateVerifyMember }) => {
+const SignUpEnterEmail = ({
+  onNavigateEkycVerify,
+  onNavigateMOTPAgreeTerms,
+  onNavigateVerifyMember,
+  onNavigateCreateId,
+}) => {
   const { deviceId, ekycCached, setEkycToNativeCache, translate: t, isNavigateFromLogin } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState(initAlert);
@@ -135,13 +140,16 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
 
   const requestUpdateEmail = async () => {
     setShowLoading(true);
+    const lowerCaseEmail = email?.toLowerCase();
     const payload = {
-      cus_email: email?.toLowerCase(),
+      cus_email: lowerCaseEmail,
       uuid_v: deviceId,
       isFromLogin: isNavigateFromLogin ? '1' : '0',
     };
+
     const { data, error, isSuccess } = await requestApi(endpoints.updateEmail, payload);
     setShowLoading(false);
+
     if (isSuccess) {
       const { screen_kd, cus_email, isFromLogin } = data;
       //Check case lost session on server or lost cusno
@@ -151,20 +159,25 @@ const SignUpEnterEmail = ({ onNavigateEkycVerify, onNavigateMOTPAgreeTerms, onNa
         moveHomeNative();
         return;
       }
-      if (Number(screen_kd) === 1) {
-        setEkycToNativeCache({
-          ...ekycCached,
-          email: cus_email?.toLowerCase(),
-        });
-        onNavigateMOTPAgreeTerms();
-      } else if (Number(screen_kd) === 2) {
-        setEkycToNativeCache({
-          ...ekycCached,
-          email: cus_email?.toLowerCase(),
-          isEkycProcessing: true,
-        });
-        clearTempLoginInfo();
-        onNavigateEkycVerify();
+
+      const updatedEmail = cus_email?.toLowerCase();
+      const ekycCacheUpdate = { ...ekycCached, email: updatedEmail };
+      switch (Number(screen_kd)) {
+        case 1: // Terms agreement screen
+          setEkycToNativeCache(ekycCacheUpdate);
+          onNavigateMOTPAgreeTerms();
+          break;
+        case 2: // EKYC verification screen
+          setEkycToNativeCache({ ...ekycCacheUpdate, isEkycProcessing: true });
+          clearTempLoginInfo();
+          onNavigateEkycVerify();
+          break;
+        case 4: //Already EKYC and update Personal
+          setEkycToNativeCache(ekycCacheUpdate);
+          onNavigateCreateId();
+          break;
+        default:
+          break;
       }
     } else {
       return setAlert({

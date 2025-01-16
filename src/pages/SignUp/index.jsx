@@ -297,6 +297,7 @@ const SignUp = ({ translate }) => {
             onNavigateEkycVerify={handleNavigateEkycVerify}
             onNavigateMOTPAgreeTerms={handleNavigateMOTPAgreeTerms}
             onNavigateVerifyMember={handleNavigateVerifyMembership}
+            onNavigateCreateId={handleNavigateCreateId}
           />
         )}
         {currentStep === SignUpStep.VERIFY_IDENTITY_TERMS && (
