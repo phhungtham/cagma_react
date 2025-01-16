@@ -583,7 +583,9 @@ export const reissueCardLabels = {
 
 export const reportLostCardLabels = {
   reportLostAccessCard: 'lbl_CACA600000_0143', //Report a Lost Access Card
+  reportLostAccessCard2: 'lbl_CACA600000_0159', //Report a Lost Access Card
   detailOfAccident: 'lbl_CACA600000_0144', //Detail of Accident
+  detailOfAccident2: 'lbl_CACA600000_0168', //Detail of Accident
   report: 'lbl_CTA_6021', //Report
   areYouSure: 'lbl_CACA600000_0145', //Are you sure you want to report the card as lost?
   afterRegisterAccident: 'lbl_CACA600000_0146', //After register the accident report, You will be...

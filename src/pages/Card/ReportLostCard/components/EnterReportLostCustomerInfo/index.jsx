@@ -62,7 +62,7 @@ const EnterReportLostCustomerInfo = ({
         onClick={moveBack}
       />
       <div className="page__form">
-        <h1 className="page__title">{t(labels.reportLostAccessCard)}</h1>
+        <h1 className="page__title">{t(labels.reportLostAccessCard2)}</h1>
         <div className="report-lost-card-info__form py-4 mt-4">
           <div className="form__section flex-gap-y-12">
             <FormProvider {...methods}>
@@ -160,7 +160,7 @@ const EnterReportLostCustomerInfo = ({
               <Controller
                 render={({ field }) => (
                   <Input
-                    label={t(labels.detailOfAccident)}
+                    label={t(labels.detailOfAccident2)}
                     regex={invalidAccident}
                     maxLength={400}
                     {...field}

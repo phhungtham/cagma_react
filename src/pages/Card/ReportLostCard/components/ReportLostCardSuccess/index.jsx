@@ -70,7 +70,7 @@ const ReportLostCardSuccess = ({ cardInfo, isLogin, translate: t }) => {
             <div className="mt-6">
               <InfoBox
                 variant="informative"
-                label={t(labels.afterRegisterAccident)}
+                label={t(labels.afterTheAccident)}
               />
             </div>
             <div className="active-success__ctas">
