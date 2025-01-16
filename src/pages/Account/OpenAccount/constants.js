@@ -81,6 +81,7 @@ export const ignoreCheckDTRProductCodes = [
   ProductCode.RRSP_E_GIC,
   ProductCode.TFSA_E_SAVINGS,
   ProductCode.RRSP_E_SAVINGS,
+  ProductCode.CHEQUING,
 ];
 
 export const checkSINNumberProductCodes = [
