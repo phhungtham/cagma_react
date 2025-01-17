@@ -9,14 +9,11 @@
       }
     }
   }
-  .review__img {
-    height: 120px;
-    width: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .completed__img {
     img {
-      height: 160px;
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
     }
   }
 }
