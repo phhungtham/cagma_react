@@ -25,6 +25,7 @@ import useApi from '@hooks/useApi';
 import useFocus from '@hooks/useFocus';
 import useMove from '@hooks/useMove';
 import { SignUpContext } from '@pages/SignUp';
+import { SignUpStep } from '@pages/SignUp/constants';
 import { routePaths } from '@routes/paths';
 import clearEkycInfo from '@utilities/gmCommon/clearEkycInfo';
 import clearTempLoginInfo from '@utilities/gmCommon/clearTempLoginInfo';
@@ -159,7 +160,6 @@ const SignUpEnterEmail = ({
         moveHomeNative();
         return;
       }
-
       const updatedEmail = cus_email?.toLowerCase();
       const ekycCacheUpdate = { ...ekycCached, email: updatedEmail };
       switch (Number(screen_kd)) {
@@ -174,7 +174,7 @@ const SignUpEnterEmail = ({
           break;
         case 4: //Already EKYC and update Personal
           setEkycToNativeCache(ekycCacheUpdate);
-          onNavigateCreateId();
+          onNavigateCreateId(SignUpStep.ENTER_EMAIL);
           break;
         default:
           break;

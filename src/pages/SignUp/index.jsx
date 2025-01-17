@@ -44,6 +44,7 @@ const SignUp = ({ translate }) => {
   const [isNavigateFromLogin, setIsNavigateFromLogin] = useState(false);
   const [ekycResultSuccess, setEkycResultSuccess] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [previousStep, setPreviousStep] = useState(null);
   const [alert, setAlert] = useState({
     isShow: false,
     title: '',
@@ -141,10 +142,6 @@ const SignUp = ({ translate }) => {
   const handleSubmitPersonalDetail = () => {
     setEkycResultSuccess(true);
     setCurrentStep(SignUpStep.EKYC_RESULT);
-  };
-
-  const handleNavigateCreateId = () => {
-    setCurrentStep(SignUpStep.CREATE_ID);
   };
 
   const handleNavigateCreatePasscode = () => {
@@ -264,6 +261,25 @@ const SignUp = ({ translate }) => {
     getEkycInfo(getEkycInfoCallback);
   }, []);
 
+  const handleNavigateCreateId = previousScreen => {
+    if (previousScreen === SignUpStep.ENTER_EMAIL) {
+      setPreviousStep(SignUpStep.ENTER_EMAIL);
+    }
+    setCurrentStep(SignUpStep.CREATE_ID);
+  };
+
+  const handleOnClickBackCreateId = () => {
+    console.log('previousStep', previousStep);
+    switch (previousStep) {
+      case SignUpStep.ENTER_EMAIL:
+        handleNavigateEnterEmail();
+        break;
+      default:
+        handleNavigateThankVisitAgain();
+        break;
+    }
+  };
+
   return (
     <SignUpContext.Provider
       value={{
@@ -300,12 +316,14 @@ const SignUp = ({ translate }) => {
             onNavigateCreateId={handleNavigateCreateId}
           />
         )}
+
         {currentStep === SignUpStep.VERIFY_IDENTITY_TERMS && (
           <VerifyIdentityTerms
             onConfirm={handleNavigateEKYCProgress}
             onNavigateEnterEmail={handleNavigateEnterEmail}
           />
         )}
+
         {currentStep === SignUpStep.EKYC_IN_PROGRESS && (
           <EKYCInProgress
             onConfirm={handleConfirmEKYC}
@@ -334,7 +352,7 @@ const SignUp = ({ translate }) => {
         {currentStep === SignUpStep.CREATE_ID && (
           <SignUpCreateID
             onConfirm={handleCreateID}
-            onNavigateThankVisitAgain={handleNavigateThankVisitAgain}
+            onClickBack={handleOnClickBackCreateId}
           />
         )}
         {currentStep === SignUpStep.CREATE_PASSWORD && (

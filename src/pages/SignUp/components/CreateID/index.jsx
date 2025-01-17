@@ -16,7 +16,7 @@ import { SignUpContext } from '@pages/SignUp';
 
 import { createIdFormSchema } from './schema';
 
-const SignUpCreateID = ({ onConfirm, onNavigateThankVisitAgain }) => {
+const SignUpCreateID = ({ onConfirm, onClickBack }) => {
   const { translate: t } = useContext(SignUpContext);
   const [showLoading, setShowLoading] = useState(false);
   const [alert, setAlert] = useState({
@@ -72,7 +72,7 @@ const SignUpCreateID = ({ onConfirm, onNavigateThankVisitAgain }) => {
         <Header
           title={t(menuLabels.signUp)}
           disabledMoveBack
-          onClickBack={onNavigateThankVisitAgain}
+          onClickBack={onClickBack}
         />
         <div className="h-screen__content pt-5">
           <div className="page__title">{t(labels.createYourId)}</div>
